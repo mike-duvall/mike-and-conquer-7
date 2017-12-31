@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenGLTestGame1
+namespace mike_and_conquer_6
 {
     /// <summary>
     /// The main class.

@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Diagnostics;
+
 
 namespace mike_and_conquer_6
 {
@@ -11,11 +14,25 @@ namespace mike_and_conquer_6
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D texture;
+        Vector2 position;
+
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.IsFullScreen = true;
+            //graphics.PreferredBackBufferWidth = 640;
+            //graphics.PreferredBackBufferHeight = 400;
+
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
+
+
             Content.RootDirectory = "Content";
+            graphics.GraphicsProfile = GraphicsProfile.HiDef;
+            position = new Vector2(0, 0);
+                        this.IsFixedTimeStep = false;
         }
 
         /// <summary>
@@ -27,7 +44,7 @@ namespace mike_and_conquer_6
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            texture = this.Content.Load<Texture2D>("m3");
             base.Initialize();
         }
 
@@ -63,6 +80,19 @@ namespace mike_and_conquer_6
                 Exit();
 
             // TODO: Add your update logic here
+            double velocity = .15;
+            double delta = gameTime.ElapsedGameTime.TotalMilliseconds * velocity;
+
+
+            position.X = position.X + (float)delta;
+            //position.X += 1;
+            if (position.X > this.GraphicsDevice.Viewport.Width)
+                position.X = 0;
+
+            position.Y = position.Y + (float)delta;
+            if (position.Y > this.GraphicsDevice.Viewport.Height)
+                position.Y = 0;
+
 
             base.Update(gameTime);
         }
@@ -76,6 +106,25 @@ namespace mike_and_conquer_6
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+
+
+            //            spriteBatch.Draw(texture, position);
+            Vector2 plottedPosition = new Vector2();
+            plottedPosition.X = (float)Math.Round(position.X);
+            plottedPosition.Y = (float)Math.Round(position.Y);
+
+
+            Debug.WriteLine("x,y=" + plottedPosition.X + "," + plottedPosition.Y);
+
+            float scale = 5f;
+            spriteBatch.Draw(texture, plottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            //(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth);
+
+            //spriteBatch.Draw(texture, position, Color.White);
+
+            spriteBatch.End();
+
 
             base.Draw(gameTime);
         }

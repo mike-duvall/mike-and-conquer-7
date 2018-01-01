@@ -2,7 +2,6 @@
 
 namespace mike_and_conquer_6
 {
-#if WINDOWS || LINUX
     /// <summary>
     /// The main class.
     /// </summary>
@@ -18,5 +17,4 @@ namespace mike_and_conquer_6
                 game.Run();
         }
     }
-#endif
 }

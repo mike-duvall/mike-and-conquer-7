@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Diagnostics;
+
 
 namespace mike_and_conquer_6
 {
@@ -20,14 +22,17 @@ namespace mike_and_conquer_6
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.IsFullScreen = true;
-            //            graphics.PreferredBackBufferWidth = 640;
-            //            graphics.PreferredBackBufferHeight = 400;
+            //graphics.PreferredBackBufferWidth = 640;
+            //graphics.PreferredBackBufferHeight = 400;
+
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
 
 
             Content.RootDirectory = "Content";
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
             position = new Vector2(0, 0);
-            this.IsFixedTimeStep = false;
+                        this.IsFixedTimeStep = false;
         }
 
         /// <summary>
@@ -75,7 +80,7 @@ namespace mike_and_conquer_6
                 Exit();
 
             // TODO: Add your update logic here
-            double velocity = .05;
+            double velocity = .15;
             double delta = gameTime.ElapsedGameTime.TotalMilliseconds * velocity;
 
 
@@ -109,7 +114,10 @@ namespace mike_and_conquer_6
             plottedPosition.X = (float)Math.Round(position.X);
             plottedPosition.Y = (float)Math.Round(position.Y);
 
-            float scale = 2f;
+
+            Debug.WriteLine("x,y=" + plottedPosition.X + "," + plottedPosition.Y);
+
+            float scale = 5f;
             spriteBatch.Draw(texture, plottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
             //(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth);
 

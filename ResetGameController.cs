@@ -3,12 +3,12 @@ using System.Web.Http;
 
 namespace mike_and_conquer_6
 {
-    public class ValuesController : ApiController
+    public class ResetGameController : ApiController
     {
         // GET api/values 
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value6", "value6" };
         }
 
         // GET api/values/5 
@@ -18,8 +18,9 @@ namespace mike_and_conquer_6
         }
 
         // POST api/values 
-        public void Post([FromBody]string value)
+        public void Post()
         {
+            int x = 3;
         }
 
         // PUT api/values/5 

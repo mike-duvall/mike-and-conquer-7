@@ -13,7 +13,7 @@ namespace mike_and_conquer_6
             HttpConfiguration config = new HttpConfiguration();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "mac/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 

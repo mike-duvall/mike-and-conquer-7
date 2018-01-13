@@ -16,7 +16,7 @@ namespace mike_and_conquer_6
         static void Main()
         {
 
-            string baseAddress = "http://localhost:9000/";
+            string baseAddress = "http://localhost:11369/";
             WebApp.Start<Startup>(url: baseAddress);
             using (var game = new Game1())
                 game.Run();

@@ -22,11 +22,11 @@ namespace mike_and_conquer_6
         {
             graphics = new GraphicsDeviceManager(this);
             //graphics.IsFullScreen = true;
-            //graphics.PreferredBackBufferWidth = 640;
-            //graphics.PreferredBackBufferHeight = 400;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 1024;
 
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
+            //graphics.PreferredBackBufferWidth = 1920;
+            //graphics.PreferredBackBufferHeight = 1080;
 
 
             Content.RootDirectory = "Content";
@@ -115,7 +115,7 @@ namespace mike_and_conquer_6
             plottedPosition.Y = (float)Math.Round(position.Y);
 
 
-            Debug.WriteLine("x,y=" + plottedPosition.X + "," + plottedPosition.Y);
+//            Debug.WriteLine("x,y=" + plottedPosition.X + "," + plottedPosition.Y);
 
             float scale = 5f;
             spriteBatch.Draw(texture, plottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);

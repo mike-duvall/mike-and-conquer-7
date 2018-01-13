@@ -7,13 +7,7 @@ namespace mike_and_conquer_6
 
     public class NodMinigunnersController : ApiController
     {
-        // GET api/values 
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
-        // GET api/values/5 
         public IHttpActionResult Get(int id)
         {
             Minigunner minigunner = new Minigunner();
@@ -25,7 +19,6 @@ namespace mike_and_conquer_6
 
         }
 
-        // POST api/values 
         public IHttpActionResult Post([FromBody]string value)
         {
             Minigunner minigunner = new Minigunner();
@@ -37,14 +30,5 @@ namespace mike_and_conquer_6
 
         }
 
-        // PUT api/values/5 
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5 
-        public void Delete(int id)
-        {
-        }
     }
 }

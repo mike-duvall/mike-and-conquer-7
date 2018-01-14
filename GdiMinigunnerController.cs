@@ -20,20 +20,32 @@ namespace mike_and_conquer_6
             return new string[] { "value1", "value2" };
         }
 
-        public string Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            return "value";
-        }
-
-        // POST mac/gidminigunners
-        public IHttpActionResult Post([FromBody]string value)
-        {
-            int x = 3;
             Minigunner minigunner = new Minigunner();
             minigunner.id = 5;
-            minigunner.x = 200;
-            minigunner.y = 300;
+            minigunner.x = minigunnerX;
+            minigunner.y = minigunnerY;
             minigunner.health = 1000;
+            return Ok(minigunner);
+
+        }
+
+        static int minigunnerX = -1;
+        static int minigunnerY = -1;
+
+        Make POST add minigunner to Game object instead of this hard coded static shit
+
+        public IHttpActionResult Post([FromBody]Minigunner inputMinigunner)
+        {
+
+            Minigunner minigunner = new Minigunner();
+            minigunner.id = 5;
+            minigunner.x = inputMinigunner.x;
+            minigunner.y = inputMinigunner.y;
+            minigunner.health = 1000;
+            minigunnerX = minigunner.x;
+            minigunnerY = minigunner.y;
             return Ok(minigunner);
 
         }

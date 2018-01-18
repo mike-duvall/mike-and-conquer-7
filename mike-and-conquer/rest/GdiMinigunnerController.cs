@@ -13,7 +13,7 @@ namespace mike_and_conquer.rest
 
         public IHttpActionResult Get(int id)
         {
-            Minigunner minigunner = new Minigunner();
+            RestMinigunner minigunner = new RestMinigunner();
             minigunner.id = 5;
             minigunner.x = minigunnerX;
             minigunner.y = minigunnerY;
@@ -25,10 +25,10 @@ namespace mike_and_conquer.rest
         static int minigunnerX = -1;
         static int minigunnerY = -1;
 
-        public IHttpActionResult Post([FromBody]Minigunner inputMinigunner)
+        public IHttpActionResult Post([FromBody]RestMinigunner inputMinigunner)
         {
 
-            Minigunner minigunner = new Minigunner();
+            RestMinigunner minigunner = new RestMinigunner();
             minigunner.id = 5;
             minigunner.x = inputMinigunner.x;
             minigunner.y = inputMinigunner.y;

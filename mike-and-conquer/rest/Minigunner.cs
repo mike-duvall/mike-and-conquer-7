@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace mike_and_conquer.rest
 {
 
-    public class Minigunner
+    public class RestMinigunner
     {
         public int id { get; set; }
         public int x { get; set; }

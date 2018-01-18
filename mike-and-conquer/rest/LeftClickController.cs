@@ -11,7 +11,7 @@ namespace mike_and_conquer.rest
         public IHttpActionResult Post([FromBody]string value)
         {
             int x = 3;
-            Minigunner minigunner = new Minigunner();
+            RestMinigunner minigunner = new RestMinigunner();
             minigunner.id = 5;
             minigunner.x = 200;
             minigunner.y = 300;

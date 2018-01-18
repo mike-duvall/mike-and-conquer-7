@@ -2,7 +2,7 @@
 using Microsoft.Owin.Hosting;
 using System.Net.Http;
 
-namespace mike_and_conquer_6
+namespace mike_and_conquer
 {
     /// <summary>
     /// The main class.
@@ -18,7 +18,7 @@ namespace mike_and_conquer_6
 
             string baseAddress = "http://localhost:11369/";
             WebApp.Start<Startup>(url: baseAddress);
-            using (var game = new Game1())
+            using (var game = new MikeAndConqueryGame())
                 game.Run();
 
             int x = 3;

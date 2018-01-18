@@ -1,17 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 
-namespace mike_and_conquer_6
+namespace mike_and_conquer.rest
 {
-    public class Minigunner
-    {
-        public int id { get; set; }
-        public int x { get; set; }
-        public int y { get; set; }
-        public int health { get; set; }
-        public bool selected { get; set; }
-
-    }
 
     public class GdiMinigunnersController : ApiController
     {
@@ -33,8 +24,6 @@ namespace mike_and_conquer_6
 
         static int minigunnerX = -1;
         static int minigunnerY = -1;
-
-        Make POST add minigunner to Game object instead of this hard coded static shit
 
         public IHttpActionResult Post([FromBody]Minigunner inputMinigunner)
         {

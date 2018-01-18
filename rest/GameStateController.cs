@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 
-namespace mike_and_conquer_6
+namespace mike_and_conquer.rest
 {
 
     public class GameState

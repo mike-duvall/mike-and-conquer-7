@@ -5,12 +5,12 @@ using System;
 using System.Diagnostics;
 
 
-namespace mike_and_conquer_6
+namespace mike_and_conquer
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class MikeAndConqueryGame : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -18,7 +18,7 @@ namespace mike_and_conquer_6
         Vector2 position;
 
 
-        public Game1()
+        public MikeAndConqueryGame()
         {
             graphics = new GraphicsDeviceManager(this);
             //graphics.IsFullScreen = true;

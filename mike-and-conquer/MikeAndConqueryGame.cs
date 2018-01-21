@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 
@@ -16,7 +17,7 @@ namespace mike_and_conquer
         SpriteBatch spriteBatch;
         Texture2D texture;
         Vector2 position;
-
+        List<Minigunner> minigunnerList;
 
         public MikeAndConqueryGame()
         {
@@ -33,6 +34,8 @@ namespace mike_and_conquer
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
             position = new Vector2(0, 0);
                         this.IsFixedTimeStep = false;
+
+            minigunnerList = new List<Minigunner>();
         }
 
         /// <summary>

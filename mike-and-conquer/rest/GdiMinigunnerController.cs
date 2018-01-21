@@ -28,6 +28,8 @@ namespace mike_and_conquer.rest
         public IHttpActionResult Post([FromBody]RestMinigunner inputMinigunner)
         {
 
+//            Determine how rest controller will get reference to Game object to add minigunner
+
             RestMinigunner minigunner = new RestMinigunner();
             minigunner.id = 5;
             minigunner.x = inputMinigunner.x;

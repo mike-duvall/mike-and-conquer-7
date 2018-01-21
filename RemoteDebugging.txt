@@ -1,5 +1,9 @@
-﻿Setup non-Homegroup sharing on remote computer, by creating folder:  c:\RemoteDebug, right clicking folder->Properties->Sharing->Advanced Sharing, give Everyone permissions
-(Had to previously do some other step to allow sharing without having a login?)
+﻿Installed Visual Studio 2015 on remote computer
+Got app running from Visual Studio 2015 on remote computer
 
-Installed Visual Studio 2015 Remote Tools on remote machine: https://my.visualstudio.com/downloads?q=remote%20tools%20visual%20studio%202015
+Followed instructions here to then setup remote debugging:  http://gpriaulx.co/2015/12/visual-studio-2015-remote-debugging/
+
+Turned off firewalls on both machines
+setup same user on both machines with same password
+
 

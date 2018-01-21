@@ -42,9 +42,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="mike-and-conquer\MikeAndConqueryGame.cs" />
+    <Compile Include="mike-and-conquer\Minigunner.cs" />
     <Compile Include="mike-and-conquer\rest\GameStateController.cs" />
     <Compile Include="mike-and-conquer\rest\LeftClickController.cs" />
-    <Compile Include="mike-and-conquer\rest\Minigunner.cs" />
+    <Compile Include="mike-and-conquer\rest\RestMinigunner.cs" />
     <Compile Include="mike-and-conquer\rest\NodMinigunnerController.cs" />
     <Compile Include="mike-and-conquer\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

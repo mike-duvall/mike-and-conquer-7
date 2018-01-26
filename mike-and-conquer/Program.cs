@@ -16,14 +16,23 @@ namespace mike_and_conquer
         static void Main()
         {
 
-            string baseAddress = "http://localhost:11369/";
-            WebApp.Start<Startup>(url: baseAddress);
-            using (var game = new MikeAndConqueryGame())
-                game.Run();
+            try
+            {
+                //string baseAddress = "http://localhost:11369/";
+                string baseAddress = "http://*:11369/";
+                WebApp.Start<Startup>(url: baseAddress);
+                using (var game = new MikeAndConqueryGame())
+                    game.Run();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
 
-            int x = 3;
         }
     }
 }
+
+
 
 

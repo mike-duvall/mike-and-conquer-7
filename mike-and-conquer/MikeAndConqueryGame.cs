@@ -48,6 +48,9 @@ namespace mike_and_conquer
         {
             // TODO: Add your initialization logic here
             texture = this.Content.Load<Texture2D>("m3");
+
+            Minigunner theMinigunner = new Minigunner(this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height, texture);
+            minigunnerList.Add(theMinigunner);
             base.Initialize();
         }
 
@@ -83,19 +86,22 @@ namespace mike_and_conquer
                 Exit();
 
             // TODO: Add your update logic here
-            double velocity = .15;
-            double delta = gameTime.ElapsedGameTime.TotalMilliseconds * velocity;
+            //double velocity = .15;
+            //double delta = gameTime.ElapsedGameTime.TotalMilliseconds * velocity;
 
 
-            position.X = position.X + (float)delta;
-            //position.X += 1;
-            if (position.X > this.GraphicsDevice.Viewport.Width)
-                position.X = 0;
+            //position.X = position.X + (float)delta;
+            //if (position.X > this.GraphicsDevice.Viewport.Width)
+            //    position.X = 0;
 
-            position.Y = position.Y + (float)delta;
-            if (position.Y > this.GraphicsDevice.Viewport.Height)
-                position.Y = 0;
+            //position.Y = position.Y + (float)delta;
+            //if (position.Y > this.GraphicsDevice.Viewport.Height)
+            //    position.Y = 0;
 
+            foreach (Minigunner nextMinigunner in minigunnerList)
+            {
+                nextMinigunner.Update(gameTime);
+            }
 
             base.Update(gameTime);
         }
@@ -111,23 +117,18 @@ namespace mike_and_conquer
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
 
+            //Vector2 plottedPosition = new Vector2();
+            //plottedPosition.X = (float)Math.Round(position.X);
+            //plottedPosition.Y = (float)Math.Round(position.Y);
+            //float scale = 5f;
+            //spriteBatch.Draw(texture, plottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
 
-            //            spriteBatch.Draw(texture, position);
-            Vector2 plottedPosition = new Vector2();
-            plottedPosition.X = (float)Math.Round(position.X);
-            plottedPosition.Y = (float)Math.Round(position.Y);
-
-
-//            Debug.WriteLine("x,y=" + plottedPosition.X + "," + plottedPosition.Y);
-
-            float scale = 5f;
-            spriteBatch.Draw(texture, plottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-            //(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth);
-
-            //spriteBatch.Draw(texture, position, Color.White);
+            foreach (Minigunner nextMinigunner in minigunnerList)
+            {
+                nextMinigunner.Draw(gameTime, spriteBatch);
+            }
 
             spriteBatch.End();
-
 
             base.Draw(gameTime);
         }

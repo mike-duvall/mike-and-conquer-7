@@ -1,39 +1,32 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 
 namespace mike_and_conquer
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
+
     public class MikeAndConqueryGame : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D texture;
-        Vector2 position;
         List<Minigunner> minigunnerList;
 
         public MikeAndConqueryGame()
         {
             graphics = new GraphicsDeviceManager(this);
-            //graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 1024;
+            //graphics.IsFullScreen = false;
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 1024;
 
-            //graphics.PreferredBackBufferWidth = 1920;
-            //graphics.PreferredBackBufferHeight = 1080;
-
+            graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
 
             Content.RootDirectory = "Content";
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
-            position = new Vector2(0, 0);
-                        this.IsFixedTimeStep = false;
+            this.IsFixedTimeStep = false;
 
             minigunnerList = new List<Minigunner>();
         }
@@ -47,7 +40,7 @@ namespace mike_and_conquer
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            texture = this.Content.Load<Texture2D>("m3");
+            Texture2D texture = this.Content.Load<Texture2D>("m3");
 
             Minigunner theMinigunner = new Minigunner(this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height, texture);
             minigunnerList.Add(theMinigunner);
@@ -86,18 +79,6 @@ namespace mike_and_conquer
                 Exit();
 
             // TODO: Add your update logic here
-            //double velocity = .15;
-            //double delta = gameTime.ElapsedGameTime.TotalMilliseconds * velocity;
-
-
-            //position.X = position.X + (float)delta;
-            //if (position.X > this.GraphicsDevice.Viewport.Width)
-            //    position.X = 0;
-
-            //position.Y = position.Y + (float)delta;
-            //if (position.Y > this.GraphicsDevice.Viewport.Height)
-            //    position.Y = 0;
-
             foreach (Minigunner nextMinigunner in minigunnerList)
             {
                 nextMinigunner.Update(gameTime);
@@ -116,12 +97,6 @@ namespace mike_and_conquer
 
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-
-            //Vector2 plottedPosition = new Vector2();
-            //plottedPosition.X = (float)Math.Round(position.X);
-            //plottedPosition.Y = (float)Math.Round(position.Y);
-            //float scale = 5f;
-            //spriteBatch.Draw(texture, plottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
 
             foreach (Minigunner nextMinigunner in minigunnerList)
             {

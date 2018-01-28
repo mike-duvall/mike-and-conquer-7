@@ -24,11 +24,18 @@ namespace mike_and_conquer
 
         }
 
-        public Minigunner(int aWorldWidth, int aWorldHeight, Texture2D aTexture )
+        private static int globalId = 1;
+
+        public Minigunner(int aWorldWidth, int aWorldHeight, Texture2D aTexture, int anX, int aY )
         {
             this.worldWidth = aWorldWidth;
             this.worldHeight = aWorldHeight;
             this.texture = aTexture;
+            x = anX;
+            y = aY;
+            health = 1000;
+            id = Minigunner.globalId;
+            Minigunner.globalId++;
         }
 
         public void Update(GameTime gameTime)

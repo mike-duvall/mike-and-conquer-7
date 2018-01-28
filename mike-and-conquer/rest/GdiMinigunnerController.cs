@@ -13,31 +13,32 @@ namespace mike_and_conquer.rest
 
         public IHttpActionResult Get(int id)
         {
-            RestMinigunner minigunner = new RestMinigunner();
-            minigunner.id = 5;
-            minigunner.x = minigunnerX;
-            minigunner.y = minigunnerY;
-            minigunner.health = 1000;
+            Minigunner minigunner = MikeAndConqueryGame.instance.GetGdiMinigunner();
+            RestMinigunner restMinigunner = new RestMinigunner();
+            restMinigunner.id = minigunner.id;
+            restMinigunner.x = minigunner.x;
+            minigunner.y = minigunner.y;
+            restMinigunner.health = minigunner.health;
             return Ok(minigunner);
 
         }
 
-        static int minigunnerX = -1;
-        static int minigunnerY = -1;
 
         public IHttpActionResult Post([FromBody]RestMinigunner inputMinigunner)
         {
 
-//            Determine how rest controller will get reference to Game object to add minigunner
+            //            Determine how rest controller will get reference to Game object to add minigunner
+            //bool xx = MikeAndConqueryGame.instance.IsFixedTimeStep;
+            //call game to add minigunner here, then update GET to retrieve same minigunner
 
-            RestMinigunner minigunner = new RestMinigunner();
-            minigunner.id = 5;
-            minigunner.x = inputMinigunner.x;
-            minigunner.y = inputMinigunner.y;
-            minigunner.health = 1000;
-            minigunnerX = minigunner.x;
-            minigunnerY = minigunner.y;
-            return Ok(minigunner);
+
+            Minigunner minigunner = MikeAndConqueryGame.instance.AddGdiMinigunner(inputMinigunner.x, inputMinigunner.y);
+            RestMinigunner restMinigunner = new RestMinigunner();
+            restMinigunner.id = minigunner.id;
+            restMinigunner.x = minigunner.x;
+            restMinigunner.y = minigunner.y;
+            restMinigunner.health = minigunner.health;
+            return Ok(restMinigunner);
 
         }
 

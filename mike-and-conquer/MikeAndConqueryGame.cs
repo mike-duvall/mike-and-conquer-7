@@ -2,16 +2,31 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-
+using System;
 
 namespace mike_and_conquer
 {
 
     public class MikeAndConqueryGame : Game
     {
+        public static MikeAndConqueryGame instance;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D minigunnerTexture;
         List<Minigunner> minigunnerList;
+
+        internal Minigunner GetGdiMinigunner()
+        {
+            Minigunner foundMinigunner = null;
+            foreach (Minigunner nextMinigunner in minigunnerList)
+            {
+                foundMinigunner = nextMinigunner;
+            }
+
+            return foundMinigunner;
+        }
+
+
 
         public MikeAndConqueryGame()
         {
@@ -29,6 +44,15 @@ namespace mike_and_conquer
             this.IsFixedTimeStep = false;
 
             minigunnerList = new List<Minigunner>();
+
+            MikeAndConqueryGame.instance = this;
+        }
+
+        internal Minigunner AddGdiMinigunner(int x, int y)
+        {
+            Minigunner newMinigunner = new Minigunner(this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height, minigunnerTexture, x, y);
+            minigunnerList.Add(newMinigunner);
+            return newMinigunner;
         }
 
         /// <summary>
@@ -40,10 +64,10 @@ namespace mike_and_conquer
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            Texture2D texture = this.Content.Load<Texture2D>("m3");
+            minigunnerTexture = this.Content.Load<Texture2D>("m3");
 
-            Minigunner theMinigunner = new Minigunner(this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height, texture);
-            minigunnerList.Add(theMinigunner);
+            //Minigunner theMinigunner = new Minigunner(this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height, texture);
+            //minigunnerList.Add(theMinigunner);
             base.Initialize();
         }
 

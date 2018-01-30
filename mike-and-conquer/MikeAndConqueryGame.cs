@@ -64,12 +64,27 @@ namespace mike_and_conquer
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            minigunnerTexture = this.Content.Load<Texture2D>("m3");
+            Texture2D loadedTexture = this.Content.Load<Texture2D>("m3");
 
-            //Minigunner theMinigunner = new Minigunner(this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height, texture);
-            //minigunnerList.Add(theMinigunner);
+            int numPixels = loadedTexture.Width * loadedTexture.Height;
+            uint[] loadedTexturePixelData = new uint[numPixels];
+
+            loadedTexture.GetData<uint>(loadedTexturePixelData);
+
+
+
+            minigunnerTexture = new Texture2D(this.GraphicsDevice, 16, 16);
+            uint[] minigunnerTexturePixelData = new uint[numPixels];
+
+            for (int i = 0; i < numPixels; i++)
+            {
+                minigunnerTexturePixelData[i] = loadedTexturePixelData[i];
+            }
+            minigunnerTexture.SetData(minigunnerTexturePixelData);
+
             base.Initialize();
         }
+
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load

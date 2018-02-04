@@ -57,6 +57,7 @@
     <Compile Include="mike-and-conquer\openra\float2.cs" />
     <Compile Include="mike-and-conquer\openra\int2.cs" />
     <Compile Include="mike-and-conquer\openra\LCWCompression.cs" />
+    <Compile Include="mike-and-conquer\openra\Palette.cs" />
     <Compile Include="mike-and-conquer\openra\ReadOnlyList.cs" />
     <Compile Include="mike-and-conquer\openra\SpriteLoader.cs" />
     <Compile Include="mike-and-conquer\openra\StreamExts.cs" />
@@ -117,6 +118,7 @@
   <ItemGroup>
     <Content Include="Icon.ico" />
     <Content Include="RemoteDebugging.txt" />
+    <Content Include="xcc-mixer-notes.txt" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />

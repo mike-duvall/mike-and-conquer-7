@@ -152,7 +152,12 @@ namespace mike_and_conquer
 
                 minigunnerTexturePixelData[i] = colorSwitched.PackedValue;
 
-                swapping red and blue, so probably an endian problem
+                swapping red and blue
+                        Possibly an endian problem
+                    Maybe a pixel format problem.  Determine what the pixel format is of my texture and my display
+                    Research using texture.SetData() and what format it's expecting
+
+                    Also compare data from GetData() of loaded texture vs what we are computing for the SetData
 
             }
             minigunnerTexture.SetData(minigunnerTexturePixelData);

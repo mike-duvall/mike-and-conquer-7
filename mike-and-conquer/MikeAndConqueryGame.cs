@@ -132,41 +132,16 @@ namespace mike_and_conquer
 
             minigunnerTexture = new Texture2D(this.GraphicsDevice, 50, 39);
             numPixels = minigunnerTexture.Width * minigunnerTexture.Height;
-            uint[] minigunnerTexturePixelData = new uint[numPixels];
+            Color[] minigunnerTexturePixelData = new Color[numPixels];
 
             for (int i = 0; i < numPixels; i++)
             {
-                //                minigunnerTexturePixelData[i] = loadedTexturePixelData[i];
-                //minigunnerTexturePixelData[i] = palette[frameData[i]];
                 uint paletteX = palette[frameData[i]];
-                Color colorX = new Color(paletteX);
-                
-                byte redX = colorX.R;
-                byte greenX = colorX.G;
-                byte blueX = colorX.B;
-
-                Color colorSwitched = new Color(colorX.PackedValue);
-                colorSwitched.R = colorX.B;
-                colorSwitched.G = colorX.G;
-                colorSwitched.B = colorX.R;
-
-                minigunnerTexturePixelData[i] = colorSwitched.PackedValue;
-
-                swapping red and blue
-                        Possibly an endian problem
-                    Maybe a pixel format problem.  Determine what the pixel format is of my texture and my display
-                    Research using texture.SetData() and what format it's expecting
-
-                    Also compare data from GetData() of loaded texture vs what we are computing for the SetData
-
+                System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)palette[frameData[i]]);
+                Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+                minigunnerTexturePixelData[i] = xnaColor;
             }
             minigunnerTexture.SetData(minigunnerTexturePixelData);
-
-
-            //We have the shp and palette loaded.  Now, render the shp to the texture using the palette values for rgb values
-
-            //    Consider littel endian vs big endian issues, as possible reason the color values aren't matching my old C++ tests
-
             base.Initialize();
         }
 

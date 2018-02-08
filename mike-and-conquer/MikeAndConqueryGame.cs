@@ -85,9 +85,9 @@ namespace mike_and_conquer
             //loader.TryParseSprite(stream, out frames);
 
             int[] remap = { };
-            OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("D:\\workspace\\mike-and-conquer\\assets\\temperat.pal", remap);
+            OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
 
-            System.IO.FileStream stream = System.IO.File.Open("D:\\workspace\\mike-and-conquer\\assets\\e1.shp", System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
+            System.IO.FileStream stream = System.IO.File.Open("Content\\e1.shp", System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
             OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader loader = new OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader();
             OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite shpTDSprite = new OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite(stream);
 

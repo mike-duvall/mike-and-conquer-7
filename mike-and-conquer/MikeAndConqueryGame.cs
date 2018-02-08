@@ -1,9 +1,20 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
-using System;
+﻿using System.Collections.Generic;
 
+
+using PlayerIndex = Microsoft.Xna.Framework.PlayerIndex;
+using Game = Microsoft.Xna.Framework.Game;
+using GamePad = Microsoft.Xna.Framework.Input.GamePad;
+using GameTime = Microsoft.Xna.Framework.GameTime;
+using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
+using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
+using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
+using GraphicsProfile = Microsoft.Xna.Framework.Graphics.GraphicsProfile;
+using Color = Microsoft.Xna.Framework.Color;
+using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
+using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
+using SpriteSortMode = Microsoft.Xna.Framework.Graphics.SpriteSortMode;
+using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
 
 namespace mike_and_conquer
 {

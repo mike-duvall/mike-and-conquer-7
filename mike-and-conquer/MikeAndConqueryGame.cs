@@ -76,24 +76,6 @@ namespace mike_and_conquer
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            Texture2D loadedTexture = this.Content.Load<Texture2D>("m3");
-
-            int numPixels = loadedTexture.Width * loadedTexture.Height;
-            uint[] loadedTexturePixelData = new uint[numPixels];
-
-            loadedTexture.GetData<uint>(loadedTexturePixelData);
-
-
-            //minigunnerTexture = new Texture2D(this.GraphicsDevice, 16, 16);
-            //uint[] minigunnerTexturePixelData = new uint[numPixels];
-
-            //for (int i = 0; i < numPixels; i++)
-            //{
-            //    minigunnerTexturePixelData[i] = loadedTexturePixelData[i];
-            //}
-            //minigunnerTexture.SetData(minigunnerTexturePixelData);
-
-
 
             //if (loader.IsShpTD(stream))
             //{
@@ -102,47 +84,18 @@ namespace mike_and_conquer
             //}
             //loader.TryParseSprite(stream, out frames);
 
-
             int[] remap = { };
             OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("D:\\workspace\\mike-and-conquer\\assets\\temperat.pal", remap);
-            uint palette1 = palette[1];
-            Color color1 = new Color(palette1);
-            byte red1 = color1.R;
-            byte green1 = color1.G;
-            byte blue1 = color1.B;
-
-            uint palette254 = palette[254];
-            Color color254 = new Color(palette254);
-            byte red254 = color254.R;
-            byte green254 = color254.G;
-            byte blue254 = color254.B;
-
-            uint palette255 = palette[255];
-            Color color255 = new Color(palette255);
-            byte red255 = color255.R;
-            byte green255 = color255.G;
-            byte blue255 = color255.B;
-
-            uint palette179 = palette[179];
-            Color color179 = new Color(palette179);
-            byte red179 = color179.R;
-            byte green179 = color179.G;
-            byte blue179 = color179.B;
-
-
 
             System.IO.FileStream stream = System.IO.File.Open("D:\\workspace\\mike-and-conquer\\assets\\e1.shp", System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
-//            OpenRA.Graphics.ISpriteFrame[] frames;
             OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader loader = new OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader();
             OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite shpTDSprite = new OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite(stream);
 
             OpenRA.Graphics.ISpriteFrame frame0 = shpTDSprite.Frames[0];
             byte[] frameData = frame0.Data;
 
-            
-
             minigunnerTexture = new Texture2D(this.GraphicsDevice, 50, 39);
-            numPixels = minigunnerTexture.Width * minigunnerTexture.Height;
+            int numPixels = minigunnerTexture.Width * minigunnerTexture.Height;
             Color[] minigunnerTexturePixelData = new Color[numPixels];
 
             for (int i = 0; i < numPixels; i++)

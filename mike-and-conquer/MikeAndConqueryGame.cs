@@ -16,6 +16,10 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 using SpriteSortMode = Microsoft.Xna.Framework.Graphics.SpriteSortMode;
 using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
 
+using Vector2 = Microsoft.Xna.Framework.Vector2;
+using Math = System.Math;
+using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
+
 namespace mike_and_conquer
 {
 
@@ -25,6 +29,7 @@ namespace mike_and_conquer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D minigunnerTexture;
+        Texture2D selectionCursorTexture;
         List<Minigunner> minigunnerList;
 
         internal Minigunner GetGdiMinigunner()
@@ -43,13 +48,24 @@ namespace mike_and_conquer
         public MikeAndConqueryGame()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.IsFullScreen = false;
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 1024;
 
-            //graphics.IsFullScreen = true;
-            //graphics.PreferredBackBufferWidth = 1920;
-            //graphics.PreferredBackBufferHeight = 1080;
+
+            bool makeFullscreen = true;
+            //bool makeFullscreen = false;
+            if (makeFullscreen)
+            {
+                graphics.IsFullScreen = true;
+                graphics.PreferredBackBufferWidth = 1920;
+                graphics.PreferredBackBufferHeight = 1080;
+            }
+            else
+            {
+                graphics.IsFullScreen = false;
+                graphics.PreferredBackBufferWidth = 1280;
+                graphics.PreferredBackBufferHeight = 1024;
+
+            }
+
 
             Content.RootDirectory = "Content";
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
@@ -67,6 +83,44 @@ namespace mike_and_conquer
             return newMinigunner;
         }
 
+
+        internal Texture2D loadTextureFromShpFile(string shpFileName,int indexOfFrameToLoad)
+        {
+            //if (loader.IsShpTD(stream))
+            //{
+            //    frames = null;
+            //    return false;
+            //}
+            //loader.TryParseSprite(stream, out frames);
+
+            int[] remap = { };
+
+            OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
+
+            System.IO.FileStream shpStream = System.IO.File.Open(shpFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
+            OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader loader = new OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader();
+            OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite shpTDSprite = new OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite(shpStream);
+
+            OpenRA.Graphics.ISpriteFrame frame = shpTDSprite.Frames[indexOfFrameToLoad];
+            byte[] frameData = frame.Data;
+
+            Texture2D texture2D = new Texture2D(this.GraphicsDevice, shpTDSprite.Size.Width, shpTDSprite.Size.Height);
+            int numPixels = texture2D.Width * texture2D.Height;
+            Color[] texturePixelData = new Color[numPixels];
+
+            for (int i = 0; i < numPixels; i++)
+            {
+                uint paletteX = palette[frameData[i]];
+                System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)palette[frameData[i]]);
+                Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+                texturePixelData[i] = xnaColor;
+            }
+            texture2D.SetData(texturePixelData);
+            return texture2D;
+
+        }
+
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -77,35 +131,12 @@ namespace mike_and_conquer
         {
             // TODO: Add your initialization logic here
 
-            //if (loader.IsShpTD(stream))
-            //{
-            //    frames = null;
-            //    return false;
-            //}
-            //loader.TryParseSprite(stream, out frames);
+            //loadMinigunnerTexture();
+            //loadSelectionCursorTexture();
 
-            int[] remap = { };
-            OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
+            minigunnerTexture = loadTextureFromShpFile("Content\\e1.shp", 0);
+            selectionCursorTexture = loadTextureFromShpFile("Content\\select.shp", 0);
 
-            System.IO.FileStream stream = System.IO.File.Open("Content\\e1.shp", System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
-            OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader loader = new OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader();
-            OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite shpTDSprite = new OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite(stream);
-
-            OpenRA.Graphics.ISpriteFrame frame0 = shpTDSprite.Frames[0];
-            byte[] frameData = frame0.Data;
-
-            minigunnerTexture = new Texture2D(this.GraphicsDevice, 50, 39);
-            int numPixels = minigunnerTexture.Width * minigunnerTexture.Height;
-            Color[] minigunnerTexturePixelData = new Color[numPixels];
-
-            for (int i = 0; i < numPixels; i++)
-            {
-                uint paletteX = palette[frameData[i]];
-                System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)palette[frameData[i]]);
-                Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
-                minigunnerTexturePixelData[i] = xnaColor;
-            }
-            minigunnerTexture.SetData(minigunnerTexturePixelData);
             base.Initialize();
         }
 
@@ -147,6 +178,8 @@ namespace mike_and_conquer
                 nextMinigunner.Update(gameTime);
             }
 
+
+
             base.Update(gameTime);
         }
 
@@ -165,6 +198,19 @@ namespace mike_and_conquer
             {
                 nextMinigunner.Draw(gameTime, spriteBatch);
             }
+
+            Vector2 plottedPosition = new Vector2();
+            plottedPosition.X = (float)Math.Round(200f);
+            plottedPosition.Y = (float)Math.Round(200f);
+            //plottedPosition.X = (float)Math.Round(position.X);
+            //plottedPosition.Y = (float)Math.Round(position.Y);
+
+
+            //            Debug.WriteLine("x,y=" + plottedPosition.X + "," + plottedPosition.Y);
+
+            float scale = 5f;
+            spriteBatch.Draw(selectionCursorTexture, plottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+
 
             spriteBatch.End();
 

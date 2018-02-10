@@ -31,3 +31,6 @@
 #begin e1.shp
 /copy:e1.shp
 
+#begin select.shp
+/copy:select.shp
+

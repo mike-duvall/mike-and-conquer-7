@@ -16,10 +16,10 @@ namespace mike_and_conquer.rest
             Minigunner minigunner = MikeAndConqueryGame.instance.GetGdiMinigunner();
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;
-            restMinigunner.x = minigunner.x;
-            minigunner.y = minigunner.y;
+            restMinigunner.x = (int)minigunner.position.X;
+            restMinigunner.y = (int)minigunner.position.Y;
             restMinigunner.health = minigunner.health;
-            return Ok(minigunner);
+            return Ok(restMinigunner);
 
         }
 
@@ -35,8 +35,8 @@ namespace mike_and_conquer.rest
             Minigunner minigunner = MikeAndConqueryGame.instance.AddGdiMinigunner(inputMinigunner.x, inputMinigunner.y);
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;
-            restMinigunner.x = minigunner.x;
-            restMinigunner.y = minigunner.y;
+            restMinigunner.x = (int)minigunner.position.X;
+            restMinigunner.y = (int)minigunner.position.Y;
             restMinigunner.health = minigunner.health;
             return Ok(restMinigunner);
 

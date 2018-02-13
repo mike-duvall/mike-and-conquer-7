@@ -28,8 +28,6 @@ namespace mike_and_conquer
         public static MikeAndConqueryGame instance;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D minigunnerTexture;
-        Texture2D selectionCursorTexture;
         List<Minigunner> minigunnerList;
 
         internal Minigunner GetGdiMinigunner()
@@ -78,64 +76,30 @@ namespace mike_and_conquer
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height, minigunnerTexture, x, y);
+            Minigunner newMinigunner = new Minigunner(x, y);
             minigunnerList.Add(newMinigunner);
             return newMinigunner;
         }
 
 
-        internal Texture2D loadTextureFromShpFile(string shpFileName,int indexOfFrameToLoad)
-        {
-            //if (loader.IsShpTD(stream))
-            //{
-            //    frames = null;
-            //    return false;
-            //}
-            //loader.TryParseSprite(stream, out frames);
-
-            int[] remap = { };
-
-            OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
-
-            System.IO.FileStream shpStream = System.IO.File.Open(shpFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
-            OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader loader = new OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader();
-            OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite shpTDSprite = new OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite(shpStream);
-
-            OpenRA.Graphics.ISpriteFrame frame = shpTDSprite.Frames[indexOfFrameToLoad];
-            byte[] frameData = frame.Data;
-
-            Texture2D texture2D = new Texture2D(this.GraphicsDevice, shpTDSprite.Size.Width, shpTDSprite.Size.Height);
-            int numPixels = texture2D.Width * texture2D.Height;
-            Color[] texturePixelData = new Color[numPixels];
-
-            for (int i = 0; i < numPixels; i++)
-            {
-                uint paletteX = palette[frameData[i]];
-                System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)palette[frameData[i]]);
-                Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
-                texturePixelData[i] = xnaColor;
-            }
-            texture2D.SetData(texturePixelData);
-            return texture2D;
-
-        }
 
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
-        protected override void Initialize()
+
+    /// <summary>
+    /// Allows the game to perform any initialization it needs to before starting to run.
+    /// This is where it can query for any required services and load any non-graphic
+    /// related content.  Calling base.Initialize will enumerate through any components
+    /// and initialize them as well.
+    /// </summary>
+    protected override void Initialize()
         {
             // TODO: Add your initialization logic here
 
             //loadMinigunnerTexture();
             //loadSelectionCursorTexture();
 
-            minigunnerTexture = loadTextureFromShpFile("Content\\e1.shp", 0);
-            selectionCursorTexture = loadTextureFromShpFile("Content\\select.shp", 0);
+            //minigunnerTexture = loadTextureFromShpFile("Content\\e1.shp", 0);
+            //selectionCursorTexture = loadTextureFromShpFile("Content\\select.shp", 0);
 
             base.Initialize();
         }
@@ -194,22 +158,38 @@ namespace mike_and_conquer
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
 
+
+            //Vector2 plottedPosition = new Vector2();
+            //plottedPosition.X = (float)Math.Round(200f);
+            //plottedPosition.Y = (float)Math.Round(200f);
+            //float scale = 5f;
+            //spriteBatch.Draw(selectionCursorTexture, plottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+
+            //int scale = 5;
+            //int minigunnerWidth = 50;
+            //int minigunnerHeight = 39;
+            //int minigunnerScaledWidth = minigunnerWidth * scale;
+            //int minigunnerScaledHeight = minigunnerHeight * scale;
+
+
+            //Pull this code into minigunner
+
+            //Texture2D rect = new Texture2D(this.GraphicsDevice, minigunnerScaledWidth, minigunnerScaledHeight);
+
+            //Color[] data = new Color[minigunnerScaledWidth * minigunnerScaledHeight];
+            //for (int i = 0; i < data.Length; ++i)
+            //{
+            //    data[i] = Color.White;
+            //}
+            //rect.SetData(data);
+
+            //Vector2 coor = new Vector2(10, 20);
+            //spriteBatch.Draw(rect, coor, Color.White);
+
             foreach (Minigunner nextMinigunner in minigunnerList)
             {
                 nextMinigunner.Draw(gameTime, spriteBatch);
             }
-
-            Vector2 plottedPosition = new Vector2();
-            plottedPosition.X = (float)Math.Round(200f);
-            plottedPosition.Y = (float)Math.Round(200f);
-            //plottedPosition.X = (float)Math.Round(position.X);
-            //plottedPosition.Y = (float)Math.Round(position.Y);
-
-
-            //            Debug.WriteLine("x,y=" + plottedPosition.X + "," + plottedPosition.Y);
-
-            float scale = 5f;
-            spriteBatch.Draw(selectionCursorTexture, plottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
 
 
             spriteBatch.End();

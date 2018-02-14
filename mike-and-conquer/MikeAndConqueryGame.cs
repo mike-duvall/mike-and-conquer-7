@@ -7,7 +7,7 @@ using GamePad = Microsoft.Xna.Framework.Input.GamePad;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
-using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
+//using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using GraphicsProfile = Microsoft.Xna.Framework.Graphics.GraphicsProfile;
 using Color = Microsoft.Xna.Framework.Color;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
@@ -16,9 +16,9 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 using SpriteSortMode = Microsoft.Xna.Framework.Graphics.SpriteSortMode;
 using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
 
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-using Math = System.Math;
-using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
+//using Vector2 = Microsoft.Xna.Framework.Vector2;
+//using Math = System.Math;
+//using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
 
 namespace mike_and_conquer
 {
@@ -29,6 +29,7 @@ namespace mike_and_conquer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         List<Minigunner> minigunnerList;
+        UnitSelectionCursor unitSelectionCursor;
 
         internal Minigunner GetGdiMinigunner()
         {
@@ -42,11 +43,9 @@ namespace mike_and_conquer
         }
 
 
-
         public MikeAndConqueryGame()
         {
             graphics = new GraphicsDeviceManager(this);
-
 
             bool makeFullscreen = true;
             //bool makeFullscreen = false;
@@ -100,6 +99,7 @@ namespace mike_and_conquer
 
             //minigunnerTexture = loadTextureFromShpFile("Content\\e1.shp", 0);
             //selectionCursorTexture = loadTextureFromShpFile("Content\\select.shp", 0);
+            unitSelectionCursor = new UnitSelectionCursor(300, 700);
 
             base.Initialize();
         }
@@ -143,6 +143,7 @@ namespace mike_and_conquer
             }
 
 
+            unitSelectionCursor.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -159,38 +160,12 @@ namespace mike_and_conquer
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
 
 
-            //Vector2 plottedPosition = new Vector2();
-            //plottedPosition.X = (float)Math.Round(200f);
-            //plottedPosition.Y = (float)Math.Round(200f);
-            //float scale = 5f;
-            //spriteBatch.Draw(selectionCursorTexture, plottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-
-            //int scale = 5;
-            //int minigunnerWidth = 50;
-            //int minigunnerHeight = 39;
-            //int minigunnerScaledWidth = minigunnerWidth * scale;
-            //int minigunnerScaledHeight = minigunnerHeight * scale;
-
-
-            //Pull this code into minigunner
-
-            //Texture2D rect = new Texture2D(this.GraphicsDevice, minigunnerScaledWidth, minigunnerScaledHeight);
-
-            //Color[] data = new Color[minigunnerScaledWidth * minigunnerScaledHeight];
-            //for (int i = 0; i < data.Length; ++i)
-            //{
-            //    data[i] = Color.White;
-            //}
-            //rect.SetData(data);
-
-            //Vector2 coor = new Vector2(10, 20);
-            //spriteBatch.Draw(rect, coor, Color.White);
-
             foreach (Minigunner nextMinigunner in minigunnerList)
             {
                 nextMinigunner.Draw(gameTime, spriteBatch);
             }
 
+            unitSelectionCursor.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
 

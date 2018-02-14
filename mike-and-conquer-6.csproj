@@ -68,6 +68,7 @@
     <Compile Include="mike-and-conquer\rest\NodMinigunnerController.cs" />
     <Compile Include="mike-and-conquer\Program.cs" />
     <Compile Include="mike-and-conquer\openra\ShpTDLoader.cs" />
+    <Compile Include="mike-and-conquer\UnitSelectionCursor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="mike-and-conquer\rest\ResetGameController.cs" />
     <Compile Include="mike-and-conquer\Startup.cs" />

@@ -1,17 +1,27 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using Microsoft.Xna.Framework.Graphics;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+
 
 using ShpTDSprite = OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
+using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
+using Color = Microsoft.Xna.Framework.Color;
+using GameTime = Microsoft.Xna.Framework.GameTime;
+using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
+using Math = System.Math;
+using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
 
 namespace mike_and_conquer
 {
 
-    public class Minigunner
+    public class UnitSelectionCursor
     {
-        public int id { get; set; }
-        public int health { get; set; }
-        public bool selected { get; set; }
+        //public int id { get; set; }
+        //public int health { get; set; }
+        //public bool selected { get; set; }
         public Vector2 position { get; set; }
 
         Texture2D minigunnerTexture;
@@ -22,7 +32,7 @@ namespace mike_and_conquer
 
         private int worldWidth;
         private int worldHeight;
-        private Minigunner()
+        private UnitSelectionCursor()
         {
 
         }
@@ -33,19 +43,14 @@ namespace mike_and_conquer
         //Create base game object base class, with ShpFile, texture, and ability to draw bounding rectangle
         //Make Minigunner draw selection cursor when selected
 
-        public Minigunner(int x, int y)
+        public UnitSelectionCursor(int x, int y)
         {
 
             this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
             this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
-            this.minigunnerTexture = loadTextureFromShpFile("Content\\e1.shp", 0);
+            this.minigunnerTexture = loadTextureFromShpFile("Content\\select.shp", 0);
 
             position = new Vector2(x, y);
-
-            health = 1000;
-            id = Minigunner.globalId;
-            Minigunner.globalId++;
-
             scale = 5f;
             boundingRectangle = initializeBoundingRectangle();
 
@@ -63,7 +68,7 @@ namespace mike_and_conquer
         internal void fillVerticalLine(Color[] data, int width, int height, int lineIndex, Color color)
         {
             int beginIndex = lineIndex;
-            for (int i = beginIndex; i < (width * height); i+= width)
+            for (int i = beginIndex; i < (width * height); i += width)
             {
                 data[i] = color;
             }
@@ -159,6 +164,9 @@ namespace mike_and_conquer
 
 
     }
+
+
+
 
 
 }

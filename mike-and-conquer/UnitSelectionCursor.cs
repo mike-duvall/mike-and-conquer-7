@@ -13,6 +13,7 @@ using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using Math = System.Math;
 using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
+using Boolean = System.Boolean;
 
 namespace mike_and_conquer
 {
@@ -24,14 +25,19 @@ namespace mike_and_conquer
         //public bool selected { get; set; }
         public Vector2 position { get; set; }
 
-        Texture2D minigunnerTexture;
+        Texture2D texture;
         //Texture2D unitSelectionCursorTexture;
         Texture2D boundingRectangle;
+        Boolean drawBoundingRectangle;
+
         float scale;
 
 
         private int worldWidth;
         private int worldHeight;
+
+        private Vector2 middleOfSprite;
+
         private UnitSelectionCursor()
         {
 
@@ -48,12 +54,17 @@ namespace mike_and_conquer
 
             this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
             this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
-            this.minigunnerTexture = loadTextureFromShpFile("Content\\select.shp", 0);
+            this.texture = loadTextureFromShpFile("Content\\select.shp", 0);
 
             position = new Vector2(x, y);
             scale = 5f;
             boundingRectangle = initializeBoundingRectangle();
 
+            middleOfSprite = new Vector2();
+            middleOfSprite.X = 15;
+            middleOfSprite.Y = 14;
+
+            drawBoundingRectangle = false;
         }
 
         internal void fillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
@@ -77,7 +88,7 @@ namespace mike_and_conquer
 
         internal Texture2D initializeBoundingRectangle()
         {
-            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, minigunnerTexture.Width, minigunnerTexture.Height);
+            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, texture.Width, texture.Height);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
@@ -115,12 +126,16 @@ namespace mike_and_conquer
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            Vector2 minigunnerPlottedPosition = new Vector2();
-            minigunnerPlottedPosition.X = (float)Math.Round(position.X);
-            minigunnerPlottedPosition.Y = (float)Math.Round(position.Y);
+            Vector2 plottedPosition = new Vector2();
+            plottedPosition.X = (float)Math.Round(position.X);
+            plottedPosition.Y = (float)Math.Round(position.Y);
 
-            spriteBatch.Draw(minigunnerTexture, minigunnerPlottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(boundingRectangle, minigunnerPlottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, plottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+            if(drawBoundingRectangle)
+            {
+                spriteBatch.Draw(boundingRectangle, plottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+            }
+
 
 
         }

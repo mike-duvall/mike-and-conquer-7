@@ -14,14 +14,19 @@ namespace mike_and_conquer
         public bool selected { get; set; }
         public Vector2 position { get; set; }
 
-        Texture2D minigunnerTexture;
+        Texture2D texture;
         //Texture2D unitSelectionCursorTexture;
         Texture2D boundingRectangle;
+        Boolean drawBoundingRectangle;
         float scale;
 
 
         private int worldWidth;
         private int worldHeight;
+
+        private Vector2 middleOfSprite;
+
+
         private Minigunner()
         {
 
@@ -38,7 +43,7 @@ namespace mike_and_conquer
 
             this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
             this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
-            this.minigunnerTexture = loadTextureFromShpFile("Content\\e1.shp", 0);
+            this.texture = loadTextureFromShpFile("Content\\e1.shp", 0);
 
             position = new Vector2(x, y);
 
@@ -49,6 +54,11 @@ namespace mike_and_conquer
             scale = 5f;
             boundingRectangle = initializeBoundingRectangle();
 
+            middleOfSprite = new Vector2();
+            middleOfSprite.X = texture.Width / 2;
+            middleOfSprite.Y = texture.Height / 2;
+
+            drawBoundingRectangle = false;
         }
 
         internal void fillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
@@ -72,7 +82,7 @@ namespace mike_and_conquer
 
         internal Texture2D initializeBoundingRectangle()
         {
-            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, minigunnerTexture.Width, minigunnerTexture.Height);
+            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, texture.Width, texture.Height);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
@@ -114,8 +124,11 @@ namespace mike_and_conquer
             minigunnerPlottedPosition.X = (float)Math.Round(position.X);
             minigunnerPlottedPosition.Y = (float)Math.Round(position.Y);
 
-            spriteBatch.Draw(minigunnerTexture, minigunnerPlottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(boundingRectangle, minigunnerPlottedPosition, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+            if(drawBoundingRectangle)
+            {
+                spriteBatch.Draw(boundingRectangle, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+            }
 
 
         }

@@ -64,6 +64,7 @@
     <Compile Include="mike-and-conquer\openra\XORDeltaCompression.cs" />
     <Compile Include="mike-and-conquer\rest\GameStateController.cs" />
     <Compile Include="mike-and-conquer\rest\LeftClickController.cs" />
+    <Compile Include="mike-and-conquer\rest\RestPoint.cs" />
     <Compile Include="mike-and-conquer\rest\RestMinigunner.cs" />
     <Compile Include="mike-and-conquer\rest\NodMinigunnerController.cs" />
     <Compile Include="mike-and-conquer\Program.cs" />

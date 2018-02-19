@@ -4,6 +4,8 @@
 using PlayerIndex = Microsoft.Xna.Framework.PlayerIndex;
 using Game = Microsoft.Xna.Framework.Game;
 using GamePad = Microsoft.Xna.Framework.Input.GamePad;
+using MouseState = Microsoft.Xna.Framework.Input.MouseState;
+using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
@@ -15,6 +17,8 @@ using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 using SpriteSortMode = Microsoft.Xna.Framework.Graphics.SpriteSortMode;
 using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
+using mike_and_conquer.rest;
+using System;
 
 //using Vector2 = Microsoft.Xna.Framework.Vector2;
 //using Math = System.Math;
@@ -29,7 +33,7 @@ namespace mike_and_conquer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         List<Minigunner> minigunnerList;
-        UnitSelectionCursor unitSelectionCursor;
+        private MouseState oldState;
 
         internal Minigunner GetGdiMinigunner()
         {
@@ -97,10 +101,7 @@ namespace mike_and_conquer
             //loadMinigunnerTexture();
             //loadSelectionCursorTexture();
 
-            //minigunnerTexture = loadTextureFromShpFile("Content\\e1.shp", 0);
-            //selectionCursorTexture = loadTextureFromShpFile("Content\\select.shp", 0);
-            unitSelectionCursor = new UnitSelectionCursor(300, 700);
-
+            this.IsMouseVisible = true;
             base.Initialize();
         }
 
@@ -133,6 +134,15 @@ namespace mike_and_conquer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            MouseState newState = Mouse.GetState();
+
+            if (newState.LeftButton == ButtonState.Pressed && oldState.LeftButton == ButtonState.Released)
+            {
+                HandleLeftClick(newState.Position.X, newState.Position.Y);
+            }
+
+            oldState = newState; // this reassigns
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -142,8 +152,6 @@ namespace mike_and_conquer
                 nextMinigunner.Update(gameTime);
             }
 
-
-            unitSelectionCursor.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -165,11 +173,26 @@ namespace mike_and_conquer
                 nextMinigunner.Draw(gameTime, spriteBatch);
             }
 
-            unitSelectionCursor.Draw(gameTime, spriteBatch);
-
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        internal void HandleLeftClick(int mouseX, int mouseY)
+        {
+            foreach (Minigunner nextMinigunner in minigunnerList)
+            {
+                if(nextMinigunner.ContainsPoint(mouseX, mouseY))
+                {
+                    nextMinigunner.selected = true;
+                }
+                else
+                {
+                    nextMinigunner.selected = false;
+                }
+            }
+
+
         }
     }
 }

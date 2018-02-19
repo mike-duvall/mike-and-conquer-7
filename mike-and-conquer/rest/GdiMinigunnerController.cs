@@ -19,6 +19,7 @@ namespace mike_and_conquer.rest
             restMinigunner.x = (int)minigunner.position.X;
             restMinigunner.y = (int)minigunner.position.Y;
             restMinigunner.health = minigunner.health;
+            restMinigunner.selected = minigunner.selected;
             return Ok(restMinigunner);
 
         }

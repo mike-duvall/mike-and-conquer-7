@@ -93,64 +93,40 @@ namespace mike_and_conquer.rest
 
         public void DoMouseClick(uint mouseX, uint mouseY)
         {
+            int screenWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
+            int screenHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
+
+            // Must normalize mouse coordinates.
+            // See https://msdn.microsoft.com/en-us/library/windows/desktop/ms646260(v=vs.85).aspx
+            double normalizedMouseX = mouseX * (65535.0f / screenWidth);
+            double normalizedMouseY = mouseY * (65535.0f / screenHeight);
+
+            INPUT mouseInput = new INPUT();
+            mouseInput.type = 0;
+            mouseInput.mkhi.mi.mouseData = 0;
+            mouseInput.mkhi.mi.time = 1000;
+            int size = Marshal.SizeOf(mouseInput);
+            mouseInput.mkhi.mi.dx = (int)normalizedMouseX;
+            mouseInput.mkhi.mi.dy = (int)normalizedMouseY;
 
 
-            double fScreenWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
-            double fScreenHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height; 
-            double fx = mouseX * (65535.0f / fScreenWidth);
-            double fy = mouseY * (65535.0f / fScreenHeight);
+            mouseInput.mkhi.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+            uint y3 = SendInput(1, ref mouseInput, size);
 
-
-            INPUT x = new INPUT();
-            x.type = 0;
-            //x.mkhi.mi.dx = 564;
-            //x.mkhi.mi.dy = 425;
-            //x.mkhi.mi.dx = (int)mouseX;
-            //x.mkhi.mi.dy = (int)mouseY;
-            x.mkhi.mi.dx = (int)fx;
-            x.mkhi.mi.dy = (int)fy;
-
-
-            x.mkhi.mi.mouseData = 0;
-            //x.mkhi.mi.dwFlags = 0x01;
-            x.mkhi.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-            x.mkhi.mi.time = 1000;
-//            x.mkhi.mi.dwExtraInfo = GetMessageExtraInfo();
-            int size = Marshal.SizeOf(x);
-
-            uint y3 = SendInput(1, ref x, size);
-
-
-            x.mkhi.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-            uint y = SendInput(1, ref x, size);
+            mouseInput.mkhi.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+            uint y = SendInput(1, ref mouseInput, size);
 
             System.Threading.Thread.Sleep(1000);
 
-            x.mkhi.mi.dwFlags = MOUSEEVENTF_LEFTUP;
-            uint y2 = SendInput(1, ref x, size);
-
-
-
-
-            //        mouseInput.mi.dwFlags = MOUSEEVENTF_LEFTDOWN; ;
-
-            //        ::SendInput(1, &mouseInput, sizeof(INPUT));
-
-            //        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-            //        mouseInput.mi.dwFlags = MOUSEEVENTF_LEFTUP;
-
-            //::SendInput(1, &mouseInput, sizeof(INPUT));
-
-
+            mouseInput.mkhi.mi.dwFlags = MOUSEEVENTF_LEFTUP;
+            uint y2 = SendInput(1, ref mouseInput, size);
         }
 
 
         public IHttpActionResult Post([FromBody]RestPoint point)
         {
-//            MikeAndConqueryGame.instance.HandleLeftClick(point.x, point.y);
             DoMouseClick((uint)point.x, (uint)point.y);
             return Ok();
-
         }
 
     }

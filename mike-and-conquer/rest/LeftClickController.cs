@@ -82,6 +82,10 @@ namespace mike_and_conquer.rest
         //    mouse_event(MOUSEEVENTF_LEFTUP, mouseX, mouseY, 0, 0);
         //}
 
+
+        private const int MOUSEEVENTF_MOVE = 0x01;
+        private const int MOUSEEVENTF_ABSOLUTE = 0x8000;
+
         private const int MOUSEEVENTF_LEFTDOWN = 0x02;
         private const int MOUSEEVENTF_LEFTUP = 0x04;
         private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
@@ -90,19 +94,34 @@ namespace mike_and_conquer.rest
         public void DoMouseClick(uint mouseX, uint mouseY)
         {
 
+
+            double fScreenWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
+            double fScreenHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height; 
+            double fx = mouseX * (65535.0f / fScreenWidth);
+            double fy = mouseY * (65535.0f / fScreenHeight);
+
+
             INPUT x = new INPUT();
             x.type = 0;
             //x.mkhi.mi.dx = 564;
             //x.mkhi.mi.dy = 425;
-            x.mkhi.mi.dx = (int)mouseX;
-            x.mkhi.mi.dy = (int)mouseY;
+            //x.mkhi.mi.dx = (int)mouseX;
+            //x.mkhi.mi.dy = (int)mouseY;
+            x.mkhi.mi.dx = (int)fx;
+            x.mkhi.mi.dy = (int)fy;
+
 
             x.mkhi.mi.mouseData = 0;
             //x.mkhi.mi.dwFlags = 0x01;
-            x.mkhi.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+            x.mkhi.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
             x.mkhi.mi.time = 1000;
 //            x.mkhi.mi.dwExtraInfo = GetMessageExtraInfo();
             int size = Marshal.SizeOf(x);
+
+            uint y3 = SendInput(1, ref x, size);
+
+
+            x.mkhi.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
             uint y = SendInput(1, ref x, size);
 
             System.Threading.Thread.Sleep(1000);

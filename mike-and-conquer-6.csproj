@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="mike-and-conquer\MikeAndConqueryGame.cs" />
     <Compile Include="mike-and-conquer\Minigunner.cs" />
+    <Compile Include="mike-and-conquer\MouseInputHandler.cs" />
     <Compile Include="mike-and-conquer\openra\Exts.cs" />
     <Compile Include="mike-and-conquer\openra\float2.cs" />
     <Compile Include="mike-and-conquer\openra\int2.cs" />

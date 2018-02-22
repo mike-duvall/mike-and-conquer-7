@@ -17,6 +17,7 @@ namespace mike_and_conquer
         Texture2D texture;
         Texture2D boundingRectangle;
         Boolean drawBoundingRectangle;
+        UnitSelectionCursor unitSelectionCursor;
         float scale;
 
         private int worldWidth;
@@ -63,6 +64,7 @@ namespace mike_and_conquer
 
             drawBoundingRectangle = false;
             selected = false;
+            unitSelectionCursor = new UnitSelectionCursor(x,y);
         }
 
         internal void fillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
@@ -119,6 +121,7 @@ namespace mike_and_conquer
             //if (position.Y > worldHeight)
             //    position.Y = 0;
 
+            unitSelectionCursor.position = this.position;
 
         }
 
@@ -129,10 +132,15 @@ namespace mike_and_conquer
             minigunnerPlottedPosition.Y = (float)Math.Round(position.Y);
 
             spriteBatch.Draw(texture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
-            //if(drawBoundingRectangle)
-            if (selected)
+            if(drawBoundingRectangle)
             {
                 spriteBatch.Draw(boundingRectangle, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+
+            }
+
+            if(selected)
+            {
+                unitSelectionCursor.Draw(gameTime, spriteBatch);
             }
 
 

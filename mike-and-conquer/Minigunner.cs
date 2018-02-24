@@ -18,7 +18,7 @@ namespace mike_and_conquer
         UnitSelectionCursor unitSelectionCursor;
         Texture2D texture;
 
-        Texture2D boundingRectangleTexture;
+        Texture2D spriteBorderRectangleTexture;
         Boolean drawBoundingRectangle;
 
         Rectangle clickDetectionRectangle;
@@ -54,7 +54,7 @@ namespace mike_and_conquer
             Minigunner.globalId++;
 
             scale = 5f;
-            boundingRectangleTexture = initializeBoundingRectangle();
+            spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
 
             middleOfSprite = new Vector2();
             middleOfSprite.X = texture.Width / 2;
@@ -102,7 +102,7 @@ namespace mike_and_conquer
         }
 
 
-        internal Texture2D initializeBoundingRectangle()
+        internal Texture2D createSpriteBorderRectangleTexture()
         {
             Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, texture.Width, texture.Height);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
@@ -150,7 +150,7 @@ namespace mike_and_conquer
             spriteBatch.Draw(texture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
             if(drawBoundingRectangle)
             {
-                spriteBatch.Draw(boundingRectangleTexture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(spriteBorderRectangleTexture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
 
             }
 
@@ -203,8 +203,8 @@ namespace mike_and_conquer
         {
             int x = (int) Math.Round(position.X);
             int y = (int) Math.Round(position.Y);
-            int width = (int) (boundingRectangleTexture.Width * scale); 
-            int height = (int) (boundingRectangleTexture.Height * scale);
+            int width = (int) (spriteBorderRectangleTexture.Width * scale); 
+            int height = (int) (spriteBorderRectangleTexture.Height * scale);
 
             x = x - (width / 2);
             y = y - (height / 2);

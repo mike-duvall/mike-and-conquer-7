@@ -43,12 +43,6 @@ namespace mike_and_conquer
 
         }
 
-        private static int globalId = 1;
-
-        //Create UnitSelectionCursor object, copy of Minigunner
-        //Create base game object base class, with ShpFile, texture, and ability to draw bounding rectangle
-        //Make Minigunner draw selection cursor when selected
-
         public UnitSelectionCursor(int x, int y)
         {
 

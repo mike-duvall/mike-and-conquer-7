@@ -14,10 +14,15 @@ namespace mike_and_conquer
         public bool selected { get; set; }
         public Vector2 position { get; set; }
 
-        Texture2D texture;
-        Texture2D boundingRectangle;
-        Boolean drawBoundingRectangle;
+
         UnitSelectionCursor unitSelectionCursor;
+        Texture2D texture;
+
+        Texture2D boundingRectangleTexture;
+        Boolean drawBoundingRectangle;
+
+        Rectangle clickDetectionRectangle;
+
         float scale;
 
         private int worldWidth;
@@ -26,11 +31,7 @@ namespace mike_and_conquer
         private Vector2 middleOfSprite;
 
 
-        //Make test pass:  def "should handle selecting deselecting gdi minigunner"()
-        //    Add handling of left click that selects and deselects gdi minigunner if left clicked on or left cliced on nothing
-        //    Set state to selected
-        //    Verify unit selection cursor is drawn
-
+        
         private Minigunner()
         {
 
@@ -38,9 +39,6 @@ namespace mike_and_conquer
 
         private static int globalId = 1;
 
-        //Create UnitSelectionCursor object, copy of Minigunner
-        //Create base game object base class, with ShpFile, texture, and ability to draw bounding rectangle
-        //Make Minigunner draw selection cursor when selected
 
         public Minigunner(int x, int y)
         {
@@ -56,15 +54,33 @@ namespace mike_and_conquer
             Minigunner.globalId++;
 
             scale = 5f;
-            boundingRectangle = initializeBoundingRectangle();
+            boundingRectangleTexture = initializeBoundingRectangle();
 
             middleOfSprite = new Vector2();
             middleOfSprite.X = texture.Width / 2;
             middleOfSprite.Y = texture.Height / 2;
 
+
+            clickDetectionRectangle = createClickDetectionRectangle();
+
             drawBoundingRectangle = false;
             selected = false;
             unitSelectionCursor = new UnitSelectionCursor(x,y);
+        }
+
+        internal Rectangle createClickDetectionRectangle()
+        {
+
+            int rectangleUnscaledWidth = 12;
+            int rectangleUnscaledHeight = 12;
+            int scaledWidth = (int)(rectangleUnscaledWidth * scale);
+            int scaledHeight = (int)(rectangleUnscaledHeight * scale);
+
+            int x = (int)(position.X - (scaledWidth / 2));
+            int y = (int)(position.Y - scaledHeight) + (int)(1 * scale);  
+
+            Rectangle rectangle = new Rectangle(x,y,scaledWidth,scaledHeight);
+            return rectangle;
         }
 
         internal void fillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
@@ -120,8 +136,8 @@ namespace mike_and_conquer
             //position.Y = position.Y + (float)delta;
             //if (position.Y > worldHeight)
             //    position.Y = 0;
-
-            unitSelectionCursor.position = this.position;
+            
+            unitSelectionCursor.position = new Vector2(this.position.X  , this.position.Y);
 
         }
 
@@ -134,7 +150,7 @@ namespace mike_and_conquer
             spriteBatch.Draw(texture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
             if(drawBoundingRectangle)
             {
-                spriteBatch.Draw(boundingRectangle, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(boundingRectangleTexture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
 
             }
 
@@ -187,23 +203,15 @@ namespace mike_and_conquer
         {
             int x = (int) Math.Round(position.X);
             int y = (int) Math.Round(position.Y);
-            int width = (int) (boundingRectangle.Width * scale); 
-            int height = (int) (boundingRectangle.Height * scale);
-
-
+            int width = (int) (boundingRectangleTexture.Width * scale); 
+            int height = (int) (boundingRectangleTexture.Height * scale);
 
             x = x - (width / 2);
             y = y - (height / 2);
 
-
-            //I believe this is not working becuase of scaling
-            //    Can try scaling to 1 to see of it works
-            //    but probably hit test rectangle will also need to be scaled up
-
-            //    alternative might be to "scale" the mouse position
-
             Rectangle rect = new Rectangle(x, y, width, height);
-            return rect.Contains(new Point(mouseX, mouseY));
+            //return rect.Contains(new Point(mouseX, mouseY));
+            return clickDetectionRectangle.Contains(new Point(mouseX, mouseY));
         }
     }
 

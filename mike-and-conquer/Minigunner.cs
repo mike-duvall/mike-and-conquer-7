@@ -32,7 +32,7 @@ namespace mike_and_conquer
 
 
         
-        private Minigunner()
+        protected Minigunner()
         {
 
         }
@@ -189,14 +189,24 @@ namespace mike_and_conquer
 
             for (int i = 0; i < numPixels; i++)
             {
-                uint paletteX = palette[frameData[i]];
-                System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)palette[frameData[i]]);
+                int basePaletteIndex = frameData[i];
+                basePaletteIndex = MapColorIndex(basePaletteIndex);
+                uint paletteX = palette[basePaletteIndex];
+
+                System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)paletteX);
                 Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
                 texturePixelData[i] = xnaColor;
             }
+
             texture2D.SetData(texturePixelData);
+            shpStream.Close();
             return texture2D;
 
+        }
+
+        protected virtual int MapColorIndex(int index)
+        {
+            return index;
         }
 
         internal bool ContainsPoint(int mouseX, int mouseY)
@@ -210,7 +220,6 @@ namespace mike_and_conquer
             y = y - (height / 2);
 
             Rectangle rect = new Rectangle(x, y, width, height);
-            //return rect.Contains(new Point(mouseX, mouseY));
             return clickDetectionRectangle.Contains(new Point(mouseX, mouseY));
         }
     }

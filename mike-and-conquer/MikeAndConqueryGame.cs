@@ -32,13 +32,14 @@ namespace mike_and_conquer
         public static MikeAndConqueryGame instance;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        List<Minigunner> minigunnerList;
+        List<Minigunner> gdiMinigunnerList;
+        List<Minigunner> nodMinigunnerList;
         private MouseState oldState;
 
         internal Minigunner GetGdiMinigunner()
         {
             Minigunner foundMinigunner = null;
-            foreach (Minigunner nextMinigunner in minigunnerList)
+            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
             {
                 foundMinigunner = nextMinigunner;
             }
@@ -72,7 +73,8 @@ namespace mike_and_conquer
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
             this.IsFixedTimeStep = false;
 
-            minigunnerList = new List<Minigunner>();
+            gdiMinigunnerList = new List<Minigunner>();
+            nodMinigunnerList = new List<Minigunner>();
 
             MikeAndConqueryGame.instance = this;
         }
@@ -80,21 +82,27 @@ namespace mike_and_conquer
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
             Minigunner newMinigunner = new Minigunner(x, y);
-            minigunnerList.Add(newMinigunner);
+            gdiMinigunnerList.Add(newMinigunner);
+            return newMinigunner;
+        }
+
+
+        internal Minigunner AddNodMinigunner(int x, int y)
+        {
+            Minigunner newMinigunner = new NodMinigunner(x, y);
+            nodMinigunnerList.Add(newMinigunner);
             return newMinigunner;
         }
 
 
 
-
-
-    /// <summary>
-    /// Allows the game to perform any initialization it needs to before starting to run.
-    /// This is where it can query for any required services and load any non-graphic
-    /// related content.  Calling base.Initialize will enumerate through any components
-    /// and initialize them as well.
-    /// </summary>
-    protected override void Initialize()
+        /// <summary>
+        /// Allows the game to perform any initialization it needs to before starting to run.
+        /// This is where it can query for any required services and load any non-graphic
+        /// related content.  Calling base.Initialize will enumerate through any components
+        /// and initialize them as well.
+        /// </summary>
+        protected override void Initialize()
         {
             // TODO: Add your initialization logic here
 
@@ -147,7 +155,13 @@ namespace mike_and_conquer
                 Exit();
 
             // TODO: Add your update logic here
-            foreach (Minigunner nextMinigunner in minigunnerList)
+            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+            {
+                nextMinigunner.Update(gameTime);
+            }
+
+
+            foreach (Minigunner nextMinigunner in nodMinigunnerList)
             {
                 nextMinigunner.Update(gameTime);
             }
@@ -168,10 +182,16 @@ namespace mike_and_conquer
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
 
 
-            foreach (Minigunner nextMinigunner in minigunnerList)
+            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
             {
                 nextMinigunner.Draw(gameTime, spriteBatch);
             }
+
+            foreach (Minigunner nextMinigunner in nodMinigunnerList)
+            {
+                nextMinigunner.Draw(gameTime, spriteBatch);
+            }
+
 
             spriteBatch.End();
 
@@ -180,7 +200,7 @@ namespace mike_and_conquer
 
         internal void HandleLeftClick(int mouseX, int mouseY)
         {
-            foreach (Minigunner nextMinigunner in minigunnerList)
+            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
             {
                 if(nextMinigunner.ContainsPoint(mouseX, mouseY))
                 {

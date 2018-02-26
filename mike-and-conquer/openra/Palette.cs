@@ -114,15 +114,6 @@ namespace OpenRA.Graphics
             using (var reader = new BinaryReader(s))
                 for (var i = 0; i < Palette.Size; i++)
                 {
-                    //var rByte = reader.ReadByte();
-                    //var gByte = reader.ReadByte();
-                    //var bByte = reader.ReadByte();
-
-                    //var r = (byte)(rByte << 2);
-                    //var g = (byte)(gByte << 2);
-                    //var b = (byte)(bByte << 2);
-
-
                     var r = (byte)(reader.ReadByte() << 2);
                     var g = (byte)(reader.ReadByte() << 2);
                     var b = (byte)(reader.ReadByte() << 2);

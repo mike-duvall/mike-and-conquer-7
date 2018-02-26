@@ -190,10 +190,10 @@ namespace mike_and_conquer
             for (int i = 0; i < numPixels; i++)
             {
                 int basePaletteIndex = frameData[i];
-                basePaletteIndex = MapColorIndex(basePaletteIndex);
-                uint paletteX = palette[basePaletteIndex];
+                int mappedPaletteIndex = MapColorIndex(basePaletteIndex);
+                uint mappedColor = palette[mappedPaletteIndex];
 
-                System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)paletteX);
+                System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
                 Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
                 texturePixelData[i] = xnaColor;
             }

@@ -91,6 +91,9 @@ namespace mike_and_conquer_6.mike_and_conquer
 
             mouseInput.mkhi.mi.dwFlags = MOUSEEVENTF_LEFTUP;
             uint y2 = SendInput(1, ref mouseInput, size);
+
+            System.Threading.Thread.Sleep(1000);
+
         }
 
     }

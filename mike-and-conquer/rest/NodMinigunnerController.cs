@@ -13,12 +13,14 @@ namespace mike_and_conquer.rest
 
         public IHttpActionResult Get(int id)
         {
-            RestMinigunner minigunner = new RestMinigunner();
-            minigunner.id = 5;
-            minigunner.x = 200;
-            minigunner.y = 300;
-            minigunner.health = 0;
-            return Ok(minigunner);
+            Minigunner minigunner = MikeAndConqueryGame.instance.GetNodMinigunner();
+            RestMinigunner restMinigunner = new RestMinigunner();
+            restMinigunner.id = minigunner.id;
+            restMinigunner.x = (int)minigunner.position.X;
+            restMinigunner.y = (int)minigunner.position.Y;
+            restMinigunner.health = minigunner.health;
+            restMinigunner.selected = minigunner.selected;
+            return Ok(restMinigunner);
 
         }
 

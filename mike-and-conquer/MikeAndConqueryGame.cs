@@ -47,6 +47,18 @@ namespace mike_and_conquer
             return foundMinigunner;
         }
 
+        internal Minigunner GetNodMinigunner()
+        {
+            Minigunner foundMinigunner = null;
+            foreach (Minigunner nextMinigunner in nodMinigunnerList)
+            {
+                foundMinigunner = nextMinigunner;
+            }
+
+            return foundMinigunner;
+        }
+
+
 
         public MikeAndConqueryGame()
         {
@@ -198,21 +210,73 @@ namespace mike_and_conquer
             base.Draw(gameTime);
         }
 
-        internal void HandleLeftClick(int mouseX, int mouseY)
+        internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)
         {
+            Boolean handled = false;
             foreach (Minigunner nextMinigunner in gdiMinigunnerList)
             {
-                if(nextMinigunner.ContainsPoint(mouseX, mouseY))
+                if (nextMinigunner.ContainsPoint(mouseX, mouseY))
                 {
+                    handled = true;
                     nextMinigunner.selected = true;
-                }
-                else
-                {
-                    nextMinigunner.selected = false;
                 }
             }
 
+            return handled;
 
         }
+
+        internal Boolean CheckForAndHandleLeftClickOnEnemyUnit(int mouseX, int mouseY)
+        {
+            bool handled = false;
+            foreach (NodMinigunner nextNodMinigunner in nodMinigunnerList)
+            {
+                if (nextNodMinigunner.ContainsPoint(mouseX, mouseY))
+                {
+                    handled = true;
+                    foreach (Minigunner nextGdiMinigunner in gdiMinigunnerList)
+                    {
+                        if (nextGdiMinigunner.selected)
+                        {
+                            nextGdiMinigunner.OrderToMoveToAndAttackEnemyUnit(nextNodMinigunner);
+                        }
+                    }
+                }
+            }
+
+            return handled;
+
+        }
+
+
+        internal void HandleLeftClick(int mouseX, int mouseY)
+        {
+            bool handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseX, mouseY);
+            if (!handledEvent)
+            {
+                handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseX, mouseY);
+            }
+            //if (!handledEvent)
+            //{
+            //    CheckForAndHandleLeftClickOnMap(input);
+            //}
+
+        }
+
+        //void PlayingGameState::HandleLeftMouseDown(Input* input)
+        //{
+
+        //    bool handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(input);
+        //    if (!handledEvent)
+        //    {
+        //        handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(input);
+        //    }
+        //    if (!handledEvent)
+        //    {
+        //        CheckForAndHandleLeftClickOnMap(input);
+        //    }
+
+        //}
+
     }
 }

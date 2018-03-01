@@ -30,8 +30,15 @@ namespace mike_and_conquer
 
         private Vector2 middleOfSprite;
 
+        private String state;
+        private Minigunner currentAttackTarget;
 
-        
+        private int destinationX;
+        private int destinationY;
+
+
+
+
         protected Minigunner()
         {
 
@@ -139,6 +146,137 @@ namespace mike_and_conquer
             
             unitSelectionCursor.position = new Vector2(this.position.X  , this.position.Y);
 
+            //if (isEnemy)
+            //{
+            //    HandleEnemyUpdate(frameTime);
+            //    return;
+            //}
+
+            if (state == "IDLE")
+            {
+                //HandleIdleState(frameTime);
+            }
+            else if (state == "MOVING")
+            {
+                //HandleMovingState(frameTime);
+            }
+            else if (state == "ATTACKING")
+            {
+                HandleAttackingState(gameTime);
+            }
+
+            //if (input->isRightMouseDown())
+            //{
+            //    SetSelected(false);
+            //}
+
+
+        }
+
+
+        private double Distance(double dX0, double dY0, double dX1, double dY1)
+        {
+            return Math.Sqrt((dX1 - dX0) * (dX1 - dX0) + (dY1 - dY0) * (dY1 - dY0));
+        }
+
+
+        private int CalculateDistanceToTarget()
+        {
+            //            return (int)Distance(this->x, this->y, this->currentAttackTarget->GetX(), this->currentAttackTarget->GetY());
+            return (int)Distance(position.X, position.Y, currentAttackTarget.position.X, currentAttackTarget.position.Y);
+        }
+
+
+        private bool IsInAttackRange()
+        {
+            int distanceToTarget = CalculateDistanceToTarget();
+
+            if (distanceToTarget < 200)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        private void HandleAttackingState(GameTime gameTime)
+        {
+            //if (IsInAttackRange())
+            //{
+            //    gameSprite->SetCurrentAnimationSequenceIndex(SHOOTING_UP);
+            //    currentAttackTarget->ReduceHealth(10);
+            //}
+            //else
+            //{
+            //    gameSprite->SetCurrentAnimationSequenceIndex(WALKING_UP);
+            //    SetDestination(currentAttackTarget->GetX(), currentAttackTarget->GetY());
+            //    MoveTowardsDestination(frameTime);
+            //}
+
+            if (IsInAttackRange())
+            {
+                //gameSprite->SetCurrentAnimationSequenceIndex(SHOOTING_UP);
+                currentAttackTarget.ReduceHealth(10);
+
+            }
+            else
+            {
+                //gameSprite->SetCurrentAnimationSequenceIndex(WALKING_UP);
+                SetDestination( (int) currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
+                MoveTowardsDestination(gameTime);
+            }
+        }
+
+        void MoveTowardsDestination(GameTime gameTime)
+        {
+            int buffer = 0;
+
+            int newX = (int)position.X;
+            int newY = (int)position.Y;
+
+            double velocity = .15;
+            double delta = gameTime.ElapsedGameTime.TotalMilliseconds * velocity;
+
+
+            if (position.X < (destinationX - buffer))
+            {
+                newX += (int)delta;
+            }
+            else if (position.X > (destinationX + buffer))
+            {
+                newX -= (int)delta;
+            }
+
+            if (position.Y < (destinationY - buffer))
+            {
+                newY += (int)delta;
+            }
+            else if (position.Y > (destinationY + buffer))
+            {
+                newY -= (int)delta;
+            }
+
+            position = new Vector2(newX, newY);
+        }
+
+
+        private void SetDestination(int x, int y)
+        {
+            destinationX = x;
+            destinationY = y;
+        }
+
+
+        private void ReduceHealth(int amount)
+        {
+            if (health > 0)
+            {
+                health -= amount;
+            }
+
         }
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -221,6 +359,13 @@ namespace mike_and_conquer
 
             Rectangle rect = new Rectangle(x, y, width, height);
             return clickDetectionRectangle.Contains(new Point(mouseX, mouseY));
+        }
+
+        internal void OrderToMoveToAndAttackEnemyUnit(NodMinigunner enemyMinigunner)
+        {
+            state = "ATTACKING";
+            currentAttackTarget = enemyMinigunner;
+
         }
     }
 

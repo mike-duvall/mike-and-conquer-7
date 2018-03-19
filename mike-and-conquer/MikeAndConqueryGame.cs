@@ -210,6 +210,8 @@ namespace mike_and_conquer
             base.Draw(gameTime);
         }
 
+        //Now add Playing and Mission Accomplished game states, and have missions accomplished displayed "Mission Accomplished" text
+
         internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)
         {
             Boolean handled = false;

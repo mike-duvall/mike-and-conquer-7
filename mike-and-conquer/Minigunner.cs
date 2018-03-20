@@ -182,7 +182,6 @@ namespace mike_and_conquer
 
         private int CalculateDistanceToTarget()
         {
-            //            return (int)Distance(this->x, this->y, this->currentAttackTarget->GetX(), this->currentAttackTarget->GetY());
             return (int)Distance(position.X, position.Y, currentAttackTarget.position.X, currentAttackTarget.position.Y);
         }
 

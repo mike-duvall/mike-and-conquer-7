@@ -1,24 +1,17 @@
 ﻿using System.Collections.Generic;
 
 
-using PlayerIndex = Microsoft.Xna.Framework.PlayerIndex;
 using Game = Microsoft.Xna.Framework.Game;
 
 using MouseState = Microsoft.Xna.Framework.Input.MouseState;
-using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
-//using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using GraphicsProfile = Microsoft.Xna.Framework.Graphics.GraphicsProfile;
 using Color = Microsoft.Xna.Framework.Color;
-using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
-
 
 using SpriteSortMode = Microsoft.Xna.Framework.Graphics.SpriteSortMode;
 using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
-using mike_and_conquer.rest;
-using System;
 
 
 namespace mike_and_conquer

@@ -1,11 +1,4 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-
-using ShpTDSprite = OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite;
+﻿using ShpTDSprite = OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using Color = Microsoft.Xna.Framework.Color;
@@ -20,13 +13,9 @@ namespace mike_and_conquer
 
     public class UnitSelectionCursor
     {
-        //public int id { get; set; }
-        //public int health { get; set; }
-        //public bool selected { get; set; }
         public Vector2 position { get; set; }
 
         Texture2D texture;
-        //Texture2D unitSelectionCursorTexture;
         Texture2D boundingRectangle;
         Boolean drawBoundingRectangle;
 
@@ -102,19 +91,6 @@ namespace mike_and_conquer
 
         public void Update(GameTime gameTime)
         {
-            //double velocity = .15;
-            //double delta = gameTime.ElapsedGameTime.TotalMilliseconds * velocity;
-
-
-            //position.X = position.X + (float)delta;
-            ////position.X += 1;
-            //if (position.X > worldWidth)
-            //    position.X = 0;
-
-            //position.Y = position.Y + (float)delta;
-            //if (position.Y > worldHeight)
-            //    position.Y = 0;
-
 
         }
 

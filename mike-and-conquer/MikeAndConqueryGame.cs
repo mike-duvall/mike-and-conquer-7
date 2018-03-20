@@ -156,32 +156,6 @@ namespace mike_and_conquer
         protected override void Update(GameTime gameTime)
         {
             currentGameState = currentGameState.Update(gameTime);
-
-            //MouseState newState = Mouse.GetState();
-
-            //if (newState.LeftButton == ButtonState.Pressed && oldState.LeftButton == ButtonState.Released)
-            //{
-            //    HandleLeftClick(newState.Position.X, newState.Position.Y);
-            //}
-
-            //oldState = newState; // this reassigns
-
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            //    Exit();
-
-            //// TODO: Add your update logic here
-            //foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            //{
-            //    nextMinigunner.Update(gameTime);
-            //}
-
-
-            //foreach (Minigunner nextMinigunner in nodMinigunnerList)
-            //{
-            //    nextMinigunner.Update(gameTime);
-            //}
-
-
             base.Update(gameTime);
         }
 
@@ -213,80 +187,12 @@ namespace mike_and_conquer
             base.Draw(gameTime);
         }
 
-        //Now add Playing and Mission Accomplished game states, and have missions accomplished displayed "Mission Accomplished" text
-
-        //internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)
-        //{
-        //    Boolean handled = false;
-        //    foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-        //    {
-        //        if (nextMinigunner.ContainsPoint(mouseX, mouseY))
-        //        {
-        //            handled = true;
-        //            nextMinigunner.selected = true;
-        //        }
-        //    }
-
-        //    return handled;
-
-        //}
-
-        //internal Boolean CheckForAndHandleLeftClickOnEnemyUnit(int mouseX, int mouseY)
-        //{
-        //    bool handled = false;
-        //    foreach (NodMinigunner nextNodMinigunner in nodMinigunnerList)
-        //    {
-        //        if (nextNodMinigunner.ContainsPoint(mouseX, mouseY))
-        //        {
-        //            handled = true;
-        //            foreach (Minigunner nextGdiMinigunner in gdiMinigunnerList)
-        //            {
-        //                if (nextGdiMinigunner.selected)
-        //                {
-        //                    nextGdiMinigunner.OrderToMoveToAndAttackEnemyUnit(nextNodMinigunner);
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return handled;
-
-        //}
-
-
-        //internal void HandleLeftClick(int mouseX, int mouseY)
-        //{
-        //    bool handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseX, mouseY);
-        //    if (!handledEvent)
-        //    {
-        //        handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseX, mouseY);
-        //    }
-        //    //if (!handledEvent)
-        //    //{
-        //    //    CheckForAndHandleLeftClickOnMap(input);
-        //    //}
-
-        //}
 
         internal GameState GetCurrentGameState()
         {
             return currentGameState;
         }
 
-        //void PlayingGameState::HandleLeftMouseDown(Input* input)
-        //{
-
-        //    bool handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(input);
-        //    if (!handledEvent)
-        //    {
-        //        handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(input);
-        //    }
-        //    if (!handledEvent)
-        //    {
-        //        CheckForAndHandleLeftClickOnMap(input);
-        //    }
-
-        //}
 
     }
 }

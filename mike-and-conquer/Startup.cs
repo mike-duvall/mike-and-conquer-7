@@ -1,7 +1,7 @@
 ﻿using Owin;
 using System.Web.Http;
 
-namespace mike_and_conquer_6
+namespace mike_and_conquer
 {
     public class Startup
     {

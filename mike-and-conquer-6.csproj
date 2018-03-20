@@ -40,16 +40,45 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RemoteDebug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>\\192.168.0.195\buildoutput\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Game1.cs" />
-    <Compile Include="GameStateController.cs" />
-    <Compile Include="LeftClickController.cs" />
-    <Compile Include="NodMinigunnerController.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="mike-and-conquer\GameState\GameState.cs" />
+    <Compile Include="mike-and-conquer\GameState\MissionAccomplishedGameState.cs" />
+    <Compile Include="mike-and-conquer\GameState\PlayingGameState.cs" />
+    <Compile Include="mike-and-conquer\MikeAndConqueryGame.cs" />
+    <Compile Include="mike-and-conquer\Minigunner.cs" />
+    <Compile Include="mike-and-conquer\MouseInputHandler.cs" />
+    <Compile Include="mike-and-conquer\NodMinigunner.cs" />
+    <Compile Include="mike-and-conquer\openra\Exts.cs" />
+    <Compile Include="mike-and-conquer\openra\float2.cs" />
+    <Compile Include="mike-and-conquer\openra\int2.cs" />
+    <Compile Include="mike-and-conquer\openra\LCWCompression.cs" />
+    <Compile Include="mike-and-conquer\openra\Palette.cs" />
+    <Compile Include="mike-and-conquer\openra\ReadOnlyList.cs" />
+    <Compile Include="mike-and-conquer\openra\SpriteLoader.cs" />
+    <Compile Include="mike-and-conquer\openra\StreamExts.cs" />
+    <Compile Include="mike-and-conquer\openra\XORDeltaCompression.cs" />
+    <Compile Include="mike-and-conquer\rest\GameStateController.cs" />
+    <Compile Include="mike-and-conquer\rest\LeftClickController.cs" />
+    <Compile Include="mike-and-conquer\rest\RestPoint.cs" />
+    <Compile Include="mike-and-conquer\rest\RestMinigunner.cs" />
+    <Compile Include="mike-and-conquer\rest\NodMinigunnerController.cs" />
+    <Compile Include="mike-and-conquer\Program.cs" />
+    <Compile Include="mike-and-conquer\openra\ShpTDLoader.cs" />
+    <Compile Include="mike-and-conquer\UnitSelectionCursor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResetGameController.cs" />
-    <Compile Include="Startup.cs" />
-    <Compile Include="GdiMinigunnerController.cs" />
+    <Compile Include="mike-and-conquer\rest\ResetGameController.cs" />
+    <Compile Include="mike-and-conquer\Startup.cs" />
+    <Compile Include="mike-and-conquer\rest\GdiMinigunnerController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Owin, Version=2.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -64,8 +93,9 @@
       <HintPath>packages\Microsoft.Owin.Hosting.2.0.2\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MonoGame.Framework">
-      <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MonoGame.Framework.WindowsDX.3.6.0.1625\lib\net40\MonoGame.Framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -76,6 +106,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -93,11 +124,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <Content Include="RemoteDebugging.txt" />
+    <Content Include="xcc-mixer-notes.txt" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

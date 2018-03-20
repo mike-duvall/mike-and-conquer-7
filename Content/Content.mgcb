@@ -25,3 +25,12 @@
 /processorParam:TextureFormat=Color
 /build:m3.png
 
+#begin temperat.pal
+/copy:temperat.pal
+
+#begin e1.shp
+/copy:e1.shp
+
+#begin select.shp
+/copy:select.shp
+

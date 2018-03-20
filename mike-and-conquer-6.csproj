@@ -51,6 +51,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="mike-and-conquer\GameState\GameState.cs" />
+    <Compile Include="mike-and-conquer\GameState\MissionAccomplishedGameState.cs" />
+    <Compile Include="mike-and-conquer\GameState\PlayingGameState.cs" />
     <Compile Include="mike-and-conquer\MikeAndConqueryGame.cs" />
     <Compile Include="mike-and-conquer\Minigunner.cs" />
     <Compile Include="mike-and-conquer\MouseInputHandler.cs" />

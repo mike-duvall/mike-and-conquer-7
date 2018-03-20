@@ -4,7 +4,7 @@ using System.Web.Http;
 namespace mike_and_conquer.rest
 {
 
-    public class GameState
+    public class RestGameState
     {
         public string gameState { get; set; }
     }
@@ -14,9 +14,10 @@ namespace mike_and_conquer.rest
     {
         public IHttpActionResult Get()
         {
-            GameState gameState = new GameState();
-            gameState.gameState = "Game Over";
-            return Ok(gameState);
+            GameState currentGameState = MikeAndConqueryGame.instance.GetCurrentGameState();
+            RestGameState restGameState = new RestGameState();
+            restGameState.gameState = currentGameState.GetName();
+            return Ok(restGameState);
         }
 
     }

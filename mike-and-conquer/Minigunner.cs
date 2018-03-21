@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 using ShpTDSprite = OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite;
+using AnimationSequence = mike_and_conquer.util.AnimationSequence;
+
 
 namespace mike_and_conquer
 {
@@ -14,9 +17,11 @@ namespace mike_and_conquer
         public bool selected { get; set; }
         public Vector2 position { get; set; }
 
+        AnimationSequence animationSequence;
 
         UnitSelectionCursor unitSelectionCursor;
-        Texture2D texture;
+        //Texture2D texture;
+        List<Texture2D> textureList;
 
         Texture2D spriteBorderRectangleTexture;
         Boolean drawBoundingRectangle;
@@ -52,7 +57,9 @@ namespace mike_and_conquer
 
             this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
             this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
-            this.texture = loadTextureFromShpFile("Content\\e1.shp", 0);
+            this.textureList = new List<Texture2D>();
+            LoadAllTexturesFromShpFile("Content\\e1.shp");
+//            this.texture = loadTextureFromShpFile("Content\\e1.shp", 0);
 
             position = new Vector2(x, y);
 
@@ -64,8 +71,9 @@ namespace mike_and_conquer
             spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
 
             middleOfSprite = new Vector2();
-            middleOfSprite.X = texture.Width / 2;
-            middleOfSprite.Y = texture.Height / 2;
+            
+            middleOfSprite.X = textureList[0].Width / 2;
+            middleOfSprite.Y = textureList[0].Height / 2;
 
 
             clickDetectionRectangle = createClickDetectionRectangle();
@@ -73,6 +81,14 @@ namespace mike_and_conquer
             drawBoundingRectangle = false;
             selected = false;
             unitSelectionCursor = new UnitSelectionCursor(x,y);
+            animationSequence = new AnimationSequence(10);
+            animationSequence.AddFrame(16);
+            animationSequence.AddFrame(17);
+            animationSequence.AddFrame(18);
+            animationSequence.AddFrame(19);
+            animationSequence.AddFrame(20);
+            animationSequence.AddFrame(21);
+
         }
 
         internal Rectangle createClickDetectionRectangle()
@@ -111,7 +127,7 @@ namespace mike_and_conquer
 
         internal Texture2D createSpriteBorderRectangleTexture()
         {
-            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, texture.Width, texture.Height);
+            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, textureList[0].Width, textureList[0].Height);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
@@ -284,7 +300,7 @@ namespace mike_and_conquer
             minigunnerPlottedPosition.X = (float)Math.Round(position.X);
             minigunnerPlottedPosition.Y = (float)Math.Round(position.Y);
 
-            spriteBatch.Draw(texture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(textureList[0], minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
             if(drawBoundingRectangle)
             {
                 spriteBatch.Draw(spriteBorderRectangleTexture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
@@ -296,6 +312,50 @@ namespace mike_and_conquer
                 unitSelectionCursor.Draw(gameTime, spriteBatch);
             }
 
+
+        }
+
+
+        internal void LoadAllTexturesFromShpFile(string shpFileName)
+        {
+
+            int[] remap = { };
+
+            OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
+
+            System.IO.FileStream shpStream = System.IO.File.Open(shpFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
+            OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader loader = new OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader();
+            ShpTDSprite shpTDSprite = new OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite(shpStream);
+
+
+            foreach (OpenRA.Graphics.ISpriteFrame frame in shpTDSprite.Frames)
+            {
+
+
+
+    //            OpenRA.Graphics.ISpriteFrame frame = shpTDSprite.Frames[indexOfFrameToLoad];
+                byte[] frameData = frame.Data;
+
+                Texture2D texture2D = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, shpTDSprite.Size.Width, shpTDSprite.Size.Height);
+                int numPixels = texture2D.Width * texture2D.Height;
+                Color[] texturePixelData = new Color[numPixels];
+
+                for (int i = 0; i < numPixels; i++)
+                {
+                    int basePaletteIndex = frameData[i];
+                    int mappedPaletteIndex = MapColorIndex(basePaletteIndex);
+                    uint mappedColor = palette[mappedPaletteIndex];
+
+                    System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
+                    Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+                    texturePixelData[i] = xnaColor;
+                }
+
+                texture2D.SetData(texturePixelData);
+                shpStream.Close();
+                textureList.Add(texture2D);
+            }
+            //return texture2D;
 
         }
 

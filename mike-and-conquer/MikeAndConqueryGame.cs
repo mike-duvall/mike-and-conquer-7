@@ -32,32 +32,6 @@ namespace mike_and_conquer
         private GameState currentGameState;
 
 
-
-
-        internal Minigunner GetGdiMinigunner()
-        {
-            Minigunner foundMinigunner = null;
-            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            {
-                foundMinigunner = nextMinigunner;
-            }
-
-            return foundMinigunner;
-        }
-
-        internal Minigunner GetNodMinigunner()
-        {
-            Minigunner foundMinigunner = null;
-            foreach (Minigunner nextMinigunner in nodMinigunnerList)
-            {
-                foundMinigunner = nextMinigunner;
-            }
-
-            return foundMinigunner;
-        }
-
-
-
         public MikeAndConqueryGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -91,6 +65,30 @@ namespace mike_and_conquer
             MikeAndConqueryGame.instance = this;
 
         }
+
+        internal Minigunner GetGdiMinigunner()
+        {
+            Minigunner foundMinigunner = null;
+            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+            {
+                foundMinigunner = nextMinigunner;
+            }
+
+            return foundMinigunner;
+        }
+
+        internal Minigunner GetNodMinigunner()
+        {
+            Minigunner foundMinigunner = null;
+            foreach (Minigunner nextMinigunner in nodMinigunnerList)
+            {
+                foundMinigunner = nextMinigunner;
+            }
+
+            return foundMinigunner;
+        }
+
+
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {

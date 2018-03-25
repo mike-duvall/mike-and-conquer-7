@@ -17,23 +17,10 @@ namespace mike_and_conquer
         public bool selected { get; set; }
         public Vector2 position { get; set; }
 
-//        AnimationSequence animationSequence;
 
         UnitSelectionCursor unitSelectionCursor;
-        //Texture2D texture;
-//        List<Texture2D> textureList;
-
-        //Texture2D spriteBorderRectangleTexture;
-        //Boolean drawBoundingRectangle;
 
         Rectangle clickDetectionRectangle;
-
-//        float scale;
-
-        //private int worldWidth;
-        //private int worldHeight;
-
-        //private Vector2 middleOfSprite;
 
         private String state;
         private Minigunner currentAttackTarget;
@@ -44,7 +31,7 @@ namespace mike_and_conquer
         public GameSprite gameSprite;
 
 
-
+        enum AnimationSequences { STANDING_STILL, WALKING_UP, SHOOTING_UP };
 
         protected Minigunner()
         {
@@ -58,11 +45,6 @@ namespace mike_and_conquer
         {
 
             gameSprite = new GameSprite(shpFileColorMapper);
-            //this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
-            //this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
-            //this.textureList = new List<Texture2D>();
-            //LoadAllTexturesFromShpFile("Content\\e1.shp");
-//            this.texture = loadTextureFromShpFile("Content\\e1.shp", 0);
 
             position = new Vector2(x, y);
 
@@ -70,29 +52,48 @@ namespace mike_and_conquer
             id = Minigunner.globalId;
             Minigunner.globalId++;
 
-//            scale = 5f;
-            //spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
-
-            //middleOfSprite = new Vector2();
-            
-            //middleOfSprite.X = textureList[0].Width / 2;
-            //middleOfSprite.Y = textureList[0].Height / 2;
-
 
             clickDetectionRectangle = createClickDetectionRectangle();
 
-//            drawBoundingRectangle = false;
             selected = false;
             unitSelectionCursor = new UnitSelectionCursor(x,y);
-            AnimationSequence animationSequence = new AnimationSequence(10);
-            animationSequence.AddFrame(16);
-            animationSequence.AddFrame(17);
-            animationSequence.AddFrame(18);
-            animationSequence.AddFrame(19);
-            animationSequence.AddFrame(20);
-            animationSequence.AddFrame(21);
-            animationSequence.SetAnimate(true);
-            gameSprite.SetAnimationSequence(animationSequence);
+            //AnimationSequence animationSequence = new AnimationSequence(10);
+            //animationSequence.AddFrame(16);
+            //animationSequence.AddFrame(17);
+            //animationSequence.AddFrame(18);
+            //animationSequence.AddFrame(19);
+            //animationSequence.AddFrame(20);
+            //animationSequence.AddFrame(21);
+            //animationSequence.SetAnimate(true);
+            //gameSprite.SetAnimationSequence(animationSequence);
+
+            AnimationSequence walkingUpAnimationSequence = new AnimationSequence(10);
+            walkingUpAnimationSequence.AddFrame(16);
+            walkingUpAnimationSequence.AddFrame(17);
+            walkingUpAnimationSequence.AddFrame(18);
+            walkingUpAnimationSequence.AddFrame(19);
+            walkingUpAnimationSequence.AddFrame(20);
+            walkingUpAnimationSequence.AddFrame(21);
+
+            gameSprite.AddAnimationSequence((int) AnimationSequences.WALKING_UP , walkingUpAnimationSequence);
+
+            AnimationSequence  standingStillAnimationSequence = new AnimationSequence(10);
+            standingStillAnimationSequence.AddFrame(0);
+            gameSprite.AddAnimationSequence((int) AnimationSequences.STANDING_STILL, standingStillAnimationSequence);
+            gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.STANDING_STILL);
+
+
+            AnimationSequence  shootinUpAnimationSequence = new AnimationSequence(10);
+            shootinUpAnimationSequence.AddFrame(65);
+            shootinUpAnimationSequence.AddFrame(66);
+            shootinUpAnimationSequence.AddFrame(67);
+            shootinUpAnimationSequence.AddFrame(68);
+            shootinUpAnimationSequence.AddFrame(69);
+            shootinUpAnimationSequence.AddFrame(70);
+            shootinUpAnimationSequence.AddFrame(71);
+            shootinUpAnimationSequence.AddFrame(72);
+            gameSprite.AddAnimationSequence((int) AnimationSequences.SHOOTING_UP, shootinUpAnimationSequence);
+
 
         }
 
@@ -139,11 +140,11 @@ namespace mike_and_conquer
 
             if (state == "IDLE")
             {
-                //HandleIdleState(frameTime);
+                HandleIdleState(gameTime);
             }
             else if (state == "MOVING")
             {
-                //HandleMovingState(frameTime);
+                HandleMovingState(gameTime);
             }
             else if (state == "ATTACKING")
             {
@@ -157,6 +158,39 @@ namespace mike_and_conquer
 
 
         }
+
+        private void HandleIdleState(GameTime gameTime)
+        {
+            gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.STANDING_STILL);
+        }
+
+
+        private void HandleMovingState(GameTime gameTime)
+        {
+
+            gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.WALKING_UP);
+
+            MoveTowardsDestination(gameTime);
+            if (IsAtDestination())
+            {
+                state = "IDLE";
+            }
+
+        }
+
+        bool IsAtDestination()
+        {
+
+            int buffer = 2;
+            return (
+                position.X > (destinationX - buffer) &&
+                position.Y < (destinationX + buffer) &&
+                position.Y > (destinationY - buffer) &&
+                position.Y < (destinationY + buffer)
+                );
+
+        }
+
 
 
         private double Distance(double dX0, double dY0, double dX1, double dY1)
@@ -203,12 +237,14 @@ namespace mike_and_conquer
             if (IsInAttackRange())
             {
                 //gameSprite->SetCurrentAnimationSequenceIndex(SHOOTING_UP);
+                gameSprite.SetCurrentAnimationSequenceIndex( (int)  AnimationSequences.SHOOTING_UP);
                 currentAttackTarget.ReduceHealth(10);
 
             }
             else
             {
                 //gameSprite->SetCurrentAnimationSequenceIndex(WALKING_UP);
+                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
                 SetDestination( (int) currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
                 MoveTowardsDestination(gameTime);
             }
@@ -270,7 +306,7 @@ namespace mike_and_conquer
             minigunnerPlottedPosition.Y = (float)Math.Round(position.Y);
 
 
-            gameSprite.Update(gameTime);
+//            gameSprite.Update(gameTime);
 //            animationSequence.Update();
             //int currentFrame = animationSequence.GetCurrentFrame();
             //Texture2D currentTexture = textureList[(int)currentFrame];

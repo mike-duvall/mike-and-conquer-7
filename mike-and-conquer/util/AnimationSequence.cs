@@ -32,10 +32,10 @@ namespace mike_and_conquer.util
 
         public void Update()
         {
-            if (!animate)
-            {
-                return;
-            }
+            //if (!animate)
+            //{
+            //    return;
+            //}
 
             if (frameSwitchTimer > frameSwitchThreshold)
             {
@@ -59,8 +59,10 @@ namespace mike_and_conquer.util
             return frames[currentAnimationFrameIndex];
         }
 
-
-
+        public void SetCurrentFrameIndex(int currentAnimationFrame)
+        {
+            this.currentAnimationFrameIndex = currentAnimationFrame;
+        }
 
 
     }

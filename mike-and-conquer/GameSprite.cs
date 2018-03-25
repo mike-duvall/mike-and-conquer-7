@@ -15,9 +15,16 @@ namespace mike_and_conquer
     public class GameSprite
     {
 
-        AnimationSequence animationSequence;
+        //AnimationSequence animationSequence;
+
+
+
+        Dictionary<int, AnimationSequence> animationSequenceMap;
+
+        int currentAnimationSequenceIndex;
 
         List<Texture2D> textureList;
+        Texture2D currentTexture;
 
         Texture2D spriteBorderRectangleTexture;
         Boolean drawBoundingRectangle;
@@ -36,6 +43,7 @@ namespace mike_and_conquer
 
         public GameSprite(ShpFileColorMapper shpFileColorMapper)
         {
+            this.animationSequenceMap = new Dictionary<int, util.AnimationSequence>();
             this.shpFileColorMapper = shpFileColorMapper;
             this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
             this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
@@ -52,15 +60,37 @@ namespace mike_and_conquer
             drawBoundingRectangle = false;
         }
 
-        public void Update(GameTime gameTime)
+        public void SetCurrentAnimationSequenceIndex(int aniatmionSequenceIndex)
         {
-            animationSequence.Update();
+            if (currentAnimationSequenceIndex == aniatmionSequenceIndex)
+            {
+                return;
+            }
+
+            currentAnimationSequenceIndex = aniatmionSequenceIndex;
+
+            AnimationSequence animationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+            animationSequence.SetCurrentFrameIndex(0);
+
+            int currentTextureIndex = animationSequence.GetCurrentFrame();
+            currentTexture = textureList[currentTextureIndex];
         }
+
+
+        public void AddAnimationSequence(int key, AnimationSequence  animationSequence)
+        {
+            animationSequenceMap[key] = animationSequence;
+        }
+
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 position)
         {
-            int currentFrame = animationSequence.GetCurrentFrame();
-            Texture2D currentTexture = textureList[(int)currentFrame];
+
+            AnimationSequence currentAnimationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+            currentAnimationSequence.Update();
+            int currentTextureIndex = currentAnimationSequence.GetCurrentFrame();
+            currentTexture = textureList[currentTextureIndex];
+
             spriteBatch.Draw(currentTexture, position, null, Color.White, 0f, middleOfSprite, MikeAndConqueryGame.instance.scale, SpriteEffects.None, 0f);
 
 
@@ -73,10 +103,6 @@ namespace mike_and_conquer
 
         }
 
-        public void SetAnimationSequence(AnimationSequence animationSequence)
-        {
-            this.animationSequence = animationSequence;
-        }
 
         internal Texture2D createSpriteBorderRectangleTexture()
         {

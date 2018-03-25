@@ -7,7 +7,7 @@ namespace mike_and_conquer.util
     public class AnimationSequence
     {
 
-        private List<uint> frames;
+        private List<int> frames;
         private int frameSwitchTimer;
         private int frameSwitchThreshold;
         private int currentAnimationFrameIndex;
@@ -17,10 +17,15 @@ namespace mike_and_conquer.util
         {
             this.frameSwitchTimer = 0;
             this.frameSwitchThreshold = frameSwitchThreshold;
-            this.frames = new List<uint>();
+            this.frames = new List<int>();
         }
 
-        public void AddFrame(uint frame)
+        public void SetAnimate(bool newValue)
+        {
+            animate = newValue;
+        }
+
+        public void AddFrame(int frame)
         {
             frames.Add(frame);
         }
@@ -49,7 +54,7 @@ namespace mike_and_conquer.util
         }
 
 
-        public uint GetCurrentFrame()
+        public int GetCurrentFrame()
         {
             return frames[currentAnimationFrameIndex];
         }

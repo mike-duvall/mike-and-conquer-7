@@ -25,6 +25,7 @@ namespace mike_and_conquer
         public List<Minigunner> gdiMinigunnerList { get; }
         public List<Minigunner> nodMinigunnerList { get; }
 
+        public float scale { get; }
 
         string Mike { get; set; }
 
@@ -35,6 +36,7 @@ namespace mike_and_conquer
         public MikeAndConqueryGame()
         {
             graphics = new GraphicsDeviceManager(this);
+            scale = 5f;
 
             bool makeFullscreen = true;
             //bool makeFullscreen = false;
@@ -92,7 +94,7 @@ namespace mike_and_conquer
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(x, y);
+            Minigunner newMinigunner = new Minigunner(x, y, new GdiShpFileColorMapper());
             gdiMinigunnerList.Add(newMinigunner);
             return newMinigunner;
         }

@@ -51,9 +51,12 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="mike-and-conquer\GameSprite.cs" />
     <Compile Include="mike-and-conquer\GameState\GameState.cs" />
     <Compile Include="mike-and-conquer\GameState\MissionAccomplishedGameState.cs" />
     <Compile Include="mike-and-conquer\GameState\PlayingGameState.cs" />
+    <Compile Include="mike-and-conquer\NodShpFileColorMapper.cs" />
+    <Compile Include="mike-and-conquer\GdiShpFileColorMapper.cs" />
     <Compile Include="mike-and-conquer\MikeAndConqueryGame.cs" />
     <Compile Include="mike-and-conquer\Minigunner.cs" />
     <Compile Include="mike-and-conquer\MouseInputHandler.cs" />
@@ -74,6 +77,7 @@
     <Compile Include="mike-and-conquer\rest\NodMinigunnerController.cs" />
     <Compile Include="mike-and-conquer\Program.cs" />
     <Compile Include="mike-and-conquer\openra\ShpTDLoader.cs" />
+    <Compile Include="mike-and-conquer\ShpFileColorMapper.cs" />
     <Compile Include="mike-and-conquer\UnitSelectionCursor.cs" />
     <Compile Include="mike-and-conquer\util\AnimationSequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

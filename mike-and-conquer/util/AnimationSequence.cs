@@ -11,18 +11,13 @@ namespace mike_and_conquer.util
         private int frameSwitchTimer;
         private int frameSwitchThreshold;
         private int currentAnimationFrameIndex;
-        private Boolean animate;
+
 
         public AnimationSequence(int frameSwitchThreshold)
         {
             this.frameSwitchTimer = 0;
             this.frameSwitchThreshold = frameSwitchThreshold;
             this.frames = new List<int>();
-        }
-
-        public void SetAnimate(bool newValue)
-        {
-            animate = newValue;
         }
 
         public void AddFrame(int frame)
@@ -32,11 +27,6 @@ namespace mike_and_conquer.util
 
         public void Update()
         {
-            //if (!animate)
-            //{
-            //    return;
-            //}
-
             if (frameSwitchTimer > frameSwitchThreshold)
             {
                 frameSwitchTimer = 0;

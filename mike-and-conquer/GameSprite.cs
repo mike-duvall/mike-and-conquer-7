@@ -23,13 +23,13 @@ namespace mike_and_conquer
 
         int currentAnimationSequenceIndex;
 
-        List<Texture2D> textureList;
+        //List<Texture2D> textureList;
+        SpriteTextureList spriteTextureList;
         Texture2D currentTexture;
 
         Texture2D spriteBorderRectangleTexture;
         Boolean drawBoundingRectangle;
 
-//        float scale;
 
         private int worldWidth;
         private int worldHeight;
@@ -47,15 +47,21 @@ namespace mike_and_conquer
             this.shpFileColorMapper = shpFileColorMapper;
             this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
             this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
-            this.textureList = new List<Texture2D>();
+            //            this.textureList = new List<Texture2D>();
+            spriteTextureList = new SpriteTextureList();
+
+
             LoadAllTexturesFromShpFile("Content\\e1.shp");
 
             spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
 
             middleOfSprite = new Vector2();
 
-            middleOfSprite.X = textureList[0].Width / 2;
-            middleOfSprite.Y = textureList[0].Height / 2;
+            //middleOfSprite.X = textureList[0].Width / 2;
+            //middleOfSprite.Y = textureList[0].Height / 2;
+            middleOfSprite.X = spriteTextureList.textureWidth / 2;
+            middleOfSprite.Y = spriteTextureList.textureHeight / 2;
+
 
             drawBoundingRectangle = false;
         }
@@ -73,7 +79,7 @@ namespace mike_and_conquer
             animationSequence.SetCurrentFrameIndex(0);
 
             int currentTextureIndex = animationSequence.GetCurrentFrame();
-            currentTexture = textureList[currentTextureIndex];
+            currentTexture = spriteTextureList.textureList[currentTextureIndex];
         }
 
 
@@ -89,7 +95,7 @@ namespace mike_and_conquer
             AnimationSequence currentAnimationSequence = animationSequenceMap[currentAnimationSequenceIndex];
             currentAnimationSequence.Update();
             int currentTextureIndex = currentAnimationSequence.GetCurrentFrame();
-            currentTexture = textureList[currentTextureIndex];
+            currentTexture = spriteTextureList.textureList[currentTextureIndex];
 
             spriteBatch.Draw(currentTexture, position, null, Color.White, 0f, middleOfSprite, MikeAndConqueryGame.instance.scale, SpriteEffects.None, 0f);
 
@@ -106,7 +112,8 @@ namespace mike_and_conquer
 
         internal Texture2D createSpriteBorderRectangleTexture()
         {
-            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, textureList[0].Width, textureList[0].Height);
+            //            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, textureList[0].Width, textureList[0].Height);
+            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
@@ -161,6 +168,8 @@ namespace mike_and_conquer
             unscaledWidth = shpTDSprite.Frames[0].Size.Width;
             unscaledHeight = shpTDSprite.Frames[0].Size.Height;
 
+            spriteTextureList.textureWidth = unscaledWidth;
+            spriteTextureList.textureHeight = unscaledHeight;
 
             foreach (OpenRA.Graphics.ISpriteFrame frame in shpTDSprite.Frames)
             {
@@ -184,7 +193,7 @@ namespace mike_and_conquer
 
                 texture2D.SetData(texturePixelData);
                 shpStream.Close();
-                textureList.Add(texture2D);
+                spriteTextureList.textureList.Add(texture2D);
             }
             //return texture2D;
 

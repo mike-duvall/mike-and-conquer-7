@@ -143,6 +143,7 @@ namespace mike_and_conquer
                 texturePixelData[i] = xnaColor;
             }
             texture2D.SetData(texturePixelData);
+            shpStream.Close();
             return texture2D;
 
         }

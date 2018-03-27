@@ -24,7 +24,7 @@ namespace mike_and_conquer
         int currentAnimationSequenceIndex;
 
         //List<Texture2D> textureList;
-        SpriteTextureList spriteTextureList;
+        static SpriteTextureList spriteTextureList = null;
         Texture2D currentTexture;
 
         Texture2D spriteBorderRectangleTexture;
@@ -48,10 +48,11 @@ namespace mike_and_conquer
             this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
             this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
             //            this.textureList = new List<Texture2D>();
-            spriteTextureList = new SpriteTextureList();
 
-
-            LoadAllTexturesFromShpFile("Content\\e1.shp");
+            if (spriteTextureList == null)
+            {
+                spriteTextureList = LoadAllTexturesFromShpFile("Content\\e1.shp");
+            }
 
             spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
 
@@ -154,11 +155,12 @@ namespace mike_and_conquer
 
 
 
-        internal void LoadAllTexturesFromShpFile(string shpFileName)
+        internal SpriteTextureList LoadAllTexturesFromShpFile(string shpFileName)
         {
 
             int[] remap = { };
 
+            SpriteTextureList spriteTextureList = new SpriteTextureList();
             OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
 
             System.IO.FileStream shpStream = System.IO.File.Open(shpFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
@@ -195,7 +197,7 @@ namespace mike_and_conquer
                 shpStream.Close();
                 spriteTextureList.textureList.Add(texture2D);
             }
-            //return texture2D;
+            return spriteTextureList;
 
         }
 

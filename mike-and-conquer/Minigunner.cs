@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Microsoft.Xna.Framework.Graphics;
-//using System.Collections.Generic;
 
-//using ShpTDSprite = OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite;
 using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 
 
@@ -41,11 +39,10 @@ namespace mike_and_conquer
         private static int globalId = 1;
 
 
-        public Minigunner(int x, int y, ShpFileColorMapper shpFileColorMapper)
+        public Minigunner(int x, int y, string spriteListKey)
         {
 
-            gameSprite = new GameSprite(shpFileColorMapper);
-
+            gameSprite = new GameSprite(spriteListKey);
             position = new Vector2(x, y);
 
             health = 1000;
@@ -56,17 +53,14 @@ namespace mike_and_conquer
             clickDetectionRectangle = createClickDetectionRectangle();
 
             selected = false;
-            unitSelectionCursor = new UnitSelectionCursor(x,y);
-            //AnimationSequence animationSequence = new AnimationSequence(10);
-            //animationSequence.AddFrame(16);
-            //animationSequence.AddFrame(17);
-            //animationSequence.AddFrame(18);
-            //animationSequence.AddFrame(19);
-            //animationSequence.AddFrame(20);
-            //animationSequence.AddFrame(21);
-            //animationSequence.SetAnimate(true);
-            //gameSprite.SetAnimationSequence(animationSequence);
+            unitSelectionCursor = new UnitSelectionCursor(x, y);
 
+            SetupAnimations();
+
+        }
+
+        private void SetupAnimations()
+        {
             AnimationSequence walkingUpAnimationSequence = new AnimationSequence(10);
             walkingUpAnimationSequence.AddFrame(16);
             walkingUpAnimationSequence.AddFrame(17);
@@ -75,15 +69,15 @@ namespace mike_and_conquer
             walkingUpAnimationSequence.AddFrame(20);
             walkingUpAnimationSequence.AddFrame(21);
 
-            gameSprite.AddAnimationSequence((int) AnimationSequences.WALKING_UP , walkingUpAnimationSequence);
+            gameSprite.AddAnimationSequence((int)AnimationSequences.WALKING_UP, walkingUpAnimationSequence);
 
-            AnimationSequence  standingStillAnimationSequence = new AnimationSequence(10);
+            AnimationSequence standingStillAnimationSequence = new AnimationSequence(10);
             standingStillAnimationSequence.AddFrame(0);
-            gameSprite.AddAnimationSequence((int) AnimationSequences.STANDING_STILL, standingStillAnimationSequence);
-            gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.STANDING_STILL);
+            gameSprite.AddAnimationSequence((int)AnimationSequences.STANDING_STILL, standingStillAnimationSequence);
+            gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
 
 
-            AnimationSequence  shootinUpAnimationSequence = new AnimationSequence(10);
+            AnimationSequence shootinUpAnimationSequence = new AnimationSequence(10);
             shootinUpAnimationSequence.AddFrame(65);
             shootinUpAnimationSequence.AddFrame(66);
             shootinUpAnimationSequence.AddFrame(67);
@@ -92,9 +86,7 @@ namespace mike_and_conquer
             shootinUpAnimationSequence.AddFrame(70);
             shootinUpAnimationSequence.AddFrame(71);
             shootinUpAnimationSequence.AddFrame(72);
-            gameSprite.AddAnimationSequence((int) AnimationSequences.SHOOTING_UP, shootinUpAnimationSequence);
-
-
+            gameSprite.AddAnimationSequence((int)AnimationSequences.SHOOTING_UP, shootinUpAnimationSequence);
         }
 
         internal Rectangle createClickDetectionRectangle()

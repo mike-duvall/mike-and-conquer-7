@@ -32,6 +32,14 @@ namespace mike_and_conquer
         private MouseState oldState;
         private GameState currentGameState;
 
+        private TextureListMap textureListMap;
+
+        public TextureListMap TextureListMap
+        {
+            get { return textureListMap; }
+        }
+
+
 
         public MikeAndConqueryGame()
         {
@@ -64,6 +72,10 @@ namespace mike_and_conquer
 
             currentGameState = new PlayingGameState();
 
+
+            textureListMap = new TextureListMap();
+
+
             MikeAndConqueryGame.instance = this;
 
         }
@@ -94,7 +106,7 @@ namespace mike_and_conquer
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(x, y, new GdiShpFileColorMapper());
+            Minigunner newMinigunner = new Minigunner(x, y, "GDIMinigunner");
             gdiMinigunnerList.Add(newMinigunner);
             return newMinigunner;
         }
@@ -135,6 +147,9 @@ namespace mike_and_conquer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            textureListMap.LoadSpriteList("GDIMinigunner", "Content\\e1.shp", new GdiShpFileColorMapper());
+            textureListMap.LoadSpriteList("NODMinigunner", "Content\\e1.shp", new NodShpFileColorMapper());
+            
 
             // TODO: use this.Content to load your game content here
         }

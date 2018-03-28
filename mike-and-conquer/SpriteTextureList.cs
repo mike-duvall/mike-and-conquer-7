@@ -4,7 +4,7 @@ using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 
 namespace mike_and_conquer
 {
-    class SpriteTextureList
+    public class SpriteTextureList
     {
 
         public List<Texture2D> textureList;

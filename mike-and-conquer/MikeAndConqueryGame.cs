@@ -147,9 +147,9 @@ namespace mike_and_conquer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            textureListMap.LoadSpriteList(GdiMinigunner.SPRITE_KEY, "Content\\e1.shp", new GdiShpFileColorMapper());
-            textureListMap.LoadSpriteList(NodMinigunner.SPRITE_KEY, "Content\\e1.shp", new NodShpFileColorMapper());
-            
+            textureListMap.LoadSpriteListFromShpFile(GdiMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, GdiMinigunner.SHP_FILE_COLOR_MAPPER);
+            textureListMap.LoadSpriteListFromShpFile(NodMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, NodMinigunner.SHP_FILE_COLOR_MAPPER);
+
 
             // TODO: use this.Content to load your game content here
         }

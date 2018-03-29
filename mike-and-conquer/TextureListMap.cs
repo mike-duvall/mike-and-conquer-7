@@ -26,7 +26,7 @@ namespace mike_and_conquer
             return spriteTextureListMap[key];
         }
 
-        internal void LoadSpriteList(string key, string shpFileName, ShpFileColorMapper shpFileColorMapper)
+        internal void LoadSpriteListFromShpFile(string key, string shpFileName, ShpFileColorMapper shpFileColorMapper)
         {
             AddTextureList(key, LoadAllTexturesFromShpFile(shpFileName, shpFileColorMapper));
         }

@@ -52,9 +52,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="mike-and-conquer\gamesprite\GameSprite.cs" />
-    <Compile Include="mike-and-conquer\GameState\GameState.cs" />
-    <Compile Include="mike-and-conquer\GameState\MissionAccomplishedGameState.cs" />
-    <Compile Include="mike-and-conquer\GameState\PlayingGameState.cs" />
+    <Compile Include="mike-and-conquer\gamestate\GameState.cs" />
+    <Compile Include="mike-and-conquer\gamestate\MissionAccomplishedGameState.cs" />
+    <Compile Include="mike-and-conquer\gamestate\PlayingGameState.cs" />
     <Compile Include="mike-and-conquer\gameobjects\GdiMinigunner.cs" />
     <Compile Include="mike-and-conquer\gamesprite\NodShpFileColorMapper.cs" />
     <Compile Include="mike-and-conquer\gamesprite\GdiShpFileColorMapper.cs" />

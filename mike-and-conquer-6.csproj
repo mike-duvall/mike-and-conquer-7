@@ -51,17 +51,17 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="mike-and-conquer\GameSprite.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\GameSprite.cs" />
     <Compile Include="mike-and-conquer\GameState\GameState.cs" />
     <Compile Include="mike-and-conquer\GameState\MissionAccomplishedGameState.cs" />
     <Compile Include="mike-and-conquer\GameState\PlayingGameState.cs" />
-    <Compile Include="mike-and-conquer\GdiMinigunner.cs" />
-    <Compile Include="mike-and-conquer\NodShpFileColorMapper.cs" />
-    <Compile Include="mike-and-conquer\GdiShpFileColorMapper.cs" />
-    <Compile Include="mike-and-conquer\MikeAndConqueryGame.cs" />
-    <Compile Include="mike-and-conquer\Minigunner.cs" />
-    <Compile Include="mike-and-conquer\MouseInputHandler.cs" />
-    <Compile Include="mike-and-conquer\NodMinigunner.cs" />
+    <Compile Include="mike-and-conquer\gameobjects\GdiMinigunner.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\NodShpFileColorMapper.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\GdiShpFileColorMapper.cs" />
+    <Compile Include="mike-and-conquer\main\MikeAndConqueryGame.cs" />
+    <Compile Include="mike-and-conquer\gameobjects\Minigunner.cs" />
+    <Compile Include="mike-and-conquer\main\MouseInputHandler.cs" />
+    <Compile Include="mike-and-conquer\gameobjects\NodMinigunner.cs" />
     <Compile Include="mike-and-conquer\openra\Exts.cs" />
     <Compile Include="mike-and-conquer\openra\float2.cs" />
     <Compile Include="mike-and-conquer\openra\int2.cs" />
@@ -76,16 +76,16 @@
     <Compile Include="mike-and-conquer\rest\RestPoint.cs" />
     <Compile Include="mike-and-conquer\rest\RestMinigunner.cs" />
     <Compile Include="mike-and-conquer\rest\NodMinigunnerController.cs" />
-    <Compile Include="mike-and-conquer\Program.cs" />
+    <Compile Include="mike-and-conquer\main\Program.cs" />
     <Compile Include="mike-and-conquer\openra\ShpTDLoader.cs" />
-    <Compile Include="mike-and-conquer\ShpFileColorMapper.cs" />
-    <Compile Include="mike-and-conquer\SpriteTextureList.cs" />
-    <Compile Include="mike-and-conquer\TextureListMap.cs" />
-    <Compile Include="mike-and-conquer\UnitSelectionCursor.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\ShpFileColorMapper.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\SpriteTextureList.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\TextureListMap.cs" />
+    <Compile Include="mike-and-conquer\gameobjects\UnitSelectionCursor.cs" />
     <Compile Include="mike-and-conquer\util\AnimationSequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="mike-and-conquer\rest\ResetGameController.cs" />
-    <Compile Include="mike-and-conquer\Startup.cs" />
+    <Compile Include="mike-and-conquer\main\Startup.cs" />
     <Compile Include="mike-and-conquer\rest\GdiMinigunnerController.cs" />
   </ItemGroup>
   <ItemGroup>

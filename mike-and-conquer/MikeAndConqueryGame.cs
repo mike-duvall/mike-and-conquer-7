@@ -27,9 +27,6 @@ namespace mike_and_conquer
 
         public float scale { get; }
 
-        string Mike { get; set; }
-
-        private MouseState oldState;
         private GameState currentGameState;
 
         private TextureListMap textureListMap;

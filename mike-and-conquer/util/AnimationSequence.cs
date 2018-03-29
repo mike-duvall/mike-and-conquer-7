@@ -1,0 +1,59 @@
+﻿using Boolean = System.Boolean;
+
+using System.Collections.Generic;
+
+namespace mike_and_conquer.util
+{
+    public class AnimationSequence
+    {
+
+        private List<int> frames;
+        private int frameSwitchTimer;
+        private int frameSwitchThreshold;
+        private int currentAnimationFrameIndex;
+
+
+        public AnimationSequence(int frameSwitchThreshold)
+        {
+            this.frameSwitchTimer = 0;
+            this.frameSwitchThreshold = frameSwitchThreshold;
+            this.frames = new List<int>();
+        }
+
+        public void AddFrame(int frame)
+        {
+            frames.Add(frame);
+        }
+
+        public void Update()
+        {
+            if (frameSwitchTimer > frameSwitchThreshold)
+            {
+                frameSwitchTimer = 0;
+                currentAnimationFrameIndex++;
+                if (currentAnimationFrameIndex >= frames.Count - 1)
+                {
+                    currentAnimationFrameIndex = 0;
+                }
+            }
+            else
+            {
+                frameSwitchTimer++;
+            }
+
+        }
+
+
+        public int GetCurrentFrame()
+        {
+            return frames[currentAnimationFrameIndex];
+        }
+
+        public void SetCurrentFrameIndex(int currentAnimationFrame)
+        {
+            this.currentAnimationFrameIndex = currentAnimationFrame;
+        }
+
+
+    }
+}

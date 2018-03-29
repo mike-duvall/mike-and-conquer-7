@@ -2,10 +2,11 @@
 using System;
 using Microsoft.Xna.Framework.Graphics;
 
-using ShpTDSprite = OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite;
+using AnimationSequence = mike_and_conquer.util.AnimationSequence;
+
 
 namespace mike_and_conquer
-{
+{ 
 
     public class Minigunner
     {
@@ -16,19 +17,8 @@ namespace mike_and_conquer
 
 
         UnitSelectionCursor unitSelectionCursor;
-        Texture2D texture;
-
-        Texture2D spriteBorderRectangleTexture;
-        Boolean drawBoundingRectangle;
 
         Rectangle clickDetectionRectangle;
-
-        float scale;
-
-        private int worldWidth;
-        private int worldHeight;
-
-        private Vector2 middleOfSprite;
 
         private String state;
         private Minigunner currentAttackTarget;
@@ -36,8 +26,10 @@ namespace mike_and_conquer
         private int destinationX;
         private int destinationY;
 
+        public GameSprite gameSprite;
 
 
+        enum AnimationSequences { STANDING_STILL, WALKING_UP, SHOOTING_UP };
 
         protected Minigunner()
         {
@@ -47,32 +39,54 @@ namespace mike_and_conquer
         private static int globalId = 1;
 
 
-        public Minigunner(int x, int y)
+        protected Minigunner(int x, int y, string spriteListKey)
         {
 
-            this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
-            this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
-            this.texture = loadTextureFromShpFile("Content\\e1.shp", 0);
-
+            gameSprite = new GameSprite(spriteListKey);
             position = new Vector2(x, y);
 
             health = 1000;
             id = Minigunner.globalId;
             Minigunner.globalId++;
 
-            scale = 5f;
-            spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
-
-            middleOfSprite = new Vector2();
-            middleOfSprite.X = texture.Width / 2;
-            middleOfSprite.Y = texture.Height / 2;
-
 
             clickDetectionRectangle = createClickDetectionRectangle();
 
-            drawBoundingRectangle = false;
             selected = false;
-            unitSelectionCursor = new UnitSelectionCursor(x,y);
+            unitSelectionCursor = new UnitSelectionCursor(x, y);
+
+            SetupAnimations();
+
+        }
+
+        private void SetupAnimations()
+        {
+            AnimationSequence walkingUpAnimationSequence = new AnimationSequence(10);
+            walkingUpAnimationSequence.AddFrame(16);
+            walkingUpAnimationSequence.AddFrame(17);
+            walkingUpAnimationSequence.AddFrame(18);
+            walkingUpAnimationSequence.AddFrame(19);
+            walkingUpAnimationSequence.AddFrame(20);
+            walkingUpAnimationSequence.AddFrame(21);
+
+            gameSprite.AddAnimationSequence((int)AnimationSequences.WALKING_UP, walkingUpAnimationSequence);
+
+            AnimationSequence standingStillAnimationSequence = new AnimationSequence(10);
+            standingStillAnimationSequence.AddFrame(0);
+            gameSprite.AddAnimationSequence((int)AnimationSequences.STANDING_STILL, standingStillAnimationSequence);
+            gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
+
+
+            AnimationSequence shootinUpAnimationSequence = new AnimationSequence(10);
+            shootinUpAnimationSequence.AddFrame(65);
+            shootinUpAnimationSequence.AddFrame(66);
+            shootinUpAnimationSequence.AddFrame(67);
+            shootinUpAnimationSequence.AddFrame(68);
+            shootinUpAnimationSequence.AddFrame(69);
+            shootinUpAnimationSequence.AddFrame(70);
+            shootinUpAnimationSequence.AddFrame(71);
+            shootinUpAnimationSequence.AddFrame(72);
+            gameSprite.AddAnimationSequence((int)AnimationSequences.SHOOTING_UP, shootinUpAnimationSequence);
         }
 
         internal Rectangle createClickDetectionRectangle()
@@ -80,54 +94,18 @@ namespace mike_and_conquer
 
             int rectangleUnscaledWidth = 12;
             int rectangleUnscaledHeight = 12;
-            int scaledWidth = (int)(rectangleUnscaledWidth * scale);
-            int scaledHeight = (int)(rectangleUnscaledHeight * scale);
+            int scaledWidth = (int)(rectangleUnscaledWidth * MikeAndConqueryGame.instance.scale);
+            int scaledHeight = (int)(rectangleUnscaledHeight * MikeAndConqueryGame.instance.scale);
 
             int x = (int)(position.X - (scaledWidth / 2));
-            int y = (int)(position.Y - scaledHeight) + (int)(1 * scale);  
+            int y = (int)(position.Y - scaledHeight) + (int)(1 * MikeAndConqueryGame.instance.scale);  
 
             Rectangle rectangle = new Rectangle(x,y,scaledWidth,scaledHeight);
             return rectangle;
         }
 
-        internal void fillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
-        {
-            int beginIndex = width * lineIndex;
-            for (int i = beginIndex; i < (beginIndex + width); ++i)
-            {
-                data[i] = color;
-            }
-        }
-
-        internal void fillVerticalLine(Color[] data, int width, int height, int lineIndex, Color color)
-        {
-            int beginIndex = lineIndex;
-            for (int i = beginIndex; i < (width * height); i+= width)
-            {
-                data[i] = color;
-            }
-        }
 
 
-        internal Texture2D createSpriteBorderRectangleTexture()
-        {
-            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, texture.Width, texture.Height);
-            Color[] data = new Color[rectangle.Width * rectangle.Height];
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
-            fillVerticalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
-            fillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, Color.White);
-            int centerX = rectangle.Width / 2;
-            int centerY = rectangle.Height / 2;
-            int centerOffset = (centerY * rectangle.Width) + centerX;
-
-            data[centerOffset] = Color.Red;
-
-
-            rectangle.SetData(data);
-            return rectangle;
-
-        }
 
         public void Update(GameTime gameTime)
         {
@@ -154,11 +132,11 @@ namespace mike_and_conquer
 
             if (state == "IDLE")
             {
-                //HandleIdleState(frameTime);
+                HandleIdleState(gameTime);
             }
             else if (state == "MOVING")
             {
-                //HandleMovingState(frameTime);
+                HandleMovingState(gameTime);
             }
             else if (state == "ATTACKING")
             {
@@ -172,6 +150,39 @@ namespace mike_and_conquer
 
 
         }
+
+        private void HandleIdleState(GameTime gameTime)
+        {
+            gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.STANDING_STILL);
+        }
+
+
+        private void HandleMovingState(GameTime gameTime)
+        {
+
+            gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.WALKING_UP);
+
+            MoveTowardsDestination(gameTime);
+            if (IsAtDestination())
+            {
+                state = "IDLE";
+            }
+
+        }
+
+        bool IsAtDestination()
+        {
+
+            int buffer = 2;
+            return (
+                position.X > (destinationX - buffer) &&
+                position.Y < (destinationX + buffer) &&
+                position.Y > (destinationY - buffer) &&
+                position.Y < (destinationY + buffer)
+                );
+
+        }
+
 
 
         private double Distance(double dX0, double dY0, double dX1, double dY1)
@@ -218,12 +229,14 @@ namespace mike_and_conquer
             if (IsInAttackRange())
             {
                 //gameSprite->SetCurrentAnimationSequenceIndex(SHOOTING_UP);
+                gameSprite.SetCurrentAnimationSequenceIndex( (int)  AnimationSequences.SHOOTING_UP);
                 currentAttackTarget.ReduceHealth(10);
 
             }
             else
             {
                 //gameSprite->SetCurrentAnimationSequenceIndex(WALKING_UP);
+                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
                 SetDestination( (int) currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
                 MoveTowardsDestination(gameTime);
             }
@@ -284,12 +297,21 @@ namespace mike_and_conquer
             minigunnerPlottedPosition.X = (float)Math.Round(position.X);
             minigunnerPlottedPosition.Y = (float)Math.Round(position.Y);
 
-            spriteBatch.Draw(texture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
-            if(drawBoundingRectangle)
-            {
-                spriteBatch.Draw(spriteBorderRectangleTexture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
 
-            }
+//            gameSprite.Update(gameTime);
+//            animationSequence.Update();
+            //int currentFrame = animationSequence.GetCurrentFrame();
+            //Texture2D currentTexture = textureList[(int)currentFrame];
+            //spriteBatch.Draw(currentTexture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+
+
+            //if(drawBoundingRectangle)
+            //{
+            //    spriteBatch.Draw(spriteBorderRectangleTexture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+
+            //}
+
+            gameSprite.Draw(gameTime, spriteBatch, minigunnerPlottedPosition);
 
             if(selected)
             {
@@ -299,59 +321,20 @@ namespace mike_and_conquer
 
         }
 
-        internal Texture2D loadTextureFromShpFile(string shpFileName, int indexOfFrameToLoad)
-        {
-            //if (loader.IsShpTD(stream))
-            //{
-            //    frames = null;
-            //    return false;
-            //}
-            //loader.TryParseSprite(stream, out frames);
-
-            int[] remap = { };
-
-            OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
-
-            System.IO.FileStream shpStream = System.IO.File.Open(shpFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
-            OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader loader = new OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader();
-            ShpTDSprite shpTDSprite = new OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite(shpStream);
 
 
-            OpenRA.Graphics.ISpriteFrame frame = shpTDSprite.Frames[indexOfFrameToLoad];
-            byte[] frameData = frame.Data;
-
-            Texture2D texture2D = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, shpTDSprite.Size.Width, shpTDSprite.Size.Height);
-            int numPixels = texture2D.Width * texture2D.Height;
-            Color[] texturePixelData = new Color[numPixels];
-
-            for (int i = 0; i < numPixels; i++)
-            {
-                int basePaletteIndex = frameData[i];
-                int mappedPaletteIndex = MapColorIndex(basePaletteIndex);
-                uint mappedColor = palette[mappedPaletteIndex];
-
-                System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
-                Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
-                texturePixelData[i] = xnaColor;
-            }
-
-            texture2D.SetData(texturePixelData);
-            shpStream.Close();
-            return texture2D;
-
-        }
-
-        protected virtual int MapColorIndex(int index)
-        {
-            return index;
-        }
 
         internal bool ContainsPoint(int mouseX, int mouseY)
         {
+
+
             int x = (int) Math.Round(position.X);
             int y = (int) Math.Round(position.Y);
-            int width = (int) (spriteBorderRectangleTexture.Width * scale); 
-            int height = (int) (spriteBorderRectangleTexture.Height * scale);
+            //int width = (int) (spriteBorderRectangleTexture.Width * scale); 
+            //int height = (int) (spriteBorderRectangleTexture.Height * scale);
+            int width = (int)(gameSprite.unscaledWidth * MikeAndConqueryGame.instance.scale);
+            int height = (int)(gameSprite.unscaledHeight * MikeAndConqueryGame.instance.scale);
+
 
             x = x - (width / 2);
             y = y - (height / 2);

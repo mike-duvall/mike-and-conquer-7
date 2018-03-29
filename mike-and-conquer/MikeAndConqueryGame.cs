@@ -25,35 +25,15 @@ namespace mike_and_conquer
         public List<Minigunner> gdiMinigunnerList { get; }
         public List<Minigunner> nodMinigunnerList { get; }
 
+        public float scale { get; }
 
-        string Mike { get; set; }
-
-        private MouseState oldState;
         private GameState currentGameState;
 
+        private TextureListMap textureListMap;
 
-
-
-        internal Minigunner GetGdiMinigunner()
+        public TextureListMap TextureListMap
         {
-            Minigunner foundMinigunner = null;
-            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            {
-                foundMinigunner = nextMinigunner;
-            }
-
-            return foundMinigunner;
-        }
-
-        internal Minigunner GetNodMinigunner()
-        {
-            Minigunner foundMinigunner = null;
-            foreach (Minigunner nextMinigunner in nodMinigunnerList)
-            {
-                foundMinigunner = nextMinigunner;
-            }
-
-            return foundMinigunner;
+            get { return textureListMap; }
         }
 
 
@@ -61,6 +41,7 @@ namespace mike_and_conquer
         public MikeAndConqueryGame()
         {
             graphics = new GraphicsDeviceManager(this);
+            scale = 5f;
 
             bool makeFullscreen = true;
             //bool makeFullscreen = false;
@@ -88,13 +69,41 @@ namespace mike_and_conquer
 
             currentGameState = new PlayingGameState();
 
+
+            textureListMap = new TextureListMap();
+
+
             MikeAndConqueryGame.instance = this;
 
         }
 
+        internal Minigunner GetGdiMinigunner()
+        {
+            Minigunner foundMinigunner = null;
+            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+            {
+                foundMinigunner = nextMinigunner;
+            }
+
+            return foundMinigunner;
+        }
+
+        internal Minigunner GetNodMinigunner()
+        {
+            Minigunner foundMinigunner = null;
+            foreach (Minigunner nextMinigunner in nodMinigunnerList)
+            {
+                foundMinigunner = nextMinigunner;
+            }
+
+            return foundMinigunner;
+        }
+
+
+
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(x, y);
+            Minigunner newMinigunner = new GdiMinigunner(x, y);
             gdiMinigunnerList.Add(newMinigunner);
             return newMinigunner;
         }
@@ -135,6 +144,9 @@ namespace mike_and_conquer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            textureListMap.LoadSpriteListFromShpFile(GdiMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, GdiMinigunner.SHP_FILE_COLOR_MAPPER);
+            textureListMap.LoadSpriteListFromShpFile(NodMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, NodMinigunner.SHP_FILE_COLOR_MAPPER);
+
 
             // TODO: use this.Content to load your game content here
         }

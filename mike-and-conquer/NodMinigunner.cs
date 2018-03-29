@@ -9,65 +9,14 @@ namespace mike_and_conquer
     class NodMinigunner : Minigunner
     {
 
-        public NodMinigunner(int x, int y) : base(x, y)
+        public const string SPRITE_KEY = "NODMinigunner";
+        public const string SHP_FILE_NAME = "Content\\e1.shp";
+        public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new NodShpFileColorMapper();
+
+        public NodMinigunner(int x, int y) : base(x, y, NodMinigunner.SPRITE_KEY)
         {
         }
 
-
-        override protected int MapColorIndex(int index)
-        {
-            if (index == 176)
-                return 161;
-
-            if (index == 177)
-                return 200;
-
-
-            if (index == 178)
-                return 201;
-
-            if (index == 179)
-                return 202;
-
-            if (index == 180)
-                return 204;
-
-            if (index == 181)
-                return 205;
-
-            if (index == 182)
-                return 206;
-
-            if (index == 183)
-                return 12;
-
-            if (index == 184)
-                return 201;
-
-            if (index == 185)
-                return 202;
-
-            if (index == 186)
-                return 203;
-
-            if (index == 187)
-                return 204;
-
-            if (index == 188)
-                return 205;
-
-            if (index == 189)
-                return 115;
-
-            if (index == 190)
-                return 198;
-
-            if (index == 191)
-                return 114;
-
-            return index;
-
-        }
 
     }
 

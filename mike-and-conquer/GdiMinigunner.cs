@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace mike_and_conquer
 {
-    class NodMinigunner : Minigunner
+    class GdiMinigunner : Minigunner
     {
 
-        public const string SPRITE_KEY = "NODMinigunner";
+        public const string SPRITE_KEY = "GDIMinigunner";
 
-        public NodMinigunner(int x, int y) : base(x, y, NodMinigunner.SPRITE_KEY)
+        public GdiMinigunner(int x, int y) : base(x, y, GdiMinigunner.SPRITE_KEY)
         {
         }
 

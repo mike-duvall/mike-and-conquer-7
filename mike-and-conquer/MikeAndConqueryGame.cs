@@ -106,7 +106,7 @@ namespace mike_and_conquer
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(x, y, "GDIMinigunner");
+            Minigunner newMinigunner = new GdiMinigunner(x, y);
             gdiMinigunnerList.Add(newMinigunner);
             return newMinigunner;
         }
@@ -147,8 +147,8 @@ namespace mike_and_conquer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            textureListMap.LoadSpriteList("GDIMinigunner", "Content\\e1.shp", new GdiShpFileColorMapper());
-            textureListMap.LoadSpriteList("NODMinigunner", "Content\\e1.shp", new NodShpFileColorMapper());
+            textureListMap.LoadSpriteList(GdiMinigunner.SPRITE_KEY, "Content\\e1.shp", new GdiShpFileColorMapper());
+            textureListMap.LoadSpriteList(NodMinigunner.SPRITE_KEY, "Content\\e1.shp", new NodShpFileColorMapper());
             
 
             // TODO: use this.Content to load your game content here

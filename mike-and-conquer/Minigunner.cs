@@ -39,7 +39,7 @@ namespace mike_and_conquer
         private static int globalId = 1;
 
 
-        public Minigunner(int x, int y, string spriteListKey)
+        protected Minigunner(int x, int y, string spriteListKey)
         {
 
             gameSprite = new GameSprite(spriteListKey);

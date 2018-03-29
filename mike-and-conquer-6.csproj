@@ -55,6 +55,7 @@
     <Compile Include="mike-and-conquer\GameState\GameState.cs" />
     <Compile Include="mike-and-conquer\GameState\MissionAccomplishedGameState.cs" />
     <Compile Include="mike-and-conquer\GameState\PlayingGameState.cs" />
+    <Compile Include="mike-and-conquer\GdiMinigunner.cs" />
     <Compile Include="mike-and-conquer\NodShpFileColorMapper.cs" />
     <Compile Include="mike-and-conquer\GdiShpFileColorMapper.cs" />
     <Compile Include="mike-and-conquer\MikeAndConqueryGame.cs" />

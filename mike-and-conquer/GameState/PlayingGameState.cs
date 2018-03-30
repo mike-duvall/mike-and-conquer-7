@@ -6,6 +6,9 @@ using GamePad = Microsoft.Xna.Framework.Input.GamePad;
 using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 using Boolean = System.Boolean;
+using System;
+
+using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 namespace mike_and_conquer
 {
@@ -135,7 +138,18 @@ namespace mike_and_conquer
 
         }
 
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            {
+                nextMinigunner.Draw(gameTime, spriteBatch);
+            }
 
+            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
+            {
+                nextMinigunner.Draw(gameTime, spriteBatch);
+            }
 
+        }
     }
 }

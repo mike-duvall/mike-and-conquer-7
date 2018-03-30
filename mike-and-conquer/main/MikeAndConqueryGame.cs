@@ -182,16 +182,17 @@ namespace mike_and_conquer
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
 
+            currentGameState.Draw(gameTime, spriteBatch);
 
-            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            {
-                nextMinigunner.Draw(gameTime, spriteBatch);
-            }
+            //foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+            //{
+            //    nextMinigunner.Draw(gameTime, spriteBatch);
+            //}
 
-            foreach (Minigunner nextMinigunner in nodMinigunnerList)
-            {
-                nextMinigunner.Draw(gameTime, spriteBatch);
-            }
+            //foreach (Minigunner nextMinigunner in nodMinigunnerList)
+            //{
+            //    nextMinigunner.Draw(gameTime, spriteBatch);
+            //}
 
 
             spriteBatch.End();

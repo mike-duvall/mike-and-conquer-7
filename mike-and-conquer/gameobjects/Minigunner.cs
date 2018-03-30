@@ -349,6 +349,11 @@ namespace mike_and_conquer
             currentAttackTarget = enemyMinigunner;
 
         }
+
+        public void SetAnimate(bool animateFlag)
+        {
+            gameSprite.SetAnimate(animateFlag);
+        }
     }
 
 

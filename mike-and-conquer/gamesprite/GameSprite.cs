@@ -132,6 +132,11 @@ namespace mike_and_conquer
             }
         }
 
+        public void SetAnimate(bool animateFlag)
+        {
+            animationSequenceMap[currentAnimationSequenceIndex].SetAnimate(animateFlag);
+        }
+
 
     }
 

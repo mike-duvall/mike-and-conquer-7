@@ -1,21 +1,19 @@
-﻿using Microsoft.Xna.Framework;
-using MouseState = Microsoft.Xna.Framework.Input.MouseState;
-using Mouse = Microsoft.Xna.Framework.Input.Mouse;
-using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
-using GamePad = Microsoft.Xna.Framework.Input.GamePad;
-using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
-using Boolean = System.Boolean;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
+using GameTime = Microsoft.Xna.Framework.GameTime;
+using MissionAccomplishedMessage = mike_and_conquer.gameobjects.MissionAccomplishedMessage;
 
 namespace mike_and_conquer
 {
     class MissionAccomplishedGameState : GameState
     {
 
+
+
+        private MissionAccomplishedMessage message;
+
         public MissionAccomplishedGameState()
         {
+            message = new MissionAccomplishedMessage();
             foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
             {
                 nextMinigunner.SetAnimate(false);
@@ -42,6 +40,7 @@ namespace mike_and_conquer
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            message.Draw(gameTime, spriteBatch);
             foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
             {
                 nextMinigunner.Draw(gameTime, spriteBatch);

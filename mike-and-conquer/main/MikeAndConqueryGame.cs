@@ -3,7 +3,7 @@
 
 using Game = Microsoft.Xna.Framework.Game;
 
-using MouseState = Microsoft.Xna.Framework.Input.MouseState;
+//using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
@@ -12,6 +12,7 @@ using Color = Microsoft.Xna.Framework.Color;
 
 using SpriteSortMode = Microsoft.Xna.Framework.Graphics.SpriteSortMode;
 using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
+using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 
 
 namespace mike_and_conquer
@@ -146,6 +147,14 @@ namespace mike_and_conquer
             spriteBatch = new SpriteBatch(GraphicsDevice);
             textureListMap.LoadSpriteListFromShpFile(GdiMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, GdiMinigunner.SHP_FILE_COLOR_MAPPER);
             textureListMap.LoadSpriteListFromShpFile(NodMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, NodMinigunner.SHP_FILE_COLOR_MAPPER);
+
+            SpriteTextureList spriteTextureList = new SpriteTextureList();
+            Texture2D texture2D = Content.Load<Texture2D>("Mission");
+            spriteTextureList.textureList.Add(texture2D);
+            spriteTextureList.textureWidth = texture2D.Width;
+            spriteTextureList.textureHeight = texture2D.Height;
+
+            TextureListMap.AddTextureList(gameobjects.MissionAccomplishedMessage.SPRITE_KEY, spriteTextureList);
 
 
             // TODO: use this.Content to load your game content here

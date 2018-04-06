@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 
-
 using Game = Microsoft.Xna.Framework.Game;
-
-//using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
@@ -129,9 +126,6 @@ namespace mike_and_conquer
         {
             // TODO: Add your initialization logic here
 
-            //loadMinigunnerTexture();
-            //loadSelectionCursorTexture();
-
             this.IsMouseVisible = true;
             base.Initialize();
         }
@@ -198,17 +192,6 @@ namespace mike_and_conquer
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
 
             currentGameState.Draw(gameTime, spriteBatch);
-
-            //foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            //{
-            //    nextMinigunner.Draw(gameTime, spriteBatch);
-            //}
-
-            //foreach (Minigunner nextMinigunner in nodMinigunnerList)
-            //{
-            //    nextMinigunner.Draw(gameTime, spriteBatch);
-            //}
-
 
             spriteBatch.End();
 

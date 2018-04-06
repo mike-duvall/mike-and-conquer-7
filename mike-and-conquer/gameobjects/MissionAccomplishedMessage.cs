@@ -21,19 +21,21 @@ namespace mike_and_conquer.gameobjects
 
         public MissionAccomplishedMessage()
         {
+            int baseX = 800;
+            int baseY = 500;
             missionGameSprite = new GameSprite(MISSION_SPRITE_KEY);
             AnimationSequence animationSequence = new AnimationSequence(1);
             animationSequence.AddFrame(0);
             missionGameSprite.AddAnimationSequence(0, animationSequence);
             missionGameSprite.SetCurrentAnimationSequenceIndex(0);
-            missionGameSprite.Scale = 2;
-            missionPosition = new Vector2(500, 400);
+            missionGameSprite.Scale = 1;
+            missionPosition = new Vector2(baseX, baseY);
 
             accomplishedGameSprite = new GameSprite(ACCOMPLISHED_SPRITE_KEY);
             accomplishedGameSprite.AddAnimationSequence(0, animationSequence);
             accomplishedGameSprite.SetCurrentAnimationSequenceIndex(0);
-            accomplishedGameSprite.Scale = 2;
-            accomplishedPosition = new Vector2(600, 500);
+            accomplishedGameSprite.Scale = 1;
+            accomplishedPosition = new Vector2(baseX - 5, baseY + 50);
 
 
 

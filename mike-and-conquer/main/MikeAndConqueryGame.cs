@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 
-
 using Game = Microsoft.Xna.Framework.Game;
-
-using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
@@ -12,6 +9,7 @@ using Color = Microsoft.Xna.Framework.Color;
 
 using SpriteSortMode = Microsoft.Xna.Framework.Graphics.SpriteSortMode;
 using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
+using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 
 
 namespace mike_and_conquer
@@ -128,9 +126,6 @@ namespace mike_and_conquer
         {
             // TODO: Add your initialization logic here
 
-            //loadMinigunnerTexture();
-            //loadSelectionCursorTexture();
-
             this.IsMouseVisible = true;
             base.Initialize();
         }
@@ -147,8 +142,22 @@ namespace mike_and_conquer
             textureListMap.LoadSpriteListFromShpFile(GdiMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, GdiMinigunner.SHP_FILE_COLOR_MAPPER);
             textureListMap.LoadSpriteListFromShpFile(NodMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, NodMinigunner.SHP_FILE_COLOR_MAPPER);
 
+            LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
+            LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
+
 
             // TODO: use this.Content to load your game content here
+        }
+
+        private void LoadSingleTextureFromFile(string key, string fileName)
+        {
+            SpriteTextureList spriteTextureList = new SpriteTextureList();
+            Texture2D texture2D = Content.Load<Texture2D>(fileName);
+            spriteTextureList.textureList.Add(texture2D);
+            spriteTextureList.textureWidth = texture2D.Width;
+            spriteTextureList.textureHeight = texture2D.Height;
+
+            TextureListMap.AddTextureList(key, spriteTextureList);
         }
 
         /// <summary>
@@ -182,17 +191,7 @@ namespace mike_and_conquer
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
 
-
-            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            {
-                nextMinigunner.Draw(gameTime, spriteBatch);
-            }
-
-            foreach (Minigunner nextMinigunner in nodMinigunnerList)
-            {
-                nextMinigunner.Draw(gameTime, spriteBatch);
-            }
-
+            currentGameState.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
 

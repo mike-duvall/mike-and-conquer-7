@@ -31,6 +31,14 @@ namespace mike_and_conquer
 
         public int unscaledWidth;
         public int unscaledHeight;
+        private float scale;
+
+
+        public float Scale
+        {
+            get { return scale; }
+            set { scale = value; }
+        }
 
         public GameSprite(string spriteListKey)
         {
@@ -47,6 +55,7 @@ namespace mike_and_conquer
             middleOfSprite.Y = spriteTextureList.textureHeight / 2;
 
             drawBoundingRectangle = false;
+            scale = MikeAndConqueryGame.instance.scale;
         }
 
         public void SetCurrentAnimationSequenceIndex(int aniatmionSequenceIndex)
@@ -80,12 +89,12 @@ namespace mike_and_conquer
             int currentTextureIndex = currentAnimationSequence.GetCurrentFrame();
             currentTexture = spriteTextureList.textureList[currentTextureIndex];
 
-            spriteBatch.Draw(currentTexture, position, null, Color.White, 0f, middleOfSprite, MikeAndConqueryGame.instance.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(currentTexture, position, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
 
 
             if (drawBoundingRectangle)
             {
-                spriteBatch.Draw(spriteBorderRectangleTexture, position, null, Color.White, 0f, middleOfSprite, MikeAndConqueryGame.instance.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(spriteBorderRectangleTexture, position, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
 
             }
 
@@ -130,6 +139,11 @@ namespace mike_and_conquer
             {
                 data[i] = color;
             }
+        }
+
+        public void SetAnimate(bool animateFlag)
+        {
+            animationSequenceMap[currentAnimationSequenceIndex].SetAnimate(animateFlag);
         }
 
 

@@ -148,16 +148,22 @@ namespace mike_and_conquer
             textureListMap.LoadSpriteListFromShpFile(GdiMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, GdiMinigunner.SHP_FILE_COLOR_MAPPER);
             textureListMap.LoadSpriteListFromShpFile(NodMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, NodMinigunner.SHP_FILE_COLOR_MAPPER);
 
+            LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
+            LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
+
+
+            // TODO: use this.Content to load your game content here
+        }
+
+        private void LoadSingleTextureFromFile(string key, string fileName)
+        {
             SpriteTextureList spriteTextureList = new SpriteTextureList();
-            Texture2D texture2D = Content.Load<Texture2D>("Mission");
+            Texture2D texture2D = Content.Load<Texture2D>(fileName);
             spriteTextureList.textureList.Add(texture2D);
             spriteTextureList.textureWidth = texture2D.Width;
             spriteTextureList.textureHeight = texture2D.Height;
 
-            TextureListMap.AddTextureList(gameobjects.MissionAccomplishedMessage.SPRITE_KEY, spriteTextureList);
-
-
-            // TODO: use this.Content to load your game content here
+            TextureListMap.AddTextureList(key, spriteTextureList);
         }
 
         /// <summary>

@@ -208,5 +208,12 @@ namespace mike_and_conquer
         }
 
 
+        public void HandleReset()
+        {
+            gdiMinigunnerList.Clear();
+            nodMinigunnerList.Clear();
+            currentGameState = new PlayingGameState();
+
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace mike_and_conquer.rest
 
         public void Post()
         {
-            int x = 3;
+            MikeAndConqueryGame.instance.HandleReset();
         }
 
 

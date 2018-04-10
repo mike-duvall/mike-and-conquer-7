@@ -51,9 +51,11 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="mike-and-conquer\gameobjects\MissionFailedMessage.cs" />
     <Compile Include="mike-and-conquer\gameobjects\MissionAccomplishedMessage.cs" />
     <Compile Include="mike-and-conquer\gamesprite\GameSprite.cs" />
     <Compile Include="mike-and-conquer\gamestate\GameState.cs" />
+    <Compile Include="mike-and-conquer\gamestate\MissionFailedGameState.cs" />
     <Compile Include="mike-and-conquer\gamestate\MissionAccomplishedGameState.cs" />
     <Compile Include="mike-and-conquer\gamestate\PlayingGameState.cs" />
     <Compile Include="mike-and-conquer\gameobjects\GdiMinigunner.cs" />

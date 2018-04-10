@@ -40,19 +40,34 @@ namespace mike_and_conquer
 
             foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
             {
-                nextMinigunner.Update(gameTime);
+                if(nextMinigunner.health > 0)
+                {
+                    nextMinigunner.Update(gameTime);
+                }
+
             }
 
 
             foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
             {
-                nextMinigunner.Update(gameTime);
+                if (nextMinigunner.health > 0)
+                {
+                    nextMinigunner.Update(gameTime);
+                }
             }
 
-            if (EnemyMinigunnersExistAndAreAllDead())
+            if (NodMinigunnersExistAndAreAllDead())
             {
                 return new MissionAccomplishedGameState();
             }
+
+            if (GdiMinigunnersExistAndAreAllDead())
+            {
+                return new MissionFailedGameState();
+            }
+
+
+
             //else if (MinigunnersExistAndAreAllDead())
             //{
             //    return new MissionFailedGameState(game);
@@ -64,7 +79,7 @@ namespace mike_and_conquer
 
         }
 
-        internal Boolean EnemyMinigunnersExistAndAreAllDead()
+        internal Boolean NodMinigunnersExistAndAreAllDead()
         {
             if(MikeAndConqueryGame.instance.nodMinigunnerList.Count == 0)
             {
@@ -78,10 +93,25 @@ namespace mike_and_conquer
                     allDead = false;
                 }
             }
-
             return allDead;
+        }
 
 
+        internal Boolean GdiMinigunnersExistAndAreAllDead()
+        {
+            if (MikeAndConqueryGame.instance.gdiMinigunnerList.Count == 0)
+            {
+                return false;
+            }
+            Boolean allDead = true;
+            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            {
+                if (nextMinigunner.health > 0)
+                {
+                    allDead = false;
+                }
+            }
+            return allDead;
         }
 
 
@@ -142,12 +172,18 @@ namespace mike_and_conquer
         {
             foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
             {
-                nextMinigunner.Draw(gameTime, spriteBatch);
+                if (nextMinigunner.health > 0)
+                {
+                    nextMinigunner.Draw(gameTime, spriteBatch);
+                }
             }
 
             foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
             {
-                nextMinigunner.Draw(gameTime, spriteBatch);
+                if (nextMinigunner.health > 0)
+                {
+                    nextMinigunner.Draw(gameTime, spriteBatch);
+                }
             }
 
         }

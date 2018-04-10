@@ -144,6 +144,7 @@ namespace mike_and_conquer
 
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
+            LoadSingleTextureFromFile(gameobjects.MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
 
 
             // TODO: use this.Content to load your game content here
@@ -168,6 +169,8 @@ namespace mike_and_conquer
         {
             // TODO: Unload any non ContentManager content here
         }
+
+
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,

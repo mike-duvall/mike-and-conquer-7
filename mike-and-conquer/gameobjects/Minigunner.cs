@@ -3,7 +3,7 @@ using System;
 using Microsoft.Xna.Framework.Graphics;
 
 using AnimationSequence = mike_and_conquer.util.AnimationSequence;
-
+using System.Collections.Generic;
 
 namespace mike_and_conquer
 { 
@@ -28,6 +28,10 @@ namespace mike_and_conquer
 
         public GameSprite gameSprite;
 
+        private bool isEnemy;
+        private bool enemyStateIsSleeping;
+        private int enemySleepCountdownTimer;
+
 
         enum AnimationSequences { STANDING_STILL, WALKING_UP, SHOOTING_UP };
 
@@ -39,8 +43,13 @@ namespace mike_and_conquer
         private static int globalId = 1;
 
 
-        protected Minigunner(int x, int y, string spriteListKey)
+        protected Minigunner(int x, int y, bool isEnemy, string spriteListKey)
         {
+
+            this.isEnemy = isEnemy;
+            this.enemyStateIsSleeping = true;
+            this.enemySleepCountdownTimer = 400;
+
 
             gameSprite = new GameSprite(spriteListKey);
             position = new Vector2(x, y);
@@ -124,11 +133,11 @@ namespace mike_and_conquer
             
             unitSelectionCursor.position = new Vector2(this.position.X  , this.position.Y);
 
-            //if (isEnemy)
-            //{
-            //    HandleEnemyUpdate(frameTime);
-            //    return;
-            //}
+            if (isEnemy)
+            {
+                HandleEnemyUpdate(gameTime);
+                return;
+            }
 
             if (state == "IDLE")
             {
@@ -150,6 +159,78 @@ namespace mike_and_conquer
 
 
         }
+
+
+        private void HandleEnemyUpdate(GameTime gameTime)
+        {
+            if (!enemyStateIsSleeping)
+            {
+
+                if (currentAttackTarget != null && currentAttackTarget.health <= 0)
+                {
+                    currentAttackTarget = FindFirstNonDeadGdiMinigunner();
+
+                    if (currentAttackTarget == null)
+                    {
+                        enemyStateIsSleeping = true;
+                        enemySleepCountdownTimer = 400;
+                        gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+                        return;
+                    }
+                }
+
+
+
+                if (IsInAttackRange())
+                {
+                    gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
+                    currentAttackTarget.ReduceHealth(10);
+                }
+                else
+                {
+                    gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+                    SetDestination((int)currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
+                    MoveTowardsDestination(gameTime);
+                }
+
+            }
+            else
+            {
+                enemySleepCountdownTimer--;
+                if (enemySleepCountdownTimer <= 0)
+                {
+                    enemyStateIsSleeping = false;
+                    currentAttackTarget = FindFirstNonDeadGdiMinigunner();
+                    if (currentAttackTarget == null)
+                    {
+                        enemyStateIsSleeping = true;
+                        enemySleepCountdownTimer = 400;
+                    }
+
+                }
+
+            }
+
+        }
+
+
+
+        private Minigunner FindFirstNonDeadGdiMinigunner()
+        {
+            List<Minigunner> gdiMinigunners = (MikeAndConqueryGame.instance.gdiMinigunnerList);
+
+            foreach (Minigunner nextMinigunner in gdiMinigunners)
+            {
+                if (nextMinigunner.health > 0)
+                {
+                    return nextMinigunner;
+                }
+            }
+
+            return null;
+
+        }
+
 
         private void HandleIdleState(GameTime gameTime)
         {

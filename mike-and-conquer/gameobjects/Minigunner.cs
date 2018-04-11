@@ -254,7 +254,7 @@ namespace mike_and_conquer
         bool IsAtDestination()
         {
 
-            int buffer = 2;
+            int buffer = 1;
             return (
                 position.X > (destinationX - buffer) &&
                 position.Y < (destinationX + buffer) &&
@@ -424,11 +424,18 @@ namespace mike_and_conquer
             return clickDetectionRectangle.Contains(new Point(mouseX, mouseY));
         }
 
+
+        internal void OrderToMoveToDestination(int x, int y)
+        {
+            state = "MOVING";
+            SetDestination(x, y);
+        }
+
+
         internal void OrderToMoveToAndAttackEnemyUnit(NodMinigunner enemyMinigunner)
         {
             state = "ATTACKING";
             currentAttackTarget = enemyMinigunner;
-
         }
 
         public void SetAnimate(bool animateFlag)

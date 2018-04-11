@@ -10,7 +10,7 @@ using Color = Microsoft.Xna.Framework.Color;
 using SpriteSortMode = Microsoft.Xna.Framework.Graphics.SpriteSortMode;
 using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
-
+using System;
 
 namespace mike_and_conquer
 {
@@ -75,12 +75,15 @@ namespace mike_and_conquer
 
         }
 
-        internal Minigunner GetGdiMinigunner()
+        internal Minigunner GetGdiMinigunner(int id)
         {
             Minigunner foundMinigunner = null;
             foreach (Minigunner nextMinigunner in gdiMinigunnerList)
             {
-                foundMinigunner = nextMinigunner;
+                if (nextMinigunner.id == id)
+                {
+                    foundMinigunner = nextMinigunner;
+                }
             }
 
             return foundMinigunner;
@@ -148,6 +151,19 @@ namespace mike_and_conquer
 
 
             // TODO: use this.Content to load your game content here
+        }
+
+        internal void SelectSingleGDIUnit(Minigunner minigunner)
+        {
+            minigunner.selected = true;
+            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+            {
+               if (nextMinigunner.id != minigunner.id)
+               {
+                    nextMinigunner.selected = false;
+               }
+           }
+
         }
 
         private void LoadSingleTextureFromFile(string key, string fileName)

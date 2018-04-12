@@ -30,6 +30,10 @@ namespace mike_and_conquer
             {
                 HandleLeftClick(newState.Position.X, newState.Position.Y);
             }
+            else if (newState.RightButton == ButtonState.Pressed && oldState.RightButton == ButtonState.Released)
+            {
+                HandleRightClick(newState.Position.X, newState.Position.Y);
+            }
 
             oldState = newState; // this reassigns
 
@@ -123,12 +127,36 @@ namespace mike_and_conquer
             {
                 handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseX, mouseY);
             }
-            //if (!handledEvent)
-            //{
-            //    CheckForAndHandleLeftClickOnMap(input);
-            //}
+            if (!handledEvent)
+            {
+                CheckForAndHandleLeftClickOnMap(mouseX, mouseY);
+            }
 
         }
+
+        internal void HandleRightClick(int mouseX, int mouseY)
+        {
+            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            {
+                nextMinigunner.selected = false;
+            }
+
+        }
+
+
+
+        private bool CheckForAndHandleLeftClickOnMap(int mouseX, int mouseY)
+        {
+            foreach(Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            {
+                if(nextMinigunner.selected == true)
+                {
+                    nextMinigunner.OrderToMoveToDestination(mouseX, mouseY);
+                }
+            }
+            return true;
+        }
+
 
         internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)
         {
@@ -138,7 +166,7 @@ namespace mike_and_conquer
                 if (nextMinigunner.ContainsPoint(mouseX, mouseY))
                 {
                     handled = true;
-                    nextMinigunner.selected = true;
+                    MikeAndConqueryGame.instance.SelectSingleGDIUnit(nextMinigunner);
                 }
             }
 

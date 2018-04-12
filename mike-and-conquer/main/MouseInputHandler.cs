@@ -65,7 +65,22 @@ namespace mike_and_conquer_6.mike_and_conquer
         private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
         private const int MOUSEEVENTF_RIGHTUP = 0x10;
 
-        public static void DoMouseClick(uint mouseX, uint mouseY, int screenWidth, int screenHeight)
+
+        public enum ClickType { RIGHT_CLICK, LEFT_CLICK };
+
+
+        public static void DoLeftMouseClick( uint mouseX, uint mouseY, int screenWidth, int screenHeight)
+        {
+            DoMouseClick(ClickType.LEFT_CLICK, mouseX, mouseY, screenWidth, screenHeight);
+        }
+
+        public static void DoRightMouseClick(uint mouseX, uint mouseY, int screenWidth, int screenHeight)
+        {
+            DoMouseClick(ClickType.RIGHT_CLICK, mouseX, mouseY, screenWidth, screenHeight);
+        }
+
+
+        public static void DoMouseClick(ClickType clickType, uint mouseX, uint mouseY, int screenWidth, int screenHeight)
         {
             // Must normalize mouse coordinates.
             // See https://msdn.microsoft.com/en-us/library/windows/desktop/ms646260(v=vs.85).aspx
@@ -81,15 +96,30 @@ namespace mike_and_conquer_6.mike_and_conquer
             mouseInput.mkhi.mi.dy = (int)normalizedMouseY;
 
 
+
+            uint mouseDownFlag;
+            uint mouseUpFlag;
+
+            if(clickType == ClickType.LEFT_CLICK)
+            {
+                mouseDownFlag = MOUSEEVENTF_LEFTDOWN;
+                mouseUpFlag = MOUSEEVENTF_LEFTUP;
+            }
+            else 
+            {
+                mouseDownFlag = MOUSEEVENTF_RIGHTDOWN;
+                mouseUpFlag = MOUSEEVENTF_RIGHTUP;
+            }
+
             mouseInput.mkhi.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
             uint y3 = SendInput(1, ref mouseInput, size);
 
-            mouseInput.mkhi.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+            mouseInput.mkhi.mi.dwFlags = mouseDownFlag;
             uint y = SendInput(1, ref mouseInput, size);
 
             System.Threading.Thread.Sleep(1000);
 
-            mouseInput.mkhi.mi.dwFlags = MOUSEEVENTF_LEFTUP;
+            mouseInput.mkhi.mi.dwFlags = mouseUpFlag;
             uint y2 = SendInput(1, ref mouseInput, size);
 
             System.Threading.Thread.Sleep(1000);

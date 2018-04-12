@@ -30,6 +30,10 @@ namespace mike_and_conquer
             {
                 HandleLeftClick(newState.Position.X, newState.Position.Y);
             }
+            else if (newState.RightButton == ButtonState.Pressed && oldState.RightButton == ButtonState.Released)
+            {
+                HandleRightClick(newState.Position.X, newState.Position.Y);
+            }
 
             oldState = newState; // this reassigns
 
@@ -129,6 +133,16 @@ namespace mike_and_conquer
             }
 
         }
+
+        internal void HandleRightClick(int mouseX, int mouseY)
+        {
+            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            {
+                nextMinigunner.selected = false;
+            }
+
+        }
+
 
 
         private bool CheckForAndHandleLeftClickOnMap(int mouseX, int mouseY)

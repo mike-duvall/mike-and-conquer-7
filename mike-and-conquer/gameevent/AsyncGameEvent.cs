@@ -1,6 +1,6 @@
 ﻿using System;
 
-using AutoResetEvent = System.Threading.AutoResetEvent;
+using ManualResetEvent = System.Threading.ManualResetEvent;
 
 namespace mike_and_conquer.gameevent
 {
@@ -11,7 +11,7 @@ namespace mike_and_conquer.gameevent
         {
             this.result = null;
             bool signaled = false;
-            this.conditon = new AutoResetEvent(signaled);
+            this.conditon = new ManualResetEvent(signaled);
         }
 
         public GameState Process()
@@ -32,7 +32,8 @@ namespace mike_and_conquer.gameevent
         protected abstract GameState ProcessImpl();
 	    protected Object result;
 
-        private AutoResetEvent conditon;
+//        private AutoResetEvent conditon;
+        private ManualResetEvent conditon;
 
 
     }

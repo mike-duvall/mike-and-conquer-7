@@ -52,6 +52,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="mike-and-conquer\gameevent\AsyncGameEvent.cs" />
+    <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameobjects\MissionFailedMessage.cs" />
     <Compile Include="mike-and-conquer\gameobjects\MissionAccomplishedMessage.cs" />

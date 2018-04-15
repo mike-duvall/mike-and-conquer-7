@@ -12,6 +12,7 @@ using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;
 using CreateGDIMinigunnerGameEvent = mike_and_conquer.gameevent.CreateGDIMinigunnerGameEvent;
+using GetGDIMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetGDIMinigunnerByIdGameEvent;
 
 namespace mike_and_conquer
 {
@@ -276,14 +277,6 @@ namespace mike_and_conquer
 
         public Minigunner CreateGDIMinigunnerViaEvent(int x, int y)
         {
-            //CreateGDIMinigunnerGameEvent* gameEvent = new CreateGDIMinigunnerGameEvent(this, x, y);
-            //std::unique_lock < std::mutex > lock (gameEventsMutex) ;
-            //gameEvents.push_back(gameEvent);
-            //lock.unlock();
-            //Minigunner* gdiMinigunner = gameEvent->GetMinigunner();
-            //return gdiMinigunner;
-
-
             CreateGDIMinigunnerGameEvent gameEvent = new CreateGDIMinigunnerGameEvent(x, y);
             lock (gameEvents)
             {
@@ -295,13 +288,20 @@ namespace mike_and_conquer
 
         }
 
-        //Minigunner InitializeGDIMinigunner(int minigunnerX, int minigunnerY)
-        //{
-        //    bool isEnemy = false;
-        //    Minigunner minigunner = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, gdiShpFileColorMapper);
-        //    gdiMinigunners.push_back(minigunner);
-        //    return minigunner;
-        //}
+
+        public Minigunner GetGDIMinigunnerByIdViaEvent(int id)
+        {
+            GetGDIMinigunnerByIdGameEvent gameEvent = new GetGDIMinigunnerByIdGameEvent(id);
+
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            Minigunner gdiMinigunner = gameEvent.GetMinigunner();
+            return gdiMinigunner;
+        }
+
 
 
     }

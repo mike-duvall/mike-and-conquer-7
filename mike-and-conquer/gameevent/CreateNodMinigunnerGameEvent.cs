@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace mike_and_conquer.gameevent 
 {
-    public class CreateNodMinigunnerGameEvent : AsyncGameEvent
+    public class CreateGDIMinigunnerGameEvent : AsyncGameEvent
     {
 
 
         private int x, y;
 
-        public CreateNodMinigunnerGameEvent(int x, int y)
+        public CreateGDIMinigunnerGameEvent(int x, int y)
         {
             this.x = x;
             this.y = y;
@@ -28,9 +28,15 @@ namespace mike_and_conquer.gameevent
         protected override GameState ProcessImpl()
         {
             GameState newGameState = null;
-            result = MikeAndConqueryGame.instance.AddNodMinigunner(x,y);
+            result = MikeAndConqueryGame.instance.AddGdiMinigunner(x,y);
             return newGameState;
         }
+
+
+
+
+
+
 
     }
 }

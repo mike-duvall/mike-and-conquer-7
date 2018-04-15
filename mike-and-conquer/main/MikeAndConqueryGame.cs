@@ -13,6 +13,7 @@ using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;
 using CreateGDIMinigunnerGameEvent = mike_and_conquer.gameevent.CreateGDIMinigunnerGameEvent;
 using GetGDIMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetGDIMinigunnerByIdGameEvent;
+using CreateNodMinigunnerGameEvent = mike_and_conquer.gameevent.CreateNodMinigunnerGameEvent;
 using GetNodMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetNodMinigunnerByIdGameEvent;
 
 namespace mike_and_conquer
@@ -306,6 +307,21 @@ namespace mike_and_conquer
             Minigunner gdiMinigunner = gameEvent.GetMinigunner();
             return gdiMinigunner;
         }
+
+
+        public Minigunner CreateNodMinigunnerViaEvent(int x, int y)
+        {
+            CreateNodMinigunnerGameEvent gameEvent = new CreateNodMinigunnerGameEvent(x, y);
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            Minigunner minigunner = gameEvent.GetMinigunner();
+            return minigunner;
+
+        }
+
 
         public Minigunner GetNodMinigunnerByIdViaEvent(int id)
         {

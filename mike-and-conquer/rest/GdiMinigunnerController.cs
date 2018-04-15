@@ -27,7 +27,8 @@ namespace mike_and_conquer.rest
 
         public IHttpActionResult Post([FromBody]RestMinigunner inputMinigunner)
         {
-            Minigunner minigunner = MikeAndConqueryGame.instance.AddGdiMinigunner(inputMinigunner.x, inputMinigunner.y);
+            Minigunner minigunner = MikeAndConqueryGame.instance.CreateGDIMinigunnerViaEvent(inputMinigunner.x, inputMinigunner.y);
+
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;
             restMinigunner.x = (int)minigunner.position.X;

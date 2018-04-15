@@ -51,6 +51,8 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="mike-and-conquer\gameevent\AsyncGameEvent.cs" />
+    <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameobjects\MissionFailedMessage.cs" />
     <Compile Include="mike-and-conquer\gameobjects\MissionAccomplishedMessage.cs" />
     <Compile Include="mike-and-conquer\gamesprite\GameSprite.cs" />
@@ -135,6 +137,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="errors.txt" />
     <Content Include="Icon.ico" />
     <Content Include="RemoteDebugging.txt" />
     <Content Include="xcc-mixer-notes.txt" />

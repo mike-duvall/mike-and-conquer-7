@@ -10,7 +10,8 @@ using Color = Microsoft.Xna.Framework.Color;
 using SpriteSortMode = Microsoft.Xna.Framework.Graphics.SpriteSortMode;
 using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
-using System;
+using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;
+using CreateGDIMinigunnerGameEvent = mike_and_conquer.gameevent.CreateGDIMinigunnerGameEvent;
 
 namespace mike_and_conquer
 {
@@ -34,6 +35,8 @@ namespace mike_and_conquer
             get { return textureListMap; }
         }
 
+
+        private List<AsyncGameEvent> gameEvents;
 
 
         public MikeAndConqueryGame()
@@ -70,6 +73,7 @@ namespace mike_and_conquer
 
             textureListMap = new TextureListMap();
 
+            gameEvents = new List<AsyncGameEvent>();
 
             MikeAndConqueryGame.instance = this;
 
@@ -231,5 +235,75 @@ namespace mike_and_conquer
             currentGameState = new PlayingGameState();
 
         }
+
+
+        public GameState ProcessGameEvents()
+        {
+            GameState newGameState = null;
+
+            //std::vector<AsyncGameEvent*>::iterator iter;
+            //std::lock_guard < std::mutex > lock (gameEventsMutex) ;
+            //for (iter = gameEvents.begin(); iter != gameEvents.end(); ++iter)
+            //{
+            //    AsyncGameEvent* nextGameEvent = *iter;
+            //    GameState* returnedGameState = nextGameEvent->Process();
+            //    if (returnedGameState != nullptr && newGameState == nullptr)
+            //    {
+            //        newGameState = returnedGameState;
+            //    }
+            //}
+            //gameEvents.clear();
+
+
+            lock(gameEvents)
+            {
+                foreach(AsyncGameEvent nextGameEvent in gameEvents)
+                {
+                    GameState returnedGameState = nextGameEvent.Process();
+                    if (returnedGameState != null && newGameState == null)
+                    {
+                        newGameState = returnedGameState;
+                    }
+                }
+                gameEvents.Clear();
+            }
+
+
+            return newGameState;
+
+        }
+
+
+        public Minigunner CreateGDIMinigunnerViaEvent(int x, int y)
+        {
+            //CreateGDIMinigunnerGameEvent* gameEvent = new CreateGDIMinigunnerGameEvent(this, x, y);
+            //std::unique_lock < std::mutex > lock (gameEventsMutex) ;
+            //gameEvents.push_back(gameEvent);
+            //lock.unlock();
+            //Minigunner* gdiMinigunner = gameEvent->GetMinigunner();
+            //return gdiMinigunner;
+
+
+            CreateGDIMinigunnerGameEvent gameEvent = new CreateGDIMinigunnerGameEvent(x, y);
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            Minigunner gdiMinigunner = gameEvent.GetMinigunner();
+            return gdiMinigunner;
+
+        }
+
+        //Minigunner InitializeGDIMinigunner(int minigunnerX, int minigunnerY)
+        //{
+        //    bool isEnemy = false;
+        //    Minigunner minigunner = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, gdiShpFileColorMapper);
+        //    gdiMinigunners.push_back(minigunner);
+        //    return minigunner;
+        //}
+
+
     }
+
 }

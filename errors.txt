@@ -1,0 +1,25 @@
+﻿Got error below when running tests.  Wondering if it is a threading issue, where stuff is getting cleared out by a ResetGame() in the middle of this loop.  Not sure
+
+Exception thrown: 'System.NullReferenceException' in mike-and-conquer-6.exe
+The thread 0x844 has exited with code 0 (0x0).
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at mike_and_conquer.PlayingGameState.Draw(GameTime gameTime, SpriteBatch spriteBatch) in D:\workspace\mike-and-conquer-6\mike-and-conquer\gamestate\PlayingGameState.cs:line 211
+   at mike_and_conquer.MikeAndConqueryGame.Draw(GameTime gameTime) in D:\workspace\mike-and-conquer-6\mike-and-conquer\main\MikeAndConqueryGame.cs:line 213
+   at Microsoft.Xna.Framework.Game.DoDraw(GameTime gameTime)
+   at Microsoft.Xna.Framework.Game.Tick()
+   at MonoGame.Framework.WinFormsGameWindow.RunLoop()
+   at MonoGame.Framework.WinFormsGamePlatform.RunLoop()
+   at Microsoft.Xna.Framework.Game.Run(GameRunBehavior runBehavior)
+   at Microsoft.Xna.Framework.Game.Run()
+   at mike_and_conquer.Program.Main() in D:\workspace\mike-and-conquer-6\mike-and-conquer\main\Program.cs:line 25
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at mike_and_conquer.PlayingGameState.Draw(GameTime gameTime, SpriteBatch spriteBatch) in D:\workspace\mike-and-conquer-6\mike-and-conquer\gamestate\PlayingGameState.cs:line 211
+   at mike_and_conquer.MikeAndConqueryGame.Draw(GameTime gameTime) in D:\workspace\mike-and-conquer-6\mike-and-conquer\main\MikeAndConqueryGame.cs:line 213
+   at Microsoft.Xna.Framework.Game.DoDraw(GameTime gameTime)
+   at Microsoft.Xna.Framework.Game.Tick()
+   at MonoGame.Framework.WinFormsGameWindow.RunLoop()
+   at MonoGame.Framework.WinFormsGamePlatform.RunLoop()
+   at Microsoft.Xna.Framework.Game.Run(GameRunBehavior runBehavior)
+   at Microsoft.Xna.Framework.Game.Run()
+   at mike_and_conquer.Program.Main() in D:\workspace\mike-and-conquer-6\mike-and-conquer\main\Program.cs:line 25
+The program '[2236] mike-and-conquer-6.exe' has exited with code 0 (0x0).

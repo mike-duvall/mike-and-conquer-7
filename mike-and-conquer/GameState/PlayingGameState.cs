@@ -24,6 +24,9 @@ namespace mike_and_conquer
 
         public override GameState Update(GameTime gameTime)
         {
+
+            MikeAndConqueryGame.instance.ProcessGameEvents();
+
             MouseState newState = Mouse.GetState();
 
             if (newState.LeftButton == ButtonState.Pressed && oldState.LeftButton == ButtonState.Released)

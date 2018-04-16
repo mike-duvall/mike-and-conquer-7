@@ -52,6 +52,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="mike-and-conquer\gameevent\AsyncGameEvent.cs" />
+    <Compile Include="mike-and-conquer\gameevent\ResetGameGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateNodMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetNodMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />

@@ -14,7 +14,7 @@ namespace mike_and_conquer.rest
     {
         public IHttpActionResult Get()
         {
-            GameState currentGameState = MikeAndConqueryGame.instance.GetCurrentGameState();
+            GameState currentGameState = MikeAndConqueryGame.instance.GetCurrentGameStateViaEvent();
             RestGameState restGameState = new RestGameState();
             restGameState.gameState = currentGameState.GetName();
             return Ok(restGameState);

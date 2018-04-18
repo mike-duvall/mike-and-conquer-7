@@ -8,7 +8,7 @@ namespace mike_and_conquer.rest
 
         public void Post()
         {
-            MikeAndConqueryGame.instance.HandleReset();
+            MikeAndConqueryGame.instance.ResetGameViaEvent();
         }
 
 

@@ -13,6 +13,7 @@ namespace mike_and_conquer
 
         public MissionFailedGameState()
         {
+
             message = new MissionFailedMessage();
             foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
             {
@@ -33,8 +34,15 @@ namespace mike_and_conquer
 
         public override GameState Update(GameTime gameTime)
         {
-
-            return this;
+            GameState nextGameState = MikeAndConqueryGame.instance.ProcessGameEvents();
+            if (nextGameState != null)
+            {
+                return nextGameState;
+            }
+            else
+            {
+                return this;
+            }
         }
 
 

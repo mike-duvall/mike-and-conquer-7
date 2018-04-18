@@ -10,7 +10,16 @@ using Color = Microsoft.Xna.Framework.Color;
 using SpriteSortMode = Microsoft.Xna.Framework.Graphics.SpriteSortMode;
 using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
-using System;
+using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;
+using CreateGDIMinigunnerGameEvent = mike_and_conquer.gameevent.CreateGDIMinigunnerGameEvent;
+using GetGDIMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetGDIMinigunnerByIdGameEvent;
+using CreateNodMinigunnerGameEvent = mike_and_conquer.gameevent.CreateNodMinigunnerGameEvent;
+using GetNodMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetNodMinigunnerByIdGameEvent;
+using ResetGameGameEvent = mike_and_conquer.gameevent.ResetGameGameEvent;
+using GetCurrentGameStateGameEvent = mike_and_conquer.gameevent.GetCurrentGameStateGameEvent;
+
+
+
 
 namespace mike_and_conquer
 {
@@ -34,6 +43,8 @@ namespace mike_and_conquer
             get { return textureListMap; }
         }
 
+
+        private List<AsyncGameEvent> gameEvents;
 
 
         public MikeAndConqueryGame()
@@ -70,6 +81,7 @@ namespace mike_and_conquer
 
             textureListMap = new TextureListMap();
 
+            gameEvents = new List<AsyncGameEvent>();
 
             MikeAndConqueryGame.instance = this;
 
@@ -89,12 +101,16 @@ namespace mike_and_conquer
             return foundMinigunner;
         }
 
-        internal Minigunner GetNodMinigunner()
+        internal Minigunner GetNodMinigunner(int id)
         {
             Minigunner foundMinigunner = null;
             foreach (Minigunner nextMinigunner in nodMinigunnerList)
             {
-                foundMinigunner = nextMinigunner;
+                if (nextMinigunner.id == id)
+                {
+                    foundMinigunner = nextMinigunner;
+                }
+
             }
 
             return foundMinigunner;
@@ -224,12 +240,117 @@ namespace mike_and_conquer
         }
 
 
-        public void HandleReset()
+        public GameState HandleReset()
         {
             gdiMinigunnerList.Clear();
             nodMinigunnerList.Clear();
-            currentGameState = new PlayingGameState();
+            return new PlayingGameState();
+        }
+
+
+        public GameState ProcessGameEvents()
+        {
+            GameState newGameState = null;
+
+            lock(gameEvents)
+            {
+                foreach(AsyncGameEvent nextGameEvent in gameEvents)
+                {
+                    GameState returnedGameState = nextGameEvent.Process();
+                    if (returnedGameState != null && newGameState == null)
+                    {
+                        newGameState = returnedGameState;
+                    }
+                }
+                gameEvents.Clear();
+            }
+
+            return newGameState;
 
         }
+
+
+        public Minigunner CreateGDIMinigunnerViaEvent(int x, int y)
+        {
+            CreateGDIMinigunnerGameEvent gameEvent = new CreateGDIMinigunnerGameEvent(x, y);
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            Minigunner gdiMinigunner = gameEvent.GetMinigunner();
+            return gdiMinigunner;
+
+        }
+
+
+        public Minigunner GetGDIMinigunnerByIdViaEvent(int id)
+        {
+            GetGDIMinigunnerByIdGameEvent gameEvent = new GetGDIMinigunnerByIdGameEvent(id);
+
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            Minigunner gdiMinigunner = gameEvent.GetMinigunner();
+            return gdiMinigunner;
+        }
+
+
+        public Minigunner CreateNodMinigunnerViaEvent(int x, int y)
+        {
+            CreateNodMinigunnerGameEvent gameEvent = new CreateNodMinigunnerGameEvent(x, y);
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            Minigunner minigunner = gameEvent.GetMinigunner();
+            return minigunner;
+
+        }
+
+
+        public Minigunner GetNodMinigunnerByIdViaEvent(int id)
+        {
+            GetNodMinigunnerByIdGameEvent gameEvent = new GetNodMinigunnerByIdGameEvent(id);
+
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            Minigunner gdiMinigunner = gameEvent.GetMinigunner();
+            return gdiMinigunner;
+        }
+
+
+        public void  ResetGameViaEvent()
+        {
+            ResetGameGameEvent gameEvent = new ResetGameGameEvent();
+
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+        }
+
+        public GameState GetCurrentGameStateViaEvent()
+        {
+            GetCurrentGameStateGameEvent gameEvent = new GetCurrentGameStateGameEvent();
+
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            return gameEvent.GetGameState();
+        }
+
+
+
     }
+
 }

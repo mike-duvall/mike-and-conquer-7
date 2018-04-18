@@ -245,28 +245,12 @@ namespace mike_and_conquer
             gdiMinigunnerList.Clear();
             nodMinigunnerList.Clear();
             return new PlayingGameState();
-//            currentGameState = new PlayingGameState();
-
         }
 
 
         public GameState ProcessGameEvents()
         {
             GameState newGameState = null;
-
-            //std::vector<AsyncGameEvent*>::iterator iter;
-            //std::lock_guard < std::mutex > lock (gameEventsMutex) ;
-            //for (iter = gameEvents.begin(); iter != gameEvents.end(); ++iter)
-            //{
-            //    AsyncGameEvent* nextGameEvent = *iter;
-            //    GameState* returnedGameState = nextGameEvent->Process();
-            //    if (returnedGameState != nullptr && newGameState == nullptr)
-            //    {
-            //        newGameState = returnedGameState;
-            //    }
-            //}
-            //gameEvents.clear();
-
 
             lock(gameEvents)
             {
@@ -280,7 +264,6 @@ namespace mike_and_conquer
                 }
                 gameEvents.Clear();
             }
-
 
             return newGameState;
 

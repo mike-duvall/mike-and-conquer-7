@@ -32,9 +32,7 @@ namespace mike_and_conquer.gameevent
         protected abstract GameState ProcessImpl();
 	    protected Object result;
 
-//        private AutoResetEvent conditon;
         private ManualResetEvent conditon;
-
 
     }
 }

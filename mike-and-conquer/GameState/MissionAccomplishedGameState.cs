@@ -34,17 +34,6 @@ namespace mike_and_conquer
 
         public override GameState Update(GameTime gameTime)
         {
-            //GameState* nextGameState = game.ProcessGameEvents();
-            //if (nextGameState != nullptr)
-            //{
-            //    return nextGameState;
-            //}
-            //else
-            //{
-            //    return this;
-            //}
-
-
             GameState nextGameState = MikeAndConqueryGame.instance.ProcessGameEvents();
             if(nextGameState != null)
             {
@@ -54,7 +43,6 @@ namespace mike_and_conquer
             {
                 return this;
             }
-
         }
 
 

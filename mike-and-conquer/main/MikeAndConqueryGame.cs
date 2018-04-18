@@ -16,6 +16,8 @@ using GetGDIMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetGDIMinigunne
 using CreateNodMinigunnerGameEvent = mike_and_conquer.gameevent.CreateNodMinigunnerGameEvent;
 using GetNodMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetNodMinigunnerByIdGameEvent;
 using ResetGameGameEvent = mike_and_conquer.gameevent.ResetGameGameEvent;
+using GetCurrentGameStateGameEvent = mike_and_conquer.gameevent.GetCurrentGameStateGameEvent;
+
 
 
 
@@ -343,7 +345,6 @@ namespace mike_and_conquer
 
         public void  ResetGameViaEvent()
         {
-            //GetGDIMinigunnerByIdGameEvent gameEvent = new GetGDIMinigunnerByIdGameEvent(id);
             ResetGameGameEvent gameEvent = new ResetGameGameEvent();
 
             lock (gameEvents)
@@ -351,6 +352,18 @@ namespace mike_and_conquer
                 gameEvents.Add(gameEvent);
             }
 
+        }
+
+        public GameState GetCurrentGameStateViaEvent()
+        {
+            GetCurrentGameStateGameEvent gameEvent = new GetCurrentGameStateGameEvent();
+
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            return gameEvent.GetGameState();
         }
 
 

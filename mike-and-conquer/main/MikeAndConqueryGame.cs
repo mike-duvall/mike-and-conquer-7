@@ -50,9 +50,12 @@ namespace mike_and_conquer
         private TextureListMap textureListMap;
         private List<AsyncGameEvent> gameEvents;
 
+        private bool testMode;
 
-        public MikeAndConqueryGame()
+
+        public MikeAndConqueryGame(bool testMode)
         {
+            this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
             scale = 5f;
 
@@ -100,6 +103,12 @@ namespace mike_and_conquer
             // TODO: Add your initialization logic here
             this.IsMouseVisible = true;
             base.Initialize();
+            if (!testMode)
+            {
+                AddNodMinigunner(100, 100);
+                AddGdiMinigunner(400, 400);
+            }
+
         }
 
 

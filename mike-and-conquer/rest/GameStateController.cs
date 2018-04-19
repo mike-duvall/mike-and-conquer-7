@@ -8,8 +8,8 @@ namespace mike_and_conquer.rest
     {
         public string gameState { get; set; }
     }
-
-
+     
+     
     public class GameStateController : ApiController
     {
         public IHttpActionResult Get()

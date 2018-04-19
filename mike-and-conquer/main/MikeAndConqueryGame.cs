@@ -17,6 +17,9 @@ using CreateNodMinigunnerGameEvent = mike_and_conquer.gameevent.CreateNodMinigun
 using GetNodMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetNodMinigunnerByIdGameEvent;
 using ResetGameGameEvent = mike_and_conquer.gameevent.ResetGameGameEvent;
 using GetCurrentGameStateGameEvent = mike_and_conquer.gameevent.GetCurrentGameStateGameEvent;
+using KeyboardState = Microsoft.Xna.Framework.Input.KeyboardState;
+using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 
 
@@ -26,17 +29,14 @@ namespace mike_and_conquer
 
     public class MikeAndConqueryGame : Game
     {
+
+
         public static MikeAndConqueryGame instance;
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+
         public List<Minigunner> gdiMinigunnerList { get; }
         public List<Minigunner> nodMinigunnerList { get; }
 
         public float scale { get; }
-
-        private GameState currentGameState;
-
-        private TextureListMap textureListMap;
 
         public TextureListMap TextureListMap
         {
@@ -44,6 +44,10 @@ namespace mike_and_conquer
         }
 
 
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private GameState currentGameState;
+        private TextureListMap textureListMap;
         private List<AsyncGameEvent> gameEvents;
 
 
@@ -65,9 +69,7 @@ namespace mike_and_conquer
                 graphics.IsFullScreen = false;
                 graphics.PreferredBackBufferWidth = 1280;
                 graphics.PreferredBackBufferHeight = 1024;
-
             }
-
 
             Content.RootDirectory = "Content";
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
@@ -78,14 +80,97 @@ namespace mike_and_conquer
 
             currentGameState = new PlayingGameState();
 
-
             textureListMap = new TextureListMap();
 
             gameEvents = new List<AsyncGameEvent>();
 
             MikeAndConqueryGame.instance = this;
-
         }
+
+
+
+        /// <summary>
+        /// Allows the game to perform any initialization it needs to before starting to run.
+        /// This is where it can query for any required services and load any non-graphic
+        /// related content.  Calling base.Initialize will enumerate through any components
+        /// and initialize them as well.
+        /// </summary>
+        protected override void Initialize()
+        {
+            // TODO: Add your initialization logic here
+            this.IsMouseVisible = true;
+            base.Initialize();
+        }
+
+
+        /// <summary>
+        /// LoadContent will be called once per game and is the place to load
+        /// all of your content.
+        /// </summary>
+        protected override void LoadContent()
+        {
+            // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            textureListMap.LoadSpriteListFromShpFile(GdiMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, GdiMinigunner.SHP_FILE_COLOR_MAPPER);
+            textureListMap.LoadSpriteListFromShpFile(NodMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, NodMinigunner.SHP_FILE_COLOR_MAPPER);
+
+            LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
+            LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
+            LoadSingleTextureFromFile(gameobjects.MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
+            // TODO: use this.Content to load your game content here
+        }
+
+        /// <summary>
+        /// UnloadContent will be called once per game and is the place to unload
+        /// game-specific content.
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            // TODO: Unload any non ContentManager content here
+        }
+
+
+
+        /// <summary>
+        /// Allows the game to run logic such as updating the world,
+        /// checking for collisions, gathering input, and playing audio.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        protected override void Update(GameTime gameTime)
+        {
+            KeyboardState state = Keyboard.GetState();
+
+            // If they hit esc, exit
+            if (state.IsKeyDown(Keys.Escape))
+            {
+                Program.restServer.Dispose();
+                Exit();
+            }
+            currentGameState = currentGameState.Update(gameTime);
+            base.Update(gameTime);
+        }
+
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            // TODO: Add your drawing code here
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+
+            currentGameState.Draw(gameTime, spriteBatch);
+
+            spriteBatch.End();
+
+            base.Draw(gameTime);
+        }
+
+
+
+
 
         internal Minigunner GetGdiMinigunner(int id)
         {
@@ -135,40 +220,6 @@ namespace mike_and_conquer
 
 
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
-        protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-
-            this.IsMouseVisible = true;
-            base.Initialize();
-        }
-
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent()
-        {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            textureListMap.LoadSpriteListFromShpFile(GdiMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, GdiMinigunner.SHP_FILE_COLOR_MAPPER);
-            textureListMap.LoadSpriteListFromShpFile(NodMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, NodMinigunner.SHP_FILE_COLOR_MAPPER);
-
-            LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
-            LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
-            LoadSingleTextureFromFile(gameobjects.MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
-
-
-            // TODO: use this.Content to load your game content here
-        }
-
         internal void SelectSingleGDIUnit(Minigunner minigunner)
         {
             minigunner.selected = true;
@@ -192,47 +243,6 @@ namespace mike_and_conquer
 
             TextureListMap.AddTextureList(key, spriteTextureList);
         }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
-
-
-
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
-        {
-            currentGameState = currentGameState.Update(gameTime);
-            base.Update(gameTime);
-        }
-
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-
-            currentGameState.Draw(gameTime, spriteBatch);
-
-            spriteBatch.End();
-
-            base.Draw(gameTime);
-        }
-
 
         internal GameState GetCurrentGameState()
         {
@@ -348,8 +358,6 @@ namespace mike_and_conquer
 
             return gameEvent.GetGameState();
         }
-
-
 
     }
 

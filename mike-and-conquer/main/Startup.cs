@@ -17,11 +17,9 @@ namespace mike_and_conquer
                 defaults: new { id = RouteParameter.Optional }
             );
 
-
             config.Formatters.Clear();
             config.Formatters.Add(new System.Net.Http.Formatting.JsonMediaTypeFormatter());
             config.MapHttpAttributeRoutes();
-
 
             appBuilder.UseWebApi(config);
         }

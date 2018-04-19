@@ -25,6 +25,7 @@ namespace mike_and_conquer
         public override GameState Update(GameTime gameTime)
         {
 
+            // TODO:  Consider pulling handling of GameEvents into base class
             GameState nextGameState = MikeAndConqueryGame.instance.ProcessGameEvents();
             if (nextGameState != null)
             {
@@ -43,12 +44,7 @@ namespace mike_and_conquer
                 HandleRightClick(newState.Position.X, newState.Position.Y);
             }
 
-            oldState = newState; // this reassigns
-
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            //    Exit();
-
-
+            oldState = newState; 
 
             foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
             {
@@ -56,9 +52,7 @@ namespace mike_and_conquer
                 {
                     nextMinigunner.Update(gameTime);
                 }
-
             }
-
 
             foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
             {
@@ -77,13 +71,6 @@ namespace mike_and_conquer
             {
                 return new MissionFailedGameState();
             }
-
-
-
-            //else if (MinigunnersExistAndAreAllDead())
-            //{
-            //    return new MissionFailedGameState(game);
-            //}
             else
             {
                 return this;

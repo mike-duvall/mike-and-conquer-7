@@ -23,8 +23,6 @@ namespace mike_and_conquer.gameevent
             return (Minigunner)GetResult();
         }
 
-
-
         protected override GameState ProcessImpl()
         {
             GameState newGameState = null;

@@ -7,8 +7,6 @@ namespace mike_and_conquer
     class MissionAccomplishedGameState : GameState
     {
 
-
-
         private MissionAccomplishedMessage message;
 
         public MissionAccomplishedGameState()

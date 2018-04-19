@@ -32,6 +32,7 @@ namespace mike_and_conquer
         }
 
 
+        // TODO Consider pulling loading of ShpFile to TextListMap into a separate ShpFileLoader class
         internal SpriteTextureList LoadAllTexturesFromShpFile(string shpFileName, ShpFileColorMapper shpFileColorMapper)
         {
 

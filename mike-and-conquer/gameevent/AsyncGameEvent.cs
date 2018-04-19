@@ -21,6 +21,10 @@ namespace mike_and_conquer.gameevent
             return newGameState;
         }
 
+
+        // TODO Consider making an abstract SetResult() method
+        // to force people to make a conscious decision on 
+        // setting a result
         public Object GetResult()
         {
             conditon.WaitOne();

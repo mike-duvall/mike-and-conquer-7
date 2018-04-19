@@ -23,7 +23,6 @@ namespace mike_and_conquer
         Texture2D spriteBorderRectangleTexture;
         Boolean drawBoundingRectangle;
 
-
         private int worldWidth;
         private int worldHeight;
 
@@ -32,7 +31,6 @@ namespace mike_and_conquer
         public int unscaledWidth;
         public int unscaledHeight;
         private float scale;
-
 
         public float Scale
         {
@@ -91,13 +89,10 @@ namespace mike_and_conquer
 
             spriteBatch.Draw(currentTexture, position, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
 
-
             if (drawBoundingRectangle)
             {
                 spriteBatch.Draw(spriteBorderRectangleTexture, position, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
-
             }
-
 
         }
 
@@ -115,7 +110,6 @@ namespace mike_and_conquer
             int centerOffset = (centerY * rectangle.Width) + centerX;
 
             data[centerOffset] = Color.Red;
-
 
             rectangle.SetData(data);
             return rectangle;

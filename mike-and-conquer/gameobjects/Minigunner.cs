@@ -152,12 +152,6 @@ namespace mike_and_conquer
                 HandleAttackingState(gameTime);
             }
 
-            //if (input->isRightMouseDown())
-            //{
-            //    SetSelected(false);
-            //}
-
-
         }
 
 
@@ -330,7 +324,8 @@ namespace mike_and_conquer
             int newX = (int)position.X;
             int newY = (int)position.Y;
 
-            double velocity = .15;
+//            double velocity = .15;
+            double velocity = .07;
             double delta = gameTime.ElapsedGameTime.TotalMilliseconds * velocity;
 
 

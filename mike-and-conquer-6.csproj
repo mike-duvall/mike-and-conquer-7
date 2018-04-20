@@ -144,6 +144,7 @@
   <ItemGroup>
     <Content Include="errors.txt" />
     <Content Include="Icon.ico" />
+    <Content Include="Notes.txt" />
     <Content Include="RemoteDebugging.txt" />
     <Content Include="xcc-mixer-notes.txt" />
   </ItemGroup>

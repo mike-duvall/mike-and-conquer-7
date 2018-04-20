@@ -1,0 +1,22 @@
+﻿
+
+Need to make it so that units can't occupy same space
+Need to make units move toward destination in straight line (instead of Y first, then X)
+Need to change cursor when selecting unit to attack, so that know you did an attack command vs a move command
+Need to show unit health bar
+Need to have death animation
+
+Human controlled units need to have automatic attack mode
+
+Need to be able to multiselect units
+
+Need to slow down game speed (or make it adjustable)
+
+
+Need to enable scenario where user can drag select all units, attack a specific target, then move on the next target after that, and thereby win.
+
+
+Enemy need to attack closest gdi unit
+
+If enemy is attacking unit X and then unit Y moves closer, enemy needs to attack unit Y instead
+(i.e enemy needs to pay attention to current state and adjust if it makes sense)

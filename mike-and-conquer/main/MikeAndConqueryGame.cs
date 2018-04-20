@@ -105,8 +105,8 @@ namespace mike_and_conquer
             base.Initialize();
             if (!testMode)
             {
-                AddNodMinigunner(1400, 100);
-                AddNodMinigunner(1450, 200);
+                AddNodMinigunner(1100, 100);
+                AddNodMinigunner(1150, 200);
 
                 AddGdiMinigunner(100, 1000);
                 AddGdiMinigunner(150, 1000);

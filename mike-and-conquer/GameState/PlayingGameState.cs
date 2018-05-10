@@ -209,6 +209,13 @@ namespace mike_and_conquer
                 }
             }
 
+
+
+            Pick up here.  Need to have Game class start managing a list of MinigunnerViews in addition to Minigunners
+            Will need the top level logic of adding a Minigunner to also add a View
+            Will need to loop through and draw views as well as updating Minigunner
+
+
         }
     }
 }

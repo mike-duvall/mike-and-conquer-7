@@ -6,7 +6,8 @@ using GamePad = Microsoft.Xna.Framework.Input.GamePad;
 using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 using Boolean = System.Boolean;
-using System;
+using MinigunnerView = mike_and_conquer.gameobjects.MinigunnerView;
+
 
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
@@ -193,28 +194,21 @@ namespace mike_and_conquer
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            foreach (MinigunnerView nextMinigunnerView in MikeAndConqueryGame.instance.GdiMinigunnerViewList)
             {
-                if (nextMinigunner.health > 0)
-                {
-                    nextMinigunner.Draw(gameTime, spriteBatch);
-                }
+                nextMinigunnerView.Draw(gameTime, spriteBatch);
             }
 
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
+            foreach (MinigunnerView nextMinigunnerView in MikeAndConqueryGame.instance.NodMinigunnerViewList)
             {
-                if (nextMinigunner.health > 0)
-                {
-                    nextMinigunner.Draw(gameTime, spriteBatch);
-                }
+                nextMinigunnerView.Draw(gameTime, spriteBatch);
             }
 
 
 
-            Pick up here.  Need to have Game class start managing a list of MinigunnerViews in addition to Minigunners
-            Will need the top level logic of adding a Minigunner to also add a View
-            Will need to loop through and draw views as well as updating Minigunner
-
+            // Make UnitSelectionCursor move along with minigunner
+            // Make animations work
+            // Make mingunners get drawn during mission failed and success states
 
         }
     }

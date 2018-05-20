@@ -20,6 +20,7 @@ using GetCurrentGameStateGameEvent = mike_and_conquer.gameevent.GetCurrentGameSt
 using KeyboardState = Microsoft.Xna.Framework.Input.KeyboardState;
 using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
+using MinigunnerView = mike_and_conquer.gameobjects.MinigunnerView;
 
 
 
@@ -35,6 +36,20 @@ namespace mike_and_conquer
 
         public List<Minigunner> gdiMinigunnerList { get; }
         public List<Minigunner> nodMinigunnerList { get; }
+
+        private List<MinigunnerView> gdiMinigunnerViewList;
+        private List<MinigunnerView> nodMinigunnerViewList;
+
+        public List<MinigunnerView> GdiMinigunnerViewList
+        {
+            get { return gdiMinigunnerViewList; }
+        }
+
+
+        public List<MinigunnerView> NodMinigunnerViewList
+        {
+            get { return nodMinigunnerViewList; }
+        }
 
         public float scale { get; }
 
@@ -80,6 +95,9 @@ namespace mike_and_conquer
 
             gdiMinigunnerList = new List<Minigunner>();
             nodMinigunnerList = new List<Minigunner>();
+
+            gdiMinigunnerViewList = new List<MinigunnerView>();
+            nodMinigunnerViewList = new List<MinigunnerView>();
 
             currentGameState = new PlayingGameState();
 
@@ -219,6 +237,9 @@ namespace mike_and_conquer
         {
             Minigunner newMinigunner = new GdiMinigunner(x, y);
             gdiMinigunnerList.Add(newMinigunner);
+
+            MinigunnerView newMinigunnerView = new MinigunnerView(newMinigunner, GdiMinigunner.SPRITE_KEY);
+            GdiMinigunnerViewList.Add(newMinigunnerView);
             return newMinigunner;
         }
 
@@ -227,6 +248,9 @@ namespace mike_and_conquer
         {
             Minigunner newMinigunner = new NodMinigunner(x, y);
             nodMinigunnerList.Add(newMinigunner);
+            MinigunnerView newMinigunnerView = new MinigunnerView(newMinigunner, NodMinigunner.SPRITE_KEY);
+            NodMinigunnerViewList.Add(newMinigunnerView);
+
             return newMinigunner;
         }
 
@@ -266,6 +290,8 @@ namespace mike_and_conquer
         {
             gdiMinigunnerList.Clear();
             nodMinigunnerList.Clear();
+            gdiMinigunnerViewList.Clear();
+            nodMinigunnerViewList.Clear();
             return new PlayingGameState();
         }
 

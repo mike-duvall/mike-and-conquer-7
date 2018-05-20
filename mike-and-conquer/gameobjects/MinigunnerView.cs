@@ -8,7 +8,7 @@ using Math = System.Math;
 
 namespace mike_and_conquer.gameobjects
 {
-    class MinigunnerView
+    public class MinigunnerView
     {
         private GameSprite gameSprite;
         private UnitSelectionCursor unitSelectionCursor;
@@ -75,6 +75,11 @@ namespace mike_and_conquer.gameobjects
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            if(myMinigunner.health <= 0)
+            {
+                return;
+            }
+
             Vector2 minigunnerPlottedPosition = new Vector2();
             minigunnerPlottedPosition.X = (float)Math.Round(myMinigunner.position.X);
             minigunnerPlottedPosition.Y = (float)Math.Round(myMinigunner.position.Y);

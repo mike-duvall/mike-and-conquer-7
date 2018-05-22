@@ -49,6 +49,8 @@ namespace mike_and_conquer
 
         private bool isEnemy;
         private bool enemyStateIsSleeping;
+
+        private static readonly int ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE = 1000;
         private int enemySleepCountdownTimer;
 
 
@@ -70,7 +72,7 @@ namespace mike_and_conquer
 
             this.isEnemy = isEnemy;
             this.enemyStateIsSleeping = true;
-            this.enemySleepCountdownTimer = 400;
+            this.enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
             this.state = "IDLE";
 
             // TODO move to base class and just have sublcass hard code
@@ -193,13 +195,14 @@ namespace mike_and_conquer
                     if (currentAttackTarget == null)
                     {
                         enemyStateIsSleeping = true;
-                        enemySleepCountdownTimer = 400;
+                        enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
                         // Might still need to update state = "MOVING" here
                         // Need to refactor and better split out AI vs non AI control
 //                        gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
                         return;
                     }
                 }
+
 
 
 
@@ -226,7 +229,7 @@ namespace mike_and_conquer
                     if (currentAttackTarget == null)
                     {
                         enemyStateIsSleeping = true;
-                        enemySleepCountdownTimer = 400;
+                        enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
                     }
 
                 }
@@ -276,13 +279,18 @@ namespace mike_and_conquer
         bool IsAtDestination()
         {
 
-            int buffer = 1;
+            int buffer = 0;
+            //return (
+            //    position.X > (destinationX - buffer) &&
+            //    position.Y < (destinationX + buffer) &&
+            //    position.Y > (destinationY - buffer) &&
+            //    position.Y < (destinationY + buffer)
+            //    );
+
             return (
-                position.X > (destinationX - buffer) &&
-                position.Y < (destinationX + buffer) &&
-                position.Y > (destinationY - buffer) &&
-                position.Y < (destinationY + buffer)
-                );
+                position.X == destinationX &&
+                position.Y == destinationX);
+
 
         }
 

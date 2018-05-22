@@ -206,9 +206,10 @@ namespace mike_and_conquer
 
 
 
-            // Make UnitSelectionCursor move along with minigunner
-            // Make animations work
-            // Make mingunners get drawn during mission failed and success states
+            //Make UnitSelectionCursor move along with minigunner
+            //Make animations work
+            //Make mingunners get drawn during mission failed and success states
+
 
         }
     }

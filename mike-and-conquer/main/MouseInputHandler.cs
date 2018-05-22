@@ -82,6 +82,8 @@ namespace mike_and_conquer_6.mike_and_conquer
 
         public static void DoMouseClick(ClickType clickType, uint mouseX, uint mouseY, int screenWidth, int screenHeight)
         {
+            mouseX++;
+            mouseY++;
             // Must normalize mouse coordinates.
             // See https://msdn.microsoft.com/en-us/library/windows/desktop/ms646260(v=vs.85).aspx
             double normalizedMouseX = mouseX * (65535.0f / screenWidth);

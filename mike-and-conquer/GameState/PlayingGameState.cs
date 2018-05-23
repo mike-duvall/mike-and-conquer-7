@@ -204,11 +204,11 @@ namespace mike_and_conquer
                 nextMinigunnerView.Draw(gameTime, spriteBatch);
             }
 
-
-
-            //Make UnitSelectionCursor move along with minigunner
             //Make animations work
+                // Need to expose some kind of "sub" state that corresponds to the actual animation
+                // Such as major state = "ATTACKING" but sub state = "MOVING"
             //Make mingunners get drawn during mission failed and success states
+            //    Fix bug with selecting unit after it has started moving
 
 
         }

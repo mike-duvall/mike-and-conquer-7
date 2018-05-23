@@ -56,22 +56,22 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-        public void Update()
-        {
-            unitSelectionCursor.position = new Vector2(myMinigunner.position.X, myMinigunner.position.Y);
-            if(myMinigunner.State == "IDLE" )
-            {
-                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
-            }
-            else if(myMinigunner.State == "MOVING")
-            {
-                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
-            }
-            else if(myMinigunner.State == "ATTACKING")
-            {
-                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
-            }
-        }
+        //public void Update()
+        //{
+        //    unitSelectionCursor.position = new Vector2(myMinigunner.position.X, myMinigunner.position.Y);
+        //    if(myMinigunner.State == "IDLE" )
+        //    {
+        //        gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
+        //    }
+        //    else if(myMinigunner.State == "MOVING")
+        //    {
+        //        gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+        //    }
+        //    else if(myMinigunner.State == "ATTACKING")
+        //    {
+        //        gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
+        //    }
+        //}
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -79,6 +79,21 @@ namespace mike_and_conquer.gameobjects
             {
                 return;
             }
+
+            unitSelectionCursor.position = new Vector2(myMinigunner.position.X, myMinigunner.position.Y);
+            if (myMinigunner.State == "IDLE")
+            {
+                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
+            }
+            else if (myMinigunner.State == "MOVING")
+            {
+                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+            }
+            else if (myMinigunner.State == "ATTACKING")
+            {
+                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
+            }
+
 
             Vector2 minigunnerPlottedPosition = new Vector2();
             minigunnerPlottedPosition.X = (float)Math.Round(myMinigunner.position.X);

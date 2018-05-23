@@ -8,7 +8,8 @@ namespace mike_and_conquer
         public const string SHP_FILE_NAME = "Content\\e1.shp";
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
-        public GdiMinigunner(int x, int y) : base(x, y, false, GdiMinigunner.SPRITE_KEY)
+//        public GdiMinigunner(int x, int y) : base(x, y, false, GdiMinigunner.SPRITE_KEY)
+        public GdiMinigunner(int x, int y) : base(x, y, false)
         {
         }
 

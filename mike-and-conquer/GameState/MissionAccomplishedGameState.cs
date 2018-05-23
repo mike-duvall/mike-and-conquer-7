@@ -13,15 +13,15 @@ namespace mike_and_conquer
         {
 
             message = new MissionAccomplishedMessage();
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
-            {
-                nextMinigunner.SetAnimate(false);
-            }
+            //foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            //{
+            //    nextMinigunner.SetAnimate(false);
+            //}
 
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
-            {
-                nextMinigunner.SetAnimate(false);
-            }
+            //foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
+            //{
+            //    nextMinigunner.SetAnimate(false);
+            //}
 
         }
 
@@ -47,15 +47,15 @@ namespace mike_and_conquer
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             message.Draw(gameTime, spriteBatch);
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
-            {
-                nextMinigunner.Draw(gameTime, spriteBatch);
-            }
+            //foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            //{
+            //    nextMinigunner.Draw(gameTime, spriteBatch);
+            //}
 
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
-            {
-                nextMinigunner.Draw(gameTime, spriteBatch);
-            }
+            //foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
+            //{
+            //    nextMinigunner.Draw(gameTime, spriteBatch);
+            //}
 
         }
 

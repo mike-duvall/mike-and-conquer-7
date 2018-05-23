@@ -15,15 +15,15 @@ namespace mike_and_conquer
         {
 
             message = new MissionFailedMessage();
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
-            {
-                nextMinigunner.SetAnimate(false);
-            }
+            //foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            //{
+            //    nextMinigunner.SetAnimate(false);
+            //}
 
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
-            {
-                nextMinigunner.SetAnimate(false);
-            }
+            //foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
+            //{
+            //    nextMinigunner.SetAnimate(false);
+            //}
 
         }
 
@@ -49,22 +49,22 @@ namespace mike_and_conquer
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
 
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
-            {
-                if (nextMinigunner.health > 0)
-                {
-                    nextMinigunner.Draw(gameTime, spriteBatch);
-                }
-            }
+            //foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            //{
+            //    if (nextMinigunner.health > 0)
+            //    {
+            //        nextMinigunner.Draw(gameTime, spriteBatch);
+            //    }
+            //}
 
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
-            {
-                if (nextMinigunner.health > 0)
-                {
-                    nextMinigunner.Draw(gameTime, spriteBatch);
-                }
+            //foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
+            //{
+            //    if (nextMinigunner.health > 0)
+            //    {
+            //        nextMinigunner.Draw(gameTime, spriteBatch);
+            //    }
 
-            }
+            //}
             message.Draw(gameTime, spriteBatch);
         }
 

@@ -23,9 +23,6 @@ namespace mike_and_conquer
         public bool selected { get; set; }
         public Vector2 position { get; set; }
 
-
-        //        UnitSelectionCursor unitSelectionCursor;
-
         Rectangle clickDetectionRectangle;
 
         private Minigunner currentAttackTarget;
@@ -38,20 +35,23 @@ namespace mike_and_conquer
             set { state = value; }
         }
 
+        enum Command { NONE, MOVE_TO_POINT, ATTACK_TARGET };
+        private Command currentCommand;
+
 
         private int destinationX;
         private int destinationY;
 
-
         private int unscaledWidth;
         private int unscaledHeight;
-//        public GameSprite gameSprite;
 
         private bool isEnemy;
         private bool enemyStateIsSleeping;
 
         private static readonly int ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE = 1000;
         private int enemySleepCountdownTimer;
+
+
 
 
         //enum AnimationSequences { STANDING_STILL, WALKING_UP, SHOOTING_UP };
@@ -66,7 +66,6 @@ namespace mike_and_conquer
         private static int globalId = 1;
 
 
-        //protected Minigunner(int x, int y, bool isEnemy, string spriteListKey)
         protected Minigunner(int x, int y, bool isEnemy)
         {
 
@@ -74,12 +73,12 @@ namespace mike_and_conquer
             this.enemyStateIsSleeping = true;
             this.enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
             this.state = "IDLE";
+            this.currentCommand = Command.NONE;
 
             // TODO move to base class and just have sublcass hard code
             this.unscaledWidth = 666;
             this.unscaledHeight = 666;
 
-//            gameSprite = new GameSprite(spriteListKey);
             position = new Vector2(x, y);
 
             health = 1000;
@@ -90,41 +89,8 @@ namespace mike_and_conquer
             clickDetectionRectangle = createClickDetectionRectangle();
 
             selected = false;
-//            unitSelectionCursor = new UnitSelectionCursor(x, y);
-
-//            SetupAnimations();
 
         }
-
-        //private void SetupAnimations()
-        //{
-        //    AnimationSequence walkingUpAnimationSequence = new AnimationSequence(10);
-        //    walkingUpAnimationSequence.AddFrame(16);
-        //    walkingUpAnimationSequence.AddFrame(17);
-        //    walkingUpAnimationSequence.AddFrame(18);
-        //    walkingUpAnimationSequence.AddFrame(19);
-        //    walkingUpAnimationSequence.AddFrame(20);
-        //    walkingUpAnimationSequence.AddFrame(21);
-
-        //    gameSprite.AddAnimationSequence((int)AnimationSequences.WALKING_UP, walkingUpAnimationSequence);
-
-        //    AnimationSequence standingStillAnimationSequence = new AnimationSequence(10);
-        //    standingStillAnimationSequence.AddFrame(0);
-        //    gameSprite.AddAnimationSequence((int)AnimationSequences.STANDING_STILL, standingStillAnimationSequence);
-        //    gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
-
-
-        //    AnimationSequence shootinUpAnimationSequence = new AnimationSequence(10);
-        //    shootinUpAnimationSequence.AddFrame(65);
-        //    shootinUpAnimationSequence.AddFrame(66);
-        //    shootinUpAnimationSequence.AddFrame(67);
-        //    shootinUpAnimationSequence.AddFrame(68);
-        //    shootinUpAnimationSequence.AddFrame(69);
-        //    shootinUpAnimationSequence.AddFrame(70);
-        //    shootinUpAnimationSequence.AddFrame(71);
-        //    shootinUpAnimationSequence.AddFrame(72);
-        //    gameSprite.AddAnimationSequence((int)AnimationSequences.SHOOTING_UP, shootinUpAnimationSequence);
-        //}
 
         internal Rectangle createClickDetectionRectangle()
         {
@@ -167,18 +133,31 @@ namespace mike_and_conquer
                 return;
             }
 
-            if (state == "IDLE")
+            //if (state == "IDLE")
+            //{
+            //    HandleIdleState(gameTime);
+            //}
+            //else if (state == "MOVING")
+            //{
+            //    HandleMovingState(gameTime);
+            //}
+            //else if (state == "ATTACKING")
+            //{
+            //    HandleAttackingState(gameTime);
+            //}
+            if (this.currentCommand == Command.NONE)
             {
-                HandleIdleState(gameTime);
+                HandleCommandNone(gameTime);
             }
-            else if (state == "MOVING")
+            else if (this.currentCommand == Command.MOVE_TO_POINT)
             {
-                HandleMovingState(gameTime);
+                HandleCommandMoveToPoint(gameTime);
             }
-            else if (state == "ATTACKING")
+            else if (this.currentCommand == Command.ATTACK_TARGET)
             {
-                HandleAttackingState(gameTime);
+                HandleCommandAttackTarget(gameTime);
             }
+
 
         }
 
@@ -257,21 +236,22 @@ namespace mike_and_conquer
         }
 
 
-        private void HandleIdleState(GameTime gameTime)
+        private void HandleCommandNone(GameTime gameTime)
         {
             //gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.STANDING_STILL);
+            this.State = "IDLE";
         }
 
 
-        private void HandleMovingState(GameTime gameTime)
+        private void HandleCommandMoveToPoint(GameTime gameTime)
         {
 
             //gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.WALKING_UP);
-
+            this.state = "MOVING";
             MoveTowardsDestination(gameTime);
             if (IsAtDestination())
             {
-                state = "IDLE";
+                this.currentCommand = Command.NONE;
             }
 
         }
@@ -323,7 +303,7 @@ namespace mike_and_conquer
         }
 
 
-        private void HandleAttackingState(GameTime gameTime)
+        private void HandleCommandAttackTarget(GameTime gameTime)
         {
             //if (IsInAttackRange())
             //{
@@ -337,15 +317,18 @@ namespace mike_and_conquer
             //    MoveTowardsDestination(frameTime);
             //}
 
+
             if (IsInAttackRange())
             {
-//                gameSprite.SetCurrentAnimationSequenceIndex( (int)  AnimationSequences.SHOOTING_UP);
+                //                gameSprite.SetCurrentAnimationSequenceIndex( (int)  AnimationSequences.SHOOTING_UP);
+                this.state = "ATTACKING";
                 currentAttackTarget.ReduceHealth(10);
 
             }
             else
             {
-//                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+                //                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+                this.state = "MOVING";
                 SetDestination( (int) currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
                 MoveTowardsDestination(gameTime);
             }
@@ -453,6 +436,7 @@ namespace mike_and_conquer
 
         internal void OrderToMoveToDestination(int x, int y)
         {
+            this.currentCommand = Command.MOVE_TO_POINT;
             state = "MOVING";
             SetDestination(x, y);
         }
@@ -460,14 +444,11 @@ namespace mike_and_conquer
 
         internal void OrderToMoveToAndAttackEnemyUnit(NodMinigunner enemyMinigunner)
         {
+            this.currentCommand = Command.ATTACK_TARGET;
             state = "ATTACKING";
             currentAttackTarget = enemyMinigunner;
         }
 
-        //public void SetAnimate(bool animateFlag)
-        //{
-        //    gameSprite.SetAnimate(animateFlag);
-        //}
     }
 
 

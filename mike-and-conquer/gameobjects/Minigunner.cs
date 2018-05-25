@@ -27,13 +27,8 @@ namespace mike_and_conquer
 
         private Minigunner currentAttackTarget;
 
-        private String state;
-
-        public String State
-        {
-            get { return state; }
-            set { state = value; }
-        }
+        public enum State { IDLE, MOVING, ATTACKING };
+        public State state;
 
         enum Command { NONE, MOVE_TO_POINT, ATTACK_TARGET };
         private Command currentCommand;
@@ -72,7 +67,7 @@ namespace mike_and_conquer
             this.isEnemy = isEnemy;
             this.enemyStateIsSleeping = true;
             this.enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
-            this.state = "IDLE";
+            this.state = State.IDLE;
             this.currentCommand = Command.NONE;
 
             // TODO move to base class and just have sublcass hard code
@@ -178,7 +173,7 @@ namespace mike_and_conquer
                         // Might still need to update state = "MOVING" here
                         // Need to refactor and better split out AI vs non AI control
                         //                        gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
-                        this.State = "MOVING";
+                        this.state = State.MOVING;
                         return;
                     }
 
@@ -190,13 +185,13 @@ namespace mike_and_conquer
                 if (IsInAttackRange())
                 {
                     //gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
-                    this.State = "ATTACKING";
+                    this.state = State.ATTACKING;
                     currentAttackTarget.ReduceHealth(10);
                 }
                 else
                 {
                     //gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
-                    this.State = "MOVING";
+                    this.state = State.MOVING;
                     SetDestination((int)currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
                     MoveTowardsDestination(gameTime);
                 }
@@ -204,7 +199,7 @@ namespace mike_and_conquer
             }
             else
             {
-                this.State = "IDLE";
+                this.state = State.IDLE;
                 enemySleepCountdownTimer--;
                 if (enemySleepCountdownTimer <= 0)
                 {
@@ -244,7 +239,7 @@ namespace mike_and_conquer
         private void HandleCommandNone(GameTime gameTime)
         {
             //gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.STANDING_STILL);
-            this.State = "IDLE";
+            this.state = State.IDLE;
         }
 
 
@@ -252,7 +247,7 @@ namespace mike_and_conquer
         {
 
             //gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.WALKING_UP);
-            this.state = "MOVING";
+            this.state = State.MOVING;
             MoveTowardsDestination(gameTime);
             if (IsAtDestination())
             {
@@ -329,14 +324,14 @@ namespace mike_and_conquer
             if (IsInAttackRange())
             {
                 //                gameSprite.SetCurrentAnimationSequenceIndex( (int)  AnimationSequences.SHOOTING_UP);
-                this.state = "ATTACKING";
+                this.state = State.ATTACKING;
                 currentAttackTarget.ReduceHealth(10);
 
             }
             else
             {
                 //                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
-                this.state = "MOVING";
+                this.state = State.MOVING;
                 SetDestination( (int) currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
                 MoveTowardsDestination(gameTime);
             }
@@ -445,7 +440,7 @@ namespace mike_and_conquer
         internal void OrderToMoveToDestination(int x, int y)
         {
             this.currentCommand = Command.MOVE_TO_POINT;
-            state = "MOVING";
+            this.state = State.MOVING;
             SetDestination(x, y);
         }
 
@@ -453,7 +448,7 @@ namespace mike_and_conquer
         internal void OrderToMoveToAndAttackEnemyUnit(NodMinigunner enemyMinigunner)
         {
             this.currentCommand = Command.ATTACK_TARGET;
-            state = "ATTACKING";
+            this.state = State.ATTACKING;
             currentAttackTarget = enemyMinigunner;
         }
 

@@ -81,15 +81,15 @@ namespace mike_and_conquer.gameobjects
             }
 
             unitSelectionCursor.position = new Vector2(myMinigunner.position.X, myMinigunner.position.Y);
-            if (myMinigunner.State == "IDLE")
+            if (myMinigunner.state == Minigunner.State.IDLE)
             {
                 gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
             }
-            else if (myMinigunner.State == "MOVING")
+            else if (myMinigunner.state == Minigunner.State.MOVING)
             {
                 gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
             }
-            else if (myMinigunner.State == "ATTACKING")
+            else if (myMinigunner.state == Minigunner.State.ATTACKING)
             {
                 gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
             }

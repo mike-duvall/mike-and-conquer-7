@@ -177,9 +177,11 @@ namespace mike_and_conquer
                         enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
                         // Might still need to update state = "MOVING" here
                         // Need to refactor and better split out AI vs non AI control
-//                        gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+                        //                        gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+                        this.State = "MOVING";
                         return;
                     }
+
                 }
 
 
@@ -188,11 +190,13 @@ namespace mike_and_conquer
                 if (IsInAttackRange())
                 {
                     //gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
+                    this.State = "ATTACKING";
                     currentAttackTarget.ReduceHealth(10);
                 }
                 else
                 {
                     //gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+                    this.State = "MOVING";
                     SetDestination((int)currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
                     MoveTowardsDestination(gameTime);
                 }
@@ -200,6 +204,7 @@ namespace mike_and_conquer
             }
             else
             {
+                this.State = "IDLE";
                 enemySleepCountdownTimer--;
                 if (enemySleepCountdownTimer <= 0)
                 {
@@ -269,7 +274,7 @@ namespace mike_and_conquer
 
             return (
                 position.X == destinationX &&
-                position.Y == destinationX);
+                position.Y == destinationY);
 
 
         }
@@ -316,7 +321,10 @@ namespace mike_and_conquer
             //    SetDestination(currentAttackTarget->GetX(), currentAttackTarget->GetY());
             //    MoveTowardsDestination(frameTime);
             //}
-
+            if(currentAttackTarget.health <= 0)
+            {
+                this.currentCommand = Command.NONE;
+            }
 
             if (IsInAttackRange())
             {

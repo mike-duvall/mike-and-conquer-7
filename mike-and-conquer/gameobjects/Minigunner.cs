@@ -23,35 +23,30 @@ namespace mike_and_conquer
         public bool selected { get; set; }
         public Vector2 position { get; set; }
 
-
-        //        UnitSelectionCursor unitSelectionCursor;
-
         Rectangle clickDetectionRectangle;
 
         private Minigunner currentAttackTarget;
 
-        private String state;
+        public enum State { IDLE, MOVING, ATTACKING };
+        public State state;
 
-        public String State
-        {
-            get { return state; }
-            set { state = value; }
-        }
+        enum Command { NONE, MOVE_TO_POINT, ATTACK_TARGET };
+        private Command currentCommand;
 
 
         private int destinationX;
         private int destinationY;
 
-
         private int unscaledWidth;
         private int unscaledHeight;
-//        public GameSprite gameSprite;
 
         private bool isEnemy;
         private bool enemyStateIsSleeping;
 
         private static readonly int ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE = 1000;
         private int enemySleepCountdownTimer;
+
+
 
 
         //enum AnimationSequences { STANDING_STILL, WALKING_UP, SHOOTING_UP };
@@ -66,20 +61,19 @@ namespace mike_and_conquer
         private static int globalId = 1;
 
 
-        //protected Minigunner(int x, int y, bool isEnemy, string spriteListKey)
         protected Minigunner(int x, int y, bool isEnemy)
         {
 
             this.isEnemy = isEnemy;
             this.enemyStateIsSleeping = true;
             this.enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
-            this.state = "IDLE";
+            this.state = State.IDLE;
+            this.currentCommand = Command.NONE;
 
             // TODO move to base class and just have sublcass hard code
             this.unscaledWidth = 666;
             this.unscaledHeight = 666;
 
-//            gameSprite = new GameSprite(spriteListKey);
             position = new Vector2(x, y);
 
             health = 1000;
@@ -90,41 +84,8 @@ namespace mike_and_conquer
             clickDetectionRectangle = createClickDetectionRectangle();
 
             selected = false;
-//            unitSelectionCursor = new UnitSelectionCursor(x, y);
-
-//            SetupAnimations();
 
         }
-
-        //private void SetupAnimations()
-        //{
-        //    AnimationSequence walkingUpAnimationSequence = new AnimationSequence(10);
-        //    walkingUpAnimationSequence.AddFrame(16);
-        //    walkingUpAnimationSequence.AddFrame(17);
-        //    walkingUpAnimationSequence.AddFrame(18);
-        //    walkingUpAnimationSequence.AddFrame(19);
-        //    walkingUpAnimationSequence.AddFrame(20);
-        //    walkingUpAnimationSequence.AddFrame(21);
-
-        //    gameSprite.AddAnimationSequence((int)AnimationSequences.WALKING_UP, walkingUpAnimationSequence);
-
-        //    AnimationSequence standingStillAnimationSequence = new AnimationSequence(10);
-        //    standingStillAnimationSequence.AddFrame(0);
-        //    gameSprite.AddAnimationSequence((int)AnimationSequences.STANDING_STILL, standingStillAnimationSequence);
-        //    gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
-
-
-        //    AnimationSequence shootinUpAnimationSequence = new AnimationSequence(10);
-        //    shootinUpAnimationSequence.AddFrame(65);
-        //    shootinUpAnimationSequence.AddFrame(66);
-        //    shootinUpAnimationSequence.AddFrame(67);
-        //    shootinUpAnimationSequence.AddFrame(68);
-        //    shootinUpAnimationSequence.AddFrame(69);
-        //    shootinUpAnimationSequence.AddFrame(70);
-        //    shootinUpAnimationSequence.AddFrame(71);
-        //    shootinUpAnimationSequence.AddFrame(72);
-        //    gameSprite.AddAnimationSequence((int)AnimationSequences.SHOOTING_UP, shootinUpAnimationSequence);
-        //}
 
         internal Rectangle createClickDetectionRectangle()
         {
@@ -167,18 +128,19 @@ namespace mike_and_conquer
                 return;
             }
 
-            if (state == "IDLE")
+            if (this.currentCommand == Command.NONE)
             {
-                HandleIdleState(gameTime);
+                HandleCommandNone(gameTime);
             }
-            else if (state == "MOVING")
+            else if (this.currentCommand == Command.MOVE_TO_POINT)
             {
-                HandleMovingState(gameTime);
+                HandleCommandMoveToPoint(gameTime);
             }
-            else if (state == "ATTACKING")
+            else if (this.currentCommand == Command.ATTACK_TARGET)
             {
-                HandleAttackingState(gameTime);
+                HandleCommandAttackTarget(gameTime);
             }
+
 
         }
 
@@ -196,24 +158,20 @@ namespace mike_and_conquer
                     {
                         enemyStateIsSleeping = true;
                         enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
-                        // Might still need to update state = "MOVING" here
-                        // Need to refactor and better split out AI vs non AI control
-//                        gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+                        this.state = State.MOVING;
                         return;
                     }
+
                 }
-
-
-
 
                 if (IsInAttackRange())
                 {
-                    //gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
+                    this.state = State.ATTACKING;
                     currentAttackTarget.ReduceHealth(10);
                 }
                 else
                 {
-                    //gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+                    this.state = State.MOVING;
                     SetDestination((int)currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
                     MoveTowardsDestination(gameTime);
                 }
@@ -221,6 +179,7 @@ namespace mike_and_conquer
             }
             else
             {
+                this.state = State.IDLE;
                 enemySleepCountdownTimer--;
                 if (enemySleepCountdownTimer <= 0)
                 {
@@ -257,21 +216,19 @@ namespace mike_and_conquer
         }
 
 
-        private void HandleIdleState(GameTime gameTime)
+        private void HandleCommandNone(GameTime gameTime)
         {
-            //gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.STANDING_STILL);
+            this.state = State.IDLE;
         }
 
 
-        private void HandleMovingState(GameTime gameTime)
+        private void HandleCommandMoveToPoint(GameTime gameTime)
         {
-
-            //gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.WALKING_UP);
-
+            this.state = State.MOVING;
             MoveTowardsDestination(gameTime);
             if (IsAtDestination())
             {
-                state = "IDLE";
+                this.currentCommand = Command.NONE;
             }
 
         }
@@ -289,7 +246,7 @@ namespace mike_and_conquer
 
             return (
                 position.X == destinationX &&
-                position.Y == destinationX);
+                position.Y == destinationY);
 
 
         }
@@ -323,29 +280,22 @@ namespace mike_and_conquer
         }
 
 
-        private void HandleAttackingState(GameTime gameTime)
+        private void HandleCommandAttackTarget(GameTime gameTime)
         {
-            //if (IsInAttackRange())
-            //{
-            //    gameSprite->SetCurrentAnimationSequenceIndex(SHOOTING_UP);
-            //    currentAttackTarget->ReduceHealth(10);
-            //}
-            //else
-            //{
-            //    gameSprite->SetCurrentAnimationSequenceIndex(WALKING_UP);
-            //    SetDestination(currentAttackTarget->GetX(), currentAttackTarget->GetY());
-            //    MoveTowardsDestination(frameTime);
-            //}
+            if(currentAttackTarget.health <= 0)
+            {
+                this.currentCommand = Command.NONE;
+            }
 
             if (IsInAttackRange())
             {
-//                gameSprite.SetCurrentAnimationSequenceIndex( (int)  AnimationSequences.SHOOTING_UP);
+                this.state = State.ATTACKING;
                 currentAttackTarget.ReduceHealth(10);
 
             }
             else
             {
-//                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+                this.state = State.MOVING;
                 SetDestination( (int) currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
                 MoveTowardsDestination(gameTime);
             }
@@ -401,38 +351,6 @@ namespace mike_and_conquer
 
         }
 
-//        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-//        {
-//            Vector2 minigunnerPlottedPosition = new Vector2();
-//            minigunnerPlottedPosition.X = (float)Math.Round(position.X);
-//            minigunnerPlottedPosition.Y = (float)Math.Round(position.Y);
-
-
-////            gameSprite.Update(gameTime);
-////            animationSequence.Update();
-//            //int currentFrame = animationSequence.GetCurrentFrame();
-//            //Texture2D currentTexture = textureList[(int)currentFrame];
-//            //spriteBatch.Draw(currentTexture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
-
-
-//            //if(drawBoundingRectangle)
-//            //{
-//            //    spriteBatch.Draw(spriteBorderRectangleTexture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
-
-//            //}
-
-//            gameSprite.Draw(gameTime, spriteBatch, minigunnerPlottedPosition);
-
-//            if(selected)
-//            {
-//                unitSelectionCursor.Draw(gameTime, spriteBatch);
-//            }
-
-
-//        }
-
-
-
 
         internal bool ContainsPoint(int mouseX, int mouseY)
         {
@@ -453,21 +371,19 @@ namespace mike_and_conquer
 
         internal void OrderToMoveToDestination(int x, int y)
         {
-            state = "MOVING";
+            this.currentCommand = Command.MOVE_TO_POINT;
+            this.state = State.MOVING;
             SetDestination(x, y);
         }
 
 
         internal void OrderToMoveToAndAttackEnemyUnit(NodMinigunner enemyMinigunner)
         {
-            state = "ATTACKING";
+            this.currentCommand = Command.ATTACK_TARGET;
+            this.state = State.ATTACKING;
             currentAttackTarget = enemyMinigunner;
         }
 
-        //public void SetAnimate(bool animateFlag)
-        //{
-        //    gameSprite.SetAnimate(animateFlag);
-        //}
     }
 
 

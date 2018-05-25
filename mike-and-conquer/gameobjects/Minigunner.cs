@@ -128,18 +128,6 @@ namespace mike_and_conquer
                 return;
             }
 
-            //if (state == "IDLE")
-            //{
-            //    HandleIdleState(gameTime);
-            //}
-            //else if (state == "MOVING")
-            //{
-            //    HandleMovingState(gameTime);
-            //}
-            //else if (state == "ATTACKING")
-            //{
-            //    HandleAttackingState(gameTime);
-            //}
             if (this.currentCommand == Command.NONE)
             {
                 HandleCommandNone(gameTime);
@@ -170,27 +158,19 @@ namespace mike_and_conquer
                     {
                         enemyStateIsSleeping = true;
                         enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
-                        // Might still need to update state = "MOVING" here
-                        // Need to refactor and better split out AI vs non AI control
-                        //                        gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
                         this.state = State.MOVING;
                         return;
                     }
 
                 }
 
-
-
-
                 if (IsInAttackRange())
                 {
-                    //gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
                     this.state = State.ATTACKING;
                     currentAttackTarget.ReduceHealth(10);
                 }
                 else
                 {
-                    //gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
                     this.state = State.MOVING;
                     SetDestination((int)currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
                     MoveTowardsDestination(gameTime);
@@ -238,15 +218,12 @@ namespace mike_and_conquer
 
         private void HandleCommandNone(GameTime gameTime)
         {
-            //gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.STANDING_STILL);
             this.state = State.IDLE;
         }
 
 
         private void HandleCommandMoveToPoint(GameTime gameTime)
         {
-
-            //gameSprite.SetCurrentAnimationSequenceIndex((int) AnimationSequences.WALKING_UP);
             this.state = State.MOVING;
             MoveTowardsDestination(gameTime);
             if (IsAtDestination())
@@ -305,17 +282,6 @@ namespace mike_and_conquer
 
         private void HandleCommandAttackTarget(GameTime gameTime)
         {
-            //if (IsInAttackRange())
-            //{
-            //    gameSprite->SetCurrentAnimationSequenceIndex(SHOOTING_UP);
-            //    currentAttackTarget->ReduceHealth(10);
-            //}
-            //else
-            //{
-            //    gameSprite->SetCurrentAnimationSequenceIndex(WALKING_UP);
-            //    SetDestination(currentAttackTarget->GetX(), currentAttackTarget->GetY());
-            //    MoveTowardsDestination(frameTime);
-            //}
             if(currentAttackTarget.health <= 0)
             {
                 this.currentCommand = Command.NONE;
@@ -323,14 +289,12 @@ namespace mike_and_conquer
 
             if (IsInAttackRange())
             {
-                //                gameSprite.SetCurrentAnimationSequenceIndex( (int)  AnimationSequences.SHOOTING_UP);
                 this.state = State.ATTACKING;
                 currentAttackTarget.ReduceHealth(10);
 
             }
             else
             {
-                //                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
                 this.state = State.MOVING;
                 SetDestination( (int) currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
                 MoveTowardsDestination(gameTime);
@@ -386,38 +350,6 @@ namespace mike_and_conquer
             }
 
         }
-
-//        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-//        {
-//            Vector2 minigunnerPlottedPosition = new Vector2();
-//            minigunnerPlottedPosition.X = (float)Math.Round(position.X);
-//            minigunnerPlottedPosition.Y = (float)Math.Round(position.Y);
-
-
-////            gameSprite.Update(gameTime);
-////            animationSequence.Update();
-//            //int currentFrame = animationSequence.GetCurrentFrame();
-//            //Texture2D currentTexture = textureList[(int)currentFrame];
-//            //spriteBatch.Draw(currentTexture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
-
-
-//            //if(drawBoundingRectangle)
-//            //{
-//            //    spriteBatch.Draw(spriteBorderRectangleTexture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
-
-//            //}
-
-//            gameSprite.Draw(gameTime, spriteBatch, minigunnerPlottedPosition);
-
-//            if(selected)
-//            {
-//                unitSelectionCursor.Draw(gameTime, spriteBatch);
-//            }
-
-
-//        }
-
-
 
 
         internal bool ContainsPoint(int mouseX, int mouseY)

@@ -31,6 +31,7 @@ namespace mike_and_conquer
         public int unscaledWidth;
         public int unscaledHeight;
         private float scale;
+        private bool animate;
 
         public float Scale
         {
@@ -54,6 +55,7 @@ namespace mike_and_conquer
 
             drawBoundingRectangle = false;
             scale = MikeAndConqueryGame.instance.scale;
+            this.animate = true;
         }
 
         public void SetCurrentAnimationSequenceIndex(int aniatmionSequenceIndex)
@@ -83,7 +85,14 @@ namespace mike_and_conquer
         {
 
             AnimationSequence currentAnimationSequence = animationSequenceMap[currentAnimationSequenceIndex];
-            currentAnimationSequence.Update();
+            if (animate)
+            {
+                currentAnimationSequence.Update();
+            }
+            else
+            {
+                int x = 3;
+            }
             int currentTextureIndex = currentAnimationSequence.GetCurrentFrame();
             currentTexture = spriteTextureList.textureList[currentTextureIndex];
 
@@ -137,7 +146,7 @@ namespace mike_and_conquer
 
         public void SetAnimate(bool animateFlag)
         {
-            animationSequenceMap[currentAnimationSequenceIndex].SetAnimate(animateFlag);
+            this.animate = animateFlag;
         }
 
 

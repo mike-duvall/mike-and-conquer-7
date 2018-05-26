@@ -2,9 +2,9 @@
 using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
-using GamePad = Microsoft.Xna.Framework.Input.GamePad;
-using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
+//using GamePad = Microsoft.Xna.Framework.Input.GamePad;
+//using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
+//using Keys = Microsoft.Xna.Framework.Input.Keys;
 using Boolean = System.Boolean;
 using MinigunnerView = mike_and_conquer.gameobjects.MinigunnerView;
 

@@ -1,7 +1,7 @@
 ﻿
 namespace mike_and_conquer
 {
-    class GdiMinigunner : Minigunner
+    public class GdiMinigunner : Minigunner
     {
 
         public const string SPRITE_KEY = "GDIMinigunner";
@@ -9,7 +9,7 @@ namespace mike_and_conquer
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
 //        public GdiMinigunner(int x, int y) : base(x, y, false, GdiMinigunner.SPRITE_KEY)
-        public GdiMinigunner(int x, int y) : base(x, y, false)
+        public GdiMinigunner(int x, int y, float scale) : base(x, y, false, scale)
         {
         }
 

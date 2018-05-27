@@ -235,7 +235,7 @@ namespace mike_and_conquer
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new GdiMinigunner(x, y);
+            Minigunner newMinigunner = new GdiMinigunner(x, y,this.scale);
             gdiMinigunnerList.Add(newMinigunner);
 
             MinigunnerView newMinigunnerView = new MinigunnerView(newMinigunner, GdiMinigunner.SPRITE_KEY);
@@ -246,7 +246,7 @@ namespace mike_and_conquer
 
         internal Minigunner AddNodMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new NodMinigunner(x, y);
+            Minigunner newMinigunner = new NodMinigunner(x, y, this.scale);
             nodMinigunnerList.Add(newMinigunner);
             MinigunnerView newMinigunnerView = new MinigunnerView(newMinigunner, NodMinigunner.SPRITE_KEY);
             NodMinigunnerViewList.Add(newMinigunnerView);

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
-using String = System.String;
+//using String = System.String;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 //using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using Math = System.Math;
@@ -45,13 +45,7 @@ namespace mike_and_conquer
 
         private static readonly int ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE = 1000;
         private int enemySleepCountdownTimer;
-
-
-
-
-        //enum AnimationSequences { STANDING_STILL, WALKING_UP, SHOOTING_UP };
-        //enum MinigunnerState { IDLE, MOVING, SHOOTING };
-        //private MinigunnerState state;
+        private float scale;
 
         protected Minigunner()
         {
@@ -61,7 +55,7 @@ namespace mike_and_conquer
         private static int globalId = 1;
 
 
-        protected Minigunner(int x, int y, bool isEnemy)
+        protected Minigunner(int x, int y, bool isEnemy, float scale)
         {
 
             this.isEnemy = isEnemy;
@@ -70,9 +64,12 @@ namespace mike_and_conquer
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;
 
+
             // TODO move to base class and just have sublcass hard code
             this.unscaledWidth = 666;
             this.unscaledHeight = 666;
+
+            this.scale = scale;
 
             position = new Vector2(x, y);
 
@@ -92,11 +89,14 @@ namespace mike_and_conquer
 
             int rectangleUnscaledWidth = 12;
             int rectangleUnscaledHeight = 12;
-            int scaledWidth = (int)(rectangleUnscaledWidth * MikeAndConqueryGame.instance.scale);
-            int scaledHeight = (int)(rectangleUnscaledHeight * MikeAndConqueryGame.instance.scale);
+            //int scaledWidth = (int)(rectangleUnscaledWidth * MikeAndConqueryGame.instance.scale);
+            //int scaledHeight = (int)(rectangleUnscaledHeight * MikeAndConqueryGame.instance.scale);
+            int scaledWidth = (int)(rectangleUnscaledWidth * this.scale);
+            int scaledHeight = (int)(rectangleUnscaledHeight * this.scale);
+
 
             int x = (int)(position.X - (scaledWidth / 2));
-            int y = (int)(position.Y - scaledHeight) + (int)(1 * MikeAndConqueryGame.instance.scale);  
+            int y = (int)(position.Y - scaledHeight) + (int)(1 * this.scale);  
 
             Rectangle rectangle = new Rectangle(x,y,scaledWidth,scaledHeight);
             return rectangle;
@@ -352,14 +352,15 @@ namespace mike_and_conquer
         }
 
 
-        internal bool ContainsPoint(int mouseX, int mouseY)
+        public bool ContainsPoint(int mouseX, int mouseY)
         {
             int x = (int) Math.Round(position.X);
             int y = (int) Math.Round(position.Y);
-            //int width = (int) (spriteBorderRectangleTexture.Width * scale); 
-            //int height = (int) (spriteBorderRectangleTexture.Height * scale);
-            int width = (int)(unscaledWidth * MikeAndConqueryGame.instance.scale);
-            int height = (int)(unscaledHeight * MikeAndConqueryGame.instance.scale);
+            //int width = (int)(unscaledWidth * MikeAndConqueryGame.instance.scale);
+            //int height = (int)(unscaledHeight * MikeAndConqueryGame.instance.scale);
+            int width = (int)(unscaledWidth * this.scale);
+            int height = (int)(unscaledHeight * this.scale);
+
 
             x = x - (width / 2);
             y = y - (height / 2);
@@ -369,7 +370,7 @@ namespace mike_and_conquer
         }
 
 
-        internal void OrderToMoveToDestination(int x, int y)
+        public void OrderToMoveToDestination(int x, int y)
         {
             this.currentCommand = Command.MOVE_TO_POINT;
             this.state = State.MOVING;

@@ -14,7 +14,7 @@ namespace mike_and_conquer
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new NodShpFileColorMapper();
 
 //        public NodMinigunner(int x, int y) : base(x, y, true,  NodMinigunner.SPRITE_KEY)
-        public NodMinigunner(int x, int y) : base(x, y, true)
+        public NodMinigunner(int x, int y, float scale) : base(x, y, true,scale)
         {
         }
 

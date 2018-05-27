@@ -5,19 +5,39 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mike-and-conquer-6", "mike-and-conquer-6.csproj", "{3FDAB4B1-0B3E-4315-B3AC-EC183A401206}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unit-tests", "unit-tests\unit-tests.csproj", "{6421C0C9-6A57-49DE-809D-30251560167D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
+		RemoteDebug|Any CPU = RemoteDebug|Any CPU
 		RemoteDebug|x86 = RemoteDebug|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3FDAB4B1-0B3E-4315-B3AC-EC183A401206}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{3FDAB4B1-0B3E-4315-B3AC-EC183A401206}.Debug|x86.ActiveCfg = Debug|x86
 		{3FDAB4B1-0B3E-4315-B3AC-EC183A401206}.Debug|x86.Build.0 = Debug|x86
+		{3FDAB4B1-0B3E-4315-B3AC-EC183A401206}.Release|Any CPU.ActiveCfg = Release|x86
 		{3FDAB4B1-0B3E-4315-B3AC-EC183A401206}.Release|x86.ActiveCfg = Release|x86
 		{3FDAB4B1-0B3E-4315-B3AC-EC183A401206}.Release|x86.Build.0 = Release|x86
+		{3FDAB4B1-0B3E-4315-B3AC-EC183A401206}.RemoteDebug|Any CPU.ActiveCfg = RemoteDebug|x86
 		{3FDAB4B1-0B3E-4315-B3AC-EC183A401206}.RemoteDebug|x86.ActiveCfg = RemoteDebug|x86
 		{3FDAB4B1-0B3E-4315-B3AC-EC183A401206}.RemoteDebug|x86.Build.0 = RemoteDebug|x86
+		{6421C0C9-6A57-49DE-809D-30251560167D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6421C0C9-6A57-49DE-809D-30251560167D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6421C0C9-6A57-49DE-809D-30251560167D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6421C0C9-6A57-49DE-809D-30251560167D}.Debug|x86.Build.0 = Debug|Any CPU
+		{6421C0C9-6A57-49DE-809D-30251560167D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6421C0C9-6A57-49DE-809D-30251560167D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6421C0C9-6A57-49DE-809D-30251560167D}.Release|x86.ActiveCfg = Release|Any CPU
+		{6421C0C9-6A57-49DE-809D-30251560167D}.Release|x86.Build.0 = Release|Any CPU
+		{6421C0C9-6A57-49DE-809D-30251560167D}.RemoteDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6421C0C9-6A57-49DE-809D-30251560167D}.RemoteDebug|Any CPU.Build.0 = Debug|Any CPU
+		{6421C0C9-6A57-49DE-809D-30251560167D}.RemoteDebug|x86.ActiveCfg = Debug|Any CPU
+		{6421C0C9-6A57-49DE-809D-30251560167D}.RemoteDebug|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

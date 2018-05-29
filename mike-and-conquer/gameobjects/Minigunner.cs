@@ -365,7 +365,8 @@ namespace mike_and_conquer
             x = x - (width / 2);
             y = y - (height / 2);
 
-            Rectangle rect = new Rectangle(x, y, width, height);
+            //            Rectangle rect = new Rectangle(x, y, width, height);
+            clickDetectionRectangle = createClickDetectionRectangle();
             return clickDetectionRectangle.Contains(new Point(mouseX, mouseY));
         }
 

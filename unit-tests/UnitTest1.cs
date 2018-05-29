@@ -18,7 +18,7 @@ namespace unit_tests
 
 
             // when
-            bool containsPoint = mingunner.ContainsPoint(39, 14);
+            bool containsPoint = mingunner.ContainsPoint(10, 10);
 
 
             // then
@@ -32,16 +32,50 @@ namespace unit_tests
             // then
             Assert.IsFalse(containsPoint);
 
+            // when
+            mingunner.OrderToMoveToDestination(200, 200);
 
-            Understand why this test passes, why 40,14 is not contained but 39,14 is
+            GameTime gameTime = new GameTime();
+            TimeSpan timespan = new TimeSpan(0,0, 0, 0, 100);
+            gameTime.ElapsedGameTime = timespan;
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
+            mingunner.Update(gameTime);
 
 
-            //// when
-            //mingunner.OrderToMoveToDestination(200, 200);
+            // when
+            containsPoint = mingunner.ContainsPoint(200, 200);
 
-            //GameTime gameTime = new GameTime();
-            //gameTime.
-            //mingunner.Update(gameTime)
+
+            // then
+            Assert.IsTrue(containsPoint);
+
+
         }
     }
 }

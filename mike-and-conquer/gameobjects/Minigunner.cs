@@ -1,15 +1,9 @@
-﻿//using Microsoft.Xna.Framework;
-//using System;
-//using Microsoft.Xna.Framework.Graphics;
-
-
+﻿
 using System.Collections.Generic;
 
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
-//using String = System.String;
 using GameTime = Microsoft.Xna.Framework.GameTime;
-//using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using Math = System.Math;
 using Point = Microsoft.Xna.Framework.Point;
 
@@ -89,8 +83,6 @@ namespace mike_and_conquer
 
             int rectangleUnscaledWidth = 12;
             int rectangleUnscaledHeight = 12;
-            //int scaledWidth = (int)(rectangleUnscaledWidth * MikeAndConqueryGame.instance.scale);
-            //int scaledHeight = (int)(rectangleUnscaledHeight * MikeAndConqueryGame.instance.scale);
             int scaledWidth = (int)(rectangleUnscaledWidth * this.scale);
             int scaledHeight = (int)(rectangleUnscaledHeight * this.scale);
 
@@ -356,16 +348,12 @@ namespace mike_and_conquer
         {
             int x = (int) Math.Round(position.X);
             int y = (int) Math.Round(position.Y);
-            //int width = (int)(unscaledWidth * MikeAndConqueryGame.instance.scale);
-            //int height = (int)(unscaledHeight * MikeAndConqueryGame.instance.scale);
             int width = (int)(unscaledWidth * this.scale);
             int height = (int)(unscaledHeight * this.scale);
-
 
             x = x - (width / 2);
             y = y - (height / 2);
 
-            //            Rectangle rect = new Rectangle(x, y, width, height);
             clickDetectionRectangle = createClickDetectionRectangle();
             return clickDetectionRectangle.Contains(new Point(mouseX, mouseY));
         }

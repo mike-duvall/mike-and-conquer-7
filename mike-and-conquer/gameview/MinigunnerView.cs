@@ -6,7 +6,7 @@ using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using Math = System.Math;
 
-namespace mike_and_conquer.gameobjects
+namespace mike_and_conquer.gameview
 {
     public class MinigunnerView
     {
@@ -16,7 +16,7 @@ namespace mike_and_conquer.gameobjects
 
         enum AnimationSequences { STANDING_STILL, WALKING_UP, SHOOTING_UP };
 
-        public MinigunnerView(Minigunner minigunner, string spriteListKey)
+        protected MinigunnerView(Minigunner minigunner, string spriteListKey)
         {
             this.myMinigunner = minigunner;
             this.gameSprite = new GameSprite(spriteListKey);
@@ -55,23 +55,6 @@ namespace mike_and_conquer.gameobjects
             gameSprite.AddAnimationSequence((int)AnimationSequences.SHOOTING_UP, shootinUpAnimationSequence);
         }
 
-
-        //public void Update()
-        //{
-        //    unitSelectionCursor.position = new Vector2(myMinigunner.position.X, myMinigunner.position.Y);
-        //    if(myMinigunner.State == "IDLE" )
-        //    {
-        //        gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
-        //    }
-        //    else if(myMinigunner.State == "MOVING")
-        //    {
-        //        gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
-        //    }
-        //    else if(myMinigunner.State == "ATTACKING")
-        //    {
-        //        gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
-        //    }
-        //}
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

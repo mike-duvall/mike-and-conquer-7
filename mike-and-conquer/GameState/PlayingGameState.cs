@@ -2,11 +2,8 @@
 using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
-//using GamePad = Microsoft.Xna.Framework.Input.GamePad;
-//using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
-//using Keys = Microsoft.Xna.Framework.Input.Keys;
 using Boolean = System.Boolean;
-using MinigunnerView = mike_and_conquer.gameobjects.MinigunnerView;
+using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
 
 
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
@@ -173,7 +170,7 @@ namespace mike_and_conquer
         internal Boolean CheckForAndHandleLeftClickOnEnemyUnit(int mouseX, int mouseY)
         {
             bool handled = false;
-            foreach (NodMinigunner nextNodMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
+            foreach (Minigunner nextNodMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
             {
                 if (nextNodMinigunner.ContainsPoint(mouseX, mouseY))
                 {

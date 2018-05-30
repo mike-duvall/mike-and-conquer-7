@@ -1,7 +1,7 @@
 ﻿using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using MissionAccomplishedMessage = mike_and_conquer.gameobjects.MissionAccomplishedMessage;
-using MinigunnerView = mike_and_conquer.gameobjects.MinigunnerView;
+using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
 
 namespace mike_and_conquer
 {

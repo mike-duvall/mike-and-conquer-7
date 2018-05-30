@@ -20,7 +20,10 @@ using GetCurrentGameStateGameEvent = mike_and_conquer.gameevent.GetCurrentGameSt
 using KeyboardState = Microsoft.Xna.Framework.Input.KeyboardState;
 using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
-using MinigunnerView = mike_and_conquer.gameobjects.MinigunnerView;
+using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
+using GdiMinigunnerView = mike_and_conquer.gameview.GdiMinigunnerView;
+using NodMinigunnerView = mike_and_conquer.gameview.NodMinigunnerView;
+
 
 
 
@@ -141,8 +144,8 @@ namespace mike_and_conquer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            textureListMap.LoadSpriteListFromShpFile(GdiMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, GdiMinigunner.SHP_FILE_COLOR_MAPPER);
-            textureListMap.LoadSpriteListFromShpFile(NodMinigunner.SPRITE_KEY, GdiMinigunner.SHP_FILE_NAME, NodMinigunner.SHP_FILE_COLOR_MAPPER);
+            textureListMap.LoadSpriteListFromShpFile(GdiMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
+            textureListMap.LoadSpriteListFromShpFile(NodMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, NodMinigunnerView.SHP_FILE_COLOR_MAPPER);
 
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
@@ -235,10 +238,10 @@ namespace mike_and_conquer
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new GdiMinigunner(x, y,this.scale);
+            Minigunner newMinigunner = new Minigunner(x, y,false, this.scale);
             gdiMinigunnerList.Add(newMinigunner);
 
-            MinigunnerView newMinigunnerView = new MinigunnerView(newMinigunner, GdiMinigunner.SPRITE_KEY);
+            MinigunnerView newMinigunnerView = new GdiMinigunnerView(newMinigunner);
             GdiMinigunnerViewList.Add(newMinigunnerView);
             return newMinigunner;
         }
@@ -246,9 +249,9 @@ namespace mike_and_conquer
 
         internal Minigunner AddNodMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new NodMinigunner(x, y, this.scale);
+            Minigunner newMinigunner = new Minigunner(x, y, true, this.scale);
             nodMinigunnerList.Add(newMinigunner);
-            MinigunnerView newMinigunnerView = new MinigunnerView(newMinigunner, NodMinigunner.SPRITE_KEY);
+            MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);
 
             return newMinigunner;

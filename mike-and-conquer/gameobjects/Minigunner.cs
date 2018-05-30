@@ -49,7 +49,7 @@ namespace mike_and_conquer
         private static int globalId = 1;
 
 
-        protected Minigunner(int x, int y, bool isEnemy, float scale)
+        public Minigunner(int x, int y, bool isEnemy, float scale)
         {
 
             this.isEnemy = isEnemy;
@@ -367,7 +367,7 @@ namespace mike_and_conquer
         }
 
 
-        internal void OrderToMoveToAndAttackEnemyUnit(NodMinigunner enemyMinigunner)
+        internal void OrderToMoveToAndAttackEnemyUnit(Minigunner enemyMinigunner)
         {
             this.currentCommand = Command.ATTACK_TARGET;
             this.state = State.ATTACKING;

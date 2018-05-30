@@ -58,7 +58,7 @@
     <Compile Include="mike-and-conquer\gameevent\GetNodMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
-    <Compile Include="mike-and-conquer\gameobjects\MinigunnerView.cs" />
+    <Compile Include="mike-and-conquer\gameview\MinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameobjects\MissionFailedMessage.cs" />
     <Compile Include="mike-and-conquer\gameobjects\MissionAccomplishedMessage.cs" />
     <Compile Include="mike-and-conquer\gamesprite\GameSprite.cs" />
@@ -93,7 +93,7 @@
     <Compile Include="mike-and-conquer\gamesprite\ShpFileColorMapper.cs" />
     <Compile Include="mike-and-conquer\gamesprite\SpriteTextureList.cs" />
     <Compile Include="mike-and-conquer\gamesprite\TextureListMap.cs" />
-    <Compile Include="mike-and-conquer\gameobjects\UnitSelectionCursor.cs" />
+    <Compile Include="mike-and-conquer\gameview\UnitSelectionCursor.cs" />
     <Compile Include="mike-and-conquer\util\AnimationSequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="mike-and-conquer\rest\ResetGameController.cs" />

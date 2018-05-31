@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using GdiMinigunner = mike_and_conquer.GdiMinigunner;
+using Minigunner = mike_and_conquer.Minigunner;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 
 namespace unit_tests
@@ -15,7 +15,7 @@ namespace unit_tests
         {
             // given
             float scale = 5f;
-            GdiMinigunner mingunner = new GdiMinigunner(10, 10, scale);
+            Minigunner mingunner = new Minigunner(10, 10, false, scale);
 
 
             // when

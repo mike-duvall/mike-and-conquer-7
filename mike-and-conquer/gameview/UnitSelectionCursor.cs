@@ -8,7 +8,7 @@ using Math = System.Math;
 using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
 using Boolean = System.Boolean;
 
-namespace mike_and_conquer
+namespace mike_and_conquer.gameview
 {
 
     public class UnitSelectionCursor

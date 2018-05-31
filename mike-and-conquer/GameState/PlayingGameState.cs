@@ -42,6 +42,7 @@ namespace mike_and_conquer
                 HandleRightClick(newState.Position.X, newState.Position.Y);
             }
 
+
             oldState = newState; 
 
             foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)

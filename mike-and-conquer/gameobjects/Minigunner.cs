@@ -34,11 +34,11 @@ namespace mike_and_conquer
         private int unscaledWidth;
         private int unscaledHeight;
 
-        private bool isEnemy;
-        private bool enemyStateIsSleeping;
+        //private bool isEnemy;
+        //private bool enemyStateIsSleeping;
 
-        private static readonly int ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE = 1000;
-        private int enemySleepCountdownTimer;
+        //private static readonly int ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE = 1000;
+        //private int enemySleepCountdownTimer;
         private float scale;
 
         protected Minigunner()
@@ -52,9 +52,9 @@ namespace mike_and_conquer
         public Minigunner(int x, int y, bool isEnemy, float scale)
         {
 
-            this.isEnemy = isEnemy;
-            this.enemyStateIsSleeping = true;
-            this.enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
+            //this.isEnemy = isEnemy;
+            //this.enemyStateIsSleeping = true;
+            //this.enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;
 
@@ -114,11 +114,11 @@ namespace mike_and_conquer
             
             //unitSelectionCursor.position = new Vector2(this.position.X  , this.position.Y);
 
-            if (isEnemy)
-            {
-                HandleEnemyUpdate(gameTime);
-                return;
-            }
+            //if (isEnemy)
+            //{
+            //    HandleEnemyUpdate(gameTime);
+            //    return;
+            //}
 
             if (this.currentCommand == Command.NONE)
             {
@@ -191,21 +191,21 @@ namespace mike_and_conquer
 
 
 
-        private Minigunner FindFirstNonDeadGdiMinigunner()
-        {
-            List<Minigunner> gdiMinigunners = (MikeAndConqueryGame.instance.gdiMinigunnerList);
+        //private Minigunner FindFirstNonDeadGdiMinigunner()
+        //{
+        //    List<Minigunner> gdiMinigunners = (MikeAndConqueryGame.instance.gdiMinigunnerList);
 
-            foreach (Minigunner nextMinigunner in gdiMinigunners)
-            {
-                if (nextMinigunner.health > 0)
-                {
-                    return nextMinigunner;
-                }
-            }
+        //    foreach (Minigunner nextMinigunner in gdiMinigunners)
+        //    {
+        //        if (nextMinigunner.health > 0)
+        //        {
+        //            return nextMinigunner;
+        //        }
+        //    }
 
-            return null;
+        //    return null;
 
-        }
+        //}
 
 
         private void HandleCommandNone(GameTime gameTime)

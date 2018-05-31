@@ -51,6 +51,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="mike-and-conquer\aicontroller\MinigunnerAIController.cs" />
     <Compile Include="mike-and-conquer\gameevent\AsyncGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetCurrentGameStateGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\ResetGameGameEvent.cs" />

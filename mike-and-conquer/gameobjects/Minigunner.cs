@@ -137,57 +137,57 @@ namespace mike_and_conquer
         }
 
 
-        private void HandleEnemyUpdate(GameTime gameTime)
-        {
-            if (!enemyStateIsSleeping)
-            {
+        //private void HandleEnemyUpdate(GameTime gameTime)
+        //{
+        //    if (!enemyStateIsSleeping)
+        //    {
 
-                if (currentAttackTarget != null && currentAttackTarget.health <= 0)
-                {
-                    currentAttackTarget = FindFirstNonDeadGdiMinigunner();
+        //        if (currentAttackTarget != null && currentAttackTarget.health <= 0)
+        //        {
+        //            currentAttackTarget = FindFirstNonDeadGdiMinigunner();
 
-                    if (currentAttackTarget == null)
-                    {
-                        enemyStateIsSleeping = true;
-                        enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
-                        this.state = State.MOVING;
-                        return;
-                    }
+        //            if (currentAttackTarget == null)
+        //            {
+        //                enemyStateIsSleeping = true;
+        //                enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
+        //                this.state = State.MOVING;
+        //                return;
+        //            }
 
-                }
+        //        }
 
-                if (IsInAttackRange())
-                {
-                    this.state = State.ATTACKING;
-                    currentAttackTarget.ReduceHealth(10);
-                }
-                else
-                {
-                    this.state = State.MOVING;
-                    SetDestination((int)currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
-                    MoveTowardsDestination(gameTime);
-                }
+        //        if (IsInAttackRange())
+        //        {
+        //            this.state = State.ATTACKING;
+        //            currentAttackTarget.ReduceHealth(10);
+        //        }
+        //        else
+        //        {
+        //            this.state = State.MOVING;
+        //            SetDestination((int)currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
+        //            MoveTowardsDestination(gameTime);
+        //        }
 
-            }
-            else
-            {
-                this.state = State.IDLE;
-                enemySleepCountdownTimer--;
-                if (enemySleepCountdownTimer <= 0)
-                {
-                    enemyStateIsSleeping = false;
-                    currentAttackTarget = FindFirstNonDeadGdiMinigunner();
-                    if (currentAttackTarget == null)
-                    {
-                        enemyStateIsSleeping = true;
-                        enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
-                    }
+        //    }
+        //    else
+        //    {
+        //        this.state = State.IDLE;
+        //        enemySleepCountdownTimer--;
+        //        if (enemySleepCountdownTimer <= 0)
+        //        {
+        //            enemyStateIsSleeping = false;
+        //            currentAttackTarget = FindFirstNonDeadGdiMinigunner();
+        //            if (currentAttackTarget == null)
+        //            {
+        //                enemyStateIsSleeping = true;
+        //                enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
+        //            }
 
-                }
+        //        }
 
-            }
+        //    }
 
-        }
+        //}
 
 
 

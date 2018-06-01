@@ -23,7 +23,7 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
 using GdiMinigunnerView = mike_and_conquer.gameview.GdiMinigunnerView;
 using NodMinigunnerView = mike_and_conquer.gameview.NodMinigunnerView;
-
+using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
 
 
 
@@ -39,6 +39,8 @@ namespace mike_and_conquer
 
         public List<Minigunner> gdiMinigunnerList { get; }
         public List<Minigunner> nodMinigunnerList { get; }
+
+        public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
 
         private List<MinigunnerView> gdiMinigunnerViewList;
         private List<MinigunnerView> nodMinigunnerViewList;
@@ -98,6 +100,8 @@ namespace mike_and_conquer
 
             gdiMinigunnerList = new List<Minigunner>();
             nodMinigunnerList = new List<Minigunner>();
+
+            nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
 
             gdiMinigunnerViewList = new List<MinigunnerView>();
             nodMinigunnerViewList = new List<MinigunnerView>();
@@ -253,6 +257,9 @@ namespace mike_and_conquer
             nodMinigunnerList.Add(newMinigunner);
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);
+
+            MinigunnerAIController minigunnerAIController = new MinigunnerAIController(newMinigunner);
+            nodMinigunnerAIControllerList.Add(minigunnerAIController);
 
             return newMinigunner;
         }

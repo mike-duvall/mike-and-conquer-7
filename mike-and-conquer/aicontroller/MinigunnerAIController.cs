@@ -4,9 +4,9 @@ using GameTime = Microsoft.Xna.Framework.GameTime;
 using System.Collections.Generic;
 using MikeAndConqueryGame = mike_and_conquer.MikeAndConqueryGame;
 
-namespace mike_and_conquer_6.mike_and_conquer.aicontroller
+namespace mike_and_conquer.aicontroller
 {
-    class MinigunnerAIController
+    public class MinigunnerAIController
     {
         private Minigunner myMinigunner;
         private Minigunner currentAttackTarget;
@@ -21,6 +21,8 @@ namespace mike_and_conquer_6.mike_and_conquer.aicontroller
         {
             this.myMinigunner = minigunner;
             this.enemyStateIsSleeping = true;
+            this.enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
+
         }
 
 
@@ -41,30 +43,39 @@ namespace mike_and_conquer_6.mike_and_conquer.aicontroller
         }
 
 
-        public void HandleEnemyUpdate(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             if (!enemyStateIsSleeping)
             {
 
 
-                Pickup here 
+                //Pickup here 
 
-                Consider if we should just determine if current state is not attackking and if so make it attack
+                //Consider if we should just determine if current state is not attackking and if so make it attack
 
-                    Consider if it should recalc attack target each time in case an enemey moves closer 
+                //    Consider if it should recalc attack target each time in case an enemey moves closer 
 
-                if (currentAttackTarget != null && currentAttackTarget.health <= 0)
-                {
-                    currentAttackTarget = FindFirstNonDeadGdiMinigunner();
+                myMinigunner.OrderToMoveToAndAttackEnemyUnit(FindFirstNonDeadGdiMinigunner());
 
-                    if (currentAttackTarget == null)
-                    {
-                        enemyStateIsSleeping = true;
-                        enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
-                        return;
-                    }
+                //if (myMinigunner.state == Minigunner.State.IDLE)
+                //{
+                //    myMinigunner.OrderToMoveToAndAttackEnemyUnit(FindFirstNonDeadGdiMinigunner());
+                //}
+                //else 
 
-                }
+
+                //if (currentAttackTarget != null && currentAttackTarget.health <= 0)
+                //{
+                //    currentAttackTarget = FindFirstNonDeadGdiMinigunner();
+
+                //    if (currentAttackTarget == null)
+                //    {
+                //        enemyStateIsSleeping = true;
+                //        enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
+                //        return;
+                //    }
+
+                //}
 
                 //if (myMinigunner.IsInAttackRange())
                 //{
@@ -81,7 +92,6 @@ namespace mike_and_conquer_6.mike_and_conquer.aicontroller
             }
             else
             {
-                this.state = State.IDLE;
                 enemySleepCountdownTimer--;
                 if (enemySleepCountdownTimer <= 0)
                 {

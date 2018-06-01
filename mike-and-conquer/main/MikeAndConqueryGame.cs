@@ -23,7 +23,7 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
 using GdiMinigunnerView = mike_and_conquer.gameview.GdiMinigunnerView;
 using NodMinigunnerView = mike_and_conquer.gameview.NodMinigunnerView;
-
+using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
 
 
 
@@ -39,6 +39,8 @@ namespace mike_and_conquer
 
         public List<Minigunner> gdiMinigunnerList { get; }
         public List<Minigunner> nodMinigunnerList { get; }
+
+        public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
 
         private List<MinigunnerView> gdiMinigunnerViewList;
         private List<MinigunnerView> nodMinigunnerViewList;
@@ -98,6 +100,8 @@ namespace mike_and_conquer
 
             gdiMinigunnerList = new List<Minigunner>();
             nodMinigunnerList = new List<Minigunner>();
+
+            nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
 
             gdiMinigunnerViewList = new List<MinigunnerView>();
             nodMinigunnerViewList = new List<MinigunnerView>();
@@ -241,6 +245,8 @@ namespace mike_and_conquer
             Minigunner newMinigunner = new Minigunner(x, y,false, this.scale);
             gdiMinigunnerList.Add(newMinigunner);
 
+            // TODO:  In future, decouple always adding a view when adding a minigunner
+            // to enable running headless with no UI
             MinigunnerView newMinigunnerView = new GdiMinigunnerView(newMinigunner);
             GdiMinigunnerViewList.Add(newMinigunnerView);
             return newMinigunner;
@@ -253,6 +259,10 @@ namespace mike_and_conquer
             nodMinigunnerList.Add(newMinigunner);
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);
+
+            // TODO:  In future, don't couple Nod having to be AI controlled enemy
+            MinigunnerAIController minigunnerAIController = new MinigunnerAIController(newMinigunner);
+            nodMinigunnerAIControllerList.Add(minigunnerAIController);
 
             return newMinigunner;
         }

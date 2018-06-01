@@ -4,6 +4,7 @@ using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Boolean = System.Boolean;
 using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
+using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController ;
 
 
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
@@ -42,7 +43,15 @@ namespace mike_and_conquer
                 HandleRightClick(newState.Position.X, newState.Position.Y);
             }
 
-            oldState = newState; 
+
+            oldState = newState;
+
+
+
+            foreach (MinigunnerAIController nextMinigunnerAIController in MikeAndConqueryGame.instance.nodMinigunnerAIControllerList)
+            {
+                nextMinigunnerAIController.Update(gameTime);
+            }
 
             foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
             {

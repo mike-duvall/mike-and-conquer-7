@@ -34,11 +34,6 @@ namespace mike_and_conquer
         private int unscaledWidth;
         private int unscaledHeight;
 
-        private bool isEnemy;
-        private bool enemyStateIsSleeping;
-
-        private static readonly int ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE = 1000;
-        private int enemySleepCountdownTimer;
         private float scale;
 
         protected Minigunner()
@@ -52,9 +47,6 @@ namespace mike_and_conquer
         public Minigunner(int x, int y, bool isEnemy, float scale)
         {
 
-            this.isEnemy = isEnemy;
-            this.enemyStateIsSleeping = true;
-            this.enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;
 
@@ -99,26 +91,6 @@ namespace mike_and_conquer
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            //double velocity = .15;
-            //double delta = gameTime.ElapsedGameTime.TotalMilliseconds * velocity;
-
-
-            //position.X = position.X + (float)delta;
-            ////position.X += 1;
-            //if (position.X > worldWidth)
-            //    position.X = 0;
-
-            //position.Y = position.Y + (float)delta;
-            //if (position.Y > worldHeight)
-            //    position.Y = 0;
-            
-            //unitSelectionCursor.position = new Vector2(this.position.X  , this.position.Y);
-
-            if (isEnemy)
-            {
-                HandleEnemyUpdate(gameTime);
-                return;
-            }
 
             if (this.currentCommand == Command.NONE)
             {
@@ -132,78 +104,6 @@ namespace mike_and_conquer
             {
                 HandleCommandAttackTarget(gameTime);
             }
-
-
-        }
-
-
-        private void HandleEnemyUpdate(GameTime gameTime)
-        {
-            if (!enemyStateIsSleeping)
-            {
-
-                if (currentAttackTarget != null && currentAttackTarget.health <= 0)
-                {
-                    currentAttackTarget = FindFirstNonDeadGdiMinigunner();
-
-                    if (currentAttackTarget == null)
-                    {
-                        enemyStateIsSleeping = true;
-                        enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
-                        this.state = State.MOVING;
-                        return;
-                    }
-
-                }
-
-                if (IsInAttackRange())
-                {
-                    this.state = State.ATTACKING;
-                    currentAttackTarget.ReduceHealth(10);
-                }
-                else
-                {
-                    this.state = State.MOVING;
-                    SetDestination((int)currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
-                    MoveTowardsDestination(gameTime);
-                }
-
-            }
-            else
-            {
-                this.state = State.IDLE;
-                enemySleepCountdownTimer--;
-                if (enemySleepCountdownTimer <= 0)
-                {
-                    enemyStateIsSleeping = false;
-                    currentAttackTarget = FindFirstNonDeadGdiMinigunner();
-                    if (currentAttackTarget == null)
-                    {
-                        enemyStateIsSleeping = true;
-                        enemySleepCountdownTimer = ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE;
-                    }
-
-                }
-
-            }
-
-        }
-
-
-
-        private Minigunner FindFirstNonDeadGdiMinigunner()
-        {
-            List<Minigunner> gdiMinigunners = (MikeAndConqueryGame.instance.gdiMinigunnerList);
-
-            foreach (Minigunner nextMinigunner in gdiMinigunners)
-            {
-                if (nextMinigunner.health > 0)
-                {
-                    return nextMinigunner;
-                }
-            }
-
-            return null;
 
         }
 
@@ -239,8 +139,6 @@ namespace mike_and_conquer
             return (
                 position.X == destinationX &&
                 position.Y == destinationY);
-
-
         }
 
 

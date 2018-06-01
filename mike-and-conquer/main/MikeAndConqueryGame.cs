@@ -245,6 +245,8 @@ namespace mike_and_conquer
             Minigunner newMinigunner = new Minigunner(x, y,false, this.scale);
             gdiMinigunnerList.Add(newMinigunner);
 
+            // TODO:  In future, decouple always adding a view when adding a minigunner
+            // to enable running headless with no UI
             MinigunnerView newMinigunnerView = new GdiMinigunnerView(newMinigunner);
             GdiMinigunnerViewList.Add(newMinigunnerView);
             return newMinigunner;
@@ -258,6 +260,7 @@ namespace mike_and_conquer
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);
 
+            // TODO:  In future, don't couple Nod having to be AI controlled enemy
             MinigunnerAIController minigunnerAIController = new MinigunnerAIController(newMinigunner);
             nodMinigunnerAIControllerList.Add(minigunnerAIController);
 

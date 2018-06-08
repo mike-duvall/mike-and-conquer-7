@@ -6,7 +6,7 @@ using Boolean = System.Boolean;
 using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
 using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController ;
 
-
+using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 namespace mike_and_conquer
@@ -200,6 +200,13 @@ namespace mike_and_conquer
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+
+
+            foreach (BasicMapSquare basicMapSqaure in MikeAndConqueryGame.instance.BasicMapSquareList)
+            {
+                basicMapSqaure.Draw(gameTime, spriteBatch);
+            }
+
             foreach (MinigunnerView nextMinigunnerView in MikeAndConqueryGame.instance.GdiMinigunnerViewList)
             {
                 nextMinigunnerView.Draw(gameTime, spriteBatch);
@@ -209,7 +216,6 @@ namespace mike_and_conquer
             {
                 nextMinigunnerView.Draw(gameTime, spriteBatch);
             }
-
 
 
         }

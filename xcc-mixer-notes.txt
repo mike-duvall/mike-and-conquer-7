@@ -5,5 +5,8 @@ Some shp file are in: D:\OriginGames\CNC and The Covert Operations\CONQUER.MIX
 * Minigunner: e1.shp
 * Unit selection cursor: select.shp
 * Palette: temperate.pal
+* Plain map squares: v15.tem (?)
+
+
 
 Set Compatibility for "XCC Mixer.exe" Winodws XP Service Pack 3.  This will make export of images to clipboard and files work correctly

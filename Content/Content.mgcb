@@ -76,3 +76,6 @@
 #begin v14.tem
 /copy:v14.tem
 
+#begin clear1.tem
+/copy:clear1.tem
+

@@ -31,6 +31,7 @@ using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIControl
 
 
 
+
 namespace mike_and_conquer
 {
 
@@ -183,11 +184,13 @@ namespace mike_and_conquer
         /// </summary>
         protected override void LoadContent()
         {
+
+            textureListMap.LoadSpriteListFromTmpFile(BasicMapSquare.SPRITE_KEY, BasicMapSquare.SHP_FILE_NAME, BasicMapSquare.SHP_FILE_COLOR_MAPPER);
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             textureListMap.LoadSpriteListFromShpFile(GdiMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
             textureListMap.LoadSpriteListFromShpFile(NodMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, NodMinigunnerView.SHP_FILE_COLOR_MAPPER);
-            textureListMap.LoadSpriteListFromShpFile(BasicMapSquare.SPRITE_KEY, BasicMapSquare.SHP_FILE_NAME, BasicMapSquare.SHP_FILE_COLOR_MAPPER);
 
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");

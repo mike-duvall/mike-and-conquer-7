@@ -83,6 +83,7 @@
     <Compile Include="mike-and-conquer\openra\ReadOnlyList.cs" />
     <Compile Include="mike-and-conquer\openra\SpriteLoader.cs" />
     <Compile Include="mike-and-conquer\openra\StreamExts.cs" />
+    <Compile Include="mike-and-conquer\openra\TmpTDLoader.cs" />
     <Compile Include="mike-and-conquer\openra\XORDeltaCompression.cs" />
     <Compile Include="mike-and-conquer\rest\GameStateController.cs" />
     <Compile Include="mike-and-conquer\rest\RightClickController.cs" />

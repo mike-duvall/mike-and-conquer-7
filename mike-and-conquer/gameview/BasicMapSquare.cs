@@ -16,7 +16,8 @@ namespace mike_and_conquer.gameview
 
         // TODO:  SHP_FILE_NAME and ShpFileColorMapper don't really belong in this view
         // Views should be agnostic about where the sprite data was loaded from
-        public const string SHP_FILE_NAME = "Content\\v14.tem";
+//        public const string SHP_FILE_NAME = "Content\\v14.tem";
+        public const string SHP_FILE_NAME = "Content\\clear1.tem";
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
 
@@ -33,8 +34,21 @@ namespace mike_and_conquer.gameview
 
         private void SetupAnimations()
         {
-            AnimationSequence animationSequence = new AnimationSequence(1);
+            AnimationSequence animationSequence = new AnimationSequence(50);
             animationSequence.AddFrame(1);
+            animationSequence.AddFrame(2);
+            animationSequence.AddFrame(3);
+            animationSequence.AddFrame(4);
+            animationSequence.AddFrame(5);
+            animationSequence.AddFrame(6);
+            animationSequence.AddFrame(7);
+            animationSequence.AddFrame(8);
+            animationSequence.AddFrame(9);
+            animationSequence.AddFrame(10);
+            animationSequence.AddFrame(11);
+            animationSequence.AddFrame(12);
+            animationSequence.AddFrame(13);
+            animationSequence.AddFrame(14);
 
             gameSprite.AddAnimationSequence(0, animationSequence);
 

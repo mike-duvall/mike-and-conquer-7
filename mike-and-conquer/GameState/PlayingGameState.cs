@@ -7,6 +7,7 @@ using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
 using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController ;
 
 using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
+using BasicMapSquare2 = mike_and_conquer.gameview.BasicMapSquare2;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 namespace mike_and_conquer
@@ -202,10 +203,17 @@ namespace mike_and_conquer
         {
 
 
-            foreach (BasicMapSquare basicMapSqaure in MikeAndConqueryGame.instance.BasicMapSquareList)
+            foreach (BasicMapSquare basicMapSquare in MikeAndConqueryGame.instance.BasicMapSquareList)
             {
-                basicMapSqaure.Draw(gameTime, spriteBatch);
+                basicMapSquare.Draw(gameTime, spriteBatch);
             }
+
+
+            foreach (BasicMapSquare2 basicMapSquare2 in MikeAndConqueryGame.instance.BasicMapSquare2List)
+            {
+                basicMapSquare2.Draw(gameTime, spriteBatch);
+            }
+
 
             foreach (MinigunnerView nextMinigunnerView in MikeAndConqueryGame.instance.GdiMinigunnerViewList)
             {

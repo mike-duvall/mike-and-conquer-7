@@ -79,3 +79,6 @@
 #begin clear1.tem
 /copy:clear1.tem
 
+#begin s12.tem
+/copy:s12.tem
+

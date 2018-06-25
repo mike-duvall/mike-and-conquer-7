@@ -25,6 +25,7 @@ using GdiMinigunnerView = mike_and_conquer.gameview.GdiMinigunnerView;
 using NodMinigunnerView = mike_and_conquer.gameview.NodMinigunnerView;
 
 using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
+using BasicMapSquare2 = mike_and_conquer.gameview.BasicMapSquare2;
 
 using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
 
@@ -50,12 +51,17 @@ namespace mike_and_conquer
         private List<MinigunnerView> nodMinigunnerViewList;
 
         private List<BasicMapSquare> basicMapSquareList;
+        private List<BasicMapSquare2> basicMapSquare2List;
 
         public List<BasicMapSquare> BasicMapSquareList
         {
             get { return basicMapSquareList; }
         }
 
+        public List<BasicMapSquare2> BasicMapSquare2List
+        {
+            get { return basicMapSquare2List; }
+        }
 
         public List<MinigunnerView> GdiMinigunnerViewList
         {
@@ -115,6 +121,7 @@ namespace mike_and_conquer
 
 
             basicMapSquareList = new List<BasicMapSquare>();
+            basicMapSquare2List = new List<BasicMapSquare2>();
 
             nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
 
@@ -145,26 +152,74 @@ namespace mike_and_conquer
             base.Initialize();
             if (!testMode)
             {
-                AddNodMinigunner(1100, 100);
-                AddNodMinigunner(1150, 200);
+                //AddNodMinigunner(1100, 100);
+                //AddNodMinigunner(1150, 200);
 
-                AddGdiMinigunner(100, 1000);
-                AddGdiMinigunner(150, 1000);
+                //AddGdiMinigunner(100, 1000);
+                //AddGdiMinigunner(150, 1000);
 
 
+                // One line showing above and below is x = 61, y = 61
+
+
+
+                //15, 12, 13
                 int x = 60;
                 int y = 60;
 
-                for (int outer = 0; outer < 10; outer++)
+                BasicMapSquareList.Add(new BasicMapSquare(x, y,15));
+
+                int x2 = x + 120;
+                int y2 = y;
+                BasicMapSquareList.Add(new BasicMapSquare(x2, y2, 12));
+
+                int x3 = x + (120 * 2);
+                int y3 = y;
+                BasicMapSquareList.Add(new BasicMapSquare(x3, y3, 13));
+
+
+                int x4 = x + (120 * 3);
+                int y4 = y;
+                BasicMapSquare2List.Add(new BasicMapSquare2(x4, y4, 2));
+
+                int x5 = x + (120 * 4);
+                int y5 = y;
+                BasicMapSquare2List.Add(new BasicMapSquare2(x5, y5, 3));
+
+
+                //Figure out how to make generic Map square where you tell key and index
+                //    will need to load all shp and templates into a generic place to hold on deman
+                //    Maybe one big sprite sheet?
+
+                int currentX = x;
+                y += 120 * 3;
+                for(int i = 0; i < 16; i++)
                 {
-                    for (int i = 0; i < 18; i++)
+
+                    BasicMapSquareList.Add(new BasicMapSquare(x, y, i));
+                    x += 121;
+                    if(x > 500)
                     {
-                        BasicMapSquareList.Add(new BasicMapSquare(x, y));
-                        x += 110;
+                        x = 60;
+                        y += 122;
                     }
-                    y += 110;
-                    x = 60;
                 }
+
+
+                //int x3 = x;
+                //int y3 = y + 120;
+                //BasicMapSquareList.Add(new BasicMapSquare(x3, y3, 1));
+
+                //for (int outer = 0; outer < 10; outer++)
+                //{
+                //    for (int i = 0; i < 18; i++)
+                //    {
+                //        BasicMapSquareList.Add(new BasicMapSquare(x, y));
+                //        x += 110;
+                //    }
+                //    y += 110;
+                //    x = 60;
+                //}
 
                 //BasicMapSquareList.Add(new BasicMapSquare(60, 60));
                 //BasicMapSquareList.Add(new BasicMapSquare(180, 60));
@@ -186,6 +241,7 @@ namespace mike_and_conquer
         {
 
             textureListMap.LoadSpriteListFromTmpFile(BasicMapSquare.SPRITE_KEY, BasicMapSquare.SHP_FILE_NAME, BasicMapSquare.SHP_FILE_COLOR_MAPPER);
+            textureListMap.LoadSpriteListFromTmpFile(BasicMapSquare2.SPRITE_KEY, BasicMapSquare2.SHP_FILE_NAME, BasicMapSquare2.SHP_FILE_COLOR_MAPPER);
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);

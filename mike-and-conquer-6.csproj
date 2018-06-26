@@ -60,7 +60,6 @@
     <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameview\BasicMapSquare.cs" />
-    <Compile Include="mike-and-conquer\gameview\BasicMapSquare2.cs" />
     <Compile Include="mike-and-conquer\gameview\NodMinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\GdiMinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\MinigunnerView.cs" />

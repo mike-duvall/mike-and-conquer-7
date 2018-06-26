@@ -25,7 +25,6 @@ using GdiMinigunnerView = mike_and_conquer.gameview.GdiMinigunnerView;
 using NodMinigunnerView = mike_and_conquer.gameview.NodMinigunnerView;
 
 using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
-using BasicMapSquare2 = mike_and_conquer.gameview.BasicMapSquare2;
 
 using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
 
@@ -51,16 +50,10 @@ namespace mike_and_conquer
         private List<MinigunnerView> nodMinigunnerViewList;
 
         private List<BasicMapSquare> basicMapSquareList;
-        private List<BasicMapSquare2> basicMapSquare2List;
 
         public List<BasicMapSquare> BasicMapSquareList
         {
             get { return basicMapSquareList; }
-        }
-
-        public List<BasicMapSquare2> BasicMapSquare2List
-        {
-            get { return basicMapSquare2List; }
         }
 
         public List<MinigunnerView> GdiMinigunnerViewList
@@ -121,7 +114,6 @@ namespace mike_and_conquer
 
 
             basicMapSquareList = new List<BasicMapSquare>();
-            basicMapSquare2List = new List<BasicMapSquare2>();
 
             nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
 
@@ -167,36 +159,31 @@ namespace mike_and_conquer
                 int x = 60;
                 int y = 60;
 
-                BasicMapSquareList.Add(new BasicMapSquare(x, y,15));
+                BasicMapSquareList.Add(new BasicMapSquare(x, y, TextureListMap.CLEAR1_SHP_FILE_NAME,15));
 
                 int x2 = x + 120;
                 int y2 = y;
-                BasicMapSquareList.Add(new BasicMapSquare(x2, y2, 12));
+                BasicMapSquareList.Add(new BasicMapSquare(x2, y2, TextureListMap.CLEAR1_SHP_FILE_NAME, 12));
 
                 int x3 = x + (120 * 2);
                 int y3 = y;
-                BasicMapSquareList.Add(new BasicMapSquare(x3, y3, 13));
+                BasicMapSquareList.Add(new BasicMapSquare(x3, y3, TextureListMap.CLEAR1_SHP_FILE_NAME, 13));
 
 
                 int x4 = x + (120 * 3);
                 int y4 = y;
-                BasicMapSquare2List.Add(new BasicMapSquare2(x4, y4, 2));
+                BasicMapSquareList.Add(new BasicMapSquare(x4, y4, TextureListMap.S12_TEM, 2));
 
                 int x5 = x + (120 * 4);
                 int y5 = y;
-                BasicMapSquare2List.Add(new BasicMapSquare2(x5, y5, 3));
-
-
-                //Figure out how to make generic Map square where you tell key and index
-                //    will need to load all shp and templates into a generic place to hold on deman
-                //    Maybe one big sprite sheet?
+                BasicMapSquareList.Add(new BasicMapSquare(x5, y5, TextureListMap.S12_TEM, 3));
 
                 int currentX = x;
                 y += 120 * 3;
                 for(int i = 0; i < 16; i++)
                 {
 
-                    BasicMapSquareList.Add(new BasicMapSquare(x, y, i));
+                    BasicMapSquareList.Add(new BasicMapSquare(x, y, TextureListMap.CLEAR1_SHP_FILE_NAME, i));
                     x += 121;
                     if(x > 500)
                     {
@@ -240,8 +227,8 @@ namespace mike_and_conquer
         protected override void LoadContent()
         {
 
-            textureListMap.LoadSpriteListFromTmpFile(BasicMapSquare.SPRITE_KEY, BasicMapSquare.SHP_FILE_NAME, BasicMapSquare.SHP_FILE_COLOR_MAPPER);
-            textureListMap.LoadSpriteListFromTmpFile(BasicMapSquare2.SPRITE_KEY, BasicMapSquare2.SHP_FILE_NAME, BasicMapSquare2.SHP_FILE_COLOR_MAPPER);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.CLEAR1_SHP_FILE_NAME);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S12_TEM);
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);

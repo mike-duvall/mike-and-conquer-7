@@ -12,21 +12,14 @@ namespace mike_and_conquer.gameview
     {
         private GameSprite gameSprite;
 
-        public const string SPRITE_KEY = "BasicMapSquare";
-
-        // TODO:  SHP_FILE_NAME and ShpFileColorMapper don't really belong in this view
-        // Views should be agnostic about where the sprite data was loaded from
-//        public const string SHP_FILE_NAME = "Content\\v14.tem";
-        public const string SHP_FILE_NAME = "Content\\clear1.tem";
-        public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
         Vector2 position;
         private int imageIndex;
 
-        public  BasicMapSquare(int x, int y, int imageIndex )
+        public  BasicMapSquare(int x, int y, string textureKey, int imageIndex )
         {
             this.position = new Vector2(x,y);
-            this.gameSprite = new GameSprite(BasicMapSquare.SPRITE_KEY);
+            this.gameSprite = new GameSprite(textureKey);
             this.imageIndex = imageIndex;
             SetupAnimations();
         }

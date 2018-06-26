@@ -15,6 +15,9 @@ namespace mike_and_conquer
 
         private Dictionary<string, SpriteTextureList> spriteTextureListMap;
 
+        public const string CLEAR1_SHP_FILE_NAME = "Content\\clear1.tem";
+        public const string S12_TEM = "Content\\s12.tem";
+
         public TextureListMap()
         {
             spriteTextureListMap = new Dictionary<string, SpriteTextureList>();
@@ -34,9 +37,9 @@ namespace mike_and_conquer
             AddTextureList(key, LoadAllTexturesFromShpFile(shpFileName, shpFileColorMapper));
         }
 
-        internal void LoadSpriteListFromTmpFile(string key, string shpFileName, ShpFileColorMapper shpFileColorMapper)
+        internal void LoadSpriteListFromTmpFile( string shpFileName)
         {
-            AddTextureList(key, LoadAllTexturesFromTmpFile(shpFileName, shpFileColorMapper));
+            AddTextureList(shpFileName, LoadAllTexturesFromTmpFile(shpFileName));
         }
 
 
@@ -62,7 +65,6 @@ namespace mike_and_conquer
 
             foreach (OpenRA.Graphics.ISpriteFrame frame in shpTDSprite.Frames)
             {
-                //            OpenRA.Graphics.ISpriteFrame frame = shpTDSprite.Frames[indexOfFrameToLoad];
                 byte[] frameData = frame.Data;
 
                 Texture2D texture2D = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, shpTDSprite.Size.Width, shpTDSprite.Size.Height);
@@ -72,7 +74,6 @@ namespace mike_and_conquer
                 for (int i = 0; i < numPixels; i++)
                 {
                     int basePaletteIndex = frameData[i];
-                    //                    int mappedPaletteIndex = MapColorIndex(basePaletteIndex);
                     int mappedPaletteIndex = shpFileColorMapper.MapColorIndex(basePaletteIndex);
                     uint mappedColor = palette[mappedPaletteIndex];
 
@@ -89,7 +90,7 @@ namespace mike_and_conquer
 
         }
 
-        internal SpriteTextureList LoadAllTexturesFromTmpFile(string fileName, ShpFileColorMapper shpFileColorMapper)
+        internal SpriteTextureList LoadAllTexturesFromTmpFile(string fileName)
         {
 
 
@@ -107,12 +108,6 @@ namespace mike_and_conquer
             SpriteTextureList spriteTextureList = new SpriteTextureList();
             OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
 
-            //System.IO.FileStream shpStream = System.IO.File.Open(shpFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
-            //OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader loader = new OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader();
-            //ShpTDSprite shpTDSprite = new OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite(shpStream);
-
-            //int unscaledWidth = shpTDSprite.Frames[0].Size.Width;
-            //int unscaledHeight = shpTDSprite.Frames[0].Size.Height;
             int unscaledWidth = frames[0].Size.Width;
             int unscaledHeight = frames[0].Size.Height;
 
@@ -121,20 +116,16 @@ namespace mike_and_conquer
 
             foreach (OpenRA.Graphics.ISpriteFrame frame in frames)
             {
-                //            OpenRA.Graphics.ISpriteFrame frame = shpTDSprite.Frames[indexOfFrameToLoad];
                 byte[] frameData = frame.Data;
 
-//                Texture2D texture2D = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, shpTDSprite.Size.Width, shpTDSprite.Size.Height);
                 Texture2D texture2D = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
                 int numPixels = texture2D.Width * texture2D.Height;
                 Color[] texturePixelData = new Color[numPixels];
 
                 for (int i = 0; i < numPixels; i++)
                 {
-                    int basePaletteIndex = frameData[i];
-                    //                    int mappedPaletteIndex = MapColorIndex(basePaletteIndex);
-                    int mappedPaletteIndex = shpFileColorMapper.MapColorIndex(basePaletteIndex);
-                    uint mappedColor = palette[mappedPaletteIndex];
+                    int paletteIndex = frameData[i];
+                    uint mappedColor = palette[paletteIndex];
 
                     System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
                     Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);

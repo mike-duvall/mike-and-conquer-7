@@ -151,69 +151,25 @@ namespace mike_and_conquer
                 //AddGdiMinigunner(150, 1000);
 
 
-                // One line showing above and below is x = 61, y = 61
 
+                string[,] mapTable = new string[,] {
+                        {TextureListMap.CLEAR1_SHP_FILE_NAME,"15"},
+                        {TextureListMap.CLEAR1_SHP_FILE_NAME,"12"},
+                        {TextureListMap.CLEAR1_SHP_FILE_NAME,"13"},
+                        {TextureListMap.S12_TEM,"2"},
+                        {TextureListMap.S12_TEM,"3"}
+                };
 
-
-                //15, 12, 13
                 int x = 60;
                 int y = 60;
 
-                BasicMapSquareList.Add(new BasicMapSquare(x, y, TextureListMap.CLEAR1_SHP_FILE_NAME,15));
+                int numSquares = mapTable.GetLength(0);
 
-                int x2 = x + 120;
-                int y2 = y;
-                BasicMapSquareList.Add(new BasicMapSquare(x2, y2, TextureListMap.CLEAR1_SHP_FILE_NAME, 12));
-
-                int x3 = x + (120 * 2);
-                int y3 = y;
-                BasicMapSquareList.Add(new BasicMapSquare(x3, y3, TextureListMap.CLEAR1_SHP_FILE_NAME, 13));
-
-
-                int x4 = x + (120 * 3);
-                int y4 = y;
-                BasicMapSquareList.Add(new BasicMapSquare(x4, y4, TextureListMap.S12_TEM, 2));
-
-                int x5 = x + (120 * 4);
-                int y5 = y;
-                BasicMapSquareList.Add(new BasicMapSquare(x5, y5, TextureListMap.S12_TEM, 3));
-
-                int currentX = x;
-                y += 120 * 3;
-                for(int i = 0; i < 16; i++)
+                for(int i = 0; i < numSquares; i++)
                 {
-
-                    BasicMapSquareList.Add(new BasicMapSquare(x, y, TextureListMap.CLEAR1_SHP_FILE_NAME, i));
-                    x += 121;
-                    if(x > 500)
-                    {
-                        x = 60;
-                        y += 122;
-                    }
+                    BasicMapSquareList.Add(new BasicMapSquare(x, y, mapTable[i, 0], System.Int32.Parse(mapTable[i, 1])));
+                    x = x + 120;
                 }
-
-
-                //int x3 = x;
-                //int y3 = y + 120;
-                //BasicMapSquareList.Add(new BasicMapSquare(x3, y3, 1));
-
-                //for (int outer = 0; outer < 10; outer++)
-                //{
-                //    for (int i = 0; i < 18; i++)
-                //    {
-                //        BasicMapSquareList.Add(new BasicMapSquare(x, y));
-                //        x += 110;
-                //    }
-                //    y += 110;
-                //    x = 60;
-                //}
-
-                //BasicMapSquareList.Add(new BasicMapSquare(60, 60));
-                //BasicMapSquareList.Add(new BasicMapSquare(180, 60));
-
-                //                BasicMapSquareList.Add(new BasicMapSquare(100, 200));
-                //                BasicMapSquareList.Add(new BasicMapSquare(220, 200));
-
 
             }
 

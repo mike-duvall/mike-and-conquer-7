@@ -17,6 +17,8 @@ namespace mike_and_conquer
 
         public const string CLEAR1_SHP_FILE_NAME = "Content\\clear1.tem";
         public const string S12_TEM = "Content\\s12.tem";
+        public const string D21_TEM = "Content\\d21.tem";
+        public const string D15_TEM = "Content\\d15.tem";
 
         public TextureListMap()
         {

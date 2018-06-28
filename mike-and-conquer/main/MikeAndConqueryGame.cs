@@ -163,7 +163,7 @@ namespace mike_and_conquer
                         {TextureListMap.D21_TEM,"0"},
                         {TextureListMap.D21_TEM,"1"},
                         {TextureListMap.D21_TEM,"2"},
-                        //{TextureListMap.D15_TEM,"2"},
+                        {TextureListMap.D23_TEM,"5"},
                 };
 
                 int x = 60;
@@ -190,14 +190,12 @@ namespace mike_and_conquer
         {
 
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.CLEAR1_SHP_FILE_NAME);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S12_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D21_TEM);
-
-            Line below is not working, I think because the number of tiles the file has is less than the actual number
-                so may need extra parameter when loading that says how many actual tiles to expect to load
-
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D09_TEM);
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D15_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D21_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D23_TEM);
 
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S12_TEM);
 
 
             // Create a new SpriteBatch, which can be used to draw textures.

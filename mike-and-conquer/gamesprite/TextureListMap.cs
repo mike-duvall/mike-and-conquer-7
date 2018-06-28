@@ -17,8 +17,10 @@ namespace mike_and_conquer
 
         public const string CLEAR1_SHP_FILE_NAME = "Content\\clear1.tem";
         public const string S12_TEM = "Content\\s12.tem";
-        public const string D21_TEM = "Content\\d21.tem";
+        public const string D09_TEM = "Content\\d09.tem";
         public const string D15_TEM = "Content\\d15.tem";
+        public const string D21_TEM = "Content\\d21.tem";
+        public const string D23_TEM = "Content\\d23.tem";
 
         public TextureListMap()
         {
@@ -110,17 +112,16 @@ namespace mike_and_conquer
             SpriteTextureList spriteTextureList = new SpriteTextureList();
             OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
 
-            int unscaledWidth = frames[0].Size.Width;
-            int unscaledHeight = frames[0].Size.Height;
-
-            spriteTextureList.textureWidth = unscaledWidth;
-            spriteTextureList.textureHeight = unscaledHeight;
-
             foreach (OpenRA.Graphics.ISpriteFrame frame in frames)
             {
                 byte[] frameData = frame.Data;
 
-                Texture2D texture2D = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
+                if( frameData.Length == 0)
+                {
+                    continue;
+                }
+                //                Texture2D texture2D = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
+                Texture2D texture2D = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, frame.Size.Width, frame.Size.Height);
                 int numPixels = texture2D.Width * texture2D.Height;
                 Color[] texturePixelData = new Color[numPixels];
 
@@ -138,6 +139,13 @@ namespace mike_and_conquer
                 tmpStream.Close();
                 spriteTextureList.textureList.Add(texture2D);
             }
+
+            int unscaledWidth = frames[0].Size.Width;
+            int unscaledHeight = frames[0].Size.Height;
+
+            spriteTextureList.textureWidth = spriteTextureList.textureList[0].Width;
+            spriteTextureList.textureHeight = spriteTextureList.textureList[0].Height;
+
             return spriteTextureList;
 
         }

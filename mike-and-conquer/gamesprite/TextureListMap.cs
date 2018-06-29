@@ -15,7 +15,7 @@ namespace mike_and_conquer
 
         private Dictionary<string, SpriteTextureList> spriteTextureListMap;
 
-        public const string CLEAR1_SHP_FILE_NAME = "Content\\clear1.tem";
+        public const string CLEAR1_SHP = "Content\\clear1.tem";
         public const string S12_TEM = "Content\\s12.tem";
         public const string D09_TEM = "Content\\d09.tem";
         public const string D15_TEM = "Content\\d15.tem";

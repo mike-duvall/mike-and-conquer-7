@@ -153,18 +153,40 @@ namespace mike_and_conquer
 
 
                 string[,] mapTable = new string[,] {
-                        {TextureListMap.CLEAR1_SHP_FILE_NAME,"15"},
-                        {TextureListMap.CLEAR1_SHP_FILE_NAME,"12"},
-                        {TextureListMap.CLEAR1_SHP_FILE_NAME,"13"},
+                        {TextureListMap.CLEAR1_SHP,"15"},
+                        {TextureListMap.CLEAR1_SHP,"12"},
+                        {TextureListMap.CLEAR1_SHP,"13"},
                         {TextureListMap.S12_TEM,"2"},
                         {TextureListMap.S12_TEM,"3"},
-                        {TextureListMap.CLEAR1_SHP_FILE_NAME,"15"},
-                        {TextureListMap.CLEAR1_SHP_FILE_NAME,"12"},
+                        {TextureListMap.CLEAR1_SHP,"15"},
+                        {TextureListMap.CLEAR1_SHP,"12"},
                         {TextureListMap.D21_TEM,"0"},
                         {TextureListMap.D21_TEM,"1"},
                         {TextureListMap.D21_TEM,"2"},
                         {TextureListMap.D23_TEM,"5"},
+                        {TextureListMap.D23_TEM,"6"},
+                        {TextureListMap.CLEAR1_SHP,"15"},
                 };
+
+                Pickup here:
+
+                Above somewhat matches this from the mission file:  (scg01ea.bin)  (Starting at 0x13CC in the file)
+
+18 02  S12
+18 03  S12
+FF 00
+FF 00
+71 00  D21
+71 01  D21
+71 02  D21
+73 06  D23
+73 07  D23
+FF 00
+
+                    Use this to help figure how to parse mission file
+(using vladan's mapping table here: http://vladan.bato.net/cnc/cncmap1f.txt)
+
+
 
                 int x = 60;
                 int y = 60;
@@ -189,7 +211,7 @@ namespace mike_and_conquer
         protected override void LoadContent()
         {
 
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.CLEAR1_SHP_FILE_NAME);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.CLEAR1_SHP);
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D09_TEM);
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D15_TEM);
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D21_TEM);

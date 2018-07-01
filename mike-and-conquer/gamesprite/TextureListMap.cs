@@ -22,6 +22,10 @@ namespace mike_and_conquer
         public const string D21_TEM = "Content\\d21.tem";
         public const string D23_TEM = "Content\\d23.tem";
 
+
+//        pickup here and add p07 and next tiles by index
+        public const string P07_TEM = "Content\\p07.tem";
+
         public TextureListMap()
         {
             spriteTextureListMap = new Dictionary<string, SpriteTextureList>();
@@ -110,6 +114,10 @@ namespace mike_and_conquer
             int[] remap = { };
 
             SpriteTextureList spriteTextureList = new SpriteTextureList();
+            spriteTextureList.textureWidth = -1;
+            spriteTextureList.textureHeight = -1;
+
+
             OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
 
             foreach (OpenRA.Graphics.ISpriteFrame frame in frames)
@@ -118,6 +126,7 @@ namespace mike_and_conquer
 
                 if( frameData.Length == 0)
                 {
+                    spriteTextureList.textureList.Add(null);
                     continue;
                 }
                 //                Texture2D texture2D = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
@@ -137,14 +146,15 @@ namespace mike_and_conquer
 
                 texture2D.SetData(texturePixelData);
                 tmpStream.Close();
+                spriteTextureList.textureWidth = frame.Size.Width;
+                spriteTextureList.textureHeight = frame.Size.Height;
+
                 spriteTextureList.textureList.Add(texture2D);
             }
 
-            int unscaledWidth = frames[0].Size.Width;
-            int unscaledHeight = frames[0].Size.Height;
+            //int unscaledWidth = frames[0].Size.Width;
+            //int unscaledHeight = frames[0].Size.Height;
 
-            spriteTextureList.textureWidth = spriteTextureList.textureList[0].Width;
-            spriteTextureList.textureHeight = spriteTextureList.textureList[0].Height;
 
             return spriteTextureList;
 

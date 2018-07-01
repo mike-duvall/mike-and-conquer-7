@@ -88,7 +88,7 @@ namespace mike_and_conquer
         {
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
-            scale = 5f;
+            scale = 3f;
 
             bool makeFullscreen = true;
             //bool makeFullscreen = false;
@@ -153,7 +153,6 @@ namespace mike_and_conquer
 
 
                 string[,] mapTable = new string[,] {
-                        {TextureListMap.CLEAR1_SHP,"15"},
                         {TextureListMap.CLEAR1_SHP,"12"},
                         {TextureListMap.CLEAR1_SHP,"13"},
                         {TextureListMap.S12_TEM,"2"},
@@ -163,40 +162,81 @@ namespace mike_and_conquer
                         {TextureListMap.D21_TEM,"0"},
                         {TextureListMap.D21_TEM,"1"},
                         {TextureListMap.D21_TEM,"2"},
-                        {TextureListMap.D23_TEM,"5"},
                         {TextureListMap.D23_TEM,"6"},
+                        {TextureListMap.D23_TEM,"7"},
                         {TextureListMap.CLEAR1_SHP,"15"},
+                        {TextureListMap.CLEAR1_SHP,"12"},
+                        {TextureListMap.CLEAR1_SHP,"13"},
+                        {TextureListMap.P07_TEM,"00"},
+                        {TextureListMap.P07_TEM,"01"},
+                        {TextureListMap.P07_TEM,"02"},
+                        {TextureListMap.P07_TEM,"03"},
                 };
 
-                Pickup here:
-
-                Above somewhat matches this from the mission file:  (scg01ea.bin)  (Starting at 0x13CC in the file)
-
-18 02  S12
-18 03  S12
-FF 00
-FF 00
-71 00  D21
-71 01  D21
-71 02  D21
-73 06  D23
-73 07  D23
-FF 00
-
-                    Use this to help figure how to parse mission file
-(using vladan's mapping table here: http://vladan.bato.net/cnc/cncmap1f.txt)
 
 
+                //  (Starting at 0x13CC in the file)
+                //18 02  S12
+                //18 03  S12
+                //FF 00
+                //FF 00
+                //71 00  D21
+                //71 01  D21
+                //71 02  D21
+                //73 06  D23
+                //73 07  D23
+                //FF 00  clear1
+                //FF 00  Clear1
+                //FF 00  Clear1
+                //49 00 P07
+                //49 01 P07
+                //49 02 P07
+                //49 03 P07
+                //FF 00
+                //FF 00
+                //FF 00
+                //FF 00
+                //FF 00
+                //FF 00
+                //FF 00
+                //FF 00
+                //FF 00
+                //FF 00
 
-                int x = 60;
-                int y = 60;
+                //Step 1:  Fill in whole map with repeating 4x4 default clear template
+                //Step 2:  Where not FF 00 in map file, overwrite clear template with specified tiles
+                //Step 3:  Figure out if this includes trees, etc, if not figure out where trees are documented
+                //Step 4:  Profit
+
+                //    Trees appear to be SHP vs TMP?
+                //    Map file only references TMP ?
+                //    What about placement of initial troops?
+                //    Sandbags
+
+                //    Is forumla for finding default templace image number somthing like:
+
+                //    (row - 1) mod 4 = the row of the template from  0 to 3
+                //    (column - 1) mod 4 = the column of the template from 0 to 3
+
+                //    So the image number = (row * 4) + column 
+
+                //    = (((row - 1) mod 4) * 4) + (column -1) mod 4
+
+
+
+                //int x = 60;
+                //int y = 60;
+
+                int x = (int)(12 * this.scale);
+                int y = (int)(12 * this.scale);
 
                 int numSquares = mapTable.GetLength(0);
 
                 for(int i = 0; i < numSquares; i++)
                 {
                     BasicMapSquareList.Add(new BasicMapSquare(x, y, mapTable[i, 0], System.Int32.Parse(mapTable[i, 1])));
-                    x = x + 120;
+                    //                    x = x + 120;
+                    x = x + (int)(24 * this.scale);
                 }
 
             }
@@ -218,6 +258,8 @@ FF 00
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D23_TEM);
 
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S12_TEM);
+
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P07_TEM);
 
 
             // Create a new SpriteBatch, which can be used to draw textures.

@@ -22,9 +22,9 @@ namespace mike_and_conquer
         public const string D21_TEM = "Content\\d21.tem";
         public const string D23_TEM = "Content\\d23.tem";
 
-
-//        pickup here and add p07 and next tiles by index
         public const string P07_TEM = "Content\\p07.tem";
+
+        public const string S09_TEM = "Content\\s09.tem";
 
         public TextureListMap()
         {

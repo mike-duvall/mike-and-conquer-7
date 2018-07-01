@@ -157,8 +157,8 @@ namespace mike_and_conquer
                         {TextureListMap.CLEAR1_SHP,"13"},
                         {TextureListMap.S12_TEM,"2"},
                         {TextureListMap.S12_TEM,"3"},
-                        {TextureListMap.CLEAR1_SHP,"15"},
                         {TextureListMap.CLEAR1_SHP,"12"},
+                        {TextureListMap.CLEAR1_SHP,"13"},
                         {TextureListMap.D21_TEM,"0"},
                         {TextureListMap.D21_TEM,"1"},
                         {TextureListMap.D21_TEM,"2"},
@@ -171,37 +171,42 @@ namespace mike_and_conquer
                         {TextureListMap.P07_TEM,"01"},
                         {TextureListMap.P07_TEM,"02"},
                         {TextureListMap.P07_TEM,"03"},
+                        {TextureListMap.CLEAR1_SHP,"14"},
+                        {TextureListMap.CLEAR1_SHP,"15"},
+                        {TextureListMap.CLEAR1_SHP,"12"},
+                        {TextureListMap.CLEAR1_SHP,"13"},
+                        {TextureListMap.CLEAR1_SHP,"14"},
+                        {TextureListMap.CLEAR1_SHP,"15"},
+                        {TextureListMap.CLEAR1_SHP,"12"},
+                        {TextureListMap.CLEAR1_SHP,"13"},
+
+                        {TextureListMap.CLEAR1_SHP,"00"},
+                        {TextureListMap.CLEAR1_SHP,"01"},
+                        {TextureListMap.S09_TEM,"00"},
+                        {TextureListMap.S09_TEM,"01"},
+                        {TextureListMap.S09_TEM,"02"},
+
+                        {TextureListMap.CLEAR1_SHP,"01"},
+                        {TextureListMap.D21_TEM,"03"},
+                        {TextureListMap.D21_TEM,"04"},
+                        {TextureListMap.D21_TEM,"05"},
+
+                        {TextureListMap.CLEAR1_SHP,"01"},
+                        {TextureListMap.CLEAR1_SHP,"02"},
+                        {TextureListMap.CLEAR1_SHP,"03"},
+                        {TextureListMap.CLEAR1_SHP,"00"},
+                        {TextureListMap.CLEAR1_SHP,"01"},
+
+                        {TextureListMap.P07_TEM,"04"},
+                        {TextureListMap.P07_TEM,"05"},
+                        {TextureListMap.P07_TEM,"06"},
+                        {TextureListMap.P07_TEM,"07"},
+
                 };
 
 
 
                 //  (Starting at 0x13CC in the file)
-                //18 02  S12
-                //18 03  S12
-                //FF 00
-                //FF 00
-                //71 00  D21
-                //71 01  D21
-                //71 02  D21
-                //73 06  D23
-                //73 07  D23
-                //FF 00  clear1
-                //FF 00  Clear1
-                //FF 00  Clear1
-                //49 00 P07
-                //49 01 P07
-                //49 02 P07
-                //49 03 P07
-                //FF 00
-                //FF 00
-                //FF 00
-                //FF 00
-                //FF 00
-                //FF 00
-                //FF 00
-                //FF 00
-                //FF 00
-                //FF 00
 
                 //Step 1:  Fill in whole map with repeating 4x4 default clear template
                 //Step 2:  Where not FF 00 in map file, overwrite clear template with specified tiles
@@ -237,7 +242,17 @@ namespace mike_and_conquer
                     BasicMapSquareList.Add(new BasicMapSquare(x, y, mapTable[i, 0], System.Int32.Parse(mapTable[i, 1])));
                     //                    x = x + 120;
                     x = x + (int)(24 * this.scale);
+
+                    if( i == 25)
+                    {
+                        x = (int)(12 * this.scale);
+                        y = y + (int)(24 * this.scale);
+                    }
                 }
+
+
+
+
 
             }
 
@@ -260,6 +275,8 @@ namespace mike_and_conquer
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S12_TEM);
 
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P07_TEM);
+
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S09_TEM);
 
 
             // Create a new SpriteBatch, which can be used to draw textures.

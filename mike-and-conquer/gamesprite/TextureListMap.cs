@@ -101,11 +101,7 @@ namespace mike_and_conquer
         internal SpriteTextureList LoadAllTexturesFromTmpFile(string fileName)
         {
 
-
             TmpTDLoader tmpTDLoader = new TmpTDLoader();
-
-            //public bool TryParseSprite(Stream s, out ISpriteFrame[] frames)
-
             System.IO.FileStream tmpStream = System.IO.File.Open(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
 
             ISpriteFrame[] frames;

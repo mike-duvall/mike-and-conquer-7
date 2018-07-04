@@ -100,3 +100,6 @@
 #begin s09.tem
 /copy:s09.tem
 
+#begin scg01ea.bin
+/copy:scg01ea.bin
+

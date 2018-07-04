@@ -88,7 +88,7 @@ namespace mike_and_conquer
         {
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
-            scale = 3f;
+            scale = 2f;
 
             bool makeFullscreen = true;
             //bool makeFullscreen = false;
@@ -131,6 +131,7 @@ namespace mike_and_conquer
 
 
 
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -142,13 +143,14 @@ namespace mike_and_conquer
             // TODO: Add your initialization logic here
             this.IsMouseVisible = true;
             base.Initialize();
+
             if (!testMode)
             {
-                //AddNodMinigunner(1100, 100);
-                //AddNodMinigunner(1150, 200);
+                AddNodMinigunner(1100, 100);
+                AddNodMinigunner(1150, 200);
 
-                //AddGdiMinigunner(100, 1000);
-                //AddGdiMinigunner(150, 1000);
+                AddGdiMinigunner(100, 1000);
+                AddGdiMinigunner(150, 1000);
 
 
 
@@ -259,12 +261,21 @@ namespace mike_and_conquer
         }
 
 
+        private void LoadMap()
+        {
+           // GameMap gameMap = new GameMap();
+        }
+
+
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
         /// </summary>
         protected override void LoadContent()
         {
+
+
+            LoadMap();
 
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.CLEAR1_SHP);
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D09_TEM);

@@ -46,45 +46,25 @@ namespace mike_and_conquer
                 allBytes.Add(nextByte);
             }
 
-            int row = startY;
-            int column = startX;
 
-            MapTile mapTile = new MapTile();
-            int offset = calculateOffset(column, row);
-            mapTile.byte1 = allBytes[offset];
-            mapTile.byte2 = allBytes[offset + 1];
-            mapTileList.Add(mapTile);
+            int numColumns = endX - startX + 1;
+            int numRows = endY - startY + 1;
 
-            column++;
-            mapTile = new MapTile();
-            offset = calculateOffset(column, row);
-            mapTile.byte1 = allBytes[offset];
-            mapTile.byte2 = allBytes[offset + 1];
-            mapTileList.Add(mapTile);
-
-            column++;
-            mapTile = new MapTile();
-            offset = calculateOffset(column, row);
-            mapTile.byte1 = allBytes[offset];
-            mapTile.byte2 = allBytes[offset + 1];
-            mapTileList.Add(mapTile);
-
-            column++;
-            mapTile = new MapTile();
-            offset = calculateOffset(column, row);
-            mapTile.byte1 = allBytes[offset];
-            mapTile.byte2 = allBytes[offset + 1];
-            mapTileList.Add(mapTile);
-
-            column++;
-            mapTile = new MapTile();
-            offset = calculateOffset(column, row);
-            mapTile.byte1 = allBytes[offset];
-            mapTile.byte2 = allBytes[offset + 1];
-            mapTileList.Add(mapTile);
+            for (int row = startY; row < endY; row++)
+            {
+                for (int column = startX; column <= endX; column++)
+                {
+                    MapTile mapTile = new MapTile();
+                    int offset = calculateOffset(column, row);
+                    mapTile.byte1 = allBytes[offset];
+                    mapTile.byte2 = allBytes[offset + 1];
+                    mapTileList.Add(mapTile);
+                }
+            }
 
 
 
+            
 
         }
 

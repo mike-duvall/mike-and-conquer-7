@@ -155,58 +155,55 @@ namespace mike_and_conquer
 
 
                 string[,] mapTable = new string[,] {
-                        {TextureListMap.CLEAR1_SHP,"12"},
-                        {TextureListMap.CLEAR1_SHP,"13"},
-                        {TextureListMap.S12_TEM,"2"},
-                        {TextureListMap.S12_TEM,"3"},
-                        {TextureListMap.CLEAR1_SHP,"12"},
-                        {TextureListMap.CLEAR1_SHP,"13"},
-                        {TextureListMap.D21_TEM,"0"},
-                        {TextureListMap.D21_TEM,"1"},
-                        {TextureListMap.D21_TEM,"2"},
-                        {TextureListMap.D23_TEM,"6"},
-                        {TextureListMap.D23_TEM,"7"},
-                        {TextureListMap.CLEAR1_SHP,"15"},
-                        {TextureListMap.CLEAR1_SHP,"12"},
-                        {TextureListMap.CLEAR1_SHP,"13"},
-                        {TextureListMap.P07_TEM,"00"},
-                        {TextureListMap.P07_TEM,"01"},
-                        {TextureListMap.P07_TEM,"02"},
-                        {TextureListMap.P07_TEM,"03"},
-                        {TextureListMap.CLEAR1_SHP,"14"},
-                        {TextureListMap.CLEAR1_SHP,"15"},
-                        {TextureListMap.CLEAR1_SHP,"12"},
-                        {TextureListMap.CLEAR1_SHP,"13"},
-                        {TextureListMap.CLEAR1_SHP,"14"},
-                        {TextureListMap.CLEAR1_SHP,"15"},
-                        {TextureListMap.CLEAR1_SHP,"12"},
-                        {TextureListMap.CLEAR1_SHP,"13"},
+                        // 1st row
+                        {TextureListMap.CLEAR1_SHP,"12"}, // 0
+                        {TextureListMap.CLEAR1_SHP,"13"}, // 1
+                        {TextureListMap.S12_TEM,"2"}, // 2
+                        {TextureListMap.S12_TEM,"3"}, // 3
+                        {TextureListMap.CLEAR1_SHP,"12"}, // 4
+                        {TextureListMap.CLEAR1_SHP,"13"}, // 5
+                        {TextureListMap.D21_TEM,"0"}, // 6
+                        {TextureListMap.D21_TEM,"1"}, // 7
+                        {TextureListMap.D21_TEM,"2"}, // 8
+                        {TextureListMap.D23_TEM,"6"}, // 9
+                        {TextureListMap.D23_TEM,"7"}, // 10
+                        {TextureListMap.CLEAR1_SHP,"15"}, // 11
+                        {TextureListMap.CLEAR1_SHP,"12"}, // 12
+                        {TextureListMap.CLEAR1_SHP,"13"}, // 13
+                        {TextureListMap.P07_TEM,"00"}, // 14
+                        {TextureListMap.P07_TEM,"01"}, // 15
+                        {TextureListMap.P07_TEM,"02"}, // 16
+                        {TextureListMap.P07_TEM,"03"}, // 17
+                        {TextureListMap.CLEAR1_SHP,"14"}, // 18
+                        {TextureListMap.CLEAR1_SHP,"15"}, // 19
+                        {TextureListMap.CLEAR1_SHP,"12"}, // 20
+                        {TextureListMap.CLEAR1_SHP,"13"}, // 21
+                        {TextureListMap.CLEAR1_SHP,"14"}, // 22
+                        {TextureListMap.CLEAR1_SHP,"15"}, // 23
+                        {TextureListMap.CLEAR1_SHP,"12"}, // 24
+                        {TextureListMap.CLEAR1_SHP,"13"}, // 25
 
-                        {TextureListMap.CLEAR1_SHP,"00"},
-                        {TextureListMap.CLEAR1_SHP,"01"},
-                        {TextureListMap.S09_TEM,"00"},
-                        {TextureListMap.S09_TEM,"01"},
-                        {TextureListMap.S09_TEM,"02"},
-
-                        {TextureListMap.CLEAR1_SHP,"01"},
-                        {TextureListMap.D21_TEM,"03"},
-                        {TextureListMap.D21_TEM,"04"},
-                        {TextureListMap.D21_TEM,"05"},
-
-                        {TextureListMap.CLEAR1_SHP,"01"},
-                        {TextureListMap.CLEAR1_SHP,"02"},
-                        {TextureListMap.CLEAR1_SHP,"03"},
-                        {TextureListMap.CLEAR1_SHP,"00"},
-                        {TextureListMap.CLEAR1_SHP,"01"},
-
-                        {TextureListMap.P07_TEM,"04"},
-                        {TextureListMap.P07_TEM,"05"},
-                        {TextureListMap.P07_TEM,"06"},
-                        {TextureListMap.P07_TEM,"07"},
+                        // 2nd row
+                        {TextureListMap.CLEAR1_SHP,"00"}, // 26
+                        {TextureListMap.CLEAR1_SHP,"01"}, // 27
+                        {TextureListMap.S09_TEM,"00"}, // 28
+                        {TextureListMap.S09_TEM,"01"}, // 29
+                        {TextureListMap.S09_TEM,"02"}, // 30
+                        {TextureListMap.CLEAR1_SHP,"01"}, // 31
+                        {TextureListMap.D21_TEM,"03"}, // 32
+                        {TextureListMap.D21_TEM,"04"}, // 33
+                        {TextureListMap.D21_TEM,"05"}, // 34
+                        {TextureListMap.CLEAR1_SHP,"01"}, // 35
+                        {TextureListMap.CLEAR1_SHP,"02"}, // 36
+                        {TextureListMap.CLEAR1_SHP,"03"}, // 37
+                        {TextureListMap.CLEAR1_SHP,"00"}, // 38
+                        {TextureListMap.CLEAR1_SHP,"01"}, // 39
+                        {TextureListMap.P07_TEM,"04"}, // 40
+                        {TextureListMap.P07_TEM,"05"}, // 41
+                        {TextureListMap.P07_TEM,"06"}, // 42
+                        {TextureListMap.P07_TEM,"07"}, // 43
 
                 };
-
-
 
                 //  (Starting at 0x13CC in the file)
 
@@ -228,11 +225,6 @@ namespace mike_and_conquer
                 //    So the image number = (row * 4) + column 
 
                 //    = (((row - 1) mod 4) * 4) + (column -1) mod 4
-
-
-
-                //int x = 60;
-                //int y = 60;
 
                 int x = (int)(12 * this.scale);
                 int y = (int)(12 * this.scale);

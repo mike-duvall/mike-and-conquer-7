@@ -28,8 +28,8 @@ using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
 
 using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
 
-
-
+using FileStream = System.IO.FileStream;
+using FileMode = System.IO.FileMode;
 
 
 namespace mike_and_conquer
@@ -37,7 +37,6 @@ namespace mike_and_conquer
 
     public class MikeAndConqueryGame : Game
     {
-
 
         public static MikeAndConqueryGame instance;
 
@@ -82,6 +81,8 @@ namespace mike_and_conquer
         private List<AsyncGameEvent> gameEvents;
 
         private bool testMode;
+
+        private GameMap gameMap;
 
 
         public MikeAndConqueryGame(bool testMode)
@@ -229,21 +230,28 @@ namespace mike_and_conquer
                 int x = (int)(12 * this.scale);
                 int y = (int)(12 * this.scale);
 
-                int numSquares = mapTable.GetLength(0);
+                //int numSquares = mapTable.GetLength(0);
 
-                for(int i = 0; i < numSquares; i++)
-                {
-                    BasicMapSquareList.Add(new BasicMapSquare(x, y, mapTable[i, 0], System.Int32.Parse(mapTable[i, 1])));
-                    //                    x = x + 120;
-                    x = x + (int)(24 * this.scale);
+                //for(int i = 0; i < numSquares; i++)
+                //{
+                //    BasicMapSquareList.Add(new BasicMapSquare(x, y, mapTable[i, 0], System.Int32.Parse(mapTable[i, 1])));
+                //    //                    x = x + 120;
+                //    x = x + (int)(24 * this.scale);
 
-                    if( i == 25)
-                    {
-                        x = (int)(12 * this.scale);
-                        y = y + (int)(24 * this.scale);
-                    }
-                }
+                //    if( i == 25)
+                //    {
+                //        x = (int)(12 * this.scale);
+                //        y = y + (int)(24 * this.scale);
+                //    }
+                //}
 
+                MapTile mapTile1 = gameMap.MapTiles[0];
+                BasicMapSquareList.Add(new BasicMapSquare(x, y, mapTile1.textureKey, mapTile1.imageIndex));
+
+                //MapTile needs to be changed to not have byte1 and byte2, but to instead have: textureKey, and imageIndex
+                //    Write unit test to that effect
+
+//                BasicMapSquare(int x, int y, string textureKey, int imageIndex)
 
 
 
@@ -255,7 +263,21 @@ namespace mike_and_conquer
 
         private void LoadMap()
         {
-           // GameMap gameMap = new GameMap();
+//           gameMap = new GameMap();
+
+            System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
+
+            // when
+            int startX = 36;
+            int startY = 39;
+            int endX = 61;
+            int endY = 61;
+
+            int numColumns = endX - startX + 1;
+            int numRows = endY - startY + 1;
+
+            gameMap = new GameMap(inputStream, startX, startY, endX, endY);
+
         }
 
 

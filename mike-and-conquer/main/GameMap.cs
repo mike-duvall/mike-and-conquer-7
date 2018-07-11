@@ -35,6 +35,7 @@ namespace mike_and_conquer
             //byte byte2 = (byte)tmpStream.ReadByte();
             ////shpBytes = stream.ReadBytes((int)(stream.Length - stream.Position));
             //byte[] bytes  = File.ReadAllBytes(fileName);
+            LoadCodeToTextureStringMap();
             mapTileList = new List<MapTile>();
 
             BinaryReader binaryReader = new BinaryReader(inputStream);
@@ -56,16 +57,42 @@ namespace mike_and_conquer
                 {
                     MapTile mapTile = new MapTile();
                     int offset = calculateOffset(column, row);
-                    mapTile.byte1 = allBytes[offset];
-                    mapTile.byte2 = allBytes[offset + 1];
+                    //mapTile.byte1 = allBytes[offset];
+                    //mapTile.byte2 = allBytes[offset + 1];
+                    mapTile.textureKey = convertByteToTextureKey(allBytes[offset]);
+                    mapTile.imageIndex = allBytes[offset + 1];
+
                     mapTileList.Add(mapTile);
                 }
             }
 
+        }
 
 
-            
+        //var map = new Dictionary<string, string>();
 
+        //// ... Add some keys and values.
+        //map.Add("cat", "orange");
+        //map.Add("dog", "brown");
+
+
+        private Dictionary<byte,string> mapFileCodeToTextureStringMap = new Dictionary<byte, string>();
+
+        private void LoadCodeToTextureStringMap()
+        {
+            mapFileCodeToTextureStringMap.Add(0xff, TextureListMap.CLEAR1_SHP);
+            mapFileCodeToTextureStringMap.Add(0x18, TextureListMap.S12_TEM);
+        }
+
+
+        private string convertByteToTextureKey(byte inputByte)
+        {
+            string textureKey;
+            mapFileCodeToTextureStringMap.TryGetValue(inputByte, out textureKey);
+            return textureKey;
+
+            // TODO: Change to this once we get all tile types registered
+            //return mapFileCodeToTextureStringMap[inputByte];
         }
 
         private int calculateOffset(int column, int row)

@@ -23,9 +23,13 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
 using GdiMinigunnerView = mike_and_conquer.gameview.GdiMinigunnerView;
 using NodMinigunnerView = mike_and_conquer.gameview.NodMinigunnerView;
+
+using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
+
 using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
 
-
+using FileStream = System.IO.FileStream;
+using FileMode = System.IO.FileMode;
 
 
 namespace mike_and_conquer
@@ -33,7 +37,6 @@ namespace mike_and_conquer
 
     public class MikeAndConqueryGame : Game
     {
-
 
         public static MikeAndConqueryGame instance;
 
@@ -44,6 +47,13 @@ namespace mike_and_conquer
 
         private List<MinigunnerView> gdiMinigunnerViewList;
         private List<MinigunnerView> nodMinigunnerViewList;
+
+        private List<BasicMapSquare> basicMapSquareList;
+
+        public List<BasicMapSquare> BasicMapSquareList
+        {
+            get { return basicMapSquareList; }
+        }
 
         public List<MinigunnerView> GdiMinigunnerViewList
         {
@@ -72,12 +82,14 @@ namespace mike_and_conquer
 
         private bool testMode;
 
+        private GameMap gameMap;
+
 
         public MikeAndConqueryGame(bool testMode)
         {
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
-            scale = 5f;
+            scale = 1.8f;
 
             bool makeFullscreen = true;
             //bool makeFullscreen = false;
@@ -101,6 +113,9 @@ namespace mike_and_conquer
             gdiMinigunnerList = new List<Minigunner>();
             nodMinigunnerList = new List<Minigunner>();
 
+
+            basicMapSquareList = new List<BasicMapSquare>();
+
             nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
 
             gdiMinigunnerViewList = new List<MinigunnerView>();
@@ -117,6 +132,7 @@ namespace mike_and_conquer
 
 
 
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -128,6 +144,7 @@ namespace mike_and_conquer
             // TODO: Add your initialization logic here
             this.IsMouseVisible = true;
             base.Initialize();
+
             if (!testMode)
             {
                 AddNodMinigunner(1100, 100);
@@ -135,7 +152,73 @@ namespace mike_and_conquer
 
                 AddGdiMinigunner(100, 1000);
                 AddGdiMinigunner(150, 1000);
+
+                //  (Starting at 0x13CC in the file)
+
+                //Step 1:  Fill in whole map with repeating 4x4 default clear template
+                //Step 2:  Where not FF 00 in map file, overwrite clear template with specified tiles
+                //Step 3:  Figure out if this includes trees, etc, if not figure out where trees are documented
+                //Step 4:  Profit
+
+                //    Trees appear to be SHP vs TMP?
+                //    Map file only references TMP ?
+                //    What about placement of initial troops?
+                //    Sandbags
+
+                //    Is forumla for finding default templace image number somthing like:
+
+                //    (row - 1) mod 4 = the row of the template from  0 to 3
+                //    (column - 1) mod 4 = the column of the template from 0 to 3
+
+                //    So the image number = (row * 4) + column 
+
+                //    = (((row - 1) mod 4) * 4) + (column -1) mod 4
+
+                int x = (int)(12 * this.scale);
+                int y = (int)(12 * this.scale);
+
+                int numSquares = gameMap.MapTiles.Count;
+                for (int i = 0; i < numSquares; i++)
+                {
+
+                    MapTile nextMapTile = gameMap.MapTiles[i];
+                    BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
+
+
+                    x = x + (int)(24 * this.scale);
+
+                    bool incrementRow = ((i + 1) % 26) == 0;
+                    if (incrementRow)
+                    {
+                        x = (int)(12 * this.scale);
+                        y = y + (int)(24 * this.scale);
+                    }
+                }
+
+
+
+
             }
+
+        }
+
+
+        private void LoadMap()
+        {
+//           gameMap = new GameMap();
+
+            System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
+
+            // when
+            int startX = 36;
+            int startY = 39;
+            int endX = 61;
+            int endY = 61;
+
+            int numColumns = endX - startX + 1;
+            int numRows = endY - startY + 1;
+
+            gameMap = new GameMap(inputStream, startX, startY, endX, endY);
 
         }
 
@@ -146,6 +229,24 @@ namespace mike_and_conquer
         /// </summary>
         protected override void LoadContent()
         {
+            LoadMap();
+
+            List<string> textureKeysAlreadyAdded = new List<string>();
+
+            foreach (MapTile nextMapTile in gameMap.MapTiles)
+            {
+                string textureKey = nextMapTile.textureKey;
+                if(!textureKeysAlreadyAdded.Contains(textureKey))
+                {
+                    // TODO Remove this null check
+                    if (textureKey != null)
+                    {
+                        textureListMap.LoadSpriteListFromTmpFile(textureKey);
+                        textureKeysAlreadyAdded.Add(textureKey);
+                    }
+                }
+            }
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             textureListMap.LoadSpriteListFromShpFile(GdiMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
@@ -154,6 +255,8 @@ namespace mike_and_conquer
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
             LoadSingleTextureFromFile(gameobjects.MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
+
+
             // TODO: use this.Content to load your game content here
         }
 

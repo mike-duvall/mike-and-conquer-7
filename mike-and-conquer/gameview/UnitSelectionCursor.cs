@@ -40,7 +40,7 @@ namespace mike_and_conquer.gameview
             this.texture = loadTextureFromShpFile("Content\\select.shp", 0);
 
             position = new Vector2(x, y);
-            scale = 5f;
+            scale = MikeAndConqueryGame.instance.scale;
             boundingRectangle = initializeBoundingRectangle();
 
             middleOfSprite = new Vector2();

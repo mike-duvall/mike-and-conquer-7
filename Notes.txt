@@ -12,14 +12,16 @@ Need to be able to multiselect units
 
 Need to slow down game speed (or make it adjustable)
 
-
 Need to enable scenario where user can drag select all units, attack a specific target, then move on the next target after that, and thereby win.
-
 
 Enemy need to attack closest gdi unit
 
 If enemy is attacking unit X and then unit Y moves closer, enemy needs to attack unit Y instead
 (i.e enemy needs to pay attention to current state and adjust if it makes sense)
 
-
 The View objects shouldn't hold the constants for shp file mapper and file name
+
+
+OpenRA code
+-----------
+Current OpenRA code pulled from branch "bleed", commit: 488cec64b87221e8fd0e88d26919ad4a6210af1f

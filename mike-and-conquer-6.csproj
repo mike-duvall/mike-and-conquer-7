@@ -59,6 +59,7 @@
     <Compile Include="mike-and-conquer\gameevent\GetNodMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
+    <Compile Include="mike-and-conquer\gameview\BasicMapSquare.cs" />
     <Compile Include="mike-and-conquer\gameview\NodMinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\GdiMinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\MinigunnerView.cs" />
@@ -71,6 +72,8 @@
     <Compile Include="mike-and-conquer\gamestate\PlayingGameState.cs" />
     <Compile Include="mike-and-conquer\gamesprite\NodShpFileColorMapper.cs" />
     <Compile Include="mike-and-conquer\gamesprite\GdiShpFileColorMapper.cs" />
+    <Compile Include="mike-and-conquer\main\GameMap.cs" />
+    <Compile Include="mike-and-conquer\main\MapTile.cs" />
     <Compile Include="mike-and-conquer\main\MikeAndConqueryGame.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Minigunner.cs" />
     <Compile Include="mike-and-conquer\main\MouseInputHandler.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="mike-and-conquer\openra\ReadOnlyList.cs" />
     <Compile Include="mike-and-conquer\openra\SpriteLoader.cs" />
     <Compile Include="mike-and-conquer\openra\StreamExts.cs" />
+    <Compile Include="mike-and-conquer\openra\TmpTDLoader.cs" />
     <Compile Include="mike-and-conquer\openra\XORDeltaCompression.cs" />
     <Compile Include="mike-and-conquer\rest\GameStateController.cs" />
     <Compile Include="mike-and-conquer\rest\RightClickController.cs" />

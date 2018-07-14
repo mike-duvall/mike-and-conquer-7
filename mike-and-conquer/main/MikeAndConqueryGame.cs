@@ -155,56 +155,56 @@ namespace mike_and_conquer
 
 
 
-                string[,] mapTable = new string[,] {
-                        // 1st row
-                        {TextureListMap.CLEAR1_SHP,"12"}, // 0
-                        {TextureListMap.CLEAR1_SHP,"13"}, // 1
-                        {TextureListMap.S12_TEM,"2"}, // 2
-                        {TextureListMap.S12_TEM,"3"}, // 3
-                        {TextureListMap.CLEAR1_SHP,"12"}, // 4
-                        {TextureListMap.CLEAR1_SHP,"13"}, // 5
-                        {TextureListMap.D21_TEM,"0"}, // 6
-                        {TextureListMap.D21_TEM,"1"}, // 7
-                        {TextureListMap.D21_TEM,"2"}, // 8
-                        {TextureListMap.D23_TEM,"6"}, // 9
-                        {TextureListMap.D23_TEM,"7"}, // 10
-                        {TextureListMap.CLEAR1_SHP,"15"}, // 11
-                        {TextureListMap.CLEAR1_SHP,"12"}, // 12
-                        {TextureListMap.CLEAR1_SHP,"13"}, // 13
-                        {TextureListMap.P07_TEM,"00"}, // 14
-                        {TextureListMap.P07_TEM,"01"}, // 15
-                        {TextureListMap.P07_TEM,"02"}, // 16
-                        {TextureListMap.P07_TEM,"03"}, // 17
-                        {TextureListMap.CLEAR1_SHP,"14"}, // 18
-                        {TextureListMap.CLEAR1_SHP,"15"}, // 19
-                        {TextureListMap.CLEAR1_SHP,"12"}, // 20
-                        {TextureListMap.CLEAR1_SHP,"13"}, // 21
-                        {TextureListMap.CLEAR1_SHP,"14"}, // 22
-                        {TextureListMap.CLEAR1_SHP,"15"}, // 23
-                        {TextureListMap.CLEAR1_SHP,"12"}, // 24
-                        {TextureListMap.CLEAR1_SHP,"13"}, // 25
+                //string[,] mapTable = new string[,] {
+                //        // 1st row
+                //        {TextureListMap.CLEAR1_SHP,"12"}, // 0
+                //        {TextureListMap.CLEAR1_SHP,"13"}, // 1
+                //        {TextureListMap.S12_TEM,"2"}, // 2
+                //        {TextureListMap.S12_TEM,"3"}, // 3
+                //        {TextureListMap.CLEAR1_SHP,"12"}, // 4
+                //        {TextureListMap.CLEAR1_SHP,"13"}, // 5
+                //        {TextureListMap.D21_TEM,"0"}, // 6
+                //        {TextureListMap.D21_TEM,"1"}, // 7
+                //        {TextureListMap.D21_TEM,"2"}, // 8
+                //        {TextureListMap.D23_TEM,"6"}, // 9
+                //        {TextureListMap.D23_TEM,"7"}, // 10
+                //        {TextureListMap.CLEAR1_SHP,"15"}, // 11
+                //        {TextureListMap.CLEAR1_SHP,"12"}, // 12
+                //        {TextureListMap.CLEAR1_SHP,"13"}, // 13
+                //        {TextureListMap.P07_TEM,"00"}, // 14
+                //        {TextureListMap.P07_TEM,"01"}, // 15
+                //        {TextureListMap.P07_TEM,"02"}, // 16
+                //        {TextureListMap.P07_TEM,"03"}, // 17
+                //        {TextureListMap.CLEAR1_SHP,"14"}, // 18
+                //        {TextureListMap.CLEAR1_SHP,"15"}, // 19
+                //        {TextureListMap.CLEAR1_SHP,"12"}, // 20
+                //        {TextureListMap.CLEAR1_SHP,"13"}, // 21
+                //        {TextureListMap.CLEAR1_SHP,"14"}, // 22
+                //        {TextureListMap.CLEAR1_SHP,"15"}, // 23
+                //        {TextureListMap.CLEAR1_SHP,"12"}, // 24
+                //        {TextureListMap.CLEAR1_SHP,"13"}, // 25
 
-                        // 2nd row
-                        {TextureListMap.CLEAR1_SHP,"00"}, // 26
-                        {TextureListMap.CLEAR1_SHP,"01"}, // 27
-                        {TextureListMap.S09_TEM,"00"}, // 28
-                        {TextureListMap.S09_TEM,"01"}, // 29
-                        {TextureListMap.S09_TEM,"02"}, // 30
-                        {TextureListMap.CLEAR1_SHP,"01"}, // 31
-                        {TextureListMap.D21_TEM,"03"}, // 32
-                        {TextureListMap.D21_TEM,"04"}, // 33
-                        {TextureListMap.D21_TEM,"05"}, // 34
-                        {TextureListMap.CLEAR1_SHP,"01"}, // 35
-                        {TextureListMap.CLEAR1_SHP,"02"}, // 36
-                        {TextureListMap.CLEAR1_SHP,"03"}, // 37
-                        {TextureListMap.CLEAR1_SHP,"00"}, // 38
-                        {TextureListMap.CLEAR1_SHP,"01"}, // 39
-                        {TextureListMap.P07_TEM,"04"}, // 40
-                        {TextureListMap.P07_TEM,"05"}, // 41
-                        {TextureListMap.P07_TEM,"06"}, // 42
-                        {TextureListMap.P07_TEM,"07"}, // 43
+                //        // 2nd row
+                //        {TextureListMap.CLEAR1_SHP,"00"}, // 26
+                //        {TextureListMap.CLEAR1_SHP,"01"}, // 27
+                //        {TextureListMap.S09_TEM,"00"}, // 28
+                //        {TextureListMap.S09_TEM,"01"}, // 29
+                //        {TextureListMap.S09_TEM,"02"}, // 30
+                //        {TextureListMap.CLEAR1_SHP,"01"}, // 31
+                //        {TextureListMap.D21_TEM,"03"}, // 32
+                //        {TextureListMap.D21_TEM,"04"}, // 33
+                //        {TextureListMap.D21_TEM,"05"}, // 34
+                //        {TextureListMap.CLEAR1_SHP,"01"}, // 35
+                //        {TextureListMap.CLEAR1_SHP,"02"}, // 36
+                //        {TextureListMap.CLEAR1_SHP,"03"}, // 37
+                //        {TextureListMap.CLEAR1_SHP,"00"}, // 38
+                //        {TextureListMap.CLEAR1_SHP,"01"}, // 39
+                //        {TextureListMap.P07_TEM,"04"}, // 40
+                //        {TextureListMap.P07_TEM,"05"}, // 41
+                //        {TextureListMap.P07_TEM,"06"}, // 42
+                //        {TextureListMap.P07_TEM,"07"}, // 43
 
-                };
+                //};
 
                 //  (Starting at 0x13CC in the file)
 
@@ -230,28 +230,23 @@ namespace mike_and_conquer
                 int x = (int)(12 * this.scale);
                 int y = (int)(12 * this.scale);
 
-                //int numSquares = mapTable.GetLength(0);
+                int numSquares = gameMap.MapTiles.Count;
+                for (int i = 0; i < numSquares; i++)
+                {
 
-                //for(int i = 0; i < numSquares; i++)
-                //{
-                //    BasicMapSquareList.Add(new BasicMapSquare(x, y, mapTable[i, 0], System.Int32.Parse(mapTable[i, 1])));
-                //    //                    x = x + 120;
-                //    x = x + (int)(24 * this.scale);
+                    MapTile nextMapTile = gameMap.MapTiles[i];
+                    BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
 
-                //    if( i == 25)
-                //    {
-                //        x = (int)(12 * this.scale);
-                //        y = y + (int)(24 * this.scale);
-                //    }
-                //}
 
-                MapTile mapTile1 = gameMap.MapTiles[0];
-                BasicMapSquareList.Add(new BasicMapSquare(x, y, mapTile1.textureKey, mapTile1.imageIndex));
+                    x = x + (int)(24 * this.scale);
 
-                //MapTile needs to be changed to not have byte1 and byte2, but to instead have: textureKey, and imageIndex
-                //    Write unit test to that effect
-
-//                BasicMapSquare(int x, int y, string textureKey, int imageIndex)
+                    bool incrementRow = ((i + 1) % 26) == 0;
+                    if (incrementRow)
+                    {
+                        x = (int)(12 * this.scale);
+                        y = y + (int)(24 * this.scale);
+                    }
+                }
 
 
 
@@ -287,22 +282,40 @@ namespace mike_and_conquer
         /// </summary>
         protected override void LoadContent()
         {
-
-
             LoadMap();
 
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.CLEAR1_SHP);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D09_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D15_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D21_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D23_TEM);
+            List<string> textureKeysAlreadyAdded = new List<string>();
 
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S12_TEM);
+            foreach (MapTile nextMapTile in gameMap.MapTiles)
+            {
+                string textureKey = nextMapTile.textureKey;
+                if(!textureKeysAlreadyAdded.Contains(textureKey))
+                {
+                    // TODO Remove this null check
+                    if (textureKey != null)
+                    {
+                        textureListMap.LoadSpriteListFromTmpFile(textureKey);
+                        textureKeysAlreadyAdded.Add(textureKey);
+                    }
+                }
+            }
 
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P07_TEM);
+            //textureListMap.LoadSpriteListFromTmpFile(TextureListMap.CLEAR1_SHP);
 
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S09_TEM);
+            //textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D04_TEM);
+            //textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D09_TEM);
+            //textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D13_TEM);
+            //textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D15_TEM);
+            //textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D20_TEM);
+            //textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D21_TEM);
+            //textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D23_TEM);
 
+            //textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P07_TEM);
+
+            //textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S09_TEM);
+            //textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S11_TEM);
+            //textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S12_TEM);
+            //textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S22_TEM);
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);

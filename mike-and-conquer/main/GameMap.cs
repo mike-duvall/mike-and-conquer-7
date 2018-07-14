@@ -13,6 +13,7 @@ namespace mike_and_conquer
     {
 
         private List<MapTile> mapTileList;
+        private Dictionary<byte, string> mapFileCodeToTextureStringMap = new Dictionary<byte, string>();
 
 
         public List<MapTile> MapTiles
@@ -27,12 +28,6 @@ namespace mike_and_conquer
 
         public GameMap(Stream inputStream, int startX, int startY, int endX, int endY)
          {
-            //string fileName = "Content\\scg01ea.bin";
-            //System.IO.FileStream tmpStream = System.IO.File.Open(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
-            //byte byte1 = (byte)tmpStream.ReadByte();
-            //byte byte2 = (byte)tmpStream.ReadByte();
-            ////shpBytes = stream.ReadBytes((int)(stream.Length - stream.Position));
-            //byte[] bytes  = File.ReadAllBytes(fileName);
             LoadCodeToTextureStringMap();
             mapTileList = new List<MapTile>();
 
@@ -55,8 +50,6 @@ namespace mike_and_conquer
                 {
                     MapTile mapTile = new MapTile();
                     int offset = calculateOffset(column, row);
-                    //mapTile.byte1 = allBytes[offset];
-                    //mapTile.byte2 = allBytes[offset + 1];
                     mapTile.textureKey = convertByteToTextureKey(allBytes[offset]);
                     mapTile.imageIndex = allBytes[offset + 1];
 
@@ -67,14 +60,6 @@ namespace mike_and_conquer
         }
 
 
-        //var map = new Dictionary<string, string>();
-
-        //// ... Add some keys and values.
-        //map.Add("cat", "orange");
-        //map.Add("dog", "brown");
-
-
-        private Dictionary<byte,string> mapFileCodeToTextureStringMap = new Dictionary<byte, string>();
 
         private void LoadCodeToTextureStringMap()
         {

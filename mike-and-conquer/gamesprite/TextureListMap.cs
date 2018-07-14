@@ -84,8 +84,6 @@ namespace mike_and_conquer
             AddTextureList(shpFileName, LoadAllTexturesFromTmpFile(shpFileName));
         }
 
-
-
         // TODO Consider pulling loading of ShpFile to TextListMap into a separate ShpFileLoader class
         internal SpriteTextureList LoadAllTexturesFromShpFile(string shpFileName, ShpFileColorMapper shpFileColorMapper)
         {
@@ -181,10 +179,6 @@ namespace mike_and_conquer
 
                 spriteTextureList.textureList.Add(texture2D);
             }
-
-            //int unscaledWidth = frames[0].Size.Width;
-            //int unscaledHeight = frames[0].Size.Height;
-
 
             return spriteTextureList;
 

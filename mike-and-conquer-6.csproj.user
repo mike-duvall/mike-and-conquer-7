@@ -3,7 +3,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RemoteDebug|x86'">
     <RemoteDebugEnabled>true</RemoteDebugEnabled>
     <RemoteDebugMachine>192.168.0.195</RemoteDebugMachine>
-    <StartArguments>
-    </StartArguments>
+    <StartArguments>TESTMODE</StartArguments>
   </PropertyGroup>
 </Project>

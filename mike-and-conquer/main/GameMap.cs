@@ -67,13 +67,7 @@ namespace mike_and_conquer
 
         private byte CalculateImageIndexForClear1(int column, int row)
         {
-//            return (byte)((row % 4) + ((column % 4) * 4));
-            int a = column % 4;
-            int b = (row % 4);
-            int c = b * 4;
-            int d = a + c;
-            return (byte)d;
-
+            return (byte)((column % 4) + ((row % 4) * 4));
         }
 
         private void LoadCodeToTextureStringMap()

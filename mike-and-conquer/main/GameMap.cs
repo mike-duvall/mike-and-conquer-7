@@ -110,13 +110,9 @@ namespace mike_and_conquer
             mapFileCodeToTextureStringMap.Add(0x4c, TextureListMap.SH17_TEM);
             mapFileCodeToTextureStringMap.Add(0x4d, TextureListMap.SH18_TEM);
 
-
-
             mapFileCodeToTextureStringMap.Add(0x01, TextureListMap.W1_TEM);
             mapFileCodeToTextureStringMap.Add(0x02, TextureListMap.W2_TEM);
-
         }
-
 
         private string convertByteToTextureKey(byte inputByte)
         {

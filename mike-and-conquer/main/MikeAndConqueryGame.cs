@@ -131,8 +131,6 @@ namespace mike_and_conquer
         }
 
 
-
-
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -152,60 +150,44 @@ namespace mike_and_conquer
 
                 AddGdiMinigunner(100, 1000);
                 AddGdiMinigunner(150, 1000);
+            }
 
-                //  (Starting at 0x13CC in the file)
+            InitializeMap();
 
-                //Step 1:  Fill in whole map with repeating 4x4 default clear template
-                //Step 2:  Where not FF 00 in map file, overwrite clear template with specified tiles
-                //Step 3:  Figure out if this includes trees, etc, if not figure out where trees are documented
-                //Step 4:  Profit
+        }
 
-                //    Trees appear to be SHP vs TMP?
-                //    Map file only references TMP ?
-                //    What about placement of initial troops?
-                //    Sandbags
+        private void InitializeMap()
+        {
+            //  (Starting at 0x13CC in the file)
+            //    Trees appear to be SHP vs TMP?
+            //    Map file only references TMP ?
+            //    What about placement of initial troops?
+            //    Sandbags
 
-                //    Is forumla for finding default templace image number somthing like:
+            int x = (int)(12 * this.scale);
+            int y = (int)(12 * this.scale);
 
-                //    (row - 1) mod 4 = the row of the template from  0 to 3
-                //    (column - 1) mod 4 = the column of the template from 0 to 3
+            int numSquares = gameMap.MapTiles.Count;
+            for (int i = 0; i < numSquares; i++)
+            {
 
-                //    So the image number = (row * 4) + column 
+                MapTile nextMapTile = gameMap.MapTiles[i];
+                BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
 
-                //    = (((row - 1) mod 4) * 4) + (column -1) mod 4
+                x = x + (int)(24 * this.scale);
 
-                int x = (int)(12 * this.scale);
-                int y = (int)(12 * this.scale);
-
-                int numSquares = gameMap.MapTiles.Count;
-                for (int i = 0; i < numSquares; i++)
+                bool incrementRow = ((i + 1) % 26) == 0;
+                if (incrementRow)
                 {
-
-                    MapTile nextMapTile = gameMap.MapTiles[i];
-                    BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
-
-
-                    x = x + (int)(24 * this.scale);
-
-                    bool incrementRow = ((i + 1) % 26) == 0;
-                    if (incrementRow)
-                    {
-                        x = (int)(12 * this.scale);
-                        y = y + (int)(24 * this.scale);
-                    }
+                    x = (int)(12 * this.scale);
+                    y = y + (int)(24 * this.scale);
                 }
-
-
-
-
             }
 
         }
 
-
         private void LoadMap()
         {
-//           gameMap = new GameMap();
 
             System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
 

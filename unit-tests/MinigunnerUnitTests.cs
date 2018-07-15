@@ -35,18 +35,18 @@ namespace unit_tests
 
             GameMap gameMap = new GameMap(inputStream, startX, startY, endX, endY);
 
-
+            
             int indexOffset = 0;
             // 1st row
             //Assert.IsTrue(gameMap.MapTiles[0].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[0].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 12);
 
             //Assert.IsTrue(gameMap.MapTiles[1].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[1].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 13);
 
 
             //Assert.IsTrue(gameMap.MapTiles[2].byte1 == 0x18);
@@ -63,13 +63,13 @@ namespace unit_tests
             //Assert.IsTrue(gameMap.MapTiles[4].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[4].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 12);
 
             ////{ TextureListMap.CLEAR1_SHP,"13"}, // 5
             //Assert.IsTrue(gameMap.MapTiles[5].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[5].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 13);
 
 
             ////{ TextureListMap.D21_TEM,"0"}, // 6
@@ -111,21 +111,21 @@ namespace unit_tests
             //Assert.IsTrue(gameMap.MapTiles[11].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[11].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 15);
 
 
             ////{ TextureListMap.CLEAR1_SHP,"12"}, // 12
             //Assert.IsTrue(gameMap.MapTiles[12].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[12].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 12);
 
 
             ////{ TextureListMap.CLEAR1_SHP,"13"}, // 13
             //Assert.IsTrue(gameMap.MapTiles[13].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[13].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 13);
 
 
             ////{ TextureListMap.P07_TEM,"00"}, // 14
@@ -158,56 +158,56 @@ namespace unit_tests
             //Assert.IsTrue(gameMap.MapTiles[18].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[18].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 14);
 
 
             ////{ TextureListMap.CLEAR1_SHP,"15"}, // 19
             //Assert.IsTrue(gameMap.MapTiles[19].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[19].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 15);
 
 
             ////{ TextureListMap.CLEAR1_SHP,"12"}, // 20
             //Assert.IsTrue(gameMap.MapTiles[20].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[20].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 12);
 
 
             ////{ TextureListMap.CLEAR1_SHP,"13"}, // 21
             //Assert.IsTrue(gameMap.MapTiles[21].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[21].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 13);
 
 
             ////{ TextureListMap.CLEAR1_SHP,"14"}, // 22
             //Assert.IsTrue(gameMap.MapTiles[22].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[22].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 14);
 
 
             ////{ TextureListMap.CLEAR1_SHP,"15"}, // 23
             //Assert.IsTrue(gameMap.MapTiles[23].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[23].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 15);
 
 
             ////{ TextureListMap.CLEAR1_SHP,"12"}, // 24
             //Assert.IsTrue(gameMap.MapTiles[24].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[24].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 12);
 
 
             ////{ TextureListMap.CLEAR1_SHP,"13"}, // 25
             //Assert.IsTrue(gameMap.MapTiles[25].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[25].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 13);
 
 
 
@@ -226,7 +226,7 @@ namespace unit_tests
             //Assert.IsTrue(gameMap.MapTiles[indexOffset].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[indexOffset++].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 1);
 
 
             ////{ TextureListMap.S09_TEM,"00"}, // 28
@@ -253,7 +253,7 @@ namespace unit_tests
             //Assert.IsTrue(gameMap.MapTiles[indexOffset].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[indexOffset++].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 1);
 
 
             ////{ TextureListMap.D21_TEM,"03"}, // 32
@@ -281,35 +281,35 @@ namespace unit_tests
             //Assert.IsTrue(gameMap.MapTiles[indexOffset].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[indexOffset++].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 1);
 
 
             ////{ TextureListMap.CLEAR1_SHP,"02"}, // 36
             //Assert.IsTrue(gameMap.MapTiles[indexOffset].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[indexOffset++].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 2);
 
 
             ////{ TextureListMap.CLEAR1_SHP,"03"}, // 37
             //Assert.IsTrue(gameMap.MapTiles[indexOffset].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[indexOffset++].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 3);
 
 
             ////{ TextureListMap.CLEAR1_SHP,"00"}, // 38
             //Assert.IsTrue(gameMap.MapTiles[indexOffset].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[indexOffset++].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0);
 
 
             ////{ TextureListMap.CLEAR1_SHP,"01"}, // 39
             //Assert.IsTrue(gameMap.MapTiles[indexOffset].byte1 == 0xff);
             //Assert.IsTrue(gameMap.MapTiles[indexOffset++].byte2 == 0x00);
             Assert.IsTrue(gameMap.MapTiles[indexOffset].textureKey == TextureListMap.CLEAR1_SHP);
-            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 0x00);
+            Assert.IsTrue(gameMap.MapTiles[indexOffset++].imageIndex == 1);
 
 
             ////{ TextureListMap.P07_TEM,"04"}, // 40

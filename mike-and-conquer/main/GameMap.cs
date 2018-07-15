@@ -2,8 +2,7 @@
 
 using System.Collections.Generic;
 
-using Stream= System.IO.Stream;
-
+using Stream = System.IO.Stream;
 
 using BinaryReader = System.IO.BinaryReader;
 
@@ -51,7 +50,14 @@ namespace mike_and_conquer
                     MapTile mapTile = new MapTile();
                     int offset = calculateOffset(column, row);
                     mapTile.textureKey = convertByteToTextureKey(allBytes[offset]);
-                    mapTile.imageIndex = allBytes[offset + 1];
+                    if(mapTile.textureKey == TextureListMap.CLEAR1_SHP)
+                    {
+                        mapTile.imageIndex = CalculateImageIndexForClear1(column, row);
+                    }
+                    else
+                    {
+                        mapTile.imageIndex = allBytes[offset + 1];
+                    }
 
                     mapTileList.Add(mapTile);
                 }
@@ -59,7 +65,10 @@ namespace mike_and_conquer
 
         }
 
-
+        private byte CalculateImageIndexForClear1(int column, int row)
+        {
+            return (byte)((column % 4) + ((row % 4) * 4));
+        }
 
         private void LoadCodeToTextureStringMap()
         {
@@ -101,13 +110,9 @@ namespace mike_and_conquer
             mapFileCodeToTextureStringMap.Add(0x4c, TextureListMap.SH17_TEM);
             mapFileCodeToTextureStringMap.Add(0x4d, TextureListMap.SH18_TEM);
 
-
-
             mapFileCodeToTextureStringMap.Add(0x01, TextureListMap.W1_TEM);
             mapFileCodeToTextureStringMap.Add(0x02, TextureListMap.W2_TEM);
-
         }
-
 
         private string convertByteToTextureKey(byte inputByte)
         {

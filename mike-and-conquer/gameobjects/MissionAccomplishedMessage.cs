@@ -28,13 +28,11 @@ namespace mike_and_conquer.gameobjects
             animationSequence.AddFrame(0);
             missionGameSprite.AddAnimationSequence(0, animationSequence);
             missionGameSprite.SetCurrentAnimationSequenceIndex(0);
-            missionGameSprite.Scale = 1;
             missionPosition = new Vector2(baseX, baseY);
 
             accomplishedGameSprite = new GameSprite(ACCOMPLISHED_SPRITE_KEY);
             accomplishedGameSprite.AddAnimationSequence(0, animationSequence);
             accomplishedGameSprite.SetCurrentAnimationSequenceIndex(0);
-            accomplishedGameSprite.Scale = 1;
             accomplishedPosition = new Vector2(baseX - 5, baseY + 50);
 
 

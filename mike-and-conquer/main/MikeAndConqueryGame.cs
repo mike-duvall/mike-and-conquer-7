@@ -66,7 +66,7 @@ namespace mike_and_conquer
             get { return nodMinigunnerViewList; }
         }
 
-        public float scale { get; }
+//        public float scale { get; }
 
         public TextureListMap TextureListMap
         {
@@ -89,7 +89,7 @@ namespace mike_and_conquer
         {
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
-            scale = 1.8f;
+//            scale = 1.8f;
 
             bool makeFullscreen = true;
             //bool makeFullscreen = false;
@@ -145,17 +145,52 @@ namespace mike_and_conquer
 
             if (!testMode)
             {
-                AddNodMinigunner(1100, 100);
-                AddNodMinigunner(1150, 200);
+                //AddNodMinigunner(1100, 100);
+                //AddNodMinigunner(1150, 200);
 
-                AddGdiMinigunner(100, 1000);
-                AddGdiMinigunner(150, 1000);
+                //AddGdiMinigunner(100, 1000);
+                //AddGdiMinigunner(150, 1000);
+                AddNodMinigunner(310, 10);
+                AddNodMinigunner(315, 30);
+
+                AddGdiMinigunner(10, 300);
+                AddGdiMinigunner(30, 300);
+
             }
 
             InitializeMap();
 
         }
 
+        //private void InitializeMap()
+        //{
+        //    //  (Starting at 0x13CC in the file)
+        //    //    Trees appear to be SHP vs TMP?
+        //    //    Map file only references TMP ?
+        //    //    What about placement of initial troops?
+        //    //    Sandbags
+
+        //    int x = (int)(12 * this.scale);
+        //    int y = (int)(12 * this.scale);
+
+        //    int numSquares = gameMap.MapTiles.Count;
+        //    for (int i = 0; i < numSquares; i++)
+        //    {
+
+        //        MapTile nextMapTile = gameMap.MapTiles[i];
+        //        BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
+
+        //        x = x + (int)(24 * this.scale);
+
+        //        bool incrementRow = ((i + 1) % 26) == 0;
+        //        if (incrementRow)
+        //        {
+        //            x = (int)(12 * this.scale);
+        //            y = y + (int)(24 * this.scale);
+        //        }
+        //    }
+
+        //}
         private void InitializeMap()
         {
             //  (Starting at 0x13CC in the file)
@@ -164,8 +199,8 @@ namespace mike_and_conquer
             //    What about placement of initial troops?
             //    Sandbags
 
-            int x = (int)(12 * this.scale);
-            int y = (int)(12 * this.scale);
+            int x = 12;
+            int y = 12;
 
             int numSquares = gameMap.MapTiles.Count;
             for (int i = 0; i < numSquares; i++)
@@ -174,17 +209,18 @@ namespace mike_and_conquer
                 MapTile nextMapTile = gameMap.MapTiles[i];
                 BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
 
-                x = x + (int)(24 * this.scale);
+                x = x + 24;
 
                 bool incrementRow = ((i + 1) % 26) == 0;
                 if (incrementRow)
                 {
-                    x = (int)(12 * this.scale);
-                    y = y + (int)(24 * this.scale);
+                    x = 12;
+                    y = y + 24;
                 }
             }
 
         }
+
 
         private void LoadMap()
         {
@@ -281,7 +317,23 @@ namespace mike_and_conquer
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+            //            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+
+            float scale = 1.8f;
+            Microsoft.Xna.Framework.Matrix transformMatrix = Microsoft.Xna.Framework.Matrix.CreateScale(scale);
+            Microsoft.Xna.Framework.Graphics.BlendState nullBlendState = null;
+            Microsoft.Xna.Framework.Graphics.DepthStencilState nullDepthStencilState = null;
+            Microsoft.Xna.Framework.Graphics.RasterizerState nullRasterizerState = null;
+            Microsoft.Xna.Framework.Graphics.Effect nullEffect = null;
+            spriteBatch.Begin(
+                   SpriteSortMode.Deferred,
+                   nullBlendState,
+                   SamplerState.PointClamp,
+                   nullDepthStencilState,
+                   nullRasterizerState,
+                   nullEffect,
+                   transformMatrix);
+
 
             currentGameState.Draw(gameTime, spriteBatch);
 
@@ -327,7 +379,7 @@ namespace mike_and_conquer
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(x, y,false, this.scale);
+            Minigunner newMinigunner = new Minigunner(x, y,false);
             gdiMinigunnerList.Add(newMinigunner);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
@@ -340,7 +392,7 @@ namespace mike_and_conquer
 
         internal Minigunner AddNodMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(x, y, true, this.scale);
+            Minigunner newMinigunner = new Minigunner(x, y, true);
             nodMinigunnerList.Add(newMinigunner);
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);

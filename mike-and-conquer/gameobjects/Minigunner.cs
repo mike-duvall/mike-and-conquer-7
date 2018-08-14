@@ -34,8 +34,6 @@ namespace mike_and_conquer
         private int unscaledWidth;
         private int unscaledHeight;
 
-        private float scale;
-
         protected Minigunner()
         {
 
@@ -44,7 +42,7 @@ namespace mike_and_conquer
         private static int globalId = 1;
 
 
-        public Minigunner(int x, int y, bool isEnemy, float scale)
+        public Minigunner(int x, int y, bool isEnemy)
         {
 
             this.state = State.IDLE;
@@ -54,8 +52,6 @@ namespace mike_and_conquer
             // TODO move to base class and just have sublcass hard code
             this.unscaledWidth = 666;
             this.unscaledHeight = 666;
-
-            this.scale = scale;
 
             position = new Vector2(x, y);
 
@@ -75,12 +71,12 @@ namespace mike_and_conquer
 
             int rectangleUnscaledWidth = 12;
             int rectangleUnscaledHeight = 12;
-            int scaledWidth = (int)(rectangleUnscaledWidth * this.scale);
-            int scaledHeight = (int)(rectangleUnscaledHeight * this.scale);
+            int scaledWidth = (int)(rectangleUnscaledWidth);
+            int scaledHeight = (int)(rectangleUnscaledHeight);
 
 
             int x = (int)(position.X - (scaledWidth / 2));
-            int y = (int)(position.Y - scaledHeight) + (int)(1 * this.scale);  
+            int y = (int)(position.Y - scaledHeight) + (int)(1);  
 
             Rectangle rectangle = new Rectangle(x,y,scaledWidth,scaledHeight);
             return rectangle;
@@ -246,8 +242,8 @@ namespace mike_and_conquer
         {
             int x = (int) Math.Round(position.X);
             int y = (int) Math.Round(position.Y);
-            int width = (int)(unscaledWidth * this.scale);
-            int height = (int)(unscaledHeight * this.scale);
+            int width = (int)(unscaledWidth);
+            int height = (int)(unscaledHeight);
 
             x = x - (width / 2);
             y = y - (height / 2);

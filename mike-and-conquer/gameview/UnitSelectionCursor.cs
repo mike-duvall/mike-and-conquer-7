@@ -19,7 +19,7 @@ namespace mike_and_conquer.gameview
         Texture2D boundingRectangle;
         Boolean drawBoundingRectangle;
 
-        float scale;
+        //float scale;
 
 
         private int worldWidth;
@@ -40,7 +40,7 @@ namespace mike_and_conquer.gameview
             this.texture = loadTextureFromShpFile("Content\\select.shp", 0);
 
             position = new Vector2(x, y);
-            scale = MikeAndConqueryGame.instance.scale;
+            //scale = MikeAndConqueryGame.instance.scale;
             boundingRectangle = initializeBoundingRectangle();
 
             middleOfSprite = new Vector2();
@@ -100,10 +100,11 @@ namespace mike_and_conquer.gameview
             plottedPosition.X = (float)Math.Round(position.X);
             plottedPosition.Y = (float)Math.Round(position.Y);
 
-            spriteBatch.Draw(texture, plottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+            float defaultScale = 1;
+            spriteBatch.Draw(texture, plottedPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
             if(drawBoundingRectangle)
             {
-                spriteBatch.Draw(boundingRectangle, plottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(boundingRectangle, plottedPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
             }
 
 

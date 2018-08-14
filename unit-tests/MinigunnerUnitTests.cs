@@ -350,8 +350,7 @@ namespace unit_tests
         public void ContainsPoint_ShouldWorkAfterMinigunnerMoves()
         {
             // given
-            float scale = 5f;
-            Minigunner mingunner = new Minigunner(10, 10, false, scale);
+            Minigunner mingunner = new Minigunner(10, 10, false);
 
 
             // when

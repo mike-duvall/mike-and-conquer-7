@@ -30,14 +30,14 @@ namespace mike_and_conquer
 
         public int unscaledWidth;
         public int unscaledHeight;
-        private float scale;
+        //private float scale;
         private bool animate;
 
-        public float Scale
-        {
-            get { return scale; }
-            set { scale = value; }
-        }
+        //public float Scale
+        //{
+        //    get { return scale; }
+        //    set { scale = value; }
+        //}
 
         public GameSprite(string spriteListKey)
         {
@@ -54,7 +54,7 @@ namespace mike_and_conquer
             middleOfSprite.Y = spriteTextureList.textureHeight / 2;
 
             drawBoundingRectangle = false;
-            scale = MikeAndConqueryGame.instance.scale;
+            //scale = MikeAndConqueryGame.instance.scale;
             this.animate = true;
         }
 
@@ -96,11 +96,12 @@ namespace mike_and_conquer
             int currentTextureIndex = currentAnimationSequence.GetCurrentFrame();
             currentTexture = spriteTextureList.textureList[currentTextureIndex];
 
-            spriteBatch.Draw(currentTexture, position, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+            float defaultScale = 1;
+            spriteBatch.Draw(currentTexture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
 
             if (drawBoundingRectangle)
             {
-                spriteBatch.Draw(spriteBorderRectangleTexture, position, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(spriteBorderRectangleTexture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
             }
 
         }

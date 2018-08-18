@@ -31,12 +31,17 @@ using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIControl
 using FileStream = System.IO.FileStream;
 using FileMode = System.IO.FileMode;
 
+using Camera = Comora.Camera;
+
 
 namespace mike_and_conquer
 {
 
     public class MikeAndConqueryGame : Game
     {
+
+        private float testRotation = 0;
+        private Camera camera;
 
         public static MikeAndConqueryGame instance;
 
@@ -141,6 +146,11 @@ namespace mike_and_conquer
         {
             // TODO: Add your initialization logic here
             this.IsMouseVisible = true;
+
+
+            this.camera = new Camera(GraphicsDevice);
+
+
             base.Initialize();
 
             if (!testMode)
@@ -249,6 +259,23 @@ namespace mike_and_conquer
         {
             LoadMap();
 
+            this.camera.LoadContent();
+            camera.Debug.Grid.AddLines(50, Color.White, 2);
+            camera.Debug.Grid.AddLines(200, Color.Red, 4);
+            
+            Read  these docs on Viewport: http://rbwhitaker.wikidot.com/viewports-split-screen
+                Consider just using basic camera from here:  https://gamedev.stackexchange.com/questions/59301/xna-2d-camera-scrolling-why-use-matrix-transform
+
+            Also read these links:  http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series1/World_space.php
+            http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series4/Mouse_camera.php
+
+                And consider reading chapter on cameras in XNA book
+
+                Watch this  video to:  https://www.youtube.com/watch?v=pin8_ZfBgq0&t=2s
+
+            also read:  https://stackoverflow.com/questions/3570192/xna-viewport-projection-and-spritebatch
+
+
             List<string> textureKeysAlreadyAdded = new List<string>();
 
             foreach (MapTile nextMapTile in gameMap.MapTiles)
@@ -305,6 +332,10 @@ namespace mike_and_conquer
                 Exit();
             }
             currentGameState = currentGameState.Update(gameTime);
+
+            this.camera.Update(gameTime);
+            this.camera.Position = Microsoft.Xna.Framework.Input.Mouse.GetState().Position.ToVector2();
+            this.camera.Debug.IsVisible = Keyboard.GetState().IsKeyDown(Keys.F1);
             base.Update(gameTime);
         }
 
@@ -319,8 +350,25 @@ namespace mike_and_conquer
             // TODO: Add your drawing code here
             //            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
 
-            float scale = 1.8f;
-            Microsoft.Xna.Framework.Matrix transformMatrix = Microsoft.Xna.Framework.Matrix.CreateScale(scale);
+            //Attempt to use camera class from here:  https://github.com/aloisdeniel/Comora
+
+            //float scale = 1.8f;
+            //Microsoft.Xna.Framework.Matrix transformMatrix = Microsoft.Xna.Framework.Matrix.CreateScale(scale);
+
+            //            camera.Position = new Microsoft.Xna.Framework.Vector2(1920 / 2, 1080 / 2);
+
+            camera.Rotation = testRotation;
+//            testRotation += 0.01f;
+            camera.Zoom = 1.8f;
+            float x = 1920 / 2 / camera.Zoom;
+            float y = 1080 / 2 / camera.Zoom;
+            camera.Position = new Microsoft.Xna.Framework.Vector2(x, y);
+
+            //pickup from here, get it draw in correct location
+            //    try changing scale
+            //    try debug stuff
+            //    bear in mind coordinate transforms might have a bug
+
             Microsoft.Xna.Framework.Graphics.BlendState nullBlendState = null;
             Microsoft.Xna.Framework.Graphics.DepthStencilState nullDepthStencilState = null;
             Microsoft.Xna.Framework.Graphics.RasterizerState nullRasterizerState = null;
@@ -332,12 +380,19 @@ namespace mike_and_conquer
                    nullDepthStencilState,
                    nullRasterizerState,
                    nullEffect,
-                   transformMatrix);
+                   camera.ViewportOffset.InvertAbsolute);
 
+            //Begin(
+            //        SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = default(Matrix?));
+//            spriteBatch.Begin(sortMode, blendState, samplerState, depthStencilState, rasterizerState, effect, camera.ViewportOffset.InvertAbsolute);
 
             currentGameState.Draw(gameTime, spriteBatch);
 
+            //this.spriteBatch.Draw(this.camera.Debug);
+
             spriteBatch.End();
+
+            this.camera.Debug.Draw(spriteBatch, Microsoft.Xna.Framework.Vector2.One);
 
             base.Draw(gameTime);
         }

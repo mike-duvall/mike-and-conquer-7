@@ -89,6 +89,8 @@ namespace mike_and_conquer
         private GameMap gameMap;
 
 
+        KeyboardState oldState;
+
         public MikeAndConqueryGame(bool testMode)
         {
             this.testMode = testMode;
@@ -131,6 +133,8 @@ namespace mike_and_conquer
 
             gameEvents = new List<AsyncGameEvent>();
 
+            oldState = Keyboard.GetState();
+
             MikeAndConqueryGame.instance = this;
         }
 
@@ -155,6 +159,9 @@ namespace mike_and_conquer
             //GraphicsDevice.Viewport = viewport;
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
+            this.camera2D.Zoom = 4.0f;
+            this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
+
             //this.camera2D = new Camera2D(viewport);
 
 
@@ -320,7 +327,7 @@ namespace mike_and_conquer
 
         private int calculateLeftmostScrollX()
         {
-            return (int)(1920 / 2 / camera2D.Zoom);
+            return (int)((1920 / 2 / camera2D.Zoom) - 1);
         }
 
         private int calculateRightmostScrollX()
@@ -338,7 +345,7 @@ namespace mike_and_conquer
 
         private int calculateTopmostScrollY()
         {
-            return (int)(1080 / 2 / camera2D.Zoom);
+            return (int)((1080 / 2 / camera2D.Zoom) - 1);
         }
 
         private int calculateBottommostScrollY()
@@ -377,13 +384,57 @@ namespace mike_and_conquer
             this.camera2D.Rotation = testRotation;
             //            testRotation += 0.01f;
 
-            this.camera2D.Zoom = 4.0f;
-            int leftmostScrollX = calculateLeftmostScrollX();
-            int rightmostScrollX = calculateRightmostScrollX();
-            int upperRightY = calculateTopmostScrollY();
-            int bottommostScrollY = calculateBottommostScrollY();
-            //            this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(rightmostScrollX, upperRightY);
-            this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(rightmostScrollX + 1, bottommostScrollY + 1);
+
+            KeyboardState newState = Keyboard.GetState();  // get the newest state
+
+            int originalX = (int)this.camera2D.Location.X;
+            int originalY = (int)this.camera2D.Location.Y;
+
+            // handle the input
+            if (oldState.IsKeyUp(Keys.Right) && newState.IsKeyDown(Keys.Right))
+            {
+
+                int newX = (int)(this.camera2D.Location.X + 10);
+                if(newX > calculateRightmostScrollX())
+                {
+                    newX = calculateRightmostScrollX();
+                }
+
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
+
+            }
+            else if (oldState.IsKeyUp(Keys.Left) && newState.IsKeyDown(Keys.Left))
+            {
+                int newX = (int)(this.camera2D.Location.X - 10);
+                if (newX < calculateLeftmostScrollX())
+                {
+                    newX = calculateLeftmostScrollX();
+                }
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
+            }
+            else if (oldState.IsKeyUp(Keys.Down) && newState.IsKeyDown(Keys.Down))
+            {
+
+                int newY = (int)(this.camera2D.Location.Y + 10);
+                if (newY > calculateBottommostScrollY())
+                {
+                    newY = calculateBottommostScrollY();
+                }
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
+            }
+            else if (oldState.IsKeyUp(Keys.Up) && newState.IsKeyDown(Keys.Up))
+            {
+                int newY = (int)(this.camera2D.Location.Y - 10);
+                if (newY < calculateTopmostScrollY())
+                {
+                    newY = calculateTopmostScrollY();
+                }
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
+            }
+
+
+            oldState = newState;  // 
+
 
             base.Update(gameTime);
         }

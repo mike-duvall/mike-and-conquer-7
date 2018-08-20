@@ -31,8 +31,7 @@ using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIControl
 using FileStream = System.IO.FileStream;
 using FileMode = System.IO.FileMode;
 
-using Camera = Comora.Camera;
-
+using Camera2D = mike_and_conquer_6.Camera2D;
 
 namespace mike_and_conquer
 {
@@ -41,7 +40,7 @@ namespace mike_and_conquer
     {
 
         private float testRotation = 0;
-        private Camera camera;
+        private Camera2D camera2D;
 
         public static MikeAndConqueryGame instance;
 
@@ -147,8 +146,16 @@ namespace mike_and_conquer
             // TODO: Add your initialization logic here
             this.IsMouseVisible = true;
 
+            //Pickup here, keep exploring how viewports work, how to handle scrolling if screen is larger than will fit
+            //    Try setting scale to 3, for example
 
-            this.camera = new Camera(GraphicsDevice);
+            //Microsoft.Xna.Framework.Graphics.Viewport viewport = GraphicsDevice.Viewport;
+            //viewport.Width = viewport.Width / 2;
+            //viewport.Height = viewport.Height / 2;
+            //GraphicsDevice.Viewport = viewport;
+
+            this.camera2D = new Camera2D(GraphicsDevice.Viewport);
+            //this.camera2D = new Camera2D(viewport);
 
 
             base.Initialize();
@@ -259,21 +266,17 @@ namespace mike_and_conquer
         {
             LoadMap();
 
-            this.camera.LoadContent();
-            camera.Debug.Grid.AddLines(50, Color.White, 2);
-            camera.Debug.Grid.AddLines(200, Color.Red, 4);
-            
-            Read  these docs on Viewport: http://rbwhitaker.wikidot.com/viewports-split-screen
-                Consider just using basic camera from here:  https://gamedev.stackexchange.com/questions/59301/xna-2d-camera-scrolling-why-use-matrix-transform
+            //Read  these docs on Viewport: http://rbwhitaker.wikidot.com/viewports-split-screen
+            //    Consider just using basic camera from here:  https://gamedev.stackexchange.com/questions/59301/xna-2d-camera-scrolling-why-use-matrix-transform
 
-            Also read these links:  http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series1/World_space.php
-            http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series4/Mouse_camera.php
+            //Also read these links:  http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series1/World_space.php
+            //http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series4/Mouse_camera.php
 
-                And consider reading chapter on cameras in XNA book
+            //    And consider reading chapter on cameras in XNA book
 
-                Watch this  video to:  https://www.youtube.com/watch?v=pin8_ZfBgq0&t=2s
+            //    Watch this  video to:  https://www.youtube.com/watch?v=pin8_ZfBgq0&t=2s
 
-            also read:  https://stackoverflow.com/questions/3570192/xna-viewport-projection-and-spritebatch
+            //also read:  https://stackoverflow.com/questions/3570192/xna-viewport-projection-and-spritebatch
 
 
             List<string> textureKeysAlreadyAdded = new List<string>();
@@ -315,6 +318,42 @@ namespace mike_and_conquer
         }
 
 
+        private int calculateLeftmostScrollX()
+        {
+            return (int)(1920 / 2 / camera2D.Zoom);
+        }
+
+        private int calculateRightmostScrollX()
+        {
+            int numSquaresWidth = 26;
+            int widthOfMapSquare = 24;
+            int widthOfMapInWorldSpace = numSquaresWidth * widthOfMapSquare;
+            int scaledWidthOfMap = (int)(widthOfMapInWorldSpace * camera2D.Zoom);
+            int amountToScrollover = scaledWidthOfMap - GraphicsDevice.Viewport.Width;
+
+            int rightmostScrollX = calculateLeftmostScrollX() + (int)((amountToScrollover / camera2D.Zoom) + 1);
+
+            return rightmostScrollX;
+        }
+
+        private int calculateTopmostScrollY()
+        {
+            return (int)(1080 / 2 / camera2D.Zoom);
+        }
+
+        private int calculateBottommostScrollY()
+        {
+            int numSquaresWidth = 23;
+            int heightOfMapSquare = 24;
+            int heightOfMapInWorldSpace = numSquaresWidth * heightOfMapSquare;
+            int scaledHeightOfMap = (int)(heightOfMapInWorldSpace * camera2D.Zoom);
+            int amountToScrollover = scaledHeightOfMap - GraphicsDevice.Viewport.Height;
+
+            int bottommostScrollY = calculateTopmostScrollY() + (int)((amountToScrollover / camera2D.Zoom) + 1);
+
+            return bottommostScrollY;
+        }
+
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -333,9 +372,19 @@ namespace mike_and_conquer
             }
             currentGameState = currentGameState.Update(gameTime);
 
-            this.camera.Update(gameTime);
-            this.camera.Position = Microsoft.Xna.Framework.Input.Mouse.GetState().Position.ToVector2();
-            this.camera.Debug.IsVisible = Keyboard.GetState().IsKeyDown(Keys.F1);
+            //this.camera2D.Location = Microsoft.Xna.Framework.Input.Mouse.GetState().Position.ToVector2();
+
+            this.camera2D.Rotation = testRotation;
+            //            testRotation += 0.01f;
+
+            this.camera2D.Zoom = 4.0f;
+            int leftmostScrollX = calculateLeftmostScrollX();
+            int rightmostScrollX = calculateRightmostScrollX();
+            int upperRightY = calculateTopmostScrollY();
+            int bottommostScrollY = calculateBottommostScrollY();
+            //            this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(rightmostScrollX, upperRightY);
+            this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(rightmostScrollX + 1, bottommostScrollY + 1);
+
             base.Update(gameTime);
         }
 
@@ -346,28 +395,6 @@ namespace mike_and_conquer
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-            //            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-
-            //Attempt to use camera class from here:  https://github.com/aloisdeniel/Comora
-
-            //float scale = 1.8f;
-            //Microsoft.Xna.Framework.Matrix transformMatrix = Microsoft.Xna.Framework.Matrix.CreateScale(scale);
-
-            //            camera.Position = new Microsoft.Xna.Framework.Vector2(1920 / 2, 1080 / 2);
-
-            camera.Rotation = testRotation;
-//            testRotation += 0.01f;
-            camera.Zoom = 1.8f;
-            float x = 1920 / 2 / camera.Zoom;
-            float y = 1080 / 2 / camera.Zoom;
-            camera.Position = new Microsoft.Xna.Framework.Vector2(x, y);
-
-            //pickup from here, get it draw in correct location
-            //    try changing scale
-            //    try debug stuff
-            //    bear in mind coordinate transforms might have a bug
 
             Microsoft.Xna.Framework.Graphics.BlendState nullBlendState = null;
             Microsoft.Xna.Framework.Graphics.DepthStencilState nullDepthStencilState = null;
@@ -380,20 +407,12 @@ namespace mike_and_conquer
                    nullDepthStencilState,
                    nullRasterizerState,
                    nullEffect,
-                   camera.ViewportOffset.InvertAbsolute);
-
-            //Begin(
-            //        SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = default(Matrix?));
-//            spriteBatch.Begin(sortMode, blendState, samplerState, depthStencilState, rasterizerState, effect, camera.ViewportOffset.InvertAbsolute);
+                   camera2D.TransformMatrix);
 
             currentGameState.Draw(gameTime, spriteBatch);
 
-            //this.spriteBatch.Draw(this.camera.Debug);
-
             spriteBatch.End();
-
-            this.camera.Debug.Draw(spriteBatch, Microsoft.Xna.Framework.Vector2.One);
-
+           
             base.Draw(gameTime);
         }
 

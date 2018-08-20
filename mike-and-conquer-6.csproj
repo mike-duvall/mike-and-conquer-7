@@ -72,6 +72,7 @@
     <Compile Include="mike-and-conquer\gamestate\PlayingGameState.cs" />
     <Compile Include="mike-and-conquer\gamesprite\NodShpFileColorMapper.cs" />
     <Compile Include="mike-and-conquer\gamesprite\GdiShpFileColorMapper.cs" />
+    <Compile Include="mike-and-conquer\main\Camera2D.cs" />
     <Compile Include="mike-and-conquer\main\GameMap.cs" />
     <Compile Include="mike-and-conquer\main\MapTile.cs" />
     <Compile Include="mike-and-conquer\main\MikeAndConqueryGame.cs" />

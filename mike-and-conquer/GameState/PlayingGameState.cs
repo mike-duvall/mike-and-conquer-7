@@ -124,6 +124,18 @@ namespace mike_and_conquer
 
         internal void HandleLeftClick(int mouseX, int mouseY)
         {
+
+            MouseState mouseState = Mouse.GetState();
+            Point mousePoint = mouseState.Position;
+            Vector2 mouseLocation = new Microsoft.Xna.Framework.Vector2();
+            mouseLocation.X = mousePoint.X;
+            mouseLocation.Y = mousePoint.Y;
+
+            Vector2 transformedLocation = Vector2.Transform(mouseLocation, Matrix.Invert(MikeAndConqueryGame.instance.camera2D.TransformMatrix));
+
+            mouseX = (int)transformedLocation.X;
+            mouseY = (int)transformedLocation.Y;
+
             bool handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseX, mouseY);
             if (!handledEvent)
             {

@@ -40,7 +40,7 @@ namespace mike_and_conquer
     {
 
         private float testRotation = 0;
-        private Camera2D camera2D;
+        public Camera2D camera2D;
 
         public static MikeAndConqueryGame instance;
 
@@ -369,6 +369,7 @@ namespace mike_and_conquer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
             KeyboardState state = Keyboard.GetState();
 
             // If they hit esc, exit
@@ -390,11 +391,20 @@ namespace mike_and_conquer
             int originalX = (int)this.camera2D.Location.X;
             int originalY = (int)this.camera2D.Location.Y;
 
-            // handle the input
+
+            //Pickup here:  Refactor this basic scrolling code
+            //   Add ability to handle holding arrow key down
+            //   Add ability to zoom with keyboard and/or mouse wheel
+            //   Test with different zooms
+            // Get click select working
+
+            int scrollAmount = 10;
+
+
             if (oldState.IsKeyUp(Keys.Right) && newState.IsKeyDown(Keys.Right))
             {
 
-                int newX = (int)(this.camera2D.Location.X + 10);
+                int newX = (int)(this.camera2D.Location.X + scrollAmount);
                 if(newX > calculateRightmostScrollX())
                 {
                     newX = calculateRightmostScrollX();
@@ -405,7 +415,7 @@ namespace mike_and_conquer
             }
             else if (oldState.IsKeyUp(Keys.Left) && newState.IsKeyDown(Keys.Left))
             {
-                int newX = (int)(this.camera2D.Location.X - 10);
+                int newX = (int)(this.camera2D.Location.X - scrollAmount);
                 if (newX < calculateLeftmostScrollX())
                 {
                     newX = calculateLeftmostScrollX();
@@ -415,7 +425,7 @@ namespace mike_and_conquer
             else if (oldState.IsKeyUp(Keys.Down) && newState.IsKeyDown(Keys.Down))
             {
 
-                int newY = (int)(this.camera2D.Location.Y + 10);
+                int newY = (int)(this.camera2D.Location.Y + scrollAmount);
                 if (newY > calculateBottommostScrollY())
                 {
                     newY = calculateBottommostScrollY();
@@ -424,21 +434,57 @@ namespace mike_and_conquer
             }
             else if (oldState.IsKeyUp(Keys.Up) && newState.IsKeyDown(Keys.Up))
             {
-                int newY = (int)(this.camera2D.Location.Y - 10);
+                int newY = (int)(this.camera2D.Location.Y - scrollAmount);
                 if (newY < calculateTopmostScrollY())
                 {
                     newY = calculateTopmostScrollY();
                 }
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
+            else if (oldState.IsKeyUp(Keys.OemPlus) && newState.IsKeyDown(Keys.OemPlus))
+            {
+                float newZoom = this.camera2D.Zoom + 0.2f;
+                this.camera2D.Zoom = newZoom;
+                resetCamera();
+            }
+            else if (oldState.IsKeyUp(Keys.OemMinus) && newState.IsKeyDown(Keys.OemMinus))
+            {
+                float newZoom = this.camera2D.Zoom - 0.2f;
+                this.camera2D.Zoom = newZoom;
+                resetCamera();
+            }
 
 
-            oldState = newState;  // 
-
-
+            oldState = newState;   
             base.Update(gameTime);
         }
 
+
+        private void resetCamera()
+        {
+            int newX = (int)(this.camera2D.Location.X);
+            int newY = (int)(this.camera2D.Location.Y);
+
+            if (newX > calculateRightmostScrollX())
+            {
+                newX = calculateRightmostScrollX();
+            }
+            if (newX < calculateLeftmostScrollX())
+            {
+                newX = calculateLeftmostScrollX();
+            }
+            if (newY < calculateTopmostScrollY())
+            {
+                newY = calculateTopmostScrollY();
+            }
+            if (newY < calculateTopmostScrollY())
+            {
+                newY = calculateTopmostScrollY();
+            }
+
+            this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, newY);
+
+        }
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>

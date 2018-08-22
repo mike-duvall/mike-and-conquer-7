@@ -150,19 +150,10 @@ namespace mike_and_conquer
             // TODO: Add your initialization logic here
             this.IsMouseVisible = true;
 
-            //Pickup here, keep exploring how viewports work, how to handle scrolling if screen is larger than will fit
-            //    Try setting scale to 3, for example
-
-            //Microsoft.Xna.Framework.Graphics.Viewport viewport = GraphicsDevice.Viewport;
-            //viewport.Width = viewport.Width / 2;
-            //viewport.Height = viewport.Height / 2;
-            //GraphicsDevice.Viewport = viewport;
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
             this.camera2D.Zoom = 4.0f;
             this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
-
-            //this.camera2D = new Camera2D(viewport);
 
 
             base.Initialize();
@@ -392,69 +383,73 @@ namespace mike_and_conquer
             int originalY = (int)this.camera2D.Location.Y;
 
 
-            //Pickup here:  Refactor this basic scrolling code
-            //   Add ability to handle holding arrow key down
-            //   Add ability to zoom with keyboard and/or mouse wheel
-            //   Test with different zooms
-            // Get click select working
+            //Pickup here:
+            //    Revisit scrolling right when screen is not big enough
+            //    Add ability to handle holding arrow key down
+            //    Add ability to zoom with  mouse wheel
+            //    Revisit click select code in PLayingGameState
+            // Refactor scrolling code
 
             int scrollAmount = 10;
 
+            int mouseScrollThreshold = 100;
 
-            if (oldState.IsKeyUp(Keys.Right) && newState.IsKeyDown(Keys.Right))
+            Microsoft.Xna.Framework.Input.MouseState mouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
+
+            if(mouseState.Position.X > GraphicsDevice.Viewport.Width - mouseScrollThreshold)
             {
-
-                int newX = (int)(this.camera2D.Location.X + scrollAmount);
-                if(newX > calculateRightmostScrollX())
-                {
-                    newX = calculateRightmostScrollX();
-                }
-
+                int newX = (int)(this.camera2D.Location.X + 2);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
+            }
+            else if (mouseState.Position.X < mouseScrollThreshold)
+            {
+                int newX = (int)(this.camera2D.Location.X - 2);
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
+            }
+            else if (mouseState.Position.Y  > GraphicsDevice.Viewport.Height - mouseScrollThreshold)
+            {
+                int newY = (int)(this.camera2D.Location.Y + 2);
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
+            }
+            else if (mouseState.Position.Y < mouseScrollThreshold)
+            {
+                int newY = (int)(this.camera2D.Location.Y - 2);
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
+            }
 
+            else if (oldState.IsKeyUp(Keys.Right) && newState.IsKeyDown(Keys.Right))
+            {
+                int newX = (int)(this.camera2D.Location.X + scrollAmount);
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
             else if (oldState.IsKeyUp(Keys.Left) && newState.IsKeyDown(Keys.Left))
             {
                 int newX = (int)(this.camera2D.Location.X - scrollAmount);
-                if (newX < calculateLeftmostScrollX())
-                {
-                    newX = calculateLeftmostScrollX();
-                }
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
             else if (oldState.IsKeyUp(Keys.Down) && newState.IsKeyDown(Keys.Down))
             {
 
                 int newY = (int)(this.camera2D.Location.Y + scrollAmount);
-                if (newY > calculateBottommostScrollY())
-                {
-                    newY = calculateBottommostScrollY();
-                }
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
             else if (oldState.IsKeyUp(Keys.Up) && newState.IsKeyDown(Keys.Up))
             {
                 int newY = (int)(this.camera2D.Location.Y - scrollAmount);
-                if (newY < calculateTopmostScrollY())
-                {
-                    newY = calculateTopmostScrollY();
-                }
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
             else if (oldState.IsKeyUp(Keys.OemPlus) && newState.IsKeyDown(Keys.OemPlus))
             {
                 float newZoom = this.camera2D.Zoom + 0.2f;
                 this.camera2D.Zoom = newZoom;
-                resetCamera();
             }
             else if (oldState.IsKeyUp(Keys.OemMinus) && newState.IsKeyDown(Keys.OemMinus))
             {
                 float newZoom = this.camera2D.Zoom - 0.2f;
                 this.camera2D.Zoom = newZoom;
-                resetCamera();
             }
 
-
+            resetCamera();
             oldState = newState;   
             base.Update(gameTime);
         }
@@ -477,9 +472,9 @@ namespace mike_and_conquer
             {
                 newY = calculateTopmostScrollY();
             }
-            if (newY < calculateTopmostScrollY())
+            if (newY > calculateBottommostScrollY())
             {
-                newY = calculateTopmostScrollY();
+                newY = calculateBottommostScrollY();
             }
 
             this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, newY);

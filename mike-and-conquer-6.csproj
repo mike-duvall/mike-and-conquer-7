@@ -89,6 +89,8 @@
     <Compile Include="mike-and-conquer\openra\TmpTDLoader.cs" />
     <Compile Include="mike-and-conquer\openra\XORDeltaCompression.cs" />
     <Compile Include="mike-and-conquer\rest\GameStateController.cs" />
+    <Compile Include="mike-and-conquer\rest\LeftClickMinigunnerController.cs" />
+    <Compile Include="mike-and-conquer\rest\RestMinigunnerId.cs" />
     <Compile Include="mike-and-conquer\rest\RightClickController.cs" />
     <Compile Include="mike-and-conquer\rest\LeftClickController.cs" />
     <Compile Include="mike-and-conquer\rest\RestPoint.cs" />

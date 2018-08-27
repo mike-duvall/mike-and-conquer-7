@@ -152,7 +152,7 @@ namespace mike_and_conquer
 
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
-            this.camera2D.Zoom = 4.0f;
+            this.camera2D.Zoom = 1.8f;
             this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
 
@@ -386,9 +386,9 @@ namespace mike_and_conquer
             //Pickup here:
             //    Revisit scrolling right when screen is not big enough
             //    Add ability to handle holding arrow key down
-            //    Add ability to zoom with  mouse wheel
-            //    Revisit click select code in PLayingGameState
-            // Refactor scrolling code
+            //    Add ability to zoom with mouse wheel
+            //   Revisit click select code in PLayingGameState
+            //Refactor scrolling code
 
             int scrollAmount = 10;
 
@@ -537,11 +537,20 @@ namespace mike_and_conquer
                 }
 
             }
-
             return foundMinigunner;
         }
 
 
+        internal Minigunner GetGdiOrNodMinigunner(int id)
+        {
+            Minigunner foundMinigunner = null;
+            foundMinigunner = GetGdiMinigunner(id);
+            if(foundMinigunner == null)
+            {
+                foundMinigunner = GetNodMinigunner(id);
+            }
+            return foundMinigunner;
+        }
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {

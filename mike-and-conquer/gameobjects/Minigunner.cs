@@ -34,6 +34,9 @@ namespace mike_and_conquer
         private int unscaledWidth;
         private int unscaledHeight;
 
+        double movementVelocity = .02;
+        double buffer;
+
         protected Minigunner()
         {
 
@@ -59,8 +62,9 @@ namespace mike_and_conquer
             id = Minigunner.globalId;
             Minigunner.globalId++;
 
-
             clickDetectionRectangle = createClickDetectionRectangle();
+
+            buffer = movementVelocity + (double).02f;
 
             selected = false;
 
@@ -121,21 +125,64 @@ namespace mike_and_conquer
 
         }
 
+        bool IsFarEnoughRight()
+        {
+            return (position.X > (destinationX - buffer));
+        }
+
+        bool IsFarEnoughtLeft()
+        {
+            return (position.X < (destinationX + buffer));
+        }
+
+        bool IsFarEnoughDown()
+        {
+            return (position.Y > (destinationY - buffer));
+        }
+
+        bool IsFarEnoughUp()
+        {
+            return (position.Y < (destinationY + buffer));
+        }
+
+
+        bool IsAtDestinationX()
+        {
+            return  (
+                IsFarEnoughRight() &&
+                IsFarEnoughtLeft()
+            );
+
+        }
+
+        bool IsAtDestinationY()
+        {
+            return (
+                IsFarEnoughDown() &&
+                IsFarEnoughUp()
+            );
+
+        }
+
+
         bool IsAtDestination()
         {
 
-            int buffer = 0;
-            //return (
-            //    position.X > (destinationX - buffer) &&
-            //    position.Y < (destinationX + buffer) &&
-            //    position.Y > (destinationY - buffer) &&
-            //    position.Y < (destinationY + buffer)
-            //    );
+            //int buffer = 0;
+            ////return (
+            ////    position.X > (destinationX - buffer) &&
+            ////    position.Y < (destinationX + buffer) &&
+            ////    position.Y > (destinationY - buffer) &&
+            ////    position.Y < (destinationY + buffer)
+            ////    );
 
-            return (
-                position.X == destinationX &&
-                position.Y == destinationY);
+            //return (
+            //    position.X == destinationX &&
+            //    position.Y == destinationY);
+
+            return IsAtDestinationX() && IsAtDestinationY();
         }
+
 
 
 
@@ -187,38 +234,78 @@ namespace mike_and_conquer
             }
         }
 
+        //        void MoveTowardsDestination(GameTime gameTime)
+        //        {
+        //            int buffer = 0;
+
+        //            int newX = (int)position.X;
+        //            int newY = (int)position.Y;
+
+        ////            double velocity = .15;
+        ////            double velocity = .07;
+        //            double velocity = .02;
+        //            double delta = gameTime.ElapsedGameTime.TotalMilliseconds * velocity;
+
+
+        //            if (position.X < (destinationX - buffer))
+        //            {
+        //                newX += (int)delta;
+        //            }
+        //            else if (position.X > (destinationX + buffer))
+        //            {
+        //                newX -= (int)delta;
+        //            }
+
+        //            if (position.Y < (destinationY - buffer))
+        //            {
+        //                newY += (int)delta;
+        //            }
+        //            else if (position.Y > (destinationY + buffer))
+        //            {
+        //                newY -= (int)delta;
+        //            }
+
+        //            position = new Vector2(newX, newY);
+        //        }
+
+
         void MoveTowardsDestination(GameTime gameTime)
         {
-            int buffer = 0;
-
-            int newX = (int)position.X;
-            int newY = (int)position.Y;
-
-//            double velocity = .15;
-            double velocity = .07;
-            double delta = gameTime.ElapsedGameTime.TotalMilliseconds * velocity;
 
 
-            if (position.X < (destinationX - buffer))
+            float newX = position.X;
+            float newY = position.Y;
+
+            //            double velocity = .15;
+            //            double velocity = .07;
+            double delta = gameTime.ElapsedGameTime.TotalMilliseconds * movementVelocity;
+
+            //            double buffer = movementVelocity + (double).01f;
+
+            if (!IsFarEnoughRight())
             {
-                newX += (int)delta;
+                newX += (float)delta;
             }
-            else if (position.X > (destinationX + buffer))
+            else if (!IsFarEnoughtLeft())
             {
-                newX -= (int)delta;
+                newX -= (float)delta;
             }
 
-            if (position.Y < (destinationY - buffer))
+
+
+            if (!IsFarEnoughDown())
             {
-                newY += (int)delta;
+                newY += (float)delta;
             }
-            else if (position.Y > (destinationY + buffer))
+            else if (!IsFarEnoughUp())
             {
-                newY -= (int)delta;
+                newY -= (float)delta;
             }
 
             position = new Vector2(newX, newY);
         }
+
+
 
 
         private void SetDestination(int x, int y)

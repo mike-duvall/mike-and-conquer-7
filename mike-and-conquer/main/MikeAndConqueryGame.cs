@@ -91,11 +91,16 @@ namespace mike_and_conquer
 
         KeyboardState oldState;
 
+        public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+
         public MikeAndConqueryGame(bool testMode)
         {
+
+
+
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
-//            scale = 1.8f;
 
             bool makeFullscreen = true;
             //bool makeFullscreen = false;
@@ -104,6 +109,7 @@ namespace mike_and_conquer
                 graphics.IsFullScreen = true;
                 graphics.PreferredBackBufferWidth = 1920;
                 graphics.PreferredBackBufferHeight = 1080;
+
             }
             else
             {
@@ -318,7 +324,8 @@ namespace mike_and_conquer
 
         private int calculateLeftmostScrollX()
         {
-            return (int)((1920 / 2 / camera2D.Zoom) - 1);
+            return (int)((graphics.PreferredBackBufferWidth / 2 / camera2D.Zoom) - 1);
+           
         }
 
         private int calculateRightmostScrollX()
@@ -336,7 +343,8 @@ namespace mike_and_conquer
 
         private int calculateTopmostScrollY()
         {
-            return (int)((1080 / 2 / camera2D.Zoom) - 1);
+            return (int)((graphics.PreferredBackBufferHeight / 2 / camera2D.Zoom) - 1);
+           
         }
 
         private int calculateBottommostScrollY()

@@ -13,8 +13,7 @@ namespace mike_and_conquer.aicontroller
 
         private bool enemyStateIsSleeping;
 
-//        private static readonly int ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE = 1000;
-        private static readonly int ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE = 100000;
+        private static readonly int ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE = 1000;
         private int enemySleepCountdownTimer;
 
 

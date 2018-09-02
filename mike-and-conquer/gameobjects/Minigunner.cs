@@ -34,7 +34,8 @@ namespace mike_and_conquer
         private int unscaledWidth;
         private int unscaledHeight;
 
-        double movementVelocity = .02;
+        double movementVelocity = .015;
+//        double movementVelocity = .03;
         double buffer;
 
         protected Minigunner()
@@ -202,7 +203,7 @@ namespace mike_and_conquer
         {
             int distanceToTarget = CalculateDistanceToTarget();
 
-            if (distanceToTarget < 200)
+            if (distanceToTarget < 35)
             {
                 return true;
             }
@@ -272,13 +273,14 @@ namespace mike_and_conquer
         void MoveTowardsDestination(GameTime gameTime)
         {
 
-
             float newX = position.X;
             float newY = position.Y;
 
             //            double velocity = .15;
             //            double velocity = .07;
             double delta = gameTime.ElapsedGameTime.TotalMilliseconds * movementVelocity;
+
+//            MikeAndConqueryGame.log.Debug("delta=" + delta);
 
             //            double buffer = movementVelocity + (double).01f;
 
@@ -303,6 +305,7 @@ namespace mike_and_conquer
             }
 
             position = new Vector2(newX, newY);
+//            MikeAndConqueryGame.log.Debug("position=" + position);
         }
 
 

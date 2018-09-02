@@ -27,6 +27,8 @@ namespace mike_and_conquer.gameview
 
         private Vector2 middleOfSprite;
 
+        float defaultScale = 1;
+
         private UnitSelectionCursor()
         {
 
@@ -96,19 +98,11 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            Vector2 plottedPosition = new Vector2();
-            plottedPosition.X = (float)Math.Round(position.X);
-            plottedPosition.Y = (float)Math.Round(position.Y);
-
-            float defaultScale = 1;
-            spriteBatch.Draw(texture, plottedPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
-            if(drawBoundingRectangle)
+            spriteBatch.Draw(texture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
+            if (drawBoundingRectangle)
             {
-                spriteBatch.Draw(boundingRectangle, plottedPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(boundingRectangle, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
             }
-
-
-
         }
 
         internal Texture2D loadTextureFromShpFile(string shpFileName, int indexOfFrameToLoad)

@@ -21,8 +21,11 @@ namespace mike_and_conquer.gameobjects
 
         public MissionFailedMessage()
         {
-            int baseX = 800;
-            int baseY = 500;
+            //int baseX = 800;
+            //int baseY = 500;
+            int baseX = 350;
+            int baseY = 100;
+
             missionGameSprite = new GameSprite(MISSION_SPRITE_KEY);
             AnimationSequence animationSequence = new AnimationSequence(1);
             animationSequence.AddFrame(0);

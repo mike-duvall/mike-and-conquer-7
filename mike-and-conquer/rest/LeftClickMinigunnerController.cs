@@ -2,7 +2,6 @@
 
 using MouseInputHandler = mike_and_conquer_6.mike_and_conquer.MouseInputHandler;
 
-using Matrix = Microsoft.Xna.Framework.Matrix;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace mike_and_conquer.rest
@@ -31,7 +30,7 @@ namespace mike_and_conquer.rest
             minigunnerLocation.X = gdiMinigunner.position.X;
             minigunnerLocation.Y = gdiMinigunner.position.Y;
 
-            Vector2 transformedLocation = Vector2.Transform(minigunnerLocation, MikeAndConqueryGame.instance.camera2D.TransformMatrix);
+            Vector2 transformedLocation = gdiMinigunner.GetScreenPosition();
 
             int screenWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
             int screenHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;

@@ -12,6 +12,8 @@ namespace mike_and_conquer.rest
         public int id { get; set; }
         public int x { get; set; }
         public int y { get; set; }
+        public int screenX { get; set; }
+        public int screenY { get; set; }
         public int health { get; set; }
         public bool selected { get; set; }
 

@@ -46,6 +46,11 @@ namespace mike_and_conquer
         private static int globalId = 1;
 
 
+        public Vector2 GetScreenPosition()
+        {
+            return Vector2.Transform(position, MikeAndConqueryGame.instance.camera2D.TransformMatrix);
+        }
+
         public Minigunner(int x, int y, bool isEnemy)
         {
 

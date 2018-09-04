@@ -121,6 +121,10 @@ namespace mike_and_conquer
         }
 
 
+        internal Vector2 ConvertScreenLocationToWorldLocation(Vector2 screenLocation)
+        {
+            return Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConqueryGame.instance.camera2D.TransformMatrix));
+        }
 
         internal void HandleLeftClick(int mouseX, int mouseY)
         {
@@ -131,7 +135,7 @@ namespace mike_and_conquer
             mouseLocation.X = mousePoint.X;
             mouseLocation.Y = mousePoint.Y;
 
-            Vector2 transformedLocation = Vector2.Transform(mouseLocation, Matrix.Invert(MikeAndConqueryGame.instance.camera2D.TransformMatrix));
+            Vector2 transformedLocation = ConvertScreenLocationToWorldLocation(mouseLocation);
 
             mouseX = (int)transformedLocation.X;
             mouseY = (int)transformedLocation.Y;

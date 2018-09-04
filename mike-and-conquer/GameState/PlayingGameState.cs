@@ -128,26 +128,22 @@ namespace mike_and_conquer
 
         internal void HandleLeftClick(int mouseX, int mouseY)
         {
-
             MouseState mouseState = Mouse.GetState();
             Point mousePoint = mouseState.Position;
-            Vector2 mouseLocation = new Microsoft.Xna.Framework.Vector2();
-            mouseLocation.X = mousePoint.X;
-            mouseLocation.Y = mousePoint.Y;
+            Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
+            Vector2 mouseWorldLocation = ConvertScreenLocationToWorldLocation(mouseScreenLocation);
 
-            Vector2 transformedLocation = ConvertScreenLocationToWorldLocation(mouseLocation);
+            int mouseWorldX = (int) mouseWorldLocation.X;
+            int mouseWorldY = (int) mouseWorldLocation.Y;
 
-            mouseX = (int)transformedLocation.X;
-            mouseY = (int)transformedLocation.Y;
-
-            bool handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseX, mouseY);
+            bool handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldX, mouseWorldY);
             if (!handledEvent)
             {
-                handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseX, mouseY);
+                handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseWorldX, mouseWorldY);
             }
             if (!handledEvent)
             {
-                CheckForAndHandleLeftClickOnMap(mouseX, mouseY);
+                CheckForAndHandleLeftClickOnMap(mouseWorldX, mouseWorldY);
             }
 
         }

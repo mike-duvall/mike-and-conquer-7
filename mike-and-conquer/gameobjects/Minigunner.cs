@@ -35,28 +35,21 @@ namespace mike_and_conquer
         private int unscaledHeight;
 
         double movementVelocity = .015;
-//        double movementVelocity = .03;
-        double buffer;
-
-        protected Minigunner()
-        {
-
-        }
+        double movementDistanceEpsilon;
 
         private static int globalId = 1;
 
 
-        public Vector2 GetScreenPosition()
+        protected Minigunner()
         {
-            return Vector2.Transform(position, MikeAndConqueryGame.instance.camera2D.TransformMatrix);
         }
+
 
         public Minigunner(int x, int y, bool isEnemy)
         {
 
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;
-
 
             // TODO move to base class and just have sublcass hard code
             this.unscaledWidth = 666;
@@ -70,30 +63,11 @@ namespace mike_and_conquer
 
             clickDetectionRectangle = createClickDetectionRectangle();
 
-            buffer = movementVelocity + (double).02f;
+            movementDistanceEpsilon = movementVelocity + (double).02f;
 
             selected = false;
 
         }
-
-        internal Rectangle createClickDetectionRectangle()
-        {
-
-            int rectangleUnscaledWidth = 12;
-            int rectangleUnscaledHeight = 12;
-            int scaledWidth = (int)(rectangleUnscaledWidth);
-            int scaledHeight = (int)(rectangleUnscaledHeight);
-
-
-            int x = (int)(position.X - (scaledWidth / 2));
-            int y = (int)(position.Y - scaledHeight) + (int)(1);  
-
-            Rectangle rectangle = new Rectangle(x,y,scaledWidth,scaledHeight);
-            return rectangle;
-        }
-
-
-
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
@@ -112,6 +86,28 @@ namespace mike_and_conquer
             }
 
         }
+
+
+
+
+
+
+        internal Rectangle createClickDetectionRectangle()
+        {
+
+            int rectangleUnscaledWidth = 12;
+            int rectangleUnscaledHeight = 12;
+            int scaledWidth = (int)(rectangleUnscaledWidth);
+            int scaledHeight = (int)(rectangleUnscaledHeight);
+
+
+            int x = (int)(position.X - (scaledWidth / 2));
+            int y = (int)(position.Y - scaledHeight) + (int)(1);  
+
+            Rectangle rectangle = new Rectangle(x,y,scaledWidth,scaledHeight);
+            return rectangle;
+        }
+
 
 
         private void HandleCommandNone(GameTime gameTime)
@@ -133,22 +129,22 @@ namespace mike_and_conquer
 
         bool IsFarEnoughRight()
         {
-            return (position.X > (destinationX - buffer));
+            return (position.X > (destinationX - movementDistanceEpsilon));
         }
 
         bool IsFarEnoughtLeft()
         {
-            return (position.X < (destinationX + buffer));
+            return (position.X < (destinationX + movementDistanceEpsilon));
         }
 
         bool IsFarEnoughDown()
         {
-            return (position.Y > (destinationY - buffer));
+            return (position.Y > (destinationY - movementDistanceEpsilon));
         }
 
         bool IsFarEnoughUp()
         {
-            return (position.Y < (destinationY + buffer));
+            return (position.Y < (destinationY + movementDistanceEpsilon));
         }
 
 
@@ -173,23 +169,8 @@ namespace mike_and_conquer
 
         bool IsAtDestination()
         {
-
-            //int buffer = 0;
-            ////return (
-            ////    position.X > (destinationX - buffer) &&
-            ////    position.Y < (destinationX + buffer) &&
-            ////    position.Y > (destinationY - buffer) &&
-            ////    position.Y < (destinationY + buffer)
-            ////    );
-
-            //return (
-            //    position.X == destinationX &&
-            //    position.Y == destinationY);
-
             return IsAtDestinationX() && IsAtDestinationY();
         }
-
-
 
 
         private double Distance(double dX0, double dY0, double dX1, double dY1)
@@ -240,54 +221,13 @@ namespace mike_and_conquer
             }
         }
 
-        //        void MoveTowardsDestination(GameTime gameTime)
-        //        {
-        //            int buffer = 0;
-
-        //            int newX = (int)position.X;
-        //            int newY = (int)position.Y;
-
-        ////            double velocity = .15;
-        ////            double velocity = .07;
-        //            double velocity = .02;
-        //            double delta = gameTime.ElapsedGameTime.TotalMilliseconds * velocity;
-
-
-        //            if (position.X < (destinationX - buffer))
-        //            {
-        //                newX += (int)delta;
-        //            }
-        //            else if (position.X > (destinationX + buffer))
-        //            {
-        //                newX -= (int)delta;
-        //            }
-
-        //            if (position.Y < (destinationY - buffer))
-        //            {
-        //                newY += (int)delta;
-        //            }
-        //            else if (position.Y > (destinationY + buffer))
-        //            {
-        //                newY -= (int)delta;
-        //            }
-
-        //            position = new Vector2(newX, newY);
-        //        }
-
-
         void MoveTowardsDestination(GameTime gameTime)
         {
 
             float newX = position.X;
             float newY = position.Y;
 
-            //            double velocity = .15;
-            //            double velocity = .07;
             double delta = gameTime.ElapsedGameTime.TotalMilliseconds * movementVelocity;
-
-//            MikeAndConqueryGame.log.Debug("delta=" + delta);
-
-            //            double buffer = movementVelocity + (double).01f;
 
             if (!IsFarEnoughRight())
             {
@@ -297,8 +237,6 @@ namespace mike_and_conquer
             {
                 newX -= (float)delta;
             }
-
-
 
             if (!IsFarEnoughDown())
             {
@@ -312,8 +250,6 @@ namespace mike_and_conquer
             position = new Vector2(newX, newY);
 //            MikeAndConqueryGame.log.Debug("position=" + position);
         }
-
-
 
 
         private void SetDestination(int x, int y)
@@ -362,6 +298,13 @@ namespace mike_and_conquer
             this.state = State.ATTACKING;
             currentAttackTarget = enemyMinigunner;
         }
+
+
+        public Vector2 GetScreenPosition()
+        {
+            return Vector2.Transform(position, MikeAndConqueryGame.instance.camera2D.TransformMatrix);
+        }
+
 
     }
 

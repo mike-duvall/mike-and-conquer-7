@@ -31,8 +31,8 @@ namespace mike_and_conquer
         private int destinationX;
         private int destinationY;
 
-        private int unscaledWidth;
-        private int unscaledHeight;
+        //private int unscaledWidth;
+        //private int unscaledHeight;
 
         double movementVelocity = .015;
         double movementDistanceEpsilon;
@@ -51,9 +51,9 @@ namespace mike_and_conquer
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;
 
-            // TODO move to base class and just have sublcass hard code
-            this.unscaledWidth = 666;
-            this.unscaledHeight = 666;
+            //// TODO move to base class and just have sublcass hard code
+            //this.unscaledWidth = 666;
+            //this.unscaledHeight = 666;
 
             position = new Vector2(x, y);
 
@@ -86,10 +86,6 @@ namespace mike_and_conquer
             }
 
         }
-
-
-
-
 
 
         internal Rectangle createClickDetectionRectangle()
@@ -271,13 +267,13 @@ namespace mike_and_conquer
 
         public bool ContainsPoint(int mouseX, int mouseY)
         {
-            int x = (int) Math.Round(position.X);
-            int y = (int) Math.Round(position.Y);
-            int width = (int)(unscaledWidth);
-            int height = (int)(unscaledHeight);
+            //int x = (int) Math.Round(position.X);
+            //int y = (int) Math.Round(position.Y);
+            //int width = (int)(unscaledWidth);
+            //int height = (int)(unscaledHeight);
 
-            x = x - (width / 2);
-            y = y - (height / 2);
+            //x = x - (width / 2);
+            //y = y - (height / 2);
 
             clickDetectionRectangle = createClickDetectionRectangle();
             return clickDetectionRectangle.Contains(new Point(mouseX, mouseY));

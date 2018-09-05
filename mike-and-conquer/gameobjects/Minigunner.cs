@@ -31,9 +31,6 @@ namespace mike_and_conquer
         private int destinationX;
         private int destinationY;
 
-        //private int unscaledWidth;
-        //private int unscaledHeight;
-
         double movementVelocity = .015;
         double movementDistanceEpsilon;
 
@@ -47,14 +44,8 @@ namespace mike_and_conquer
 
         public Minigunner(int x, int y, bool isEnemy)
         {
-
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;
-
-            //// TODO move to base class and just have sublcass hard code
-            //this.unscaledWidth = 666;
-            //this.unscaledHeight = 666;
-
             position = new Vector2(x, y);
 
             health = 1000;
@@ -62,14 +53,11 @@ namespace mike_and_conquer
             Minigunner.globalId++;
 
             clickDetectionRectangle = createClickDetectionRectangle();
-
             movementDistanceEpsilon = movementVelocity + (double).02f;
-
             selected = false;
-
         }
 
-        public void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
 
             if (this.currentCommand == Command.NONE)
@@ -91,16 +79,13 @@ namespace mike_and_conquer
         internal Rectangle createClickDetectionRectangle()
         {
 
-            int rectangleUnscaledWidth = 12;
-            int rectangleUnscaledHeight = 12;
-            int scaledWidth = (int)(rectangleUnscaledWidth);
-            int scaledHeight = (int)(rectangleUnscaledHeight);
+            int unitWidth = 12;
+            int unitHeight = 12;
 
+            int x = (int)(position.X - (unitWidth / 2));
+            int y = (int)(position.Y - unitHeight) + (int)(1);  
 
-            int x = (int)(position.X - (scaledWidth / 2));
-            int y = (int)(position.Y - scaledHeight) + (int)(1);  
-
-            Rectangle rectangle = new Rectangle(x,y,scaledWidth,scaledHeight);
+            Rectangle rectangle = new Rectangle(x,y,unitWidth,unitHeight);
             return rectangle;
         }
 
@@ -267,14 +252,6 @@ namespace mike_and_conquer
 
         public bool ContainsPoint(int mouseX, int mouseY)
         {
-            //int x = (int) Math.Round(position.X);
-            //int y = (int) Math.Round(position.Y);
-            //int width = (int)(unscaledWidth);
-            //int height = (int)(unscaledHeight);
-
-            //x = x - (width / 2);
-            //y = y - (height / 2);
-
             clickDetectionRectangle = createClickDetectionRectangle();
             return clickDetectionRectangle.Contains(new Point(mouseX, mouseY));
         }

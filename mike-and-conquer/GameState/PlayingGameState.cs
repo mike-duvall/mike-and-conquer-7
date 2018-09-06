@@ -121,17 +121,29 @@ namespace mike_and_conquer
         }
 
 
+        internal Vector2 ConvertScreenLocationToWorldLocation(Vector2 screenLocation)
+        {
+            return Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConqueryGame.instance.camera2D.TransformMatrix));
+        }
 
         internal void HandleLeftClick(int mouseX, int mouseY)
         {
-            bool handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseX, mouseY);
+            MouseState mouseState = Mouse.GetState();
+            Point mousePoint = mouseState.Position;
+            Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
+            Vector2 mouseWorldLocation = ConvertScreenLocationToWorldLocation(mouseScreenLocation);
+
+            int mouseWorldX = (int) mouseWorldLocation.X;
+            int mouseWorldY = (int) mouseWorldLocation.Y;
+
+            bool handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldX, mouseWorldY);
             if (!handledEvent)
             {
-                handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseX, mouseY);
+                handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseWorldX, mouseWorldY);
             }
             if (!handledEvent)
             {
-                CheckForAndHandleLeftClickOnMap(mouseX, mouseY);
+                CheckForAndHandleLeftClickOnMap(mouseWorldX, mouseWorldY);
             }
 
         }

@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 
+
+using Vector2 = Microsoft.Xna.Framework.Vector2;
+
+
 namespace mike_and_conquer.rest
 {
 
@@ -18,6 +22,9 @@ namespace mike_and_conquer.rest
             restMinigunner.id = minigunner.id;
             restMinigunner.x = (int)minigunner.position.X;
             restMinigunner.y = (int)minigunner.position.Y;
+            Vector2 screenPosition = minigunner.GetScreenPosition();
+            restMinigunner.screenX = (int)screenPosition.X;
+            restMinigunner.screenY = (int)screenPosition.Y;
             restMinigunner.health = minigunner.health;
             restMinigunner.selected = minigunner.selected;
             return Ok(restMinigunner);

@@ -22,12 +22,13 @@ namespace mike_and_conquer.gameview
             this.gameSprite = new GameSprite(spriteListKey);
             this.unitSelectionCursor = new UnitSelectionCursor((int)this.myMinigunner.position.X, (int)this.myMinigunner.position.Y);
             SetupAnimations();
+            //this.gameSprite.SetAnimate(false);
         }
 
 
         private void SetupAnimations()
         {
-            AnimationSequence walkingUpAnimationSequence = new AnimationSequence(10);
+            AnimationSequence walkingUpAnimationSequence = new AnimationSequence(20);
             walkingUpAnimationSequence.AddFrame(16);
             walkingUpAnimationSequence.AddFrame(17);
             walkingUpAnimationSequence.AddFrame(18);
@@ -77,26 +78,7 @@ namespace mike_and_conquer.gameview
                 gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
             }
 
-
-            Vector2 minigunnerPlottedPosition = new Vector2();
-            minigunnerPlottedPosition.X = (float)Math.Round(myMinigunner.position.X);
-            minigunnerPlottedPosition.Y = (float)Math.Round(myMinigunner.position.Y);
-
-
-            //            gameSprite.Update(gameTime);
-            //            animationSequence.Update();
-            //int currentFrame = animationSequence.GetCurrentFrame();
-            //Texture2D currentTexture = textureList[(int)currentFrame];
-            //spriteBatch.Draw(currentTexture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
-
-
-            //if(drawBoundingRectangle)
-            //{
-            //    spriteBatch.Draw(spriteBorderRectangleTexture, minigunnerPlottedPosition, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
-
-            //}
-
-            gameSprite.Draw(gameTime, spriteBatch, minigunnerPlottedPosition);
+            gameSprite.Draw(gameTime, spriteBatch, myMinigunner.position);
 
             if (myMinigunner.selected)
             {

@@ -31,12 +31,16 @@ using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIControl
 using FileStream = System.IO.FileStream;
 using FileMode = System.IO.FileMode;
 
+using Camera2D = mike_and_conquer_6.Camera2D;
 
 namespace mike_and_conquer
 {
 
     public class MikeAndConqueryGame : Game
     {
+
+        private float testRotation = 0;
+        public Camera2D camera2D;
 
         public static MikeAndConqueryGame instance;
 
@@ -66,7 +70,7 @@ namespace mike_and_conquer
             get { return nodMinigunnerViewList; }
         }
 
-        public float scale { get; }
+//        public float scale { get; }
 
         public TextureListMap TextureListMap
         {
@@ -85,11 +89,18 @@ namespace mike_and_conquer
         private GameMap gameMap;
 
 
+        KeyboardState oldState;
+
+        public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+
         public MikeAndConqueryGame(bool testMode)
         {
+
+
+
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
-            scale = 1.8f;
 
             bool makeFullscreen = true;
             //bool makeFullscreen = false;
@@ -98,6 +109,7 @@ namespace mike_and_conquer
                 graphics.IsFullScreen = true;
                 graphics.PreferredBackBufferWidth = 1920;
                 graphics.PreferredBackBufferHeight = 1080;
+
             }
             else
             {
@@ -127,6 +139,8 @@ namespace mike_and_conquer
 
             gameEvents = new List<AsyncGameEvent>();
 
+            oldState = Keyboard.GetState();
+
             MikeAndConqueryGame.instance = this;
         }
 
@@ -141,21 +155,63 @@ namespace mike_and_conquer
         {
             // TODO: Add your initialization logic here
             this.IsMouseVisible = true;
+
+
+            this.camera2D = new Camera2D(GraphicsDevice.Viewport);
+            this.camera2D.Zoom = 3.0f;
+            this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
+
+
             base.Initialize();
 
             if (!testMode)
             {
-                AddNodMinigunner(1100, 100);
-                AddNodMinigunner(1150, 200);
+                //AddNodMinigunner(1100, 100);
+                //AddNodMinigunner(1150, 200);
 
-                AddGdiMinigunner(100, 1000);
-                AddGdiMinigunner(150, 1000);
+                //AddGdiMinigunner(100, 1000);
+                //AddGdiMinigunner(150, 1000);
+                AddNodMinigunner(310, 10);
+                AddNodMinigunner(315, 30);
+
+                AddGdiMinigunner(10, 300);
+                AddGdiMinigunner(30, 300);
+
             }
 
             InitializeMap();
 
         }
 
+        //private void InitializeMap()
+        //{
+        //    //  (Starting at 0x13CC in the file)
+        //    //    Trees appear to be SHP vs TMP?
+        //    //    Map file only references TMP ?
+        //    //    What about placement of initial troops?
+        //    //    Sandbags
+
+        //    int x = (int)(12 * this.scale);
+        //    int y = (int)(12 * this.scale);
+
+        //    int numSquares = gameMap.MapTiles.Count;
+        //    for (int i = 0; i < numSquares; i++)
+        //    {
+
+        //        MapTile nextMapTile = gameMap.MapTiles[i];
+        //        BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
+
+        //        x = x + (int)(24 * this.scale);
+
+        //        bool incrementRow = ((i + 1) % 26) == 0;
+        //        if (incrementRow)
+        //        {
+        //            x = (int)(12 * this.scale);
+        //            y = y + (int)(24 * this.scale);
+        //        }
+        //    }
+
+        //}
         private void InitializeMap()
         {
             //  (Starting at 0x13CC in the file)
@@ -164,8 +220,8 @@ namespace mike_and_conquer
             //    What about placement of initial troops?
             //    Sandbags
 
-            int x = (int)(12 * this.scale);
-            int y = (int)(12 * this.scale);
+            int x = 12;
+            int y = 12;
 
             int numSquares = gameMap.MapTiles.Count;
             for (int i = 0; i < numSquares; i++)
@@ -174,17 +230,18 @@ namespace mike_and_conquer
                 MapTile nextMapTile = gameMap.MapTiles[i];
                 BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
 
-                x = x + (int)(24 * this.scale);
+                x = x + 24;
 
                 bool incrementRow = ((i + 1) % 26) == 0;
                 if (incrementRow)
                 {
-                    x = (int)(12 * this.scale);
-                    y = y + (int)(24 * this.scale);
+                    x = 12;
+                    y = y + 24;
                 }
             }
 
         }
+
 
         private void LoadMap()
         {
@@ -212,6 +269,19 @@ namespace mike_and_conquer
         protected override void LoadContent()
         {
             LoadMap();
+
+            //Read  these docs on Viewport: http://rbwhitaker.wikidot.com/viewports-split-screen
+            //    Consider just using basic camera from here:  https://gamedev.stackexchange.com/questions/59301/xna-2d-camera-scrolling-why-use-matrix-transform
+
+            //Also read these links:  http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series1/World_space.php
+            //http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series4/Mouse_camera.php
+
+            //    And consider reading chapter on cameras in XNA book
+
+            //    Watch this  video to:  https://www.youtube.com/watch?v=pin8_ZfBgq0&t=2s
+
+            //also read:  https://stackoverflow.com/questions/3570192/xna-viewport-projection-and-spritebatch
+
 
             List<string> textureKeysAlreadyAdded = new List<string>();
 
@@ -252,6 +322,44 @@ namespace mike_and_conquer
         }
 
 
+        private int calculateLeftmostScrollX()
+        {
+            return (int)((graphics.PreferredBackBufferWidth / 2 / camera2D.Zoom) - 1);
+           
+        }
+
+        private int calculateRightmostScrollX()
+        {
+            int numSquaresWidth = 26;
+            int widthOfMapSquare = 24;
+            int widthOfMapInWorldSpace = numSquaresWidth * widthOfMapSquare;
+            int scaledWidthOfMap = (int)(widthOfMapInWorldSpace * camera2D.Zoom);
+            int amountToScrollover = scaledWidthOfMap - GraphicsDevice.Viewport.Width;
+
+            int rightmostScrollX = calculateLeftmostScrollX() + (int)((amountToScrollover / camera2D.Zoom) + 1);
+
+            return rightmostScrollX;
+        }
+
+        private int calculateTopmostScrollY()
+        {
+            return (int)((graphics.PreferredBackBufferHeight / 2 / camera2D.Zoom) - 1);
+           
+        }
+
+        private int calculateBottommostScrollY()
+        {
+            int numSquaresWidth = 23;
+            int heightOfMapSquare = 24;
+            int heightOfMapInWorldSpace = numSquaresWidth * heightOfMapSquare;
+            int scaledHeightOfMap = (int)(heightOfMapInWorldSpace * camera2D.Zoom);
+            int amountToScrollover = scaledHeightOfMap - GraphicsDevice.Viewport.Height;
+
+            int bottommostScrollY = calculateTopmostScrollY() + (int)((amountToScrollover / camera2D.Zoom) + 1);
+
+            return bottommostScrollY;
+        }
+
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -260,6 +368,7 @@ namespace mike_and_conquer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
             KeyboardState state = Keyboard.GetState();
 
             // If they hit esc, exit
@@ -269,9 +378,116 @@ namespace mike_and_conquer
                 Exit();
             }
             currentGameState = currentGameState.Update(gameTime);
+
+            //this.camera2D.Location = Microsoft.Xna.Framework.Input.Mouse.GetState().Position.ToVector2();
+
+            this.camera2D.Rotation = testRotation;
+            //            testRotation += 0.01f;
+
+
+            KeyboardState newState = Keyboard.GetState();  // get the newest state
+
+            int originalX = (int)this.camera2D.Location.X;
+            int originalY = (int)this.camera2D.Location.Y;
+
+
+            //Pickup here:
+            //    Revisit scrolling right when screen is not big enough
+            //    Add ability to handle holding arrow key down
+            //    Add ability to zoom with mouse wheel
+            //   Revisit click select code in PLayingGameState
+            //Refactor scrolling code
+
+            int scrollAmount = 10;
+
+            int mouseScrollThreshold = 100;
+
+            Microsoft.Xna.Framework.Input.MouseState mouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
+
+            if(mouseState.Position.X > GraphicsDevice.Viewport.Width - mouseScrollThreshold)
+            {
+                int newX = (int)(this.camera2D.Location.X + 2);
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
+            }
+            else if (mouseState.Position.X < mouseScrollThreshold)
+            {
+                int newX = (int)(this.camera2D.Location.X - 2);
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
+            }
+            else if (mouseState.Position.Y  > GraphicsDevice.Viewport.Height - mouseScrollThreshold)
+            {
+                int newY = (int)(this.camera2D.Location.Y + 2);
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
+            }
+            else if (mouseState.Position.Y < mouseScrollThreshold)
+            {
+                int newY = (int)(this.camera2D.Location.Y - 2);
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
+            }
+
+            else if (oldState.IsKeyUp(Keys.Right) && newState.IsKeyDown(Keys.Right))
+            {
+                int newX = (int)(this.camera2D.Location.X + scrollAmount);
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
+            }
+            else if (oldState.IsKeyUp(Keys.Left) && newState.IsKeyDown(Keys.Left))
+            {
+                int newX = (int)(this.camera2D.Location.X - scrollAmount);
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
+            }
+            else if (oldState.IsKeyUp(Keys.Down) && newState.IsKeyDown(Keys.Down))
+            {
+
+                int newY = (int)(this.camera2D.Location.Y + scrollAmount);
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
+            }
+            else if (oldState.IsKeyUp(Keys.Up) && newState.IsKeyDown(Keys.Up))
+            {
+                int newY = (int)(this.camera2D.Location.Y - scrollAmount);
+                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
+            }
+            else if (oldState.IsKeyUp(Keys.OemPlus) && newState.IsKeyDown(Keys.OemPlus))
+            {
+                float newZoom = this.camera2D.Zoom + 0.2f;
+                this.camera2D.Zoom = newZoom;
+            }
+            else if (oldState.IsKeyUp(Keys.OemMinus) && newState.IsKeyDown(Keys.OemMinus))
+            {
+                float newZoom = this.camera2D.Zoom - 0.2f;
+                this.camera2D.Zoom = newZoom;
+            }
+
+            resetCamera();
+            oldState = newState;   
             base.Update(gameTime);
         }
 
+
+        private void resetCamera()
+        {
+            int newX = (int)(this.camera2D.Location.X);
+            int newY = (int)(this.camera2D.Location.Y);
+
+            if (newX > calculateRightmostScrollX())
+            {
+                newX = calculateRightmostScrollX();
+            }
+            if (newX < calculateLeftmostScrollX())
+            {
+                newX = calculateLeftmostScrollX();
+            }
+            if (newY < calculateTopmostScrollY())
+            {
+                newY = calculateTopmostScrollY();
+            }
+            if (newY > calculateBottommostScrollY())
+            {
+                newY = calculateBottommostScrollY();
+            }
+
+            this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, newY);
+
+        }
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -280,13 +496,23 @@ namespace mike_and_conquer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+            Microsoft.Xna.Framework.Graphics.BlendState nullBlendState = null;
+            Microsoft.Xna.Framework.Graphics.DepthStencilState nullDepthStencilState = null;
+            Microsoft.Xna.Framework.Graphics.RasterizerState nullRasterizerState = null;
+            Microsoft.Xna.Framework.Graphics.Effect nullEffect = null;
+            spriteBatch.Begin(
+                   SpriteSortMode.Deferred,
+                   nullBlendState,
+                   SamplerState.PointClamp,
+                   nullDepthStencilState,
+                   nullRasterizerState,
+                   nullEffect,
+                   camera2D.TransformMatrix);
 
             currentGameState.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
-
+           
             base.Draw(gameTime);
         }
 
@@ -319,15 +545,24 @@ namespace mike_and_conquer
                 }
 
             }
-
             return foundMinigunner;
         }
 
 
+        internal Minigunner GetGdiOrNodMinigunner(int id)
+        {
+            Minigunner foundMinigunner = null;
+            foundMinigunner = GetGdiMinigunner(id);
+            if(foundMinigunner == null)
+            {
+                foundMinigunner = GetNodMinigunner(id);
+            }
+            return foundMinigunner;
+        }
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(x, y,false, this.scale);
+            Minigunner newMinigunner = new Minigunner(x, y,false);
             gdiMinigunnerList.Add(newMinigunner);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
@@ -340,7 +575,7 @@ namespace mike_and_conquer
 
         internal Minigunner AddNodMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(x, y, true, this.scale);
+            Minigunner newMinigunner = new Minigunner(x, y, true);
             nodMinigunnerList.Add(newMinigunner);
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);

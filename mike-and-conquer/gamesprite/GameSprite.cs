@@ -28,16 +28,8 @@ namespace mike_and_conquer
 
         private Vector2 middleOfSprite;
 
-        public int unscaledWidth;
-        public int unscaledHeight;
-        //private float scale;
         private bool animate;
 
-        //public float Scale
-        //{
-        //    get { return scale; }
-        //    set { scale = value; }
-        //}
 
         public GameSprite(string spriteListKey)
         {
@@ -54,7 +46,6 @@ namespace mike_and_conquer
             middleOfSprite.Y = spriteTextureList.textureHeight / 2;
 
             drawBoundingRectangle = false;
-            //scale = MikeAndConqueryGame.instance.scale;
             this.animate = true;
         }
 

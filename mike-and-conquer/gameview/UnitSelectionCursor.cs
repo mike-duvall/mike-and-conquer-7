@@ -19,9 +19,6 @@ namespace mike_and_conquer.gameview
         Texture2D boundingRectangle;
         Boolean drawBoundingRectangle;
 
-        //float scale;
-
-
         private int worldWidth;
         private int worldHeight;
 
@@ -42,7 +39,6 @@ namespace mike_and_conquer.gameview
             this.texture = loadTextureFromShpFile("Content\\select.shp", 0);
 
             position = new Vector2(x, y);
-            //scale = MikeAndConqueryGame.instance.scale;
             boundingRectangle = initializeBoundingRectangle();
 
             middleOfSprite = new Vector2();

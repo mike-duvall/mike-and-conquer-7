@@ -10,20 +10,8 @@ namespace mike_and_conquer.rest
     public class LeftClickMinigunnerController : ApiController
     {
 
-
-        //public IHttpActionResult Post([FromBody]RestPoint point)
-        //{
-        //    int screenWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
-        //    int screenHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
-
-        //    MouseInputHandler.DoLeftMouseClick((uint)point.x, (uint)point.y, screenWidth, screenHeight);
-        //    return Ok();
-        //}
-
         public IHttpActionResult Post([FromBody]RestMinigunnerId restMinigunnerId)
         {
-
-
             Minigunner gdiMinigunner = MikeAndConqueryGame.instance.GetGdiOrNodMinigunner(restMinigunnerId.id);
 
             Vector2 minigunnerLocation = new Microsoft.Xna.Framework.Vector2();
@@ -39,7 +27,6 @@ namespace mike_and_conquer.rest
 
             return Ok();
         }
-
 
     }
 }

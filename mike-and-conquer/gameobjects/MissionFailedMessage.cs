@@ -21,8 +21,6 @@ namespace mike_and_conquer.gameobjects
 
         public MissionFailedMessage()
         {
-            //int baseX = 800;
-            //int baseY = 500;
             int baseX = 350;
             int baseY = 100;
 

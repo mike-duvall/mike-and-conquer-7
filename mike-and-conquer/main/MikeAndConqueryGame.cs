@@ -33,6 +33,8 @@ using FileMode = System.IO.FileMode;
 
 using Camera2D = mike_and_conquer_6.Camera2D;
 
+using Serilog;
+
 namespace mike_and_conquer
 {
 
@@ -91,17 +93,23 @@ namespace mike_and_conquer
 
         KeyboardState oldState;
 
-        public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        Serilog.Core.Logger log = new LoggerConfiguration()
+            //.WriteTo.Console()
+            //.WriteTo.File("log.txt")
+            .WriteTo.Debug()
+            .CreateLogger();
+
 
 
         public MikeAndConqueryGame(bool testMode)
         {
+            RemoveHostingTraceListenerToEliminateDuplicateLogEntries();
 
-
+            log.Information("Hello, Serilog!");
 
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
-
+            
             bool makeFullscreen = true;
             //bool makeFullscreen = false;
             if (makeFullscreen)
@@ -109,7 +117,7 @@ namespace mike_and_conquer
                 graphics.IsFullScreen = true;
                 graphics.PreferredBackBufferWidth = 1920;
                 graphics.PreferredBackBufferHeight = 1080;
-
+                 
             }
             else
             {
@@ -144,6 +152,11 @@ namespace mike_and_conquer
             MikeAndConqueryGame.instance = this;
         }
 
+
+        private void  RemoveHostingTraceListenerToEliminateDuplicateLogEntries()
+        {
+            System.Diagnostics.Trace.Listeners.Remove("HostingTraceListener");
+        }
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.

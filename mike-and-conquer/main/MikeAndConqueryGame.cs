@@ -184,8 +184,9 @@ namespace mike_and_conquer
 
                 //AddGdiMinigunner(100, 1000);
                 //AddGdiMinigunner(150, 1000);
-                AddNodMinigunner(310, 10);
-                AddNodMinigunner(315, 30);
+                bool aiIsOn = true;
+                AddNodMinigunner(310, 10, aiIsOn);
+                AddNodMinigunner(315, 30, aiIsOn);
 
                 AddGdiMinigunner(10, 300);
                 AddGdiMinigunner(30, 300);
@@ -575,7 +576,7 @@ namespace mike_and_conquer
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(x, y,false);
+            Minigunner newMinigunner = new Minigunner(x, y);
             gdiMinigunnerList.Add(newMinigunner);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
@@ -586,16 +587,19 @@ namespace mike_and_conquer
         }
 
 
-        internal Minigunner AddNodMinigunner(int x, int y)
+        internal Minigunner AddNodMinigunner(int x, int y, bool aiIsOn)
         {
-            Minigunner newMinigunner = new Minigunner(x, y, true);
+            Minigunner newMinigunner = new Minigunner(x, y);
             nodMinigunnerList.Add(newMinigunner);
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);
 
             // TODO:  In future, don't couple Nod having to be AI controlled enemy
-            MinigunnerAIController minigunnerAIController = new MinigunnerAIController(newMinigunner);
-            nodMinigunnerAIControllerList.Add(minigunnerAIController);
+            if (aiIsOn)
+            {
+                MinigunnerAIController minigunnerAIController = new MinigunnerAIController(newMinigunner);
+                nodMinigunnerAIControllerList.Add(minigunnerAIController);
+            }
 
             return newMinigunner;
         }
@@ -692,9 +696,9 @@ namespace mike_and_conquer
         }
 
 
-        public Minigunner CreateNodMinigunnerViaEvent(int x, int y)
+        public Minigunner CreateNodMinigunnerViaEvent(int x, int y, bool aiIsOn)
         {
-            CreateNodMinigunnerGameEvent gameEvent = new CreateNodMinigunnerGameEvent(x, y);
+            CreateNodMinigunnerGameEvent gameEvent = new CreateNodMinigunnerGameEvent(x, y, aiIsOn);
             lock (gameEvents)
             {
                 gameEvents.Add(gameEvent);

@@ -42,7 +42,7 @@ namespace mike_and_conquer
         }
 
 
-        public Minigunner(int x, int y, bool isEnemy)
+        public Minigunner(int x, int y)
         {
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;

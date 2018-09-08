@@ -28,7 +28,7 @@ namespace mike_and_conquer.rest
         {
             try
             {
-                Minigunner minigunner = MikeAndConqueryGame.instance.CreateNodMinigunnerViaEvent(inputMinigunner.x, inputMinigunner.y);
+                Minigunner minigunner = MikeAndConqueryGame.instance.CreateNodMinigunnerViaEvent(inputMinigunner.x, inputMinigunner.y, inputMinigunner.aiIsOn);
                 RestMinigunner restMinigunner = new RestMinigunner();
                 restMinigunner.id = minigunner.id;
                 restMinigunner.x = (int)minigunner.position.X;

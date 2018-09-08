@@ -80,10 +80,7 @@ namespace mike_and_conquer
             {
                 currentAnimationSequence.Update();
             }
-            else
-            {
-                int x = 3;
-            }
+
             int currentTextureIndex = currentAnimationSequence.GetCurrentFrame();
             currentTexture = spriteTextureList.textureList[currentTextureIndex];
 

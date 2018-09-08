@@ -11,11 +11,13 @@ namespace mike_and_conquer.gameevent
 
 
         private int x, y;
+        private bool aiIsOn;
 
-        public CreateNodMinigunnerGameEvent(int x, int y)
+        public CreateNodMinigunnerGameEvent(int x, int y, bool aiIsOn)
         {
             this.x = x;
             this.y = y;
+            this.aiIsOn = aiIsOn;
         }
 
         public Minigunner GetMinigunner()
@@ -26,7 +28,7 @@ namespace mike_and_conquer.gameevent
         protected override GameState ProcessImpl()
         {
             GameState newGameState = null;
-            result = MikeAndConqueryGame.instance.AddNodMinigunner(x,y);
+            result = MikeAndConqueryGame.instance.AddNodMinigunner(x,y, aiIsOn);
             return newGameState;
         }
 

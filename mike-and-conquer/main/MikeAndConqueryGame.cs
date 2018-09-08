@@ -353,7 +353,7 @@ namespace mike_and_conquer
 
             int scrollAmount = 10;
 
-            int mouseScrollThreshold = 100;
+            int mouseScrollThreshold = 30;
 
             Microsoft.Xna.Framework.Input.MouseState mouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
 

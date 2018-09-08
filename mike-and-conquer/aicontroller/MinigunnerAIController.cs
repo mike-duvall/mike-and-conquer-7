@@ -1,8 +1,7 @@
 ﻿
-//using Minigunner = Minigunner;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using System.Collections.Generic;
-//using MikeAndConqueryGame = mike_and_conquer.MikeAndConqueryGame;
+
 
 namespace mike_and_conquer.aicontroller
 {
@@ -13,7 +12,7 @@ namespace mike_and_conquer.aicontroller
 
         private bool enemyStateIsSleeping;
 
-        private static readonly int ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE = 1000;
+        private static readonly int ENEMY_SLEEP_COUNTDOWN_TIMER_INITIAL_VALUE = 10;
         private int enemySleepCountdownTimer;
 
 

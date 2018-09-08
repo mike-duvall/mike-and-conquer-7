@@ -16,6 +16,7 @@ namespace mike_and_conquer.rest
         public int screenY { get; set; }
         public int health { get; set; }
         public bool selected { get; set; }
+        public bool aiIsOn { get; set; }
 
     }
 

@@ -72,13 +72,10 @@ namespace mike_and_conquer
             get { return nodMinigunnerViewList; }
         }
 
-//        public float scale { get; }
-
         public TextureListMap TextureListMap
         {
             get { return textureListMap; }
         }
-
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -98,7 +95,6 @@ namespace mike_and_conquer
             //.WriteTo.File("log.txt")
             .WriteTo.Debug()
             .CreateLogger();
-
 
 
         public MikeAndConqueryGame(bool testMode)
@@ -179,52 +175,18 @@ namespace mike_and_conquer
 
             if (!testMode)
             {
-                //AddNodMinigunner(1100, 100);
-                //AddNodMinigunner(1150, 200);
-
-                //AddGdiMinigunner(100, 1000);
-                //AddGdiMinigunner(150, 1000);
-                AddNodMinigunner(310, 10);
-                AddNodMinigunner(315, 30);
+                bool aiIsOn = false;
+                AddNodMinigunner(310, 10, aiIsOn);
+                AddNodMinigunner(315, 30, aiIsOn);
 
                 AddGdiMinigunner(10, 300);
                 AddGdiMinigunner(30, 300);
-
             }
 
             InitializeMap();
 
         }
 
-        //private void InitializeMap()
-        //{
-        //    //  (Starting at 0x13CC in the file)
-        //    //    Trees appear to be SHP vs TMP?
-        //    //    Map file only references TMP ?
-        //    //    What about placement of initial troops?
-        //    //    Sandbags
-
-        //    int x = (int)(12 * this.scale);
-        //    int y = (int)(12 * this.scale);
-
-        //    int numSquares = gameMap.MapTiles.Count;
-        //    for (int i = 0; i < numSquares; i++)
-        //    {
-
-        //        MapTile nextMapTile = gameMap.MapTiles[i];
-        //        BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
-
-        //        x = x + (int)(24 * this.scale);
-
-        //        bool incrementRow = ((i + 1) % 26) == 0;
-        //        if (incrementRow)
-        //        {
-        //            x = (int)(12 * this.scale);
-        //            y = y + (int)(24 * this.scale);
-        //        }
-        //    }
-
-        //}
         private void InitializeMap()
         {
             //  (Starting at 0x13CC in the file)
@@ -282,19 +244,6 @@ namespace mike_and_conquer
         protected override void LoadContent()
         {
             LoadMap();
-
-            //Read  these docs on Viewport: http://rbwhitaker.wikidot.com/viewports-split-screen
-            //    Consider just using basic camera from here:  https://gamedev.stackexchange.com/questions/59301/xna-2d-camera-scrolling-why-use-matrix-transform
-
-            //Also read these links:  http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series1/World_space.php
-            //http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series4/Mouse_camera.php
-
-            //    And consider reading chapter on cameras in XNA book
-
-            //    Watch this  video to:  https://www.youtube.com/watch?v=pin8_ZfBgq0&t=2s
-
-            //also read:  https://stackoverflow.com/questions/3570192/xna-viewport-projection-and-spritebatch
-
 
             List<string> textureKeysAlreadyAdded = new List<string>();
 
@@ -392,8 +341,6 @@ namespace mike_and_conquer
             }
             currentGameState = currentGameState.Update(gameTime);
 
-            //this.camera2D.Location = Microsoft.Xna.Framework.Input.Mouse.GetState().Position.ToVector2();
-
             this.camera2D.Rotation = testRotation;
             //            testRotation += 0.01f;
 
@@ -403,13 +350,6 @@ namespace mike_and_conquer
             int originalX = (int)this.camera2D.Location.X;
             int originalY = (int)this.camera2D.Location.Y;
 
-
-            //Pickup here:
-            //    Revisit scrolling right when screen is not big enough
-            //    Add ability to handle holding arrow key down
-            //    Add ability to zoom with mouse wheel
-            //   Revisit click select code in PLayingGameState
-            //Refactor scrolling code
 
             int scrollAmount = 10;
 
@@ -575,7 +515,7 @@ namespace mike_and_conquer
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(x, y,false);
+            Minigunner newMinigunner = new Minigunner(x, y);
             gdiMinigunnerList.Add(newMinigunner);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
@@ -586,16 +526,19 @@ namespace mike_and_conquer
         }
 
 
-        internal Minigunner AddNodMinigunner(int x, int y)
+        internal Minigunner AddNodMinigunner(int x, int y, bool aiIsOn)
         {
-            Minigunner newMinigunner = new Minigunner(x, y, true);
+            Minigunner newMinigunner = new Minigunner(x, y);
             nodMinigunnerList.Add(newMinigunner);
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);
 
             // TODO:  In future, don't couple Nod having to be AI controlled enemy
-            MinigunnerAIController minigunnerAIController = new MinigunnerAIController(newMinigunner);
-            nodMinigunnerAIControllerList.Add(minigunnerAIController);
+            if (aiIsOn)
+            {
+                MinigunnerAIController minigunnerAIController = new MinigunnerAIController(newMinigunner);
+                nodMinigunnerAIControllerList.Add(minigunnerAIController);
+            }
 
             return newMinigunner;
         }
@@ -692,9 +635,9 @@ namespace mike_and_conquer
         }
 
 
-        public Minigunner CreateNodMinigunnerViaEvent(int x, int y)
+        public Minigunner CreateNodMinigunnerViaEvent(int x, int y, bool aiIsOn)
         {
-            CreateNodMinigunnerGameEvent gameEvent = new CreateNodMinigunnerGameEvent(x, y);
+            CreateNodMinigunnerGameEvent gameEvent = new CreateNodMinigunnerGameEvent(x, y, aiIsOn);
             lock (gameEvents)
             {
                 gameEvents.Add(gameEvent);

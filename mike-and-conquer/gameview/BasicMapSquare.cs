@@ -20,6 +20,7 @@ namespace mike_and_conquer.gameview
         {
             this.position = new Vector2(x,y);
             this.gameSprite = new GameSprite(textureKey);
+            this.gameSprite.drawBoundingRectangle = true;
             this.imageIndex = imageIndex;
             SetupAnimations();
         }

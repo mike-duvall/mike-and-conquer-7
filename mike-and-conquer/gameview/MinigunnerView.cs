@@ -21,8 +21,8 @@ namespace mike_and_conquer.gameview
             this.myMinigunner = minigunner;
             this.gameSprite = new GameSprite(spriteListKey);
             this.unitSelectionCursor = new UnitSelectionCursor((int)this.myMinigunner.position.X, (int)this.myMinigunner.position.Y);
+
             SetupAnimations();
-            //this.gameSprite.SetAnimate(false);
         }
 
 

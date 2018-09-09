@@ -21,7 +21,7 @@ namespace mike_and_conquer
         Texture2D currentTexture;
 
         Texture2D spriteBorderRectangleTexture;
-        Boolean drawBoundingRectangle;
+        public Boolean drawBoundingRectangle;
 
         private int worldWidth;
         private int worldHeight;
@@ -97,12 +97,13 @@ namespace mike_and_conquer
 
         internal Texture2D createSpriteBorderRectangleTexture()
         {
-            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
+            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, spriteTextureList.textureWidth + 2, spriteTextureList.textureHeight + 2);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
             fillVerticalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
             fillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, Color.White);
+
             int centerX = rectangle.Width / 2;
             int centerY = rectangle.Height / 2;
             int centerOffset = (centerY * rectangle.Width) + centerX;

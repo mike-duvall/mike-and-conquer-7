@@ -23,9 +23,6 @@ namespace mike_and_conquer
         Texture2D spriteBorderRectangleTexture;
         public Boolean drawBoundingRectangle;
 
-//        private int worldWidth;
-//        private int worldHeight;
-
         private Vector2 middleOfSprite;
 
         private bool animate;
@@ -34,8 +31,6 @@ namespace mike_and_conquer
         public GameSprite(string spriteListKey)
         {
             this.animationSequenceMap = new Dictionary<int, util.AnimationSequence>();
-//            this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
-//            this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
             spriteTextureList = MikeAndConqueryGame.instance.TextureListMap.GetTextureList(spriteListKey);
 
             spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();

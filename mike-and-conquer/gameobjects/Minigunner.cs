@@ -1,6 +1,6 @@
 ﻿
 using System.Collections.Generic;
-
+using Microsoft.Xna.Framework.Graphics;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -31,7 +31,9 @@ namespace mike_and_conquer
         private int destinationX;
         private int destinationY;
 
-        double movementVelocity = .015;
+        public Vector2 DestinationPosition { get { return new Vector2(destinationX, destinationY); } }
+
+    double movementVelocity = .015;
         double movementDistanceEpsilon;
 
         private static int globalId = 1;

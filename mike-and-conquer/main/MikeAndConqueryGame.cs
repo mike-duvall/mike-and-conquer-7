@@ -269,6 +269,7 @@ namespace mike_and_conquer
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
             LoadSingleTextureFromFile(gameobjects.MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
+            LoadSingleTextureFromFile(gameobjects.Circle.CIRCLE_SPRITE_KEY, gameobjects.Circle.CIRCLE_SPRITE_KEY);
 
 
             // TODO: use this.Content to load your game content here

@@ -23,8 +23,8 @@ namespace mike_and_conquer
         Texture2D spriteBorderRectangleTexture;
         public Boolean drawBoundingRectangle;
 
-        private int worldWidth;
-        private int worldHeight;
+//        private int worldWidth;
+//        private int worldHeight;
 
         private Vector2 middleOfSprite;
 
@@ -34,8 +34,8 @@ namespace mike_and_conquer
         public GameSprite(string spriteListKey)
         {
             this.animationSequenceMap = new Dictionary<int, util.AnimationSequence>();
-            this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
-            this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
+//            this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
+//            this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
             spriteTextureList = MikeAndConqueryGame.instance.TextureListMap.GetTextureList(spriteListKey);
 
             spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
@@ -49,14 +49,14 @@ namespace mike_and_conquer
             this.animate = true;
         }
 
-        public void SetCurrentAnimationSequenceIndex(int aniatmionSequenceIndex)
+        public void SetCurrentAnimationSequenceIndex(int animationSequenceIndex)
         {
-            if (currentAnimationSequenceIndex == aniatmionSequenceIndex)
+            if (currentAnimationSequenceIndex == animationSequenceIndex)
             {
                 return;
             }
 
-            currentAnimationSequenceIndex = aniatmionSequenceIndex;
+            currentAnimationSequenceIndex = animationSequenceIndex;
 
             AnimationSequence animationSequence = animationSequenceMap[currentAnimationSequenceIndex];
             animationSequence.SetCurrentFrameIndex(0);

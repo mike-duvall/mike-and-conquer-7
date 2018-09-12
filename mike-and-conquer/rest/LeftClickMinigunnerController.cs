@@ -12,7 +12,7 @@ namespace mike_and_conquer.rest
 
         public IHttpActionResult Post([FromBody]RestMinigunnerId restMinigunnerId)
         {
-            Minigunner gdiMinigunner = MikeAndConqueryGame.instance.GetGdiOrNodMinigunner(restMinigunnerId.id);
+            Minigunner gdiMinigunner = MikeAndConquerGame.instance.GetGdiOrNodMinigunner(restMinigunnerId.id);
 
             Vector2 minigunnerLocation = new Microsoft.Xna.Framework.Vector2();
             minigunnerLocation.X = gdiMinigunner.position.X;
@@ -20,8 +20,8 @@ namespace mike_and_conquer.rest
 
             Vector2 transformedLocation = gdiMinigunner.GetScreenPosition();
 
-            int screenWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
-            int screenHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
+            int screenWidth = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Width;
+            int screenHeight = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Height;
 
             MouseInputHandler.DoLeftMouseClick((uint)transformedLocation.X, (uint) transformedLocation.Y , screenWidth, screenHeight);
 

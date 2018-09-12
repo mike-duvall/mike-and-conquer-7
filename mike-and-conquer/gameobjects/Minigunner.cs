@@ -33,7 +33,7 @@ namespace mike_and_conquer
 
         public Vector2 DestinationPosition { get { return new Vector2(destinationX, destinationY); } }
 
-    double movementVelocity = .015;
+        double movementVelocity = .015;
         double movementDistanceEpsilon;
 
         private static int globalId = 1;
@@ -54,7 +54,7 @@ namespace mike_and_conquer
             id = Minigunner.globalId;
             Minigunner.globalId++;
 
-            clickDetectionRectangle = createClickDetectionRectangle();
+            clickDetectionRectangle = CreateClickDetectionRectangle();
             movementDistanceEpsilon = movementVelocity + (double).02f;
             selected = false;
         }
@@ -78,7 +78,7 @@ namespace mike_and_conquer
         }
 
 
-        internal Rectangle createClickDetectionRectangle()
+        internal Rectangle CreateClickDetectionRectangle()
         {
 
             int unitWidth = 12;
@@ -110,37 +110,37 @@ namespace mike_and_conquer
 
         }
 
-        bool IsFarEnoughRight()
+        private bool IsFarEnoughRight()
         {
             return (position.X > (destinationX - movementDistanceEpsilon));
         }
 
-        bool IsFarEnoughtLeft()
+        private bool IsFarEnoughLeft()
         {
             return (position.X < (destinationX + movementDistanceEpsilon));
         }
 
-        bool IsFarEnoughDown()
+        private bool IsFarEnoughDown()
         {
             return (position.Y > (destinationY - movementDistanceEpsilon));
         }
 
-        bool IsFarEnoughUp()
+        private bool IsFarEnoughUp()
         {
             return (position.Y < (destinationY + movementDistanceEpsilon));
         }
 
 
-        bool IsAtDestinationX()
+        private bool IsAtDestinationX()
         {
             return  (
                 IsFarEnoughRight() &&
-                IsFarEnoughtLeft()
+                IsFarEnoughLeft()
             );
 
         }
 
-        bool IsAtDestinationY()
+        private bool IsAtDestinationY()
         {
             return (
                 IsFarEnoughDown() &&
@@ -150,7 +150,7 @@ namespace mike_and_conquer
         }
 
 
-        bool IsAtDestination()
+        private bool IsAtDestination()
         {
             return IsAtDestinationX() && IsAtDestinationY();
         }
@@ -216,7 +216,7 @@ namespace mike_and_conquer
             {
                 newX += (float)delta;
             }
-            else if (!IsFarEnoughtLeft())
+            else if (!IsFarEnoughLeft())
             {
                 newX -= (float)delta;
             }
@@ -231,7 +231,7 @@ namespace mike_and_conquer
             }
 
             position = new Vector2(newX, newY);
-//            MikeAndConqueryGame.log.Debug("position=" + position);
+//            MikeAndConquerGame.log.Debug("position=" + position);
         }
 
 
@@ -254,16 +254,17 @@ namespace mike_and_conquer
 
         public bool ContainsPoint(int mouseX, int mouseY)
         {
-            clickDetectionRectangle = createClickDetectionRectangle();
+            clickDetectionRectangle = CreateClickDetectionRectangle();
             return clickDetectionRectangle.Contains(new Point(mouseX, mouseY));
         }
 
 
-        public void OrderToMoveToDestination(int x, int y)
+//        public void OrderToMoveToDestination(int x, int y)
+        public void OrderToMoveToDestination(Point destination)
         {
             this.currentCommand = Command.MOVE_TO_POINT;
             this.state = State.MOVING;
-            SetDestination(x, y);
+            SetDestination(destination.X, destination.Y);
         }
 
 
@@ -277,7 +278,7 @@ namespace mike_and_conquer
 
         public Vector2 GetScreenPosition()
         {
-            return Vector2.Transform(position, MikeAndConqueryGame.instance.camera2D.TransformMatrix);
+            return Vector2.Transform(position, MikeAndConquerGame.instance.camera2D.TransformMatrix);
         }
 
 

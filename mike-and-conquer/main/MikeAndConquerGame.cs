@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using Microsoft.Xna.Framework;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
@@ -38,13 +38,13 @@ using Serilog;
 namespace mike_and_conquer
 {
 
-    public class MikeAndConqueryGame : Game
+    public class MikeAndConquerGame : Game
     {
 
         private float testRotation = 0;
         public Camera2D camera2D;
 
-        public static MikeAndConqueryGame instance;
+        public static MikeAndConquerGame instance;
 
         public List<Minigunner> gdiMinigunnerList { get; }
         public List<Minigunner> nodMinigunnerList { get; }
@@ -97,7 +97,7 @@ namespace mike_and_conquer
             .CreateLogger();
 
 
-        public MikeAndConqueryGame(bool testMode)
+        public MikeAndConquerGame(bool testMode)
         {
             RemoveHostingTraceListenerToEliminateDuplicateLogEntries();
 
@@ -145,7 +145,7 @@ namespace mike_and_conquer
 
             oldState = Keyboard.GetState();
 
-            MikeAndConqueryGame.instance = this;
+            MikeAndConquerGame.instance = this;
         }
 
 
@@ -687,6 +687,19 @@ namespace mike_and_conquer
             return gameEvent.GetGameState();
         }
 
+        public BasicMapSquare FindMapSquare(int mouseX, int mouseY)
+        {
+
+            foreach (BasicMapSquare nextBasicMapSquare in basicMapSquareList)
+            {
+                if (nextBasicMapSquare.ContainsPoint(new Point(mouseX, mouseY)))
+                {
+                    return nextBasicMapSquare;
+                }
+            }
+            return null;
+
+        }
     }
 
 }

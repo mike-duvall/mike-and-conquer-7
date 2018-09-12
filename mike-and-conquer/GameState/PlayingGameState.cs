@@ -25,7 +25,7 @@ namespace mike_and_conquer
         {
 
             // TODO:  Consider pulling handling of GameEvents into base class
-            GameState nextGameState = MikeAndConqueryGame.instance.ProcessGameEvents();
+            GameState nextGameState = MikeAndConquerGame.instance.ProcessGameEvents();
             if (nextGameState != null)
             {
                 return nextGameState;
@@ -48,12 +48,12 @@ namespace mike_and_conquer
 
 
 
-            foreach (MinigunnerAIController nextMinigunnerAIController in MikeAndConqueryGame.instance.nodMinigunnerAIControllerList)
+            foreach (MinigunnerAIController nextMinigunnerAIController in MikeAndConquerGame.instance.nodMinigunnerAIControllerList)
             {
                 nextMinigunnerAIController.Update(gameTime);
             }
 
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            foreach (Minigunner nextMinigunner in MikeAndConquerGame.instance.gdiMinigunnerList)
             {
                 if(nextMinigunner.health > 0)
                 {
@@ -61,7 +61,7 @@ namespace mike_and_conquer
                 }
             }
 
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
+            foreach (Minigunner nextMinigunner in MikeAndConquerGame.instance.nodMinigunnerList)
             {
                 if (nextMinigunner.health > 0)
                 {
@@ -87,12 +87,12 @@ namespace mike_and_conquer
 
         internal Boolean NodMinigunnersExistAndAreAllDead()
         {
-            if(MikeAndConqueryGame.instance.nodMinigunnerList.Count == 0)
+            if(MikeAndConquerGame.instance.nodMinigunnerList.Count == 0)
             {
                 return false;
             }
             Boolean allDead = true;
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
+            foreach (Minigunner nextMinigunner in MikeAndConquerGame.instance.nodMinigunnerList)
             {
                 if( nextMinigunner.health > 0)
                 {
@@ -105,12 +105,12 @@ namespace mike_and_conquer
 
         internal Boolean GdiMinigunnersExistAndAreAllDead()
         {
-            if (MikeAndConqueryGame.instance.gdiMinigunnerList.Count == 0)
+            if (MikeAndConquerGame.instance.gdiMinigunnerList.Count == 0)
             {
                 return false;
             }
             Boolean allDead = true;
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            foreach (Minigunner nextMinigunner in MikeAndConquerGame.instance.gdiMinigunnerList)
             {
                 if (nextMinigunner.health > 0)
                 {
@@ -123,7 +123,7 @@ namespace mike_and_conquer
 
         internal Vector2 ConvertScreenLocationToWorldLocation(Vector2 screenLocation)
         {
-            return Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConqueryGame.instance.camera2D.TransformMatrix));
+            return Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConquerGame.instance.camera2D.TransformMatrix));
         }
 
         internal void HandleLeftClick(int mouseX, int mouseY)
@@ -150,7 +150,7 @@ namespace mike_and_conquer
 
         internal void HandleRightClick(int mouseX, int mouseY)
         {
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            foreach (Minigunner nextMinigunner in MikeAndConquerGame.instance.gdiMinigunnerList)
             {
                 nextMinigunner.selected = false;
             }
@@ -159,13 +159,16 @@ namespace mike_and_conquer
 
 
 
+
         private bool CheckForAndHandleLeftClickOnMap(int mouseX, int mouseY)
         {
-            foreach(Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            foreach(Minigunner nextMinigunner in MikeAndConquerGame.instance.gdiMinigunnerList)
             {
                 if(nextMinigunner.selected == true)
                 {
-                    nextMinigunner.OrderToMoveToDestination(mouseX, mouseY);
+                    BasicMapSquare clickedBasicMapSquare = MikeAndConquerGame.instance.FindMapSquare(mouseX, mouseY);
+                    Point centerOfSquare = clickedBasicMapSquare.GetCenter();
+                    nextMinigunner.OrderToMoveToDestination(centerOfSquare);
                 }
             }
             return true;
@@ -175,12 +178,12 @@ namespace mike_and_conquer
         internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)
         {
             Boolean handled = false;
-            foreach (Minigunner nextMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+            foreach (Minigunner nextMinigunner in MikeAndConquerGame.instance.gdiMinigunnerList)
             {
                 if (nextMinigunner.ContainsPoint(mouseX, mouseY))
                 {
                     handled = true;
-                    MikeAndConqueryGame.instance.SelectSingleGDIUnit(nextMinigunner);
+                    MikeAndConquerGame.instance.SelectSingleGDIUnit(nextMinigunner);
                 }
             }
 
@@ -191,12 +194,12 @@ namespace mike_and_conquer
         internal Boolean CheckForAndHandleLeftClickOnEnemyUnit(int mouseX, int mouseY)
         {
             bool handled = false;
-            foreach (Minigunner nextNodMinigunner in MikeAndConqueryGame.instance.nodMinigunnerList)
+            foreach (Minigunner nextNodMinigunner in MikeAndConquerGame.instance.nodMinigunnerList)
             {
                 if (nextNodMinigunner.ContainsPoint(mouseX, mouseY))
                 {
                     handled = true;
-                    foreach (Minigunner nextGdiMinigunner in MikeAndConqueryGame.instance.gdiMinigunnerList)
+                    foreach (Minigunner nextGdiMinigunner in MikeAndConquerGame.instance.gdiMinigunnerList)
                     {
                         if (nextGdiMinigunner.selected)
                         {
@@ -214,18 +217,18 @@ namespace mike_and_conquer
         {
 
 
-            foreach (BasicMapSquare basicMapSquare in MikeAndConqueryGame.instance.BasicMapSquareList)
+            foreach (BasicMapSquare basicMapSquare in MikeAndConquerGame.instance.BasicMapSquareList)
             {
                 basicMapSquare.Draw(gameTime, spriteBatch);
             }
 
 
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConqueryGame.instance.GdiMinigunnerViewList)
+            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.GdiMinigunnerViewList)
             {
                 nextMinigunnerView.Draw(gameTime, spriteBatch);
             }
 
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConqueryGame.instance.NodMinigunnerViewList)
+            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.NodMinigunnerViewList)
             {
                 nextMinigunnerView.Draw(gameTime, spriteBatch);
             }

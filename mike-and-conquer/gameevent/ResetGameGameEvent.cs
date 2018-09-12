@@ -11,7 +11,7 @@ namespace mike_and_conquer.gameevent
 
         protected override GameState ProcessImpl()
         {
-            return MikeAndConqueryGame.instance.HandleReset();
+            return MikeAndConquerGame.instance.HandleReset();
         }
 
     }

@@ -27,7 +27,7 @@ namespace mike_and_conquer.aicontroller
 
         private Minigunner FindFirstNonDeadGdiMinigunner()
         {
-            List<Minigunner> gdiMinigunners = (MikeAndConqueryGame.instance.gdiMinigunnerList);
+            List<Minigunner> gdiMinigunners = (MikeAndConquerGame.instance.gdiMinigunnerList);
 
             foreach (Minigunner nextMinigunner in gdiMinigunners)
             {

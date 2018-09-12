@@ -31,7 +31,7 @@ namespace mike_and_conquer
         public GameSprite(string spriteListKey)
         {
             this.animationSequenceMap = new Dictionary<int, util.AnimationSequence>();
-            spriteTextureList = MikeAndConqueryGame.instance.TextureListMap.GetTextureList(spriteListKey);
+            spriteTextureList = MikeAndConquerGame.instance.TextureListMap.GetTextureList(spriteListKey);
 
             spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
 
@@ -92,7 +92,7 @@ namespace mike_and_conquer
 
         internal Texture2D createSpriteBorderRectangleTexture()
         {
-            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, spriteTextureList.textureWidth + 2, spriteTextureList.textureHeight + 2);
+            Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, spriteTextureList.textureWidth + 2, spriteTextureList.textureHeight + 2);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);

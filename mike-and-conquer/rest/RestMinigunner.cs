@@ -17,6 +17,8 @@ namespace mike_and_conquer.rest
         public int health { get; set; }
         public bool selected { get; set; }
         public bool aiIsOn { get; set; }
+        public int destinationX { get; set; }
+        public int destinationY { get; set; }
 
     }
 

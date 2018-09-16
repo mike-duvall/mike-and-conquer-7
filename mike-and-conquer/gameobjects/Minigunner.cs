@@ -16,6 +16,9 @@ namespace mike_and_conquer
         public int health { get; set; }
         public bool selected { get; set; }
         public Vector2 position { get; set; }
+        public Point destination {
+            get { return new Point(destinationX, destinationY);}
+        }
 
         Rectangle clickDetectionRectangle;
 

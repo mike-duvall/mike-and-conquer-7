@@ -92,15 +92,23 @@ namespace mike_and_conquer
 
         internal Texture2D createSpriteBorderRectangleTexture()
         {
-            Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, spriteTextureList.textureWidth + 2, spriteTextureList.textureHeight + 2);
+            Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
             fillVerticalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
             fillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, Color.White);
 
-            int centerX = rectangle.Width / 2;
-            int centerY = rectangle.Height / 2;
+            int centerX = (rectangle.Width / 2) - 1;
+
+            //or  
+
+            //int centerX = (rectangle.Width - 1) / 2; 
+
+            //???
+
+
+            int centerY = (rectangle.Height / 2) - 1;
             int centerOffset = (centerY * rectangle.Width) + centerX;
 
             data[centerOffset] = Color.Red;

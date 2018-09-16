@@ -12,7 +12,8 @@ namespace mike_and_conquer.gameview
 {
     public class BasicMapSquare
     {
-        private GameSprite gameSprite;
+        public GameSprite gameSprite;
+
 
 
         Vector2 position;

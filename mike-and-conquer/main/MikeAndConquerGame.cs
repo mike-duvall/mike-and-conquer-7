@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
@@ -32,6 +32,8 @@ using FileStream = System.IO.FileStream;
 using FileMode = System.IO.FileMode;
 
 using Camera2D = mike_and_conquer_6.Camera2D;
+
+using Point = Microsoft.Xna.Framework.Point;
 
 using Serilog;
 

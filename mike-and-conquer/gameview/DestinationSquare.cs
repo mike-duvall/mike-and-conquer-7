@@ -12,7 +12,6 @@ namespace mike_and_conquer.gameobjects
 
         public const string SPRITE_KEY = "DestinationSquare";
 
-
         private GameSprite gameSprite;
         public Vector2 position;
 

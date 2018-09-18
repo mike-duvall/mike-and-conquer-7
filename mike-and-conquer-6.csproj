@@ -74,12 +74,13 @@
     <Compile Include="mike-and-conquer\gameevent\GetNodMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
+    <Compile Include="mike-and-conquer\gameview\DestinationSquare.cs" />
     <Compile Include="mike-and-conquer\gameview\BasicMapSquare.cs" />
     <Compile Include="mike-and-conquer\gameview\NodMinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\GdiMinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\MinigunnerView.cs" />
-    <Compile Include="mike-and-conquer\gameobjects\MissionFailedMessage.cs" />
-    <Compile Include="mike-and-conquer\gameobjects\MissionAccomplishedMessage.cs" />
+    <Compile Include="mike-and-conquer\gameview\MissionFailedMessage.cs" />
+    <Compile Include="mike-and-conquer\gameview\MissionAccomplishedMessage.cs" />
     <Compile Include="mike-and-conquer\gamesprite\GameSprite.cs" />
     <Compile Include="mike-and-conquer\gamestate\GameState.cs" />
     <Compile Include="mike-and-conquer\gamestate\MissionFailedGameState.cs" />
@@ -90,7 +91,7 @@
     <Compile Include="mike-and-conquer\main\Camera2D.cs" />
     <Compile Include="mike-and-conquer\main\GameMap.cs" />
     <Compile Include="mike-and-conquer\main\MapTile.cs" />
-    <Compile Include="mike-and-conquer\main\MikeAndConqueryGame.cs" />
+    <Compile Include="mike-and-conquer\main\MikeAndConquerGame.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Minigunner.cs" />
     <Compile Include="mike-and-conquer\main\MouseInputHandler.cs" />
     <Compile Include="mike-and-conquer\openra\Exts.cs" />

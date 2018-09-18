@@ -14,12 +14,12 @@ namespace mike_and_conquer
         {
 
             message = new MissionAccomplishedMessage();
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConqueryGame.instance.GdiMinigunnerViewList)
+            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.GdiMinigunnerViewList)
             {
                 nextMinigunnerView.SetAnimate(false);
             }
 
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConqueryGame.instance.NodMinigunnerViewList)
+            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.NodMinigunnerViewList)
             {
                 nextMinigunnerView.SetAnimate(false);
             }
@@ -34,7 +34,7 @@ namespace mike_and_conquer
 
         public override GameState Update(GameTime gameTime)
         {
-            GameState nextGameState = MikeAndConqueryGame.instance.ProcessGameEvents();
+            GameState nextGameState = MikeAndConquerGame.instance.ProcessGameEvents();
             if(nextGameState != null)
             {
                 return nextGameState;
@@ -48,12 +48,12 @@ namespace mike_and_conquer
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConqueryGame.instance.GdiMinigunnerViewList)
+            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.GdiMinigunnerViewList)
             {
                 nextMinigunnerView.Draw(gameTime, spriteBatch);
             }
 
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConqueryGame.instance.NodMinigunnerViewList)
+            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.NodMinigunnerViewList)
             {
                 nextMinigunnerView.Draw(gameTime, spriteBatch);
             }

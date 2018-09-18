@@ -33,18 +33,20 @@ using FileMode = System.IO.FileMode;
 
 using Camera2D = mike_and_conquer_6.Camera2D;
 
+using Point = Microsoft.Xna.Framework.Point;
+
 using Serilog;
 
 namespace mike_and_conquer
 {
 
-    public class MikeAndConqueryGame : Game
+    public class MikeAndConquerGame : Game
     {
 
         private float testRotation = 0;
         public Camera2D camera2D;
 
-        public static MikeAndConqueryGame instance;
+        public static MikeAndConquerGame instance;
 
         public List<Minigunner> gdiMinigunnerList { get; }
         public List<Minigunner> nodMinigunnerList { get; }
@@ -97,7 +99,7 @@ namespace mike_and_conquer
             .CreateLogger();
 
 
-        public MikeAndConqueryGame(bool testMode)
+        public MikeAndConquerGame(bool testMode)
         {
             RemoveHostingTraceListenerToEliminateDuplicateLogEntries();
 
@@ -107,7 +109,7 @@ namespace mike_and_conquer
             graphics = new GraphicsDeviceManager(this);
             
             bool makeFullscreen = true;
-            //bool makeFullscreen = false;
+//            bool makeFullscreen = false;
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;
@@ -145,7 +147,7 @@ namespace mike_and_conquer
 
             oldState = Keyboard.GetState();
 
-            MikeAndConqueryGame.instance = this;
+            MikeAndConquerGame.instance = this;
         }
 
 
@@ -168,6 +170,7 @@ namespace mike_and_conquer
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
             this.camera2D.Zoom = 3.0f;
+//            this.camera2D.Zoom = 1.0f;
             this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
 
@@ -198,15 +201,25 @@ namespace mike_and_conquer
             int x = 12;
             int y = 12;
 
+
+//            MapTile nextMapTile = gameMap.MapTiles[0];
+//            BasicMapSquareList.Add(new BasicMapSquare(100,100, nextMapTile.textureKey, nextMapTile.imageIndex));
+//
+//            BasicMapSquare basicMapSquare2 = new BasicMapSquare(100, 130, nextMapTile.textureKey, nextMapTile.imageIndex);
+//            basicMapSquare2.gameSprite.drawBoundingRectangle = false;
+//            BasicMapSquareList.Add(basicMapSquare2);
+
+            //            BasicMapSquareList.Add(new BasicMapSquare(13, 13, nextMapTile.textureKey, nextMapTile.imageIndex));
+
             int numSquares = gameMap.MapTiles.Count;
             for (int i = 0; i < numSquares; i++)
             {
-
+            
                 MapTile nextMapTile = gameMap.MapTiles[i];
                 BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
-
+            
                 x = x + 24;
-
+            
                 bool incrementRow = ((i + 1) % 26) == 0;
                 if (incrementRow)
                 {
@@ -269,6 +282,7 @@ namespace mike_and_conquer
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
             LoadSingleTextureFromFile(gameobjects.MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
+            LoadSingleTextureFromFile(gameobjects.DestinationSquare.SPRITE_KEY, gameobjects.DestinationSquare.SPRITE_KEY);
 
 
             // TODO: use this.Content to load your game content here
@@ -461,6 +475,15 @@ namespace mike_and_conquer
                    nullRasterizerState,
                    nullEffect,
                    camera2D.TransformMatrix);
+
+//            spriteBatch.Begin(
+//                SpriteSortMode.Deferred,
+//                nullBlendState,
+//                SamplerState.PointClamp,
+//                nullDepthStencilState,
+//                nullRasterizerState,
+//                nullEffect,
+//                null);
 
             currentGameState.Draw(gameTime, spriteBatch);
 
@@ -686,6 +709,19 @@ namespace mike_and_conquer
             return gameEvent.GetGameState();
         }
 
+        public BasicMapSquare FindMapSquare(int mouseX, int mouseY)
+        {
+
+            foreach (BasicMapSquare nextBasicMapSquare in basicMapSquareList)
+            {
+                if (nextBasicMapSquare.ContainsPoint(new Point(mouseX, mouseY)))
+                {
+                    return nextBasicMapSquare;
+                }
+            }
+            return null;
+
+        }
     }
 
 }

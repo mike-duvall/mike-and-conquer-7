@@ -20,9 +20,8 @@ namespace mike_and_conquer
             get { return mapTileList; }
         }
 
-        public GameMap()
+        private GameMap()
         {
-            int x = 3;
         }
 
         public GameMap(Stream inputStream, int startX, int startY, int endX, int endY)

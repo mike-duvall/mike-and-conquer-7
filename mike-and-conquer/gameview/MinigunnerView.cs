@@ -1,10 +1,11 @@
 ﻿
+using mike_and_conquer.gameobjects;
 using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
-using Math = System.Math;
+
 
 namespace mike_and_conquer.gameview
 {
@@ -12,6 +13,7 @@ namespace mike_and_conquer.gameview
     {
         private GameSprite gameSprite;
         private UnitSelectionCursor unitSelectionCursor;
+        private DestinationSquare destinationSquare;
         private Minigunner myMinigunner;
 
         enum AnimationSequences { STANDING_STILL, WALKING_UP, SHOOTING_UP };
@@ -21,6 +23,7 @@ namespace mike_and_conquer.gameview
             this.myMinigunner = minigunner;
             this.gameSprite = new GameSprite(spriteListKey);
             this.unitSelectionCursor = new UnitSelectionCursor((int)this.myMinigunner.position.X, (int)this.myMinigunner.position.Y);
+            this.destinationSquare = new DestinationSquare();
 
             SetupAnimations();
         }
@@ -85,6 +88,11 @@ namespace mike_and_conquer.gameview
                 unitSelectionCursor.Draw(gameTime, spriteBatch);
             }
 
+            if (this.myMinigunner.state == Minigunner.State.MOVING)
+            {
+                this.destinationSquare.position = this.myMinigunner.DestinationPosition;
+                this.destinationSquare.Draw(gameTime, spriteBatch);
+            }
 
         }
 

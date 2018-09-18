@@ -34,8 +34,8 @@ namespace mike_and_conquer.gameview
         public UnitSelectionCursor(int x, int y)
         {
 
-            this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
-            this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
+            this.worldWidth = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Width;
+            this.worldHeight = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Height;
             this.texture = loadTextureFromShpFile("Content\\select.shp", 0);
 
             position = new Vector2(x, y);
@@ -69,7 +69,7 @@ namespace mike_and_conquer.gameview
 
         internal Texture2D initializeBoundingRectangle()
         {
-            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, texture.Width, texture.Height);
+            Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, texture.Width, texture.Height);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
@@ -122,7 +122,7 @@ namespace mike_and_conquer.gameview
             OpenRA.Graphics.ISpriteFrame frame = shpTDSprite.Frames[indexOfFrameToLoad];
             byte[] frameData = frame.Data;
 
-            Texture2D texture2D = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, shpTDSprite.Size.Width, shpTDSprite.Size.Height);
+            Texture2D texture2D = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, shpTDSprite.Size.Width, shpTDSprite.Size.Height);
             int numPixels = texture2D.Width * texture2D.Height;
             Color[] texturePixelData = new Color[numPixels];
 

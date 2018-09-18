@@ -107,7 +107,7 @@ namespace mike_and_conquer
             {
                 byte[] frameData = frame.Data;
 
-                Texture2D texture2D = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, shpTDSprite.Size.Width, shpTDSprite.Size.Height);
+                Texture2D texture2D = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, shpTDSprite.Size.Width, shpTDSprite.Size.Height);
                 int numPixels = texture2D.Width * texture2D.Height;
                 Color[] texturePixelData = new Color[numPixels];
 
@@ -157,8 +157,8 @@ namespace mike_and_conquer
                     spriteTextureList.textureList.Add(null);
                     continue;
                 }
-                //                Texture2D texture2D = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
-                Texture2D texture2D = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, frame.Size.Width, frame.Size.Height);
+                //                Texture2D texture2D = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
+                Texture2D texture2D = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, frame.Size.Width, frame.Size.Height);
                 int numPixels = texture2D.Width * texture2D.Height;
                 Color[] texturePixelData = new Color[numPixels];
 

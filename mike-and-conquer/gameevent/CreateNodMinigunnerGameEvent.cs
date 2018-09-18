@@ -28,7 +28,7 @@ namespace mike_and_conquer.gameevent
         protected override GameState ProcessImpl()
         {
             GameState newGameState = null;
-            result = MikeAndConqueryGame.instance.AddGdiMinigunner(x,y);
+            result = MikeAndConquerGame.instance.AddGdiMinigunner(x,y);
             return newGameState;
         }
 

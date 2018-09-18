@@ -23,9 +23,6 @@ namespace mike_and_conquer
         Texture2D spriteBorderRectangleTexture;
         public Boolean drawBoundingRectangle;
 
-        private int worldWidth;
-        private int worldHeight;
-
         private Vector2 middleOfSprite;
 
         private bool animate;
@@ -34,9 +31,7 @@ namespace mike_and_conquer
         public GameSprite(string spriteListKey)
         {
             this.animationSequenceMap = new Dictionary<int, util.AnimationSequence>();
-            this.worldWidth = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Width;
-            this.worldHeight = MikeAndConqueryGame.instance.GraphicsDevice.Viewport.Height;
-            spriteTextureList = MikeAndConqueryGame.instance.TextureListMap.GetTextureList(spriteListKey);
+            spriteTextureList = MikeAndConquerGame.instance.TextureListMap.GetTextureList(spriteListKey);
 
             spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
 
@@ -49,14 +44,14 @@ namespace mike_and_conquer
             this.animate = true;
         }
 
-        public void SetCurrentAnimationSequenceIndex(int aniatmionSequenceIndex)
+        public void SetCurrentAnimationSequenceIndex(int animationSequenceIndex)
         {
-            if (currentAnimationSequenceIndex == aniatmionSequenceIndex)
+            if (currentAnimationSequenceIndex == animationSequenceIndex)
             {
                 return;
             }
 
-            currentAnimationSequenceIndex = aniatmionSequenceIndex;
+            currentAnimationSequenceIndex = animationSequenceIndex;
 
             AnimationSequence animationSequence = animationSequenceMap[currentAnimationSequenceIndex];
             animationSequence.SetCurrentFrameIndex(0);
@@ -97,15 +92,15 @@ namespace mike_and_conquer
 
         internal Texture2D createSpriteBorderRectangleTexture()
         {
-            Texture2D rectangle = new Texture2D(MikeAndConqueryGame.instance.GraphicsDevice, spriteTextureList.textureWidth + 2, spriteTextureList.textureHeight + 2);
+            Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
             fillVerticalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
             fillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, Color.White);
 
-            int centerX = rectangle.Width / 2;
-            int centerY = rectangle.Height / 2;
+            int centerX = (rectangle.Width / 2) - 1;
+            int centerY = (rectangle.Height / 2) - 1;
             int centerOffset = (centerY * rectangle.Width) + centerX;
 
             data[centerOffset] = Color.Red;

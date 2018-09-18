@@ -1,6 +1,4 @@
 ﻿
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -262,7 +260,6 @@ namespace mike_and_conquer
         }
 
 
-//        public void OrderToMoveToDestination(int x, int y)
         public void OrderToMoveToDestination(Point destination)
         {
             this.currentCommand = Command.MOVE_TO_POINT;

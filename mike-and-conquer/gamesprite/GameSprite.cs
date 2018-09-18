@@ -100,14 +100,6 @@ namespace mike_and_conquer
             fillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, Color.White);
 
             int centerX = (rectangle.Width / 2) - 1;
-
-            //or  
-
-            //int centerX = (rectangle.Width - 1) / 2; 
-
-            //???
-
-
             int centerY = (rectangle.Height / 2) - 1;
             int centerOffset = (centerY * rectangle.Width) + centerX;
 

@@ -10,6 +10,8 @@ using TextureListMap = mike_and_conquer.TextureListMap;
 using FileStream = System.IO.FileStream;
 using FileMode = System.IO.FileMode;
 
+using Point = Microsoft.Xna.Framework.Point;
+
 namespace unit_tests
 {
     [TestClass]
@@ -350,7 +352,7 @@ namespace unit_tests
         public void ContainsPoint_ShouldWorkAfterMinigunnerMoves()
         {
             // given
-            Minigunner mingunner = new Minigunner(10, 10, false);
+            Minigunner mingunner = new Minigunner(10, 10);
 
 
             // when
@@ -369,7 +371,7 @@ namespace unit_tests
             Assert.IsFalse(containsPoint);
 
             // when
-            mingunner.OrderToMoveToDestination(200, 200);
+            mingunner.OrderToMoveToDestination(new Point(200, 200));
 
             GameTime gameTime = new GameTime();
             TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 100);
@@ -379,7 +381,7 @@ namespace unit_tests
             // then
             bool done = false;
             int numAttempts = 0;
-            int maxNumRepetitions = 50;
+            int maxNumRepetitions = 200;
 
             while(!done)
             {

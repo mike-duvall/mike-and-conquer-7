@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,18 +26,95 @@ namespace mike_and_conquer.pathfinding
     {
 
         public List<Node> nodeList;
+        private int width;
+        private int height;
+        private int currentRow = 0;
+        private int currentNodeId = 0;
 
-        public Graph()
+        private int[,] nodeArray;
+
+//        public Graph(int width, int height)
+//        {
+//            nodeList = new List<Node>();
+//            this.width = width;
+//            this.height = height;
+//        }
+
+        //        public void AddNode(Node aNode)
+        //        {
+        //            nodeList.Add(aNode);
+        //        }
+
+        public Graph(int[,] nodeArray)
         {
+            this.nodeArray = nodeArray;
             nodeList = new List<Node>();
+            width = nodeArray.GetLength(0);
+            height = nodeArray.GetLength(1);
+
+            for (int i = 0; i < nodeArray.Length; i++)
+            {
+                List<int> adjacentNodes = CalculateAdjacentNodes(currentNodeId);
+                Node node = new Node(currentNodeId, adjacentNodes);
+                nodeList.Add(node);
+                currentNodeId++;
+            }
+
         }
 
-        public void AddNode(Node aNode)
+        List<int> CalculateAdjacentNodes(int nodeId)
         {
-            nodeList.Add(aNode);
+
+            List<int> adjacentNodes = new List<int>();
+            int currentNodex = nodeId % width;
+            int currentNodey = nodeId / height;
+
+            if (IsLocationOpen(currentNodex, currentNodey))
+            {
+                for (int y = currentNodey - 1; y <= currentNodey + 1; y++)
+                for (int x = currentNodex - 1; x <= currentNodex + 1; x++)
+                {
+                    if (IsValidLocation(x, y) && IsLocationOpen(x, y) && !(currentNodex == x && currentNodey == y))
+                    {
+                        int adjacentNodeIndex = y * width + x;
+                        adjacentNodes.Add(adjacentNodeIndex);
+                    }
+                }
+            }
+
+            return adjacentNodes;
         }
 
 
+        bool IsValidLocation(int x, int y)
+        {
+            bool isValid = (
+                x >= 0 &&
+                (x <= width - 1) &&
+                y >= 0 &&
+                (y <= height - 1));
+
+            return isValid;
+        }
+
+        bool IsLocationOpen(int x, int y)
+        {
+            bool isOpen = nodeArray[x, y] == 0;
+            return isOpen;
+        }
+
+        public void AddRow(string row)
+        {
+            string[] mapSquares = row.Split(' ');
+            foreach (string mapSquare in mapSquares)
+            {
+                if (mapSquare == "0")
+                {
+                    Node newNode = new Node(currentNodeId++);
+
+                }
+            }
+        }
     }
 
     public class Node
@@ -49,6 +127,13 @@ namespace mike_and_conquer.pathfinding
             this.id = id;
             this.connectedNodes = connectedNodes;
         }
+
+        public Node(int id)
+        {
+            this.id = id;
+//            this.connectedNodes = connectedNodes;
+        }
+
 
     }
 
@@ -79,7 +164,7 @@ namespace mike_and_conquer.pathfinding
 //            }
 
             Queue<Node> frontier  = new Queue<Node>();
-            frontier.Enqueue(graph.nodeList[startLocation-1]);
+            frontier.Enqueue(graph.nodeList[startLocation]);
             Dictionary<int, int> came_from = new Dictionary<int, int>();
             came_from[startLocation] = -1;
 
@@ -90,7 +175,7 @@ namespace mike_and_conquer.pathfinding
                 {
                     if (!came_from.ContainsKey(next))
                     {
-                        frontier.Enqueue(graph.nodeList[next-1]);
+                        frontier.Enqueue(graph.nodeList[next]);
                         came_from[next] = current.id;
                     }
                 }
@@ -98,9 +183,8 @@ namespace mike_and_conquer.pathfinding
 
             Path thePath = new Path();
 
-            Node nextNode = graph.nodeList[goalLocation-1];
+            Node nextNode = graph.nodeList[goalLocation];
             List<Node> nodesInReverseOrder = new List<Node>();
-//            nodesInReverseOrder.Add(lastNode);
             Boolean moreNodes = true;
             while (moreNodes)
             {
@@ -108,7 +192,7 @@ namespace mike_and_conquer.pathfinding
                 nodesInReverseOrder.Add(nextNode);
                 if (came_from[nextNode.id] != -1)
                 {
-                    nextNode = graph.nodeList[came_from[nextNode.id]-1];
+                    nextNode = graph.nodeList[came_from[nextNode.id]];
                 }
                 else
                 {

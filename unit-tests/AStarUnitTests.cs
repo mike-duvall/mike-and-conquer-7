@@ -83,6 +83,40 @@ namespace unit_tests
         }
 
 
+        [TestMethod]
+        public void BasicPathfindingTest3()
+        {
+            // given
+            AStar aStar = new AStar();
+
+            // and
+            int[,] nodeArray = new int[3, 3]
+            {
+                { 0, 0, 1 },
+                { 0, 1, 1 },
+                { 0, 0, 0 }
+            };
+
+            Graph graph = new Graph(nodeArray);
+
+            // when
+            Path foundPath = aStar.FindPath(graph, 0, 8);
+
+            // then
+            Assert.IsNotNull(foundPath);
+
+            // and
+            Assert.IsTrue(foundPath.nodeList.Count == 4);
+
+            Assert.IsTrue(foundPath.nodeList[0].id == 0);
+            Assert.IsTrue(foundPath.nodeList[1].id == 3);
+            Assert.IsTrue(foundPath.nodeList[2].id == 7);
+            Assert.IsTrue(foundPath.nodeList[3].id == 8);
+
+
+        }
+
+
     }
 
 }

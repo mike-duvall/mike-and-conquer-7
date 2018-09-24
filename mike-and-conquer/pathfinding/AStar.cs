@@ -99,7 +99,8 @@ namespace mike_and_conquer.pathfinding
 
         bool IsLocationOpen(int x, int y)
         {
-            bool isOpen = nodeArray[x, y] == 0;
+//            bool isOpen = nodeArray[x, y] == 0;
+            bool isOpen = nodeArray[y, x] == 0;
             return isOpen;
         }
 

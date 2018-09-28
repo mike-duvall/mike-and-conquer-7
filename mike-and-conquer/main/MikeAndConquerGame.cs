@@ -38,6 +38,9 @@ using Point = Microsoft.Xna.Framework.Point;
 
 using Serilog;
 
+using Graph = mike_and_conquer.pathfinding.Graph;
+using AStar = mike_and_conquer.pathfinding.AStar;
+
 namespace mike_and_conquer
 {
 
@@ -62,6 +65,8 @@ namespace mike_and_conquer
         private List<Sandbag> sandbagList;
         private List<SandbagView> sandbagViewList;
 
+
+        public Graph navigationGraph;
         public List<BasicMapSquare> BasicMapSquareList
         {
             get { return basicMapSquareList; }
@@ -196,20 +201,57 @@ namespace mike_and_conquer
 
                 AddGdiMinigunner(10, 300);
                 AddGdiMinigunner(30, 300);
-                int mapX = 10;
-                int mapY = 7;
+                int mapX = 1;
+                int mapY = 1;
                 AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12,10);
                 AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
                 AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
-                AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
-                AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
-                AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
-                AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
-                AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+//                AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+//                AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+//                AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+//                AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+//                AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+
             }
 
             InitializeMap();
 
+            InitializeNavigationGraph();
+
+        }
+
+        private void InitializeNavigationGraph()
+        {
+            
+            int[,] nodeArray = new int[this.gameMap.numRows, this.gameMap.numColumns];
+
+
+            int mapX = 10;
+            int mapY = 7;
+//            AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+//            AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+//            AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+//            AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+//            AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+//            AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+//            AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+//            AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12, 10);
+
+            // Revisit this, doesn't match actual sandbags
+            // Have this be done automatically, not manually
+            nodeArray[mapY, mapX++] = 1;
+            nodeArray[mapY, mapX++] = 1;
+            nodeArray[mapY, mapX++] = 1;
+            nodeArray[mapY, mapX++] = 1;
+            nodeArray[mapY, mapX++] = 1;
+            nodeArray[mapY, mapX++] = 1;
+            nodeArray[mapY, mapX++] = 1;
+            nodeArray[mapY, mapX++] = 1;
+
+//            navigationGraph = new Graph(nodeArray);
+
+//            AStar aStar = new AStar();
+//            aStar.FindPath(navigationGraph, )
         }
 
         private void InitializeMap()

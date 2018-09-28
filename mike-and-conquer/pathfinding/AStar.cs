@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿
+
+using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Boolean = System.Boolean;
 
 namespace mike_and_conquer.pathfinding
 {
@@ -26,24 +23,13 @@ namespace mike_and_conquer.pathfinding
     {
 
         public List<Node> nodeList;
-        private int width;
-        private int height;
+        public int width;
+        public int height;
         private int currentRow = 0;
         private int currentNodeId = 0;
 
         private int[,] nodeArray;
 
-//        public Graph(int width, int height)
-//        {
-//            nodeList = new List<Node>();
-//            this.width = width;
-//            this.height = height;
-//        }
-
-        //        public void AddNode(Node aNode)
-        //        {
-        //            nodeList.Add(aNode);
-        //        }
 
         public Graph(int[,] nodeArray)
         {
@@ -67,7 +53,7 @@ namespace mike_and_conquer.pathfinding
 
             List<int> adjacentNodes = new List<int>();
             int currentNodex = nodeId % width;
-            int currentNodey = nodeId / height;
+            int currentNodey = nodeId / width;
 
             if (IsLocationOpen(currentNodex, currentNodey))
             {
@@ -99,23 +85,10 @@ namespace mike_and_conquer.pathfinding
 
         bool IsLocationOpen(int x, int y)
         {
-//            bool isOpen = nodeArray[x, y] == 0;
-            bool isOpen = nodeArray[y, x] == 0;
+            bool isOpen = nodeArray[x, y] == 0;
             return isOpen;
         }
 
-        public void AddRow(string row)
-        {
-            string[] mapSquares = row.Split(' ');
-            foreach (string mapSquare in mapSquares)
-            {
-                if (mapSquare == "0")
-                {
-                    Node newNode = new Node(currentNodeId++);
-
-                }
-            }
-        }
     }
 
     public class Node
@@ -129,19 +102,16 @@ namespace mike_and_conquer.pathfinding
             this.connectedNodes = connectedNodes;
         }
 
-        public Node(int id)
-        {
-            this.id = id;
-//            this.connectedNodes = connectedNodes;
-        }
-
-
     }
 
     public class AStar
     {
-
-
+        public Path FindPath(Graph graph, Point startPoint, Point endPoint)
+        {
+            int startPointIndex = (startPoint.Y * graph.width) + startPoint.X;
+            int endPointIndex = (endPoint.Y * graph.width) + endPoint.X;
+            return this.FindPath(graph, startPointIndex, endPointIndex);
+        }
 
         public Path FindPath(Graph graph, int startLocation, int goalLocation)
 

@@ -410,6 +410,9 @@ namespace mike_and_conquer
         protected override void Update(GameTime gameTime)
         {
 
+
+//            log.Information("gameTime.ElapsedGameTime.TotalMilliseconds:" + gameTime.ElapsedGameTime.TotalMilliseconds);
+
             KeyboardState state = Keyboard.GetState();
 
             // If they hit esc, exit

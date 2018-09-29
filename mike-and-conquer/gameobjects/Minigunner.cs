@@ -1,9 +1,12 @@
 ﻿
+using System.Collections.Generic;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using Math = System.Math;
 using Point = Microsoft.Xna.Framework.Point;
+
+using Serilog;
 
 namespace mike_and_conquer
 { 
@@ -39,6 +42,12 @@ namespace mike_and_conquer
 
         private static int globalId = 1;
 
+        Serilog.Core.Logger log = new LoggerConfiguration()
+            //.WriteTo.Console()
+            //.WriteTo.File("log.txt")
+            .WriteTo.Debug()
+            .CreateLogger();
+
 
         protected Minigunner()
         {
@@ -56,7 +65,7 @@ namespace mike_and_conquer
             Minigunner.globalId++;
 
             clickDetectionRectangle = CreateClickDetectionRectangle();
-            movementDistanceEpsilon = movementVelocity + (double).02f;
+            movementDistanceEpsilon = movementVelocity + (double).04f;
             selected = false;
         }
 
@@ -212,6 +221,8 @@ namespace mike_and_conquer
             float newY = position.Y;
 
             double delta = gameTime.ElapsedGameTime.TotalMilliseconds * movementVelocity;
+            //log.Information("delta:" + delta);
+
 
             if (!IsFarEnoughRight())
             {
@@ -266,6 +277,12 @@ namespace mike_and_conquer
             this.state = State.MOVING;
             SetDestination(destination.X, destination.Y);
         }
+
+        public void OrderToFollowPath(List<Point> listOfPoints)
+        {
+            return;
+        }
+
 
 
         internal void OrderToMoveToAndAttackEnemyUnit(Minigunner enemyMinigunner)

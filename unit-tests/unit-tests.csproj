@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="GraphUnitTests.cs" />
     <Compile Include="AStarUnitTests.cs" />
+    <Compile Include="GameMapUnitTests.cs" />
     <Compile Include="MinigunnerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

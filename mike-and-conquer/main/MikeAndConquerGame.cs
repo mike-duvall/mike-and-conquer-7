@@ -196,11 +196,13 @@ namespace mike_and_conquer
             if (!testMode)
             {
                 bool aiIsOn = false;
-                AddNodMinigunner(310, 10, aiIsOn);
-                AddNodMinigunner(315, 30, aiIsOn);
+//                AddNodMinigunner(310, 10, aiIsOn);
+//                AddNodMinigunner(315, 30, aiIsOn);
 
-                AddGdiMinigunner(10, 300);
-                AddGdiMinigunner(30, 300);
+//                AddGdiMinigunner(10, 300);
+//                AddGdiMinigunner(30, 300);
+
+                AddGdiMinigunner(60, 12);
                 int mapX = 1;
                 int mapY = 1;
                 AddSandbag(mapX++ * 24 + 12, mapY * 24 + 12,10);

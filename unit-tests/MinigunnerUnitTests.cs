@@ -26,13 +26,13 @@ namespace unit_tests
             Minigunner minigunner = new Minigunner(10, 10);
 
             // when
-            Point destination = new Point(15, 15);
-            minigunner.OrderToMoveToDestination(destination);
-//            List<Point> listOfPoints = new List<Point>();
-//            listOfPoints.Add(new Point(15,15));
-//            listOfPoints.Add(new Point(25, 35));
-//
-//            minigunner.OrderToFollowPath(listOfPoints);
+            List<Point> listOfPoints = new List<Point>();
+            Point pathPoint1 = new Point(15, 15);
+            Point pathPoint2 = new Point(25, 35);
+            listOfPoints.Add(pathPoint1);
+            listOfPoints.Add(pathPoint2);
+
+            minigunner.OrderToFollowPath(listOfPoints);
 
 
             // then
@@ -40,7 +40,8 @@ namespace unit_tests
             TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 15);
             gameTime.ElapsedGameTime = timespan;
 
-            WaitForMinigunnerToArriveAtPosition(minigunner, destination, gameTime);
+            WaitForMinigunnerToArriveAtPosition(minigunner, pathPoint1, gameTime);
+            WaitForMinigunnerToArriveAtPosition(minigunner, pathPoint2, gameTime);
 
         }
 

@@ -6,6 +6,11 @@ using GameTime = Microsoft.Xna.Framework.GameTime;
 using Math = System.Math;
 using Point = Microsoft.Xna.Framework.Point;
 
+using Path = mike_and_conquer.pathfinding.Path;
+using AStar = mike_and_conquer.pathfinding.AStar;
+using Node = mike_and_conquer.pathfinding.Node;
+
+
 using Serilog;
 
 namespace mike_and_conquer
@@ -305,16 +310,57 @@ namespace mike_and_conquer
             //            this.currentCommand = Command.MOVE_TO_POINT;
             //            this.state = State.MOVING;
             //            SetDestination(destination.X, destination.Y);
-            List<Point> listOfPoints = new List<Point>();
-            listOfPoints.Add(new Point(12 + 24, 12));
-            listOfPoints.Add(new Point(12, 12 + 24));
-            listOfPoints.Add(new Point(12 + 24, 12 + 48));
-            listOfPoints.Add(destination);
+
+//            List<Point> listOfPoints = new List<Point>();
+//            listOfPoints.Add(new Point(12 + 24, 12));
+//            listOfPoints.Add(new Point(12, 12 + 24));
+//            listOfPoints.Add(new Point(12 + 24, 12 + 48));
+//            listOfPoints.Add(destination);
+//            this.currentCommand = Command.FOLLOW_PATH;
+//            this.state = State.MOVING;
+//            this.SetPath(listOfPoints);
+//            SetDestination(listOfPoints[0].X, listOfPoints[0].Y);
+
+//            Point startPoint = new Point(2, 0);
+            int startColumn = (int)this.position.X / 24;
+            int startRow = (int)this.position.Y / 24;
+            Point startPoint = new Point(startColumn, startRow);
+
+            AStar aStar = new AStar();
+
+            Point destinationSquare = new Point();
+            destinationSquare.X = destination.X / 24;
+            destinationSquare.Y = destination.Y / 24;
+            
+            Path foundPath = aStar.FindPath(MikeAndConquerGame.instance.navigationGraph, startPoint, destinationSquare);
+            
+
             this.currentCommand = Command.FOLLOW_PATH;
             this.state = State.MOVING;
+
+            List<Point> listOfPoints = new List<Point>();
+            List<Node> nodeList = foundPath.nodeList;
+            foreach (Node node in nodeList)
+            {
+                Point point = ConvertIndexToPoint(node.id);
+                listOfPoints.Add(point);
+            }
+
             this.SetPath(listOfPoints);
             SetDestination(listOfPoints[0].X, listOfPoints[0].Y);
 
+        }
+
+        private Point ConvertIndexToPoint(int index)
+        {
+            Point point = new Point();
+            int row = index / 26;
+            int column = index - (row * 26);
+            int widthOfMapSquare = 24;
+            int heightOfMapSquare = 24;
+            point.X = (column * widthOfMapSquare) + 12; ;
+            point.Y = (row * heightOfMapSquare) + 12 ;
+            return point;
         }
 
         public void OrderToFollowPath(List<Point> listOfPoints)

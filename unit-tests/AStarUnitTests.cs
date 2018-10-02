@@ -166,6 +166,47 @@ namespace unit_tests
 
         }
 
+        [TestMethod]
+        public void AsymmetricMapMapPathfindingTest2()
+        {
+            // given
+            AStar aStar = new AStar();
+
+            // and
+            //  0, 0, S, 0, 0, 0
+            //  0, 1, 1, 1, 0, 0
+            //  0, 0, E, 0, 0, 0
+            //  .
+            //  .
+
+            int[,] nodeArray = new int[26, 24];
+
+            nodeArray[1, 1] = 1;
+            nodeArray[2, 1] = 1;
+            nodeArray[3, 1] = 1;
+
+            Graph graph = new Graph(nodeArray);
+
+            // when
+            Point startPoint = new Point(2, 0);
+            Point endPoint = new Point(2, 2);
+            Path foundPath = aStar.FindPath(graph, startPoint, endPoint);
+
+            // then
+            Assert.IsNotNull(foundPath);
+
+            // and
+            Assert.IsTrue(foundPath.nodeList.Count == 5);
+
+            Assert.IsTrue(foundPath.nodeList[0].id == 2);
+            Assert.IsTrue(foundPath.nodeList[1].id == 1);
+            Assert.IsTrue(foundPath.nodeList[2].id == 26);
+            Assert.IsTrue(foundPath.nodeList[3].id == 53);
+            Assert.IsTrue(foundPath.nodeList[4].id == 54);
+
+
+        }
+
 
     }
 

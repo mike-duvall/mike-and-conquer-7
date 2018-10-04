@@ -14,6 +14,8 @@ Open up the proper Rest endpoints on the Windows box in question, with this comm
 	netsh http add urlacl url=http://*:11369/ user=mduvall
 
 	Update this documentation to make it clear this has to be done we fresh machine install
+	Also update to tell that you need to login to the remote machines before the network connection will work
+		Connect to \\192.168.0.195\buildoutput in xyplorer or file explorer
 
 	Need to run this one both local box(for running locally) and remote box(for running remotely)
 

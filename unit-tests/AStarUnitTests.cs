@@ -24,13 +24,14 @@ namespace unit_tests
             AStar aStar = new AStar();
 
             // and
-            int[,] nodeArray = new int[3, 3];
+//            int[,] nodeArray = new int[3, 3];
 //          S, 0, 0
 //          0, 0, 0
 //          0, 0, E
 
 
-            Graph graph = new Graph(nodeArray);
+//            Graph graph = new Graph(nodeArray);
+            Graph graph = new Graph(3, 3);
 
             // when
 
@@ -61,14 +62,17 @@ namespace unit_tests
             AStar aStar = new AStar();
 
             // and
-            int[,] nodeArray = new int[3, 3];
+//            int[,] nodeArray = new int[3, 3];
 //          0, 0, 0
 //          0, 1, 0
 //          0, 0, 0
 
-            nodeArray[1, 1] = 1;
+//            nodeArray[1, 1] = 1;
 
-            Graph graph = new Graph(nodeArray);
+//            Graph graph = new Graph(nodeArray);
+            Graph graph = new Graph(3, 3);
+
+            graph.AddNode(1,1);
 
             // when
             Path foundPath = aStar.FindPath(graph, 0, 8);
@@ -99,14 +103,18 @@ namespace unit_tests
 //          0, 1, 1
 //          0, 0, 0
 
-            int[,] nodeArray = new int[3, 3];
+//            int[,] nodeArray = new int[3, 3];
+//
+//            nodeArray[2, 0] = 1;
+//            nodeArray[1, 1] = 1;
+//            nodeArray[2, 1] = 1;
 
-            nodeArray[2, 0] = 1;
-            nodeArray[1, 1] = 1;
-            nodeArray[2, 1] = 1;
 
-
-            Graph graph = new Graph(nodeArray);
+//            Graph graph = new Graph(nodeArray);
+            Graph graph = new Graph(3, 3);
+            graph.AddNode(2,0);
+            graph.AddNode(1, 1);
+            graph.AddNode(2, 1);
 
             // when
             Path foundPath = aStar.FindPath(graph, 0, 8);
@@ -138,13 +146,18 @@ namespace unit_tests
             //  .
             //  .
 
-            int[,] nodeArray = new int[5, 3];
+//            int[,] nodeArray = new int[5, 3];
+//
+//            nodeArray[1, 1] = 1;
+//            nodeArray[2, 1] = 1;
+//            nodeArray[3, 1] = 1;
 
-            nodeArray[1, 1] = 1;
-            nodeArray[2, 1] = 1;
-            nodeArray[3, 1] = 1;
+//            Graph graph = new Graph(nodeArray);
+            Graph graph = new Graph(5,3);
 
-            Graph graph = new Graph(nodeArray);
+            graph.AddNode(1,1);
+            graph.AddNode(2, 1);
+            graph.AddNode(3, 1);
 
             // when
             Point startPoint = new Point(2, 0);
@@ -179,13 +192,19 @@ namespace unit_tests
             //  .
             //  .
 
-            int[,] nodeArray = new int[26, 24];
+//            int[,] nodeArray = new int[26, 24];
+//
+//            nodeArray[1, 1] = 1;
+//            nodeArray[2, 1] = 1;
+//            nodeArray[3, 1] = 1;
 
-            nodeArray[1, 1] = 1;
-            nodeArray[2, 1] = 1;
-            nodeArray[3, 1] = 1;
 
-            Graph graph = new Graph(nodeArray);
+
+            //            Graph graph = new Graph(nodeArray);
+            Graph graph = new Graph(26, 24);
+            graph.AddNode(1, 1);
+            graph.AddNode(2, 1);
+            graph.AddNode(3, 1);
 
             // when
             Point startPoint = new Point(2, 0);

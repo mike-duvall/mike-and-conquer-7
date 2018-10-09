@@ -35,10 +35,10 @@ namespace mike_and_conquer
         }
 
 
-        public Vector2 GetScreenPosition()
-        {
-            return Vector2.Transform(position, MikeAndConquerGame.instance.camera2D.TransformMatrix);
-        }
+//        public Vector2 GetScreenPosition()
+//        {
+//            return Vector2.Transform(position, MikeAndConquerGame.instance.camera2D.TransformMatrix);
+//        }
 
 
     }

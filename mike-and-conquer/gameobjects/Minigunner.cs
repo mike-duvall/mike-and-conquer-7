@@ -342,7 +342,7 @@ namespace mike_and_conquer
             List<Node> nodeList = foundPath.nodeList;
             foreach (Node node in nodeList)
             {
-                Point point = ConvertMapSqaureIndexToMapPoint(node.id);
+                Point point = ConvertMapSquareIndexToWorldCoordinate(node.id);
                 listOfPoints.Add(point);
             }
 
@@ -351,7 +351,7 @@ namespace mike_and_conquer
 
         }
 
-        private Point ConvertMapSqaureIndexToMapPoint(int index)
+        private Point ConvertMapSquareIndexToWorldCoordinate(int index)
         {
             Point point = new Point();
             int row = index / 26;

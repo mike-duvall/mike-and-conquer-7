@@ -26,7 +26,8 @@ namespace unit_tests
 //          0, 0, 0
 //          0, 0, 0
 
-            Graph graph = new Graph(nodeArray);
+//            Graph graph = new Graph(nodeArray);
+            Graph graph = new Graph(3,3);
 
 
             // then
@@ -113,13 +114,16 @@ namespace unit_tests
         {
             // given
 
-            int[,] nodeArray = new int[3, 3];
+//            int[,] nodeArray = new int[3, 3];
 //          0, 0, 0
 //          0, 1, 0
 //          0, 0, 0
-            nodeArray[1, 1] = 1;
+//            nodeArray[1, 1] = 1;
 
-            Graph graph = new Graph(nodeArray);
+//            Graph graph = new Graph(nodeArray);
+            Graph graph = new Graph(3, 3);
+
+            graph.AddNode(1,1);
 
 
             // then
@@ -190,15 +194,20 @@ namespace unit_tests
         public void BasicPathfindingTest3()
         {
             // given
-            int[,] nodeArray = new int[3, 3];
+//            int[,] nodeArray = new int[3, 3];
 //          0, 0, 1
 //          0, 1, 1
 //          0, 0, 0
-            nodeArray[2, 0] = 1;
-            nodeArray[1, 1] = 1;
-            nodeArray[2, 1] = 1;
+//            nodeArray[2, 0] = 1;
+//            nodeArray[1, 1] = 1;
+//            nodeArray[2, 1] = 1;
 
-            Graph graph = new Graph(nodeArray);
+//            Graph graph = new Graph(nodeArray);
+            Graph graph = new Graph(3,3);
+
+            graph.AddNode(2, 0);
+            graph.AddNode(1, 1);
+            graph.AddNode(2, 1);
 
             // then
             Node node = graph.nodeList[0];
@@ -259,7 +268,7 @@ namespace unit_tests
         public void AsymmetricGraphTest1()
         {
             // given
-            AStar aStar = new AStar();
+//            AStar aStar = new AStar();
 
             // and
             //  0, 0, S, 0, 0
@@ -268,14 +277,19 @@ namespace unit_tests
             //  .
             //  .
 
-            int[,] nodeArray = new int[5, 3];
-
-            nodeArray[1, 1] = 1;
-            nodeArray[2, 1] = 1;
-            nodeArray[3, 1] = 1;
+//            int[,] nodeArray = new int[5, 3];
+//
+//            nodeArray[1, 1] = 1;
+//            nodeArray[2, 1] = 1;
+//            nodeArray[3, 1] = 1;
 
             // when
-            Graph graph = new Graph(nodeArray);
+//            Graph graph = new Graph(nodeArray);
+            Graph graph = new Graph(5,3);
+
+            graph.AddNode(1, 1);
+            graph.AddNode(2, 1);
+            graph.AddNode(3, 1);
 
 
             // then
@@ -361,7 +375,7 @@ namespace unit_tests
         public void AsymmetricGraphTest2()
         {
             // given
-            AStar aStar = new AStar();
+//            AStar aStar = new AStar();
 
             // and
             //  0, 0, S, 0, 0
@@ -370,15 +384,20 @@ namespace unit_tests
             //  .
             //  .
 
-            int[,] nodeArray = new int[26, 24];
-
-            nodeArray[1, 1] = 1;
-            nodeArray[2, 1] = 1;
-            nodeArray[3, 1] = 1;
+//            int[,] nodeArray = new int[26, 24];
+//
+//            nodeArray[1, 1] = 1;
+//            nodeArray[2, 1] = 1;
+//            nodeArray[3, 1] = 1;
 
             // when
-            Graph graph = new Graph(nodeArray);
+//            Graph graph = new Graph(nodeArray);
+            Graph graph = new Graph(26, 24);
 
+
+            graph.AddNode(1, 1);
+            graph.AddNode(2, 1);
+            graph.AddNode(3, 1);
 
             // then
             Node node = graph.nodeList[0];

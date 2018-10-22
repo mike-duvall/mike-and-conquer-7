@@ -64,9 +64,9 @@ namespace mike_and_conquer.pathfinding
 
         }
 
-        public void AddNode(int x, int y)
+        public void UpdateNode(int x, int y, int newValue)
         {
-            this.nodeArray[x, y] = 1;
+            this.nodeArray[x, y] = newValue;
             this.nodeList = new List<Node>();
             this.currentNodeId = 0;
             for (int i = 0; i < nodeArray.Length; i++)

@@ -72,7 +72,7 @@ namespace unit_tests
 //            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(3, 3);
 
-            graph.AddNode(1,1);
+            graph.UpdateNode(1,1,1);
 
             // when
             Path foundPath = aStar.FindPath(graph, 0, 8);
@@ -112,9 +112,9 @@ namespace unit_tests
 
 //            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(3, 3);
-            graph.AddNode(2,0);
-            graph.AddNode(1, 1);
-            graph.AddNode(2, 1);
+            graph.UpdateNode(2, 0, 1);
+            graph.UpdateNode(1, 1, 1);
+            graph.UpdateNode(2, 1, 1);
 
             // when
             Path foundPath = aStar.FindPath(graph, 0, 8);
@@ -155,9 +155,9 @@ namespace unit_tests
 //            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(5,3);
 
-            graph.AddNode(1,1);
-            graph.AddNode(2, 1);
-            graph.AddNode(3, 1);
+            graph.UpdateNode(1, 1, 1);
+            graph.UpdateNode(2, 1, 1);
+            graph.UpdateNode(3, 1, 1);
 
             // when
             Point startPoint = new Point(2, 0);
@@ -202,9 +202,9 @@ namespace unit_tests
 
             //            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(26, 24);
-            graph.AddNode(1, 1);
-            graph.AddNode(2, 1);
-            graph.AddNode(3, 1);
+            graph.UpdateNode(1, 1, 1);
+            graph.UpdateNode(2, 1, 1);
+            graph.UpdateNode(3, 1, 1);
 
             // when
             Point startPoint = new Point(2, 0);

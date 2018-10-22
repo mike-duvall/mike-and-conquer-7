@@ -623,7 +623,7 @@ namespace mike_and_conquer
         {
 
 
-            navigationGraph.AddNode(x, y);
+            navigationGraph.UpdateNode(x, y, 1);
             x = x * 24 + 12;
             y = y * 24 + 12;
 

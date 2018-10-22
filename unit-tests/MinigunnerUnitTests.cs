@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using mike_and_conquer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Minigunner = mike_and_conquer.Minigunner;
@@ -10,6 +11,8 @@ using TextureListMap = mike_and_conquer.TextureListMap;
 
 using FileStream = System.IO.FileStream;
 using FileMode = System.IO.FileMode;
+
+using Graph = mike_and_conquer.pathfinding.Graph;
 
 using Point = Microsoft.Xna.Framework.Point;
 
@@ -95,6 +98,8 @@ namespace unit_tests
         public void ContainsPoint_ShouldWorkAfterMinigunnerMoves()
         {
             // given
+            Graph graph = new Graph(26, 24);
+            MikeAndConquerGame.instance.navigationGraph = graph;
             Minigunner mingunner = new Minigunner(10, 10);
 
 

@@ -1,10 +1,5 @@
 ﻿
-using System.Collections.Generic;
-using mike_and_conquer.pathfinding;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Xna.Framework.Graphics;
-using AStar = mike_and_conquer.pathfinding.AStar;
-using Path = mike_and_conquer.pathfinding.Path;
 using Graph = mike_and_conquer.pathfinding.Graph;
 using Node = mike_and_conquer.pathfinding.Node;
 
@@ -123,7 +118,7 @@ namespace unit_tests
 //            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(3, 3);
 
-            graph.AddNode(1,1);
+            graph.UpdateNode(1, 1, 1);
 
 
             // then
@@ -205,9 +200,9 @@ namespace unit_tests
 //            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(3,3);
 
-            graph.AddNode(2, 0);
-            graph.AddNode(1, 1);
-            graph.AddNode(2, 1);
+            graph.UpdateNode(2, 0, 1);
+            graph.UpdateNode(1, 1, 1);
+            graph.UpdateNode(2, 1, 1);
 
             // then
             Node node = graph.nodeList[0];
@@ -287,9 +282,9 @@ namespace unit_tests
 //            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(5,3);
 
-            graph.AddNode(1, 1);
-            graph.AddNode(2, 1);
-            graph.AddNode(3, 1);
+            graph.UpdateNode(1, 1, 1);
+            graph.UpdateNode(2, 1, 1);
+            graph.UpdateNode(3, 1, 1);
 
 
             // then
@@ -395,9 +390,9 @@ namespace unit_tests
             Graph graph = new Graph(26, 24);
 
 
-            graph.AddNode(1, 1);
-            graph.AddNode(2, 1);
-            graph.AddNode(3, 1);
+            graph.UpdateNode(1, 1, 1);
+            graph.UpdateNode(2, 1, 1);
+            graph.UpdateNode(3, 1, 1);
 
             // then
             Node node = graph.nodeList[0];

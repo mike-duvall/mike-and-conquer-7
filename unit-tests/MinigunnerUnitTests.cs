@@ -26,7 +26,8 @@ namespace unit_tests
         public void ShouldNavigatePath()
         {
             // given
-            Minigunner minigunner = new Minigunner(10, 10);
+            Graph nullNavigationGraph = null;
+            Minigunner minigunner = new Minigunner(10, 10, nullNavigationGraph);
 
             // when
             List<Point> listOfPoints = new List<Point>();
@@ -99,8 +100,7 @@ namespace unit_tests
         {
             // given
             Graph graph = new Graph(26, 24);
-            MikeAndConquerGame.instance.navigationGraph = graph;
-            Minigunner mingunner = new Minigunner(10, 10);
+            Minigunner mingunner = new Minigunner(10, 10, graph);
 
 
             // when

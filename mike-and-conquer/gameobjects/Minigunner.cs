@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using mike_and_conquer.pathfinding;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -50,6 +51,8 @@ namespace mike_and_conquer
 
         private static int globalId = 1;
 
+        private Graph navigationGraph;
+
         Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()
             //.WriteTo.File("log.txt")
@@ -62,8 +65,9 @@ namespace mike_and_conquer
         }
 
 
-        public Minigunner(int x, int y)
+        public Minigunner(int x, int y, Graph navigationGraph)
         {
+            this.navigationGraph = navigationGraph;
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;
             position = new Vector2(x, y);
@@ -332,7 +336,7 @@ namespace mike_and_conquer
             destinationSquare.X = destination.X / 24;
             destinationSquare.Y = destination.Y / 24;
             
-            Path foundPath = aStar.FindPath(MikeAndConquerGame.instance.navigationGraph, startPoint, destinationSquare);
+            Path foundPath = aStar.FindPath(navigationGraph, startPoint, destinationSquare);
             
 
             this.currentCommand = Command.FOLLOW_PATH;

@@ -21,7 +21,7 @@ Open up the proper Rest endpoints on the Windows box in question, with this comm
 	To show permissions:
 		netsh http show urlacl
 
-Alos need to manually connect to the remote machine before the network connection will work
+Also need to manually connect to the remote machine before the network connection will work
 		Connect to \\192.168.0.195\buildoutput in xyplorer or file explorer
 
 For running mike-and-conquer-test Spock tests against remote instance, need to open up firewall on remote machine:

@@ -30,23 +30,6 @@ namespace mike_and_conquer.pathfinding
 
         private int[,] nodeArray;
 
-
-//        public Graph(int[,] nodeArray)
-//        {
-//            this.nodeArray = nodeArray;
-//            nodeList = new List<Node>();
-//            width = nodeArray.GetLength(0);
-//            height = nodeArray.GetLength(1);
-//
-//            for (int i = 0; i < nodeArray.Length; i++)
-//            {
-//                List<int> adjacentNodes = CalculateAdjacentNodes(currentNodeId);
-//                Node node = new Node(currentNodeId, adjacentNodes);
-//                nodeList.Add(node);
-//                currentNodeId++;
-//            }
-//        }
-
         public Graph(int width, int height)
         {
             this.width = width;

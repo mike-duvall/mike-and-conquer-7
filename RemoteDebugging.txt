@@ -12,7 +12,7 @@ Set username and password the same on both machines
 Open up the proper Rest endpoints on the Windows box in question, with this command:
 	(Run command prompt as administrator)
 	netsh http add urlacl url=http://*:11369/ user=mduvall
-		- Need to run this one both local box(for running locally) and remote box(for running remotely)
+		- Need to run this on both local box(for running locally) and remote box(for running remotely)
 
 
 	You can later delete this permission if needed with:

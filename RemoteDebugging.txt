@@ -12,12 +12,8 @@ Set username and password the same on both machines
 Open up the proper Rest endpoints on the Windows box in question, with this command:
 	(Run command prompt as administrator)
 	netsh http add urlacl url=http://*:11369/ user=mduvall
+		- Need to run this one both local box(for running locally) and remote box(for running remotely)
 
-	Update this documentation to make it clear this has to be done we fresh machine install
-	Also update to tell that you need to login to the remote machines before the network connection will work
-		Connect to \\192.168.0.195\buildoutput in xyplorer or file explorer
-
-	Need to run this one both local box(for running locally) and remote box(for running remotely)
 
 	You can later delete this permission if needed with:
 		netsh http delete urlacl http://*:11369/mac/
@@ -25,6 +21,8 @@ Open up the proper Rest endpoints on the Windows box in question, with this comm
 	To show permissions:
 		netsh http show urlacl
 
+Alos need to manually connect to the remote machine before the network connection will work
+		Connect to \\192.168.0.195\buildoutput in xyplorer or file explorer
 
 For running mike-and-conquer-test Spock tests against remote instance, need to open up firewall on remote machine:
 

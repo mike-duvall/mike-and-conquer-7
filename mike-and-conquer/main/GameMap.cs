@@ -14,6 +14,9 @@ namespace mike_and_conquer
         private List<MapTile> mapTileList;
         private Dictionary<byte, string> mapFileCodeToTextureStringMap = new Dictionary<byte, string>();
 
+        public int numColumns;
+        public int numRows;
+
 
         public List<MapTile> MapTiles
         {
@@ -39,8 +42,8 @@ namespace mike_and_conquer
             }
 
 
-            int numColumns = endX - startX + 1;
-            int numRows = endY - startY + 1;
+            numColumns = endX - startX + 1;
+            numRows = endY - startY + 1;
 
             for (int row = startY; row <= endY; row++)
             {

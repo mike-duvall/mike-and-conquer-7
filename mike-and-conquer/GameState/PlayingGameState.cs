@@ -1,9 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using mike_and_conquer.gameview;
+using Microsoft.Xna.Framework;
 using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Boolean = System.Boolean;
 using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
+using SandbagView = mike_and_conquer.gameview.SandbagView;
 using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController ;
 
 using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
@@ -233,6 +235,10 @@ namespace mike_and_conquer
                 nextMinigunnerView.Draw(gameTime, spriteBatch);
             }
 
+            foreach (SandbagView nextSandbagView in MikeAndConquerGame.instance.SandbagViewList)
+            {
+                nextSandbagView.Draw(gameTime, spriteBatch);
+            }
 
         }
     }

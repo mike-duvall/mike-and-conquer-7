@@ -187,3 +187,6 @@
 /processorParam:TextureFormat=Color
 /build:DestinationSquare.png
 
+#begin sbag.shp
+/copy:sbag.shp
+

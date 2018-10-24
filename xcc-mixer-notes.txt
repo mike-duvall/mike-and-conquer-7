@@ -18,4 +18,3 @@ Use "D:\Program Files (x86)\XCC\Utilities\XCC Editor.exe" to view map files.
 	Do "File->Open from Mix" to view GDI and Nod Missions
 
 
-

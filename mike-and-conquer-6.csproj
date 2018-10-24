@@ -68,14 +68,17 @@
   <ItemGroup>
     <Compile Include="mike-and-conquer\aicontroller\MinigunnerAIController.cs" />
     <Compile Include="mike-and-conquer\gameevent\AsyncGameEvent.cs" />
+    <Compile Include="mike-and-conquer\gameevent\CreateSandbagGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetCurrentGameStateGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\ResetGameGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateNodMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetNodMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
+    <Compile Include="mike-and-conquer\gameobjects\Sandbag.cs" />
     <Compile Include="mike-and-conquer\gameview\DestinationSquare.cs" />
     <Compile Include="mike-and-conquer\gameview\BasicMapSquare.cs" />
+    <Compile Include="mike-and-conquer\gameview\SandbagView.cs" />
     <Compile Include="mike-and-conquer\gameview\NodMinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\GdiMinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\MinigunnerView.cs" />
@@ -104,7 +107,10 @@
     <Compile Include="mike-and-conquer\openra\StreamExts.cs" />
     <Compile Include="mike-and-conquer\openra\TmpTDLoader.cs" />
     <Compile Include="mike-and-conquer\openra\XORDeltaCompression.cs" />
+    <Compile Include="mike-and-conquer\pathfinding\AStar.cs" />
     <Compile Include="mike-and-conquer\rest\GameStateController.cs" />
+    <Compile Include="mike-and-conquer\rest\RestSandbag.cs" />
+    <Compile Include="mike-and-conquer\rest\SandbagController.cs" />
     <Compile Include="mike-and-conquer\rest\LeftClickMinigunnerController.cs" />
     <Compile Include="mike-and-conquer\rest\RestMinigunnerId.cs" />
     <Compile Include="mike-and-conquer\rest\RightClickController.cs" />

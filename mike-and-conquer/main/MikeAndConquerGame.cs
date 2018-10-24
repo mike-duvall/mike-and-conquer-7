@@ -17,12 +17,14 @@ using CreateNodMinigunnerGameEvent = mike_and_conquer.gameevent.CreateNodMinigun
 using GetNodMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetNodMinigunnerByIdGameEvent;
 using ResetGameGameEvent = mike_and_conquer.gameevent.ResetGameGameEvent;
 using GetCurrentGameStateGameEvent = mike_and_conquer.gameevent.GetCurrentGameStateGameEvent;
+using CreateSandbagGameEvent = mike_and_conquer.gameevent.CreateSandbagGameEvent;
 using KeyboardState = Microsoft.Xna.Framework.Input.KeyboardState;
 using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
 using GdiMinigunnerView = mike_and_conquer.gameview.GdiMinigunnerView;
 using NodMinigunnerView = mike_and_conquer.gameview.NodMinigunnerView;
+using SandbagView = mike_and_conquer.gameview.SandbagView;
 
 using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
 
@@ -36,6 +38,9 @@ using Camera2D = mike_and_conquer_6.Camera2D;
 using Point = Microsoft.Xna.Framework.Point;
 
 using Serilog;
+
+using Graph = mike_and_conquer.pathfinding.Graph;
+using AStar = mike_and_conquer.pathfinding.AStar;
 
 namespace mike_and_conquer
 {
@@ -58,6 +63,11 @@ namespace mike_and_conquer
 
         private List<BasicMapSquare> basicMapSquareList;
 
+        private List<Sandbag> sandbagList;
+        private List<SandbagView> sandbagViewList;
+
+
+        public Graph navigationGraph;
         public List<BasicMapSquare> BasicMapSquareList
         {
             get { return basicMapSquareList; }
@@ -72,6 +82,11 @@ namespace mike_and_conquer
         public List<MinigunnerView> NodMinigunnerViewList
         {
             get { return nodMinigunnerViewList; }
+        }
+
+        public List<SandbagView> SandbagViewList
+        {
+            get { return sandbagViewList; }
         }
 
         public TextureListMap TextureListMap
@@ -139,6 +154,9 @@ namespace mike_and_conquer
             gdiMinigunnerViewList = new List<MinigunnerView>();
             nodMinigunnerViewList = new List<MinigunnerView>();
 
+            sandbagList = new List<Sandbag>();
+            sandbagViewList = new List<SandbagView>();
+
             currentGameState = new PlayingGameState();
 
             textureListMap = new TextureListMap();
@@ -170,24 +188,73 @@ namespace mike_and_conquer
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
             this.camera2D.Zoom = 3.0f;
-//            this.camera2D.Zoom = 1.0f;
+//            this.camera2D.Zoom = 2.0f;
             this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
 
             base.Initialize();
 
+            InitializeNavigationGraph();
+
             if (!testMode)
             {
                 bool aiIsOn = false;
-                AddNodMinigunner(310, 10, aiIsOn);
-                AddNodMinigunner(315, 30, aiIsOn);
+//                AddNodMinigunner(310, 10, aiIsOn);
+//                AddNodMinigunner(315, 30, aiIsOn);
 
-                AddGdiMinigunner(10, 300);
-                AddGdiMinigunner(30, 300);
+//                AddGdiMinigunner(10, 300);
+//                AddGdiMinigunner(30, 300);
+
+                AddGdiMinigunner(60, 12);
+                int mapX = 1;
+                int mapY = 1;
+
+                AddSandbag(1, 1, 10);
+                AddSandbag(2, 1, 10);
+                AddSandbag(3, 1, 10);
+                AddSandbag(4, 1, 10);
+
+                AddSandbag(1, 2, 5);
+                AddSandbag(1, 3, 5);
+                AddSandbag(4, 2, 5);
+                AddSandbag(4, 3, 5);
+
             }
 
             InitializeMap();
 
+
+
+        }
+
+        private void InitializeNavigationGraph()
+        {
+            
+//            int[,] nodeArray = new int[this.gameMap.numRows, this.gameMap.numColumns];
+//            int[,] nodeArray = new int[this.gameMap.numColumns, this.gameMap.numRows];
+
+
+//            int mapX = 1;
+//            int mapY = 1;
+//
+//            // Revisit this, doesn't match actual sandbags
+//            // Have this be done automatically, not manually
+//            nodeArray[1, 1] = 1;
+//            nodeArray[2, 1] = 1;
+//            nodeArray[3, 1] = 1;
+//            nodeArray[4, 1] = 1;
+//
+//            nodeArray[1, 2] = 1;
+//            nodeArray[1, 3] = 1;
+//            nodeArray[4, 2] = 1;
+//            nodeArray[4, 3] = 1;
+
+
+//            navigationGraph = new Graph(nodeArray);
+            navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
+
+            //            AStar aStar = new AStar();
+            //            aStar.FindPath(navigationGraph, )
         }
 
         private void InitializeMap()
@@ -278,6 +345,7 @@ namespace mike_and_conquer
             spriteBatch = new SpriteBatch(GraphicsDevice);
             textureListMap.LoadSpriteListFromShpFile(GdiMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
             textureListMap.LoadSpriteListFromShpFile(NodMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, NodMinigunnerView.SHP_FILE_COLOR_MAPPER);
+            textureListMap.LoadSpriteListFromShpFile(SandbagView.SPRITE_KEY, SandbagView.SHP_FILE_NAME, SandbagView.SHP_FILE_COLOR_MAPPER);
 
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
@@ -344,6 +412,9 @@ namespace mike_and_conquer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
+
+//            log.Information("gameTime.ElapsedGameTime.TotalMilliseconds:" + gameTime.ElapsedGameTime.TotalMilliseconds);
 
             KeyboardState state = Keyboard.GetState();
 
@@ -538,7 +609,7 @@ namespace mike_and_conquer
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(x, y);
+            Minigunner newMinigunner = new Minigunner(x, y,navigationGraph);
             gdiMinigunnerList.Add(newMinigunner);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
@@ -548,10 +619,31 @@ namespace mike_and_conquer
             return newMinigunner;
         }
 
+        internal Sandbag AddSandbag(int x, int y, int sandbagType)
+        {
+
+
+            navigationGraph.UpdateNode(x, y, 1);
+            x = x * 24 + 12;
+            y = y * 24 + 12;
+
+
+            Sandbag newSandbag = new Sandbag(x,y, sandbagType);
+            sandbagList.Add(newSandbag);
+
+            SandbagView newSandbagView = new SandbagView(newSandbag);
+            sandbagViewList.Add(newSandbagView);
+
+
+            return newSandbag;
+        }
+
+
+
 
         internal Minigunner AddNodMinigunner(int x, int y, bool aiIsOn)
         {
-            Minigunner newMinigunner = new Minigunner(x, y);
+            Minigunner newMinigunner = new Minigunner(x, y, navigationGraph);
             nodMinigunnerList.Add(newMinigunner);
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);
@@ -600,10 +692,20 @@ namespace mike_and_conquer
 
         public GameState HandleReset()
         {
+
+//            int[,] nodeArray = new int[this.gameMap.numColumns, this.gameMap.numRows];
+//            navigationGraph = new Graph(nodeArray);
+            navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
+
+
             gdiMinigunnerList.Clear();
             nodMinigunnerList.Clear();
+            sandbagList.Clear();
+
             gdiMinigunnerViewList.Clear();
             nodMinigunnerViewList.Clear();
+            sandbagViewList.Clear();
+
             return new PlayingGameState();
         }
 
@@ -643,6 +745,19 @@ namespace mike_and_conquer
 
         }
 
+        public Sandbag CreateSandbagViaEvent(int x, int y, int index)
+        {
+            CreateSandbagGameEvent gameEvent = new CreateSandbagGameEvent(x, y, index);
+
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            Sandbag sandbag = gameEvent.GetSandbag();
+            return sandbag;
+
+        }
 
         public Minigunner GetGDIMinigunnerByIdViaEvent(int id)
         {

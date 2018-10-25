@@ -53,9 +53,6 @@ namespace mike_and_conquer
 
         public static MikeAndConquerGame instance;
 
-//        public List<Minigunner> gdiMinigunnerList { get; }
-//        public List<Minigunner> nodMinigunnerList { get; }
-
         public GameWorld gameWorld;
 
         public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
@@ -65,7 +62,7 @@ namespace mike_and_conquer
 
         private List<BasicMapSquare> basicMapSquareList;
 
-        private List<Sandbag> sandbagList;
+//        private List<Sandbag> sandbagList;
         private List<SandbagView> sandbagViewList;
 
 
@@ -147,9 +144,6 @@ namespace mike_and_conquer
 
             gameWorld = new GameWorld();
 
-//            gdiMinigunnerList = new List<Minigunner>();
-//            nodMinigunnerList = new List<Minigunner>();
-
 
             basicMapSquareList = new List<BasicMapSquare>();
 
@@ -158,7 +152,6 @@ namespace mike_and_conquer
             gdiMinigunnerViewList = new List<MinigunnerView>();
             nodMinigunnerViewList = new List<MinigunnerView>();
 
-            sandbagList = new List<Sandbag>();
             sandbagViewList = new List<SandbagView>();
 
             currentGameState = new PlayingGameState();
@@ -233,32 +226,7 @@ namespace mike_and_conquer
 
         private void InitializeNavigationGraph()
         {
-            
-//            int[,] nodeArray = new int[this.gameMap.numRows, this.gameMap.numColumns];
-//            int[,] nodeArray = new int[this.gameMap.numColumns, this.gameMap.numRows];
-
-
-//            int mapX = 1;
-//            int mapY = 1;
-//
-//            // Revisit this, doesn't match actual sandbags
-//            // Have this be done automatically, not manually
-//            nodeArray[1, 1] = 1;
-//            nodeArray[2, 1] = 1;
-//            nodeArray[3, 1] = 1;
-//            nodeArray[4, 1] = 1;
-//
-//            nodeArray[1, 2] = 1;
-//            nodeArray[1, 3] = 1;
-//            nodeArray[4, 2] = 1;
-//            nodeArray[4, 3] = 1;
-
-
-//            navigationGraph = new Graph(nodeArray);
             navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
-
-            //            AStar aStar = new AStar();
-            //            aStar.FindPath(navigationGraph, )
         }
 
         private void InitializeMap()
@@ -567,54 +535,9 @@ namespace mike_and_conquer
             base.Draw(gameTime);
         }
 
-
-
-
-
-//        internal Minigunner GetGdiMinigunner(int id)
-//        {
-//            Minigunner foundMinigunner = null;
-//            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-//            {
-//                if (nextMinigunner.id == id)
-//                {
-//                    foundMinigunner = nextMinigunner;
-//                }
-//            }
-//
-//            return foundMinigunner;
-//        }
-
-//        internal Minigunner GetNodMinigunner(int id)
-//        {
-//            Minigunner foundMinigunner = null;
-//            foreach (Minigunner nextMinigunner in nodMinigunnerList)
-//            {
-//                if (nextMinigunner.id == id)
-//                {
-//                    foundMinigunner = nextMinigunner;
-//                }
-//
-//            }
-//            return foundMinigunner;
-//        }
-
-
-//        internal Minigunner GetGdiOrNodMinigunner(int id)
-//        {
-//            Minigunner foundMinigunner = null;
-//            foundMinigunner = GetGdiMinigunner(id);
-//            if(foundMinigunner == null)
-//            {
-//                foundMinigunner = GetNodMinigunner(id);
-//            }
-//            return foundMinigunner;
-//        }
-
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
             Minigunner newMinigunner = new Minigunner(x, y,navigationGraph);
-//            gdiMinigunnerList.Add(newMinigunner);
             GameWorld.instance.gdiMinigunnerList.Add(newMinigunner);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
@@ -626,30 +549,23 @@ namespace mike_and_conquer
 
         internal Sandbag AddSandbag(int x, int y, int sandbagType)
         {
-
-
             navigationGraph.UpdateNode(x, y, 1);
             x = x * 24 + 12;
             y = y * 24 + 12;
 
 
             Sandbag newSandbag = new Sandbag(x,y, sandbagType);
-            sandbagList.Add(newSandbag);
+            GameWorld.instance.sandbagList.Add(newSandbag);
 
             SandbagView newSandbagView = new SandbagView(newSandbag);
             sandbagViewList.Add(newSandbagView);
-
-
             return newSandbag;
         }
-
-
 
 
         internal Minigunner AddNodMinigunner(int x, int y, bool aiIsOn)
         {
             Minigunner newMinigunner = new Minigunner(x, y, navigationGraph);
-//            nodMinigunnerList.Add(newMinigunner);
             GameWorld.instance.nodMinigunnerList.Add(newMinigunner);
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);
@@ -664,20 +580,6 @@ namespace mike_and_conquer
             return newMinigunner;
         }
 
-
-
-//        internal void SelectSingleGDIUnit(Minigunner minigunner)
-//        {
-//            minigunner.selected = true;
-//            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-//            {
-//               if (nextMinigunner.id != minigunner.id)
-//               {
-//                    nextMinigunner.selected = false;
-//               }
-//           }
-//
-//        }
 
         private void LoadSingleTextureFromFile(string key, string fileName)
         {
@@ -699,20 +601,11 @@ namespace mike_and_conquer
         public GameState HandleReset()
         {
 
-//            int[,] nodeArray = new int[this.gameMap.numColumns, this.gameMap.numRows];
-//            navigationGraph = new Graph(nodeArray);
             navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
-
-
-//            gdiMinigunnerList.Clear();
-//            nodMinigunnerList.Clear();
-            sandbagList.Clear();
-
             gdiMinigunnerViewList.Clear();
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
 
-//            return new PlayingGameState();
             return gameWorld.HandleReset();
         }
 

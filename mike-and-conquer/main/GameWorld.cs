@@ -14,6 +14,7 @@ namespace mike_and_conquer
 
         public List<Minigunner> gdiMinigunnerList { get; }
         public List<Minigunner> nodMinigunnerList { get; }
+        public List<Sandbag> sandbagList;
 
         public static GameWorld instance;
 
@@ -21,7 +22,7 @@ namespace mike_and_conquer
         {
             gdiMinigunnerList = new List<Minigunner>();
             nodMinigunnerList = new List<Minigunner>();
-
+            sandbagList = new List<Sandbag>();
             GameWorld.instance = this;
         }
 
@@ -84,6 +85,7 @@ namespace mike_and_conquer
         {
             gdiMinigunnerList.Clear();
             nodMinigunnerList.Clear();
+            sandbagList.Clear();
             return new PlayingGameState();
 
         }

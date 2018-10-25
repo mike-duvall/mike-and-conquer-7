@@ -40,7 +40,7 @@ using Point = Microsoft.Xna.Framework.Point;
 using Serilog;
 
 using Graph = mike_and_conquer.pathfinding.Graph;
-using AStar = mike_and_conquer.pathfinding.AStar;
+
 
 namespace mike_and_conquer
 {
@@ -53,8 +53,10 @@ namespace mike_and_conquer
 
         public static MikeAndConquerGame instance;
 
-        public List<Minigunner> gdiMinigunnerList { get; }
-        public List<Minigunner> nodMinigunnerList { get; }
+//        public List<Minigunner> gdiMinigunnerList { get; }
+//        public List<Minigunner> nodMinigunnerList { get; }
+
+        public GameWorld gameWorld;
 
         public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
 
@@ -143,8 +145,10 @@ namespace mike_and_conquer
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
             this.IsFixedTimeStep = false;
 
-            gdiMinigunnerList = new List<Minigunner>();
-            nodMinigunnerList = new List<Minigunner>();
+            gameWorld = new GameWorld();
+
+//            gdiMinigunnerList = new List<Minigunner>();
+//            nodMinigunnerList = new List<Minigunner>();
 
 
             basicMapSquareList = new List<BasicMapSquare>();
@@ -567,50 +571,51 @@ namespace mike_and_conquer
 
 
 
-        internal Minigunner GetGdiMinigunner(int id)
-        {
-            Minigunner foundMinigunner = null;
-            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            {
-                if (nextMinigunner.id == id)
-                {
-                    foundMinigunner = nextMinigunner;
-                }
-            }
+//        internal Minigunner GetGdiMinigunner(int id)
+//        {
+//            Minigunner foundMinigunner = null;
+//            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+//            {
+//                if (nextMinigunner.id == id)
+//                {
+//                    foundMinigunner = nextMinigunner;
+//                }
+//            }
+//
+//            return foundMinigunner;
+//        }
 
-            return foundMinigunner;
-        }
-
-        internal Minigunner GetNodMinigunner(int id)
-        {
-            Minigunner foundMinigunner = null;
-            foreach (Minigunner nextMinigunner in nodMinigunnerList)
-            {
-                if (nextMinigunner.id == id)
-                {
-                    foundMinigunner = nextMinigunner;
-                }
-
-            }
-            return foundMinigunner;
-        }
+//        internal Minigunner GetNodMinigunner(int id)
+//        {
+//            Minigunner foundMinigunner = null;
+//            foreach (Minigunner nextMinigunner in nodMinigunnerList)
+//            {
+//                if (nextMinigunner.id == id)
+//                {
+//                    foundMinigunner = nextMinigunner;
+//                }
+//
+//            }
+//            return foundMinigunner;
+//        }
 
 
-        internal Minigunner GetGdiOrNodMinigunner(int id)
-        {
-            Minigunner foundMinigunner = null;
-            foundMinigunner = GetGdiMinigunner(id);
-            if(foundMinigunner == null)
-            {
-                foundMinigunner = GetNodMinigunner(id);
-            }
-            return foundMinigunner;
-        }
+//        internal Minigunner GetGdiOrNodMinigunner(int id)
+//        {
+//            Minigunner foundMinigunner = null;
+//            foundMinigunner = GetGdiMinigunner(id);
+//            if(foundMinigunner == null)
+//            {
+//                foundMinigunner = GetNodMinigunner(id);
+//            }
+//            return foundMinigunner;
+//        }
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
             Minigunner newMinigunner = new Minigunner(x, y,navigationGraph);
-            gdiMinigunnerList.Add(newMinigunner);
+//            gdiMinigunnerList.Add(newMinigunner);
+            GameWorld.instance.gdiMinigunnerList.Add(newMinigunner);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
             // to enable running headless with no UI
@@ -644,7 +649,8 @@ namespace mike_and_conquer
         internal Minigunner AddNodMinigunner(int x, int y, bool aiIsOn)
         {
             Minigunner newMinigunner = new Minigunner(x, y, navigationGraph);
-            nodMinigunnerList.Add(newMinigunner);
+//            nodMinigunnerList.Add(newMinigunner);
+            GameWorld.instance.nodMinigunnerList.Add(newMinigunner);
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);
 
@@ -660,18 +666,18 @@ namespace mike_and_conquer
 
 
 
-        internal void SelectSingleGDIUnit(Minigunner minigunner)
-        {
-            minigunner.selected = true;
-            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            {
-               if (nextMinigunner.id != minigunner.id)
-               {
-                    nextMinigunner.selected = false;
-               }
-           }
-
-        }
+//        internal void SelectSingleGDIUnit(Minigunner minigunner)
+//        {
+//            minigunner.selected = true;
+//            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+//            {
+//               if (nextMinigunner.id != minigunner.id)
+//               {
+//                    nextMinigunner.selected = false;
+//               }
+//           }
+//
+//        }
 
         private void LoadSingleTextureFromFile(string key, string fileName)
         {
@@ -698,15 +704,16 @@ namespace mike_and_conquer
             navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
 
 
-            gdiMinigunnerList.Clear();
-            nodMinigunnerList.Clear();
+//            gdiMinigunnerList.Clear();
+//            nodMinigunnerList.Clear();
             sandbagList.Clear();
 
             gdiMinigunnerViewList.Clear();
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
 
-            return new PlayingGameState();
+//            return new PlayingGameState();
+            return gameWorld.HandleReset();
         }
 
 

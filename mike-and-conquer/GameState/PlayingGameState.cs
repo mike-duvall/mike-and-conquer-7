@@ -55,7 +55,7 @@ namespace mike_and_conquer
                 nextMinigunnerAIController.Update(gameTime);
             }
 
-            foreach (Minigunner nextMinigunner in MikeAndConquerGame.instance.gdiMinigunnerList)
+            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
             {
                 if(nextMinigunner.health > 0)
                 {
@@ -63,7 +63,7 @@ namespace mike_and_conquer
                 }
             }
 
-            foreach (Minigunner nextMinigunner in MikeAndConquerGame.instance.nodMinigunnerList)
+            foreach (Minigunner nextMinigunner in GameWorld.instance.nodMinigunnerList)
             {
                 if (nextMinigunner.health > 0)
                 {
@@ -89,12 +89,12 @@ namespace mike_and_conquer
 
         internal Boolean NodMinigunnersExistAndAreAllDead()
         {
-            if(MikeAndConquerGame.instance.nodMinigunnerList.Count == 0)
+            if(GameWorld.instance.nodMinigunnerList.Count == 0)
             {
                 return false;
             }
             Boolean allDead = true;
-            foreach (Minigunner nextMinigunner in MikeAndConquerGame.instance.nodMinigunnerList)
+            foreach (Minigunner nextMinigunner in GameWorld.instance.nodMinigunnerList)
             {
                 if( nextMinigunner.health > 0)
                 {
@@ -107,12 +107,12 @@ namespace mike_and_conquer
 
         internal Boolean GdiMinigunnersExistAndAreAllDead()
         {
-            if (MikeAndConquerGame.instance.gdiMinigunnerList.Count == 0)
+            if (GameWorld.instance.gdiMinigunnerList.Count == 0)
             {
                 return false;
             }
             Boolean allDead = true;
-            foreach (Minigunner nextMinigunner in MikeAndConquerGame.instance.gdiMinigunnerList)
+            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
             {
                 if (nextMinigunner.health > 0)
                 {
@@ -152,7 +152,7 @@ namespace mike_and_conquer
 
         internal void HandleRightClick(int mouseX, int mouseY)
         {
-            foreach (Minigunner nextMinigunner in MikeAndConquerGame.instance.gdiMinigunnerList)
+            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
             {
                 nextMinigunner.selected = false;
             }
@@ -164,7 +164,7 @@ namespace mike_and_conquer
 
         private bool CheckForAndHandleLeftClickOnMap(int mouseX, int mouseY)
         {
-            foreach(Minigunner nextMinigunner in MikeAndConquerGame.instance.gdiMinigunnerList)
+            foreach(Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
             {
                 if(nextMinigunner.selected == true)
                 {
@@ -180,12 +180,12 @@ namespace mike_and_conquer
         internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)
         {
             Boolean handled = false;
-            foreach (Minigunner nextMinigunner in MikeAndConquerGame.instance.gdiMinigunnerList)
+            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
             {
                 if (nextMinigunner.ContainsPoint(mouseX, mouseY))
                 {
                     handled = true;
-                    MikeAndConquerGame.instance.SelectSingleGDIUnit(nextMinigunner);
+                    GameWorld.instance.SelectSingleGDIUnit(nextMinigunner);
                 }
             }
 
@@ -196,12 +196,12 @@ namespace mike_and_conquer
         internal Boolean CheckForAndHandleLeftClickOnEnemyUnit(int mouseX, int mouseY)
         {
             bool handled = false;
-            foreach (Minigunner nextNodMinigunner in MikeAndConquerGame.instance.nodMinigunnerList)
+            foreach (Minigunner nextNodMinigunner in GameWorld.instance.nodMinigunnerList)
             {
                 if (nextNodMinigunner.ContainsPoint(mouseX, mouseY))
                 {
                     handled = true;
-                    foreach (Minigunner nextGdiMinigunner in MikeAndConquerGame.instance.gdiMinigunnerList)
+                    foreach (Minigunner nextGdiMinigunner in GameWorld.instance.gdiMinigunnerList)
                     {
                         if (nextGdiMinigunner.selected)
                         {

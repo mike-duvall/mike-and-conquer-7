@@ -1,4 +1,5 @@
 ﻿
+using System;
 using IntPtr = System.IntPtr;
 
 using System.Runtime.InteropServices;
@@ -92,7 +93,7 @@ namespace mike_and_conquer_6.mike_and_conquer
             INPUT mouseInput = new INPUT();
             mouseInput.type = 0;
             mouseInput.mkhi.mi.mouseData = 0;
-            mouseInput.mkhi.mi.time = 1000;
+            mouseInput.mkhi.mi.time = (uint)DateTime.Now.Ticks;
             int size = Marshal.SizeOf(mouseInput);
             mouseInput.mkhi.mi.dx = (int)normalizedMouseX;
             mouseInput.mkhi.mi.dy = (int)normalizedMouseY;
@@ -117,6 +118,7 @@ namespace mike_and_conquer_6.mike_and_conquer
             uint y3 = SendInput(1, ref mouseInput, size);
 
             mouseInput.mkhi.mi.dwFlags = mouseDownFlag;
+            mouseInput.mkhi.mi.time = (uint) DateTime.Now.Ticks;
             uint y = SendInput(1, ref mouseInput, size);
 
             System.Threading.Thread.Sleep(1000);

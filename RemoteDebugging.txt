@@ -29,7 +29,7 @@ For running mike-and-conquer-test Spock tests against remote instance, need to o
 	Add firewall rule:
 		netsh advfirewall firewall add rule name="Open port 11369 for mike-and-conquer remote test running" dir=in action=allow protocol=TCP localport=11369
 
-	To remote the same rule:
+	To remove the same rule:
 		netsh advfirewall firewall delete rule name="Open port 11369 for mike-and-conquer remote test running" protocol=tcp localport=11369
 
 

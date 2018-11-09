@@ -127,9 +127,11 @@ namespace mike_and_conquer
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;
-                graphics.PreferredBackBufferWidth = 1920;
-                graphics.PreferredBackBufferHeight = 1080;
-                 
+                //                graphics.PreferredBackBufferWidth = 1920;
+                //                graphics.PreferredBackBufferHeight = 1080;
+                graphics.PreferredBackBufferWidth = 2880;
+                graphics.PreferredBackBufferHeight = 1800;
+
             }
             else
             {
@@ -184,7 +186,7 @@ namespace mike_and_conquer
 
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
-            this.camera2D.Zoom = 3.0f;
+            this.camera2D.Zoom = 4.8f;
 //            this.camera2D.Zoom = 2.0f;
             this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 

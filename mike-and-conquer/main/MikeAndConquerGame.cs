@@ -39,7 +39,7 @@ using Point = Microsoft.Xna.Framework.Point;
 
 using Serilog;
 
-using Graph = mike_and_conquer.pathfinding.Graph;
+//using Graph = mike_and_conquer.pathfinding.Graph;
 
 
 namespace mike_and_conquer
@@ -62,11 +62,9 @@ namespace mike_and_conquer
 
         private List<BasicMapSquare> basicMapSquareList;
 
-//        private List<Sandbag> sandbagList;
         private List<SandbagView> sandbagViewList;
 
 
-        public Graph navigationGraph;
         public List<BasicMapSquare> BasicMapSquareList
         {
             get { return basicMapSquareList; }
@@ -190,10 +188,9 @@ namespace mike_and_conquer
 //            this.camera2D.Zoom = 2.0f;
             this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
-
             base.Initialize();
 
-            InitializeNavigationGraph();
+            gameWorld.Initialize(this.gameMap.numColumns, this.gameMap.numRows);
 
             if (!testMode)
             {
@@ -226,10 +223,10 @@ namespace mike_and_conquer
 
         }
 
-        private void InitializeNavigationGraph()
-        {
-            navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
-        }
+//        private void InitializeNavigationGraph()
+//        {
+//            navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
+//        }
 
         private void InitializeMap()
         {
@@ -539,7 +536,7 @@ namespace mike_and_conquer
 
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(x, y,navigationGraph);
+            Minigunner newMinigunner = new Minigunner(x, y, gameWorld.navigationGraph);
             GameWorld.instance.gdiMinigunnerList.Add(newMinigunner);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
@@ -551,7 +548,7 @@ namespace mike_and_conquer
 
         internal Sandbag AddSandbag(int x, int y, int sandbagType)
         {
-            navigationGraph.UpdateNode(x, y, 1);
+            gameWorld.navigationGraph.UpdateNode(x, y, 1);
             x = x * 24 + 12;
             y = y * 24 + 12;
 
@@ -567,7 +564,7 @@ namespace mike_and_conquer
 
         internal Minigunner AddNodMinigunner(int x, int y, bool aiIsOn)
         {
-            Minigunner newMinigunner = new Minigunner(x, y, navigationGraph);
+            Minigunner newMinigunner = new Minigunner(x, y, gameWorld.navigationGraph);
             GameWorld.instance.nodMinigunnerList.Add(newMinigunner);
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);
@@ -603,7 +600,6 @@ namespace mike_and_conquer
         public GameState HandleReset()
         {
 
-            navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
             gdiMinigunnerViewList.Clear();
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();

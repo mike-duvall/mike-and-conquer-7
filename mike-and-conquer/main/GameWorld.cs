@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Graph = mike_and_conquer.pathfinding.Graph;
 
 namespace mike_and_conquer
 
 {
     public class GameWorld
     {
-
-
-
         public List<Minigunner> gdiMinigunnerList { get; }
         public List<Minigunner> nodMinigunnerList { get; }
         public List<Sandbag> sandbagList;
+
+        public Graph navigationGraph;
 
         public static GameWorld instance;
 
@@ -25,6 +23,24 @@ namespace mike_and_conquer
             sandbagList = new List<Sandbag>();
             GameWorld.instance = this;
         }
+
+        public GameState HandleReset()
+        {
+            gdiMinigunnerList.Clear();
+            nodMinigunnerList.Clear();
+            sandbagList.Clear();
+            int oldNumColumns = this.navigationGraph.width;
+            int oldNumRows = this.navigationGraph.height;
+            navigationGraph = new Graph(oldNumColumns, oldNumRows);
+            return new PlayingGameState();
+
+        }
+
+        internal void Initialize(int numColumns, int numRows)
+        {
+            navigationGraph = new Graph(numColumns, numRows);
+        }
+
 
 
         internal Minigunner GetGdiMinigunner(int id)
@@ -78,15 +94,6 @@ namespace mike_and_conquer
                     nextMinigunner.selected = false;
                 }
             }
-
-        }
-
-        public GameState HandleReset()
-        {
-            gdiMinigunnerList.Clear();
-            nodMinigunnerList.Clear();
-            sandbagList.Clear();
-            return new PlayingGameState();
 
         }
 

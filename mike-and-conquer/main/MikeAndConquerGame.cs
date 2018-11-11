@@ -93,7 +93,6 @@ namespace mike_and_conquer
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private GameState currentGameState;
         private TextureListMap textureListMap;
         private List<AsyncGameEvent> gameEvents;
 
@@ -153,8 +152,6 @@ namespace mike_and_conquer
             nodMinigunnerViewList = new List<MinigunnerView>();
 
             sandbagViewList = new List<SandbagView>();
-
-            currentGameState = new PlayingGameState();
 
             textureListMap = new TextureListMap();
 
@@ -395,7 +392,8 @@ namespace mike_and_conquer
                 Program.restServer.Dispose();
                 Exit();
             }
-            currentGameState = currentGameState.Update(gameTime);
+
+            this.gameWorld.Update(gameTime);
 
             this.camera2D.Rotation = testRotation;
             //            testRotation += 0.01f;
@@ -527,7 +525,7 @@ namespace mike_and_conquer
 //                nullEffect,
 //                null);
 
-            currentGameState.Draw(gameTime, spriteBatch);
+            this.gameWorld.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
            
@@ -589,11 +587,6 @@ namespace mike_and_conquer
             spriteTextureList.textureHeight = texture2D.Height;
 
             TextureListMap.AddTextureList(key, spriteTextureList);
-        }
-
-        internal GameState GetCurrentGameState()
-        {
-            return currentGameState;
         }
 
 

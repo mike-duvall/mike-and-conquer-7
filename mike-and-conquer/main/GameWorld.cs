@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Graph = mike_and_conquer.pathfinding.Graph;
 
 namespace mike_and_conquer
@@ -14,6 +15,8 @@ namespace mike_and_conquer
 
         public Graph navigationGraph;
 
+        private GameState currentGameState;
+
         public static GameWorld instance;
 
         public GameWorld()
@@ -21,6 +24,8 @@ namespace mike_and_conquer
             gdiMinigunnerList = new List<Minigunner>();
             nodMinigunnerList = new List<Minigunner>();
             sandbagList = new List<Sandbag>();
+            currentGameState = new PlayingGameState();
+
             GameWorld.instance = this;
         }
 
@@ -35,6 +40,12 @@ namespace mike_and_conquer
             return new PlayingGameState();
 
         }
+
+        internal GameState GetCurrentGameState()
+        {
+            return currentGameState;
+        }
+
 
         internal void Initialize(int numColumns, int numRows)
         {
@@ -97,5 +108,14 @@ namespace mike_and_conquer
 
         }
 
+        internal void Update(GameTime gameTime)
+        {
+            currentGameState = currentGameState.Update(gameTime);
+        }
+
+        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            currentGameState.Draw(gameTime, spriteBatch);
+        }
     }
 }

@@ -113,9 +113,5 @@ namespace mike_and_conquer
             currentGameState = currentGameState.Update(gameTime);
         }
 
-        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            currentGameState.Draw(gameTime, spriteBatch);
-        }
     }
 }

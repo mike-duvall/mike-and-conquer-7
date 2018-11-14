@@ -1,15 +1,18 @@
-﻿using mike_and_conquer.gameview;
-using Microsoft.Xna.Framework;
+﻿
+
 using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Boolean = System.Boolean;
-using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
-using SandbagView = mike_and_conquer.gameview.SandbagView;
 using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController ;
 
 using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
-using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
+
+using GameTime = Microsoft.Xna.Framework.GameTime;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
+using Matrix = Microsoft.Xna.Framework.Matrix;
+using Point = Microsoft.Xna.Framework.Point;
+
 
 namespace mike_and_conquer
 {
@@ -215,31 +218,5 @@ namespace mike_and_conquer
 
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-
-
-            foreach (BasicMapSquare basicMapSquare in MikeAndConquerGame.instance.BasicMapSquareList)
-            {
-                basicMapSquare.Draw(gameTime, spriteBatch);
-            }
-
-
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.GdiMinigunnerViewList)
-            {
-                nextMinigunnerView.Draw(gameTime, spriteBatch);
-            }
-
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.NodMinigunnerViewList)
-            {
-                nextMinigunnerView.Draw(gameTime, spriteBatch);
-            }
-
-            foreach (SandbagView nextSandbagView in MikeAndConquerGame.instance.SandbagViewList)
-            {
-                nextSandbagView.Draw(gameTime, spriteBatch);
-            }
-
-        }
     }
 }

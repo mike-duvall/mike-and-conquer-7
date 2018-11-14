@@ -10,6 +10,5 @@ namespace mike_and_conquer
     {
         abstract public String GetName();
         abstract public GameState Update(GameTime gameTime);
-        abstract public void Draw(GameTime gameTime, SpriteBatch spriteBatch);
     }
 }

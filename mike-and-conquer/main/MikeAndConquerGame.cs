@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using mike_and_conquer.gameview;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
@@ -64,6 +64,7 @@ namespace mike_and_conquer
 
         private List<SandbagView> sandbagViewList;
 
+        private GameStateView currentGameStateView;
 
         public List<BasicMapSquare> BasicMapSquareList
         {
@@ -101,7 +102,7 @@ namespace mike_and_conquer
         private GameMap gameMap;
 
 
-        KeyboardState oldState;
+        KeyboardState oldKeyboardState;
 
         Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()
@@ -157,7 +158,7 @@ namespace mike_and_conquer
 
             gameEvents = new List<AsyncGameEvent>();
 
-            oldState = Keyboard.GetState();
+            oldKeyboardState = Keyboard.GetState();
 
             MikeAndConquerGame.instance = this;
         }
@@ -399,7 +400,7 @@ namespace mike_and_conquer
             //            testRotation += 0.01f;
 
 
-            KeyboardState newState = Keyboard.GetState();  // get the newest state
+            KeyboardState newKeyboardState = Keyboard.GetState();  // get the newest state
 
             int originalX = (int)this.camera2D.Location.X;
             int originalY = (int)this.camera2D.Location.Y;
@@ -432,40 +433,57 @@ namespace mike_and_conquer
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
 
-            else if (oldState.IsKeyUp(Keys.Right) && newState.IsKeyDown(Keys.Right))
+            else if (oldKeyboardState.IsKeyUp(Keys.Right) && newKeyboardState.IsKeyDown(Keys.Right))
             {
                 int newX = (int)(this.camera2D.Location.X + scrollAmount);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
-            else if (oldState.IsKeyUp(Keys.Left) && newState.IsKeyDown(Keys.Left))
+            else if (oldKeyboardState.IsKeyUp(Keys.Left) && newKeyboardState.IsKeyDown(Keys.Left))
             {
                 int newX = (int)(this.camera2D.Location.X - scrollAmount);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
-            else if (oldState.IsKeyUp(Keys.Down) && newState.IsKeyDown(Keys.Down))
+            else if (oldKeyboardState.IsKeyUp(Keys.Down) && newKeyboardState.IsKeyDown(Keys.Down))
             {
 
                 int newY = (int)(this.camera2D.Location.Y + scrollAmount);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
-            else if (oldState.IsKeyUp(Keys.Up) && newState.IsKeyDown(Keys.Up))
+            else if (oldKeyboardState.IsKeyUp(Keys.Up) && newKeyboardState.IsKeyDown(Keys.Up))
             {
                 int newY = (int)(this.camera2D.Location.Y - scrollAmount);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
-            else if (oldState.IsKeyUp(Keys.OemPlus) && newState.IsKeyDown(Keys.OemPlus))
+            else if (oldKeyboardState.IsKeyUp(Keys.OemPlus) && newKeyboardState.IsKeyDown(Keys.OemPlus))
             {
                 float newZoom = this.camera2D.Zoom + 0.2f;
                 this.camera2D.Zoom = newZoom;
             }
-            else if (oldState.IsKeyUp(Keys.OemMinus) && newState.IsKeyDown(Keys.OemMinus))
+            else if (oldKeyboardState.IsKeyUp(Keys.OemMinus) && newKeyboardState.IsKeyDown(Keys.OemMinus))
             {
                 float newZoom = this.camera2D.Zoom - 0.2f;
                 this.camera2D.Zoom = newZoom;
             }
 
             resetCamera();
-            oldState = newState;   
+            oldKeyboardState = newKeyboardState;
+
+            GameState currentGameState = this.gameWorld.GetCurrentGameState();
+            if (currentGameState.GetType().Equals(typeof(PlayingGameState)))
+            {
+                currentGameStateView = new PlayingGameStateView();
+            }
+            else if (currentGameState.GetType().Equals(typeof(MissionAccomplishedGameState)))
+            {
+                currentGameStateView = new MissionAccomplishedGameStateView();
+            }
+            else if (currentGameState.GetType().Equals(typeof(MissionFailedGameState)))
+            {
+                currentGameStateView = new MissionFailedGameStateView();
+            }
+
+
+
             base.Update(gameTime);
         }
 
@@ -525,7 +543,8 @@ namespace mike_and_conquer
 //                nullEffect,
 //                null);
 
-            this.gameWorld.Draw(gameTime, spriteBatch);
+
+            this.currentGameStateView.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
            

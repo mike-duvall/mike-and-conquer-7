@@ -78,6 +78,10 @@
     <Compile Include="mike-and-conquer\gameobjects\Sandbag.cs" />
     <Compile Include="mike-and-conquer\gameview\DestinationSquare.cs" />
     <Compile Include="mike-and-conquer\gameview\BasicMapSquare.cs" />
+    <Compile Include="mike-and-conquer\gameview\MissionFailedGameStateView.cs" />
+    <Compile Include="mike-and-conquer\gameview\MissionAccomplishedGameStateView.cs" />
+    <Compile Include="mike-and-conquer\gameview\GameStateView.cs" />
+    <Compile Include="mike-and-conquer\gameview\PlayingGameStateView.cs" />
     <Compile Include="mike-and-conquer\gameview\SandbagView.cs" />
     <Compile Include="mike-and-conquer\gameview\NodMinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\GdiMinigunnerView.cs" />

@@ -29,5 +29,13 @@ For running mike-and-conquer-test Spock tests against remote instance, need to o
 	Add firewall rule:
 		netsh advfirewall firewall add rule name="Open port 11369 for mike-and-conquer remote test running" dir=in action=allow protocol=TCP localport=11369
 
-	To remote the same rule:
+	To remove the same rule:
 		netsh advfirewall firewall delete rule name="Open port 11369 for mike-and-conquer remote test running" protocol=tcp localport=11369
+
+
+Also, setup local project config to set build output to be the remote machine and to connect to the remote machine when debugging:
+* Right click the project name ("mike-and-conquer-6")
+* Select Properties
+* On the Build tab, set Ouput Path to:  \\192.168.0.195\buildoutput\ (Or whatever the IP address of the remote machine is)
+* On the Debug tab, Check "Use remote machine", and set the value to "192.168.0.195" (Or whatever the IP address of the remote machine is)
+

@@ -12,14 +12,15 @@ namespace mike_and_conquer.rest
 
         public IHttpActionResult Post([FromBody]RestMinigunnerId restMinigunnerId)
         {
-            Minigunner gdiMinigunner = MikeAndConquerGame.instance.GetGdiOrNodMinigunner(restMinigunnerId.id);
-
+            //            Minigunner gdiMinigunner = MikeAndConquerGame.instance.GetGdiOrNodMinigunner(restMinigunnerId.id);
+            Minigunner gdiMinigunner = GameWorld.instance.GetGdiOrNodMinigunner(restMinigunnerId.id);
+        
             Vector2 minigunnerLocation = new Microsoft.Xna.Framework.Vector2();
             minigunnerLocation.X = gdiMinigunner.position.X;
             minigunnerLocation.Y = gdiMinigunner.position.Y;
-
+        
             Vector2 transformedLocation = gdiMinigunner.GetScreenPosition();
-
+        
             int screenWidth = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Width;
             int screenHeight = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Height;
 

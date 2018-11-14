@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-
+﻿using System;
+using System.Collections.Generic;
+using mike_and_conquer.gameview;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
@@ -39,8 +40,8 @@ using Point = Microsoft.Xna.Framework.Point;
 
 using Serilog;
 
-using Graph = mike_and_conquer.pathfinding.Graph;
-using AStar = mike_and_conquer.pathfinding.AStar;
+
+
 
 namespace mike_and_conquer
 {
@@ -53,8 +54,7 @@ namespace mike_and_conquer
 
         public static MikeAndConquerGame instance;
 
-        public List<Minigunner> gdiMinigunnerList { get; }
-        public List<Minigunner> nodMinigunnerList { get; }
+        public GameWorld gameWorld;
 
         public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
 
@@ -63,11 +63,10 @@ namespace mike_and_conquer
 
         private List<BasicMapSquare> basicMapSquareList;
 
-        private List<Sandbag> sandbagList;
         private List<SandbagView> sandbagViewList;
 
+        private GameStateView currentGameStateView;
 
-        public Graph navigationGraph;
         public List<BasicMapSquare> BasicMapSquareList
         {
             get { return basicMapSquareList; }
@@ -96,7 +95,6 @@ namespace mike_and_conquer
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private GameState currentGameState;
         private TextureListMap textureListMap;
         private List<AsyncGameEvent> gameEvents;
 
@@ -105,7 +103,7 @@ namespace mike_and_conquer
         private GameMap gameMap;
 
 
-        KeyboardState oldState;
+        KeyboardState oldKeyboardState;
 
         Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()
@@ -128,9 +126,11 @@ namespace mike_and_conquer
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;
-                graphics.PreferredBackBufferWidth = 1920;
-                graphics.PreferredBackBufferHeight = 1080;
-                 
+                //                graphics.PreferredBackBufferWidth = 1920;
+                //                graphics.PreferredBackBufferHeight = 1080;
+                graphics.PreferredBackBufferWidth = 2880;
+                graphics.PreferredBackBufferHeight = 1800;
+
             }
             else
             {
@@ -143,8 +143,7 @@ namespace mike_and_conquer
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
             this.IsFixedTimeStep = false;
 
-            gdiMinigunnerList = new List<Minigunner>();
-            nodMinigunnerList = new List<Minigunner>();
+            gameWorld = new GameWorld();
 
 
             basicMapSquareList = new List<BasicMapSquare>();
@@ -154,16 +153,13 @@ namespace mike_and_conquer
             gdiMinigunnerViewList = new List<MinigunnerView>();
             nodMinigunnerViewList = new List<MinigunnerView>();
 
-            sandbagList = new List<Sandbag>();
             sandbagViewList = new List<SandbagView>();
-
-            currentGameState = new PlayingGameState();
 
             textureListMap = new TextureListMap();
 
             gameEvents = new List<AsyncGameEvent>();
 
-            oldState = Keyboard.GetState();
+            oldKeyboardState = Keyboard.GetState();
 
             MikeAndConquerGame.instance = this;
         }
@@ -187,14 +183,13 @@ namespace mike_and_conquer
 
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
-            this.camera2D.Zoom = 3.0f;
+            this.camera2D.Zoom = 4.8f;
 //            this.camera2D.Zoom = 2.0f;
             this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
-
             base.Initialize();
 
-            InitializeNavigationGraph();
+            gameWorld.Initialize(this.gameMap.numColumns, this.gameMap.numRows);
 
             if (!testMode)
             {
@@ -227,35 +222,6 @@ namespace mike_and_conquer
 
         }
 
-        private void InitializeNavigationGraph()
-        {
-            
-//            int[,] nodeArray = new int[this.gameMap.numRows, this.gameMap.numColumns];
-//            int[,] nodeArray = new int[this.gameMap.numColumns, this.gameMap.numRows];
-
-
-//            int mapX = 1;
-//            int mapY = 1;
-//
-//            // Revisit this, doesn't match actual sandbags
-//            // Have this be done automatically, not manually
-//            nodeArray[1, 1] = 1;
-//            nodeArray[2, 1] = 1;
-//            nodeArray[3, 1] = 1;
-//            nodeArray[4, 1] = 1;
-//
-//            nodeArray[1, 2] = 1;
-//            nodeArray[1, 3] = 1;
-//            nodeArray[4, 2] = 1;
-//            nodeArray[4, 3] = 1;
-
-
-//            navigationGraph = new Graph(nodeArray);
-            navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
-
-            //            AStar aStar = new AStar();
-            //            aStar.FindPath(navigationGraph, )
-        }
 
         private void InitializeMap()
         {
@@ -424,13 +390,14 @@ namespace mike_and_conquer
                 Program.restServer.Dispose();
                 Exit();
             }
-            currentGameState = currentGameState.Update(gameTime);
+
+            this.gameWorld.Update(gameTime);
 
             this.camera2D.Rotation = testRotation;
             //            testRotation += 0.01f;
 
 
-            KeyboardState newState = Keyboard.GetState();  // get the newest state
+            KeyboardState newKeyboardState = Keyboard.GetState();  // get the newest state
 
             int originalX = (int)this.camera2D.Location.X;
             int originalY = (int)this.camera2D.Location.Y;
@@ -463,41 +430,88 @@ namespace mike_and_conquer
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
 
-            else if (oldState.IsKeyUp(Keys.Right) && newState.IsKeyDown(Keys.Right))
+            else if (oldKeyboardState.IsKeyUp(Keys.Right) && newKeyboardState.IsKeyDown(Keys.Right))
             {
                 int newX = (int)(this.camera2D.Location.X + scrollAmount);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
-            else if (oldState.IsKeyUp(Keys.Left) && newState.IsKeyDown(Keys.Left))
+            else if (oldKeyboardState.IsKeyUp(Keys.Left) && newKeyboardState.IsKeyDown(Keys.Left))
             {
                 int newX = (int)(this.camera2D.Location.X - scrollAmount);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
-            else if (oldState.IsKeyUp(Keys.Down) && newState.IsKeyDown(Keys.Down))
+            else if (oldKeyboardState.IsKeyUp(Keys.Down) && newKeyboardState.IsKeyDown(Keys.Down))
             {
 
                 int newY = (int)(this.camera2D.Location.Y + scrollAmount);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
-            else if (oldState.IsKeyUp(Keys.Up) && newState.IsKeyDown(Keys.Up))
+            else if (oldKeyboardState.IsKeyUp(Keys.Up) && newKeyboardState.IsKeyDown(Keys.Up))
             {
                 int newY = (int)(this.camera2D.Location.Y - scrollAmount);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
-            else if (oldState.IsKeyUp(Keys.OemPlus) && newState.IsKeyDown(Keys.OemPlus))
+            else if (oldKeyboardState.IsKeyUp(Keys.OemPlus) && newKeyboardState.IsKeyDown(Keys.OemPlus))
             {
                 float newZoom = this.camera2D.Zoom + 0.2f;
                 this.camera2D.Zoom = newZoom;
             }
-            else if (oldState.IsKeyUp(Keys.OemMinus) && newState.IsKeyDown(Keys.OemMinus))
+            else if (oldKeyboardState.IsKeyUp(Keys.OemMinus) && newKeyboardState.IsKeyDown(Keys.OemMinus))
             {
                 float newZoom = this.camera2D.Zoom - 0.2f;
                 this.camera2D.Zoom = newZoom;
             }
 
             resetCamera();
-            oldState = newState;   
+            oldKeyboardState = newKeyboardState;
+
+            SwitchToNewGameStateViewIfNeeded();
+
             base.Update(gameTime);
+        }
+
+        private void SwitchToNewGameStateViewIfNeeded()
+        {
+            GameState currentGameState = this.gameWorld.GetCurrentGameState();
+            if (currentGameState.GetType().Equals(typeof(PlayingGameState)))
+            {
+//                currentGameStateView = new PlayingGameStateView();
+                HandleSwitchToPlayingGameStateView();
+            }
+            else if (currentGameState.GetType().Equals(typeof(MissionAccomplishedGameState)))
+            {
+                //                currentGameStateView = new MissionAccomplishedGameStateView();
+                HandleSwitchToMissionAccomplishedGameStateView();
+            }
+            else if (currentGameState.GetType().Equals(typeof(MissionFailedGameState)))
+            {
+                //                currentGameStateView = new MissionFailedGameStateView();
+                HandleSwitchToMissionFailedGameStateView();
+            }
+        }
+
+        private void HandleSwitchToPlayingGameStateView()
+        {
+            if (currentGameStateView == null || !currentGameStateView.GetType().Equals(typeof(PlayingGameStateView)))
+            {
+                currentGameStateView = new PlayingGameStateView();
+            }
+        }
+
+        private void HandleSwitchToMissionAccomplishedGameStateView()
+        {
+            if (currentGameStateView == null || !currentGameStateView.GetType().Equals(typeof(MissionAccomplishedGameStateView)))
+            {
+                currentGameStateView = new MissionAccomplishedGameStateView();
+            }
+        }
+
+        private void HandleSwitchToMissionFailedGameStateView()
+        {
+            if (currentGameStateView == null || !currentGameStateView.GetType().Equals(typeof(MissionFailedGameStateView)))
+            {
+                currentGameStateView = new MissionFailedGameStateView();
+            }
         }
 
 
@@ -556,61 +570,18 @@ namespace mike_and_conquer
 //                nullEffect,
 //                null);
 
-            currentGameState.Draw(gameTime, spriteBatch);
+
+            this.currentGameStateView.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
            
             base.Draw(gameTime);
         }
 
-
-
-
-
-        internal Minigunner GetGdiMinigunner(int id)
-        {
-            Minigunner foundMinigunner = null;
-            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            {
-                if (nextMinigunner.id == id)
-                {
-                    foundMinigunner = nextMinigunner;
-                }
-            }
-
-            return foundMinigunner;
-        }
-
-        internal Minigunner GetNodMinigunner(int id)
-        {
-            Minigunner foundMinigunner = null;
-            foreach (Minigunner nextMinigunner in nodMinigunnerList)
-            {
-                if (nextMinigunner.id == id)
-                {
-                    foundMinigunner = nextMinigunner;
-                }
-
-            }
-            return foundMinigunner;
-        }
-
-
-        internal Minigunner GetGdiOrNodMinigunner(int id)
-        {
-            Minigunner foundMinigunner = null;
-            foundMinigunner = GetGdiMinigunner(id);
-            if(foundMinigunner == null)
-            {
-                foundMinigunner = GetNodMinigunner(id);
-            }
-            return foundMinigunner;
-        }
-
         internal Minigunner AddGdiMinigunner(int x, int y)
         {
-            Minigunner newMinigunner = new Minigunner(x, y,navigationGraph);
-            gdiMinigunnerList.Add(newMinigunner);
+            Minigunner newMinigunner = new Minigunner(x, y, gameWorld.navigationGraph);
+            GameWorld.instance.gdiMinigunnerList.Add(newMinigunner);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
             // to enable running headless with no UI
@@ -621,30 +592,24 @@ namespace mike_and_conquer
 
         internal Sandbag AddSandbag(int x, int y, int sandbagType)
         {
-
-
-            navigationGraph.UpdateNode(x, y, 1);
+            gameWorld.navigationGraph.UpdateNode(x, y, 1);
             x = x * 24 + 12;
             y = y * 24 + 12;
 
 
             Sandbag newSandbag = new Sandbag(x,y, sandbagType);
-            sandbagList.Add(newSandbag);
+            GameWorld.instance.sandbagList.Add(newSandbag);
 
             SandbagView newSandbagView = new SandbagView(newSandbag);
             sandbagViewList.Add(newSandbagView);
-
-
             return newSandbag;
         }
 
 
-
-
         internal Minigunner AddNodMinigunner(int x, int y, bool aiIsOn)
         {
-            Minigunner newMinigunner = new Minigunner(x, y, navigationGraph);
-            nodMinigunnerList.Add(newMinigunner);
+            Minigunner newMinigunner = new Minigunner(x, y, gameWorld.navigationGraph);
+            GameWorld.instance.nodMinigunnerList.Add(newMinigunner);
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);
 
@@ -659,20 +624,6 @@ namespace mike_and_conquer
         }
 
 
-
-        internal void SelectSingleGDIUnit(Minigunner minigunner)
-        {
-            minigunner.selected = true;
-            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            {
-               if (nextMinigunner.id != minigunner.id)
-               {
-                    nextMinigunner.selected = false;
-               }
-           }
-
-        }
-
         private void LoadSingleTextureFromFile(string key, string fileName)
         {
             SpriteTextureList spriteTextureList = new SpriteTextureList();
@@ -684,29 +635,15 @@ namespace mike_and_conquer
             TextureListMap.AddTextureList(key, spriteTextureList);
         }
 
-        internal GameState GetCurrentGameState()
-        {
-            return currentGameState;
-        }
-
 
         public GameState HandleReset()
         {
-
-//            int[,] nodeArray = new int[this.gameMap.numColumns, this.gameMap.numRows];
-//            navigationGraph = new Graph(nodeArray);
-            navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
-
-
-            gdiMinigunnerList.Clear();
-            nodMinigunnerList.Clear();
-            sandbagList.Clear();
 
             gdiMinigunnerViewList.Clear();
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
 
-            return new PlayingGameState();
+            return gameWorld.HandleReset();
         }
 
 

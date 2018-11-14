@@ -16,7 +16,7 @@ namespace mike_and_conquer.gameevent
 
         protected override GameState ProcessImpl()
         {
-            GameState currentGameState = MikeAndConquerGame.instance.GetCurrentGameState();
+            GameState currentGameState = GameWorld.instance.GetCurrentGameState();
             result = currentGameState;
             return currentGameState;
         }

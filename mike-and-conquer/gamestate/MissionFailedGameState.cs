@@ -1,6 +1,4 @@
-﻿using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
-using GameTime = Microsoft.Xna.Framework.GameTime;
-using MissionFailedMessage = mike_and_conquer.gameobjects.MissionFailedMessage;
+﻿using GameTime = Microsoft.Xna.Framework.GameTime;
 using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
 
 namespace mike_and_conquer
@@ -8,14 +6,9 @@ namespace mike_and_conquer
     class MissionFailedGameState : GameState
     {
 
-
-
-        private MissionFailedMessage message;
-
         public MissionFailedGameState()
         {
 
-            message = new MissionFailedMessage();
             foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.GdiMinigunnerViewList)
             {
                 nextMinigunnerView.SetAnimate(false);
@@ -46,20 +39,6 @@ namespace mike_and_conquer
             }
         }
 
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.GdiMinigunnerViewList)
-            {
-                nextMinigunnerView.Draw(gameTime, spriteBatch);
-            }
-
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.NodMinigunnerViewList)
-            {
-                nextMinigunnerView.Draw(gameTime, spriteBatch);
-            }
-            message.Draw(gameTime, spriteBatch);
-        }
 
 
     }

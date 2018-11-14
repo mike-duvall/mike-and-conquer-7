@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using mike_and_conquer.gameview;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -39,7 +40,7 @@ using Point = Microsoft.Xna.Framework.Point;
 
 using Serilog;
 
-//using Graph = mike_and_conquer.pathfinding.Graph;
+
 
 
 namespace mike_and_conquer
@@ -221,10 +222,6 @@ namespace mike_and_conquer
 
         }
 
-//        private void InitializeNavigationGraph()
-//        {
-//            navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
-//        }
 
         private void InitializeMap()
         {
@@ -468,23 +465,53 @@ namespace mike_and_conquer
             resetCamera();
             oldKeyboardState = newKeyboardState;
 
+            SwitchToNewGameStateViewIfNeeded();
+
+            base.Update(gameTime);
+        }
+
+        private void SwitchToNewGameStateViewIfNeeded()
+        {
             GameState currentGameState = this.gameWorld.GetCurrentGameState();
             if (currentGameState.GetType().Equals(typeof(PlayingGameState)))
             {
-                currentGameStateView = new PlayingGameStateView();
+//                currentGameStateView = new PlayingGameStateView();
+                HandleSwitchToPlayingGameStateView();
             }
             else if (currentGameState.GetType().Equals(typeof(MissionAccomplishedGameState)))
             {
-                currentGameStateView = new MissionAccomplishedGameStateView();
+                //                currentGameStateView = new MissionAccomplishedGameStateView();
+                HandleSwitchToMissionAccomplishedGameStateView();
             }
             else if (currentGameState.GetType().Equals(typeof(MissionFailedGameState)))
             {
+                //                currentGameStateView = new MissionFailedGameStateView();
+                HandleSwitchToMissionFailedGameStateView();
+            }
+        }
+
+        private void HandleSwitchToPlayingGameStateView()
+        {
+            if (currentGameStateView == null || !currentGameStateView.GetType().Equals(typeof(PlayingGameStateView)))
+            {
+                currentGameStateView = new PlayingGameStateView();
+            }
+        }
+
+        private void HandleSwitchToMissionAccomplishedGameStateView()
+        {
+            if (currentGameStateView == null || !currentGameStateView.GetType().Equals(typeof(MissionAccomplishedGameStateView)))
+            {
+                currentGameStateView = new MissionAccomplishedGameStateView();
+            }
+        }
+
+        private void HandleSwitchToMissionFailedGameStateView()
+        {
+            if (currentGameStateView == null || !currentGameStateView.GetType().Equals(typeof(MissionFailedGameStateView)))
+            {
                 currentGameStateView = new MissionFailedGameStateView();
             }
-
-
-
-            base.Update(gameTime);
         }
 
 

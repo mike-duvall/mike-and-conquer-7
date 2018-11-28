@@ -122,14 +122,14 @@ namespace unit_tests
             mingunner.OrderToMoveToDestination(new Point(200, 200));
 
             GameTime gameTime = new GameTime();
-            TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 100);
+            TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 10);
             gameTime.ElapsedGameTime = timespan;
 
 
             // then
             bool done = false;
             int numAttempts = 0;
-            int maxNumRepetitions = 200;
+            int maxNumRepetitions = 2000;
 
             while(!done)
             {

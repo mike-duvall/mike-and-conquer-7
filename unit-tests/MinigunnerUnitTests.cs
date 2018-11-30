@@ -156,6 +156,74 @@ namespace unit_tests
         }
 
 
+        [TestMethod]
+        public void ShouldNavigatePathThroughObstacles1()
+        {
+            // given
+            int[,] nodeArray = new int[3, 4]
+            {
+                { 0, 0, 1, 0 },
+                { 0, 1, 1, 0 },
+                { 0, 0, 0, 0 }
+            };
+
+            
+
+            Graph graph = new Graph(4, 3);
+            for (int x = 0; x < 4; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    if (nodeArray[y,x] == 1)
+                    {
+                        graph.UpdateNode(x,y,1);
+                    }
+                }
+            }
+
+
+            Minigunner mingunner = new Minigunner(12, 12, graph);
+
+            // when
+            int destinationRow = 2;
+            int destinationColumn = 3;
+            int destinationX = destinationColumn * 24;
+            int destinationY = destinationRow * 24;
+
+            mingunner.OrderToMoveToDestination(new Point(destinationX, destinationY));
+
+            GameTime gameTime = new GameTime();
+            TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 10);
+            gameTime.ElapsedGameTime = timespan;
+
+
+            // then
+            bool done = false;
+            int numAttempts = 0;
+            int maxNumRepetitions = 2000;
+
+            while (!done)
+            {
+                if (numAttempts > maxNumRepetitions)
+                {
+                    done = true;
+                }
+                else
+                {
+                    mingunner.Update(gameTime);
+                    numAttempts++;
+                }
+            }
+
+
+            // then
+            int minigunnerPositionXAsInt = (int) mingunner.position.X;
+            Assert.IsTrue(minigunnerPositionXAsInt == destinationX);
+
+
+        }
+
+
     }
 
 }

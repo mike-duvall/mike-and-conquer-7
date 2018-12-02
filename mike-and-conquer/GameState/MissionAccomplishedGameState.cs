@@ -32,7 +32,7 @@ namespace mike_and_conquer
 
         public override GameState Update(GameTime gameTime)
         {
-            GameState nextGameState = MikeAndConquerGame.instance.ProcessGameEvents();
+            GameState nextGameState = GameWorld.instance.ProcessGameEvents();
             if(nextGameState != null)
             {
                 return nextGameState;

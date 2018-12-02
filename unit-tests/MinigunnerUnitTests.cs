@@ -156,10 +156,17 @@ namespace unit_tests
         }
 
 
+
+
         [TestMethod]
-        public void ShouldNavigatePathThroughObstacles1()
+        public void ShouldNavigatePathThroughObstacles2()
         {
             // given
+
+            GameWorld gameWorld = new GameWorld();
+            gameWorld.Initialize(4,3);
+
+
             int[,] nodeArray = new int[3, 4]
             {
                 { 0, 0, 1, 0 },
@@ -167,22 +174,22 @@ namespace unit_tests
                 { 0, 0, 0, 0 }
             };
 
-            
 
-            Graph graph = new Graph(4, 3);
+
+            Graph graph = gameWorld.navigationGraph;
             for (int x = 0; x < 4; x++)
             {
                 for (int y = 0; y < 3; y++)
                 {
-                    if (nodeArray[y,x] == 1)
+                    if (nodeArray[y, x] == 1)
                     {
-                        graph.UpdateNode(x,y,1);
+                        graph.UpdateNode(x, y, 1);
                     }
                 }
             }
 
 
-            Minigunner mingunner = new Minigunner(12, 12, graph);
+            Minigunner mingunner = gameWorld.AddGdiMinigunner(12, 12);
 
             // when
             int destinationRow = 2;
@@ -210,20 +217,23 @@ namespace unit_tests
                 }
                 else
                 {
-                    mingunner.Update(gameTime);
+//                    mingunner.Update(gameTime);
+                    gameWorld.Update(gameTime);
                     numAttempts++;
                 }
             }
 
 
             // then
-            int minigunnerPositionXAsInt = (int) mingunner.position.X;
+            int minigunnerPositionXAsInt = (int)mingunner.position.X;
             Assert.IsTrue(minigunnerPositionXAsInt == destinationX);
 
 
         }
 
 
+
     }
+
 
 }

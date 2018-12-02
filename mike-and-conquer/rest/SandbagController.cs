@@ -44,7 +44,7 @@ namespace mike_and_conquer.rest
 //            restMinigunner.health = minigunner.health;
 
             Sandbag sandbag =
-                MikeAndConquerGame.instance.CreateSandbagViaEvent(inputSandbag.x, inputSandbag.y, inputSandbag.index);
+                GameWorld.instance.CreateSandbagViaEvent(inputSandbag.x, inputSandbag.y, inputSandbag.index);
 
             RestSandbag restSandbag = new RestSandbag();
             restSandbag.x = (int)sandbag.position.X;

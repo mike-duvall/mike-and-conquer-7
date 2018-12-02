@@ -187,8 +187,8 @@ namespace unit_tests
             // when
             int destinationRow = 2;
             int destinationColumn = 3;
-            int destinationX = destinationColumn * 24;
-            int destinationY = destinationRow * 24;
+            int destinationX = (destinationColumn * 24) + 12;
+            int destinationY = (destinationRow * 24) + 12;
 
             mingunner.OrderToMoveToDestination(new Point(destinationX, destinationY));
 

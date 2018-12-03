@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Point = Microsoft.Xna.Framework.Point;
 
 namespace mike_and_conquer.gameevent 
 {
@@ -11,11 +8,11 @@ namespace mike_and_conquer.gameevent
 
 
         private int x, y;
+        private Point position;
 
-        public CreateGDIMinigunnerGameEvent(int x, int y)
+        public CreateGDIMinigunnerGameEvent(Point worldCoordinates )
         {
-            this.x = x;
-            this.y = y;
+            this.position = worldCoordinates;
         }
 
         public Minigunner GetMinigunner()
@@ -28,7 +25,7 @@ namespace mike_and_conquer.gameevent
         protected override GameState ProcessImpl()
         {
             GameState newGameState = null;
-            result = MikeAndConquerGame.instance.AddGdiMinigunner(x,y);
+            result = MikeAndConquerGame.instance.AddGdiMinigunner(this.position);
             return newGameState;
         }
 

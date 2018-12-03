@@ -135,9 +135,9 @@ namespace mike_and_conquer
             currentGameState = currentGameState.Update(gameTime);
         }
 
-        public Minigunner AddGdiMinigunner(int x, int y)
+        public Minigunner AddGdiMinigunner(Point worldCoordinates)
         {
-            Minigunner newMinigunner = new Minigunner(x, y, this.navigationGraph);
+            Minigunner newMinigunner = new Minigunner(worldCoordinates.X, worldCoordinates.Y, this.navigationGraph);
             gdiMinigunnerList.Add(newMinigunner);
             return newMinigunner;
         }
@@ -180,9 +180,9 @@ namespace mike_and_conquer
         }
 
 
-        public Minigunner CreateGDIMinigunnerViaEvent(int x, int y)
+        public Minigunner CreateGDIMinigunnerViaEvent(Point minigunnerPosition)
         {
-            CreateGDIMinigunnerGameEvent gameEvent = new CreateGDIMinigunnerGameEvent(x, y);
+            CreateGDIMinigunnerGameEvent gameEvent = new CreateGDIMinigunnerGameEvent(minigunnerPosition);
             lock (gameEvents)
             {
                 gameEvents.Add(gameEvent);

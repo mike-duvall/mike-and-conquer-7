@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using mike_and_conquer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Minigunner = mike_and_conquer.Minigunner;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 
-using GameMap = mike_and_conquer.GameMap;
-using TextureListMap = mike_and_conquer.TextureListMap;
-
-using FileStream = System.IO.FileStream;
-using FileMode = System.IO.FileMode;
 
 using Graph = mike_and_conquer.pathfinding.Graph;
 
 using Point = Microsoft.Xna.Framework.Point;
-using mike_and_conquer.pathfinding;
+
 
 namespace unit_tests
 {
@@ -25,19 +18,17 @@ namespace unit_tests
     {
 
 
-
-
         [TestMethod]
         public void MinigunnerShouldNavigateSimpleObstacles()
         {
             // given
             GameWorld gameWorld = new GameWorld();
-            const int numRows = 4;
-            const int  numColumns = 3;
-            gameWorld.Initialize(numRows, numColumns);
+            const int numRows = 3;
+            const int  numColumns = 4;
+            gameWorld.Initialize(numColumns, numRows);
 
 
-            int[,] obstacleArray = new int[numColumns, numRows]
+            int[,] obstacleArray = new int[numRows, numColumns]
             {
                 { 0, 0, 1, 0 },
                 { 0, 1, 1, 0 },
@@ -46,7 +37,11 @@ namespace unit_tests
 
             UpdateGraphFromFromObstacleArray(gameWorld.navigationGraph, obstacleArray);
 
-            Minigunner minigunner = gameWorld.AddGdiMinigunner(12, 12);
+            Point minigunnerLocationInMapSquareCoordinates = new Point(0, 0);
+            Point minigunnerLocationInWorldCoordinates =
+                ConvertWorldMapSquareCoordiantesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+            
+            Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
 
             // when
             int destinationColumn = 3;
@@ -67,6 +62,50 @@ namespace unit_tests
 
         }
 
+
+//        [TestMethod]
+//        public void MinigunnerShouldNavigateSimpleObstacles2()
+//        {
+//            // given
+//            GameWorld gameWorld = new GameWorld();
+//            const int numRows = 5;
+//            const int numColumns = 6;
+//            gameWorld.Initialize(numRows, numColumns);
+//
+//
+//            int[,] obstacleArray = new int[numRows, numColumns]
+//            {
+//                { 0, 0, 1, 0, 0, 0 },
+//                { 0, 0, 1, 0, 0, 0 },
+//                { 0, 0, 1, 0, 0, 0 },
+//                { 0, 0, 1, 0, 0, 0 },
+//                { 0, 0, 0, 0, 0, 0 }
+//            };
+//
+//            UpdateGraphFromFromObstacleArray(gameWorld.navigationGraph, obstacleArray);
+//
+//            Minigunner minigunner = gameWorld.AddGdiMinigunner(12, 12);
+//
+//            // when
+//            int destinationColumn = 3;
+//            int destinationRow = 2;
+//            Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
+//
+//            Point destinationInWorldCoordinates =
+//                ConvertWorldMapSquareCoordiantesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+//
+//            minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
+//
+//            GameTime gameTime = new GameTime();
+//            TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 10);
+//            gameTime.ElapsedGameTime = timespan;
+//
+//            // then
+//            WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, destinationInWorldCoordinates, gameTime);
+//
+//        }
+//
+
         private void UpdateGraphFromFromObstacleArray(Graph graph, int[,] nodeArray)
         {
             for (int x = 0; x < 4; x++)
@@ -82,7 +121,6 @@ namespace unit_tests
         }
 
 
-//        private Point ConvertWorldMapSquareCoordiantesToWorldCoordinates(int x, int y)
         private Point ConvertWorldMapSquareCoordiantesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
         {
 

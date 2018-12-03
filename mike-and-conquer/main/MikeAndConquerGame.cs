@@ -184,7 +184,8 @@ namespace mike_and_conquer
 //                AddGdiMinigunner(10, 300);
 //                AddGdiMinigunner(30, 300);
 
-                AddGdiMinigunner(60, 12);
+                Point minigunnerStartPosition = new Point(60,12);
+                AddGdiMinigunner(minigunnerStartPosition);
                 int mapX = 1;
                 int mapY = 1;
 
@@ -562,9 +563,9 @@ namespace mike_and_conquer
             base.Draw(gameTime);
         }
 
-        internal Minigunner AddGdiMinigunner(int x, int y)
+        internal Minigunner AddGdiMinigunner(Point worldCoordinates)
         {
-            Minigunner newMinigunner =  GameWorld.instance.AddGdiMinigunner(x, y);
+            Minigunner newMinigunner =  GameWorld.instance.AddGdiMinigunner(worldCoordinates);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
             // to enable running headless with no UI

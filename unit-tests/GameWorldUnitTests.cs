@@ -2,6 +2,7 @@
 using mike_and_conquer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using System.Collections.Generic;
 using Minigunner = mike_and_conquer.Minigunner;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 
@@ -23,8 +24,8 @@ namespace unit_tests
         {
             // given
             GameWorld gameWorld = new GameWorld();
+            const int numColumns = 4;
             const int numRows = 3;
-            const int  numColumns = 4;
             gameWorld.Initialize(numColumns, numRows);
 
 
@@ -39,7 +40,7 @@ namespace unit_tests
 
             Point minigunnerLocationInMapSquareCoordinates = new Point(0, 0);
             Point minigunnerLocationInWorldCoordinates =
-                ConvertWorldMapSquareCoordiantesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+                ConvertMapSquareCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
             
             Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
 
@@ -49,7 +50,7 @@ namespace unit_tests
             Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
 
             Point destinationInWorldCoordinates =
-                ConvertWorldMapSquareCoordiantesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+                ConvertMapSquareCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
 
             minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
 
@@ -58,59 +59,83 @@ namespace unit_tests
             gameTime.ElapsedGameTime = timespan;
 
             // then
-            WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, destinationInWorldCoordinates, gameTime);
+            WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, gameTime,  destinationInWorldCoordinates);
+
+            Update this test to verify entire path
+            Add one more, more complex test, and then say done
 
         }
 
 
-//        [TestMethod]
-//        public void MinigunnerShouldNavigateSimpleObstacles2()
-//        {
-//            // given
-//            GameWorld gameWorld = new GameWorld();
-//            const int numRows = 5;
-//            const int numColumns = 6;
-//            gameWorld.Initialize(numRows, numColumns);
-//
-//
-//            int[,] obstacleArray = new int[numRows, numColumns]
-//            {
-//                { 0, 0, 1, 0, 0, 0 },
-//                { 0, 0, 1, 0, 0, 0 },
-//                { 0, 0, 1, 0, 0, 0 },
-//                { 0, 0, 1, 0, 0, 0 },
-//                { 0, 0, 0, 0, 0, 0 }
-//            };
-//
-//            UpdateGraphFromFromObstacleArray(gameWorld.navigationGraph, obstacleArray);
-//
-//            Minigunner minigunner = gameWorld.AddGdiMinigunner(12, 12);
-//
-//            // when
-//            int destinationColumn = 3;
-//            int destinationRow = 2;
-//            Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
-//
-//            Point destinationInWorldCoordinates =
-//                ConvertWorldMapSquareCoordiantesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
-//
-//            minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
-//
-//            GameTime gameTime = new GameTime();
-//            TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 10);
-//            gameTime.ElapsedGameTime = timespan;
-//
-//            // then
-//            WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, destinationInWorldCoordinates, gameTime);
-//
-//        }
-//
+        [TestMethod]
+        public void MinigunnerShouldNavigateSimpleObstacles2()
+        {
+            // given
+            GameWorld gameWorld = new GameWorld();
+            const int numColumns = 6;
+            const int numRows = 5;
+            gameWorld.Initialize(numColumns, numRows);
+
+
+            int[,] obstacleArray = new int[numRows, numColumns]
+            {
+                { 0, 0, 1, 0, 0, 0 },
+                { 0, 0, 1, 0, 0, 0 },
+                { 0, 0, 1, 0, 0, 0 },
+                { 0, 0, 1, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0 }
+            };
+
+            UpdateGraphFromFromObstacleArray(gameWorld.navigationGraph, obstacleArray);
+
+            Point minigunnerLocationInMapSquareCoordinates = new Point(1, 1);
+            Point minigunnerLocationInWorldCoordinates =
+                ConvertMapSquareCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+
+            Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
+
+
+            // when
+            int destinationColumn = 3;
+            int destinationRow = 1;
+            Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
+
+            Point destinationInWorldCoordinates =
+                ConvertMapSquareCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+
+            minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
+
+            GameTime gameTime = new GameTime();
+            TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 10);
+            gameTime.ElapsedGameTime = timespan;
+
+            // then
+
+            int[,] expectedPathArray = new int[numRows, numColumns]
+            {
+                { 0, 0, 0, 0, 0, 0 },
+                { 0, 1, 0, 7, 0, 0 },
+                { 2, 0, 0, 6, 0, 0 },
+                { 0, 3, 0, 5, 0, 0 },
+                { 0, 0, 4, 0, 0, 0 }
+            };
+
+
+
+            WaitForMinigunnerToFollowPath(gameWorld, minigunner, gameTime, expectedPathArray);
+
+        }
+
 
         private void UpdateGraphFromFromObstacleArray(Graph graph, int[,] nodeArray)
         {
-            for (int x = 0; x < 4; x++)
+
+            int rank1 = nodeArray.GetLength(0);
+            int rank2 = nodeArray.GetLength(1);
+
+            for (int x = 0; x < rank2; x++)
             {
-                for (int y = 0; y < 3; y++)
+                for (int y = 0; y < rank1; y++)
                 {
                     if (nodeArray[y, x] == 1)
                     {
@@ -120,8 +145,23 @@ namespace unit_tests
             }
         }
 
+//        private void UpdateGraphFromFromObstacleArray(Graph graph, int[,] nodeArray)
+//        {
+//            for (int x = 0; x < 4; x++)
+//            {
+//                for (int y = 0; y < 3; y++)
+//                {
+//                    if (nodeArray[y, x] == 1)
+//                    {
+//                        graph.UpdateNode(x, y, 1);
+//                    }
+//                }
+//            }
+//        }
 
-        private Point ConvertWorldMapSquareCoordiantesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
+
+
+        private Point ConvertMapSquareCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
         {
 
             int destinationRow = pointInWorldMapSquareCoordinates.Y;
@@ -134,6 +174,34 @@ namespace unit_tests
             int destinationY = (destinationRow * mapSquareSize) + halfMapSquareSize;
 
             return new Point(destinationX, destinationY);
+        }
+
+        private Point ConvertWorldCoordinatesToMapSquareCoordinates(Point pointInWorldCoordinates)
+        {
+
+            int destinationRow = pointInWorldCoordinates.Y;
+            int destinationColumn = pointInWorldCoordinates.X;
+
+            int mapSquareSize = 24;
+//            int halfMapSquareSize = mapSquareSize / 2;
+
+            int destinationX = destinationColumn / mapSquareSize;
+            int destinationY = destinationRow / mapSquareSize;
+
+            return new Point(destinationX, destinationY);
+        }
+
+
+        private List<Point> ConvertWorldCoordinatesListToMapSquareCoordinatesList(List<Point> worldCoordinatesList)
+        {
+            List<Point> mapSquareCoordinatesList = new List<Point>();
+
+            foreach(Point point in worldCoordinatesList)
+            {
+                mapSquareCoordinatesList.Add(ConvertWorldCoordinatesToMapSquareCoordinates(point));
+            }
+
+            return mapSquareCoordinatesList;
         }
 
 
@@ -154,7 +222,81 @@ namespace unit_tests
 
 
 
-        private void WaitForMinigunnerToArriveAtPosition(GameWorld gameWorld, Minigunner minigunner, Point destination, GameTime gameTime)
+        private void WaitForMinigunnerToFollowPath(
+            GameWorld gameWorld,
+            Minigunner minigunner,
+            GameTime gameTime,
+            int[,] expectedPathArray)
+        {
+//            int rank1 = expectedPathArray.GetLength(0);
+//            int rank2 = expectedPathArray.GetLength(1);
+
+            int currentPathIndex = 1;
+            int maxPathIndex = FindMaxPathIndex(expectedPathArray);
+
+
+            while (currentPathIndex <= maxPathIndex)
+            {
+                Point nextPathPoint = FindPointWithPathIndex(expectedPathArray, currentPathIndex);
+                Point nextDestinationInWorldCoordinates =
+                    ConvertMapSquareCoordinatesToWorldCoordinates(nextPathPoint);
+                WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, gameTime,
+                    nextDestinationInWorldCoordinates);
+                currentPathIndex++;
+            }
+
+        }
+
+
+        Point FindPointWithPathIndex(int[,] pathArray, int pathIndex)
+        {
+
+            int rank1 = pathArray.GetLength(0);
+            int rank2 = pathArray.GetLength(1);
+
+            int maxValue = 0;
+
+            for (int x = 0; x < rank2; x++)
+            {
+                for (int y = 0; y < rank1; y++)
+                {
+                    int nextValue = pathArray[y, x];
+
+                    if (nextValue == pathIndex)
+                    {
+                        return new Point(x,y);
+                    }
+                }
+            }
+
+            throw new SystemException("Did not find pathIndex");
+
+        }
+
+        int FindMaxPathIndex(int[,] pathArray)
+        {
+            int rank1 = pathArray.GetLength(0);
+            int rank2 = pathArray.GetLength(1);
+
+            int maxValue = 0;
+
+            for (int x = 0; x < rank2; x++)
+            {
+                for (int y = 0; y < rank1; y++)
+                {
+                    int nextValue = pathArray[y, x];
+
+                    if (nextValue > maxValue)
+                    {
+                        maxValue = nextValue;
+                    }
+                }
+            }
+
+            return maxValue;
+        }
+
+        private void WaitForMinigunnerToArriveAtPosition(GameWorld gameWorld, Minigunner minigunner,  GameTime gameTime, Point destination)
         {
             bool done = false;
             int numAttempts = 0;

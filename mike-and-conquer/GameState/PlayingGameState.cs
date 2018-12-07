@@ -30,7 +30,7 @@ namespace mike_and_conquer
         {
 
             // TODO:  Consider pulling handling of GameEvents into base class
-            GameState nextGameState = MikeAndConquerGame.instance.ProcessGameEvents();
+            GameState nextGameState = GameWorld.instance.ProcessGameEvents();
             if (nextGameState != null)
             {
                 return nextGameState;
@@ -53,7 +53,7 @@ namespace mike_and_conquer
 
 
 
-            foreach (MinigunnerAIController nextMinigunnerAIController in MikeAndConquerGame.instance.nodMinigunnerAIControllerList)
+            foreach (MinigunnerAIController nextMinigunnerAIController in GameWorld.instance.nodMinigunnerAIControllerList)
             {
                 nextMinigunnerAIController.Update(gameTime);
             }

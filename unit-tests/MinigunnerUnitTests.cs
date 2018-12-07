@@ -6,11 +6,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Minigunner = mike_and_conquer.Minigunner;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 
-using GameMap = mike_and_conquer.GameMap;
-using TextureListMap = mike_and_conquer.TextureListMap;
-
-using FileStream = System.IO.FileStream;
-using FileMode = System.IO.FileMode;
 
 using Graph = mike_and_conquer.pathfinding.Graph;
 
@@ -48,6 +43,68 @@ namespace unit_tests
             WaitForMinigunnerToArriveAtPosition(minigunner, pathPoint2, gameTime);
 
         }
+
+
+        [TestMethod]
+        public void ContainsPoint_ShouldWorkAfterMinigunnerMoves()
+        {
+            // given
+            Graph graph = new Graph(26, 24);
+            Minigunner mingunner = new Minigunner(10, 10, graph);
+
+
+            // when
+            bool containsPoint = mingunner.ContainsPoint(10, 10);
+
+
+            // then
+            Assert.IsTrue(containsPoint);
+
+
+            // when
+            containsPoint = mingunner.ContainsPoint(40, 14);
+
+
+            // then
+            Assert.IsFalse(containsPoint);
+
+            // when
+            mingunner.OrderToMoveToDestination(new Point(200, 200));
+
+            GameTime gameTime = new GameTime();
+            TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 10);
+            gameTime.ElapsedGameTime = timespan;
+
+
+            // then
+            bool done = false;
+            int numAttempts = 0;
+            int maxNumRepetitions = 2000;
+
+            while(!done)
+            {
+                if(numAttempts > maxNumRepetitions)
+                {
+                    done = true;
+                }
+                else
+                {
+                    mingunner.Update(gameTime);
+                    containsPoint = mingunner.ContainsPoint(200, 200);
+                    if (containsPoint)
+                    {
+                        done = true;
+                    }
+                    numAttempts++;
+                }
+            }
+
+            // then
+            Assert.IsTrue(containsPoint);
+
+
+        }
+
 
         private void WaitForMinigunnerToArriveAtPosition(Minigunner minigunner, Point destination, GameTime gameTime)
         {
@@ -95,67 +152,10 @@ namespace unit_tests
             return isAtXDestination && isAtYDestination;
         }
 
-        [TestMethod]
-        public void ContainsPoint_ShouldWorkAfterMinigunnerMoves()
-        {
-            // given
-            Graph graph = new Graph(26, 24);
-            Minigunner mingunner = new Minigunner(10, 10, graph);
 
-
-            // when
-            bool containsPoint = mingunner.ContainsPoint(10, 10);
-
-
-            // then
-            Assert.IsTrue(containsPoint);
-
-
-            // when
-            containsPoint = mingunner.ContainsPoint(40, 14);
-
-
-            // then
-            Assert.IsFalse(containsPoint);
-
-            // when
-            mingunner.OrderToMoveToDestination(new Point(200, 200));
-
-            GameTime gameTime = new GameTime();
-            TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 100);
-            gameTime.ElapsedGameTime = timespan;
-
-
-            // then
-            bool done = false;
-            int numAttempts = 0;
-            int maxNumRepetitions = 200;
-
-            while(!done)
-            {
-                if(numAttempts > maxNumRepetitions)
-                {
-                    done = true;
-                }
-                else
-                {
-                    mingunner.Update(gameTime);
-                    containsPoint = mingunner.ContainsPoint(200, 200);
-                    if (containsPoint)
-                    {
-                        done = true;
-                    }
-                    numAttempts++;
-                }
-            }
-
-            // then
-            Assert.IsTrue(containsPoint);
-
-
-        }
 
 
     }
+
 
 }

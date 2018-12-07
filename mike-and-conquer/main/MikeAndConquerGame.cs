@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using mike_and_conquer.gameview;
 using Game = Microsoft.Xna.Framework.Game;
@@ -11,14 +11,6 @@ using Color = Microsoft.Xna.Framework.Color;
 using SpriteSortMode = Microsoft.Xna.Framework.Graphics.SpriteSortMode;
 using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
-using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;
-using CreateGDIMinigunnerGameEvent = mike_and_conquer.gameevent.CreateGDIMinigunnerGameEvent;
-using GetGDIMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetGDIMinigunnerByIdGameEvent;
-using CreateNodMinigunnerGameEvent = mike_and_conquer.gameevent.CreateNodMinigunnerGameEvent;
-using GetNodMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetNodMinigunnerByIdGameEvent;
-using ResetGameGameEvent = mike_and_conquer.gameevent.ResetGameGameEvent;
-using GetCurrentGameStateGameEvent = mike_and_conquer.gameevent.GetCurrentGameStateGameEvent;
-using CreateSandbagGameEvent = mike_and_conquer.gameevent.CreateSandbagGameEvent;
 using KeyboardState = Microsoft.Xna.Framework.Input.KeyboardState;
 using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
@@ -29,7 +21,6 @@ using SandbagView = mike_and_conquer.gameview.SandbagView;
 
 using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
 
-using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
 
 using FileStream = System.IO.FileStream;
 using FileMode = System.IO.FileMode;
@@ -55,8 +46,6 @@ namespace mike_and_conquer
         public static MikeAndConquerGame instance;
 
         public GameWorld gameWorld;
-
-        public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
 
         private List<MinigunnerView> gdiMinigunnerViewList;
         private List<MinigunnerView> nodMinigunnerViewList;
@@ -96,7 +85,6 @@ namespace mike_and_conquer
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private TextureListMap textureListMap;
-        private List<AsyncGameEvent> gameEvents;
 
         private bool testMode;
 
@@ -148,16 +136,12 @@ namespace mike_and_conquer
 
             basicMapSquareList = new List<BasicMapSquare>();
 
-            nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
-
             gdiMinigunnerViewList = new List<MinigunnerView>();
             nodMinigunnerViewList = new List<MinigunnerView>();
 
             sandbagViewList = new List<SandbagView>();
 
             textureListMap = new TextureListMap();
-
-            gameEvents = new List<AsyncGameEvent>();
 
             oldKeyboardState = Keyboard.GetState();
 
@@ -200,7 +184,8 @@ namespace mike_and_conquer
 //                AddGdiMinigunner(10, 300);
 //                AddGdiMinigunner(30, 300);
 
-                AddGdiMinigunner(60, 12);
+                Point minigunnerStartPosition = new Point(60,12);
+                AddGdiMinigunner(minigunnerStartPosition);
                 int mapX = 1;
                 int mapY = 1;
 
@@ -578,10 +563,9 @@ namespace mike_and_conquer
             base.Draw(gameTime);
         }
 
-        internal Minigunner AddGdiMinigunner(int x, int y)
+        internal Minigunner AddGdiMinigunner(Point worldCoordinates)
         {
-            Minigunner newMinigunner = new Minigunner(x, y, gameWorld.navigationGraph);
-            GameWorld.instance.gdiMinigunnerList.Add(newMinigunner);
+            Minigunner newMinigunner =  GameWorld.instance.AddGdiMinigunner(worldCoordinates);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
             // to enable running headless with no UI
@@ -608,18 +592,10 @@ namespace mike_and_conquer
 
         internal Minigunner AddNodMinigunner(int x, int y, bool aiIsOn)
         {
-            Minigunner newMinigunner = new Minigunner(x, y, gameWorld.navigationGraph);
-            GameWorld.instance.nodMinigunnerList.Add(newMinigunner);
+            Minigunner newMinigunner = gameWorld.AddNodMinigunner(x, y, aiIsOn);
+
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);
-
-            // TODO:  In future, don't couple Nod having to be AI controlled enemy
-            if (aiIsOn)
-            {
-                MinigunnerAIController minigunnerAIController = new MinigunnerAIController(newMinigunner);
-                nodMinigunnerAIControllerList.Add(minigunnerAIController);
-            }
-
             return newMinigunner;
         }
 
@@ -646,120 +622,6 @@ namespace mike_and_conquer
             return gameWorld.HandleReset();
         }
 
-
-        public GameState ProcessGameEvents()
-        {
-            GameState newGameState = null;
-
-            lock(gameEvents)
-            {
-                foreach(AsyncGameEvent nextGameEvent in gameEvents)
-                {
-                    GameState returnedGameState = nextGameEvent.Process();
-                    if (returnedGameState != null && newGameState == null)
-                    {
-                        newGameState = returnedGameState;
-                    }
-                }
-                gameEvents.Clear();
-            }
-
-            return newGameState;
-
-        }
-
-
-        public Minigunner CreateGDIMinigunnerViaEvent(int x, int y)
-        {
-            CreateGDIMinigunnerGameEvent gameEvent = new CreateGDIMinigunnerGameEvent(x, y);
-            lock (gameEvents)
-            {
-                gameEvents.Add(gameEvent);
-            }
-
-            Minigunner gdiMinigunner = gameEvent.GetMinigunner();
-            return gdiMinigunner;
-
-        }
-
-        public Sandbag CreateSandbagViaEvent(int x, int y, int index)
-        {
-            CreateSandbagGameEvent gameEvent = new CreateSandbagGameEvent(x, y, index);
-
-            lock (gameEvents)
-            {
-                gameEvents.Add(gameEvent);
-            }
-
-            Sandbag sandbag = gameEvent.GetSandbag();
-            return sandbag;
-
-        }
-
-        public Minigunner GetGDIMinigunnerByIdViaEvent(int id)
-        {
-            GetGDIMinigunnerByIdGameEvent gameEvent = new GetGDIMinigunnerByIdGameEvent(id);
-
-            lock (gameEvents)
-            {
-                gameEvents.Add(gameEvent);
-            }
-
-            Minigunner gdiMinigunner = gameEvent.GetMinigunner();
-            return gdiMinigunner;
-        }
-
-
-        public Minigunner CreateNodMinigunnerViaEvent(int x, int y, bool aiIsOn)
-        {
-            CreateNodMinigunnerGameEvent gameEvent = new CreateNodMinigunnerGameEvent(x, y, aiIsOn);
-            lock (gameEvents)
-            {
-                gameEvents.Add(gameEvent);
-            }
-
-            Minigunner minigunner = gameEvent.GetMinigunner();
-            return minigunner;
-
-        }
-
-
-        public Minigunner GetNodMinigunnerByIdViaEvent(int id)
-        {
-            GetNodMinigunnerByIdGameEvent gameEvent = new GetNodMinigunnerByIdGameEvent(id);
-
-            lock (gameEvents)
-            {
-                gameEvents.Add(gameEvent);
-            }
-
-            Minigunner gdiMinigunner = gameEvent.GetMinigunner();
-            return gdiMinigunner;
-        }
-
-
-        public void  ResetGameViaEvent()
-        {
-            ResetGameGameEvent gameEvent = new ResetGameGameEvent();
-
-            lock (gameEvents)
-            {
-                gameEvents.Add(gameEvent);
-            }
-
-        }
-
-        public GameState GetCurrentGameStateViaEvent()
-        {
-            GetCurrentGameStateGameEvent gameEvent = new GetCurrentGameStateGameEvent();
-
-            lock (gameEvents)
-            {
-                gameEvents.Add(gameEvent);
-            }
-
-            return gameEvent.GetGameState();
-        }
 
         public BasicMapSquare FindMapSquare(int mouseX, int mouseY)
         {

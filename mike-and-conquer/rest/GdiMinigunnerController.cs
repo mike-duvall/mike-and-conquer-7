@@ -3,6 +3,7 @@ using System.Web.Http;
 
 
 using Vector2 = Microsoft.Xna.Framework.Vector2;
+using Point = Microsoft.Xna.Framework.Point;
 
 
 namespace mike_and_conquer.rest
@@ -17,7 +18,7 @@ namespace mike_and_conquer.rest
 
         public IHttpActionResult Get(int id)
         {
-            Minigunner minigunner = MikeAndConquerGame.instance.GetGDIMinigunnerByIdViaEvent(id);
+            Minigunner minigunner = GameWorld.instance.GetGDIMinigunnerByIdViaEvent(id);
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;
             restMinigunner.x = (int)minigunner.position.X;
@@ -35,7 +36,10 @@ namespace mike_and_conquer.rest
 
         public IHttpActionResult Post([FromBody]RestMinigunner inputMinigunner)
         {
-            Minigunner minigunner = MikeAndConquerGame.instance.CreateGDIMinigunnerViaEvent(inputMinigunner.x, inputMinigunner.y);
+            
+            Point minigunnerPositionInWorldCoordinates = new Point(inputMinigunner.x, inputMinigunner.y);
+            Minigunner minigunner =
+                GameWorld.instance.CreateGDIMinigunnerViaEvent(minigunnerPositionInWorldCoordinates);
 
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;

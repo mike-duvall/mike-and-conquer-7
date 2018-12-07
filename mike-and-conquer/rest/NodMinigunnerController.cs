@@ -13,7 +13,7 @@ namespace mike_and_conquer.rest
 
         public IHttpActionResult Get(int id)
         {
-            Minigunner minigunner = MikeAndConquerGame.instance.GetNodMinigunnerByIdViaEvent(id);
+            Minigunner minigunner = GameWorld.instance.GetNodMinigunnerByIdViaEvent(id);
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;
             restMinigunner.x = (int)minigunner.position.X;
@@ -28,7 +28,7 @@ namespace mike_and_conquer.rest
         {
             try
             {
-                Minigunner minigunner = MikeAndConquerGame.instance.CreateNodMinigunnerViaEvent(inputMinigunner.x, inputMinigunner.y, inputMinigunner.aiIsOn);
+                Minigunner minigunner = GameWorld.instance.CreateNodMinigunnerViaEvent(inputMinigunner.x, inputMinigunner.y, inputMinigunner.aiIsOn);
                 RestMinigunner restMinigunner = new RestMinigunner();
                 restMinigunner.id = minigunner.id;
                 restMinigunner.x = (int)minigunner.position.X;

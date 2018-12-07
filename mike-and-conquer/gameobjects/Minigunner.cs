@@ -357,9 +357,10 @@ namespace mike_and_conquer
 
         private Point ConvertMapSquareIndexToWorldCoordinate(int index)
         {
+            int numColumns = this.navigationGraph.width;
             Point point = new Point();
-            int row = index / 26;
-            int column = index - (row * 26);
+            int row = index / numColumns;
+            int column = index - (row * numColumns);
             int widthOfMapSquare = 24;
             int heightOfMapSquare = 24;
             point.X = (column * widthOfMapSquare) + 12; ;

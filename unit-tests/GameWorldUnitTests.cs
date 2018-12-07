@@ -59,11 +59,16 @@ namespace unit_tests
             gameTime.ElapsedGameTime = timespan;
 
             // then
-            WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, gameTime,  destinationInWorldCoordinates);
+            //            WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, gameTime,  destinationInWorldCoordinates);
+            int[,] expectedPathArray = new int[numRows, numColumns]
+            {
+                { 1, 0, 0, 0 },
+                { 2, 0, 0, 0 },
+                { 0, 3, 4, 5 }
+            };
 
-            Update this test to verify entire path
-            Add one more, more complex test, and then say done
 
+            WaitForMinigunnerToFollowPath(gameWorld, minigunner, gameTime, expectedPathArray);
         }
 
 
@@ -125,6 +130,67 @@ namespace unit_tests
             WaitForMinigunnerToFollowPath(gameWorld, minigunner, gameTime, expectedPathArray);
 
         }
+
+
+        [TestMethod]
+        public void MinigunnerShouldNavigateSimpleObstacles3()
+        {
+            // given
+            GameWorld gameWorld = new GameWorld();
+            const int numColumns = 6;
+            const int numRows = 5;
+            gameWorld.Initialize(numColumns, numRows);
+
+
+            int[,] obstacleArray = new int[numRows, numColumns]
+            {
+                { 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 1, 0, 1, 0 },
+                { 0, 0, 1, 0, 1, 0 },
+                { 0, 0, 1, 0, 1, 0 },
+                { 0, 0, 1, 0, 1, 0 }
+            };
+
+            UpdateGraphFromFromObstacleArray(gameWorld.navigationGraph, obstacleArray);
+
+            Point minigunnerLocationInMapSquareCoordinates = new Point(0, 4);
+            Point minigunnerLocationInWorldCoordinates =
+                ConvertMapSquareCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+
+            Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
+
+
+            // when
+            int destinationColumn = 3;
+            int destinationRow = 4;
+            Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
+
+            Point destinationInWorldCoordinates =
+                ConvertMapSquareCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+
+            minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
+
+            GameTime gameTime = new GameTime();
+            TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 10);
+            gameTime.ElapsedGameTime = timespan;
+
+            // then
+
+            int[,] expectedPathArray = new int[numRows, numColumns]
+            {
+                { 0, 0, 5, 0, 0, 0 },
+                { 0, 4, 0, 6, 0, 0 },
+                { 3, 0, 0, 7, 0, 0 },
+                { 2, 0, 0, 8, 0, 0 },
+                { 1, 0, 0, 9, 0, 0 }
+            };
+
+
+
+            WaitForMinigunnerToFollowPath(gameWorld, minigunner, gameTime, expectedPathArray);
+
+        }
+
 
 
         private void UpdateGraphFromFromObstacleArray(Graph graph, int[,] nodeArray)

@@ -44,51 +44,6 @@ namespace unit_tests
 
         }
 
-        private void WaitForMinigunnerToArriveAtPosition(Minigunner minigunner, Point destination, GameTime gameTime)
-        {
-            bool done = false;
-            int numAttempts = 0;
-            int maxNumRepetitions = 1200;
-
-            bool isAtDestination = false;
-
-            while (!done)
-            {
-                if (numAttempts > maxNumRepetitions)
-                {
-                    done = true;
-                }
-                else
-                {
-                    minigunner.Update(gameTime);
-                    isAtDestination = IsMinigunnerAtDestination(minigunner, destination);
-                    if (isAtDestination)
-                    {
-                        done = true;
-                    }
-                    numAttempts++;
-                }
-            }
-
-            // then
-            Assert.IsTrue(isAtDestination);
-
-        }
-
-        private bool IsMinigunnerAtDestination(Minigunner minigunner, Point destination)
-        {
-            int leeway = 1;
-            bool isAtXDestination =
-                (minigunner.position.X > destination.X - leeway) &&
-                (minigunner.position.X < destination.X + leeway);
-
-            bool isAtYDestination =
-                (minigunner.position.Y > destination.Y - leeway) &&
-                (minigunner.position.Y < destination.Y + leeway);
-
-
-            return isAtXDestination && isAtYDestination;
-        }
 
         [TestMethod]
         public void ContainsPoint_ShouldWorkAfterMinigunnerMoves()
@@ -151,6 +106,51 @@ namespace unit_tests
         }
 
 
+        private void WaitForMinigunnerToArriveAtPosition(Minigunner minigunner, Point destination, GameTime gameTime)
+        {
+            bool done = false;
+            int numAttempts = 0;
+            int maxNumRepetitions = 1200;
+
+            bool isAtDestination = false;
+
+            while (!done)
+            {
+                if (numAttempts > maxNumRepetitions)
+                {
+                    done = true;
+                }
+                else
+                {
+                    minigunner.Update(gameTime);
+                    isAtDestination = IsMinigunnerAtDestination(minigunner, destination);
+                    if (isAtDestination)
+                    {
+                        done = true;
+                    }
+                    numAttempts++;
+                }
+            }
+
+            // then
+            Assert.IsTrue(isAtDestination);
+
+        }
+
+        private bool IsMinigunnerAtDestination(Minigunner minigunner, Point destination)
+        {
+            int leeway = 1;
+            bool isAtXDestination =
+                (minigunner.position.X > destination.X - leeway) &&
+                (minigunner.position.X < destination.X + leeway);
+
+            bool isAtYDestination =
+                (minigunner.position.Y > destination.Y - leeway) &&
+                (minigunner.position.Y < destination.Y + leeway);
+
+
+            return isAtXDestination && isAtYDestination;
+        }
 
 
 

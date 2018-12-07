@@ -211,22 +211,6 @@ namespace unit_tests
             }
         }
 
-//        private void UpdateGraphFromFromObstacleArray(Graph graph, int[,] nodeArray)
-//        {
-//            for (int x = 0; x < 4; x++)
-//            {
-//                for (int y = 0; y < 3; y++)
-//                {
-//                    if (nodeArray[y, x] == 1)
-//                    {
-//                        graph.UpdateNode(x, y, 1);
-//                    }
-//                }
-//            }
-//        }
-
-
-
         private Point ConvertMapSquareCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
         {
 
@@ -249,7 +233,6 @@ namespace unit_tests
             int destinationColumn = pointInWorldCoordinates.X;
 
             int mapSquareSize = 24;
-//            int halfMapSquareSize = mapSquareSize / 2;
 
             int destinationX = destinationColumn / mapSquareSize;
             int destinationY = destinationRow / mapSquareSize;
@@ -294,9 +277,6 @@ namespace unit_tests
             GameTime gameTime,
             int[,] expectedPathArray)
         {
-//            int rank1 = expectedPathArray.GetLength(0);
-//            int rank2 = expectedPathArray.GetLength(1);
-
             int currentPathIndex = 1;
             int maxPathIndex = FindMaxPathIndex(expectedPathArray);
 

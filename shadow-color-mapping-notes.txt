@@ -1,0 +1,189 @@
+﻿
+
+55 -> 249
+
+58 -> 240
+60 -> 240
+66 -> 241
+67 -> 241
+70 -> 242
+
+
+
+
+
+
+X X X 9 8 X X
+7 6 5 4 3 2 1
+
+
+#1
+From:
+RGB(decimal): 56 80 60
+RGB(hex): 38 50 3C
+Palette index(hex): 46
+Palette index(decimal): 70
+
+To:
+RGB(decimal): 40 36 16
+RGB(hex): 28 24 10
+Palette index(hex): F2
+Palette index(decimal): 242
+
+****************************************
+#2
+From:
+RGB(decimal): 40 48 44	
+RGB(hex): 28 30 2C
+Palette index(hex): 3C
+Palette index(decimal): 60
+
+To:
+RGB(decimal): 
+RGB(hex): 1C 18 08
+Palette index(hex): F0
+Palette index(decimal): 240
+
+
+****************************************
+#3
+From:
+RGB(hex): 24 24 28
+Palette index(hex): 3A
+Palette index(decimal): 58
+
+To:
+RGB(hex): 1C 18 08
+Palette index(hex): F0
+Palette index(decimal): 240
+
+****************************************
+#4 and #5
+Same as #2
+
+#6 
+Same as #1
+
+
+****************************************
+#7
+From:
+RGB(hex):  34 40 28
+Palette index(hex): 43
+Palette index(decimal): 67
+
+To:
+RGB(hex): 24 20 0C
+Palette index(hex): F1
+Palette index(decimal): 241
+
+#8 
+Same as #2
+
+#9
+Same as #1
+
+**************************************************
+**************************************************
+
+XX  6  7  8  9 10 11
+ 1  2  3  4  5 XX XX
+
+
+#1
+From:
+RGB(hex): 34 40 28
+Palette index(hex): 43
+Palette index(decimal): 67
+
+To:
+RGB(hex): 24 20 0C
+Palette index(hex): F1
+Palette index(decimal): 241
+
+
+
+
+
+#2
+From:
+RGB(hex): 38 50 3C
+Palette index(hex): 
+Palette index(decimal):
+
+To:
+RGB(hex): 
+Palette index(hex): 28 24 10
+Palette index(decimal): 
+
+
+# 7
+From:
+20 20 1C
+Hex: 37
+Decimal: 55
+
+To:
+1C 18 08
+Hex: F0
+Decimal: 249
+
+
+8: X
+9: X
+10: X
+11:
+From:
+28 44 28
+Hex: 42
+Decimal: 66
+
+To:
+24 20 0C
+Hex: F1
+Decimal: 241
+
+
+
+
+
+
+
+
+
+
+
+Found below in units.mrp from here: http://nyerguds.arsaneus-design.com/project_stuff/2014/FilterCreator/release/
+ 
+
+
+[Project]
+Name=Unit shadow
+Filters=2
+
+[Filter1]
+Name=Index table
+ClearValue=255
+ForcedRange1=0:4
+Indices=
+IgnoreIndices=No
+UntouchableIndices=
+Effects=0
+
+[Filter2]
+Name=Shadow
+ClearValue=-1
+Indices=240,241,242,243,244,245,246,247,248,249,250,251,252,253,254
+IgnoreIndices=No
+UntouchableIndices=0,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255
+Effects=2
+ForcedRange1=15:32,33,34,35,36,37,38
+
+[Filter2Effect1]
+FilterType=Contrast
+Contrast=-52
+Exponential=No
+
+[Filter2Effect2]
+FilterType=Brightness
+Brightness=-62

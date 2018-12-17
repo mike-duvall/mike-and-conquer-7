@@ -1,12 +1,13 @@
 ﻿
 
 55 -> 249
-
 58 -> 240
 60 -> 240
 66 -> 241
 67 -> 241
+68 -> 241
 70 -> 242
+77 -> 242
 
 
 
@@ -145,12 +146,57 @@ Decimal: 241
 
 
 
+Square:
+From:
+	Palette Color(Hex):
+	Palette Offset Hex: 
+	Palette Offset Decimal: 
+
+To:
+	Palette Color(Hex):
+	Palette Offset Hex: 
+	Palette Offset Decimal: 
 
 
 
+**************************************************
+**************************************************
+xx 06 07 08 09 10 11
+01 02 03 04 05 xx xx
 
 
+Square: 1
+From:
+	Palette Color(Hex): 2C 40 38
+	Palette Offset Hex: 44
+	Palette Offset Decimal: 68
 
+To:
+	Palette Color(Hex): 24 20 0C
+	Palette Offset Hex: F1
+	Palette Offset Decimal: 241
+
+
+2 - already done
+3 - already done
+4 - already done
+5 - already done
+6 - already done
+7 - already done
+8 - already done
+9 - already done
+
+
+Square: 10
+From:
+	Palette Color(Hex): 54 48 48
+	Palette Offset Hex: 4D
+	Palette Offset Decimal: 77
+
+To:
+	Palette Color(Hex): 28 24 10
+	Palette Offset Hex: F2
+	Palette Offset Decimal: 242
 
 
 Found below in units.mrp from here: http://nyerguds.arsaneus-design.com/project_stuff/2014/FilterCreator/release/

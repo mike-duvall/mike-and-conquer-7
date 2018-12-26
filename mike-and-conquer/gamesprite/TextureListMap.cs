@@ -125,6 +125,8 @@ namespace mike_and_conquer
                 texture2D.SetData(texturePixelData);
                 shpStream.Close();
                 spriteTextureList.textureList.Add(texture2D);
+                spriteTextureList.frameDataList.Add(frameData);
+                int x = 3;
             }
             return spriteTextureList;
 
@@ -155,6 +157,7 @@ namespace mike_and_conquer
                 if( frameData.Length == 0)
                 {
                     spriteTextureList.textureList.Add(null);
+                    spriteTextureList.frameDataList.Add(null);
                     continue;
                 }
                 //                Texture2D texture2D = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
@@ -178,6 +181,7 @@ namespace mike_and_conquer
                 spriteTextureList.textureHeight = frame.Size.Height;
 
                 spriteTextureList.textureList.Add(texture2D);
+                spriteTextureList.frameDataList.Add(frameData);
             }
 
             return spriteTextureList;

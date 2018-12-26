@@ -176,6 +176,20 @@ namespace mike_and_conquer
                     nextMinigunner.OrderToMoveToDestination(centerOfSquare);
                 }
             }
+
+            BasicMapSquare clickedBasicMapSquare2 = MikeAndConquerGame.instance.FindMapSquare(mouseX, mouseY);
+//            Pick up here, map to actual square clicked on, then check if correct color
+//            probably need to remove drawing of borders and click upper left pixel of first square
+//                But will have to handle clear mapping, maybe
+            int topLeftXOfClickedSquare = clickedBasicMapSquare2.GetCenter().X - 12;
+            int topLeftYOfClickedSquare = clickedBasicMapSquare2.GetCenter().Y - 12;
+
+            int squareMouseX = mouseX - topLeftXOfClickedSquare;
+            int squareMouseY = mouseY - topLeftYOfClickedSquare;
+            int paletteIndex = clickedBasicMapSquare2.GetPaletteIndexOfCoordinate(squareMouseX, squareMouseY);
+//            int paletteIndex = clickedBasicMapSquare2.GetPaletteIndexOfCoordinate(mouseX, mouseY);
+            //            int paletteIndex = clickedBasicMapSquare2.GetPaletteIndexOfUpperLeft();
+
             return true;
         }
 

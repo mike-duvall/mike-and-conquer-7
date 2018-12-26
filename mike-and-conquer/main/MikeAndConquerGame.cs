@@ -167,10 +167,12 @@ namespace mike_and_conquer
 
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
-            this.camera2D.Zoom = 4.8f;
-//            this.camera2D.Zoom = 2.0f;
+            this.camera2D.Zoom = 30.8f;
+//            this.camera2D.Zoom = 4.8f;
+            //            this.camera2D.Zoom = 2.0f;
             this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
+            // base.Initialize() calls MikeAndConquerGame.LoadContent()
             base.Initialize();
 
             gameWorld.Initialize(this.gameMap.numColumns, this.gameMap.numRows);
@@ -254,14 +256,13 @@ namespace mike_and_conquer
 
             System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
 
-            // when
             int startX = 36;
             int startY = 39;
             int endX = 61;
             int endY = 61;
 
-            int numColumns = endX - startX + 1;
-            int numRows = endY - startY + 1;
+//            int numColumns = endX - startX + 1;
+//            int numRows = endY - startY + 1;
 
             gameMap = new GameMap(inputStream, startX, startY, endX, endY);
 

@@ -11,6 +11,11 @@ namespace mike_and_conquer
     public class GameMap
     {
 
+//        Draw class diagram and understand current structure
+//        Write method that returns current tile, given a point on the map
+//        Write method that returns color index of given point on the map
+//        Write method that then maps the color index to the shadow index color
+//        Write method that creates new texture for minigunner with shadow colors fixed up 
         private List<MapTile> mapTileList;
         private Dictionary<byte, string> mapFileCodeToTextureStringMap = new Dictionary<byte, string>();
 

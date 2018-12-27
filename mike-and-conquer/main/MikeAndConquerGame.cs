@@ -167,8 +167,8 @@ namespace mike_and_conquer
 
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
-            this.camera2D.Zoom = 30.8f;
-//            this.camera2D.Zoom = 4.8f;
+//            this.camera2D.Zoom = 30.8f;
+            this.camera2D.Zoom = 4.8f;
             //            this.camera2D.Zoom = 2.0f;
             this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
@@ -186,8 +186,16 @@ namespace mike_and_conquer
 //                AddGdiMinigunner(10, 300);
 //                AddGdiMinigunner(30, 300);
 
-                Point minigunnerStartPosition = new Point(60,12);
+//                Point minigunnerStartPosition = new Point(60,12);
+                Point minigunnerStartPosition = new Point(24, 24);
                 AddGdiMinigunner(minigunnerStartPosition);
+
+
+                AddGdiMinigunner(new Point(64, 64));
+                AddGdiMinigunner(new Point(132, 64));
+                AddGdiMinigunner(new Point(64, 132));
+
+
                 int mapX = 1;
                 int mapY = 1;
 

@@ -22,6 +22,7 @@ namespace mike_and_conquer.gameview
         {
             this.myMinigunner = minigunner;
             this.gameSprite = new GameSprite(spriteListKey);
+            this.gameSprite.drawBoundingRectangle = false;
             this.unitSelectionCursor = new UnitSelectionCursor((int)this.myMinigunner.position.X, (int)this.myMinigunner.position.Y);
             this.destinationSquare = new DestinationSquare();
 

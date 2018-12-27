@@ -31,11 +31,11 @@ namespace mike_and_conquer.gameview
             SetupAnimations();
         }
 
-        public int GetPaletteIndexOfUpperLeft()
-        {
-            SpriteTextureList list = MikeAndConquerGame.instance.TextureListMap.GetTextureList(textureKey);
-            return list.frameDataList[imageIndex][0];
-        }
+//        public int GetPaletteIndexOfUpperLeft()
+//        {
+//            SpriteTextureList list = MikeAndConquerGame.instance.TextureListMap.GetTextureList(textureKey);
+//            return list.frameDataList[imageIndex][0];
+//        }
 
 
         internal int GetPaletteIndexOfCoordinate(int mouseX, int mouseY)

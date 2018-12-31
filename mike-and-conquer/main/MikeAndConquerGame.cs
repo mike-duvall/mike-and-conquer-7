@@ -191,6 +191,7 @@ namespace mike_and_conquer
                 AddGdiMinigunner(minigunnerStartPosition);
 
 
+                 Fix broken movement
                 AddGdiMinigunner(new Point(64, 64));
                 AddGdiMinigunner(new Point(132, 64));
                 AddGdiMinigunner(new Point(64, 132));

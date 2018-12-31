@@ -1,15 +1,31 @@
 ﻿
 
+
+Mappings:
+
+
+
 55 -> 249
+
 58 -> 240
 60 -> 240
+
 66 -> 241
 67 -> 241
 68 -> 241
+
 70 -> 242
+New 72 -> 243
 77 -> 242
 
+New 78 -> 243
+New 79 -> 243
 
+New 80 -> 244
+New 81 -> 244
+New 84 -> 244
+
+New 189 -> 243
 
 
 
@@ -200,7 +216,124 @@ To:
 
 
 Found below in units.mrp from here: http://nyerguds.arsaneus-design.com/project_stuff/2014/FilterCreator/release/
+
+
+
+Square:
+From:
+	Palette Color(Hex):
+	Palette Offset Hex: 
+	Palette Offset Decimal: 
+
+To:
+	Palette Color(Hex):
+	Palette Offset Hex: 
+	Palette Offset Decimal: 
  
+
+
+**************************************************
+**************************************************
+xx xx 08 09 10 xx xx
+01 02 03 04 05 06 07
+
+Square: 1
+From:
+	Palette Color(Hex): 64 50 38
+	Palette Offset Hex: 48 ?  (actual match was: 65 50 38)
+	Palette Offset Decimal: 72
+
+To:
+	Palette Color(Hex): 30 30 14
+	Palette Offset Hex: F3
+	Palette Offset Decimal: 243
+
+2 - already done
+
+Square: 3
+From:
+	Palette Color(Hex): 64 58 54   
+	                    (found ) 65 59 55
+	Palette Offset Hex: 50
+	Palette Offset Decimal: 80
+
+To:
+	Palette Color(Hex): 38 38 1C
+	Palette Offset Hex: F4
+	Palette Offset Decimal: 244
+
+
+Square: 4
+From:
+	Palette Color(Hex): 64 64 4C  
+	Palette Offset Hex:  54  (Found:  65 65 4C)
+	Palette Offset Decimal: 84
+
+To:
+	Palette Color(Hex):
+	Palette Offset Hex: 
+	Palette Offset Decimal: 244
+
+
+5 - already done
+
+Square: 6
+From:
+	Palette Color(Hex): 48 54 48
+	Palette Offset Hex:  4E (found:  485548)
+	Palette Offset Decimal: 78
+
+To:
+	Palette Color(Hex): 30 30 14
+	Palette Offset Hex: 
+	Palette Offset Decimal: 243
+
+
+Square: 7 
+From:
+	Palette Color(Hex):  54 64 4C (found:  55 65 4C)
+	Palette Offset Hex: 51 
+	Palette Offset Decimal: 81
+
+To:
+	Palette Color(Hex): 38 38 1C
+	Palette Offset Hex: 
+	Palette Offset Decimal: 244
+
+Square: 8
+From:
+	Palette Color(Hex): 58 54 2C (found:  59 55 2C)
+	Palette Offset Hex: BD
+	Palette Offset Decimal: 189
+
+To:
+	Palette Color(Hex): 30 30 14
+	Palette Offset Hex: 
+	Palette Offset Decimal: 243
+ 
+
+
+ 9 - already done
+ 
+Square: 10 
+From:
+	Palette Color(Hex): 54 58 48  (found: 55 59 48)
+	Palette Offset Hex: 4F
+	Palette Offset Decimal: 79
+
+To:
+	Palette Color(Hex):
+	Palette Offset Hex: 
+	Palette Offset Decimal:  243
+ 
+
+
+
+
+**************************************************
+**************************************************
+
+
 
 
 [Project]

@@ -27,6 +27,7 @@ namespace mike_and_conquer.gameview
         {
             this.mySandbag = sandbag;
             this.gameSprite = new GameSprite(SPRITE_KEY);
+            this.gameSprite.drawShadow = true;
             SetupAnimations();
         }
 

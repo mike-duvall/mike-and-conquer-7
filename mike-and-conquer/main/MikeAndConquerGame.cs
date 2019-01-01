@@ -192,9 +192,9 @@ namespace mike_and_conquer
 
 
                  //Fix broken movement
-                AddGdiMinigunner(new Point(64, 64));
-                AddGdiMinigunner(new Point(132, 64));
-                AddGdiMinigunner(new Point(64, 132));
+//                AddGdiMinigunner(new Point(64, 64));
+//                AddGdiMinigunner(new Point(132, 64));
+//                AddGdiMinigunner(new Point(64, 132));
 
 
                 int mapX = 1;

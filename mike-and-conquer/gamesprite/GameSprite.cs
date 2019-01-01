@@ -19,7 +19,6 @@ namespace mike_and_conquer
 
         SpriteTextureList spriteTextureList;
         Texture2D currentTexture;
-        private Texture2D tempTexture;
 
         Texture2D spriteBorderRectangleTexture;
         public Boolean drawBoundingRectangle;
@@ -46,7 +45,6 @@ namespace mike_and_conquer
 
             drawBoundingRectangle = false;
             this.animate = true;
-            this.tempTexture = null;
             int[] remap = { };
             palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
             drawShadow = false;
@@ -89,94 +87,58 @@ namespace mike_and_conquer
 
             float defaultScale = 1;
 
-
             if (drawShadow)
             {
-                if (tempTexture == null)
-                {
-//                tempTexture.Dispose();
-                    tempTexture = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, currentTexture.Width,
-                        currentTexture.Height);
-
-                }
-                //tempTexture = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, currentTexture.Width,
-                //        currentTexture.Height);
-
-
                 Color[] texturePixelData = new Color[currentTexture.Width * currentTexture.Height];
-                Color[] newTexturePixelData = new Color[currentTexture.Width * currentTexture.Height];
                 currentTexture.GetData(texturePixelData);
 
-                int i = 0;
+                List<int> currentShadowIndexList = spriteTextureList.shadowIndexLists[currentTextureIndex];
 
-                foreach (Color color in texturePixelData)
+                foreach (int shadowIndex in currentShadowIndexList)
                 {
+                    int x = shadowIndex % 50;
+                    int y = shadowIndex / 50;
 
-                    //                int x = i % 24;
-                    //                int y = i / 24;
-                    int x = i % 50;
-                    int y = i / 50;
+                    int topLeftXOfSprite = (int)position.X - (int)middleOfSprite.X;
+                    int topLeftYOfSprite = (int)position.Y - (int)middleOfSprite.Y;
+                    int screenPositionXOfThisPixel = topLeftXOfSprite + x;
+                    int screenPositionYOfThisPixel = topLeftYOfSprite + y;
+
+                    BasicMapSquare clickedBasicMapSquare2 =
+                        MikeAndConquerGame.instance.FindMapSquare(screenPositionXOfThisPixel,
+                            screenPositionYOfThisPixel);
+
+                    int topLeftXOfClickedSquare = clickedBasicMapSquare2.GetCenter().X - 12;
+                    int topLeftYOfClickedSquare = clickedBasicMapSquare2.GetCenter().Y - 12;
+
+                    int squareMouseX = screenPositionXOfThisPixel - topLeftXOfClickedSquare;
+                    int squareMouseY = screenPositionYOfThisPixel - topLeftYOfClickedSquare;
+                    int paletteIndex =
+                        clickedBasicMapSquare2.GetPaletteIndexOfCoordinate(squareMouseX, squareMouseY);
 
 
-                    if (
-                        (color.R == 84) && (color.G == 252) && (color.B == 84)
-                    )
+                    int shadowPaletteIndex = MapPaletteIndexToShadowPaletteIndex(paletteIndex);
+                    if (shadowPaletteIndex != paletteIndex)
                     {
-                        int topLeftXOfSprite = (int) position.X - (int) middleOfSprite.X;
-                        int topLeftYOfSprite = (int) position.Y - (int) middleOfSprite.Y;
-                        int screenPositionXOfThisPixel = topLeftXOfSprite + x;
-                        int screenPositionYOfThisPixel = topLeftYOfSprite + y;
-
-                        BasicMapSquare clickedBasicMapSquare2 =
-                            MikeAndConquerGame.instance.FindMapSquare(screenPositionXOfThisPixel,
-                                screenPositionYOfThisPixel);
-
-                        int topLeftXOfClickedSquare = clickedBasicMapSquare2.GetCenter().X - 12;
-                        int topLeftYOfClickedSquare = clickedBasicMapSquare2.GetCenter().Y - 12;
-
-                        int squareMouseX = screenPositionXOfThisPixel - topLeftXOfClickedSquare;
-                        int squareMouseY = screenPositionYOfThisPixel - topLeftYOfClickedSquare;
-                        int paletteIndex =
-                            clickedBasicMapSquare2.GetPaletteIndexOfCoordinate(squareMouseX, squareMouseY);
-
-
-                        int shadowPaletteIndex = MapPaletteIndexToShadowPaletteIndex(paletteIndex);
-                        if (shadowPaletteIndex != paletteIndex)
-                        {
-                            uint mappedColor = palette[shadowPaletteIndex];
-                            System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int) mappedColor);
-                            Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
-                            newTexturePixelData[i] = xnaColor;
-
-                        }
-                        else
-                        {
-                            newTexturePixelData[i] = color;
-                        }
-
-                        //                    newTexturePixelData[i] = new Color(255, 252, 84);
+                        uint mappedColor = palette[shadowPaletteIndex];
+                        System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
+                        Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+                        texturePixelData[shadowIndex] = xnaColor;
 
                     }
                     else
                     {
-                        newTexturePixelData[i] = color;
+                        texturePixelData[shadowIndex] = new Color(255, 252, 84); 
                     }
-
-
-                    i++;
 
                 }
 
-                tempTexture.SetData(newTexturePixelData);
+                currentTexture.SetData(texturePixelData);
+            }
 
-//                spriteBatch.Draw(currentTexture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
-                spriteBatch.Draw(tempTexture, position, null, Color.White, 0f, middleOfSprite, defaultScale,
-                    SpriteEffects.None, 0f);
-            }
-            else
-            {
-                spriteBatch.Draw(currentTexture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
-            }
+
+            spriteBatch.Draw(currentTexture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
+            
 
 
             if (drawBoundingRectangle)

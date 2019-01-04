@@ -202,15 +202,27 @@ namespace mike_and_conquer
                 int mapX = 1;
                 int mapY = 1;
 
-                AddSandbag(1, 1, 10);
-                AddSandbag(2, 1, 10);
-                AddSandbag(3, 1, 10);
-                AddSandbag(4, 1, 10);
+                //                AddSandbag(1, 1, 10);
+                //                AddSandbag(2, 1, 10);
+                //                AddSandbag(3, 1, 10);
+                //                AddSandbag(4, 1, 10);
+                //
+                //                AddSandbag(1, 2, 5);
+                //                AddSandbag(1, 3, 5);
+                //                AddSandbag(4, 2, 5);
+                //                AddSandbag(4, 3, 5);
 
-                AddSandbag(1, 2, 5);
-                AddSandbag(1, 3, 5);
-                AddSandbag(4, 2, 5);
-                AddSandbag(4, 3, 5);
+                AddSandbag(10, 6, 5);
+                AddSandbag(10, 7, 5);
+                AddSandbag(10, 8, 5);
+                AddSandbag(10, 9, 5);
+                AddSandbag(10, 10, 5);
+
+                AddSandbag(8, 4, 10);
+                AddSandbag(9, 4, 10);
+                //                AddSandbag(10, 11, 5);
+                //                AddSandbag(10, 12, 5);
+                //                AddSandbag(10, 13, 5);
 
             }
 

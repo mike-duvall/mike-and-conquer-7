@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -47,6 +48,7 @@ namespace mike_and_conquer
 
         public GameWorld gameWorld;
 
+        public ShadowMapper shadowMapper;
         private List<MinigunnerView> gdiMinigunnerViewList;
         private List<MinigunnerView> nodMinigunnerViewList;
 
@@ -192,9 +194,9 @@ namespace mike_and_conquer
 
 
                  //Fix broken movement
-//                AddGdiMinigunner(new Point(64, 64));
-//                AddGdiMinigunner(new Point(132, 64));
-//                AddGdiMinigunner(new Point(64, 132));
+                AddGdiMinigunner(new Point(64, 64));
+                AddGdiMinigunner(new Point(132, 64));
+                AddGdiMinigunner(new Point(64, 132));
 
 
                 int mapX = 1;
@@ -285,6 +287,8 @@ namespace mike_and_conquer
         protected override void LoadContent()
         {
             LoadMap();
+
+            shadowMapper = new ShadowMapper();
 
             List<string> textureKeysAlreadyAdded = new List<string>();
 

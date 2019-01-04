@@ -76,6 +76,7 @@
     <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Sandbag.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\ShadowMapper.cs" />
     <Compile Include="mike-and-conquer\gameview\DestinationSquare.cs" />
     <Compile Include="mike-and-conquer\gameview\BasicMapSquare.cs" />
     <Compile Include="mike-and-conquer\gameview\MissionFailedGameStateView.cs" />

@@ -1,5 +1,6 @@
 ﻿
-
+Remote Debugging
+----------------
 Here are the steps I did to get remote debugging working, including running of the Spock tests from mike-and-conquer-test:
 
 Installed Visual Studio 2015 on remote computer
@@ -39,3 +40,10 @@ Also, setup local project config to set build output to be the remote machine an
 * On the Build tab, set Ouput Path to:  \\192.168.0.146\buildoutput\ (Or whatever the IP address of the remote machine is)
 * On the Debug tab, Check "Use remote machine", and set the value to "192.168.0.146" (Or whatever the IP address of the remote machine is)
 
+
+Git Bash setup
+--------------
+To get TAB to cycle through autocomplete selections
+Add:  bind TAB:menu-complete
+to ~/.profile 
+in Git Bash

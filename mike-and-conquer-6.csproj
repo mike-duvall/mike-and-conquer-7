@@ -199,7 +199,7 @@
     <Content Include="errors.txt" />
     <Content Include="Icon.ico" />
     <Content Include="Notes.txt" />
-    <Content Include="RemoteDebugging.txt" />
+    <Content Include="Setup-Notes.txt" />
     <Content Include="shadow-color-mapping-notes.txt" />
     <Content Include="xcc-mixer-notes.txt" />
   </ItemGroup>

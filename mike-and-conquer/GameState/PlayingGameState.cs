@@ -177,15 +177,6 @@ namespace mike_and_conquer
                 }
             }
 
-            BasicMapSquare clickedBasicMapSquare2 = MikeAndConquerGame.instance.FindMapSquare(mouseX, mouseY);
-
-            int topLeftXOfClickedSquare = clickedBasicMapSquare2.GetCenter().X - 12;
-            int topLeftYOfClickedSquare = clickedBasicMapSquare2.GetCenter().Y - 12;
-
-            int squareMouseX = mouseX - topLeftXOfClickedSquare;
-            int squareMouseY = mouseY - topLeftYOfClickedSquare;
-            int paletteIndex = clickedBasicMapSquare2.GetPaletteIndexOfCoordinate(squareMouseX, squareMouseY);
-
             return true;
         }
 

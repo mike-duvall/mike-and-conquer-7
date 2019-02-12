@@ -15,6 +15,7 @@ namespace mike_and_conquer.gameview
         private UnitSelectionCursor unitSelectionCursor;
         private DestinationSquare destinationSquare;
         private Minigunner myMinigunner;
+        private bool drawDestinationSquare;
 
         enum AnimationSequences { STANDING_STILL, WALKING_UP, SHOOTING_UP };
 
@@ -26,7 +27,7 @@ namespace mike_and_conquer.gameview
             this.gameSprite.drawShadow = true;
             this.unitSelectionCursor = new UnitSelectionCursor((int)this.myMinigunner.position.X, (int)this.myMinigunner.position.Y);
             this.destinationSquare = new DestinationSquare();
-
+            this.drawDestinationSquare = false;
             SetupAnimations();
         }
 
@@ -90,7 +91,7 @@ namespace mike_and_conquer.gameview
                 unitSelectionCursor.Draw(gameTime, spriteBatch);
             }
 
-            if (this.myMinigunner.state == Minigunner.State.MOVING)
+            if (this.drawDestinationSquare && this.myMinigunner.state == Minigunner.State.MOVING)
             {
                 this.destinationSquare.position = this.myMinigunner.DestinationPosition;
                 this.destinationSquare.Draw(gameTime, spriteBatch);

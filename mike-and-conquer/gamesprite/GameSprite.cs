@@ -148,64 +148,6 @@ namespace mike_and_conquer
             }
         }
 
-//        int MapPaletteIndexToShadowPaletteIndex(int index)
-//        {
-//            if (index == 55)
-//                return 249;
-//            if (index == 58)
-//                return 240;
-//            if (index == 60)
-//                return 240;
-//            if (index == 66)
-//                return 241;
-//            if (index == 67)
-//                return 241;
-//            if (index == 68)
-//                return 241;
-//            if (index == 70)
-//                return 242;
-//            if (index == 72)
-//                return 243;
-//            if (index == 77)
-//                return 242;
-//
-//
-//            if (index == 78)
-//                return 243;
-//            if (index == 79)
-//                return 243;
-//
-//            if (index == 80)
-//                return 244;
-//            if (index == 81)
-//                return 244;
-//            if (index == 84)
-//                return 244;
-//            if (index == 189)
-//                return 243;
-//
-//            //            New 72-> 243
-//            //            New 78-> 243
-//            //            New 79-> 243
-////            New 80-> 244
-////            New 81-> 244
-////            New 84-> 244
-////
-////            New 189-> 243
-//
-//
-//            return index;
-//
-////            55-> 249
-////            58-> 240
-////            60-> 240
-////            66-> 241
-////            67-> 241
-////            68-> 241
-////            70-> 242
-////            77-> 242
-//
-//        }
 
         internal Texture2D createSpriteBorderRectangleTexture()
         {

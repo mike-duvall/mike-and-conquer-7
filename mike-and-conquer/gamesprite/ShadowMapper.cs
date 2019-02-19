@@ -15,10 +15,8 @@ namespace mike_and_conquer.gamesprite
         {
             shadowMap = new Dictionary<int, int>();
             System.IO.FileStream mrfFileStream = System.IO.File.Open("Content\\tunits.mrf", System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
-//            System.IO.FileStream mrfFileStream = System.IO.File.Open("Content\\tunits.mrf", System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
             for (int i = 0; i < 256; i++)
                 mrfFileStream.ReadByte();
-
 
             for (int i = 256; i < 512; i++)
             {

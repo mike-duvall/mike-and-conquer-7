@@ -31,21 +31,12 @@ namespace mike_and_conquer.gameview
             SetupAnimations();
         }
 
-//        public int GetPaletteIndexOfUpperLeft()
-//        {
-//            SpriteTextureList list = MikeAndConquerGame.instance.TextureListMap.GetTextureList(textureKey);
-//            return list.frameDataList[imageIndex][0];
-//        }
-
-
-        internal int GetPaletteIndexOfCoordinate(int mouseX, int mouseY)
+        internal int GetPaletteIndexOfCoordinate(int x, int y)
         {
             SpriteTextureList list = MikeAndConquerGame.instance.TextureListMap.GetTextureList(textureKey);
-            int index = mouseY * 24 + mouseX;
+            int index = y * 24 + x;
             return list.frameDataList[imageIndex][index];
-
         }
-
 
         private void SetupAnimations()
         {
@@ -53,7 +44,6 @@ namespace mike_and_conquer.gameview
             animationSequence.AddFrame(imageIndex);
             gameSprite.AddAnimationSequence(0, animationSequence);
         }
-
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

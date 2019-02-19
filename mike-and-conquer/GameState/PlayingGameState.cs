@@ -176,7 +176,6 @@ namespace mike_and_conquer
                     nextMinigunner.OrderToMoveToDestination(centerOfSquare);
                 }
             }
-
             return true;
         }
 

@@ -96,28 +96,26 @@ namespace mike_and_conquer
 
                 foreach (int shadowIndex in currentShadowIndexList)
                 {
-                    int x = shadowIndex % 50;
-                    int y = shadowIndex / 50;
+                    int x = shadowIndex % spriteTextureList.textureWidth;
+                    int y = shadowIndex / spriteTextureList.textureWidth;
 
                     int topLeftXOfSprite = (int)position.X - (int)middleOfSprite.X;
                     int topLeftYOfSprite = (int)position.Y - (int)middleOfSprite.Y;
                     int screenPositionXOfThisPixel = topLeftXOfSprite + x;
                     int screenPositionYOfThisPixel = topLeftYOfSprite + y;
 
-                    BasicMapSquare clickedBasicMapSquare2 =
+                    BasicMapSquare underlyingMapSquare =
                         MikeAndConquerGame.instance.FindMapSquare(screenPositionXOfThisPixel,
                             screenPositionYOfThisPixel);
 
-                    int topLeftXOfClickedSquare = clickedBasicMapSquare2.GetCenter().X - 12;
-                    int topLeftYOfClickedSquare = clickedBasicMapSquare2.GetCenter().Y - 12;
+                    int topLeftXOfUnderlyingMapSquare = underlyingMapSquare.GetCenter().X - 12;
+                    int topLeftYOfUnderlyingMapSquare = underlyingMapSquare.GetCenter().Y - 12;
 
-                    int squareMouseX = screenPositionXOfThisPixel - topLeftXOfClickedSquare;
-                    int squareMouseY = screenPositionYOfThisPixel - topLeftYOfClickedSquare;
+                    int underlyingMapSquarePixelX = screenPositionXOfThisPixel - topLeftXOfUnderlyingMapSquare;
+                    int underlyingMapSquarePixelY = screenPositionYOfThisPixel - topLeftYOfUnderlyingMapSquare;
                     int paletteIndex =
-                        clickedBasicMapSquare2.GetPaletteIndexOfCoordinate(squareMouseX, squareMouseY);
+                        underlyingMapSquare.GetPaletteIndexOfCoordinate(underlyingMapSquarePixelX, underlyingMapSquarePixelY);
 
-
-                    //                    int shadowPaletteIndex = MapPaletteIndexToShadowPaletteIndex(paletteIndex);
                     int shadowPaletteIndex = MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(paletteIndex);
                     if (shadowPaletteIndex != paletteIndex)
                     {
@@ -139,8 +137,6 @@ namespace mike_and_conquer
 
 
             spriteBatch.Draw(currentTexture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
-            
-
 
             if (drawBoundingRectangle)
             {

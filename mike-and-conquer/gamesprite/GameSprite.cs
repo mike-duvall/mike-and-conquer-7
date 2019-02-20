@@ -96,37 +96,48 @@ namespace mike_and_conquer
 
                 foreach (int shadowIndex in currentShadowIndexList)
                 {
-                    int x = shadowIndex % spriteTextureList.textureWidth;
-                    int y = shadowIndex / spriteTextureList.textureWidth;
+                    int shadowXSpriteCoordinate = shadowIndex % spriteTextureList.textureWidth;
+                    int shadowYSpriteCoordinate = shadowIndex / spriteTextureList.textureWidth;
 
                     int topLeftXOfSprite = (int)position.X - (int)middleOfSprite.X;
                     int topLeftYOfSprite = (int)position.Y - (int)middleOfSprite.Y;
-                    int screenPositionXOfThisPixel = topLeftXOfSprite + x;
-                    int screenPositionYOfThisPixel = topLeftYOfSprite + y;
+                    int shadowXScreenCoordinate = topLeftXOfSprite + shadowXSpriteCoordinate;
+                    int shadowYScreenCoordinate = topLeftYOfSprite + shadowYSpriteCoordinate;
 
                     BasicMapSquare underlyingMapSquare =
-                        MikeAndConquerGame.instance.FindMapSquare(screenPositionXOfThisPixel,
-                            screenPositionYOfThisPixel);
+                        MikeAndConquerGame.instance.FindMapSquare(shadowXScreenCoordinate,
+                            shadowYScreenCoordinate);
 
+
+                    // TODO:  Un-hard code 12
+                    // TODO:  Update variables below to indicate coordinate system.  Screen coordinates?
                     int topLeftXOfUnderlyingMapSquare = underlyingMapSquare.GetCenter().X - 12;
                     int topLeftYOfUnderlyingMapSquare = underlyingMapSquare.GetCenter().Y - 12;
 
-                    int underlyingMapSquarePixelX = screenPositionXOfThisPixel - topLeftXOfUnderlyingMapSquare;
-                    int underlyingMapSquarePixelY = screenPositionYOfThisPixel - topLeftYOfUnderlyingMapSquare;
-                    int paletteIndex =
-                        underlyingMapSquare.GetPaletteIndexOfCoordinate(underlyingMapSquarePixelX, underlyingMapSquarePixelY);
 
-                    int shadowPaletteIndex = MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(paletteIndex);
-                    if (shadowPaletteIndex != paletteIndex)
+                    int shadowXMapSquareCoordinate = shadowXScreenCoordinate - topLeftXOfUnderlyingMapSquare;
+                    int shadowYMapSquareCoordinate = shadowYScreenCoordinate - topLeftYOfUnderlyingMapSquare;
+
+                    int nonShadowPaletteIndexAtShadowLocation =
+                        underlyingMapSquare.GetPaletteIndexOfCoordinate(shadowXMapSquareCoordinate, shadowYMapSquareCoordinate);
+
+                    int shadowPaletteIndex =
+                        MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
+
+                    if (shadowPaletteIndex != nonShadowPaletteIndexAtShadowLocation)
                     {
+                        // If we found a different color for the shadow pixel (which we should)
+                        // remap the color in the texture to be the shadow color
                         uint mappedColor = palette[shadowPaletteIndex];
                         System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
                         Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
                         texturePixelData[shadowIndex] = xnaColor;
-
                     }
                     else
                     {
+                        // If we didn't find a different shadow palette color, map it to bright green
+                        // so we can see it and debug it
+                        // TODO:  Or, consider throwing and exception and logging it
                         texturePixelData[shadowIndex] = new Color(255, 252, 84); 
                     }
 

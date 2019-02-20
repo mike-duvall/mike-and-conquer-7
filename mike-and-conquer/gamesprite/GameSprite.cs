@@ -7,7 +7,7 @@ using Color = Microsoft.Xna.Framework.Color;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
-
+using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
 
 namespace mike_and_conquer
 {
@@ -27,6 +27,9 @@ namespace mike_and_conquer
 
         private bool animate;
 
+        private OpenRA.Graphics.ImmutablePalette palette;
+
+        public bool drawShadow;
 
         public GameSprite(string spriteListKey)
         {
@@ -42,6 +45,9 @@ namespace mike_and_conquer
 
             drawBoundingRectangle = false;
             this.animate = true;
+            int[] remap = { };
+            palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
+            drawShadow = false;
         }
 
         public void SetCurrentAnimationSequenceIndex(int animationSequenceIndex)
@@ -80,13 +86,73 @@ namespace mike_and_conquer
             currentTexture = spriteTextureList.textureList[currentTextureIndex];
 
             float defaultScale = 1;
+
+            if (drawShadow)
+            {
+                Color[] texturePixelData = new Color[currentTexture.Width * currentTexture.Height];
+                currentTexture.GetData(texturePixelData);
+
+                List<int> currentShadowIndexList = spriteTextureList.shadowIndexLists[currentTextureIndex];
+
+                foreach (int shadowIndex in currentShadowIndexList)
+                {
+                    int shadowXSpriteCoordinate = shadowIndex % spriteTextureList.textureWidth;
+                    int shadowYSpriteCoordinate = shadowIndex / spriteTextureList.textureWidth;
+
+                    int topLeftXOfSprite = (int)position.X - (int)middleOfSprite.X;
+                    int topLeftYOfSprite = (int)position.Y - (int)middleOfSprite.Y;
+                    int shadowXScreenCoordinate = topLeftXOfSprite + shadowXSpriteCoordinate;
+                    int shadowYScreenCoordinate = topLeftYOfSprite + shadowYSpriteCoordinate;
+
+                    BasicMapSquare underlyingMapSquare =
+                        MikeAndConquerGame.instance.FindMapSquare(shadowXScreenCoordinate,
+                            shadowYScreenCoordinate);
+
+
+                    // TODO:  Un-hard code 12
+                    // TODO:  Update variables below to indicate coordinate system.  Screen coordinates?
+                    int topLeftXOfUnderlyingMapSquare = underlyingMapSquare.GetCenter().X - 12;
+                    int topLeftYOfUnderlyingMapSquare = underlyingMapSquare.GetCenter().Y - 12;
+
+
+                    int shadowXMapSquareCoordinate = shadowXScreenCoordinate - topLeftXOfUnderlyingMapSquare;
+                    int shadowYMapSquareCoordinate = shadowYScreenCoordinate - topLeftYOfUnderlyingMapSquare;
+
+                    int nonShadowPaletteIndexAtShadowLocation =
+                        underlyingMapSquare.GetPaletteIndexOfCoordinate(shadowXMapSquareCoordinate, shadowYMapSquareCoordinate);
+
+                    int shadowPaletteIndex =
+                        MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
+
+                    if (shadowPaletteIndex != nonShadowPaletteIndexAtShadowLocation)
+                    {
+                        // If we found a different color for the shadow pixel (which we should)
+                        // remap the color in the texture to be the shadow color
+                        uint mappedColor = palette[shadowPaletteIndex];
+                        System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
+                        Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+                        texturePixelData[shadowIndex] = xnaColor;
+                    }
+                    else
+                    {
+                        // If we didn't find a different shadow palette color, map it to bright green
+                        // so we can see it and debug it
+                        // TODO:  Or, consider throwing and exception and logging it
+                        texturePixelData[shadowIndex] = new Color(255, 252, 84); 
+                    }
+
+                }
+
+                currentTexture.SetData(texturePixelData);
+            }
+
+
             spriteBatch.Draw(currentTexture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
 
             if (drawBoundingRectangle)
             {
                 spriteBatch.Draw(spriteBorderRectangleTexture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
             }
-
         }
 
 
@@ -99,8 +165,13 @@ namespace mike_and_conquer
             fillVerticalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
             fillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, Color.White);
 
-            int centerX = (rectangle.Width / 2) - 1;
-            int centerY = (rectangle.Height / 2) - 1;
+            //            int centerX = (rectangle.Width / 2) - 1;
+            //            int centerY = (rectangle.Height / 2) - 1;
+            int centerX = (rectangle.Width / 2) ;
+            int centerY = (rectangle.Height / 2);
+
+            // Check how this works for even sized sprites with true center
+
             int centerOffset = (centerY * rectangle.Width) + centerX;
 
             data[centerOffset] = Color.Red;

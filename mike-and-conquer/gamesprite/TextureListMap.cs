@@ -7,6 +7,7 @@ using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using Color = Microsoft.Xna.Framework.Color;
 
 using ISpriteFrame = OpenRA.Graphics.ISpriteFrame;
+using Point = Microsoft.Xna.Framework.Point;
 
 namespace mike_and_conquer
 {
@@ -106,6 +107,7 @@ namespace mike_and_conquer
             foreach (OpenRA.Graphics.ISpriteFrame frame in shpTDSprite.Frames)
             {
                 byte[] frameData = frame.Data;
+                List<int> shadowIndexList = new List<int>();
 
                 Texture2D texture2D = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, shpTDSprite.Size.Width, shpTDSprite.Size.Height);
                 int numPixels = texture2D.Width * texture2D.Height;
@@ -120,11 +122,19 @@ namespace mike_and_conquer
                     System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
                     Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
                     texturePixelData[i] = xnaColor;
+
+                    if (mappedPaletteIndex == 4)
+                    {
+                        shadowIndexList.Add(i);
+                    }
                 }
 
                 texture2D.SetData(texturePixelData);
                 shpStream.Close();
                 spriteTextureList.textureList.Add(texture2D);
+                spriteTextureList.shadowIndexLists.Add(shadowIndexList);
+                spriteTextureList.frameDataList.Add(frameData);
+                int x = 3;
             }
             return spriteTextureList;
 
@@ -155,6 +165,8 @@ namespace mike_and_conquer
                 if( frameData.Length == 0)
                 {
                     spriteTextureList.textureList.Add(null);
+                    spriteTextureList.frameDataList.Add(null);
+                    spriteTextureList.shadowIndexLists.Add(null);
                     continue;
                 }
                 //                Texture2D texture2D = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
@@ -178,6 +190,7 @@ namespace mike_and_conquer
                 spriteTextureList.textureHeight = frame.Size.Height;
 
                 spriteTextureList.textureList.Add(texture2D);
+                spriteTextureList.frameDataList.Add(frameData);
             }
 
             return spriteTextureList;

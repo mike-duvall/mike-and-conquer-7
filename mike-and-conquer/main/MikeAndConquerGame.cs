@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -47,6 +48,7 @@ namespace mike_and_conquer
 
         public GameWorld gameWorld;
 
+        public ShadowMapper shadowMapper;
         private List<MinigunnerView> gdiMinigunnerViewList;
         private List<MinigunnerView> nodMinigunnerViewList;
 
@@ -168,7 +170,7 @@ namespace mike_and_conquer
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
             this.camera2D.Zoom = 4.8f;
-//            this.camera2D.Zoom = 2.0f;
+            //            this.camera2D.Zoom = 2.0f;
             this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
             base.Initialize();
@@ -185,19 +187,40 @@ namespace mike_and_conquer
 //                AddGdiMinigunner(30, 300);
 
                 Point minigunnerStartPosition = new Point(60,12);
+//                Point minigunnerStartPosition = new Point(24, 24);
                 AddGdiMinigunner(minigunnerStartPosition);
+
+
+                 //Fix broken movement
+                AddGdiMinigunner(new Point(64, 64));
+                AddGdiMinigunner(new Point(132, 64));
+                AddGdiMinigunner(new Point(64, 132));
+
+
                 int mapX = 1;
                 int mapY = 1;
 
-                AddSandbag(1, 1, 10);
-                AddSandbag(2, 1, 10);
-                AddSandbag(3, 1, 10);
-                AddSandbag(4, 1, 10);
+                //                AddSandbag(1, 1, 10);
+                //                AddSandbag(2, 1, 10);
+                //                AddSandbag(3, 1, 10);
+                //                AddSandbag(4, 1, 10);
+                //
+                //                AddSandbag(1, 2, 5);
+                //                AddSandbag(1, 3, 5);
+                //                AddSandbag(4, 2, 5);
+                //                AddSandbag(4, 3, 5);
 
-                AddSandbag(1, 2, 5);
-                AddSandbag(1, 3, 5);
-                AddSandbag(4, 2, 5);
-                AddSandbag(4, 3, 5);
+                AddSandbag(10, 6, 5);
+                AddSandbag(10, 7, 5);
+                AddSandbag(10, 8, 5);
+                AddSandbag(10, 9, 5);
+                AddSandbag(10, 10, 5);
+
+                AddSandbag(8, 4, 10);
+                AddSandbag(9, 4, 10);
+                //                AddSandbag(10, 11, 5);
+                //                AddSandbag(10, 12, 5);
+                //                AddSandbag(10, 13, 5);
 
             }
 
@@ -254,17 +277,12 @@ namespace mike_and_conquer
 
             System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
 
-            // when
             int startX = 36;
             int startY = 39;
             int endX = 61;
             int endY = 61;
 
-            int numColumns = endX - startX + 1;
-            int numRows = endY - startY + 1;
-
             gameMap = new GameMap(inputStream, startX, startY, endX, endY);
-
         }
 
 
@@ -275,6 +293,8 @@ namespace mike_and_conquer
         protected override void LoadContent()
         {
             LoadMap();
+
+            shadowMapper = new ShadowMapper();
 
             List<string> textureKeysAlreadyAdded = new List<string>();
 

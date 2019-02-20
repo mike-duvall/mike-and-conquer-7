@@ -30,10 +30,14 @@ Current OpenRA code pulled from branch "bleed", commit: 488cec64b87221e8fd0e88d2
 
 
 
-Coordinates systems
---------------------
+Coordinates system terms
+------------------------
+(Below examples assumes world size of width: 26 squares, height: 24 squares)
 
 Screen Coordinates - x,y, where they click on screen (range of 1920 x 1080)
 World Coordinates - x,y, Where they click in the game world (range of (26 * 12) x (24 * 12))
 World Map Square Coordinates - x,y, the map square as x,y coordinates.  Range of 26 x 24
 World Map Square Index -  the index of the map square, single number, range of 0 to 26*24
+Map Square Coordinates - x,y relative to a map square, where 0,0, is top left of that map square, and (mapsquarewidth,mapsquareheight) is bottom right
+	(not sure what existing map square width and height are....)
+Sprite Coordinates - x,y, relative to the top left of the sprite

@@ -7,6 +7,7 @@ using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
+using System;
 
 namespace mike_and_conquer.gameview
 {
@@ -18,16 +19,24 @@ namespace mike_and_conquer.gameview
 
         Vector2 position;
         private int imageIndex;
+        private string textureKey;
 
         public  BasicMapSquare(int x, int y, string textureKey, int imageIndex )
         {
             this.position = new Vector2(x,y);
             this.gameSprite = new GameSprite(textureKey);
-            this.gameSprite.drawBoundingRectangle = true;
+            this.gameSprite.drawBoundingRectangle = false;
             this.imageIndex = imageIndex;
+            this.textureKey = textureKey;
             SetupAnimations();
         }
 
+        internal int GetPaletteIndexOfCoordinate(int x, int y)
+        {
+            SpriteTextureList list = MikeAndConquerGame.instance.TextureListMap.GetTextureList(textureKey);
+            int index = y * list.textureWidth + x;
+            return list.frameDataList[imageIndex][index];
+        }
 
         private void SetupAnimations()
         {
@@ -35,7 +44,6 @@ namespace mike_and_conquer.gameview
             animationSequence.AddFrame(imageIndex);
             gameSprite.AddAnimationSequence(0, animationSequence);
         }
-
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -57,5 +65,6 @@ namespace mike_and_conquer.gameview
         {
             return new Point((int) position.X, (int) position.Y);
         }
+
     }
 }

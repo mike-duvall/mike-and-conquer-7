@@ -141,12 +141,12 @@ namespace unit_tests
         {
             int leeway = 1;
             bool isAtXDestination =
-                (minigunner.position.X > destination.X - leeway) &&
-                (minigunner.position.X < destination.X + leeway);
+                (minigunner.positionInWorldCoordinates.X > destination.X - leeway) &&
+                (minigunner.positionInWorldCoordinates.X < destination.X + leeway);
 
             bool isAtYDestination =
-                (minigunner.position.Y > destination.Y - leeway) &&
-                (minigunner.position.Y < destination.Y + leeway);
+                (minigunner.positionInWorldCoordinates.Y > destination.Y - leeway) &&
+                (minigunner.positionInWorldCoordinates.Y < destination.Y + leeway);
 
 
             return isAtXDestination && isAtYDestination;

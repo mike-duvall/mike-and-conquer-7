@@ -23,7 +23,7 @@ namespace mike_and_conquer
         Texture2D spriteBorderRectangleTexture;
         public Boolean drawBoundingRectangle;
 
-        private Vector2 middleOfSprite;
+        private Vector2 middleOfSpriteInSpriteCoordinates;
 
         private bool animate;
 
@@ -38,10 +38,10 @@ namespace mike_and_conquer
 
             spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
 
-            middleOfSprite = new Vector2();
+            middleOfSpriteInSpriteCoordinates = new Vector2();
 
-            middleOfSprite.X = spriteTextureList.textureWidth / 2;
-            middleOfSprite.Y = spriteTextureList.textureHeight / 2;
+            middleOfSpriteInSpriteCoordinates.X = spriteTextureList.textureWidth / 2;
+            middleOfSpriteInSpriteCoordinates.Y = spriteTextureList.textureHeight / 2;
 
             drawBoundingRectangle = false;
             this.animate = true;
@@ -73,7 +73,7 @@ namespace mike_and_conquer
         }
 
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 position)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates)
         {
 
             AnimationSequence currentAnimationSequence = animationSequenceMap[currentAnimationSequenceIndex];
@@ -99,10 +99,10 @@ namespace mike_and_conquer
                     int shadowXSpriteCoordinate = shadowIndex % spriteTextureList.textureWidth;
                     int shadowYSpriteCoordinate = shadowIndex / spriteTextureList.textureWidth;
 
-                    int topLeftXOfSprite = (int)position.X - (int)middleOfSprite.X;
-                    int topLeftYOfSprite = (int)position.Y - (int)middleOfSprite.Y;
-                    int shadowXScreenCoordinate = topLeftXOfSprite + shadowXSpriteCoordinate;
-                    int shadowYScreenCoordinate = topLeftYOfSprite + shadowYSpriteCoordinate;
+                    int topLeftXOfSpriteInWorldCoordinates = (int)positionInWorldCoordinates.X - (int)middleOfSpriteInSpriteCoordinates.X;
+                    int topLeftYOfSpriteInWorldCoordinates = (int)positionInWorldCoordinates.Y - (int)middleOfSpriteInSpriteCoordinates.Y;
+                    int shadowXScreenCoordinate = topLeftXOfSpriteInWorldCoordinates + shadowXSpriteCoordinate;
+                    int shadowYScreenCoordinate = topLeftYOfSpriteInWorldCoordinates + shadowYSpriteCoordinate;
 
                     BasicMapSquare underlyingMapSquare =
                         MikeAndConquerGame.instance.FindMapSquare(shadowXScreenCoordinate,
@@ -147,11 +147,11 @@ namespace mike_and_conquer
             }
 
 
-            spriteBatch.Draw(currentTexture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(currentTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
 
             if (drawBoundingRectangle)
             {
-                spriteBatch.Draw(spriteBorderRectangleTexture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
             }
         }
 

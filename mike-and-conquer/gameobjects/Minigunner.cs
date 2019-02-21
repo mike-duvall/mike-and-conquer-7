@@ -22,7 +22,7 @@ namespace mike_and_conquer
         public int id { get; set; }
         public int health { get; set; }
         public bool selected { get; set; }
-        public Vector2 position { get; set; }
+        public Vector2 positionInWorldCoordinates { get; set; }
         public Point destination {
             get { return new Point(destinationX, destinationY);}
         }
@@ -65,12 +65,12 @@ namespace mike_and_conquer
         }
 
 
-        public Minigunner(int x, int y, Graph navigationGraph)
+        public Minigunner(int xInWorldCoordinates, int yInWorldCoordinates, Graph navigationGraph)
         {
             this.navigationGraph = navigationGraph;
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;
-            position = new Vector2(x, y);
+            positionInWorldCoordinates = new Vector2(xInWorldCoordinates, yInWorldCoordinates);
 
             health = 1000;
             id = Minigunner.globalId;
@@ -110,8 +110,8 @@ namespace mike_and_conquer
             int unitWidth = 12;
             int unitHeight = 12;
 
-            int x = (int)(position.X - (unitWidth / 2));
-            int y = (int)(position.Y - unitHeight) + (int)(1);  
+            int x = (int)(positionInWorldCoordinates.X - (unitWidth / 2));
+            int y = (int)(positionInWorldCoordinates.Y - unitHeight) + (int)(1);  
 
             Rectangle rectangle = new Rectangle(x,y,unitWidth,unitHeight);
             return rectangle;
@@ -161,22 +161,22 @@ namespace mike_and_conquer
 
         private bool IsFarEnoughRight(int destinationX)
         {
-            return (position.X > (destinationX - movementDistanceEpsilon));
+            return (positionInWorldCoordinates.X > (destinationX - movementDistanceEpsilon));
         }
 
         private bool IsFarEnoughLeft(int destinationX)
         {
-            return (position.X < (destinationX + movementDistanceEpsilon));
+            return (positionInWorldCoordinates.X < (destinationX + movementDistanceEpsilon));
         }
 
         private bool IsFarEnoughDown(int destinationY)
         {
-            return (position.Y > (destinationY - movementDistanceEpsilon));
+            return (positionInWorldCoordinates.Y > (destinationY - movementDistanceEpsilon));
         }
 
         private bool IsFarEnoughUp(int destinationY)
         {
-            return (position.Y < (destinationY + movementDistanceEpsilon));
+            return (positionInWorldCoordinates.Y < (destinationY + movementDistanceEpsilon));
         }
 
 
@@ -213,7 +213,7 @@ namespace mike_and_conquer
 
         private int CalculateDistanceToTarget()
         {
-            return (int)Distance(position.X, position.Y, currentAttackTarget.position.X, currentAttackTarget.position.Y);
+            return (int)Distance(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, currentAttackTarget.positionInWorldCoordinates.X, currentAttackTarget.positionInWorldCoordinates.Y);
         }
 
 
@@ -248,7 +248,7 @@ namespace mike_and_conquer
             else
             {
                 this.state = State.MOVING;
-                SetDestination( (int) currentAttackTarget.position.X, (int)currentAttackTarget.position.Y);
+                SetDestination( (int) currentAttackTarget.positionInWorldCoordinates.X, (int)currentAttackTarget.positionInWorldCoordinates.Y);
                 MoveTowardsDestination(gameTime,destinationX, destinationY);
             }
         }
@@ -256,8 +256,8 @@ namespace mike_and_conquer
         void MoveTowardsDestination(GameTime gameTime, int destinationX, int destinationY)
         {
 
-            float newX = position.X;
-            float newY = position.Y;
+            float newX = positionInWorldCoordinates.X;
+            float newY = positionInWorldCoordinates.Y;
 
             double delta = gameTime.ElapsedGameTime.TotalMilliseconds * movementVelocity;
             //log.Information("delta:" + delta);
@@ -280,8 +280,8 @@ namespace mike_and_conquer
             {
                 newY -= (float)delta;
             }
-            position = new Vector2(newX, newY);
-//            MikeAndConquerGame.log.Debug("position=" + position);
+            positionInWorldCoordinates = new Vector2(newX, newY);
+//            MikeAndConquerGame.log.Debug("positionInWorldCoordinates=" + positionInWorldCoordinates);
         }
 
 
@@ -326,8 +326,8 @@ namespace mike_and_conquer
 //            SetDestination(listOfPoints[0].X, listOfPoints[0].Y);
 
 //            Point startPoint = new Point(2, 0);
-            int startColumn = (int)this.position.X / 24;
-            int startRow = (int)this.position.Y / 24;
+            int startColumn = (int)this.positionInWorldCoordinates.X / 24;
+            int startRow = (int)this.positionInWorldCoordinates.Y / 24;
             Point startPoint = new Point(startColumn, startRow);
 
             AStar aStar = new AStar();
@@ -392,7 +392,7 @@ namespace mike_and_conquer
 
         public Vector2 GetScreenPosition()
         {
-            return Vector2.Transform(position, MikeAndConquerGame.instance.camera2D.TransformMatrix);
+            return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.camera2D.TransformMatrix);
         }
 
 

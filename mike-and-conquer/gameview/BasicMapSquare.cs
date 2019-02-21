@@ -17,13 +17,13 @@ namespace mike_and_conquer.gameview
 
 
 
-        Vector2 position;
+        Vector2 positionInWorldCoordinates;
         private int imageIndex;
         private string textureKey;
 
         public  BasicMapSquare(int x, int y, string textureKey, int imageIndex )
         {
-            this.position = new Vector2(x,y);
+            this.positionInWorldCoordinates = new Vector2(x,y);
             this.gameSprite = new GameSprite(textureKey);
             this.gameSprite.drawBoundingRectangle = false;
             this.imageIndex = imageIndex;
@@ -47,7 +47,7 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            gameSprite.Draw(gameTime, spriteBatch, this.position);
+            gameSprite.Draw(gameTime, spriteBatch, this.positionInWorldCoordinates);
         }
 
 
@@ -55,15 +55,15 @@ namespace mike_and_conquer.gameview
         {
             int height = 24;
             int width = 24;
-            int leftX = (int) position.X - (width / 2);
-            int topY = (int) position.Y - (height / 2);
+            int leftX = (int) positionInWorldCoordinates.X - (width / 2);
+            int topY = (int) positionInWorldCoordinates.Y - (height / 2);
             Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);
             return boundRectangle.Contains(aPoint);
         }
 
         public Point GetCenter()
         {
-            return new Point((int) position.X, (int) position.Y);
+            return new Point((int) positionInWorldCoordinates.X, (int) positionInWorldCoordinates.Y);
         }
 
     }

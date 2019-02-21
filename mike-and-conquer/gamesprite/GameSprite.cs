@@ -101,6 +101,9 @@ namespace mike_and_conquer
 
                     int topLeftXOfSpriteInWorldCoordinates = (int)positionInWorldCoordinates.X - (int)middleOfSpriteInSpriteCoordinates.X;
                     int topLeftYOfSpriteInWorldCoordinates = (int)positionInWorldCoordinates.Y - (int)middleOfSpriteInSpriteCoordinates.Y;
+
+
+                     Pickup here.  Some of these are named "ScreenCoordinate", but I think they are actually WorldCoordinates
                     int shadowXScreenCoordinate = topLeftXOfSpriteInWorldCoordinates + shadowXSpriteCoordinate;
                     int shadowYScreenCoordinate = topLeftYOfSpriteInWorldCoordinates + shadowYSpriteCoordinate;
 

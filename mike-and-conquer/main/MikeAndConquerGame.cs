@@ -624,12 +624,12 @@ namespace mike_and_conquer
         }
 
 
-        public BasicMapSquare FindMapSquare(int mouseX, int mouseY)
+        public BasicMapSquare FindMapSquare(int xWorldCoordinate, int yWorldCoordinate)
         {
 
             foreach (BasicMapSquare nextBasicMapSquare in basicMapSquareList)
             {
-                if (nextBasicMapSquare.ContainsPoint(new Point(mouseX, mouseY)))
+                if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
                 {
                     return nextBasicMapSquare;
                 }

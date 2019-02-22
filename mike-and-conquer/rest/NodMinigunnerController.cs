@@ -16,8 +16,8 @@ namespace mike_and_conquer.rest
             Minigunner minigunner = GameWorld.instance.GetNodMinigunnerByIdViaEvent(id);
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;
-            restMinigunner.x = (int)minigunner.position.X;
-            restMinigunner.y = (int)minigunner.position.Y;
+            restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
+            restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
             restMinigunner.health = minigunner.health;
             restMinigunner.selected = minigunner.selected;
             return Ok(restMinigunner);
@@ -31,8 +31,8 @@ namespace mike_and_conquer.rest
                 Minigunner minigunner = GameWorld.instance.CreateNodMinigunnerViaEvent(inputMinigunner.x, inputMinigunner.y, inputMinigunner.aiIsOn);
                 RestMinigunner restMinigunner = new RestMinigunner();
                 restMinigunner.id = minigunner.id;
-                restMinigunner.x = (int)minigunner.position.X;
-                restMinigunner.y = (int)minigunner.position.Y;
+                restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
+                restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
                 restMinigunner.health = minigunner.health;
                 return Ok(restMinigunner);
             }

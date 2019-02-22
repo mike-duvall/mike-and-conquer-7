@@ -16,8 +16,8 @@ namespace mike_and_conquer.rest
             Minigunner gdiMinigunner = GameWorld.instance.GetGdiOrNodMinigunner(restMinigunnerId.id);
         
             Vector2 minigunnerLocation = new Microsoft.Xna.Framework.Vector2();
-            minigunnerLocation.X = gdiMinigunner.position.X;
-            minigunnerLocation.Y = gdiMinigunner.position.Y;
+            minigunnerLocation.X = gdiMinigunner.positionInWorldCoordinates.X;
+            minigunnerLocation.Y = gdiMinigunner.positionInWorldCoordinates.Y;
         
             Vector2 transformedLocation = gdiMinigunner.GetScreenPosition();
         

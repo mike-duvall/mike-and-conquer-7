@@ -21,8 +21,8 @@ namespace mike_and_conquer.rest
             Minigunner minigunner = GameWorld.instance.GetGDIMinigunnerByIdViaEvent(id);
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;
-            restMinigunner.x = (int)minigunner.position.X;
-            restMinigunner.y = (int)minigunner.position.Y;
+            restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
+            restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
             Vector2 screenPosition = minigunner.GetScreenPosition();
             restMinigunner.screenX = (int)screenPosition.X;
             restMinigunner.screenY = (int)screenPosition.Y;
@@ -43,8 +43,8 @@ namespace mike_and_conquer.rest
 
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;
-            restMinigunner.x = (int)minigunner.position.X;
-            restMinigunner.y = (int)minigunner.position.Y;
+            restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
+            restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
             restMinigunner.health = minigunner.health;
             return Ok(restMinigunner);
         }

@@ -180,35 +180,19 @@ namespace mike_and_conquer
             if (!testMode)
             {
                 bool aiIsOn = false;
-//                AddNodMinigunner(310, 10, aiIsOn);
-//                AddNodMinigunner(315, 30, aiIsOn);
-
-//                AddGdiMinigunner(10, 300);
-//                AddGdiMinigunner(30, 300);
 
                 Point minigunnerStartPosition = new Point(60,12);
-//                Point minigunnerStartPosition = new Point(24, 24);
                 AddGdiMinigunner(minigunnerStartPosition);
 
 
                  //Fix broken movement
-                AddGdiMinigunner(new Point(64, 64));
-                AddGdiMinigunner(new Point(132, 64));
-                AddGdiMinigunner(new Point(64, 132));
+//                AddGdiMinigunner(new Point(64, 64));
+//                AddGdiMinigunner(new Point(132, 64));
+//                AddGdiMinigunner(new Point(64, 132));
 
 
                 int mapX = 1;
                 int mapY = 1;
-
-                //                AddSandbag(1, 1, 10);
-                //                AddSandbag(2, 1, 10);
-                //                AddSandbag(3, 1, 10);
-                //                AddSandbag(4, 1, 10);
-                //
-                //                AddSandbag(1, 2, 5);
-                //                AddSandbag(1, 3, 5);
-                //                AddSandbag(4, 2, 5);
-                //                AddSandbag(4, 3, 5);
 
                 AddSandbag(10, 6, 5);
                 AddSandbag(10, 7, 5);
@@ -218,9 +202,6 @@ namespace mike_and_conquer
 
                 AddSandbag(8, 4, 10);
                 AddSandbag(9, 4, 10);
-                //                AddSandbag(10, 11, 5);
-                //                AddSandbag(10, 12, 5);
-                //                AddSandbag(10, 13, 5);
 
             }
 
@@ -643,12 +624,12 @@ namespace mike_and_conquer
         }
 
 
-        public BasicMapSquare FindMapSquare(int mouseX, int mouseY)
+        public BasicMapSquare FindMapSquare(int xWorldCoordinate, int yWorldCoordinate)
         {
 
             foreach (BasicMapSquare nextBasicMapSquare in basicMapSquareList)
             {
-                if (nextBasicMapSquare.ContainsPoint(new Point(mouseX, mouseY)))
+                if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
                 {
                     return nextBasicMapSquare;
                 }

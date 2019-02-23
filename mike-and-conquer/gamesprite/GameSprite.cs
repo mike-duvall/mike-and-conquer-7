@@ -62,8 +62,8 @@ namespace mike_and_conquer
             AnimationSequence animationSequence = animationSequenceMap[currentAnimationSequenceIndex];
             animationSequence.SetCurrentFrameIndex(0);
 
-            int currentTextureIndex = animationSequence.GetCurrentFrame();
-            currentTexture = spriteTextureList.textureList[currentTextureIndex];
+            int currentAnimationImageIndex = animationSequence.GetCurrentFrame();
+            currentTexture = spriteTextureList.shpFileImageList[currentAnimationImageIndex].texture;
         }
 
 
@@ -81,14 +81,14 @@ namespace mike_and_conquer
                 currentAnimationSequence.Update();
             }
 
-            int currentTextureIndex = currentAnimationSequence.GetCurrentFrame();
-            currentTexture = spriteTextureList.textureList[currentTextureIndex];
+            int currentAnimationImageIndex = currentAnimationSequence.GetCurrentFrame();
+            currentTexture = spriteTextureList.shpFileImageList[currentAnimationImageIndex].texture;
 
             float defaultScale = 1;
 
             if (drawShadow)
             {
-                updateShadowPixels(positionInWorldCoordinates, currentTextureIndex);
+                updateShadowPixels(positionInWorldCoordinates, currentAnimationImageIndex);
             }
 
             spriteBatch.Draw(currentTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
@@ -99,14 +99,14 @@ namespace mike_and_conquer
             }
         }
 
-        private void updateShadowPixels(Vector2 positionInWorldCoordinates, int currentTextureIndex)
+        private void updateShadowPixels(Vector2 positionInWorldCoordinates, int imageIndex)
         {
             Color[] texturePixelData = new Color[currentTexture.Width * currentTexture.Height];
             currentTexture.GetData(texturePixelData);
 
-            List<int> currentShadowIndexList = spriteTextureList.shadowIndexLists[currentTextureIndex];
+            List<int> shadowIndexList = spriteTextureList.shpFileImageList[imageIndex].shadowIndexList;
 
-            foreach (int shadowIndex in currentShadowIndexList)
+            foreach (int shadowIndex in shadowIndexList)
             {
                 int shadowXSpriteCoordinate = shadowIndex % spriteTextureList.textureWidth;
                 int shadowYSpriteCoordinate = shadowIndex / spriteTextureList.textureWidth;

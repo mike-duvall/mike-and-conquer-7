@@ -7,7 +7,6 @@ using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using Color = Microsoft.Xna.Framework.Color;
 
 using ISpriteFrame = OpenRA.Graphics.ISpriteFrame;
-using Point = Microsoft.Xna.Framework.Point;
 
 namespace mike_and_conquer
 {
@@ -98,11 +97,9 @@ namespace mike_and_conquer
             OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader loader = new OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader();
             ShpTDSprite shpTDSprite = new OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite(shpStream);
 
-            int unscaledWidth = shpTDSprite.Frames[0].Size.Width;
-            int unscaledHeight = shpTDSprite.Frames[0].Size.Height;
+            spriteTextureList.textureWidth = shpTDSprite.Frames[0].Size.Width;
+            spriteTextureList.textureHeight = shpTDSprite.Frames[0].Size.Height;
 
-            spriteTextureList.textureWidth = unscaledWidth;
-            spriteTextureList.textureHeight = unscaledHeight;
 
             foreach (OpenRA.Graphics.ISpriteFrame frame in shpTDSprite.Frames)
             {
@@ -131,9 +128,8 @@ namespace mike_and_conquer
 
                 texture2D.SetData(texturePixelData);
                 shpStream.Close();
-                spriteTextureList.textureList.Add(texture2D);
-                spriteTextureList.shadowIndexLists.Add(shadowIndexList);
-                spriteTextureList.frameDataList.Add(frameData);
+                ShpFileImage shpFileImage = new ShpFileImage(texture2D, shadowIndexList, frameData);
+                spriteTextureList.shpFileImageList.Add(shpFileImage);
                 int x = 3;
             }
             return spriteTextureList;
@@ -164,9 +160,8 @@ namespace mike_and_conquer
 
                 if( frameData.Length == 0)
                 {
-                    spriteTextureList.textureList.Add(null);
-                    spriteTextureList.frameDataList.Add(null);
-                    spriteTextureList.shadowIndexLists.Add(null);
+                    ShpFileImage emptyShpFileImage = new ShpFileImage(null, null, null);
+                    spriteTextureList.shpFileImageList.Add(emptyShpFileImage);
                     continue;
                 }
                 //                Texture2D texture2D = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
@@ -189,8 +184,8 @@ namespace mike_and_conquer
                 spriteTextureList.textureWidth = frame.Size.Width;
                 spriteTextureList.textureHeight = frame.Size.Height;
 
-                spriteTextureList.textureList.Add(texture2D);
-                spriteTextureList.frameDataList.Add(frameData);
+                ShpFileImage shpFileImage = new ShpFileImage(texture2D,null, frameData);
+                spriteTextureList.shpFileImageList.Add(shpFileImage);
             }
 
             return spriteTextureList;

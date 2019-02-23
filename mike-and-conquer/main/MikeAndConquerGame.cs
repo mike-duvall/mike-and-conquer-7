@@ -605,7 +605,10 @@ namespace mike_and_conquer
         {
             SpriteTextureList spriteTextureList = new SpriteTextureList();
             Texture2D texture2D = Content.Load<Texture2D>(fileName);
-            spriteTextureList.textureList.Add(texture2D);
+
+
+            ShpFileImage shpFileImage = new ShpFileImage(texture2D,null,null);
+            spriteTextureList.shpFileImageList.Add(shpFileImage);
             spriteTextureList.textureWidth = texture2D.Width;
             spriteTextureList.textureHeight = texture2D.Height;
 

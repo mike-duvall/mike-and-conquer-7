@@ -34,8 +34,10 @@ namespace mike_and_conquer.gameview
         internal int GetPaletteIndexOfCoordinate(int x, int y)
         {
             SpriteTextureList list = MikeAndConquerGame.instance.TextureListMap.GetTextureList(textureKey);
-            int index = y * list.textureWidth + x;
-            return list.frameDataList[imageIndex][index];
+            ShpFileImage shpFileImage = list.shpFileImageList[imageIndex];
+
+            int frameDataIndex = y * list.textureWidth + x;
+            return shpFileImage.frameData[frameDataIndex];
         }
 
         private void SetupAnimations()

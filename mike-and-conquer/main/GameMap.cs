@@ -31,6 +31,8 @@ namespace mike_and_conquer
         public int numColumns;
         public int numRows;
 
+        public Dictionary<string, int[]> blockingTerrainMap = new Dictionary<string, int[]>();
+
 
         public List<MapTile> MapTiles
         {
@@ -79,7 +81,35 @@ namespace mike_and_conquer
                 }
             }
 
+            InitializeBlockTerrainMap();
+
+         }
+
+
+        private void InitializeBlockTerrainMap()
+        {
+            blockingTerrainMap.Add(TextureListMap.S09_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.S10_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.S11_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.S12_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.S14_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.S22_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.S29_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.S32_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.S34_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.S35_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.SH1_TEM, new int[] { 6, 7, 8 });
+            blockingTerrainMap.Add(TextureListMap.SH2_TEM, new int[] { 3, 4, 5, 6, 7, 8 });
+            blockingTerrainMap.Add(TextureListMap.SH3_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.SH4_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.SH5_TEM, new int[] {  6, 7, 8 });
+            blockingTerrainMap.Add(TextureListMap.SH6_TEM, new int[] { 6, 7, 8 });
+            blockingTerrainMap.Add(TextureListMap.SH9_TEM, new int[] { 6 });
+            blockingTerrainMap.Add(TextureListMap.SH10_TEM, new int[] {0,2,3 });
+            blockingTerrainMap.Add(TextureListMap.SH17_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.SH18_TEM, null);
         }
+
 
         private byte CalculateImageIndexForClear1(int column, int row)
         {
@@ -154,6 +184,8 @@ namespace mike_and_conquer
         {
             return (row * 64 * 2) + (column * 2);
         }
+
+
 
 
     }

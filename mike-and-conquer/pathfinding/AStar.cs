@@ -47,9 +47,9 @@ namespace mike_and_conquer.pathfinding
 
         }
 
-        public void UpdateNode(int x, int y, int newValue)
+        public void UpdateNode(int xInMapSquareCoordinates, int yInMapSquareCoordinates, int newValue)
         {
-            this.nodeArray[x, y] = newValue;
+            this.nodeArray[xInMapSquareCoordinates, yInMapSquareCoordinates] = newValue;
             this.nodeList = new List<Node>();
             this.currentNodeId = 0;
             for (int i = 0; i < nodeArray.Length; i++)

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
+
 
 
 namespace mike_and_conquer

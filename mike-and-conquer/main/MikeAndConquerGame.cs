@@ -30,6 +30,8 @@ using Camera2D = mike_and_conquer_6.Camera2D;
 
 using Point = Microsoft.Xna.Framework.Point;
 
+using String = System.String;
+
 using Serilog;
 
 
@@ -90,7 +92,7 @@ namespace mike_and_conquer
 
         private bool testMode;
 
-        private GameMap gameMap;
+        public GameMap gameMap;
 
 
         KeyboardState oldKeyboardState;
@@ -169,7 +171,8 @@ namespace mike_and_conquer
 
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
-            this.camera2D.Zoom = 4.8f;
+            this.camera2D.Zoom = 3.4f;
+            //            this.camera2D.Zoom = 4.8f;
             //            this.camera2D.Zoom = 2.0f;
             this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
@@ -181,7 +184,7 @@ namespace mike_and_conquer
             {
                 bool aiIsOn = false;
 
-                Point minigunnerStartPosition = new Point(60,12);
+                Point minigunnerStartPosition = new Point(160,22);
                 AddGdiMinigunner(minigunnerStartPosition);
 
 
@@ -238,8 +241,20 @@ namespace mike_and_conquer
             {
             
                 MapTile nextMapTile = gameMap.MapTiles[i];
-                BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
-            
+                BasicMapSquare basicMapSquare =
+                    new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex);
+                //                BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
+
+                int mapX = x / 24;
+                int mapY = y / 24;
+                if (basicMapSquare.isBlockingTerrain())
+                {
+                    basicMapSquare.gameSprite.drawBoundingRectangle = true;
+                    gameWorld.navigationGraph.UpdateNode(mapX, mapY, 1);
+                }
+
+                BasicMapSquareList.Add(basicMapSquare);
+
                 x = x + 24;
             
                 bool incrementRow = ((i + 1) % 26) == 0;
@@ -251,6 +266,7 @@ namespace mike_and_conquer
             }
 
         }
+
 
 
         private void LoadMap()

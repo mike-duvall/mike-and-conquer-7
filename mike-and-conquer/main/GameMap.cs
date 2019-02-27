@@ -108,6 +108,8 @@ namespace mike_and_conquer
             blockingTerrainMap.Add(TextureListMap.SH10_TEM, new int[] {0,2,3 });
             blockingTerrainMap.Add(TextureListMap.SH17_TEM, null);
             blockingTerrainMap.Add(TextureListMap.SH18_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.W1_TEM, null);
+            blockingTerrainMap.Add(TextureListMap.W2_TEM, null);
         }
 
 

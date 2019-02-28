@@ -223,6 +223,16 @@ namespace mike_and_conquer
                 gameWorld.navigationGraph.AddNode(nextSandbag.GetMapSquareX(), nextSandbag.GetMapSquareY(), 1);
             }
 
+
+            foreach (BasicMapSquare nextBasicMapSquare in this.BasicMapSquareList)
+            {
+                if (nextBasicMapSquare.isBlockingTerrain())
+                {
+//                    nextBasicMapSquare.gameSprite.drawBoundingRectangle = true;
+                    gameWorld.navigationGraph.AddNode(nextBasicMapSquare.GetMapSquareX(), nextBasicMapSquare.GetMapSquareY(), 1);
+                }
+            }
+
             gameWorld.navigationGraph.RebuildAdajencyGraph();
 
         }
@@ -595,10 +605,6 @@ namespace mike_and_conquer
 
         internal Sandbag AddSandbag(int xInMapSquareCoordinates, int yInMapSquareCoordinates, int sandbagType)
         {
-//            gameWorld.navigationGraph.AddNode(x, y, 1);
-//            x = x * 24 + 12;
-//            y = y * 24 + 12;
-
 
             int xInWorldCoordinates = xInMapSquareCoordinates * 24 + 12;
             int yInWorldCoordinates = yInMapSquareCoordinates * 24 + 12;

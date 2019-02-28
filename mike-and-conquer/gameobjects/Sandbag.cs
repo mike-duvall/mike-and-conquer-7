@@ -12,7 +12,7 @@ namespace mike_and_conquer
     public class Sandbag
     {
 
-        public Vector2 positionInWordlCoordinates { get; set; }
+        public Vector2 positionInWorldCoordinates { get; set; }
 
 
         private int sandbagType;
@@ -31,21 +31,20 @@ namespace mike_and_conquer
 
         public Sandbag(int x, int y, int sandbagType)
         {
-            positionInWordlCoordinates = new Vector2(x, y);
+            positionInWorldCoordinates = new Vector2(x, y);
             this.sandbagType = sandbagType;
         }
 
         internal int GetMapSquareX()
         {
-            int mapSquareX = (int)((this.positionInWordlCoordinates.X - 12) / 24);
+            int mapSquareX = (int)((this.positionInWorldCoordinates.X - 12) / 24);
             return mapSquareX;
         }
 
         internal int GetMapSquareY()
         {
-            int mapSquareY = (int)((this.positionInWordlCoordinates.Y - 12) / 24);
+            int mapSquareY = (int)((this.positionInWorldCoordinates.Y - 12) / 24);
             return mapSquareY;
-
         }
 
 

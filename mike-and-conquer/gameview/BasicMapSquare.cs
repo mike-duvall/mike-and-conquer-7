@@ -90,5 +90,18 @@ namespace mike_and_conquer.gameview
             return false;
         }
 
+        internal int GetMapSquareX()
+        {
+            int mapSquareX = (int)((this.positionInWorldCoordinates.X - 12) / 24);
+            return mapSquareX;
+        }
+
+        internal int GetMapSquareY()
+        {
+            int mapSquareY = (int)((this.positionInWorldCoordinates.Y - 12) / 24);
+            return mapSquareY;
+
+        }
+
     }
 }

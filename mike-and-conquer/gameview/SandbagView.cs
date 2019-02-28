@@ -41,7 +41,7 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            gameSprite.Draw(gameTime, spriteBatch, mySandbag.positionInWordlCoordinates);
+            gameSprite.Draw(gameTime, spriteBatch, mySandbag.positionInWorldCoordinates);
         }
 
 

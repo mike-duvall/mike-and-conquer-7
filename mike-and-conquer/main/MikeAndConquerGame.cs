@@ -112,7 +112,7 @@ namespace mike_and_conquer
 
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
-            
+
             bool makeFullscreen = true;
 //            bool makeFullscreen = false;
             if (makeFullscreen)
@@ -153,7 +153,7 @@ namespace mike_and_conquer
         }
 
 
-        private void  RemoveHostingTraceListenerToEliminateDuplicateLogEntries()
+        private void RemoveHostingTraceListenerToEliminateDuplicateLogEntries()
         {
             System.Diagnostics.Trace.Listeners.Remove("HostingTraceListener");
         }
@@ -174,7 +174,8 @@ namespace mike_and_conquer
             this.camera2D.Zoom = 3.4f;
             //            this.camera2D.Zoom = 4.8f;
             //            this.camera2D.Zoom = 2.0f;
-            this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
+            this.camera2D.Location =
+                new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
             base.Initialize();
 
@@ -184,11 +185,11 @@ namespace mike_and_conquer
             {
                 bool aiIsOn = false;
 
-                Point minigunnerStartPosition = new Point(160,22);
+                Point minigunnerStartPosition = new Point(160, 22);
                 AddGdiMinigunner(minigunnerStartPosition);
 
 
-                 //Fix broken movement
+                //Fix broken movement
 //                AddGdiMinigunner(new Point(64, 64));
 //                AddGdiMinigunner(new Point(132, 64));
 //                AddGdiMinigunner(new Point(64, 132));
@@ -209,11 +210,22 @@ namespace mike_and_conquer
             }
 
             InitializeMap();
-
-
+            InitializeNavigationGraph();
 
         }
 
+
+        private void InitializeNavigationGraph()
+        {
+
+            foreach (Sandbag nextSandbag in gameWorld.sandbagList)
+            {
+                gameWorld.navigationGraph.AddNode(nextSandbag.GetMapSquareX(), nextSandbag.GetMapSquareY(), 1);
+            }
+
+            gameWorld.navigationGraph.RebuildAdajencyGraph();
+
+        }
 
         private void InitializeMap()
         {
@@ -226,16 +238,6 @@ namespace mike_and_conquer
             int x = 12;
             int y = 12;
 
-
-//            MapTile nextMapTile = gameMap.MapTiles[0];
-//            BasicMapSquareList.Add(new BasicMapSquare(100,100, nextMapTile.textureKey, nextMapTile.imageIndex));
-//
-//            BasicMapSquare basicMapSquare2 = new BasicMapSquare(100, 130, nextMapTile.textureKey, nextMapTile.imageIndex);
-//            basicMapSquare2.gameSprite.drawBoundingRectangle = false;
-//            BasicMapSquareList.Add(basicMapSquare2);
-
-            //            BasicMapSquareList.Add(new BasicMapSquare(13, 13, nextMapTile.textureKey, nextMapTile.imageIndex));
-
             int numSquares = gameMap.MapTiles.Count;
             for (int i = 0; i < numSquares; i++)
             {
@@ -245,13 +247,13 @@ namespace mike_and_conquer
                     new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex);
                 //                BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
 
-                int mapX = x / 24;
-                int mapY = y / 24;
-                if (basicMapSquare.isBlockingTerrain())
-                {
-                    basicMapSquare.gameSprite.drawBoundingRectangle = true;
-                    gameWorld.navigationGraph.UpdateNode(mapX, mapY, 1);
-                }
+//                int mapX = x / 24;
+//                int mapY = y / 24;
+//                if (basicMapSquare.isBlockingTerrain())
+//                {
+//                    basicMapSquare.gameSprite.drawBoundingRectangle = true;
+//                    gameWorld.navigationGraph.UpdateNode(mapX, mapY, 1);
+//                }
 
                 BasicMapSquareList.Add(basicMapSquare);
 
@@ -591,14 +593,17 @@ namespace mike_and_conquer
             return newMinigunner;
         }
 
-        internal Sandbag AddSandbag(int x, int y, int sandbagType)
+        internal Sandbag AddSandbag(int xInMapSquareCoordinates, int yInMapSquareCoordinates, int sandbagType)
         {
-            gameWorld.navigationGraph.UpdateNode(x, y, 1);
-            x = x * 24 + 12;
-            y = y * 24 + 12;
+//            gameWorld.navigationGraph.AddNode(x, y, 1);
+//            x = x * 24 + 12;
+//            y = y * 24 + 12;
 
 
-            Sandbag newSandbag = new Sandbag(x,y, sandbagType);
+            int xInWorldCoordinates = xInMapSquareCoordinates * 24 + 12;
+            int yInWorldCoordinates = yInMapSquareCoordinates * 24 + 12;
+
+            Sandbag newSandbag = new Sandbag(xInWorldCoordinates, yInWorldCoordinates, sandbagType);
             GameWorld.instance.sandbagList.Add(newSandbag);
 
             SandbagView newSandbagView = new SandbagView(newSandbag);

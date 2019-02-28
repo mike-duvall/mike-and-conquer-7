@@ -60,7 +60,6 @@ namespace mike_and_conquer
             int oldNumRows = this.navigationGraph.height;
             navigationGraph = new Graph(oldNumColumns, oldNumRows);
             return new PlayingGameState();
-
         }
 
         internal GameState GetCurrentGameState()

@@ -87,36 +87,8 @@ namespace mike_and_conquer.gameview
                 }
             }
         
-
-//            if (textureKey.Equals(TextureListMap.SH1_TEM))
-//            {
-//                int[] blockedIndexes = {6, 7, 8};
-//                return blockedIndexes.Contains(imageIndex);
-//
-//            }
-////            if (textureKey.Equals(TextureListMap.SH2_TEM))
-////            {
-////                int[] blockedIndexes = {0, 1, 2};
-////
-////                if (imageIndex == 6 || imageIndex == 7 || imageIndex == 8)
-////                {
-////                    return true;
-////                }
-////            }
-//
-//            if (textureKey.Equals(TextureListMap.SH10_TEM))
-//            {
-//                if (imageIndex == 0 || imageIndex == 2 || imageIndex == 3)
-//                {
-//                    return true;
-//                }
-//            }
-
-
-        return false;
-    }
-
-
+            return false;
+        }
 
     }
 }

@@ -70,7 +70,7 @@ namespace mike_and_conquer.gameview
             return new Point((int) positionInWorldCoordinates.X, (int) positionInWorldCoordinates.Y);
         }
 
-        public bool isBlockingTerrain()
+        public bool IsBlockingTerrain()
         {
             Dictionary<string, int[]> blockingTerrainMap = MikeAndConquerGame.instance.gameMap.blockingTerrainMap;
 

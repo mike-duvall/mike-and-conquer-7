@@ -226,7 +226,7 @@ namespace mike_and_conquer
 
             foreach (BasicMapSquare nextBasicMapSquare in this.BasicMapSquareList)
             {
-                if (nextBasicMapSquare.isBlockingTerrain())
+                if (nextBasicMapSquare.IsBlockingTerrain())
                 {
 //                    nextBasicMapSquare.gameSprite.drawBoundingRectangle = true;
                     gameWorld.navigationGraph.AddNode(nextBasicMapSquare.GetMapSquareX(), nextBasicMapSquare.GetMapSquareY(), 1);
@@ -259,7 +259,7 @@ namespace mike_and_conquer
 
 //                int mapX = x / 24;
 //                int mapY = y / 24;
-//                if (basicMapSquare.isBlockingTerrain())
+//                if (basicMapSquare.IsBlockingTerrain())
 //                {
 //                    basicMapSquare.gameSprite.drawBoundingRectangle = true;
 //                    gameWorld.navigationGraph.UpdateNode(mapX, mapY, 1);
@@ -649,7 +649,6 @@ namespace mike_and_conquer
             gdiMinigunnerViewList.Clear();
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
-
             return gameWorld.HandleReset();
         }
 

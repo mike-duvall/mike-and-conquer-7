@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
-
-
+using mike_and_conquer.gameview;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Point = Microsoft.Xna.Framework.Point;
 
@@ -38,6 +37,15 @@ namespace mike_and_conquer.rest
         {
             
             Point minigunnerPositionInWorldCoordinates = new Point(inputMinigunner.x, inputMinigunner.y);
+            foreach(BasicMapSquare nexBasicMapSquare in MikeAndConquerGame.instance.BasicMapSquareList)
+            {
+                if (nexBasicMapSquare.IsBlockingTerrain() &&
+                    nexBasicMapSquare.ContainsPoint(minigunnerPositionInWorldCoordinates))
+                {
+                    return BadRequest("Cannot create on blocking terrain");
+                }
+            }
+
             Minigunner minigunner =
                 GameWorld.instance.CreateGDIMinigunnerViaEvent(minigunnerPositionInWorldCoordinates);
 

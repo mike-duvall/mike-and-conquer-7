@@ -58,7 +58,8 @@ namespace mike_and_conquer
             sandbagList.Clear();
             int oldNumColumns = this.navigationGraph.width;
             int oldNumRows = this.navigationGraph.height;
-            navigationGraph = new Graph(oldNumColumns, oldNumRows);
+//            navigationGraph = new Graph(oldNumColumns, oldNumRows);
+//            navigationGraph.RebuildAdajencyGraph();
             return new PlayingGameState();
         }
 

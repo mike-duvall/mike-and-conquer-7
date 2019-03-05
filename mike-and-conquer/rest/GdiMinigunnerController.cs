@@ -36,15 +36,6 @@ namespace mike_and_conquer.rest
         {
             
             Point minigunnerPositionInWorldCoordinates = new Point(inputMinigunner.x, inputMinigunner.y);
-            //            foreach(BasicMapSquare nexBasicMapSquare in MikeAndConquerGame.instance.BasicMapSquareList)
-            //            {
-            //                if (nexBasicMapSquare.IsBlockingTerrain() &&
-            //                    nexBasicMapSquare.ContainsPoint(minigunnerPositionInWorldCoordinates))
-            //                {
-            //                    return BadRequest("Cannot create on blocking terrain");
-            //                }
-            //            }
-
 
             Minigunner minigunner;
 

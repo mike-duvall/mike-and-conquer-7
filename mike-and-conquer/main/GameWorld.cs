@@ -171,7 +171,6 @@ namespace mike_and_conquer
         }
 
 
-//        public Minigunner AddNodMinigunner(int x, int y, bool aiIsOn)
         public Minigunner AddNodMinigunner(Point positionInWorldCoordinates, bool aiIsOn)
         {
 

@@ -6,8 +6,6 @@ namespace mike_and_conquer.gameevent
     public class CreateNodMinigunnerGameEvent : AsyncGameEvent
     {
 
-
-//        private int x, y;
         private Point position;
         private bool aiIsOn;
 

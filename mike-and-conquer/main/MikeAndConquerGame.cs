@@ -30,7 +30,6 @@ using Camera2D = mike_and_conquer_6.Camera2D;
 
 using Point = Microsoft.Xna.Framework.Point;
 
-using String = System.String;
 
 using Serilog;
 
@@ -592,9 +591,11 @@ namespace mike_and_conquer
             base.Draw(gameTime);
         }
 
-        internal Minigunner AddGdiMinigunner(Point worldCoordinates)
+
+        internal Minigunner AddGdiMinigunner(Point positionInWorldCoordinates)
         {
-            Minigunner newMinigunner =  GameWorld.instance.AddGdiMinigunner(worldCoordinates);
+
+            Minigunner newMinigunner =  GameWorld.instance.AddGdiMinigunner(positionInWorldCoordinates);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
             // to enable running headless with no UI
@@ -618,9 +619,9 @@ namespace mike_and_conquer
         }
 
 
-        internal Minigunner AddNodMinigunner(int x, int y, bool aiIsOn)
+        internal Minigunner AddNodMinigunner(Point positionInWorldCoordinates, bool aiIsOn)
         {
-            Minigunner newMinigunner = gameWorld.AddNodMinigunner(x, y, aiIsOn);
+            Minigunner newMinigunner = gameWorld.AddNodMinigunner(positionInWorldCoordinates, aiIsOn);
 
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);

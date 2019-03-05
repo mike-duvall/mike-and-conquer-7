@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 
+using Point = Microsoft.Xna.Framework.Point;
+
 namespace mike_and_conquer.rest
 {
 
@@ -28,7 +30,8 @@ namespace mike_and_conquer.rest
         {
             try
             {
-                Minigunner minigunner = GameWorld.instance.CreateNodMinigunnerViaEvent(inputMinigunner.x, inputMinigunner.y, inputMinigunner.aiIsOn);
+                Point minigunnerPositionInWorldCoordinates = new Point(inputMinigunner.x, inputMinigunner.y);
+                Minigunner minigunner = GameWorld.instance.CreateNodMinigunnerViaEvent(minigunnerPositionInWorldCoordinates, inputMinigunner.aiIsOn);
                 RestMinigunner restMinigunner = new RestMinigunner();
                 restMinigunner.id = minigunner.id;
                 restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;

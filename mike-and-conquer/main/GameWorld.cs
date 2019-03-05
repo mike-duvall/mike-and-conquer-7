@@ -15,7 +15,9 @@ using GetCurrentGameStateGameEvent = mike_and_conquer.gameevent.GetCurrentGameSt
 using CreateSandbagGameEvent = mike_and_conquer.gameevent.CreateSandbagGameEvent;
 
 using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
+using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
 
+using Exception = System.Exception;
 
 namespace mike_and_conquer
 
@@ -135,16 +137,48 @@ namespace mike_and_conquer
             currentGameState = currentGameState.Update(gameTime);
         }
 
-        public Minigunner AddGdiMinigunner(Point worldCoordinates)
+
+        public class BadMinigunnerLocationException : Exception
         {
-            Minigunner newMinigunner = new Minigunner(worldCoordinates.X, worldCoordinates.Y, this.navigationGraph);
+            public BadMinigunnerLocationException(Point badLocation)
+                : base("Bad minigunner location.  x:" + badLocation.X + ", y:" + badLocation.Y)
+            {
+            }
+        }
+
+
+        private static void validatePosition(Point positionInWorldCoordinates)
+        {
+            foreach (BasicMapSquare nexBasicMapSquare in MikeAndConquerGame.instance.BasicMapSquareList)
+            {
+                if (nexBasicMapSquare.IsBlockingTerrain() &&
+                    nexBasicMapSquare.ContainsPoint(positionInWorldCoordinates))
+                {
+                    throw new BadMinigunnerLocationException(positionInWorldCoordinates);
+                }
+            }
+        }
+
+
+        public Minigunner AddGdiMinigunner(Point positionInWorldCoordinates)
+        {
+            
+            validatePosition(positionInWorldCoordinates);
+
+            Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this.navigationGraph);
             gdiMinigunnerList.Add(newMinigunner);
             return newMinigunner;
         }
 
-        public Minigunner AddNodMinigunner(int x, int y, bool aiIsOn)
+
+//        public Minigunner AddNodMinigunner(int x, int y, bool aiIsOn)
+        public Minigunner AddNodMinigunner(Point positionInWorldCoordinates, bool aiIsOn)
         {
-            Minigunner newMinigunner = new Minigunner(x, y, this.navigationGraph);
+
+            validatePosition(positionInWorldCoordinates);
+
+
+            Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this.navigationGraph);
             this.nodMinigunnerList.Add(newMinigunner);
 
             // TODO:  In future, don't couple Nod having to be AI controlled enemy
@@ -221,9 +255,9 @@ namespace mike_and_conquer
         }
 
 
-        public Minigunner CreateNodMinigunnerViaEvent(int x, int y, bool aiIsOn)
+        public Minigunner CreateNodMinigunnerViaEvent(Point positionInWorldCoordinates, bool aiIsOn)
         {
-            CreateNodMinigunnerGameEvent gameEvent = new CreateNodMinigunnerGameEvent(x, y, aiIsOn);
+            CreateNodMinigunnerGameEvent gameEvent = new CreateNodMinigunnerGameEvent(positionInWorldCoordinates, aiIsOn);
             lock (gameEvents)
             {
                 gameEvents.Add(gameEvent);

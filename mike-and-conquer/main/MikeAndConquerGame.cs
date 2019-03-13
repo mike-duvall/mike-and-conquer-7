@@ -194,16 +194,6 @@ namespace mike_and_conquer
                 Point minigunnerStartPosition = new Point(160, 22);
                 AddGdiMinigunner(minigunnerStartPosition);
 
-
-                //Fix broken movement
-//                AddGdiMinigunner(new Point(64, 64));
-//                AddGdiMinigunner(new Point(132, 64));
-//                AddGdiMinigunner(new Point(64, 132));
-
-
-                int mapX = 1;
-                int mapY = 1;
-
                 AddSandbag(10, 6, 5);
                 AddSandbag(10, 7, 5);
                 AddSandbag(10, 8, 5);
@@ -261,15 +251,6 @@ namespace mike_and_conquer
                 MapTile nextMapTile = gameMap.MapTiles[i];
                 BasicMapSquare basicMapSquare =
                     new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex);
-                //                BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
-
-//                int mapX = x / 24;
-//                int mapY = y / 24;
-//                if (basicMapSquare.IsBlockingTerrain())
-//                {
-//                    basicMapSquare.gameSprite.drawBoundingRectangle = true;
-//                    gameWorld.navigationGraph.UpdateNode(mapX, mapY, 1);
-//                }
 
                 BasicMapSquareList.Add(basicMapSquare);
 
@@ -495,17 +476,14 @@ namespace mike_and_conquer
             GameState currentGameState = this.gameWorld.GetCurrentGameState();
             if (currentGameState.GetType().Equals(typeof(PlayingGameState)))
             {
-//                currentGameStateView = new PlayingGameStateView();
                 HandleSwitchToPlayingGameStateView();
             }
             else if (currentGameState.GetType().Equals(typeof(MissionAccomplishedGameState)))
             {
-                //                currentGameStateView = new MissionAccomplishedGameStateView();
                 HandleSwitchToMissionAccomplishedGameStateView();
             }
             else if (currentGameState.GetType().Equals(typeof(MissionFailedGameState)))
             {
-                //                currentGameStateView = new MissionFailedGameStateView();
                 HandleSwitchToMissionFailedGameStateView();
             }
         }

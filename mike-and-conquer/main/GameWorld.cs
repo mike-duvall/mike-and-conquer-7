@@ -58,10 +58,6 @@ namespace mike_and_conquer
             gdiMinigunnerList.Clear();
             nodMinigunnerList.Clear();
             sandbagList.Clear();
-            int oldNumColumns = this.navigationGraph.width;
-            int oldNumRows = this.navigationGraph.height;
-//            navigationGraph = new Graph(oldNumColumns, oldNumRows);
-//            navigationGraph.RebuildAdajencyGraph();
             return new PlayingGameState();
         }
 
@@ -147,12 +143,12 @@ namespace mike_and_conquer
         }
 
 
-        private static void validatePosition(Point positionInWorldCoordinates)
+        private static void assertIsValidMinigunnerPosition(Point positionInWorldCoordinates)
         {
             foreach (BasicMapSquare nexBasicMapSquare in MikeAndConquerGame.instance.BasicMapSquareList)
             {
-                if (nexBasicMapSquare.IsBlockingTerrain() &&
-                    nexBasicMapSquare.ContainsPoint(positionInWorldCoordinates))
+                if (nexBasicMapSquare.ContainsPoint(positionInWorldCoordinates) &&
+                    nexBasicMapSquare.IsBlockingTerrain())
                 {
                     throw new BadMinigunnerLocationException(positionInWorldCoordinates);
                 }
@@ -163,7 +159,7 @@ namespace mike_and_conquer
         public Minigunner AddGdiMinigunner(Point positionInWorldCoordinates)
         {
             
-            validatePosition(positionInWorldCoordinates);
+            assertIsValidMinigunnerPosition(positionInWorldCoordinates);
 
             Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this.navigationGraph);
             gdiMinigunnerList.Add(newMinigunner);
@@ -174,7 +170,7 @@ namespace mike_and_conquer
         public Minigunner AddNodMinigunner(Point positionInWorldCoordinates, bool aiIsOn)
         {
 
-            validatePosition(positionInWorldCoordinates);
+            assertIsValidMinigunnerPosition(positionInWorldCoordinates);
 
 
             Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this.navigationGraph);

@@ -143,7 +143,7 @@ namespace mike_and_conquer
         }
 
 
-        private static void assertIsValidMinigunnerPosition(Point positionInWorldCoordinates)
+        private static void AssertIsValidMinigunnerPosition(Point positionInWorldCoordinates)
         {
             foreach (BasicMapSquare nexBasicMapSquare in MikeAndConquerGame.instance.BasicMapSquareList)
             {
@@ -159,7 +159,7 @@ namespace mike_and_conquer
         public Minigunner AddGdiMinigunner(Point positionInWorldCoordinates)
         {
             
-            assertIsValidMinigunnerPosition(positionInWorldCoordinates);
+            AssertIsValidMinigunnerPosition(positionInWorldCoordinates);
 
             Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this.navigationGraph);
             gdiMinigunnerList.Add(newMinigunner);
@@ -170,7 +170,7 @@ namespace mike_and_conquer
         public Minigunner AddNodMinigunner(Point positionInWorldCoordinates, bool aiIsOn)
         {
 
-            assertIsValidMinigunnerPosition(positionInWorldCoordinates);
+            AssertIsValidMinigunnerPosition(positionInWorldCoordinates);
 
 
             Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this.navigationGraph);

@@ -44,18 +44,6 @@ namespace mike_and_conquer.rest
             {
                 return BadRequest("Cannot create on blocking terrain");
             }
-
-
-//            Pickup with making this test pass:  def "should be able to move two separate GDI minigunners"()
-//            Currently failing because it's using expected destination in screen coordinates vs minigunner in gameworld coordinates
-//            Should probably convert clicked screen coordinate to actual world coordinate, and validate against that
-//            Previously was passing too early due to checking against minigunner internal destinationX and Y, which is now 
-//            the intermediate point it's current navigating too, vs the the end goal destinationX
-//
-//            new pickup:  Add Rest endpoint to take raw clicks as world coordinates rather than screen coordaintes
-//            update test to use this method, then just test it arrived at specified worlf coordaintes
-
-
             catch (System.Exception e)
             {
 

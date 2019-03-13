@@ -1,18 +1,18 @@
 ﻿
 using Point = Microsoft.Xna.Framework.Point;
 
-namespace mike_and_conquer.gameevent 
+namespace mike_and_conquer.gameevent
 {
-    public class CreateGDIMinigunnerGameEvent : AsyncGameEvent
+    public class CreateNodMinigunnerGameEvent : AsyncGameEvent
     {
 
-
-        private int x, y;
         private Point position;
+        private bool aiIsOn;
 
-        public CreateGDIMinigunnerGameEvent(Point worldCoordinates )
+        public CreateNodMinigunnerGameEvent(Point positionInWorldCoordinates, bool aiIsOn)
         {
-            this.position = worldCoordinates;
+            this.position = positionInWorldCoordinates;
+            this.aiIsOn = aiIsOn;
         }
 
         public Minigunner GetMinigunner()
@@ -20,20 +20,12 @@ namespace mike_and_conquer.gameevent
             return (Minigunner)GetResult();
         }
 
-
-
         protected override GameState ProcessImpl()
         {
             GameState newGameState = null;
-            result = MikeAndConquerGame.instance.AddGdiMinigunner(this.position);
+            result = MikeAndConquerGame.instance.AddNodMinigunner(position, aiIsOn);
             return newGameState;
         }
-
-
-
-
-
-
 
     }
 }

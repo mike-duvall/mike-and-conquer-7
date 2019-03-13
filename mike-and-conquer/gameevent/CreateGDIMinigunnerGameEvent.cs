@@ -1,34 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Point = Microsoft.Xna.Framework.Point;
 
-namespace mike_and_conquer.gameevent 
+using Exception = System.Exception;
+
+using BadMinigunnerLocationException = mike_and_conquer.GameWorld.BadMinigunnerLocationException;
+
+namespace mike_and_conquer.gameevent
 {
-    public class CreateNodMinigunnerGameEvent : AsyncGameEvent
+    public class CreateGDIMinigunnerGameEvent : AsyncGameEvent
     {
 
+        private Point position;
 
-        private int x, y;
-        private bool aiIsOn;
-
-        public CreateNodMinigunnerGameEvent(int x, int y, bool aiIsOn)
+        public CreateGDIMinigunnerGameEvent(Point positionInWorldCoordinates)
         {
-            this.x = x;
-            this.y = y;
-            this.aiIsOn = aiIsOn;
+            this.position = positionInWorldCoordinates;
         }
 
         public Minigunner GetMinigunner()
         {
             return (Minigunner)GetResult();
+
         }
 
         protected override GameState ProcessImpl()
         {
             GameState newGameState = null;
-            result = MikeAndConquerGame.instance.AddNodMinigunner(x,y, aiIsOn);
+            result = MikeAndConquerGame.instance.AddGdiMinigunner(position);
             return newGameState;
         }
 

@@ -1,5 +1,6 @@
 ﻿
 
+using System.Linq;
 using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -7,7 +8,7 @@ using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
-using System;
+using System.Collections.Generic;
 
 namespace mike_and_conquer.gameview
 {
@@ -30,6 +31,7 @@ namespace mike_and_conquer.gameview
             this.textureKey = textureKey;
             SetupAnimations();
         }
+
 
         internal int GetPaletteIndexOfCoordinate(int x, int y)
         {
@@ -66,6 +68,39 @@ namespace mike_and_conquer.gameview
         public Point GetCenter()
         {
             return new Point((int) positionInWorldCoordinates.X, (int) positionInWorldCoordinates.Y);
+        }
+
+        public bool IsBlockingTerrain()
+        {
+            Dictionary<string, int[]> blockingTerrainMap = MikeAndConquerGame.instance.gameMap.blockingTerrainMap;
+
+            if (blockingTerrainMap.ContainsKey(textureKey))
+            {
+                int[] blockedImageIndexes = blockingTerrainMap[textureKey];
+                if (blockedImageIndexes == null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return blockedImageIndexes.Contains(imageIndex);
+                }
+            }
+        
+            return false;
+        }
+
+        internal int GetMapSquareX()
+        {
+            int mapSquareX = (int)((this.positionInWorldCoordinates.X - 12) / 24);
+            return mapSquareX;
+        }
+
+        internal int GetMapSquareY()
+        {
+            int mapSquareY = (int)((this.positionInWorldCoordinates.Y - 12) / 24);
+            return mapSquareY;
+
         }
 
     }

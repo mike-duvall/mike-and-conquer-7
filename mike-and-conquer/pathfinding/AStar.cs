@@ -47,9 +47,29 @@ namespace mike_and_conquer.pathfinding
 
         }
 
-        public void UpdateNode(int x, int y, int newValue)
+//        public void UpdateNode(int xInMapSquareCoordinates, int yInMapSquareCoordinates, int newValue)
+//        {
+//            this.nodeArray[xInMapSquareCoordinates, yInMapSquareCoordinates] = newValue;
+//            this.nodeList = new List<Node>();
+//            this.currentNodeId = 0;
+//            for (int i = 0; i < nodeArray.Length; i++)
+//            {
+//                List<int> adjacentNodes = CalculateAdjacentNodes(currentNodeId);
+//                Node node = new Node(currentNodeId, adjacentNodes);
+//                nodeList.Add(node);
+//                currentNodeId++;
+//            }
+//
+//        }
+
+        public void AddNode(int xInMapSquareCoordinates, int yInMapSquareCoordinates, int newValue)
         {
-            this.nodeArray[x, y] = newValue;
+            this.nodeArray[xInMapSquareCoordinates, yInMapSquareCoordinates] = newValue;
+        }
+
+
+        public void RebuildAdajencyGraph()
+        {
             this.nodeList = new List<Node>();
             this.currentNodeId = 0;
             for (int i = 0; i < nodeArray.Length; i++)
@@ -61,6 +81,7 @@ namespace mike_and_conquer.pathfinding
             }
 
         }
+
 
         List<int> CalculateAdjacentNodes(int nodeId)
         {

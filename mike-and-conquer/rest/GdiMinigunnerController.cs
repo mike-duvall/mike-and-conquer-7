@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
-
-
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Point = Microsoft.Xna.Framework.Point;
-
+using BadMinigunnerLocationException = mike_and_conquer.GameWorld.BadMinigunnerLocationException;
 
 namespace mike_and_conquer.rest
 {
@@ -38,8 +36,18 @@ namespace mike_and_conquer.rest
         {
             
             Point minigunnerPositionInWorldCoordinates = new Point(inputMinigunner.x, inputMinigunner.y);
-            Minigunner minigunner =
-                GameWorld.instance.CreateGDIMinigunnerViaEvent(minigunnerPositionInWorldCoordinates);
+
+            Minigunner minigunner;
+
+            try
+            {
+                minigunner =
+                    GameWorld.instance.CreateGDIMinigunnerViaEvent(minigunnerPositionInWorldCoordinates);
+            }
+            catch (BadMinigunnerLocationException e)
+            {
+                return BadRequest("Cannot create on blocking terrain");
+            }
 
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;

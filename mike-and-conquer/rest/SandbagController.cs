@@ -17,8 +17,8 @@ namespace mike_and_conquer.rest
                 GameWorld.instance.CreateSandbagViaEvent(inputSandbag.x, inputSandbag.y, inputSandbag.index);
 
             RestSandbag restSandbag = new RestSandbag();
-            restSandbag.x = (int)sandbag.position.X;
-            restSandbag.y = (int)sandbag.position.Y;
+            restSandbag.x = (int)sandbag.positionInWorldCoordinates.X;
+            restSandbag.y = (int)sandbag.positionInWorldCoordinates.Y;
             restSandbag.index = (int) sandbag.SandbagType;
 
             return Ok(sandbag);

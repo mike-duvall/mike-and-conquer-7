@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
@@ -29,6 +30,7 @@ using FileMode = System.IO.FileMode;
 using Camera2D = mike_and_conquer_6.Camera2D;
 
 using Point = Microsoft.Xna.Framework.Point;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 using Serilog;
 
@@ -90,7 +92,7 @@ namespace mike_and_conquer
 
         private bool testMode;
 
-        private GameMap gameMap;
+        public GameMap gameMap;
 
 
         KeyboardState oldKeyboardState;
@@ -110,7 +112,7 @@ namespace mike_and_conquer
 
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
-            
+
             bool makeFullscreen = true;
 //            bool makeFullscreen = false;
             if (makeFullscreen)
@@ -151,10 +153,17 @@ namespace mike_and_conquer
         }
 
 
-        private void  RemoveHostingTraceListenerToEliminateDuplicateLogEntries()
+        private void RemoveHostingTraceListenerToEliminateDuplicateLogEntries()
         {
             System.Diagnostics.Trace.Listeners.Remove("HostingTraceListener");
         }
+
+
+        public static Vector2 ConvertWorldCoordinatesToScreenCoordinates(Vector2 positionInWorldCoordinates)
+        {
+            return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.camera2D.TransformMatrix);
+        }
+
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -169,9 +178,10 @@ namespace mike_and_conquer
 
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
-            this.camera2D.Zoom = 4.8f;
+            this.camera2D.Zoom = 3.4f;
             //            this.camera2D.Zoom = 2.0f;
-            this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
+            this.camera2D.Location =
+                new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
             base.Initialize();
 
@@ -181,18 +191,8 @@ namespace mike_and_conquer
             {
                 bool aiIsOn = false;
 
-                Point minigunnerStartPosition = new Point(60,12);
+                Point minigunnerStartPosition = new Point(160, 22);
                 AddGdiMinigunner(minigunnerStartPosition);
-
-
-                 //Fix broken movement
-//                AddGdiMinigunner(new Point(64, 64));
-//                AddGdiMinigunner(new Point(132, 64));
-//                AddGdiMinigunner(new Point(64, 132));
-
-
-                int mapX = 1;
-                int mapY = 1;
 
                 AddSandbag(10, 6, 5);
                 AddSandbag(10, 7, 5);
@@ -206,11 +206,32 @@ namespace mike_and_conquer
             }
 
             InitializeMap();
-
-
+            InitializeNavigationGraph();
 
         }
 
+
+        private void InitializeNavigationGraph()
+        {
+
+            foreach (Sandbag nextSandbag in gameWorld.sandbagList)
+            {
+                gameWorld.navigationGraph.AddNode(nextSandbag.GetMapSquareX(), nextSandbag.GetMapSquareY(), 1);
+            }
+
+
+            foreach (BasicMapSquare nextBasicMapSquare in this.BasicMapSquareList)
+            {
+                if (nextBasicMapSquare.IsBlockingTerrain())
+                {
+//                    nextBasicMapSquare.gameSprite.drawBoundingRectangle = true;
+                    gameWorld.navigationGraph.AddNode(nextBasicMapSquare.GetMapSquareX(), nextBasicMapSquare.GetMapSquareY(), 1);
+                }
+            }
+
+            gameWorld.navigationGraph.RebuildAdajencyGraph();
+
+        }
 
         private void InitializeMap()
         {
@@ -223,23 +244,16 @@ namespace mike_and_conquer
             int x = 12;
             int y = 12;
 
-
-//            MapTile nextMapTile = gameMap.MapTiles[0];
-//            BasicMapSquareList.Add(new BasicMapSquare(100,100, nextMapTile.textureKey, nextMapTile.imageIndex));
-//
-//            BasicMapSquare basicMapSquare2 = new BasicMapSquare(100, 130, nextMapTile.textureKey, nextMapTile.imageIndex);
-//            basicMapSquare2.gameSprite.drawBoundingRectangle = false;
-//            BasicMapSquareList.Add(basicMapSquare2);
-
-            //            BasicMapSquareList.Add(new BasicMapSquare(13, 13, nextMapTile.textureKey, nextMapTile.imageIndex));
-
             int numSquares = gameMap.MapTiles.Count;
             for (int i = 0; i < numSquares; i++)
             {
             
                 MapTile nextMapTile = gameMap.MapTiles[i];
-                BasicMapSquareList.Add(new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex));
-            
+                BasicMapSquare basicMapSquare =
+                    new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex);
+
+                BasicMapSquareList.Add(basicMapSquare);
+
                 x = x + 24;
             
                 bool incrementRow = ((i + 1) % 26) == 0;
@@ -251,6 +265,7 @@ namespace mike_and_conquer
             }
 
         }
+
 
 
         private void LoadMap()
@@ -461,17 +476,14 @@ namespace mike_and_conquer
             GameState currentGameState = this.gameWorld.GetCurrentGameState();
             if (currentGameState.GetType().Equals(typeof(PlayingGameState)))
             {
-//                currentGameStateView = new PlayingGameStateView();
                 HandleSwitchToPlayingGameStateView();
             }
             else if (currentGameState.GetType().Equals(typeof(MissionAccomplishedGameState)))
             {
-                //                currentGameStateView = new MissionAccomplishedGameStateView();
                 HandleSwitchToMissionAccomplishedGameStateView();
             }
             else if (currentGameState.GetType().Equals(typeof(MissionFailedGameState)))
             {
-                //                currentGameStateView = new MissionFailedGameStateView();
                 HandleSwitchToMissionFailedGameStateView();
             }
         }
@@ -564,9 +576,11 @@ namespace mike_and_conquer
             base.Draw(gameTime);
         }
 
-        internal Minigunner AddGdiMinigunner(Point worldCoordinates)
+
+        internal Minigunner AddGdiMinigunner(Point positionInWorldCoordinates)
         {
-            Minigunner newMinigunner =  GameWorld.instance.AddGdiMinigunner(worldCoordinates);
+
+            Minigunner newMinigunner =  GameWorld.instance.AddGdiMinigunner(positionInWorldCoordinates);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
             // to enable running headless with no UI
@@ -575,14 +589,13 @@ namespace mike_and_conquer
             return newMinigunner;
         }
 
-        internal Sandbag AddSandbag(int x, int y, int sandbagType)
+        internal Sandbag AddSandbag(int xInMapSquareCoordinates, int yInMapSquareCoordinates, int sandbagType)
         {
-            gameWorld.navigationGraph.UpdateNode(x, y, 1);
-            x = x * 24 + 12;
-            y = y * 24 + 12;
 
+            int xInWorldCoordinates = xInMapSquareCoordinates * 24 + 12;
+            int yInWorldCoordinates = yInMapSquareCoordinates * 24 + 12;
 
-            Sandbag newSandbag = new Sandbag(x,y, sandbagType);
+            Sandbag newSandbag = new Sandbag(xInWorldCoordinates, yInWorldCoordinates, sandbagType);
             GameWorld.instance.sandbagList.Add(newSandbag);
 
             SandbagView newSandbagView = new SandbagView(newSandbag);
@@ -591,9 +604,9 @@ namespace mike_and_conquer
         }
 
 
-        internal Minigunner AddNodMinigunner(int x, int y, bool aiIsOn)
+        internal Minigunner AddNodMinigunner(Point positionInWorldCoordinates, bool aiIsOn)
         {
-            Minigunner newMinigunner = gameWorld.AddNodMinigunner(x, y, aiIsOn);
+            Minigunner newMinigunner = gameWorld.AddNodMinigunner(positionInWorldCoordinates, aiIsOn);
 
             MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
             NodMinigunnerViewList.Add(newMinigunnerView);
@@ -622,7 +635,6 @@ namespace mike_and_conquer
             gdiMinigunnerViewList.Clear();
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
-
             return gameWorld.HandleReset();
         }
 
@@ -637,7 +649,7 @@ namespace mike_and_conquer
                     return nextBasicMapSquare;
                 }
             }
-            return null;
+            throw new Exception("Unable to find BasicMapSquare at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
 
         }
     }

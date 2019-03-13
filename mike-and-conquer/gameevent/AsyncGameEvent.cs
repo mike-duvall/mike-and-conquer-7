@@ -6,23 +6,33 @@ namespace mike_and_conquer.gameevent
 {
     public abstract class AsyncGameEvent
     {
-
-        protected abstract GameState ProcessImpl();
         protected Object result;
-
         private ManualResetEvent condition;
-
+        private Exception thrownException;
 
         public AsyncGameEvent()
         {
             this.result = null;
             bool signaled = false;
             this.condition = new ManualResetEvent(signaled);
+            this.thrownException = null;
         }
+
+        protected abstract GameState ProcessImpl();
+
 
         public GameState Process()
         {
-            GameState newGameState = ProcessImpl();
+            GameState newGameState = null;
+            try
+            {
+                newGameState = ProcessImpl();
+            }
+            catch (Exception e)
+            {
+                thrownException = e;
+            }
+
             condition.Set();
             return newGameState;
         }
@@ -34,7 +44,14 @@ namespace mike_and_conquer.gameevent
         public Object GetResult()
         {
             condition.WaitOne();
-            return result;
+            if (thrownException != null)
+            {
+                throw thrownException;
+            }
+            else
+            {
+                return result;
+            }
         }
 
 

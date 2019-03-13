@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
@@ -29,7 +30,7 @@ using FileMode = System.IO.FileMode;
 using Camera2D = mike_and_conquer_6.Camera2D;
 
 using Point = Microsoft.Xna.Framework.Point;
-
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 using Serilog;
 
@@ -157,6 +158,13 @@ namespace mike_and_conquer
             System.Diagnostics.Trace.Listeners.Remove("HostingTraceListener");
         }
 
+
+        public static Vector2 ConvertWorldCoordinatesToScreenCoordinates(Vector2 positionInWorldCoordinates)
+        {
+            return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.camera2D.TransformMatrix);
+        }
+
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -171,7 +179,6 @@ namespace mike_and_conquer
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
             this.camera2D.Zoom = 3.4f;
-            //            this.camera2D.Zoom = 4.8f;
             //            this.camera2D.Zoom = 2.0f;
             this.camera2D.Location =
                 new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
@@ -664,7 +671,7 @@ namespace mike_and_conquer
                     return nextBasicMapSquare;
                 }
             }
-            return null;
+            throw new Exception("Unable to find BasicMapSquare at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
 
         }
     }

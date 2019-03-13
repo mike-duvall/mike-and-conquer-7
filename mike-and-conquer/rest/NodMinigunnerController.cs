@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿
 using System.Web.Http;
 
 using Point = Microsoft.Xna.Framework.Point;
+using BadMinigunnerLocationException = mike_and_conquer.GameWorld.BadMinigunnerLocationException;
 
 namespace mike_and_conquer.rest
 {
@@ -39,8 +40,25 @@ namespace mike_and_conquer.rest
                 restMinigunner.health = minigunner.health;
                 return Ok(restMinigunner);
             }
-            catch(System.Exception e)
+            catch (BadMinigunnerLocationException e)
             {
+                return BadRequest("Cannot create on blocking terrain");
+            }
+
+
+//            Pickup with making this test pass:  def "should be able to move two separate GDI minigunners"()
+//            Currently failing because it's using expected destination in screen coordinates vs minigunner in gameworld coordinates
+//            Should probably convert clicked screen coordinate to actual world coordinate, and validate against that
+//            Previously was passing too early due to checking against minigunner internal destinationX and Y, which is now 
+//            the intermediate point it's current navigating too, vs the the end goal destinationX
+//
+//            new pickup:  Add Rest endpoint to take raw clicks as world coordinates rather than screen coordaintes
+//            update test to use this method, then just test it arrived at specified worlf coordaintes
+
+
+            catch (System.Exception e)
+            {
+
                 System.Diagnostics.Debug.WriteLine("ERROR*************************************");
                 System.Diagnostics.Debug.WriteLine(e.ToString());
                 System.Diagnostics.Debug.WriteLine(e.StackTrace);

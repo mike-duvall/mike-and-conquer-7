@@ -97,7 +97,7 @@ namespace mike_and_conquer
 
         KeyboardState oldKeyboardState;
 
-        Serilog.Core.Logger log = new LoggerConfiguration()
+        public Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()
             //.WriteTo.File("log.txt")
             .WriteTo.Debug()
@@ -404,52 +404,60 @@ namespace mike_and_conquer
             int originalY = (int)this.camera2D.Location.Y;
 
 
-            int scrollAmount = 10;
+            HandleMapScrolling(originalY, originalX, newKeyboardState);
+            oldKeyboardState = newKeyboardState;
 
+            SwitchToNewGameStateViewIfNeeded();
+
+            base.Update(gameTime);
+        }
+
+        private void HandleMapScrolling(int originalY, int originalX, KeyboardState newKeyboardState)
+        {
+            int scrollAmount = 10;
             int mouseScrollThreshold = 30;
 
             Microsoft.Xna.Framework.Input.MouseState mouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
 
-            if(mouseState.Position.X > GraphicsDevice.Viewport.Width - mouseScrollThreshold)
+            if (mouseState.Position.X > GraphicsDevice.Viewport.Width - mouseScrollThreshold)
             {
-                int newX = (int)(this.camera2D.Location.X + 2);
+                int newX = (int) (this.camera2D.Location.X + 2);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
             else if (mouseState.Position.X < mouseScrollThreshold)
             {
-                int newX = (int)(this.camera2D.Location.X - 2);
+                int newX = (int) (this.camera2D.Location.X - 2);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
-            else if (mouseState.Position.Y  > GraphicsDevice.Viewport.Height - mouseScrollThreshold)
+            else if (mouseState.Position.Y > GraphicsDevice.Viewport.Height - mouseScrollThreshold)
             {
-                int newY = (int)(this.camera2D.Location.Y + 2);
+                int newY = (int) (this.camera2D.Location.Y + 2);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
             else if (mouseState.Position.Y < mouseScrollThreshold)
             {
-                int newY = (int)(this.camera2D.Location.Y - 2);
+                int newY = (int) (this.camera2D.Location.Y - 2);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
 
             else if (oldKeyboardState.IsKeyUp(Keys.Right) && newKeyboardState.IsKeyDown(Keys.Right))
             {
-                int newX = (int)(this.camera2D.Location.X + scrollAmount);
+                int newX = (int) (this.camera2D.Location.X + scrollAmount);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
             else if (oldKeyboardState.IsKeyUp(Keys.Left) && newKeyboardState.IsKeyDown(Keys.Left))
             {
-                int newX = (int)(this.camera2D.Location.X - scrollAmount);
+                int newX = (int) (this.camera2D.Location.X - scrollAmount);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
             else if (oldKeyboardState.IsKeyUp(Keys.Down) && newKeyboardState.IsKeyDown(Keys.Down))
             {
-
-                int newY = (int)(this.camera2D.Location.Y + scrollAmount);
+                int newY = (int) (this.camera2D.Location.Y + scrollAmount);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
             else if (oldKeyboardState.IsKeyUp(Keys.Up) && newKeyboardState.IsKeyDown(Keys.Up))
             {
-                int newY = (int)(this.camera2D.Location.Y - scrollAmount);
+                int newY = (int) (this.camera2D.Location.Y - scrollAmount);
                 this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
             else if (oldKeyboardState.IsKeyUp(Keys.OemPlus) && newKeyboardState.IsKeyDown(Keys.OemPlus))
@@ -464,11 +472,6 @@ namespace mike_and_conquer
             }
 
             resetCamera();
-            oldKeyboardState = newKeyboardState;
-
-            SwitchToNewGameStateViewIfNeeded();
-
-            base.Update(gameTime);
         }
 
         private void SwitchToNewGameStateViewIfNeeded()

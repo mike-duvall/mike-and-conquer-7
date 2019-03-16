@@ -1,5 +1,7 @@
 ﻿
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using mike_and_conquer.pathfinding;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -260,28 +262,70 @@ namespace mike_and_conquer
             float newY = positionInWorldCoordinates.Y;
 
             double delta = gameTime.ElapsedGameTime.TotalMilliseconds * movementVelocity;
-            //log.Information("delta:" + delta);
 
+            float remainingDistanceX = Math.Abs(destinationX - positionInWorldCoordinates.X);
+            float remainingDistanceY = Math.Abs(destinationY - positionInWorldCoordinates.Y);
+            double deltaX = delta;
+            double deltaY = delta;
+
+            if (remainingDistanceX < deltaX)
+            {
+                deltaX = remainingDistanceX;
+            }
+
+            if (remainingDistanceY < deltaY)
+            {
+                deltaY = remainingDistanceY;
+            }
 
             if (!IsFarEnoughRight(destinationX))
             {
-                newX += (float)delta;
+                newX += (float)deltaX;
             }
             else if (!IsFarEnoughLeft(destinationX))
             {
-                newX -= (float)delta;
+                newX -= (float)deltaX;
             }
 
             if (!IsFarEnoughDown(destinationY))
             {
-                newY += (float)delta;
+                newY += (float)deltaY;
             }
             else if (!IsFarEnoughUp(destinationY))
             {
-                newY -= (float)delta;
+                newY -= (float)deltaY;
             }
+
+
+            // TODO:  Leaving in this commented out code for debugging movement issues.
+            // Should remove it later if end up not needing it
+//            float xChange = Math.Abs(positionInWorldCoordinates.X - newX);
+//            float yChange = Math.Abs(positionInWorldCoordinates.Y - newY);
+//            float changeThreshold = 0.10f;
+//
+//            if (xChange < changeThreshold && yChange < changeThreshold)
+//            {
+//                MikeAndConquerGame.instance.log.Information("delta:" + delta);
+//                Boolean isFarEnoughRight = IsFarEnoughRight(destinationX);
+//                Boolean isFarEnoughLeft = IsFarEnoughLeft(destinationX);
+//                Boolean isFarEnoughDown = IsFarEnoughDown(destinationY);
+//                Boolean isFarEnoughUp = IsFarEnoughUp(destinationY);
+//
+//                MikeAndConquerGame.instance.log.Information("isFarEnoughRight:" + isFarEnoughRight);
+//                MikeAndConquerGame.instance.log.Information("isFarEnoughLeft:" + isFarEnoughLeft);
+//                MikeAndConquerGame.instance.log.Information("isFarEnoughDown:" + isFarEnoughDown);
+//                MikeAndConquerGame.instance.log.Information("isFarEnoughUp:" + isFarEnoughUp);
+//                MikeAndConquerGame.instance.log.Information("old:positionInWorldCoordinates=" + positionInWorldCoordinates);
+//                positionInWorldCoordinates = new Vector2(newX, newY);
+//                MikeAndConquerGame.instance.log.Information("new:positionInWorldCoordinates=" + positionInWorldCoordinates);
+//            }
+//            else
+//            {
+//                positionInWorldCoordinates = new Vector2(newX, newY);
+//            }
+
             positionInWorldCoordinates = new Vector2(newX, newY);
-//            MikeAndConquerGame.log.Debug("positionInWorldCoordinates=" + positionInWorldCoordinates);
+
         }
 
 
@@ -311,21 +355,6 @@ namespace mike_and_conquer
 
         public void OrderToMoveToDestination(Point destination)
         {
-            //            this.currentCommand = Command.MOVE_TO_POINT;
-            //            this.state = State.MOVING;
-            //            SetDestination(destination.X, destination.Y);
-
-//            List<Point> listOfPoints = new List<Point>();
-//            listOfPoints.Add(new Point(12 + 24, 12));
-//            listOfPoints.Add(new Point(12, 12 + 24));
-//            listOfPoints.Add(new Point(12 + 24, 12 + 48));
-//            listOfPoints.Add(destination);
-//            this.currentCommand = Command.FOLLOW_PATH;
-//            this.state = State.MOVING;
-//            this.SetPath(listOfPoints);
-//            SetDestination(listOfPoints[0].X, listOfPoints[0].Y);
-
-//            Point startPoint = new Point(2, 0);
             int startColumn = (int)this.positionInWorldCoordinates.X / 24;
             int startRow = (int)this.positionInWorldCoordinates.Y / 24;
             Point startPoint = new Point(startColumn, startRow);
@@ -337,7 +366,6 @@ namespace mike_and_conquer
             destinationSquare.Y = destination.Y / 24;
             
             Path foundPath = aStar.FindPath(navigationGraph, startPoint, destinationSquare);
-            
 
             this.currentCommand = Command.FOLLOW_PATH;
             this.state = State.MOVING;

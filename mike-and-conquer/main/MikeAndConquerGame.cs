@@ -97,7 +97,7 @@ namespace mike_and_conquer
 
         KeyboardState oldKeyboardState;
 
-        Serilog.Core.Logger log = new LoggerConfiguration()
+        public Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()
             //.WriteTo.File("log.txt")
             .WriteTo.Debug()

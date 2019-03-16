@@ -48,10 +48,7 @@ namespace mike_and_conquer
                 HandleRightClick(newState.Position.X, newState.Position.Y);
             }
 
-
             oldState = newState;
-
-
 
             foreach (MinigunnerAIController nextMinigunnerAIController in GameWorld.instance.nodMinigunnerAIControllerList)
             {

@@ -296,30 +296,35 @@ namespace mike_and_conquer
                 newY -= (float)deltaY;
             }
 
-            float xChange = Math.Abs(positionInWorldCoordinates.X - newX);
-            float yChange = Math.Abs(positionInWorldCoordinates.Y - newY);
-            float changeThreshold = 0.10f;
 
-            if (xChange < changeThreshold && yChange < changeThreshold)
-            {
-                MikeAndConquerGame.instance.log.Information("delta:" + delta);
-                Boolean isFarEnoughRight = IsFarEnoughRight(destinationX);
-                Boolean isFarEnoughLeft = IsFarEnoughLeft(destinationX);
-                Boolean isFarEnoughDown = IsFarEnoughDown(destinationY);
-                Boolean isFarEnoughUp = IsFarEnoughUp(destinationY);
+            // TODO:  Leaving in this commented out code for debugging movement issues.
+            // Should remove it later if end up not needing it
+//            float xChange = Math.Abs(positionInWorldCoordinates.X - newX);
+//            float yChange = Math.Abs(positionInWorldCoordinates.Y - newY);
+//            float changeThreshold = 0.10f;
+//
+//            if (xChange < changeThreshold && yChange < changeThreshold)
+//            {
+//                MikeAndConquerGame.instance.log.Information("delta:" + delta);
+//                Boolean isFarEnoughRight = IsFarEnoughRight(destinationX);
+//                Boolean isFarEnoughLeft = IsFarEnoughLeft(destinationX);
+//                Boolean isFarEnoughDown = IsFarEnoughDown(destinationY);
+//                Boolean isFarEnoughUp = IsFarEnoughUp(destinationY);
+//
+//                MikeAndConquerGame.instance.log.Information("isFarEnoughRight:" + isFarEnoughRight);
+//                MikeAndConquerGame.instance.log.Information("isFarEnoughLeft:" + isFarEnoughLeft);
+//                MikeAndConquerGame.instance.log.Information("isFarEnoughDown:" + isFarEnoughDown);
+//                MikeAndConquerGame.instance.log.Information("isFarEnoughUp:" + isFarEnoughUp);
+//                MikeAndConquerGame.instance.log.Information("old:positionInWorldCoordinates=" + positionInWorldCoordinates);
+//                positionInWorldCoordinates = new Vector2(newX, newY);
+//                MikeAndConquerGame.instance.log.Information("new:positionInWorldCoordinates=" + positionInWorldCoordinates);
+//            }
+//            else
+//            {
+//                positionInWorldCoordinates = new Vector2(newX, newY);
+//            }
 
-                MikeAndConquerGame.instance.log.Information("isFarEnoughRight:" + isFarEnoughRight);
-                MikeAndConquerGame.instance.log.Information("isFarEnoughLeft:" + isFarEnoughLeft);
-                MikeAndConquerGame.instance.log.Information("isFarEnoughDown:" + isFarEnoughDown);
-                MikeAndConquerGame.instance.log.Information("isFarEnoughUp:" + isFarEnoughUp);
-                MikeAndConquerGame.instance.log.Information("old:positionInWorldCoordinates=" + positionInWorldCoordinates);
-                positionInWorldCoordinates = new Vector2(newX, newY);
-                MikeAndConquerGame.instance.log.Information("new:positionInWorldCoordinates=" + positionInWorldCoordinates);
-            }
-            else
-            {
-                positionInWorldCoordinates = new Vector2(newX, newY);
-            }
+            positionInWorldCoordinates = new Vector2(newX, newY);
 
         }
 

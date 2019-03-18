@@ -46,7 +46,16 @@ namespace mike_and_conquer.aicontroller
         {
             if (!enemyStateIsSleeping)
             {
-                myMinigunner.OrderToMoveToAndAttackEnemyUnit(FindFirstNonDeadGdiMinigunner());
+
+                if (myMinigunner.currentCommand == Minigunner.Command.NONE)
+                {
+                    Minigunner foundMinigunner = FindFirstNonDeadGdiMinigunner();
+                    if (foundMinigunner != null)
+                    {
+                        myMinigunner.OrderToMoveToAndAttackEnemyUnit(foundMinigunner);
+                    }
+
+                }
             }
             else
             {

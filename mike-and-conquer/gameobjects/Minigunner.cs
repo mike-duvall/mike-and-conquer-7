@@ -36,8 +36,8 @@ namespace mike_and_conquer
         public enum State { IDLE, MOVING, ATTACKING };
         public State state;
 
-        enum Command { NONE, MOVE_TO_POINT, ATTACK_TARGET, FOLLOW_PATH };
-        private Command currentCommand;
+        public enum Command { NONE, MOVE_TO_POINT, ATTACK_TARGET, FOLLOW_PATH };
+        public Command currentCommand;
 
 
         private int destinationX;
@@ -160,6 +160,38 @@ namespace mike_and_conquer
 
         }
 
+        private void HandleCommandAttackTarget(GameTime gameTime)
+        {
+            if (currentAttackTarget.health <= 0)
+            {
+                this.currentCommand = Command.NONE;
+            }
+
+            if (IsInAttackRange())
+            {
+                this.state = State.ATTACKING;
+                currentAttackTarget.ReduceHealth(10);
+
+            }
+            else
+            {
+                if (path.Count > 0)
+                {
+                    this.state = State.MOVING;
+                    Point currentDestinationPoint = path[0];
+                    SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
+                    MoveTowardsDestination(gameTime, currentDestinationPoint.X, currentDestinationPoint.Y);
+                    if (IsAtDestination(currentDestinationPoint.X, currentDestinationPoint.Y))
+                    {
+                        path.RemoveAt(0);
+                    }
+
+                }
+
+            }
+        }
+
+
 
         private bool IsFarEnoughRight(int destinationX)
         {
@@ -234,26 +266,6 @@ namespace mike_and_conquer
         }
 
 
-        private void HandleCommandAttackTarget(GameTime gameTime)
-        {
-            if(currentAttackTarget.health <= 0)
-            {
-                this.currentCommand = Command.NONE;
-            }
-
-            if (IsInAttackRange())
-            {
-                this.state = State.ATTACKING;
-                currentAttackTarget.ReduceHealth(10);
-
-            }
-            else
-            {
-                this.state = State.MOVING;
-                SetDestination( (int) currentAttackTarget.positionInWorldCoordinates.X, (int)currentAttackTarget.positionInWorldCoordinates.Y);
-                MoveTowardsDestination(gameTime,destinationX, destinationY);
-            }
-        }
 
         void MoveTowardsDestination(GameTime gameTime, int destinationX, int destinationY)
         {
@@ -412,9 +424,36 @@ namespace mike_and_conquer
 
         internal void OrderToMoveToAndAttackEnemyUnit(Minigunner enemyMinigunner)
         {
+
+            int startColumn = (int)this.positionInWorldCoordinates.X / 24;
+            int startRow = (int)this.positionInWorldCoordinates.Y / 24;
+            Point startPoint = new Point(startColumn, startRow);
+
+            AStar aStar = new AStar();
+
+            Point destinationSquare = new Point();
+            destinationSquare.X = (int)enemyMinigunner.positionInWorldCoordinates.X / 24;
+            destinationSquare.Y = (int)enemyMinigunner.positionInWorldCoordinates.Y / 24;
+
+
+            Path foundPath = aStar.FindPath(navigationGraph, startPoint, destinationSquare);
+
             this.currentCommand = Command.ATTACK_TARGET;
             this.state = State.ATTACKING;
             currentAttackTarget = enemyMinigunner;
+
+            List<Point> listOfPoints = new List<Point>();
+            List<Node> nodeList = foundPath.nodeList;
+            foreach (Node node in nodeList)
+            {
+                Point point = ConvertMapSquareIndexToWorldCoordinate(node.id);
+                listOfPoints.Add(point);
+            }
+
+            this.SetPath(listOfPoints);
+            SetDestination(listOfPoints[0].X, listOfPoints[0].Y);
+
+
         }
 
 

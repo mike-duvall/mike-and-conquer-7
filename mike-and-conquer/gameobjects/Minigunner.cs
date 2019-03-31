@@ -436,7 +436,18 @@ namespace mike_and_conquer
             destinationSquare.Y = (int)enemyMinigunner.positionInWorldCoordinates.Y / 24;
 
 
-            Path foundPath = aStar.FindPath(navigationGraph, startPoint, destinationSquare);
+            Path foundPath = null;
+            try
+            {
+                foundPath = aStar.FindPath(navigationGraph, startPoint, destinationSquare);
+            }
+            catch (Exception e)
+            {
+                MikeAndConquerGame.instance.log.Information("Exception thrown trying to find path");
+                MikeAndConquerGame.instance.log.Information("startPoint.X:" + startPoint.X + " startPoint.Y:" + startPoint.Y);
+                MikeAndConquerGame.instance.log.Information("destinationSquare.X:" + destinationSquare.X + " destinationSquare.Y:" + destinationSquare.Y);
+                throw e;
+            }
 
             this.currentCommand = Command.ATTACK_TARGET;
             this.state = State.ATTACKING;

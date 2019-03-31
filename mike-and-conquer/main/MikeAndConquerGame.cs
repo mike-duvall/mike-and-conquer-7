@@ -216,6 +216,13 @@ namespace mike_and_conquer
 
         private void InitializeNavigationGraph()
         {
+            // TODO:  Fix this.  This code should be in GameWorld, not MikeAndConquerGame
+            // but has to be here for now, since BasicMapSquareList is in MikeAndConquerGame
+            // Need to separate out view of BasicMapSquare into a BasicMapSquareView
+            // And let GameWorld hold BasicMapSquareList(with no view data, just
+            // the terrain type and whether it's blocking or not, etc
+
+            gameWorld.navigationGraph.Reset();
 
             foreach (Sandbag nextSandbag in gameWorld.sandbagList)
             {
@@ -666,11 +673,16 @@ namespace mike_and_conquer
 
         public GameState HandleReset()
         {
-
             gdiMinigunnerViewList.Clear();
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
-            return gameWorld.HandleReset();
+            // TODO:  Bogus stuff here
+            // Have to reset world first, before then resetting navigation graph
+            // because navigation graph depends on what's in the game world
+            // and sandbags were not getting cleared before navigation graph was updated
+            GameState newGameState = gameWorld.HandleReset();
+            InitializeNavigationGraph();
+            return newGameState;
         }
 
 

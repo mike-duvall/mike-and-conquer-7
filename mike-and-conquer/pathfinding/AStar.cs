@@ -124,6 +124,11 @@ namespace mike_and_conquer.pathfinding
             return isOpen;
         }
 
+        internal void Reset()
+        {
+            this.nodeArray = new int[width, height];
+            this.nodeList = new List<Node>();
+        }
     }
 
     public class Node
@@ -194,17 +199,38 @@ namespace mike_and_conquer.pathfinding
             Boolean moreNodes = true;
             while (moreNodes)
             {
-
                 nodesInReverseOrder.Add(nextNode);
-                if (came_from[nextNode.id] != -1)
+                try
                 {
-                    nextNode = graph.nodeList[came_from[nextNode.id]];
+                    if (came_from[nextNode.id] != -1)
+                    {
+                        nextNode = graph.nodeList[came_from[nextNode.id]];
+                    }
+                    else
+                    {
+                        moreNodes = false;
+                    }
                 }
-                else
+                catch (KeyNotFoundException e)
                 {
-                    moreNodes = false;
+                    MikeAndConquerGame.instance.log.Information("KeyNotFoundException:");
+                    MikeAndConquerGame.instance.log.Information("For key:" + nextNode.id);
+                    MikeAndConquerGame.instance.log.Information("Start location:" + startLocation + "   goalLocation:" + goalLocation);
+                    
+                    MikeAndConquerGame.instance.log.Information("Dumping came_from:");
+                    Dictionary<int, int>.KeyCollection keyCollection = came_from.Keys;
+                    foreach (int key in keyCollection)
+                    {
+                        int value = came_from[key];
+                        MikeAndConquerGame.instance.log.Information("key:" + key + "  value:" + value);
+                    }
+
+                    throw e;
                 }
             }
+
+
+
 
             nodesInReverseOrder.Reverse(0, nodesInReverseOrder.Count);
             thePath.nodeList = nodesInReverseOrder;

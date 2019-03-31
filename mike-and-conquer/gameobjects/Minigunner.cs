@@ -36,7 +36,7 @@ namespace mike_and_conquer
         public enum State { IDLE, MOVING, ATTACKING };
         public State state;
 
-        public enum Command { NONE, MOVE_TO_POINT, ATTACK_TARGET, FOLLOW_PATH };
+        public enum Command { NONE,  ATTACK_TARGET, FOLLOW_PATH };
         public Command currentCommand;
 
 
@@ -90,10 +90,6 @@ namespace mike_and_conquer
             {
                 HandleCommandNone(gameTime);
             }
-            else if (this.currentCommand == Command.MOVE_TO_POINT)
-            {
-                HandleCommandMoveToPoint(gameTime);
-            }
             else if (this.currentCommand == Command.FOLLOW_PATH)
             {
                 HandleCommandFollowPath(gameTime);
@@ -127,30 +123,25 @@ namespace mike_and_conquer
         }
 
 
-        private void HandleCommandMoveToPoint(GameTime gameTime)
+        private void MoveTowardsCurrentDestinationInPath(GameTime gameTime)
         {
             this.state = State.MOVING;
-            MoveTowardsDestination(gameTime, destinationX, destinationY);
-            if (IsAtDestination(destinationX, destinationY))
+            Point currentDestinationPoint = path[0];
+            SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
+            MoveTowardsDestination(gameTime, currentDestinationPoint.X, currentDestinationPoint.Y);
+            if (IsAtDestination(currentDestinationPoint.X, currentDestinationPoint.Y))
             {
-                this.currentCommand = Command.NONE;
+                path.RemoveAt(0);
             }
+
         }
 
-        
 
         private void HandleCommandFollowPath(GameTime gameTime)
         {
             if (path.Count > 0)
             {
-                this.state = State.MOVING;
-                Point currentDestinationPoint = path[0];
-                SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
-                MoveTowardsDestination(gameTime,currentDestinationPoint.X, currentDestinationPoint.Y);
-                if (IsAtDestination(currentDestinationPoint.X, currentDestinationPoint.Y))
-                {
-                    path.RemoveAt(0);
-                }
+                MoveTowardsCurrentDestinationInPath(gameTime);
 
             }
             else
@@ -177,14 +168,7 @@ namespace mike_and_conquer
             {
                 if (path.Count > 0)
                 {
-                    this.state = State.MOVING;
-                    Point currentDestinationPoint = path[0];
-                    SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
-                    MoveTowardsDestination(gameTime, currentDestinationPoint.X, currentDestinationPoint.Y);
-                    if (IsAtDestination(currentDestinationPoint.X, currentDestinationPoint.Y))
-                    {
-                        path.RemoveAt(0);
-                    }
+                    MoveTowardsCurrentDestinationInPath(gameTime);
 
                 }
 

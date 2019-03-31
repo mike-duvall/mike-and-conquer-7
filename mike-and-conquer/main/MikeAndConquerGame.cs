@@ -191,8 +191,11 @@ namespace mike_and_conquer
             {
                 bool aiIsOn = false;
 
-                Point minigunnerStartPosition = new Point(160, 22);
-                AddGdiMinigunner(minigunnerStartPosition);
+//                AddGdiMinigunnerAtMapSquareCoordinates(new Point(0, 0));
+                AddGdiMinigunnerAtMapSquareCoordinates(new Point(4, 0));
+
+                //AddNodMinigunner(new Point(200, 200), aiIsOn);
+                AddNodMinigunnerAtMapSquareCoordinates(new Point(7, 0), aiIsOn);
 
                 AddSandbag(10, 6, 5);
                 AddSandbag(10, 7, 5);
@@ -213,6 +216,13 @@ namespace mike_and_conquer
 
         private void InitializeNavigationGraph()
         {
+            // TODO:  Fix this.  This code should be in GameWorld, not MikeAndConquerGame
+            // but has to be here for now, since BasicMapSquareList is in MikeAndConquerGame
+            // Need to separate out view of BasicMapSquare into a BasicMapSquareView
+            // And let GameWorld hold BasicMapSquareList(with no view data, just
+            // the terrain type and whether it's blocking or not, etc
+
+            gameWorld.navigationGraph.Reset();
 
             foreach (Sandbag nextSandbag in gameWorld.sandbagList)
             {
@@ -580,6 +590,26 @@ namespace mike_and_conquer
         }
 
 
+        public Point ConvertMapSquareCoordinatesToWorldCoordinates(Point positionInMapSquareCoordinates)
+        {
+
+            int xInWorldCoordinates = positionInMapSquareCoordinates.X * 24 + 12;
+            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * 24 + 12;
+
+            return new Point(xInWorldCoordinates,yInWorldCoordinates);
+
+        }
+
+
+        internal Minigunner AddGdiMinigunnerAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
+        {
+            Point positionInWorldCoordinates =
+                ConvertMapSquareCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
+
+            return AddGdiMinigunner(positionInWorldCoordinates);
+        }
+
+
         internal Minigunner AddGdiMinigunner(Point positionInWorldCoordinates)
         {
 
@@ -605,6 +635,15 @@ namespace mike_and_conquer
             sandbagViewList.Add(newSandbagView);
             return newSandbag;
         }
+
+        internal Minigunner AddNodMinigunnerAtMapSquareCoordinates(Point positionInMapSquareCoordinates, bool aiIsOn)
+        {
+            Point positionInWorldCoordinates =
+                ConvertMapSquareCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
+
+            return AddNodMinigunner(positionInWorldCoordinates, aiIsOn);
+        }
+
 
 
         internal Minigunner AddNodMinigunner(Point positionInWorldCoordinates, bool aiIsOn)
@@ -634,11 +673,16 @@ namespace mike_and_conquer
 
         public GameState HandleReset()
         {
-
             gdiMinigunnerViewList.Clear();
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
-            return gameWorld.HandleReset();
+            // TODO:  Bogus stuff here
+            // Have to reset world first, before then resetting navigation graph
+            // because navigation graph depends on what's in the game world
+            // and sandbags were not getting cleared before navigation graph was updated
+            GameState newGameState = gameWorld.HandleReset();
+            InitializeNavigationGraph();
+            return newGameState;
         }
 
 

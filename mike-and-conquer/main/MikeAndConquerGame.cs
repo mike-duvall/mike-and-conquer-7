@@ -60,6 +60,8 @@ namespace mike_and_conquer
 
         private GameStateView currentGameStateView;
 
+        private GameCursor gameCursor;
+
         public List<BasicMapSquare> BasicMapSquareList
         {
             get { return basicMapSquareList; }
@@ -210,6 +212,8 @@ namespace mike_and_conquer
 
             InitializeMap();
             InitializeNavigationGraph();
+            this.IsMouseVisible = true;
+            gameCursor = new GameCursor(1,1);
 
         }
 
@@ -405,7 +409,7 @@ namespace mike_and_conquer
             this.gameWorld.Update(gameTime);
 
             this.camera2D.Rotation = testRotation;
-            //            testRotation += 0.01f;
+//                        testRotation += 0.05f;
 
 
             KeyboardState newKeyboardState = Keyboard.GetState();  // get the newest state
@@ -418,7 +422,7 @@ namespace mike_and_conquer
             oldKeyboardState = newKeyboardState;
 
             SwitchToNewGameStateViewIfNeeded();
-
+            gameCursor.Update(gameTime);
             base.Update(gameTime);
         }
 

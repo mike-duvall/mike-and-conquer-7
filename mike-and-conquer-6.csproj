@@ -80,6 +80,7 @@
     <Compile Include="mike-and-conquer\gamesprite\ShpFileImage.cs" />
     <Compile Include="mike-and-conquer\gameview\DestinationSquare.cs" />
     <Compile Include="mike-and-conquer\gameview\BasicMapSquare.cs" />
+    <Compile Include="mike-and-conquer\gameview\GameCursor.cs" />
     <Compile Include="mike-and-conquer\gameview\MissionFailedGameStateView.cs" />
     <Compile Include="mike-and-conquer\gameview\MissionAccomplishedGameStateView.cs" />
     <Compile Include="mike-and-conquer\gameview\GameStateView.cs" />
@@ -110,6 +111,8 @@
     <Compile Include="mike-and-conquer\openra\LCWCompression.cs" />
     <Compile Include="mike-and-conquer\openra\Palette.cs" />
     <Compile Include="mike-and-conquer\openra\ReadOnlyList.cs" />
+    <Compile Include="mike-and-conquer\openra\RLEZerosCompression.cs" />
+    <Compile Include="mike-and-conquer\openra\ShpD2Loader.cs" />
     <Compile Include="mike-and-conquer\openra\SpriteLoader.cs" />
     <Compile Include="mike-and-conquer\openra\StreamExts.cs" />
     <Compile Include="mike-and-conquer\openra\TmpTDLoader.cs" />

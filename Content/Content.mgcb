@@ -34,6 +34,9 @@
 #begin select.shp
 /copy:select.shp
 
+#begin mouse.shp
+/copy:mouse.shp
+
 #begin Mission.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -192,4 +195,7 @@
 
 #begin tunits.mrf
 /copy:tunits.mrf
+
+#begin temperat-local.pal
+/copy:temperat-local.pal
 

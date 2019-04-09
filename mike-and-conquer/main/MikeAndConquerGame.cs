@@ -176,12 +176,13 @@ namespace mike_and_conquer
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            this.IsMouseVisible = true;
+//            this.IsMouseVisible = true;
+            this.IsMouseVisible = false;
 
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
             this.camera2D.Zoom = 3.4f;
-            //            this.camera2D.Zoom = 2.0f;
+//            this.camera2D.Zoom = 1.0f;
             this.camera2D.Location =
                 new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
@@ -212,7 +213,6 @@ namespace mike_and_conquer
 
             InitializeMap();
             InitializeNavigationGraph();
-            this.IsMouseVisible = true;
             gameCursor = new GameCursor(1,1);
 
         }
@@ -587,6 +587,7 @@ namespace mike_and_conquer
 
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
+            gameCursor.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
            

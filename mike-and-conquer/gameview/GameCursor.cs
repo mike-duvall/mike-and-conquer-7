@@ -1,5 +1,7 @@
 ﻿
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using OpenRA.Mods.Common.SpriteLoaders;
 using ShpTDSprite = OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -17,6 +19,7 @@ using ISpriteFrame = OpenRA.Graphics.ISpriteFrame;
 
 using MouseCursor = Microsoft.Xna.Framework.Input.MouseCursor;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
+using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 
 namespace mike_and_conquer.gameview
 {
@@ -25,7 +28,16 @@ namespace mike_and_conquer.gameview
     {
         public Vector2 position { get; set; }
 
-        Texture2D texture;
+        private Texture2D texture;
+        private Texture2D mainCursorTexture;
+        private Texture2D moveToLocationCursorTexture;
+        private Texture2D movementNotAllowedCursorTexture;
+
+
+        // 0 = main cursor
+        // 10 = select movement location pointer
+        // 11 = movement not allowed to this point, pointer
+
         Texture2D boundingRectangle;
         Boolean drawBoundingRectangle;
 
@@ -35,8 +47,6 @@ namespace mike_and_conquer.gameview
         private Vector2 middleOfSprite;
 
         float defaultScale = 1;
-
-        private MouseCursor mouseCursor;
 
         private GameCursor()
         {
@@ -49,24 +59,25 @@ namespace mike_and_conquer.gameview
             this.worldWidth = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Width;
             this.worldHeight = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Height;
             //            this.texture = loadTextureFromShpFile("Content\\select.shp", 0);
-            this.texture = loadTextureFromD2ShpFile("Content\\mouse.shp", 18);
+            this.mainCursorTexture = loadTextureFromD2ShpFile("Content\\mouse.shp", 0);
+            this.moveToLocationCursorTexture = loadTextureFromD2ShpFile("Content\\mouse.shp", 10);
+            this.movementNotAllowedCursorTexture = loadTextureFromD2ShpFile("Content\\mouse.shp", 11);
+            // 0 = main cursor
             // 10 = select movement location pointer
             // 11 = movement not allowed to this point, pointer
             // 18 through 25, attack enemy pointer
 
+            //            Pickup here:  Load each of above cursors.  Then change to the right one depending on 
+            //            mouse pointer position.  Initially have Update() method in this class figure out which 
+            //            pointer.  Then consider if that should be determined externally....
 
-            mouseCursor = MouseCursor.FromTexture2D(this.texture, 0, 0);
-            Mouse.SetCursor(mouseCursor);
-//            Mouse.SetCursor();
-//            Pickup here, hack in place to handle cursors for now
-//            Proceed with making them work
-
+            this.texture = mainCursorTexture;
             position = new Vector2(x, y);
             boundingRectangle = initializeBoundingRectangle();
 
             middleOfSprite = new Vector2();
-            middleOfSprite.X = 15;
-            middleOfSprite.Y = 14;
+            middleOfSprite.X = 0;
+            middleOfSprite.Y = 0;
 
             drawBoundingRectangle = false;
         }
@@ -112,7 +123,41 @@ namespace mike_and_conquer.gameview
 
         public void Update(GameTime gameTime)
         {
-            Mouse.SetCursor(mouseCursor);
+            MouseState newState = Mouse.GetState();
+            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
+            position = new Vector2(newState.X / scale, newState.Y / scale);
+            Point point = new Point();
+            point.X = (int) position.X;
+            point.Y = (int) position.Y;
+            if (IsPointOverBlockingTerrain(point))
+            {
+                this.texture = movementNotAllowedCursorTexture;
+                middleOfSprite.X = this.texture.Width / 2;
+                middleOfSprite.Y = this.texture.Height / 2;
+
+            }
+            else
+            {
+                this.texture = moveToLocationCursorTexture;
+                middleOfSprite.X = this.texture.Width / 2;
+                middleOfSprite.Y = this.texture.Height / 2;
+            }
+
+
+        }
+
+        bool IsPointOverBlockingTerrain(Point pointInWorldCoordinates)
+        {
+            foreach (BasicMapSquare nexBasicMapSquare in MikeAndConquerGame.instance.BasicMapSquareList)
+            {
+                if (nexBasicMapSquare.ContainsPoint(pointInWorldCoordinates) &&
+                    nexBasicMapSquare.IsBlockingTerrain())
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)

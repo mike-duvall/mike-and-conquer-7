@@ -8,6 +8,9 @@ using Math = System.Math;
 using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
 using Boolean = System.Boolean;
 
+using ShpD2Loader = OpenRA.Mods.Common.SpriteLoaders.ShpD2Loader;
+using ISpriteFrame = OpenRA.Graphics.ISpriteFrame;
+
 namespace mike_and_conquer.gameview
 {
 
@@ -37,6 +40,17 @@ namespace mike_and_conquer.gameview
             this.worldWidth = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Width;
             this.worldHeight = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Height;
             this.texture = loadTextureFromShpFile("Content\\select.shp", 0);
+//            this.texture = loadTextureFromD2ShpFile("Content\\mouse.shp", 11);
+            // 10 = select movement location pointer
+            // 11 = movement not allowed to this point, pointer
+            // 18 through 25, attack enemy pointer
+
+
+
+            //            Mouse.SetCursor(mouseCursor);
+            //            Mouse.SetCursor();
+            //            Pickup here, hack in place to handle cursors for now
+            //            Proceed with making them work
 
             position = new Vector2(x, y);
             boundingRectangle = initializeBoundingRectangle();
@@ -47,6 +61,70 @@ namespace mike_and_conquer.gameview
 
             drawBoundingRectangle = false;
         }
+
+
+        internal Texture2D loadTextureFromD2ShpFile(string shpFileName, int indexOfFrameToLoad)
+        {
+            //if (loader.IsShpTD(stream))
+            //{
+            //    frames = null;
+            //    return false;
+            //}
+            //loader.TryParseSprite(stream, out frames);
+
+            int[] remap = { };
+
+            OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat-local.pal", remap);
+
+            System.IO.FileStream shpStream = System.IO.File.Open(shpFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
+
+            ShpD2Loader shpD2Loader = new ShpD2Loader();
+            ISpriteFrame[] frames = new ISpriteFrame[180];
+            shpD2Loader.TryParseSprite(shpStream, out frames);
+
+            int x = 3;
+
+            OpenRA.Graphics.ISpriteFrame frame = frames[indexOfFrameToLoad];
+            byte[] frameData = frame.Data;
+
+            Texture2D texture2D = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, frame.Size.Width, frame.Size.Height);
+            int numPixels = texture2D.Width * texture2D.Height;
+            Color[] texturePixelData = new Color[numPixels];
+
+            for (int i = 0; i < numPixels; i++)
+            {
+
+                int paletteCode = frameData[i];
+                if (indexOfFrameToLoad == 10)
+                {
+                    // TODO, BOGUS: Having to manually
+                    // tweak the palette offsets for the 
+                    // movement destination cursor
+                    // Not sure why.  Other ones
+                    // seems to need no tweak
+                    if (paletteCode == 124)
+                    {
+                        paletteCode = 4;
+                    }
+                    if (paletteCode == 125)
+                    {
+                        paletteCode = 3;
+                    }
+
+                }
+
+                uint paletteX = palette[paletteCode];
+                System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)paletteX);
+                Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+                texturePixelData[i] = xnaColor;
+
+            }
+            texture2D.SetData(texturePixelData);
+            shpStream.Close();
+            return texture2D;
+
+        }
+
 
         internal void fillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
         {

@@ -36,8 +36,45 @@ namespace mike_and_conquer
                 return nextGameState;
             }
 
-
             MouseState newState = Mouse.GetState();
+
+            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
+            Vector2 mousePosition = new Vector2(newState.X / scale, newState.Y / scale);
+
+            Boolean isAMinigunnerSelected = false;
+
+            foreach(Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
+            {
+
+                if (nextMinigunner.selected == true)
+                {
+                    isAMinigunnerSelected = true;
+                }
+
+            }
+
+            if (isAMinigunnerSelected)
+            {
+                Point point = new Point();
+                point.X = (int)mousePosition.X;
+                point.Y = (int)mousePosition.Y;
+                if (IsPointOverBlockingTerrain(point))
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToMovementNotAllowedCursor();
+                }
+                else
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToMoveToLocationCursor();
+                }
+
+            }
+            else
+            {
+                MikeAndConquerGame.instance.gameCursor.SetToMainCursor();
+            }
+
+
+
 
             if (newState.LeftButton == ButtonState.Pressed && oldState.LeftButton == ButtonState.Released)
             {
@@ -86,6 +123,22 @@ namespace mike_and_conquer
             }
 
         }
+
+
+        bool IsPointOverBlockingTerrain(Point pointInWorldCoordinates)
+        {
+            foreach (BasicMapSquare nexBasicMapSquare in MikeAndConquerGame.instance.BasicMapSquareList)
+            {
+                if (nexBasicMapSquare.ContainsPoint(pointInWorldCoordinates) &&
+                    nexBasicMapSquare.IsBlockingTerrain())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
 
         internal Boolean NodMinigunnersExistAndAreAllDead()
         {

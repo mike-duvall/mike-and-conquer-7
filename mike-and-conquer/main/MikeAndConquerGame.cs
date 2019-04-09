@@ -60,7 +60,7 @@ namespace mike_and_conquer
 
         private GameStateView currentGameStateView;
 
-        private GameCursor gameCursor;
+        public GameCursor gameCursor;
 
         public List<BasicMapSquare> BasicMapSquareList
         {

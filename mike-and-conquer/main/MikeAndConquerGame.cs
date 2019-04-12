@@ -198,7 +198,7 @@ namespace mike_and_conquer
                 AddGdiMinigunnerAtMapSquareCoordinates(new Point(4, 0));
 
                 //AddNodMinigunner(new Point(200, 200), aiIsOn);
-                AddNodMinigunnerAtMapSquareCoordinates(new Point(7, 0), aiIsOn);
+                AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
 
                 AddSandbag(10, 6, 5);
                 AddSandbag(10, 7, 5);

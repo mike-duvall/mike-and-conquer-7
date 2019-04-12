@@ -19,7 +19,7 @@ namespace mike_and_conquer
     class PlayingGameState : GameState
     {
 
-        private MouseState oldState;
+        private MouseState oldMouseState;
 
         public override string GetName()
         {
@@ -36,56 +36,21 @@ namespace mike_and_conquer
                 return nextGameState;
             }
 
-            MouseState newState = Mouse.GetState();
+            MouseState newMouseState = Mouse.GetState();
 
-            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
-            Vector2 mousePosition = new Vector2(newState.X / scale, newState.Y / scale);
+            UpdateMousePointer(newMouseState);
 
-            Boolean isAMinigunnerSelected = false;
-
-            foreach(Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
+            if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released)
             {
-
-                if (nextMinigunner.selected == true)
-                {
-                    isAMinigunnerSelected = true;
-                }
-
+                HandleLeftClick(newMouseState.Position.X, newMouseState.Position.Y);
             }
-
-            if (isAMinigunnerSelected)
+            else if (newMouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released)
             {
-                Point point = new Point();
-                point.X = (int)mousePosition.X;
-                point.Y = (int)mousePosition.Y;
-                if (IsPointOverBlockingTerrain(point))
-                {
-                    MikeAndConquerGame.instance.gameCursor.SetToMovementNotAllowedCursor();
-                }
-                else
-                {
-                    MikeAndConquerGame.instance.gameCursor.SetToMoveToLocationCursor();
-                }
-
-            }
-            else
-            {
-                MikeAndConquerGame.instance.gameCursor.SetToMainCursor();
+                HandleRightClick(newMouseState.Position.X, newMouseState.Position.Y);
             }
 
 
-
-
-            if (newState.LeftButton == ButtonState.Pressed && oldState.LeftButton == ButtonState.Released)
-            {
-                HandleLeftClick(newState.Position.X, newState.Position.Y);
-            }
-            else if (newState.RightButton == ButtonState.Pressed && oldState.RightButton == ButtonState.Released)
-            {
-                HandleRightClick(newState.Position.X, newState.Position.Y);
-            }
-
-            oldState = newState;
+            oldMouseState = newMouseState;
 
             foreach (MinigunnerAIController nextMinigunnerAIController in GameWorld.instance.nodMinigunnerAIControllerList)
             {
@@ -124,6 +89,64 @@ namespace mike_and_conquer
 
         }
 
+        private void UpdateMousePointer(MouseState newState)
+        {
+            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
+            Vector2 scaledMousedPosition = new Vector2(newState.X / scale, newState.Y / scale);
+
+
+            if (IsAMinigunnerSelected())
+            {
+                Point point = new Point();
+                point.X = (int) scaledMousedPosition.X;
+                point.Y = (int) scaledMousedPosition.Y;
+                if (IsPointOverBlockingTerrain(point))
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToMovementNotAllowedCursor();
+                }
+                else if(IsPointOverEnemy(point)) 
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToAttackEnemyLocationCursor();
+                }
+                else
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToMoveToLocationCursor();
+                }
+            }
+            else
+            {
+                MikeAndConquerGame.instance.gameCursor.SetToMainCursor();
+            }
+
+
+        }
+
+        bool IsPointOverEnemy(Point pointInWorldCoordinates)
+        {
+            foreach (Minigunner nextNodMinigunner in GameWorld.instance.nodMinigunnerList)
+            {
+                if (nextNodMinigunner.ContainsPoint(pointInWorldCoordinates.X, pointInWorldCoordinates.Y))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        bool IsAMinigunnerSelected()
+        {
+            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
+            {
+                if (nextMinigunner.selected)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
 
         bool IsPointOverBlockingTerrain(Point pointInWorldCoordinates)
         {
@@ -138,6 +161,8 @@ namespace mike_and_conquer
 
             return false;
         }
+
+
 
 
         internal Boolean NodMinigunnersExistAndAreAllDead()

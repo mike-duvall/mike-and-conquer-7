@@ -247,8 +247,11 @@ namespace mike_and_conquer
                 if(nextMinigunner.selected == true)
                 {
                     BasicMapSquare clickedBasicMapSquare = MikeAndConquerGame.instance.FindMapSquare(mouseX, mouseY);
-                    Point centerOfSquare = clickedBasicMapSquare.GetCenter();
-                    nextMinigunner.OrderToMoveToDestination(centerOfSquare);
+                    if (!clickedBasicMapSquare.IsBlockingTerrain())
+                    {
+                        Point centerOfSquare = clickedBasicMapSquare.GetCenter();
+                        nextMinigunner.OrderToMoveToDestination(centerOfSquare);
+                    }
                 }
             }
             return true;

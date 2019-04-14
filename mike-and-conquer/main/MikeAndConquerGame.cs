@@ -176,8 +176,6 @@ namespace mike_and_conquer
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-//            this.IsMouseVisible = true;
-            this.IsMouseVisible = false;
 
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
@@ -194,10 +192,8 @@ namespace mike_and_conquer
             {
                 bool aiIsOn = false;
 
-//                AddGdiMinigunnerAtMapSquareCoordinates(new Point(0, 0));
                 AddGdiMinigunnerAtMapSquareCoordinates(new Point(4, 0));
 
-                //AddNodMinigunner(new Point(200, 200), aiIsOn);
                 AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
 
                 AddSandbag(10, 6, 5);
@@ -209,11 +205,24 @@ namespace mike_and_conquer
                 AddSandbag(8, 4, 10);
                 AddSandbag(9, 4, 10);
 
+                //                AddSandbag(12, 16, 10);
+
+                AddSandbag(11, 16, 2);
+                AddSandbag(12, 16, 8);
+
+
+                AddSandbag(14, 5, 0);
+                AddSandbag(14, 6, 2);
+                AddSandbag(14, 7, 8);
+
+
+
             }
 
             InitializeMap();
             InitializeNavigationGraph();
             gameCursor = new GameCursor(1,1);
+            this.IsMouseVisible = false;
 
         }
 

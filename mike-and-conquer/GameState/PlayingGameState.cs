@@ -100,17 +100,17 @@ namespace mike_and_conquer
                 Point point = new Point();
                 point.X = (int) scaledMousedPosition.X;
                 point.Y = (int) scaledMousedPosition.Y;
-                if (IsPointOverBlockingTerrain(point))
-                {
-                    MikeAndConquerGame.instance.gameCursor.SetToMovementNotAllowedCursor();
-                }
-                else if(IsPointOverEnemy(point)) 
+                if (IsPointOverEnemy(point))
                 {
                     MikeAndConquerGame.instance.gameCursor.SetToAttackEnemyLocationCursor();
                 }
-                else
+                else if (IsValidMoveDestination(point))
                 {
                     MikeAndConquerGame.instance.gameCursor.SetToMoveToLocationCursor();
+                }
+                else
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToMovementNotAllowedCursor();
                 }
             }
             else
@@ -147,21 +147,6 @@ namespace mike_and_conquer
             return false;
 
         }
-
-        bool IsPointOverBlockingTerrain(Point pointInWorldCoordinates)
-        {
-            foreach (BasicMapSquare nexBasicMapSquare in MikeAndConquerGame.instance.BasicMapSquareList)
-            {
-                if (nexBasicMapSquare.ContainsPoint(pointInWorldCoordinates) &&
-                    nexBasicMapSquare.IsBlockingTerrain())
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
 
 
 
@@ -246,9 +231,10 @@ namespace mike_and_conquer
             {
                 if(nextMinigunner.selected == true)
                 {
-                    BasicMapSquare clickedBasicMapSquare = MikeAndConquerGame.instance.FindMapSquare(mouseX, mouseY);
-                    if (!clickedBasicMapSquare.IsBlockingTerrain())
+                    if (IsValidMoveDestination(new Point(mouseX, mouseY)))
                     {
+                        BasicMapSquare clickedBasicMapSquare =
+                            MikeAndConquerGame.instance.FindMapSquare(mouseX, mouseY);
                         Point centerOfSquare = clickedBasicMapSquare.GetCenter();
                         nextMinigunner.OrderToMoveToDestination(centerOfSquare);
                     }
@@ -257,6 +243,30 @@ namespace mike_and_conquer
             return true;
         }
 
+        private bool IsValidMoveDestination(Point pointInWorldCoordinates)
+        {
+            Boolean isValidMoveDestination = true;
+            BasicMapSquare clickedBasicMapSquare =
+                MikeAndConquerGame.instance.FindMapSquare(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
+            if (clickedBasicMapSquare.IsBlockingTerrain())
+            {
+                isValidMoveDestination = false;
+            }
+
+
+            foreach (Sandbag nextSandbag in MikeAndConquerGame.instance.gameWorld.sandbagList)
+            {
+
+                if (nextSandbag.ContainsPoint(pointInWorldCoordinates))
+                {
+                    isValidMoveDestination = false;
+                }
+            }
+
+            return isValidMoveDestination;
+
+
+        }
 
         internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)
         {

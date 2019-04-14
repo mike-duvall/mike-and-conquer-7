@@ -196,6 +196,3 @@
 #begin tunits.mrf
 /copy:tunits.mrf
 
-#begin temperat-local.pal
-/copy:temperat-local.pal
-

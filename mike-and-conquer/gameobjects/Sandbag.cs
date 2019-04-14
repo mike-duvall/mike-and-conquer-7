@@ -54,6 +54,17 @@ namespace mike_and_conquer
         //        }
 
 
+        public bool ContainsPoint(Point aPoint)
+        {
+            int height = 24;
+            int width = 24;
+            int leftX = (int)positionInWorldCoordinates.X - (width / 2);
+            int topY = (int)positionInWorldCoordinates.Y - (height / 2);
+            Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);
+            return boundRectangle.Contains(aPoint);
+        }
+
+
     }
 
 

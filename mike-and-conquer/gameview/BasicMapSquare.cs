@@ -72,6 +72,7 @@ namespace mike_and_conquer.gameview
 
         public bool IsBlockingTerrain()
         {
+
             Dictionary<string, int[]> blockingTerrainMap = MikeAndConquerGame.instance.gameMap.blockingTerrainMap;
 
             if (blockingTerrainMap.ContainsKey(textureKey))

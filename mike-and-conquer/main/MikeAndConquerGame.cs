@@ -60,6 +60,8 @@ namespace mike_and_conquer
 
         private GameStateView currentGameStateView;
 
+        public GameCursor gameCursor;
+
         public List<BasicMapSquare> BasicMapSquareList
         {
             get { return basicMapSquareList; }
@@ -174,12 +176,11 @@ namespace mike_and_conquer
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            this.IsMouseVisible = true;
 
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
             this.camera2D.Zoom = 3.4f;
-            //            this.camera2D.Zoom = 2.0f;
+//            this.camera2D.Zoom = 1.0f;
             this.camera2D.Location =
                 new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
@@ -191,11 +192,9 @@ namespace mike_and_conquer
             {
                 bool aiIsOn = false;
 
-//                AddGdiMinigunnerAtMapSquareCoordinates(new Point(0, 0));
                 AddGdiMinigunnerAtMapSquareCoordinates(new Point(4, 0));
 
-                //AddNodMinigunner(new Point(200, 200), aiIsOn);
-                AddNodMinigunnerAtMapSquareCoordinates(new Point(7, 0), aiIsOn);
+                AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
 
                 AddSandbag(10, 6, 5);
                 AddSandbag(10, 7, 5);
@@ -206,10 +205,24 @@ namespace mike_and_conquer
                 AddSandbag(8, 4, 10);
                 AddSandbag(9, 4, 10);
 
+                //                AddSandbag(12, 16, 10);
+
+                AddSandbag(11, 16, 2);
+                AddSandbag(12, 16, 8);
+
+
+                AddSandbag(14, 5, 0);
+                AddSandbag(14, 6, 2);
+                AddSandbag(14, 7, 8);
+
+
+
             }
 
             InitializeMap();
             InitializeNavigationGraph();
+            gameCursor = new GameCursor(1,1);
+            this.IsMouseVisible = false;
 
         }
 
@@ -405,7 +418,7 @@ namespace mike_and_conquer
             this.gameWorld.Update(gameTime);
 
             this.camera2D.Rotation = testRotation;
-            //            testRotation += 0.01f;
+//                        testRotation += 0.05f;
 
 
             KeyboardState newKeyboardState = Keyboard.GetState();  // get the newest state
@@ -418,7 +431,7 @@ namespace mike_and_conquer
             oldKeyboardState = newKeyboardState;
 
             SwitchToNewGameStateViewIfNeeded();
-
+            gameCursor.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -583,6 +596,7 @@ namespace mike_and_conquer
 
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
+            gameCursor.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
            

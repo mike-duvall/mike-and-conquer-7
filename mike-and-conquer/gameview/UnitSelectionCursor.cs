@@ -4,9 +4,11 @@ using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using Color = Microsoft.Xna.Framework.Color;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
-using Math = System.Math;
 using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
 using Boolean = System.Boolean;
+
+
+
 
 namespace mike_and_conquer.gameview
 {
@@ -47,6 +49,9 @@ namespace mike_and_conquer.gameview
 
             drawBoundingRectangle = false;
         }
+
+
+
 
         internal void fillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
         {

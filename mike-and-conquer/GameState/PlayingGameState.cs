@@ -19,7 +19,7 @@ namespace mike_and_conquer
     class PlayingGameState : GameState
     {
 
-        private MouseState oldState;
+        private MouseState oldMouseState;
 
         public override string GetName()
         {
@@ -36,19 +36,21 @@ namespace mike_and_conquer
                 return nextGameState;
             }
 
+            MouseState newMouseState = Mouse.GetState();
 
-            MouseState newState = Mouse.GetState();
+            UpdateMousePointer(newMouseState);
 
-            if (newState.LeftButton == ButtonState.Pressed && oldState.LeftButton == ButtonState.Released)
+            if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released)
             {
-                HandleLeftClick(newState.Position.X, newState.Position.Y);
+                HandleLeftClick(newMouseState.Position.X, newMouseState.Position.Y);
             }
-            else if (newState.RightButton == ButtonState.Pressed && oldState.RightButton == ButtonState.Released)
+            else if (newMouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released)
             {
-                HandleRightClick(newState.Position.X, newState.Position.Y);
+                HandleRightClick(newMouseState.Position.X, newMouseState.Position.Y);
             }
 
-            oldState = newState;
+
+            oldMouseState = newMouseState;
 
             foreach (MinigunnerAIController nextMinigunnerAIController in GameWorld.instance.nodMinigunnerAIControllerList)
             {
@@ -86,6 +88,67 @@ namespace mike_and_conquer
             }
 
         }
+
+        private void UpdateMousePointer(MouseState newState)
+        {
+            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
+            Vector2 scaledMousedPosition = new Vector2(newState.X / scale, newState.Y / scale);
+
+
+            if (IsAMinigunnerSelected())
+            {
+                Point point = new Point();
+                point.X = (int) scaledMousedPosition.X;
+                point.Y = (int) scaledMousedPosition.Y;
+                if (IsPointOverEnemy(point))
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToAttackEnemyLocationCursor();
+                }
+                else if (IsValidMoveDestination(point))
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToMoveToLocationCursor();
+                }
+                else
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToMovementNotAllowedCursor();
+                }
+            }
+            else
+            {
+                MikeAndConquerGame.instance.gameCursor.SetToMainCursor();
+            }
+
+
+        }
+
+        bool IsPointOverEnemy(Point pointInWorldCoordinates)
+        {
+            foreach (Minigunner nextNodMinigunner in GameWorld.instance.nodMinigunnerList)
+            {
+                if (nextNodMinigunner.ContainsPoint(pointInWorldCoordinates.X, pointInWorldCoordinates.Y))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        bool IsAMinigunnerSelected()
+        {
+            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
+            {
+                if (nextMinigunner.selected)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
+
+
 
         internal Boolean NodMinigunnersExistAndAreAllDead()
         {
@@ -168,14 +231,42 @@ namespace mike_and_conquer
             {
                 if(nextMinigunner.selected == true)
                 {
-                    BasicMapSquare clickedBasicMapSquare = MikeAndConquerGame.instance.FindMapSquare(mouseX, mouseY);
-                    Point centerOfSquare = clickedBasicMapSquare.GetCenter();
-                    nextMinigunner.OrderToMoveToDestination(centerOfSquare);
+                    if (IsValidMoveDestination(new Point(mouseX, mouseY)))
+                    {
+                        BasicMapSquare clickedBasicMapSquare =
+                            MikeAndConquerGame.instance.FindMapSquare(mouseX, mouseY);
+                        Point centerOfSquare = clickedBasicMapSquare.GetCenter();
+                        nextMinigunner.OrderToMoveToDestination(centerOfSquare);
+                    }
                 }
             }
             return true;
         }
 
+        private bool IsValidMoveDestination(Point pointInWorldCoordinates)
+        {
+            Boolean isValidMoveDestination = true;
+            BasicMapSquare clickedBasicMapSquare =
+                MikeAndConquerGame.instance.FindMapSquare(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
+            if (clickedBasicMapSquare.IsBlockingTerrain())
+            {
+                isValidMoveDestination = false;
+            }
+
+
+            foreach (Sandbag nextSandbag in MikeAndConquerGame.instance.gameWorld.sandbagList)
+            {
+
+                if (nextSandbag.ContainsPoint(pointInWorldCoordinates))
+                {
+                    isValidMoveDestination = false;
+                }
+            }
+
+            return isValidMoveDestination;
+
+
+        }
 
         internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)
         {

@@ -107,14 +107,9 @@ namespace mike_and_conquer.gameview
         }
 
 
+        // TODO:  Put this where rest of shp file loading code is
         internal Texture2D loadTextureFromD2ShpFile(string shpFileName, int indexOfFrameToLoad)
         {
-            //if (loader.IsShpTD(stream))
-            //{
-            //    frames = null;
-            //    return false;
-            //}
-            //loader.TryParseSprite(stream, out frames);
 
             int[] remap = { };
 
@@ -172,8 +167,6 @@ namespace mike_and_conquer.gameview
 
 
     }
-
-
 
 
 

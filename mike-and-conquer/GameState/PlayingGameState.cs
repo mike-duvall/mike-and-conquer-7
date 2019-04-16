@@ -1,5 +1,6 @@
 ﻿
 
+using Microsoft.Xna.Framework;
 using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
@@ -21,6 +22,10 @@ namespace mike_and_conquer
 
         private MouseState oldMouseState;
 
+        //private Boolean isDragSelectHappening = false;
+
+        private Rectangle selectionBoxRectangle;
+
         public override string GetName()
         {
             return "Playing";
@@ -40,15 +45,64 @@ namespace mike_and_conquer
 
             UpdateMousePointer(newMouseState);
 
+            Vector2 mouseScreenLocation = new Vector2(newMouseState.X, newMouseState.Y);
+            Vector2 mouseWorldLocationVector2 = ConvertScreenLocationToWorldLocation(mouseScreenLocation);
+            Point mouseWorldLocationPoint = new Point((int)mouseWorldLocationVector2.X, (int)mouseWorldLocationVector2.Y);
+
+
+
             if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released)
             {
                 HandleLeftClick(newMouseState.Position.X, newMouseState.Position.Y);
+                selectionBoxRectangle = new Rectangle(mouseWorldLocationPoint.X, mouseWorldLocationPoint.Y, 0, 0);
             }
             else if (newMouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released)
             {
                 HandleRightClick(newMouseState.Position.X, newMouseState.Position.Y);
             }
 
+
+
+
+            //If the user is still holding the Left button down, then continue to re-size the 
+            //selection square based on where the mouse has currently been moved to.
+            if (newMouseState.LeftButton == ButtonState.Pressed)
+            {
+                //The starting location for the selection box remains the same, but increase (or decrease)
+                //the size of the Width and Height but taking the current location of the mouse minus the
+                //original starting location.
+                selectionBoxRectangle = new Rectangle(
+                    selectionBoxRectangle.X,
+                    selectionBoxRectangle.Y,
+                    mouseWorldLocationPoint.X - selectionBoxRectangle.X,
+                    mouseWorldLocationPoint.Y - selectionBoxRectangle.Y);
+            }
+
+            //If the user has released the left mouse button, then reset the selection square
+            if (newMouseState.LeftButton == ButtonState.Released)
+            {
+                foreach (Minigunner minigunner in MikeAndConquerGame.instance.gameWorld.gdiMinigunnerList)
+                {
+                    if (selectionBoxRectangle.Contains(minigunner.positionInWorldCoordinates))
+                    {
+                        minigunner.selected = true;
+                    }
+                }
+                //Reset the selection square to no position with no height and width
+                selectionBoxRectangle = new Rectangle(-1, -1, 0, 0);
+            }
+
+            MikeAndConquerGame.instance.log.Information("x:" + selectionBoxRectangle.X + 
+                                                        ",y:" + selectionBoxRectangle.Y + 
+                                                        ",width:" + selectionBoxRectangle.Width +
+                                                        ",height:" + selectionBoxRectangle.Height);
+
+            //            Pickup here:  now that selectionBoxRectangle is being update,
+            //            make call to set the rectangle for the UnitSelectionBox
+            //            and then update UnitSelectionBox to set it's size off of the rectangle
+            //            may want to update this code to just directly modify UnitSelectionBox
+            //            or even pass the mouse state to UnitSelectionBox and let it handle things
+            MikeAndConquerGame.instance.unitSelectionBox.unitSelectionBoxRectangle = selectionBoxRectangle;
 
             oldMouseState = newMouseState;
 

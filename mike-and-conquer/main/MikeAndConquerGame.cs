@@ -62,6 +62,8 @@ namespace mike_and_conquer
 
         public GameCursor gameCursor;
 
+        public UnitSelectionBox unitSelectionBox;
+
         public List<BasicMapSquare> BasicMapSquareList
         {
             get { return basicMapSquareList; }
@@ -91,6 +93,8 @@ namespace mike_and_conquer
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private TextureListMap textureListMap;
+
+
 
         private bool testMode;
 
@@ -150,6 +154,7 @@ namespace mike_and_conquer
             textureListMap = new TextureListMap();
 
             oldKeyboardState = Keyboard.GetState();
+            unitSelectionBox = new UnitSelectionBox();
 
             MikeAndConquerGame.instance = this;
         }
@@ -192,7 +197,9 @@ namespace mike_and_conquer
             {
                 bool aiIsOn = false;
 
-                AddGdiMinigunnerAtMapSquareCoordinates(new Point(4, 0));
+                AddGdiMinigunnerAtMapSquareCoordinates(new Point(6, 1));
+
+                AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 3));
 
                 AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
 
@@ -597,6 +604,7 @@ namespace mike_and_conquer
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
             gameCursor.Draw(gameTime, spriteBatch);
+            unitSelectionBox.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
            

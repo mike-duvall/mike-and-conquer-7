@@ -24,6 +24,8 @@ namespace mike_and_conquer
 
         //private Boolean isDragSelectHappening = false;
 
+        private Point selectionBoxDragStartPoint;
+
         private Rectangle selectionBoxRectangle;
 
         public override string GetName()
@@ -54,7 +56,8 @@ namespace mike_and_conquer
             if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released)
             {
                 HandleLeftClick(newMouseState.Position.X, newMouseState.Position.Y);
-                selectionBoxRectangle = new Rectangle(mouseWorldLocationPoint.X, mouseWorldLocationPoint.Y, 0, 0);
+                selectionBoxDragStartPoint = mouseWorldLocationPoint;
+//                selectionBoxRectangle = new Rectangle(mouseWorldLocationPoint.X, mouseWorldLocationPoint.Y, 0, 0);
             }
             else if (newMouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released)
             {
@@ -66,16 +69,55 @@ namespace mike_and_conquer
 
             //If the user is still holding the Left button down, then continue to re-size the 
             //selection square based on where the mouse has currently been moved to.
-            if (newMouseState.LeftButton == ButtonState.Pressed)
+            if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton != ButtonState.Released)
             {
                 //The starting location for the selection box remains the same, but increase (or decrease)
                 //the size of the Width and Height but taking the current location of the mouse minus the
                 //original starting location.
-                selectionBoxRectangle = new Rectangle(
-                    selectionBoxRectangle.X,
-                    selectionBoxRectangle.Y,
-                    mouseWorldLocationPoint.X - selectionBoxRectangle.X,
-                    mouseWorldLocationPoint.Y - selectionBoxRectangle.Y);
+
+                if (mouseWorldLocationPoint.X > selectionBoxDragStartPoint.X)
+                {
+                    if (mouseWorldLocationPoint.Y > selectionBoxDragStartPoint.Y)
+                    {
+                        // Dragging from top left to bottom right
+                        selectionBoxRectangle = new Rectangle(
+                            selectionBoxDragStartPoint.X,
+                            selectionBoxDragStartPoint.Y,
+                            mouseWorldLocationPoint.X - selectionBoxDragStartPoint.X ,
+                            mouseWorldLocationPoint.Y - selectionBoxDragStartPoint.Y);
+                    }
+                    else
+                    {
+                        // Dragging from bottom left to top right
+                        selectionBoxRectangle = new Rectangle(
+                            selectionBoxDragStartPoint.X,
+                            mouseWorldLocationPoint.Y,
+                            mouseWorldLocationPoint.X - selectionBoxDragStartPoint.X,
+                            selectionBoxDragStartPoint.Y - mouseWorldLocationPoint.Y);
+                    }
+                }
+                else
+                {
+                    if (mouseWorldLocationPoint.Y > selectionBoxDragStartPoint.Y)
+                    {
+                        // Dragging from top right to bottom left
+                        selectionBoxRectangle = new Rectangle(
+                            mouseWorldLocationPoint.X,
+                            selectionBoxDragStartPoint.Y,
+                            selectionBoxDragStartPoint.X - mouseWorldLocationPoint.X,
+                            mouseWorldLocationPoint.Y - selectionBoxDragStartPoint.Y);
+                    }
+                    else
+                    {
+                        // Dragging from bottom right to top left
+                        selectionBoxRectangle = new Rectangle(
+                            mouseWorldLocationPoint.X,
+                            mouseWorldLocationPoint.Y,
+                            selectionBoxDragStartPoint.X - mouseWorldLocationPoint.X,
+                            selectionBoxDragStartPoint.Y - mouseWorldLocationPoint.Y);
+                    }
+
+                }
             }
 
             //If the user has released the left mouse button, then reset the selection square
@@ -97,11 +139,14 @@ namespace mike_and_conquer
                                                         ",width:" + selectionBoxRectangle.Width +
                                                         ",height:" + selectionBoxRectangle.Height);
 
-            //            Pickup here:  now that selectionBoxRectangle is being update,
-            //            make call to set the rectangle for the UnitSelectionBox
-            //            and then update UnitSelectionBox to set it's size off of the rectangle
-            //            may want to update this code to just directly modify UnitSelectionBox
-            //            or even pass the mouse state to UnitSelectionBox and let it handle things
+//            Pickup here:  Basic selection working. Only handle drag from top left to bottom right
+//            Refactor and cleanup.
+//            Now have issue of if you group select and pick movement destination, all units
+//            move on top of each other and you can't select individual unit now
+//            Need to make units respect space of each other
+//            Also consider having UnitSelectionBox just accept MouseState and do all it's updating on it's own
+
+
             MikeAndConquerGame.instance.unitSelectionBox.unitSelectionBoxRectangle = selectionBoxRectangle;
 
             oldMouseState = newMouseState;

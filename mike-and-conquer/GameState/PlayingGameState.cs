@@ -22,7 +22,7 @@ namespace mike_and_conquer
 
         private MouseState oldMouseState;
 
-        //private Boolean isDragSelectHappening = false;
+        private Boolean isDragSelectHappening = false;
 
         private Point selectionBoxDragStartPoint;
 
@@ -53,14 +53,37 @@ namespace mike_and_conquer
 
 
 
-            if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released)
+            if (newMouseState.LeftButton == ButtonState.Released && oldMouseState.LeftButton == ButtonState.Pressed)
             {
-                HandleLeftClick(newMouseState.Position.X, newMouseState.Position.Y);
+                if (!isDragSelectHappening)
+                {
+                    HandleLeftClick(newMouseState.Position.X, newMouseState.Position.Y);
+                }
+                else
+                {
+                    foreach (Minigunner minigunner in MikeAndConquerGame.instance.gameWorld.gdiMinigunnerList)
+                    {
+                        if (selectionBoxRectangle.Contains(minigunner.positionInWorldCoordinates))
+                        {
+                            minigunner.selected = true;
+                        }
+                        else
+                        {
+                            minigunner.selected = false;
+                        }
+                    }
+                }
+
+                isDragSelectHappening = false;
+            }
+            else if (newMouseState.LeftButton == ButtonState.Pressed &&
+                     oldMouseState.LeftButton == ButtonState.Released)
+            {
                 selectionBoxDragStartPoint = mouseWorldLocationPoint;
-//                selectionBoxRectangle = new Rectangle(mouseWorldLocationPoint.X, mouseWorldLocationPoint.Y, 0, 0);
             }
             else if (newMouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released)
             {
+                isDragSelectHappening = false;
                 HandleRightClick(newMouseState.Position.X, newMouseState.Position.Y);
             }
 
@@ -74,6 +97,11 @@ namespace mike_and_conquer
                 //The starting location for the selection box remains the same, but increase (or decrease)
                 //the size of the Width and Height but taking the current location of the mouse minus the
                 //original starting location.
+
+                if (mouseWorldLocationPoint.X != selectionBoxDragStartPoint.X || mouseWorldLocationPoint.Y != selectionBoxDragStartPoint.Y)
+                {
+                    isDragSelectHappening = true;
+                }
 
                 if (mouseWorldLocationPoint.X > selectionBoxDragStartPoint.X)
                 {
@@ -120,34 +148,24 @@ namespace mike_and_conquer
                 }
             }
 
-            //If the user has released the left mouse button, then reset the selection square
-            if (newMouseState.LeftButton == ButtonState.Released)
-            {
-                foreach (Minigunner minigunner in MikeAndConquerGame.instance.gameWorld.gdiMinigunnerList)
-                {
-                    if (selectionBoxRectangle.Contains(minigunner.positionInWorldCoordinates))
-                    {
-                        minigunner.selected = true;
-                    }
-                }
-                //Reset the selection square to no position with no height and width
-                selectionBoxRectangle = new Rectangle(-1, -1, 0, 0);
-            }
 
             MikeAndConquerGame.instance.log.Information("x:" + selectionBoxRectangle.X + 
                                                         ",y:" + selectionBoxRectangle.Y + 
                                                         ",width:" + selectionBoxRectangle.Width +
-                                                        ",height:" + selectionBoxRectangle.Height);
+                                                        ",height:" + selectionBoxRectangle.Height +
+                                                        ", isDragSelectHappening:" + isDragSelectHappening
+                                                        );
 
-//            Pickup here:  Basic selection working. Only handle drag from top left to bottom right
-//            Refactor and cleanup.
-//            Now have issue of if you group select and pick movement destination, all units
-//            move on top of each other and you can't select individual unit now
-//            Need to make units respect space of each other
-//            Also consider having UnitSelectionBox just accept MouseState and do all it's updating on it's own
-
+            Pickup here:  Drag select working from all directions
+            Do more extensive testing.  
+            Issue should be fixed where when trying to do drag select when unit is already selected, it makes that unit move
+            Still have issue:  if you group select and pick movement destination, all units
+            move on top of each other and you can't select individual unit now
+            Need to make units respect space of each other
+            Also consider having UnitSelectionBox just accept MouseState and do all it's updating on it's own
 
             MikeAndConquerGame.instance.unitSelectionBox.unitSelectionBoxRectangle = selectionBoxRectangle;
+            MikeAndConquerGame.instance.unitSelectionBox.drawUnitSelectionBox = isDragSelectHappening;
 
             oldMouseState = newMouseState;
 

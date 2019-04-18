@@ -21,6 +21,8 @@ namespace mike_and_conquer.gameview
         Texture2D unitSelectionBoxTexture;
 //        Boolean drawBoundingRectangle;
 
+        public Boolean drawUnitSelectionBox;
+
 
         public Rectangle unitSelectionBoxRectangle = new Rectangle(0,0,10,10);
         float defaultScale = 1;
@@ -98,14 +100,13 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            unitSelectionBoxTexture = initializeBoundingRectangle();
-//            spriteBatch.Draw(texture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
-//            if (drawBoundingRectangle)
-//            {
-
-                Vector2 origin = new Vector2(0,0);
-                spriteBatch.Draw(unitSelectionBoxTexture, position, null, Color.White, 0f, origin, defaultScale, SpriteEffects.None, 0f);
-//            }
+            if (drawUnitSelectionBox)
+            {
+                unitSelectionBoxTexture = initializeBoundingRectangle();
+                Vector2 origin = new Vector2(0, 0);
+                spriteBatch.Draw(unitSelectionBoxTexture, position, null, Color.White, 0f, origin, defaultScale,
+                    SpriteEffects.None, 0f);
+            }
 
         }
 

@@ -5,7 +5,7 @@ using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Boolean = System.Boolean;
-using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController ;
+using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
 
 using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
 
@@ -13,7 +13,8 @@ using GameTime = Microsoft.Xna.Framework.GameTime;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Matrix = Microsoft.Xna.Framework.Matrix;
 using Point = Microsoft.Xna.Framework.Point;
-
+using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace mike_and_conquer
 {
@@ -47,13 +48,9 @@ namespace mike_and_conquer
 
             UpdateMousePointer(newMouseState);
 
-            Vector2 mouseScreenLocation = new Vector2(newMouseState.X, newMouseState.Y);
-            Vector2 mouseWorldLocationVector2 = ConvertScreenLocationToWorldLocation(mouseScreenLocation);
-            Point mouseWorldLocationPoint = new Point((int)mouseWorldLocationVector2.X, (int)mouseWorldLocationVector2.Y);
+            Point mouseWorldLocationPoint = GetWorldLocationPointFromMouseState(newMouseState);
 
-
-
-            if (newMouseState.LeftButton == ButtonState.Released && oldMouseState.LeftButton == ButtonState.Pressed)
+            if (LeftMouseButtonUnclicked(newMouseState))
             {
                 if (!isDragSelectHappening)
                 {
@@ -61,27 +58,16 @@ namespace mike_and_conquer
                 }
                 else
                 {
-                    foreach (Minigunner minigunner in MikeAndConquerGame.instance.gameWorld.gdiMinigunnerList)
-                    {
-                        if (selectionBoxRectangle.Contains(minigunner.positionInWorldCoordinates))
-                        {
-                            minigunner.selected = true;
-                        }
-                        else
-                        {
-                            minigunner.selected = false;
-                        }
-                    }
+                    HandleEndDragSelect();
                 }
 
                 isDragSelectHappening = false;
             }
-            else if (newMouseState.LeftButton == ButtonState.Pressed &&
-                     oldMouseState.LeftButton == ButtonState.Released)
+            else if (LeftMouseButtonClicked(newMouseState))
             {
                 selectionBoxDragStartPoint = mouseWorldLocationPoint;
             }
-            else if (newMouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released)
+            else if (RightMouseButtonClicked(newMouseState))
             {
                 isDragSelectHappening = false;
                 HandleRightClick(newMouseState.Position.X, newMouseState.Position.Y);
@@ -89,80 +75,36 @@ namespace mike_and_conquer
 
 
 
-
             //If the user is still holding the Left button down, then continue to re-size the 
             //selection square based on where the mouse has currently been moved to.
-            if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton != ButtonState.Released)
+            if (LeftMouseButtonIsBeingHeldDown(newMouseState))
             {
                 //The starting location for the selection box remains the same, but increase (or decrease)
                 //the size of the Width and Height but taking the current location of the mouse minus the
                 //original starting location.
 
-                if (mouseWorldLocationPoint.X != selectionBoxDragStartPoint.X || mouseWorldLocationPoint.Y != selectionBoxDragStartPoint.Y)
+                if (MouseLocationHasMovedSinceLeftClick(mouseWorldLocationPoint))
                 {
                     isDragSelectHappening = true;
                 }
 
                 if (mouseWorldLocationPoint.X > selectionBoxDragStartPoint.X)
                 {
-                    if (mouseWorldLocationPoint.Y > selectionBoxDragStartPoint.Y)
-                    {
-                        // Dragging from top left to bottom right
-                        selectionBoxRectangle = new Rectangle(
-                            selectionBoxDragStartPoint.X,
-                            selectionBoxDragStartPoint.Y,
-                            mouseWorldLocationPoint.X - selectionBoxDragStartPoint.X ,
-                            mouseWorldLocationPoint.Y - selectionBoxDragStartPoint.Y);
-                    }
-                    else
-                    {
-                        // Dragging from bottom left to top right
-                        selectionBoxRectangle = new Rectangle(
-                            selectionBoxDragStartPoint.X,
-                            mouseWorldLocationPoint.Y,
-                            mouseWorldLocationPoint.X - selectionBoxDragStartPoint.X,
-                            selectionBoxDragStartPoint.Y - mouseWorldLocationPoint.Y);
-                    }
+                    HandleDragFromLeftToRight(mouseWorldLocationPoint);
                 }
                 else
                 {
-                    if (mouseWorldLocationPoint.Y > selectionBoxDragStartPoint.Y)
-                    {
-                        // Dragging from top right to bottom left
-                        selectionBoxRectangle = new Rectangle(
-                            mouseWorldLocationPoint.X,
-                            selectionBoxDragStartPoint.Y,
-                            selectionBoxDragStartPoint.X - mouseWorldLocationPoint.X,
-                            mouseWorldLocationPoint.Y - selectionBoxDragStartPoint.Y);
-                    }
-                    else
-                    {
-                        // Dragging from bottom right to top left
-                        selectionBoxRectangle = new Rectangle(
-                            mouseWorldLocationPoint.X,
-                            mouseWorldLocationPoint.Y,
-                            selectionBoxDragStartPoint.X - mouseWorldLocationPoint.X,
-                            selectionBoxDragStartPoint.Y - mouseWorldLocationPoint.Y);
-                    }
-
+                    HandleDragFromRightToLeft(mouseWorldLocationPoint);
                 }
             }
 
 
-            MikeAndConquerGame.instance.log.Information("x:" + selectionBoxRectangle.X + 
-                                                        ",y:" + selectionBoxRectangle.Y + 
-                                                        ",width:" + selectionBoxRectangle.Width +
-                                                        ",height:" + selectionBoxRectangle.Height +
-                                                        ", isDragSelectHappening:" + isDragSelectHappening
-                                                        );
-
-            Pickup here:  Drag select working from all directions
-            Do more extensive testing.  
-            Issue should be fixed where when trying to do drag select when unit is already selected, it makes that unit move
-            Still have issue:  if you group select and pick movement destination, all units
-            move on top of each other and you can't select individual unit now
-            Need to make units respect space of each other
-            Also consider having UnitSelectionBox just accept MouseState and do all it's updating on it's own
+//            MikeAndConquerGame.instance.log.Information("x:" + selectionBoxRectangle.X + 
+//                                                        ",y:" + selectionBoxRectangle.Y + 
+//                                                        ",width:" + selectionBoxRectangle.Width +
+//                                                        ",height:" + selectionBoxRectangle.Height +
+//                                                        ", isDragSelectHappening:" + isDragSelectHappening
+//                                                        );
 
             MikeAndConquerGame.instance.unitSelectionBox.unitSelectionBoxRectangle = selectionBoxRectangle;
             MikeAndConquerGame.instance.unitSelectionBox.drawUnitSelectionBox = isDragSelectHappening;
@@ -204,6 +146,114 @@ namespace mike_and_conquer
                 return this;
             }
 
+        }
+
+        private void HandleDragFromLeftToRight(Point mouseWorldLocationPoint)
+        {
+            if (mouseWorldLocationPoint.Y > selectionBoxDragStartPoint.Y)
+            {
+                HandleDragFromTopLeftToBottomRight(mouseWorldLocationPoint);
+            }
+            else
+            {
+                HandleDrapFromBottomLeftToTopRight(mouseWorldLocationPoint);
+            }
+        }
+
+        private void HandleDragFromRightToLeft(Point mouseWorldLocationPoint)
+        {
+            if (mouseWorldLocationPoint.Y > selectionBoxDragStartPoint.Y)
+            {
+                HandleDragFromTopRightToBottomLeft(mouseWorldLocationPoint);
+            }
+            else
+            {
+                HandleDragFromBottomRightToTopLeft(mouseWorldLocationPoint);
+            }
+        }
+
+
+        private void HandleDragFromBottomRightToTopLeft(Point mouseWorldLocationPoint)
+        {
+            selectionBoxRectangle = new Rectangle(
+                mouseWorldLocationPoint.X,
+                mouseWorldLocationPoint.Y,
+                selectionBoxDragStartPoint.X - mouseWorldLocationPoint.X,
+                selectionBoxDragStartPoint.Y - mouseWorldLocationPoint.Y);
+        }
+
+        private void HandleDragFromTopRightToBottomLeft(Point mouseWorldLocationPoint)
+        {
+            selectionBoxRectangle = new Rectangle(
+                mouseWorldLocationPoint.X,
+                selectionBoxDragStartPoint.Y,
+                selectionBoxDragStartPoint.X - mouseWorldLocationPoint.X,
+                mouseWorldLocationPoint.Y - selectionBoxDragStartPoint.Y);
+        }
+
+        private void HandleDrapFromBottomLeftToTopRight(Point mouseWorldLocationPoint)
+        {
+            selectionBoxRectangle = new Rectangle(
+                selectionBoxDragStartPoint.X,
+                mouseWorldLocationPoint.Y,
+                mouseWorldLocationPoint.X - selectionBoxDragStartPoint.X,
+                selectionBoxDragStartPoint.Y - mouseWorldLocationPoint.Y);
+        }
+
+        private void HandleDragFromTopLeftToBottomRight(Point mouseWorldLocationPoint)
+        {
+            selectionBoxRectangle = new Rectangle(
+                selectionBoxDragStartPoint.X,
+                selectionBoxDragStartPoint.Y,
+                mouseWorldLocationPoint.X - selectionBoxDragStartPoint.X,
+                mouseWorldLocationPoint.Y - selectionBoxDragStartPoint.Y);
+        }
+
+        private bool MouseLocationHasMovedSinceLeftClick(Point mouseWorldLocationPoint)
+        {
+            return mouseWorldLocationPoint.X != selectionBoxDragStartPoint.X || mouseWorldLocationPoint.Y != selectionBoxDragStartPoint.Y;
+        }
+
+        private bool LeftMouseButtonIsBeingHeldDown(MouseState newMouseState)
+        {
+            return newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton != ButtonState.Released;
+        }
+
+        private bool RightMouseButtonClicked(MouseState newMouseState)
+        {
+            return newMouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released;
+        }
+
+        private bool LeftMouseButtonClicked(MouseState newMouseState)
+        {
+            return newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released;
+        }
+
+        private bool LeftMouseButtonUnclicked(MouseState newMouseState)
+        {
+            return newMouseState.LeftButton == ButtonState.Released && oldMouseState.LeftButton == ButtonState.Pressed;
+        }
+
+        private void HandleEndDragSelect()
+        {
+            foreach (Minigunner minigunner in MikeAndConquerGame.instance.gameWorld.gdiMinigunnerList)
+            {
+                if (selectionBoxRectangle.Contains(minigunner.positionInWorldCoordinates))
+                {
+                    minigunner.selected = true;
+                }
+                else
+                {
+                    minigunner.selected = false;
+                }
+            }
+        }
+
+        private Point GetWorldLocationPointFromMouseState(MouseState mouseState)
+        {
+            Vector2 mouseScreenLocation = new Vector2(mouseState.X, mouseState.Y);
+            Vector2 mouseWorldLocationVector2 = ConvertScreenLocationToWorldLocation(mouseScreenLocation);
+            return new Point((int)mouseWorldLocationVector2.X, (int)mouseWorldLocationVector2.Y);
         }
 
         private void UpdateMousePointer(MouseState newState)

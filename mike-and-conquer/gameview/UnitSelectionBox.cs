@@ -18,7 +18,7 @@ namespace mike_and_conquer.gameview
     {
         public Vector2 position { get; set; }
 
-        Texture2D unitSelectionBoxTexture;
+        private Texture2D unitSelectionBoxTexture = null;
 //        Boolean drawBoundingRectangle;
 
         public Boolean drawUnitSelectionBox;
@@ -28,27 +28,7 @@ namespace mike_and_conquer.gameview
         float defaultScale = 1;
 
 
-//        public UnitSelectionCursor(int x, int y)
-//        {
-//
-//            this.worldWidth = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Width;
-//            this.worldHeight = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Height;
-//            this.texture = loadTextureFromShpFile("Content\\select.shp", 0);
-//
-//            position = new Vector2(x, y);
-//            unitSelectionBoxTexture = initializeBoundingRectangle();
-//
-//            middleOfSprite = new Vector2();
-//            middleOfSprite.X = 15;
-//            middleOfSprite.Y = 14;
-//
-//            drawBoundingRectangle = false;
-//        }
-
-
-
-
-        internal void fillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
+        internal void FillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
         {
             int beginIndex = width * lineIndex;
             for (int i = beginIndex; i < (beginIndex + width); ++i)
@@ -57,7 +37,7 @@ namespace mike_and_conquer.gameview
             }
         }
 
-        internal void fillVerticalLine(Color[] data, int width, int height, int lineIndex, Color color)
+        internal void FillVerticalLine(Color[] data, int width, int height, int lineIndex, Color color)
         {
             int beginIndex = lineIndex;
             for (int i = beginIndex; i < (width * height); i += width)
@@ -67,7 +47,7 @@ namespace mike_and_conquer.gameview
         }
 
 
-        internal Texture2D initializeBoundingRectangle()
+        internal void InitializeBoundingRectangle()
         {
             int width = unitSelectionBoxRectangle.Right - unitSelectionBoxRectangle.Left;
             int height = unitSelectionBoxRectangle.Bottom - unitSelectionBoxRectangle.Top;
@@ -75,34 +55,34 @@ namespace mike_and_conquer.gameview
 
             if (width < 1) width = 1;
             if (height < 1) height = 1;
-            Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, width, height);
-            Color[] data = new Color[rectangle.Width * rectangle.Height];
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
-            fillVerticalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
-            fillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, Color.White);
-            int centerX = rectangle.Width / 2;
-            int centerY = rectangle.Height / 2;
-            int centerOffset = (centerY * rectangle.Width) + centerX;
-
-            data[centerOffset] = Color.Red;
-
-
-            rectangle.SetData(data);
-            return rectangle;
-
+            if (unitSelectionBoxTexture != null)
+            {
+                unitSelectionBoxTexture.Dispose();
+            }
+            unitSelectionBoxTexture = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, width, height);
+            Color[] data = new Color[width * height];
+            FillHorizontalLine(data, width, height, 0, Color.White);
+            FillHorizontalLine(data, width, height, height - 1, Color.White);
+            FillVerticalLine(data, width, height, 0, Color.White);
+            FillVerticalLine(data, width, height, width - 1, Color.White);
+//            DrawRedDotInCenter(width, height, data);
+            unitSelectionBoxTexture.SetData(data);
         }
 
-        public void Update(GameTime gameTime)
+        private void DrawRedDotInCenter(int width, int height, Color[] data)
         {
-
+            int centerX = width / 2;
+            int centerY = height / 2;
+            int centerOffset = (centerY * width) + centerX;
+            data[centerOffset] = Color.Red;
         }
+
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (drawUnitSelectionBox)
             {
-                unitSelectionBoxTexture = initializeBoundingRectangle();
+                InitializeBoundingRectangle();
                 Vector2 origin = new Vector2(0, 0);
                 spriteBatch.Draw(unitSelectionBoxTexture, position, null, Color.White, 0f, origin, defaultScale,
                     SpriteEffects.None, 0f);

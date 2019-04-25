@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using ShpTDSprite = OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite;
+﻿
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using Color = Microsoft.Xna.Framework.Color;
@@ -7,6 +6,7 @@ using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
 using Boolean = System.Boolean;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 
 

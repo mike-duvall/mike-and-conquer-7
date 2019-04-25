@@ -1,6 +1,4 @@
 ﻿
-
-using Microsoft.Xna.Framework;
 using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
@@ -13,8 +11,7 @@ using GameTime = Microsoft.Xna.Framework.GameTime;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Matrix = Microsoft.Xna.Framework.Matrix;
 using Point = Microsoft.Xna.Framework.Point;
-using Microsoft.Xna.Framework.Input;
-using System;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace mike_and_conquer
 {

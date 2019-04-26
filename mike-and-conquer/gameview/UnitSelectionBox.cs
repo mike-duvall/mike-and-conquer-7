@@ -7,7 +7,7 @@ using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
 using Boolean = System.Boolean;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
-
+using Point = Microsoft.Xna.Framework.Point;
 
 
 
@@ -19,12 +19,10 @@ namespace mike_and_conquer.gameview
         public Vector2 position { get; set; }
 
         private Texture2D unitSelectionBoxTexture = null;
-//        Boolean drawBoundingRectangle;
+        public Boolean isDragSelectHappening;
+        public Point selectionBoxDragStartPoint;
 
-        public Boolean drawUnitSelectionBox;
-
-
-        public Rectangle unitSelectionBoxRectangle = new Rectangle(0,0,10,10);
+        public Rectangle selectionBoxRectangle = new Rectangle(0,0,10,10);
         float defaultScale = 1;
 
 
@@ -49,9 +47,9 @@ namespace mike_and_conquer.gameview
 
         internal void InitializeBoundingRectangle()
         {
-            int width = unitSelectionBoxRectangle.Right - unitSelectionBoxRectangle.Left;
-            int height = unitSelectionBoxRectangle.Bottom - unitSelectionBoxRectangle.Top;
-            position = new Vector2(unitSelectionBoxRectangle.X, unitSelectionBoxRectangle.Y);
+            int width = selectionBoxRectangle.Right - selectionBoxRectangle.Left;
+            int height = selectionBoxRectangle.Bottom - selectionBoxRectangle.Top;
+            position = new Vector2(selectionBoxRectangle.X, selectionBoxRectangle.Y);
 
             if (width < 1) width = 1;
             if (height < 1) height = 1;
@@ -80,7 +78,7 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (drawUnitSelectionBox)
+            if (isDragSelectHappening)
             {
                 InitializeBoundingRectangle();
                 Vector2 origin = new Vector2(0, 0);
@@ -88,6 +86,88 @@ namespace mike_and_conquer.gameview
                     SpriteEffects.None, 0f);
             }
 
+        }
+
+
+        public void HandleDragFromLeftToRight(Point mouseWorldLocationPoint)
+        {
+            if (mouseWorldLocationPoint.Y > selectionBoxDragStartPoint.Y)
+            {
+                HandleDragFromTopLeftToBottomRight(mouseWorldLocationPoint);
+            }
+            else
+            {
+                HandleDrapFromBottomLeftToTopRight(mouseWorldLocationPoint);
+            }
+        }
+
+        public void HandleDragFromRightToLeft(Point mouseWorldLocationPoint)
+        {
+            if (mouseWorldLocationPoint.Y > selectionBoxDragStartPoint.Y)
+            {
+                HandleDragFromTopRightToBottomLeft(mouseWorldLocationPoint);
+            }
+            else
+            {
+                HandleDragFromBottomRightToTopLeft(mouseWorldLocationPoint);
+            }
+        }
+
+
+        private void HandleDragFromBottomRightToTopLeft(Point mouseWorldLocationPoint)
+        {
+            selectionBoxRectangle = new Rectangle(
+                mouseWorldLocationPoint.X,
+                mouseWorldLocationPoint.Y,
+                selectionBoxDragStartPoint.X - mouseWorldLocationPoint.X,
+                selectionBoxDragStartPoint.Y - mouseWorldLocationPoint.Y);
+        }
+
+        private void HandleDragFromTopRightToBottomLeft(Point mouseWorldLocationPoint)
+        {
+            selectionBoxRectangle = new Rectangle(
+                mouseWorldLocationPoint.X,
+                selectionBoxDragStartPoint.Y,
+                selectionBoxDragStartPoint.X - mouseWorldLocationPoint.X,
+                mouseWorldLocationPoint.Y - selectionBoxDragStartPoint.Y);
+        }
+
+        private void HandleDrapFromBottomLeftToTopRight(Point mouseWorldLocationPoint)
+        {
+            selectionBoxRectangle = new Rectangle(
+                selectionBoxDragStartPoint.X,
+                mouseWorldLocationPoint.Y,
+                mouseWorldLocationPoint.X - selectionBoxDragStartPoint.X,
+                selectionBoxDragStartPoint.Y - mouseWorldLocationPoint.Y);
+        }
+
+        private void HandleDragFromTopLeftToBottomRight(Point mouseWorldLocationPoint)
+        {
+            selectionBoxRectangle = new Rectangle(
+                selectionBoxDragStartPoint.X,
+                selectionBoxDragStartPoint.Y,
+                mouseWorldLocationPoint.X - selectionBoxDragStartPoint.X,
+                mouseWorldLocationPoint.Y - selectionBoxDragStartPoint.Y);
+        }
+
+        public bool MouseLocationHasMovedSinceLeftClick(Point mouseWorldLocationPoint)
+        {
+            return mouseWorldLocationPoint.X != selectionBoxDragStartPoint.X || mouseWorldLocationPoint.Y != selectionBoxDragStartPoint.Y;
+        }
+
+        public void HandleEndDragSelect()
+        {
+            foreach (Minigunner minigunner in MikeAndConquerGame.instance.gameWorld.gdiMinigunnerList)
+            {
+                if (selectionBoxRectangle.Contains(minigunner.positionInWorldCoordinates))
+                {
+                    minigunner.selected = true;
+                }
+                else
+                {
+                    minigunner.selected = false;
+                }
+            }
         }
 
 

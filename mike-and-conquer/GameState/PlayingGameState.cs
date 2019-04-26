@@ -28,7 +28,6 @@ namespace mike_and_conquer
 
         public override GameState Update(GameTime gameTime)
         {
-
             // TODO:  Consider pulling handling of GameEvents into base class
             GameState nextGameState = GameWorld.instance.ProcessGameEvents();
             if (nextGameState != null)
@@ -36,6 +35,15 @@ namespace mike_and_conquer
                 return nextGameState;
             }
 
+            HandleInput();
+            UpdateAIControllers(gameTime);
+            UpdateGDIMinigunners(gameTime);
+            UpdateNodMinigunners(gameTime);
+            return DetermineNextGameState();
+        }
+
+        private void HandleInput()
+        {
             MouseState newMouseState = Mouse.GetState();
 
             UpdateMousePointer(newMouseState);
@@ -53,7 +61,6 @@ namespace mike_and_conquer
                 {
                     HandleLeftClick(newMouseState.Position.X, newMouseState.Position.Y);
                 }
-
             }
             else if (LeftMouseButtonClicked(newMouseState))
             {
@@ -71,30 +78,11 @@ namespace mike_and_conquer
                 unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
             }
 
-
             oldMouseState = newMouseState;
+        }
 
-            foreach (MinigunnerAIController nextMinigunnerAIController in GameWorld.instance.nodMinigunnerAIControllerList)
-            {
-                nextMinigunnerAIController.Update(gameTime);
-            }
-
-            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
-            {
-                if(nextMinigunner.health > 0)
-                {
-                    nextMinigunner.Update(gameTime);
-                }
-            }
-
-            foreach (Minigunner nextMinigunner in GameWorld.instance.nodMinigunnerList)
-            {
-                if (nextMinigunner.health > 0)
-                {
-                    nextMinigunner.Update(gameTime);
-                }
-            }
-
+        private GameState DetermineNextGameState()
+        {
             if (NodMinigunnersExistAndAreAllDead())
             {
                 return new MissionAccomplishedGameState();
@@ -108,7 +96,36 @@ namespace mike_and_conquer
             {
                 return this;
             }
+        }
 
+        private static void UpdateNodMinigunners(GameTime gameTime)
+        {
+            foreach (Minigunner nextMinigunner in GameWorld.instance.nodMinigunnerList)
+            {
+                if (nextMinigunner.health > 0)
+                {
+                    nextMinigunner.Update(gameTime);
+                }
+            }
+        }
+
+        private static void UpdateGDIMinigunners(GameTime gameTime)
+        {
+            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
+            {
+                if (nextMinigunner.health > 0)
+                {
+                    nextMinigunner.Update(gameTime);
+                }
+            }
+        }
+
+        private static void UpdateAIControllers(GameTime gameTime)
+        {
+            foreach (MinigunnerAIController nextMinigunnerAIController in GameWorld.instance.nodMinigunnerAIControllerList)
+            {
+                nextMinigunnerAIController.Update(gameTime);
+            }
         }
 
 

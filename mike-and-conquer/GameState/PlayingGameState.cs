@@ -1,10 +1,10 @@
 ﻿
-
+using mike_and_conquer.gameview;
 using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Boolean = System.Boolean;
-using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController ;
+using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
 
 using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
 
@@ -12,7 +12,7 @@ using GameTime = Microsoft.Xna.Framework.GameTime;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Matrix = Microsoft.Xna.Framework.Matrix;
 using Point = Microsoft.Xna.Framework.Point;
-
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace mike_and_conquer
 {
@@ -28,7 +28,6 @@ namespace mike_and_conquer
 
         public override GameState Update(GameTime gameTime)
         {
-
             // TODO:  Consider pulling handling of GameEvents into base class
             GameState nextGameState = GameWorld.instance.ProcessGameEvents();
             if (nextGameState != null)
@@ -36,43 +35,54 @@ namespace mike_and_conquer
                 return nextGameState;
             }
 
+            HandleInput();
+            UpdateAIControllers(gameTime);
+            UpdateGDIMinigunners(gameTime);
+            UpdateNodMinigunners(gameTime);
+            return DetermineNextGameState();
+        }
+
+        private void HandleInput()
+        {
             MouseState newMouseState = Mouse.GetState();
 
             UpdateMousePointer(newMouseState);
 
-            if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released)
+            Point mouseWorldLocationPoint = GetWorldLocationPointFromMouseState(newMouseState);
+            UnitSelectionBox unitSelectionBox = MikeAndConquerGame.instance.unitSelectionBox;
+
+            if (LeftMouseButtonUnclicked(newMouseState))
             {
-                HandleLeftClick(newMouseState.Position.X, newMouseState.Position.Y);
+                if (unitSelectionBox.isDragSelectHappening)
+                {
+                    unitSelectionBox.HandleEndDragSelect();
+                }
+                else
+                {
+                    HandleLeftClick(newMouseState.Position.X, newMouseState.Position.Y);
+                }
             }
-            else if (newMouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released)
+            else if (LeftMouseButtonClicked(newMouseState))
             {
+                unitSelectionBox.selectionBoxDragStartPoint = mouseWorldLocationPoint;
+            }
+            else if (RightMouseButtonClicked(newMouseState))
+            {
+                unitSelectionBox.isDragSelectHappening = false;
                 HandleRightClick(newMouseState.Position.X, newMouseState.Position.Y);
             }
 
 
+            if (LeftMouseButtonIsBeingHeldDown(newMouseState))
+            {
+                unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
+            }
+
             oldMouseState = newMouseState;
+        }
 
-            foreach (MinigunnerAIController nextMinigunnerAIController in GameWorld.instance.nodMinigunnerAIControllerList)
-            {
-                nextMinigunnerAIController.Update(gameTime);
-            }
-
-            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
-            {
-                if(nextMinigunner.health > 0)
-                {
-                    nextMinigunner.Update(gameTime);
-                }
-            }
-
-            foreach (Minigunner nextMinigunner in GameWorld.instance.nodMinigunnerList)
-            {
-                if (nextMinigunner.health > 0)
-                {
-                    nextMinigunner.Update(gameTime);
-                }
-            }
-
+        private GameState DetermineNextGameState()
+        {
             if (NodMinigunnersExistAndAreAllDead())
             {
                 return new MissionAccomplishedGameState();
@@ -86,7 +96,65 @@ namespace mike_and_conquer
             {
                 return this;
             }
+        }
 
+        private static void UpdateNodMinigunners(GameTime gameTime)
+        {
+            foreach (Minigunner nextMinigunner in GameWorld.instance.nodMinigunnerList)
+            {
+                if (nextMinigunner.health > 0)
+                {
+                    nextMinigunner.Update(gameTime);
+                }
+            }
+        }
+
+        private static void UpdateGDIMinigunners(GameTime gameTime)
+        {
+            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
+            {
+                if (nextMinigunner.health > 0)
+                {
+                    nextMinigunner.Update(gameTime);
+                }
+            }
+        }
+
+        private static void UpdateAIControllers(GameTime gameTime)
+        {
+            foreach (MinigunnerAIController nextMinigunnerAIController in GameWorld.instance.nodMinigunnerAIControllerList)
+            {
+                nextMinigunnerAIController.Update(gameTime);
+            }
+        }
+
+
+        private bool LeftMouseButtonIsBeingHeldDown(MouseState newMouseState)
+        {
+            return newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton != ButtonState.Released;
+        }
+
+        private bool RightMouseButtonClicked(MouseState newMouseState)
+        {
+            return newMouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released;
+        }
+
+        private bool LeftMouseButtonClicked(MouseState newMouseState)
+        {
+            return newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released;
+        }
+
+        private bool LeftMouseButtonUnclicked(MouseState newMouseState)
+        {
+            return newMouseState.LeftButton == ButtonState.Released && oldMouseState.LeftButton == ButtonState.Pressed;
+        }
+
+
+        private Point GetWorldLocationPointFromMouseState(MouseState mouseState)
+        {
+            Vector2 mouseScreenLocation = new Vector2(mouseState.X, mouseState.Y);
+            Vector2 mouseWorldLocationVector2 = ConvertScreenLocationToWorldLocation(mouseScreenLocation);
+            return new Point((int)mouseWorldLocationVector2.X, (int)mouseWorldLocationVector2.Y);
         }
 
         private void UpdateMousePointer(MouseState newState)

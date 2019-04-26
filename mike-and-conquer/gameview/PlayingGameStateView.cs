@@ -31,6 +31,8 @@ namespace mike_and_conquer.gameview
                 nextSandbagView.Draw(gameTime, spriteBatch);
             }
 
+            MikeAndConquerGame.instance.unitSelectionBox.Draw(gameTime, spriteBatch);
+
 
         }
     }

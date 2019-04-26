@@ -21,12 +21,6 @@ namespace mike_and_conquer
 
         private MouseState oldMouseState;
 
-//        private Boolean isDragSelectHappening = false;
-//
-//        private Point selectionBoxDragStartPoint;
-//
-//        private Rectangle selectionBoxRectangle;
-
         public override string GetName()
         {
             return "Playing";
@@ -60,7 +54,6 @@ namespace mike_and_conquer
                     HandleLeftClick(newMouseState.Position.X, newMouseState.Position.Y);
                 }
 
-                unitSelectionBox.isDragSelectHappening = false;
             }
             else if (LeftMouseButtonClicked(newMouseState))
             {
@@ -73,39 +66,10 @@ namespace mike_and_conquer
             }
 
 
-
-            //If the user is still holding the Left button down, then continue to re-size the 
-            //selection square based on where the mouse has currently been moved to.
             if (LeftMouseButtonIsBeingHeldDown(newMouseState))
             {
-                //The starting location for the selection box remains the same, but increase (or decrease)
-                //the size of the Width and Height but taking the current location of the mouse minus the
-                //original starting location.
-
-//                unitSelectionBox.HandleEndDragSelect(mouseWorldLocationPoint);
-
-                if (unitSelectionBox.MouseLocationHasMovedSinceLeftClick(mouseWorldLocationPoint))
-                {
-                    unitSelectionBox.isDragSelectHappening = true;
-                }
-
-                if (mouseWorldLocationPoint.X > unitSelectionBox.selectionBoxDragStartPoint.X)
-                {
-                    unitSelectionBox.HandleDragFromLeftToRight(mouseWorldLocationPoint);
-                }
-                else
-                {
-                    unitSelectionBox.HandleDragFromRightToLeft(mouseWorldLocationPoint);
-                }
+                unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
             }
-
-
-//            MikeAndConquerGame.instance.log.Information("x:" + selectionBoxRectangle.X + 
-//                                                        ",y:" + selectionBoxRectangle.Y + 
-//                                                        ",width:" + selectionBoxRectangle.Width +
-//                                                        ",height:" + selectionBoxRectangle.Height +
-//                                                        ", isDragSelectHappening:" + isDragSelectHappening
-//                                                        );
 
 
             oldMouseState = newMouseState;

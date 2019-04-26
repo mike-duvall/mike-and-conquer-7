@@ -8,8 +8,8 @@ using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
 using Boolean = System.Boolean;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Point = Microsoft.Xna.Framework.Point;
-
-
+using Microsoft.Xna.Framework;
+using System;
 
 namespace mike_and_conquer.gameview
 {
@@ -88,6 +88,23 @@ namespace mike_and_conquer.gameview
 
         }
 
+        internal void HandleMouseMoveDuringDragSelect(Point mouseWorldLocationPoint)
+        {
+            if (MouseLocationHasMovedSinceLeftClick(mouseWorldLocationPoint))
+            {
+                isDragSelectHappening = true;
+            }
+
+            if (mouseWorldLocationPoint.X > selectionBoxDragStartPoint.X)
+            {
+                HandleDragFromLeftToRight(mouseWorldLocationPoint);
+            }
+            else
+            {
+                HandleDragFromRightToLeft(mouseWorldLocationPoint);
+            }
+
+        }
 
         public void HandleDragFromLeftToRight(Point mouseWorldLocationPoint)
         {
@@ -168,6 +185,8 @@ namespace mike_and_conquer.gameview
                     minigunner.selected = false;
                 }
             }
+
+            isDragSelectHappening = false;
         }
 
 

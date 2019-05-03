@@ -94,12 +94,12 @@ namespace mike_and_conquer
         private SpriteBatch spriteBatch;
         private TextureListMap textureListMap;
 
-
-
         private bool testMode;
 
         public GameMap gameMap;
 
+        private int borderSize = 0;
+        private int scrollPosition = 7;
 
         KeyboardState oldKeyboardState;
 
@@ -184,10 +184,10 @@ namespace mike_and_conquer
 
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
-            this.camera2D.Zoom = 3.4f;
-//            this.camera2D.Zoom = 1.0f;
+//            this.camera2D.Zoom = 3.4f;
+            this.camera2D.Zoom = 1.0f;
             this.camera2D.Location =
-                new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
+                new Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
 
             base.Initialize();
 
@@ -363,42 +363,109 @@ namespace mike_and_conquer
         }
 
 
-        private int calculateLeftmostScrollX()
+        private float calculateLeftmostScrollX()
         {
-            return (int)((graphics.PreferredBackBufferWidth / 2 / camera2D.Zoom) - 1);
-           
+            int displayWidth = GraphicsDevice.Viewport.Width;
+            int halfDisplayWidth = displayWidth / 2;
+//            int scaledHalfDisplayWidth = (int) (halfDisplayWidth / camera2D.Zoom);
+            float scaledHalfDisplayWidth = halfDisplayWidth / camera2D.Zoom;
+            return scaledHalfDisplayWidth - borderSize;
         }
 
-        private int calculateRightmostScrollX()
+        private float calculateRightmostScrollX()
         {
             int numSquaresWidth = 26;
             int widthOfMapSquare = 24;
             int widthOfMapInWorldSpace = numSquaresWidth * widthOfMapSquare;
-            int scaledWidthOfMap = (int)(widthOfMapInWorldSpace * camera2D.Zoom);
-            int amountToScrollover = scaledWidthOfMap - GraphicsDevice.Viewport.Width;
 
-            int rightmostScrollX = calculateLeftmostScrollX() + (int)((amountToScrollover / camera2D.Zoom) + 1);
+            int displayWidth = GraphicsDevice.Viewport.Width;
+            int halfDisplayWidth = displayWidth / 2;
+//            int scaledHalfDisplayWidth = (int)(halfDisplayWidth / camera2D.Zoom);
+            float scaledHalfDisplayWidth = halfDisplayWidth / camera2D.Zoom;
+            float amountToScrollHorizontally = widthOfMapInWorldSpace - scaledHalfDisplayWidth;
+            return amountToScrollHorizontally + borderSize;
 
-            return rightmostScrollX;
+
         }
 
-        private int calculateTopmostScrollY()
+        private float calculateTopmostScrollY()
         {
-            return (int)((graphics.PreferredBackBufferHeight / 2 / camera2D.Zoom) - 1);
-           
+//            return (int)((graphics.PreferredBackBufferHeight / 2 / camera2D.Zoom) - borderSize);  // Appears to put 1 pixel border on top, Zoom 3
+            int viewportHeight = GraphicsDevice.Viewport.Height;
+            int halfViewportHeight = viewportHeight / 2;
+//            int scaledHalfViewportHeight = (int) (halfViewportHeight / camera2D.Zoom);
+            float scaledHalfViewportHeight = halfViewportHeight / camera2D.Zoom;
+            return scaledHalfViewportHeight - borderSize;
         }
 
-        private int calculateBottommostScrollY()
+        private float calculateBottommostScrollY()
         {
             int numSquaresWidth = 23;
             int heightOfMapSquare = 24;
             int heightOfMapInWorldSpace = numSquaresWidth * heightOfMapSquare;
-            int scaledHeightOfMap = (int)(heightOfMapInWorldSpace * camera2D.Zoom);
-            int amountToScrollover = scaledHeightOfMap - GraphicsDevice.Viewport.Height;
+            int viewportHeight = GraphicsDevice.Viewport.Height;
+            int halfViewportHeight = viewportHeight / 2;
+//            int scaledHalfViewportHeight = (int) (halfViewportHeight / camera2D.Zoom);
+            float scaledHalfViewportHeight = halfViewportHeight / camera2D.Zoom;
+            float amountToScrollVertically = heightOfMapInWorldSpace - scaledHalfViewportHeight;
+            return amountToScrollVertically + borderSize;
+        }
 
-            int bottommostScrollY = calculateTopmostScrollY() + (int)((amountToScrollover / camera2D.Zoom) + 1);
 
-            return bottommostScrollY;
+        private void ResetCamera()
+        {
+//            int newX = (int)(this.camera2D.Location.X);
+//            int newY = (int)(this.camera2D.Location.Y);
+//
+//            if (newX > calculateRightmostScrollX())
+//            {
+//                newX = calculateRightmostScrollX();
+//            }
+//            if (newX < calculateLeftmostScrollX())
+//            {
+//                newX = calculateLeftmostScrollX();
+//            }
+//            if (newY < calculateTopmostScrollY())
+//            {
+//                newY = calculateTopmostScrollY();
+//            }
+//            if (newY > calculateBottommostScrollY())
+//            {
+//                newY = calculateBottommostScrollY();
+//            }
+//
+//            this.camera2D.Location = new Vector2(newX, newY);
+
+            this.camera2D.Zoom = 5.3f;
+
+//            Pickup here:  All of these seem to have 1 pixel border on all sides, at Zoom = 3
+//            Test these with Zoom = 2 and Zoom = 4
+
+            if (scrollPosition == 7)
+            {
+                this.camera2D.Location = new Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
+            }
+
+            if (scrollPosition == 9)
+            {
+                this.camera2D.Location = new Vector2(calculateRightmostScrollX(), calculateTopmostScrollY());
+            }
+
+            if (scrollPosition == 3)
+            {
+                this.camera2D.Location = new Vector2(calculateRightmostScrollX(), calculateBottommostScrollY());
+            }
+
+            if (scrollPosition == 1)
+            {
+                this.camera2D.Location = new Vector2(calculateLeftmostScrollX(), calculateBottommostScrollY());
+            }
+
+
+            //            this.camera2D.Location = new Vector2(calculateRightmostScrollX(), calculateBottommostScrollY());
+            //            this.camera2D.Location = new Vector2(calculateLeftmostScrollX(), calculateBottommostScrollY());
+
+
         }
 
 
@@ -421,6 +488,34 @@ namespace mike_and_conquer
                 Program.restServer.Dispose();
                 Exit();
             }
+
+            if (state.IsKeyDown(Keys.B))
+            {
+                borderSize = 1;
+            }
+            if (state.IsKeyDown(Keys.N))
+            {
+                borderSize = 0;
+            }
+
+
+            if (state.IsKeyDown(Keys.I))
+            {
+                scrollPosition = 7;
+            }
+            if (state.IsKeyDown(Keys.P))
+            {
+                scrollPosition = 9;
+            }
+            if (state.IsKeyDown(Keys.M))
+            {
+                scrollPosition = 1;
+            }
+            if (state.IsKeyDown(Keys.OemPeriod))
+            {
+                scrollPosition = 3;
+            }
+
 
             this.gameWorld.Update(gameTime);
 
@@ -501,7 +596,7 @@ namespace mike_and_conquer
                 this.camera2D.Zoom = newZoom;
             }
 
-            resetCamera();
+            ResetCamera();
         }
 
         private void SwitchToNewGameStateViewIfNeeded()
@@ -546,38 +641,13 @@ namespace mike_and_conquer
         }
 
 
-        private void resetCamera()
-        {
-            int newX = (int)(this.camera2D.Location.X);
-            int newY = (int)(this.camera2D.Location.Y);
-
-            if (newX > calculateRightmostScrollX())
-            {
-                newX = calculateRightmostScrollX();
-            }
-            if (newX < calculateLeftmostScrollX())
-            {
-                newX = calculateLeftmostScrollX();
-            }
-            if (newY < calculateTopmostScrollY())
-            {
-                newY = calculateTopmostScrollY();
-            }
-            if (newY > calculateBottommostScrollY())
-            {
-                newY = calculateBottommostScrollY();
-            }
-
-            this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, newY);
-
-        }
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Crimson);
 
             Microsoft.Xna.Framework.Graphics.BlendState nullBlendState = null;
             Microsoft.Xna.Framework.Graphics.DepthStencilState nullDepthStencilState = null;

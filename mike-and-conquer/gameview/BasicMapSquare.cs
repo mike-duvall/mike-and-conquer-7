@@ -26,7 +26,7 @@ namespace mike_and_conquer.gameview
         {
             this.positionInWorldCoordinates = new Vector2(x,y);
             this.gameSprite = new GameSprite(textureKey);
-            this.gameSprite.drawBoundingRectangle = false;
+            this.gameSprite.drawBoundingRectangle = true;
             this.imageIndex = imageIndex;
             this.textureKey = textureKey;
             SetupAnimations();

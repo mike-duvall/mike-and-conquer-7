@@ -160,7 +160,17 @@ namespace mike_and_conquer
         private void UpdateMousePointer(MouseState newState)
         {
             float scale = MikeAndConquerGame.instance.camera2D.Zoom;
-            Vector2 scaledMousedPosition = new Vector2(newState.X / scale, newState.Y / scale);
+            float leftMostScrollX = MikeAndConquerGame.instance.calculateLeftmostScrollX();
+            float topMostScrollY = MikeAndConquerGame.instance.calculateTopmostScrollY();
+
+            float camerOffsetX = MikeAndConquerGame.instance.camera2D.Location.X - leftMostScrollX;
+            float scaledMousePositionX = (newState.X / scale) + camerOffsetX;
+
+            float camerOffsetY= MikeAndConquerGame.instance.camera2D.Location.Y - topMostScrollY;
+            float scaledMousePositionY = (newState.Y / scale) + camerOffsetY;
+
+
+            Vector2 scaledMousedPosition = new Vector2(scaledMousePositionX, scaledMousePositionY);
 
 
             if (IsAMinigunnerSelected())

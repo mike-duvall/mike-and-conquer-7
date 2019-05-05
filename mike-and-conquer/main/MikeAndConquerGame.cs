@@ -363,7 +363,7 @@ namespace mike_and_conquer
         }
 
 
-        private float calculateLeftmostScrollX()
+        public float calculateLeftmostScrollX()
         {
             int displayWidth = GraphicsDevice.Viewport.Width;
             int halfDisplayWidth = displayWidth / 2;
@@ -384,7 +384,7 @@ namespace mike_and_conquer
             return amountToScrollHorizontally + borderSize;
         }
 
-        private float calculateTopmostScrollY()
+        public float calculateTopmostScrollY()
         {
             int viewportHeight = GraphicsDevice.Viewport.Height;
             int halfViewportHeight = viewportHeight / 2;

@@ -96,13 +96,23 @@ namespace mike_and_conquer.gameview
         public void Update(GameTime gameTime)
         {
             MouseState newState = Mouse.GetState();
-            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
-            position = new Vector2(newState.X / scale, newState.Y / scale);
+            //            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
+            //            position = new Vector2(newState.X / scale, newState.Y / scale);
+            position = new Vector2(newState.X , newState.Y );
         }
+
+
+
+        // Pickup here, if reverting back to this commit:
+        // Current status is:  scrolling seems to work.  snapping to top left if map is small works
+        // if snapped to top left, click and moving units work and attacking units work
+        // However, if scrolled over to the right or left, can't properly select and move units or
+        // order them to attack.  So seems code that is determining what's under the cursor is not working
 
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            defaultScale = MikeAndConquerGame.instance.camera2D.Zoom;
             spriteBatch.Draw(texture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
         }
 

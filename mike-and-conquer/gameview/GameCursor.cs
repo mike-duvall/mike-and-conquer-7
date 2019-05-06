@@ -36,7 +36,7 @@ namespace mike_and_conquer.gameview
 
         private Vector2 middleOfSprite;
 
-        float defaultScale = 1;
+        private float scale;
 
         private GameCursor()
         {
@@ -96,19 +96,13 @@ namespace mike_and_conquer.gameview
         public void Update(GameTime gameTime)
         {
             MouseState newState = Mouse.GetState();
-            //            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
-            //            position = new Vector2(newState.X / scale, newState.Y / scale);
             position = new Vector2(newState.X , newState.Y );
         }
 
-
-
-
-
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            defaultScale = MikeAndConquerGame.instance.camera2D.Zoom;
-            spriteBatch.Draw(texture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
+            scale = MikeAndConquerGame.instance.camera2D.Zoom;
+            spriteBatch.Draw(texture, position, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
         }
 
 

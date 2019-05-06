@@ -187,7 +187,7 @@ namespace mike_and_conquer
 //            this.camera2D.Zoom = 3.4f;
             this.camera2D.Zoom = 5.0f;
             this.camera2D.Location =
-                new Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
+                new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
 
             base.Initialize();
 
@@ -363,7 +363,7 @@ namespace mike_and_conquer
         }
 
 
-        public float calculateLeftmostScrollX()
+        public float CalculateLeftmostScrollX()
         {
             int displayWidth = GraphicsDevice.Viewport.Width;
             int halfDisplayWidth = displayWidth / 2;
@@ -371,7 +371,7 @@ namespace mike_and_conquer
             return scaledHalfDisplayWidth - borderSize;
         }
 
-        private float calculateRightmostScrollX()
+        private float CalculateRightmostScrollX()
         {
             int numSquaresWidth = 26;
             int widthOfMapSquare = 24;
@@ -384,7 +384,7 @@ namespace mike_and_conquer
             return amountToScrollHorizontally + borderSize;
         }
 
-        public float calculateTopmostScrollY()
+        public float CalculateTopmostScrollY()
         {
             int viewportHeight = GraphicsDevice.Viewport.Height;
             int halfViewportHeight = viewportHeight / 2;
@@ -392,7 +392,7 @@ namespace mike_and_conquer
             return scaledHalfViewportHeight - borderSize;
         }
 
-        private float calculateBottommostScrollY()
+        private float CalculateBottommostScrollY()
         {
             int numSquaresWidth = 23;
             int heightOfMapSquare = 24;
@@ -410,10 +410,10 @@ namespace mike_and_conquer
             float newX = this.camera2D.Location.X;
             float newY = this.camera2D.Location.Y;
 
-            float rightMostScrollX = calculateRightmostScrollX();
-            float leftMostScrollX = calculateLeftmostScrollX();
-            float topmostScrollY = calculateTopmostScrollY();
-            float bottommostScrollY = calculateBottommostScrollY();
+            float rightMostScrollX = CalculateRightmostScrollX();
+            float leftMostScrollX = CalculateLeftmostScrollX();
+            float topmostScrollY = CalculateTopmostScrollY();
+            float bottommostScrollY = CalculateBottommostScrollY();
             if (newX > rightMostScrollX)
             {
                 newX = rightMostScrollX;
@@ -443,22 +443,22 @@ namespace mike_and_conquer
 //
 //            if (scrollPosition == 7)
 //            {
-//                this.camera2D.Location = new Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
+//                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
 //            }
 //
 //            if (scrollPosition == 9)
 //            {
-//                this.camera2D.Location = new Vector2(calculateRightmostScrollX(), calculateTopmostScrollY());
+//                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateTopmostScrollY());
 //            }
 //
 //            if (scrollPosition == 3)
 //            {
-//                this.camera2D.Location = new Vector2(calculateRightmostScrollX(), calculateBottommostScrollY());
+//                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateBottommostScrollY());
 //            }
 //
 //            if (scrollPosition == 1)
 //            {
-//                this.camera2D.Location = new Vector2(calculateLeftmostScrollX(), calculateBottommostScrollY());
+//                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateBottommostScrollY());
 //            }
 
         }

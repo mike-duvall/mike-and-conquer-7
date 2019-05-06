@@ -157,32 +157,32 @@ namespace mike_and_conquer
             return new Point((int)mouseWorldLocationVector2.X, (int)mouseWorldLocationVector2.Y);
         }
 
-        private void UpdateMousePointer(MouseState newState)
+        private void UpdateMousePointer(MouseState newMouseState)
         {
             float scale = MikeAndConquerGame.instance.camera2D.Zoom;
-            float leftMostScrollX = MikeAndConquerGame.instance.calculateLeftmostScrollX();
-            float topMostScrollY = MikeAndConquerGame.instance.calculateTopmostScrollY();
+            float leftMostScrollX = MikeAndConquerGame.instance.CalculateLeftmostScrollX();
+            float topMostScrollY = MikeAndConquerGame.instance.CalculateTopmostScrollY();
 
             float camerOffsetX = MikeAndConquerGame.instance.camera2D.Location.X - leftMostScrollX;
-            float scaledMousePositionX = (newState.X / scale) + camerOffsetX;
+            float mousePositionYInWorldCoordinates = (newMouseState.X / scale) + camerOffsetX;
 
             float camerOffsetY= MikeAndConquerGame.instance.camera2D.Location.Y - topMostScrollY;
-            float scaledMousePositionY = (newState.Y / scale) + camerOffsetY;
+            float mousePositionXInWorldCoordinates = (newMouseState.Y / scale) + camerOffsetY;
 
 
-            Vector2 scaledMousedPosition = new Vector2(scaledMousePositionX, scaledMousePositionY);
+            Vector2 mousePositionInWorldCoordinates = new Vector2(mousePositionYInWorldCoordinates, mousePositionXInWorldCoordinates);
 
 
             if (IsAMinigunnerSelected())
             {
-                Point point = new Point();
-                point.X = (int) scaledMousedPosition.X;
-                point.Y = (int) scaledMousedPosition.Y;
-                if (IsPointOverEnemy(point))
+                Point mousePositionAsPointInWorldCoordinates = new Point();
+                mousePositionAsPointInWorldCoordinates.X = (int) mousePositionInWorldCoordinates.X;
+                mousePositionAsPointInWorldCoordinates.Y = (int) mousePositionInWorldCoordinates.Y;
+                if (IsPointOverEnemy(mousePositionAsPointInWorldCoordinates))
                 {
                     MikeAndConquerGame.instance.gameCursor.SetToAttackEnemyLocationCursor();
                 }
-                else if (IsValidMoveDestination(point))
+                else if (IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
                 {
                     MikeAndConquerGame.instance.gameCursor.SetToMoveToLocationCursor();
                 }

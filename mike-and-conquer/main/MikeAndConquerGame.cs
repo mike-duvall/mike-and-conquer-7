@@ -407,7 +407,6 @@ namespace mike_and_conquer
             float newX = this.camera2D.Location.X;
             float newY = this.camera2D.Location.Y;
 
-
             // TODO:  Consider if we store these as class variables
             // and only recalculate when the zoom changes
             float rightMostScrollX = CalculateRightmostScrollX();
@@ -423,7 +422,6 @@ namespace mike_and_conquer
                 newY = bottommostScrollY;
             }
 
-
             // Check for leftmost and topmost last, which makes it snap to top left corner
             // if zoom is such that entire map fits on current screen
             if (newX < leftMostScrollX)
@@ -437,28 +435,6 @@ namespace mike_and_conquer
             }
 
             this.camera2D.Location = new Vector2(newX, newY);
-
-//            this.camera2D.Zoom = 5.3f;
-//
-//            if (scrollPosition == 7)
-//            {
-//                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
-//            }
-//
-//            if (scrollPosition == 9)
-//            {
-//                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateTopmostScrollY());
-//            }
-//
-//            if (scrollPosition == 3)
-//            {
-//                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateBottommostScrollY());
-//            }
-//
-//            if (scrollPosition == 1)
-//            {
-//                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateBottommostScrollY());
-//            }
 
         }
 

@@ -486,33 +486,9 @@ namespace mike_and_conquer
                 this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateBottommostScrollY());
             }
 
-            //            if (scrollPosition == 7)
-            //            {
-            //                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
-            //            }
-            //
-            //            if (scrollPosition == 9)
-            //            {
-            //                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateTopmostScrollY());
-            //            }
-            //
-            //            if (scrollPosition == 3)
-            //            {
-            //                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateBottommostScrollY());
-            //            }
-            //
-            //            if (scrollPosition == 1)
-            //            {
-            //                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateBottommostScrollY());
-            //            }
-
-
-
             this.gameWorld.Update(gameTime);
-
             this.camera2D.Rotation = testRotation;
 //                        testRotation += 0.05f;
-
 
             KeyboardState newKeyboardState = Keyboard.GetState();  // get the newest state
 

@@ -99,7 +99,6 @@ namespace mike_and_conquer
         public GameMap gameMap;
 
         private int borderSize = 0;
-        private int scrollPosition = 7;
 
         KeyboardState oldKeyboardState;
 
@@ -373,9 +372,8 @@ namespace mike_and_conquer
 
         private float CalculateRightmostScrollX()
         {
-            int numSquaresWidth = 26;
             int widthOfMapSquare = 24;
-            int widthOfMapInWorldSpace = numSquaresWidth * widthOfMapSquare;
+            int widthOfMapInWorldSpace = MikeAndConquerGame.instance.gameMap.numColumns * widthOfMapSquare;
 
             int displayWidth = GraphicsDevice.Viewport.Width;
             int halfDisplayWidth = displayWidth / 2;
@@ -394,9 +392,8 @@ namespace mike_and_conquer
 
         private float CalculateBottommostScrollY()
         {
-            int numSquaresWidth = 23;
             int heightOfMapSquare = 24;
-            int heightOfMapInWorldSpace = numSquaresWidth * heightOfMapSquare;
+            int heightOfMapInWorldSpace = MikeAndConquerGame.instance.gameMap.numRows * heightOfMapSquare;
             int viewportHeight = GraphicsDevice.Viewport.Height;
             int halfViewportHeight = viewportHeight / 2;
             float scaledHalfViewportHeight = halfViewportHeight / camera2D.Zoom;
@@ -435,7 +432,6 @@ namespace mike_and_conquer
             {
                 newY = topmostScrollY;
             }
-
 
             this.camera2D.Location = new Vector2(newX, newY);
 
@@ -496,20 +492,41 @@ namespace mike_and_conquer
 
             if (state.IsKeyDown(Keys.I))
             {
-                scrollPosition = 7;
+                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
             }
             if (state.IsKeyDown(Keys.P))
             {
-                scrollPosition = 9;
+                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateTopmostScrollY());
             }
             if (state.IsKeyDown(Keys.M))
             {
-                scrollPosition = 1;
+                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateBottommostScrollY());
             }
             if (state.IsKeyDown(Keys.OemPeriod))
             {
-                scrollPosition = 3;
+                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateBottommostScrollY());
             }
+
+            //            if (scrollPosition == 7)
+            //            {
+            //                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
+            //            }
+            //
+            //            if (scrollPosition == 9)
+            //            {
+            //                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateTopmostScrollY());
+            //            }
+            //
+            //            if (scrollPosition == 3)
+            //            {
+            //                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateBottommostScrollY());
+            //            }
+            //
+            //            if (scrollPosition == 1)
+            //            {
+            //                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateBottommostScrollY());
+            //            }
+
 
 
             this.gameWorld.Update(gameTime);
@@ -585,23 +602,11 @@ namespace mike_and_conquer
             {
                 float newZoom = this.camera2D.Zoom + zoomChangeAmount;
                 this.camera2D.Zoom = newZoom;
-//                float oldCameraX = this.camera2D.Location.X;
-//                float newCameraX = this.camera2D.Location.X + (zoomChangeAmount * oldCameraX);
-//
-//                float oldCameraY = this.camera2D.Location.Y;
-//                float newCameraY = this.camera2D.Location.Y + (zoomChangeAmount * oldCameraY);
-//
-//                Vector2 newLocation = new Vector2(newCameraX, newCameraY);
-//                this.camera2D.Location = newLocation;
-
             }
             else if (oldKeyboardState.IsKeyUp(Keys.OemMinus) && newKeyboardState.IsKeyDown(Keys.OemMinus))
             {
                 float newZoom = this.camera2D.Zoom - zoomChangeAmount;
                 this.camera2D.Zoom = newZoom;
-//                Vector2 newLocation = new Vector2(this.camera2D.Location.X * -zoomChangeAmount, this.camera2D.Location.Y * -zoomChangeAmount);
-//                this.camera2D.Location = newLocation;
-
             }
 
             ResetCamera();

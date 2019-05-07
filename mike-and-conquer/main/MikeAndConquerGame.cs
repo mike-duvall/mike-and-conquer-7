@@ -407,6 +407,9 @@ namespace mike_and_conquer
             float newX = this.camera2D.Location.X;
             float newY = this.camera2D.Location.Y;
 
+
+            // TODO:  Consider if we store these as class variables
+            // and only recalculate when the zoom changes
             float rightMostScrollX = CalculateRightmostScrollX();
             float leftMostScrollX = CalculateLeftmostScrollX();
             float topmostScrollY = CalculateTopmostScrollY();

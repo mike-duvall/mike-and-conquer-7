@@ -159,19 +159,7 @@ namespace mike_and_conquer
 
         private void UpdateMousePointer(MouseState newMouseState)
         {
-            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
-            float leftMostScrollX = MikeAndConquerGame.instance.CalculateLeftmostScrollX();
-            float topMostScrollY = MikeAndConquerGame.instance.CalculateTopmostScrollY();
-
-            float camerOffsetX = MikeAndConquerGame.instance.camera2D.Location.X - leftMostScrollX;
-            float mousePositionYInWorldCoordinates = (newMouseState.X / scale) + camerOffsetX;
-
-            float camerOffsetY= MikeAndConquerGame.instance.camera2D.Location.Y - topMostScrollY;
-            float mousePositionXInWorldCoordinates = (newMouseState.Y / scale) + camerOffsetY;
-
-
-            Vector2 mousePositionInWorldCoordinates = new Vector2(mousePositionYInWorldCoordinates, mousePositionXInWorldCoordinates);
-
+            var mousePositionInWorldCoordinates = CalculateMousePositionInWorldCoordinates(newMouseState);
 
             if (IsAMinigunnerSelected())
             {
@@ -195,8 +183,24 @@ namespace mike_and_conquer
             {
                 MikeAndConquerGame.instance.gameCursor.SetToMainCursor();
             }
+        }
 
+        private static Vector2 CalculateMousePositionInWorldCoordinates(MouseState newMouseState)
+        {
+            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
+            float leftMostScrollX = MikeAndConquerGame.instance.CalculateLeftmostScrollX();
+            float topMostScrollY = MikeAndConquerGame.instance.CalculateTopmostScrollY();
 
+            float cameraOffsetX = MikeAndConquerGame.instance.camera2D.Location.X - leftMostScrollX;
+            float mousePositionYInWorldCoordinates = (newMouseState.X / scale) + cameraOffsetX;
+
+            float cameraOffsetY = MikeAndConquerGame.instance.camera2D.Location.Y - topMostScrollY;
+            float mousePositionXInWorldCoordinates = (newMouseState.Y / scale) + cameraOffsetY;
+
+            Vector2 mousePositionInWorldCoordinates =
+                new Vector2(mousePositionYInWorldCoordinates, mousePositionXInWorldCoordinates);
+
+            return mousePositionInWorldCoordinates;
         }
 
         bool IsPointOverEnemy(Point pointInWorldCoordinates)

@@ -159,13 +159,10 @@ namespace mike_and_conquer
 
         private void UpdateMousePointer(MouseState newMouseState)
         {
-            var mousePositionInWorldCoordinates = CalculateMousePositionInWorldCoordinates(newMouseState);
+            Point mousePositionAsPointInWorldCoordinates = CalculateMousePositionInWorldCoordinates(newMouseState);
 
             if (IsAMinigunnerSelected())
             {
-                Point mousePositionAsPointInWorldCoordinates = new Point();
-                mousePositionAsPointInWorldCoordinates.X = (int) mousePositionInWorldCoordinates.X;
-                mousePositionAsPointInWorldCoordinates.Y = (int) mousePositionInWorldCoordinates.Y;
                 if (IsPointOverEnemy(mousePositionAsPointInWorldCoordinates))
                 {
                     MikeAndConquerGame.instance.gameCursor.SetToAttackEnemyLocationCursor();
@@ -185,7 +182,7 @@ namespace mike_and_conquer
             }
         }
 
-        private static Vector2 CalculateMousePositionInWorldCoordinates(MouseState newMouseState)
+        private static Point CalculateMousePositionInWorldCoordinates(MouseState newMouseState)
         {
             float scale = MikeAndConquerGame.instance.camera2D.Zoom;
             float leftMostScrollX = MikeAndConquerGame.instance.CalculateLeftmostScrollX();
@@ -200,7 +197,12 @@ namespace mike_and_conquer
             Vector2 mousePositionInWorldCoordinates =
                 new Vector2(mousePositionYInWorldCoordinates, mousePositionXInWorldCoordinates);
 
-            return mousePositionInWorldCoordinates;
+
+            Point mousePositionAsPointInWorldCoordinates = new Point();
+            mousePositionAsPointInWorldCoordinates.X = (int)mousePositionInWorldCoordinates.X;
+            mousePositionAsPointInWorldCoordinates.Y = (int)mousePositionInWorldCoordinates.Y;
+
+            return mousePositionAsPointInWorldCoordinates;
         }
 
         bool IsPointOverEnemy(Point pointInWorldCoordinates)

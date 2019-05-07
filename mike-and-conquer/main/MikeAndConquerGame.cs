@@ -183,8 +183,8 @@ namespace mike_and_conquer
 
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
-//            this.camera2D.Zoom = 3.4f;
-            this.camera2D.Zoom = 5.0f;
+            this.camera2D.Zoom = 3.4f;
+//            this.camera2D.Zoom = 5.0f;
             this.camera2D.Location =
                 new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
 

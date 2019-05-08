@@ -94,12 +94,11 @@ namespace mike_and_conquer
         private SpriteBatch spriteBatch;
         private TextureListMap textureListMap;
 
-
-
         private bool testMode;
 
         public GameMap gameMap;
 
+        private int borderSize = 0;
 
         KeyboardState oldKeyboardState;
 
@@ -185,9 +184,9 @@ namespace mike_and_conquer
 
             this.camera2D = new Camera2D(GraphicsDevice.Viewport);
             this.camera2D.Zoom = 3.4f;
-//            this.camera2D.Zoom = 1.0f;
+//            this.camera2D.Zoom = 5.0f;
             this.camera2D.Location =
-                new Microsoft.Xna.Framework.Vector2(calculateLeftmostScrollX(), calculateTopmostScrollY());
+                new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
 
             base.Initialize();
 
@@ -363,42 +362,80 @@ namespace mike_and_conquer
         }
 
 
-        private int calculateLeftmostScrollX()
+        public float CalculateLeftmostScrollX()
         {
-            return (int)((graphics.PreferredBackBufferWidth / 2 / camera2D.Zoom) - 1);
-           
+            int displayWidth = GraphicsDevice.Viewport.Width;
+            int halfDisplayWidth = displayWidth / 2;
+            float scaledHalfDisplayWidth = halfDisplayWidth / camera2D.Zoom;
+            return scaledHalfDisplayWidth - borderSize;
         }
 
-        private int calculateRightmostScrollX()
+        private float CalculateRightmostScrollX()
         {
-            int numSquaresWidth = 26;
             int widthOfMapSquare = 24;
-            int widthOfMapInWorldSpace = numSquaresWidth * widthOfMapSquare;
-            int scaledWidthOfMap = (int)(widthOfMapInWorldSpace * camera2D.Zoom);
-            int amountToScrollover = scaledWidthOfMap - GraphicsDevice.Viewport.Width;
+            int widthOfMapInWorldSpace = MikeAndConquerGame.instance.gameMap.numColumns * widthOfMapSquare;
 
-            int rightmostScrollX = calculateLeftmostScrollX() + (int)((amountToScrollover / camera2D.Zoom) + 1);
-
-            return rightmostScrollX;
+            int displayWidth = GraphicsDevice.Viewport.Width;
+            int halfDisplayWidth = displayWidth / 2;
+            float scaledHalfDisplayWidth = halfDisplayWidth / camera2D.Zoom;
+            float amountToScrollHorizontally = widthOfMapInWorldSpace - scaledHalfDisplayWidth;
+            return amountToScrollHorizontally + borderSize;
         }
 
-        private int calculateTopmostScrollY()
+        public float CalculateTopmostScrollY()
         {
-            return (int)((graphics.PreferredBackBufferHeight / 2 / camera2D.Zoom) - 1);
-           
+            int viewportHeight = GraphicsDevice.Viewport.Height;
+            int halfViewportHeight = viewportHeight / 2;
+            float scaledHalfViewportHeight = halfViewportHeight / camera2D.Zoom;
+            return scaledHalfViewportHeight - borderSize;
         }
 
-        private int calculateBottommostScrollY()
+        private float CalculateBottommostScrollY()
         {
-            int numSquaresWidth = 23;
             int heightOfMapSquare = 24;
-            int heightOfMapInWorldSpace = numSquaresWidth * heightOfMapSquare;
-            int scaledHeightOfMap = (int)(heightOfMapInWorldSpace * camera2D.Zoom);
-            int amountToScrollover = scaledHeightOfMap - GraphicsDevice.Viewport.Height;
+            int heightOfMapInWorldSpace = MikeAndConquerGame.instance.gameMap.numRows * heightOfMapSquare;
+            int viewportHeight = GraphicsDevice.Viewport.Height;
+            int halfViewportHeight = viewportHeight / 2;
+            float scaledHalfViewportHeight = halfViewportHeight / camera2D.Zoom;
+            float amountToScrollVertically = heightOfMapInWorldSpace - scaledHalfViewportHeight;
+            return amountToScrollVertically + borderSize;
+        }
 
-            int bottommostScrollY = calculateTopmostScrollY() + (int)((amountToScrollover / camera2D.Zoom) + 1);
 
-            return bottommostScrollY;
+        private void ResetCamera()
+        {
+            float newX = this.camera2D.Location.X;
+            float newY = this.camera2D.Location.Y;
+
+            // TODO:  Consider if we store these as class variables
+            // and only recalculate when the zoom changes
+            float rightMostScrollX = CalculateRightmostScrollX();
+            float leftMostScrollX = CalculateLeftmostScrollX();
+            float topmostScrollY = CalculateTopmostScrollY();
+            float bottommostScrollY = CalculateBottommostScrollY();
+            if (newX > rightMostScrollX)
+            {
+                newX = rightMostScrollX;
+            }
+            if (newY > bottommostScrollY)
+            {
+                newY = bottommostScrollY;
+            }
+
+            // Check for leftmost and topmost last, which makes it snap to top left corner
+            // if zoom is such that entire map fits on current screen
+            if (newX < leftMostScrollX)
+            {
+                newX = leftMostScrollX;
+            }
+
+            if (newY < topmostScrollY)
+            {
+                newY = topmostScrollY;
+            }
+
+            this.camera2D.Location = new Vector2(newX, newY);
+
         }
 
 
@@ -422,11 +459,36 @@ namespace mike_and_conquer
                 Exit();
             }
 
-            this.gameWorld.Update(gameTime);
+            if (state.IsKeyDown(Keys.B))
+            {
+                borderSize = 1;
+            }
+            if (state.IsKeyDown(Keys.N))
+            {
+                borderSize = 0;
+            }
 
+
+            if (state.IsKeyDown(Keys.I))
+            {
+                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
+            }
+            if (state.IsKeyDown(Keys.P))
+            {
+                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateTopmostScrollY());
+            }
+            if (state.IsKeyDown(Keys.M))
+            {
+                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateBottommostScrollY());
+            }
+            if (state.IsKeyDown(Keys.OemPeriod))
+            {
+                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateBottommostScrollY());
+            }
+
+            this.gameWorld.Update(gameTime);
             this.camera2D.Rotation = testRotation;
 //                        testRotation += 0.05f;
-
 
             KeyboardState newKeyboardState = Keyboard.GetState();  // get the newest state
 
@@ -449,6 +511,7 @@ namespace mike_and_conquer
 
             Microsoft.Xna.Framework.Input.MouseState mouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
 
+            float zoomChangeAmount = 0.2f;
             if (mouseState.Position.X > GraphicsDevice.Viewport.Width - mouseScrollThreshold)
             {
                 int newX = (int) (this.camera2D.Location.X + 2);
@@ -492,16 +555,16 @@ namespace mike_and_conquer
             }
             else if (oldKeyboardState.IsKeyUp(Keys.OemPlus) && newKeyboardState.IsKeyDown(Keys.OemPlus))
             {
-                float newZoom = this.camera2D.Zoom + 0.2f;
+                float newZoom = this.camera2D.Zoom + zoomChangeAmount;
                 this.camera2D.Zoom = newZoom;
             }
             else if (oldKeyboardState.IsKeyUp(Keys.OemMinus) && newKeyboardState.IsKeyDown(Keys.OemMinus))
             {
-                float newZoom = this.camera2D.Zoom - 0.2f;
+                float newZoom = this.camera2D.Zoom - zoomChangeAmount;
                 this.camera2D.Zoom = newZoom;
             }
 
-            resetCamera();
+            ResetCamera();
         }
 
         private void SwitchToNewGameStateViewIfNeeded()
@@ -546,38 +609,13 @@ namespace mike_and_conquer
         }
 
 
-        private void resetCamera()
-        {
-            int newX = (int)(this.camera2D.Location.X);
-            int newY = (int)(this.camera2D.Location.Y);
-
-            if (newX > calculateRightmostScrollX())
-            {
-                newX = calculateRightmostScrollX();
-            }
-            if (newX < calculateLeftmostScrollX())
-            {
-                newX = calculateLeftmostScrollX();
-            }
-            if (newY < calculateTopmostScrollY())
-            {
-                newY = calculateTopmostScrollY();
-            }
-            if (newY > calculateBottommostScrollY())
-            {
-                newY = calculateBottommostScrollY();
-            }
-
-            this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, newY);
-
-        }
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Crimson);
 
             Microsoft.Xna.Framework.Graphics.BlendState nullBlendState = null;
             Microsoft.Xna.Framework.Graphics.DepthStencilState nullDepthStencilState = null;
@@ -603,9 +641,21 @@ namespace mike_and_conquer
 
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
-            gameCursor.Draw(gameTime, spriteBatch);
+//            gameCursor.Draw(gameTime, spriteBatch);
             spriteBatch.End();
-           
+
+            spriteBatch.Begin(
+                SpriteSortMode.Deferred,
+                nullBlendState,
+                SamplerState.PointClamp,
+                nullDepthStencilState,
+                nullRasterizerState,
+                nullEffect);
+
+            gameCursor.Draw(gameTime, spriteBatch);
+
+            spriteBatch.End();
+
             base.Draw(gameTime);
         }
 

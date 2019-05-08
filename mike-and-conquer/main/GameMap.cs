@@ -11,6 +11,8 @@ namespace mike_and_conquer
     public class GameMap
     {
 
+
+        // How to draw shadows:
 // X       Draw class diagram and understand current structure
 // X       Write method that returns current tile, given a point on the map
 // X       Write method that returns color index of given point on the map

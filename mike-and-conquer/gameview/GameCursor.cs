@@ -1,23 +1,16 @@
 ﻿
 
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using OpenRA.Mods.Common.SpriteLoaders;
-using ShpTDSprite = OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using Color = Microsoft.Xna.Framework.Color;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
-using Math = System.Math;
 using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
-
-using Boolean = System.Boolean;
 
 using ISpriteFrame = OpenRA.Graphics.ISpriteFrame;
 
 
-using MouseCursor = Microsoft.Xna.Framework.Input.MouseCursor;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 
@@ -35,8 +28,6 @@ namespace mike_and_conquer.gameview
         private Texture2D attackEnemyCursor;
 
         private Vector2 middleOfSprite;
-
-        float defaultScale = 1;
 
         private GameCursor()
         {
@@ -96,14 +87,13 @@ namespace mike_and_conquer.gameview
         public void Update(GameTime gameTime)
         {
             MouseState newState = Mouse.GetState();
-            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
-            position = new Vector2(newState.X / scale, newState.Y / scale);
+            position = new Vector2(newState.X , newState.Y );
         }
-
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
+            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
+            spriteBatch.Draw(texture, position, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
         }
 
 
@@ -123,7 +113,7 @@ namespace mike_and_conquer.gameview
 
             int x = 3;
 
-            OpenRA.Graphics.ISpriteFrame frame = frames[indexOfFrameToLoad];
+            ISpriteFrame frame = frames[indexOfFrameToLoad];
             byte[] frameData = frame.Data;
 
             Texture2D texture2D = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, frame.Size.Width, frame.Size.Height);

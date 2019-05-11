@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using mike_and_conquer.gameview;
 using mike_and_conquer.pathfinding;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -33,7 +34,7 @@ namespace mike_and_conquer
 
         private Minigunner currentAttackTarget;
 
-        public enum State { IDLE, MOVING, ATTACKING };
+        public enum State { IDLE, MOVING, ATTACKING, LANDING_AT_MAP_SQUARE };
         public State state;
 
         public enum Command { NONE,  ATTACK_TARGET, FOLLOW_PATH };
@@ -129,7 +130,69 @@ namespace mike_and_conquer
             Point currentDestinationPoint = path[0];
             SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
             MoveTowardsDestination(gameTime, currentDestinationPoint.X, currentDestinationPoint.Y);
+
             if (IsAtDestination(currentDestinationPoint.X, currentDestinationPoint.Y))
+            {
+                path.RemoveAt(0);
+            }
+
+        }
+
+
+        private void LandOnFinalDestinationMapSquare(GameTime gameTime)
+        {
+
+
+            if (this.state == State.MOVING)
+            {
+
+                Point currentDestinationPoint = path[0];
+
+                BasicMapSquare destinationBasicMapSquare =
+                    MikeAndConquerGame.instance.FindMapSquare(currentDestinationPoint.X, currentDestinationPoint.Y);
+
+                Pickup here:  Everything is basicially working for up to moving 5 units
+                Next steps:  Refactor and cleanup
+                  Then determine how to handle 10
+
+                if (destinationBasicMapSquare.numSlotsOccupied == 0)
+                {
+                    currentDestinationPoint.X = currentDestinationPoint.X + 4;
+                    currentDestinationPoint.Y = currentDestinationPoint.Y - 3;
+                }
+                else if (destinationBasicMapSquare.numSlotsOccupied == 1)
+                {
+                    currentDestinationPoint.X = currentDestinationPoint.X - 8;
+                    currentDestinationPoint.Y = currentDestinationPoint.Y - 3;
+                }
+                else if (destinationBasicMapSquare.numSlotsOccupied == 2)
+                {
+                    currentDestinationPoint.X = currentDestinationPoint.X + 4;
+                    currentDestinationPoint.Y = currentDestinationPoint.Y + 10;
+                }
+                else if (destinationBasicMapSquare.numSlotsOccupied == 3)
+                {
+                    currentDestinationPoint.X = currentDestinationPoint.X - 8;
+                    currentDestinationPoint.Y = currentDestinationPoint.Y + 10;
+                }
+                else if (destinationBasicMapSquare.numSlotsOccupied == 4)
+                {
+                    currentDestinationPoint.X = currentDestinationPoint.X - 2;
+                    currentDestinationPoint.Y = currentDestinationPoint.Y + 3;
+                }
+
+
+                destinationBasicMapSquare.numSlotsOccupied++;
+
+                SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
+
+            }
+
+            this.state = State.LANDING_AT_MAP_SQUARE;
+
+            MoveTowardsDestination(gameTime, destinationX, destinationY);
+
+            if (IsAtDestination(destinationX, destinationY))
             {
                 path.RemoveAt(0);
             }
@@ -140,10 +203,14 @@ namespace mike_and_conquer
 
         private void HandleCommandFollowPath(GameTime gameTime)
         {
-            if (path.Count > 0)
+            if (path.Count > 1)
             {
                 MoveTowardsCurrentDestinationInPath(gameTime);
 
+            }
+            else if (path.Count == 1)
+            {
+                LandOnFinalDestinationMapSquare(gameTime);
             }
             else
             {
@@ -361,7 +428,7 @@ namespace mike_and_conquer
             Point destinationSquare = new Point();
             destinationSquare.X = destination.X / 24;
             destinationSquare.Y = destination.Y / 24;
-            
+
             Path foundPath = aStar.FindPath(navigationGraph, startPoint, destinationSquare);
 
             this.currentCommand = Command.FOLLOW_PATH;

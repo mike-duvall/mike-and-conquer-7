@@ -132,8 +132,11 @@ namespace mike_and_conquer
             else
             {
                 graphics.IsFullScreen = false;
-                graphics.PreferredBackBufferWidth = 1280;
-                graphics.PreferredBackBufferHeight = 1024;
+                //                graphics.PreferredBackBufferWidth = 1280;
+                //                graphics.PreferredBackBufferHeight = 1024;
+                graphics.PreferredBackBufferWidth = 1024;
+                graphics.PreferredBackBufferHeight = 768;
+
             }
 
             Content.RootDirectory = "Content";
@@ -201,6 +204,14 @@ namespace mike_and_conquer
                 AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 3));
 
                 AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
+
+
+                AddGdiMinigunnerAtMapSquareCoordinates(new Point(15, 16));
+                AddGdiMinigunnerAtMapSquareCoordinates(new Point(16, 16));
+                AddGdiMinigunnerAtMapSquareCoordinates(new Point(17, 16));
+                AddGdiMinigunnerAtMapSquareCoordinates(new Point(17, 15));
+                AddGdiMinigunnerAtMapSquareCoordinates(new Point(18, 16));
+
 
                 AddSandbag(10, 6, 5);
                 AddSandbag(10, 7, 5);

@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using System.Linq;
 using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 
@@ -21,9 +22,19 @@ namespace mike_and_conquer.gameview
         Vector2 positionInWorldCoordinates;
         private int imageIndex;
         private string textureKey;
-        public int numSlotsOccupied = 0;
+//        private Boolean slotOccupied0 = false;
+//        private Boolean slotOccupied1 = false;
+//        private Boolean slotOccupied2 = false;
+//        private Boolean slotOccupied3 = false;
+//        private Boolean slotOccupied4 = false;
 
-        public  BasicMapSquare(int x, int y, string textureKey, int imageIndex )
+        private Minigunner minigunnerSlot0 = null;
+        private Minigunner minigunnerSlot1 = null;
+        private Minigunner minigunnerSlot2 = null;
+        private Minigunner minigunnerSlot3 = null;
+        private Minigunner minigunnerSlot4 = null;
+
+        public BasicMapSquare(int x, int y, string textureKey, int imageIndex )
         {
             this.positionInWorldCoordinates = new Vector2(x,y);
             this.gameSprite = new GameSprite(textureKey);
@@ -71,13 +82,44 @@ namespace mike_and_conquer.gameview
             return new Point((int) positionInWorldCoordinates.X, (int) positionInWorldCoordinates.Y);
         }
 
-        public Point GetNextAvailableMinigunnerPosition()
+        public Point GetDestinationSlotForMinigunner(Minigunner aMinigunner)
         {
 
-            Point center = GetCenter();
-            center.X += 10;
-            center.Y -= 10;
-            return center;
+            Point nextAvailablePosition = GetCenter();
+            if (minigunnerSlot0 == null)
+            {
+                nextAvailablePosition.X = nextAvailablePosition.X + 4;
+                nextAvailablePosition.Y = nextAvailablePosition.Y - 3;
+                minigunnerSlot0 = aMinigunner;
+            }
+            else if (minigunnerSlot1 == null) 
+            {
+                nextAvailablePosition.X = nextAvailablePosition.X - 8;
+                nextAvailablePosition.Y = nextAvailablePosition.Y - 3;
+                minigunnerSlot1 = aMinigunner;
+            }
+            else if (minigunnerSlot2 == null)
+            {
+                nextAvailablePosition.X = nextAvailablePosition.X + 4;
+                nextAvailablePosition.Y = nextAvailablePosition.Y + 10;
+                minigunnerSlot2 = aMinigunner;
+            }
+            else if (minigunnerSlot3 == null)
+            {
+                nextAvailablePosition.X = nextAvailablePosition.X - 8;
+                nextAvailablePosition.Y = nextAvailablePosition.Y + 10;
+                minigunnerSlot3 = aMinigunner;
+            }
+            else if (minigunnerSlot4 == null)
+            {
+                nextAvailablePosition.X = nextAvailablePosition.X - 2;
+                nextAvailablePosition.Y = nextAvailablePosition.Y + 3;
+                minigunnerSlot4 = aMinigunner;
+
+            }
+
+            return nextAvailablePosition;
+
         }
 
         public bool IsBlockingTerrain()

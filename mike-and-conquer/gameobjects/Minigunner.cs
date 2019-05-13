@@ -138,52 +138,18 @@ namespace mike_and_conquer
 
         }
 
-
         private void LandOnFinalDestinationMapSquare(GameTime gameTime)
         {
-
 
             if (this.state == State.MOVING)
             {
 
-                Point currentDestinationPoint = path[0];
+                Point centerOfDestinationSquare = path[0];
 
                 BasicMapSquare destinationBasicMapSquare =
-                    MikeAndConquerGame.instance.FindMapSquare(currentDestinationPoint.X, currentDestinationPoint.Y);
+                    MikeAndConquerGame.instance.FindMapSquare(centerOfDestinationSquare.X, centerOfDestinationSquare.Y);
 
-                Pickup here:  Everything is basicially working for up to moving 5 units
-                Next steps:  Refactor and cleanup
-                  Then determine how to handle 10
-
-                if (destinationBasicMapSquare.numSlotsOccupied == 0)
-                {
-                    currentDestinationPoint.X = currentDestinationPoint.X + 4;
-                    currentDestinationPoint.Y = currentDestinationPoint.Y - 3;
-                }
-                else if (destinationBasicMapSquare.numSlotsOccupied == 1)
-                {
-                    currentDestinationPoint.X = currentDestinationPoint.X - 8;
-                    currentDestinationPoint.Y = currentDestinationPoint.Y - 3;
-                }
-                else if (destinationBasicMapSquare.numSlotsOccupied == 2)
-                {
-                    currentDestinationPoint.X = currentDestinationPoint.X + 4;
-                    currentDestinationPoint.Y = currentDestinationPoint.Y + 10;
-                }
-                else if (destinationBasicMapSquare.numSlotsOccupied == 3)
-                {
-                    currentDestinationPoint.X = currentDestinationPoint.X - 8;
-                    currentDestinationPoint.Y = currentDestinationPoint.Y + 10;
-                }
-                else if (destinationBasicMapSquare.numSlotsOccupied == 4)
-                {
-                    currentDestinationPoint.X = currentDestinationPoint.X - 2;
-                    currentDestinationPoint.Y = currentDestinationPoint.Y + 3;
-                }
-
-
-                destinationBasicMapSquare.numSlotsOccupied++;
-
+                Point currentDestinationPoint = destinationBasicMapSquare.GetDestinationSlotForMinigunner(this);
                 SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
 
             }

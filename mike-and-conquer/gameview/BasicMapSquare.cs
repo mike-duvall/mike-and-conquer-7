@@ -119,8 +119,33 @@ namespace mike_and_conquer.gameview
             }
 
             return nextAvailablePosition;
+        }
+
+        internal void ClearSlotForMinigunner(Minigunner aMinigunner)
+        {
+            if (minigunnerSlot0 == aMinigunner)
+            {
+                minigunnerSlot0 = null;
+            }
+            if (minigunnerSlot1 == aMinigunner)
+            {
+                minigunnerSlot1 = null;
+            }
+            if (minigunnerSlot2 == aMinigunner)
+            {
+                minigunnerSlot2 = null;
+            }
+            if (minigunnerSlot3 == aMinigunner)
+            {
+                minigunnerSlot3 = null;
+            }
+            if (minigunnerSlot4 == aMinigunner)
+            {
+                minigunnerSlot4 = null;
+            }
 
         }
+
 
         public bool IsBlockingTerrain()
         {

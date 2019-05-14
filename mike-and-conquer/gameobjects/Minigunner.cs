@@ -385,6 +385,12 @@ namespace mike_and_conquer
 
         public void OrderToMoveToDestination(Point destination)
         {
+
+            BasicMapSquare currentMapSquareLocation =
+                MikeAndConquerGame.instance.FindMapSquare((int)this.positionInWorldCoordinates.X,
+                    (int) this.positionInWorldCoordinates.Y);
+
+            currentMapSquareLocation.ClearSlotForMinigunner(this);
             int startColumn = (int)this.positionInWorldCoordinates.X / 24;
             int startRow = (int)this.positionInWorldCoordinates.Y / 24;
             Point startPoint = new Point(startColumn, startRow);

@@ -1,7 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using mike_and_conquer.gameview;
 using mike_and_conquer.pathfinding;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -33,18 +33,16 @@ namespace mike_and_conquer
 
         private Minigunner currentAttackTarget;
 
-        public enum State { IDLE, MOVING, ATTACKING };
+        public enum State { IDLE, MOVING, ATTACKING, LANDING_AT_MAP_SQUARE };
         public State state;
 
         public enum Command { NONE,  ATTACK_TARGET, FOLLOW_PATH };
         public Command currentCommand;
 
-
         private int destinationX;
         private int destinationY;
 
         public Vector2 DestinationPosition { get { return new Vector2(destinationX, destinationY); } }
-
 
         private List<Point> path;
 
@@ -129,7 +127,34 @@ namespace mike_and_conquer
             Point currentDestinationPoint = path[0];
             SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
             MoveTowardsDestination(gameTime, currentDestinationPoint.X, currentDestinationPoint.Y);
+
             if (IsAtDestination(currentDestinationPoint.X, currentDestinationPoint.Y))
+            {
+                path.RemoveAt(0);
+            }
+
+        }
+
+        private void LandOnFinalDestinationMapSquare(GameTime gameTime)
+        {
+
+            if (this.state == State.MOVING)
+            {
+                Point centerOfDestinationSquare = path[0];
+
+                BasicMapSquare destinationBasicMapSquare =
+                    MikeAndConquerGame.instance.FindMapSquare(centerOfDestinationSquare.X, centerOfDestinationSquare.Y);
+
+                Point currentDestinationPoint = destinationBasicMapSquare.GetDestinationSlotForMinigunner(this);
+                SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
+
+            }
+
+            this.state = State.LANDING_AT_MAP_SQUARE;
+
+            MoveTowardsDestination(gameTime, destinationX, destinationY);
+
+            if (IsAtDestination(destinationX, destinationY))
             {
                 path.RemoveAt(0);
             }
@@ -140,10 +165,19 @@ namespace mike_and_conquer
 
         private void HandleCommandFollowPath(GameTime gameTime)
         {
-            if (path.Count > 0)
+            if (path.Count > 1)
             {
                 MoveTowardsCurrentDestinationInPath(gameTime);
 
+            }
+            else if (path.Count == 1)
+            {
+
+                // TODO:  Currently waiting until units almost arrive to assign
+                // them slots on the destination square, but when
+                // handling more than 5 units, will probably need to assign slots
+                // when the move is initiated, rather than up on arrival
+                LandOnFinalDestinationMapSquare(gameTime);
             }
             else
             {
@@ -352,6 +386,12 @@ namespace mike_and_conquer
 
         public void OrderToMoveToDestination(Point destination)
         {
+
+            BasicMapSquare currentMapSquareLocation =
+                MikeAndConquerGame.instance.FindMapSquare((int)this.positionInWorldCoordinates.X,
+                    (int) this.positionInWorldCoordinates.Y);
+
+            currentMapSquareLocation.ClearSlotForMinigunner(this);
             int startColumn = (int)this.positionInWorldCoordinates.X / 24;
             int startRow = (int)this.positionInWorldCoordinates.Y / 24;
             Point startPoint = new Point(startColumn, startRow);
@@ -361,7 +401,7 @@ namespace mike_and_conquer
             Point destinationSquare = new Point();
             destinationSquare.X = destination.X / 24;
             destinationSquare.Y = destination.Y / 24;
-            
+
             Path foundPath = aStar.FindPath(navigationGraph, startPoint, destinationSquare);
 
             this.currentCommand = Command.FOLLOW_PATH;

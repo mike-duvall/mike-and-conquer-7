@@ -174,11 +174,19 @@ namespace mike_and_conquer.gameview
 
         public void HandleEndDragSelect()
         {
+
+            // TODO:  For now, limiting the number of allowed selected units to 5
+            // Until can add ability to handle the case where more than 5 unites are directed
+            // to move to the same square (i.e. add code to shunt some of the selected units off to nearby squares, since
+            // a single square can only hold 5 minigunners
+            int numMinigunnersSelected = 0;
+            int maxAllowedSelected = 5;
             foreach (Minigunner minigunner in MikeAndConquerGame.instance.gameWorld.gdiMinigunnerList)
             {
-                if (selectionBoxRectangle.Contains(minigunner.positionInWorldCoordinates))
+                if (numMinigunnersSelected < maxAllowedSelected && selectionBoxRectangle.Contains(minigunner.positionInWorldCoordinates))
                 {
                     minigunner.selected = true;
+                    numMinigunnersSelected++;
                 }
                 else
                 {

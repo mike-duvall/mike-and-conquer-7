@@ -321,9 +321,7 @@ namespace mike_and_conquer
                             MikeAndConquerGame.instance.FindMapSquare(mouseX, mouseY);
                         Point centerOfSquare = clickedBasicMapSquare.GetCenter();
                         nextMinigunner.OrderToMoveToDestination(centerOfSquare);
-//                        Point destinationPoint = clickedBasicMapSquare.GetNextAvailableMinigunnerPosition();
                         nextMinigunner.OrderToMoveToDestination(centerOfSquare);
-
                     }
                 }
             }

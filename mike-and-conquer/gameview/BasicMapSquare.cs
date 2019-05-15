@@ -17,17 +17,9 @@ namespace mike_and_conquer.gameview
     {
         public GameSprite gameSprite;
 
-
-
         Vector2 positionInWorldCoordinates;
         private int imageIndex;
         private string textureKey;
-//        private Boolean slotOccupied0 = false;
-//        private Boolean slotOccupied1 = false;
-//        private Boolean slotOccupied2 = false;
-//        private Boolean slotOccupied3 = false;
-//        private Boolean slotOccupied4 = false;
-
         private Minigunner minigunnerSlot0 = null;
         private Minigunner minigunnerSlot1 = null;
         private Minigunner minigunnerSlot2 = null;
@@ -88,6 +80,9 @@ namespace mike_and_conquer.gameview
             Point nextAvailablePosition = GetCenter();
             if (minigunnerSlot0 == null)
             {
+                // TODO:  These slot offsets where determined by trial and error.  
+                // May want to revisit and see if there is some formula
+                // that can be used to calculate them instead of hard coding them...
                 nextAvailablePosition.X = nextAvailablePosition.X + 4;
                 nextAvailablePosition.Y = nextAvailablePosition.Y - 3;
                 minigunnerSlot0 = aMinigunner;

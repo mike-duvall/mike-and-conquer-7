@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using mike_and_conquer.gameview;
 using mike_and_conquer.pathfinding;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -40,12 +39,10 @@ namespace mike_and_conquer
         public enum Command { NONE,  ATTACK_TARGET, FOLLOW_PATH };
         public Command currentCommand;
 
-
         private int destinationX;
         private int destinationY;
 
         public Vector2 DestinationPosition { get { return new Vector2(destinationX, destinationY); } }
-
 
         private List<Point> path;
 
@@ -143,7 +140,6 @@ namespace mike_and_conquer
 
             if (this.state == State.MOVING)
             {
-
                 Point centerOfDestinationSquare = path[0];
 
                 BasicMapSquare destinationBasicMapSquare =
@@ -176,6 +172,11 @@ namespace mike_and_conquer
             }
             else if (path.Count == 1)
             {
+
+                // TODO:  Currently waiting until units almost arrive to assign
+                // them slots on the destination square, but when
+                // handling more than 5 units, will probably need to assign slots
+                // when the move is initiated, rather than up on arrival
                 LandOnFinalDestinationMapSquare(gameTime);
             }
             else

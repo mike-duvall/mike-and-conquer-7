@@ -54,6 +54,8 @@ namespace mike_and_conquer
         private List<MinigunnerView> gdiMinigunnerViewList;
         private List<MinigunnerView> nodMinigunnerViewList;
 
+        private GDIBarracksView gdiBarracksView;
+
         private List<BasicMapSquare> basicMapSquareList;
 
         private List<SandbagView> sandbagViewList;
@@ -118,8 +120,8 @@ namespace mike_and_conquer
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
 
-            bool makeFullscreen = true;
-//            bool makeFullscreen = false;
+//            bool makeFullscreen = true;
+            bool makeFullscreen = false;
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;
@@ -232,7 +234,7 @@ namespace mike_and_conquer
                 AddSandbag(14, 6, 2);
                 AddSandbag(14, 7, 8);
 
-
+                gdiBarracksView = new GDIBarracksView();
 
             }
 
@@ -353,6 +355,8 @@ namespace mike_and_conquer
             textureListMap.LoadSpriteListFromShpFile(GdiMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
             textureListMap.LoadSpriteListFromShpFile(NodMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, NodMinigunnerView.SHP_FILE_COLOR_MAPPER);
             textureListMap.LoadSpriteListFromShpFile(SandbagView.SPRITE_KEY, SandbagView.SHP_FILE_NAME, SandbagView.SHP_FILE_COLOR_MAPPER);
+
+            textureListMap.LoadSpriteListFromShpFile(GDIBarracksView.SPRITE_KEY, GDIBarracksView.SHP_FILE_NAME, GDIBarracksView.SHP_FILE_COLOR_MAPPER);
 
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
@@ -652,6 +656,7 @@ namespace mike_and_conquer
 
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
+            gdiBarracksView.Draw(gameTime,spriteBatch);
 //            gameCursor.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 

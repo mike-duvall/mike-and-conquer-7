@@ -9,22 +9,22 @@ using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 namespace mike_and_conquer.gameview
 {
-    public class GDIBarracksView
+    public class MinigunnerIconView
     {
         private GameSprite gameSprite;
 //        private Sandbag mySandbag;
 
 
-        public const string SPRITE_KEY = "Barracks";
+        public const string SPRITE_KEY = "MinigunnerIcon";
 
         // TODO:  SHP_FILE_NAME and ShpFileColorMapper don't really belong in this view
         // Views should be agnostic about where the sprite data was loaded from
-        public const string SHP_FILE_NAME = "Content\\pyle.shp";
+        public const string SHP_FILE_NAME = "Content\\e1icnh.tem";
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
 
 //        public GDIBarracksView(GDIBarracks barracks)
-        public GDIBarracksView()
+        public MinigunnerIconView()
         {
 //            this.mySandbag = sandbag;
             this.gameSprite = new GameSprite(SPRITE_KEY);
@@ -44,7 +44,7 @@ namespace mike_and_conquer.gameview
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
 //            gameSprite.Draw(gameTime, spriteBatch, mySandbag.positionInWorldCoordinates);
-            gameSprite.Draw(gameTime, spriteBatch, new Vector2(200,200));
+            gameSprite.Draw(gameTime, spriteBatch, new Vector2(100,100));
         }
 
 

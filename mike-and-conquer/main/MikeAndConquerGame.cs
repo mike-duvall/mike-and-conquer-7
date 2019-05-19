@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
 using Game = Microsoft.Xna.Framework.Game;
@@ -43,6 +44,9 @@ namespace mike_and_conquer
     public class MikeAndConquerGame : Game
     {
 
+
+        private Viewport mapViewport;
+        private Viewport toolbarViewport;
         private float testRotation = 0;
         public Camera2D camera2D;
 
@@ -121,8 +125,8 @@ namespace mike_and_conquer
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
 
-//            bool makeFullscreen = true;
-            bool makeFullscreen = false;
+            bool makeFullscreen = true;
+//            bool makeFullscreen = false;
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;
@@ -244,7 +248,24 @@ namespace mike_and_conquer
             InitializeMap();
             InitializeNavigationGraph();
             gameCursor = new GameCursor(1,1);
-            this.IsMouseVisible = false;
+//            this.IsMouseVisible = false;
+
+            mapViewport = new Viewport();
+            mapViewport.X = 0;
+            mapViewport.Y = 0;
+            mapViewport.Width = (int) (GraphicsDevice.Viewport.Width * 0.8f);
+            mapViewport.Height = GraphicsDevice.Viewport.Height;
+            mapViewport.MinDepth = 0;
+            mapViewport.MaxDepth = 1;
+
+            toolbarViewport = new Viewport();
+            toolbarViewport.X = mapViewport.Width + 2;
+            toolbarViewport.Y = 0;
+            toolbarViewport.Width = GraphicsDevice.Viewport.Width - mapViewport.Width - 5;
+            toolbarViewport.Height = GraphicsDevice.Viewport.Height;
+            toolbarViewport.MinDepth = 0;
+            toolbarViewport.MaxDepth = 1;
+
 
         }
 
@@ -458,7 +479,7 @@ namespace mike_and_conquer
 
         }
 
-
+        private int mouseCounter = 0;
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -508,7 +529,24 @@ namespace mike_and_conquer
 
             this.gameWorld.Update(gameTime);
             this.camera2D.Rotation = testRotation;
-//                        testRotation += 0.05f;
+            //                        testRotation += 0.05f;
+
+
+
+            // This is a hack fix to fix an issue where if you change this.IsMouseVisible to false
+            // while the Windows pointer is showing the mouse pointer arrow with the blue sworl "busy" icon on the side
+            // it will continue to show a frozen(non moving) copy of the blue sworl "busy" icon, even after it 
+            // stops showing and updating the normal Winodws mouse pointer (in favor of my manually handled one)
+            if (mouseCounter < 20)
+            {
+                this.IsMouseVisible = true;
+                mouseCounter++;
+            }
+            else
+            {
+                this.IsMouseVisible = false;
+            }
+
 
             KeyboardState newKeyboardState = Keyboard.GetState();  // get the newest state
 
@@ -637,6 +675,10 @@ namespace mike_and_conquer
         {
             GraphicsDevice.Clear(Color.Crimson);
 
+            Viewport originalViewport = GraphicsDevice.Viewport;
+
+
+            GraphicsDevice.Viewport = mapViewport;
             Microsoft.Xna.Framework.Graphics.BlendState nullBlendState = null;
             Microsoft.Xna.Framework.Graphics.DepthStencilState nullDepthStencilState = null;
             Microsoft.Xna.Framework.Graphics.RasterizerState nullRasterizerState = null;
@@ -661,9 +703,34 @@ namespace mike_and_conquer
 
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
+
+            
             gdiBarracksView.Draw(gameTime,spriteBatch);
-            minigunnerIconView.Draw(gameTime, spriteBatch );
-//            gameCursor.Draw(gameTime, spriteBatch);
+
+            spriteBatch.End();//            gameCursor.Draw(gameTime, spriteBatch);
+
+
+            Camera2D toolBarCamera = new Camera2D(toolbarViewport);
+            toolBarCamera.Zoom = 3.0f;
+            //            this.camera2D.Zoom = 5.0f;
+            toolBarCamera.Location =
+                new Vector2(0, 0);
+
+
+            spriteBatch.Begin(
+                SpriteSortMode.Deferred,
+                nullBlendState,
+                SamplerState.PointClamp,
+                nullDepthStencilState,
+                nullRasterizerState,
+                nullEffect,
+                toolBarCamera.TransformMatrix);
+
+
+            GraphicsDevice.Viewport = toolbarViewport;
+
+            minigunnerIconView.Draw(gameTime, spriteBatch);
+
             spriteBatch.End();
 
             spriteBatch.Begin(
@@ -674,10 +741,13 @@ namespace mike_and_conquer
                 nullRasterizerState,
                 nullEffect);
 
+            GraphicsDevice.Viewport = originalViewport;
+
             gameCursor.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
 
+//            GraphicsDevice.Viewport = originalViewport;
             base.Draw(gameTime);
         }
 

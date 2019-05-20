@@ -5,6 +5,7 @@ using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
+using Point = Microsoft.Xna.Framework.Point;
 
 
 namespace mike_and_conquer.gameview
@@ -13,6 +14,8 @@ namespace mike_and_conquer.gameview
     {
         private GameSprite gameSprite;
 //        private Sandbag mySandbag;
+
+        private Point position;
 
 
         public const string SPRITE_KEY = "Barracks";
@@ -24,11 +27,12 @@ namespace mike_and_conquer.gameview
 
 
 //        public GDIBarracksView(GDIBarracks barracks)
-        public GDIBarracksView()
+        public GDIBarracksView(Point aPosition)
         {
 //            this.mySandbag = sandbag;
             this.gameSprite = new GameSprite(SPRITE_KEY);
             this.gameSprite.drawShadow = true;
+            this.position = aPosition;
             SetupAnimations();
         }
 
@@ -44,7 +48,7 @@ namespace mike_and_conquer.gameview
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
 //            gameSprite.Draw(gameTime, spriteBatch, mySandbag.positionInWorldCoordinates);
-            gameSprite.Draw(gameTime, spriteBatch, new Vector2(200,200));
+            gameSprite.Draw(gameTime, spriteBatch, new Vector2(this.position.X, this.position.Y));
         }
 
 

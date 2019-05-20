@@ -213,11 +213,11 @@ namespace mike_and_conquer
                 AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
 
 
-                AddGdiMinigunnerAtMapSquareCoordinates(new Point(15, 16));
-                AddGdiMinigunnerAtMapSquareCoordinates(new Point(16, 16));
-                AddGdiMinigunnerAtMapSquareCoordinates(new Point(17, 16));
-                AddGdiMinigunnerAtMapSquareCoordinates(new Point(17, 15));
-                AddGdiMinigunnerAtMapSquareCoordinates(new Point(18, 16));
+//                AddGdiMinigunnerAtMapSquareCoordinates(new Point(15, 16));
+//                AddGdiMinigunnerAtMapSquareCoordinates(new Point(16, 16));
+//                AddGdiMinigunnerAtMapSquareCoordinates(new Point(17, 16));
+//                AddGdiMinigunnerAtMapSquareCoordinates(new Point(17, 15));
+//                AddGdiMinigunnerAtMapSquareCoordinates(new Point(18, 16));
 
 
                 AddSandbag(10, 6, 5);
@@ -231,15 +231,17 @@ namespace mike_and_conquer
 
                 //                AddSandbag(12, 16, 10);
 
-                AddSandbag(11, 16, 2);
-                AddSandbag(12, 16, 8);
+                //                AddSandbag(11, 16, 2);
+                //                AddSandbag(12, 16, 8);
+                //
+                //
+                //                AddSandbag(14, 5, 0);
+                //                AddSandbag(14, 6, 2);
+                //                AddSandbag(14, 7, 8);
 
 
-                AddSandbag(14, 5, 0);
-                AddSandbag(14, 6, 2);
-                AddSandbag(14, 7, 8);
 
-                gdiBarracksView = new GDIBarracksView();
+                gdiBarracksView = AddGDIBarracksViewAtMapSquareCoordinates(new Point(23, 15));
                 minigunnerIconView = new MinigunnerIconView();
                 
 
@@ -406,6 +408,7 @@ namespace mike_and_conquer
         public float CalculateLeftmostScrollX()
         {
             int displayWidth = GraphicsDevice.Viewport.Width;
+//            int displayWidth = mapViewport.Width;
             int halfDisplayWidth = displayWidth / 2;
             float scaledHalfDisplayWidth = halfDisplayWidth / camera2D.Zoom;
             return scaledHalfDisplayWidth - borderSize;
@@ -416,8 +419,11 @@ namespace mike_and_conquer
             int widthOfMapSquare = 24;
             int widthOfMapInWorldSpace = MikeAndConquerGame.instance.gameMap.numColumns * widthOfMapSquare;
 
-            int displayWidth = GraphicsDevice.Viewport.Width;
+            //            int displayWidth = GraphicsDevice.Viewport.Width;
+            int displayWidth = mapViewport.Width;
             int halfDisplayWidth = displayWidth / 2;
+//            int halfDisplayWidth = (displayWidth / 2) + toolbarViewport.Width ;
+
             float scaledHalfDisplayWidth = halfDisplayWidth / camera2D.Zoom;
             float amountToScrollHorizontally = widthOfMapInWorldSpace - scaledHalfDisplayWidth;
             return amountToScrollHorizontally + borderSize;
@@ -692,15 +698,6 @@ namespace mike_and_conquer
                    nullEffect,
                    camera2D.TransformMatrix);
 
-//            spriteBatch.Begin(
-//                SpriteSortMode.Deferred,
-//                nullBlendState,
-//                SamplerState.PointClamp,
-//                nullDepthStencilState,
-//                nullRasterizerState,
-//                nullEffect,
-//                null);
-
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
 
@@ -742,6 +739,9 @@ namespace mike_and_conquer
                 nullEffect);
 
             GraphicsDevice.Viewport = originalViewport;
+
+
+            Viewport scroll not working
 
             gameCursor.Draw(gameTime, spriteBatch);
 
@@ -804,6 +804,19 @@ namespace mike_and_conquer
                 ConvertMapSquareCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
 
             return AddNodMinigunner(positionInWorldCoordinates, aiIsOn);
+        }
+
+
+        internal GDIBarracksView AddGDIBarracksViewAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
+        {
+            int xInWorldCoordinates = positionInMapSquareCoordinates.X * 24;
+            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * 24;
+
+            Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
+
+            GDIBarracksView gdiBarracksView = new GDIBarracksView(positionInWorldCoordinates);
+            return gdiBarracksView;
+
         }
 
 

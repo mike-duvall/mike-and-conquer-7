@@ -192,11 +192,12 @@ namespace mike_and_conquer
             // TODO: Add your initialization logic here
 
 
-            this.camera2D = new Camera2D(GraphicsDevice.Viewport);
-            this.camera2D.Zoom = 3.4f;
-//            this.camera2D.Zoom = 5.0f;
-            this.camera2D.Location =
-                new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
+//            this.camera2D = new Camera2D(GraphicsDevice.Viewport);
+
+//            this.camera2D.Zoom = 4.0f;
+////            this.camera2D.Zoom = 5.0f;
+//            this.camera2D.Location =
+//                new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
 
             base.Initialize();
 
@@ -259,6 +260,14 @@ namespace mike_and_conquer
             mapViewport.Height = GraphicsDevice.Viewport.Height;
             mapViewport.MinDepth = 0;
             mapViewport.MaxDepth = 1;
+
+            this.camera2D = new Camera2D(mapViewport);
+
+            this.camera2D.Zoom = 4.0f;
+            //            this.camera2D.Zoom = 5.0f;
+            this.camera2D.Location =
+                new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
+
 
             toolbarViewport = new Viewport();
             toolbarViewport.X = mapViewport.Width + 2;
@@ -407,8 +416,8 @@ namespace mike_and_conquer
 
         public float CalculateLeftmostScrollX()
         {
-            int displayWidth = GraphicsDevice.Viewport.Width;
-//            int displayWidth = mapViewport.Width;
+//            int displayWidth = GraphicsDevice.Viewport.Width;
+            int displayWidth = mapViewport.Width;
             int halfDisplayWidth = displayWidth / 2;
             float scaledHalfDisplayWidth = halfDisplayWidth / camera2D.Zoom;
             return scaledHalfDisplayWidth - borderSize;
@@ -423,6 +432,7 @@ namespace mike_and_conquer
             int displayWidth = mapViewport.Width;
             int halfDisplayWidth = displayWidth / 2;
 //            int halfDisplayWidth = (displayWidth / 2) + toolbarViewport.Width ;
+//            halfDisplayWidth += (15 * 24);
 
             float scaledHalfDisplayWidth = halfDisplayWidth / camera2D.Zoom;
             float amountToScrollHorizontally = widthOfMapInWorldSpace - scaledHalfDisplayWidth;
@@ -739,9 +749,6 @@ namespace mike_and_conquer
                 nullEffect);
 
             GraphicsDevice.Viewport = originalViewport;
-
-
-            Viewport scroll not working
 
             gameCursor.Draw(gameTime, spriteBatch);
 

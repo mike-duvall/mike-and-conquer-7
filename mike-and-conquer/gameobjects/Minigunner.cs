@@ -19,6 +19,7 @@ using Serilog;
 namespace mike_and_conquer
 { 
 
+
     public class Minigunner
     {
         public int id { get; set; }
@@ -495,7 +496,7 @@ namespace mike_and_conquer
 
         public Vector2 GetScreenPosition()
         {
-            return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.camera2D.TransformMatrix);
+            return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix);
         }
 
 

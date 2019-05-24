@@ -10,8 +10,8 @@ namespace mike_and_conquer.rest
 
         public IHttpActionResult Post([FromBody]RestPoint point)
         {
-            int screenWidth = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Width;
-            int screenHeight = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Height;
+            int screenWidth = MikeAndConquerGame.instance.defaultViewport.Width;
+            int screenHeight = MikeAndConquerGame.instance.defaultViewport.Height;
 
             MouseInputHandler.DoRightMouseClick((uint)point.x, (uint)point.y, screenWidth, screenHeight);
             return Ok();

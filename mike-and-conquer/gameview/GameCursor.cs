@@ -92,7 +92,7 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
+            float scale = MikeAndConquerGame.instance.mapViewportCamera.Zoom;
             spriteBatch.Draw(texture, position, null, Color.White, 0f, middleOfSprite, scale, SpriteEffects.None, 0f);
         }
 

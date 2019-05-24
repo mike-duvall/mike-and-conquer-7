@@ -184,14 +184,14 @@ namespace mike_and_conquer
 
         private static Point CalculateMousePositionInWorldCoordinates(MouseState newMouseState)
         {
-            float scale = MikeAndConquerGame.instance.camera2D.Zoom;
+            float scale = MikeAndConquerGame.instance.mapViewportCamera.Zoom;
             float leftMostScrollX = MikeAndConquerGame.instance.CalculateLeftmostScrollX();
             float topMostScrollY = MikeAndConquerGame.instance.CalculateTopmostScrollY();
 
-            float cameraOffsetX = MikeAndConquerGame.instance.camera2D.Location.X - leftMostScrollX;
+            float cameraOffsetX = MikeAndConquerGame.instance.mapViewportCamera.Location.X - leftMostScrollX;
             float mousePositionYInWorldCoordinates = (newMouseState.X / scale) + cameraOffsetX;
 
-            float cameraOffsetY = MikeAndConquerGame.instance.camera2D.Location.Y - topMostScrollY;
+            float cameraOffsetY = MikeAndConquerGame.instance.mapViewportCamera.Location.Y - topMostScrollY;
             float mousePositionXInWorldCoordinates = (newMouseState.Y / scale) + cameraOffsetY;
 
             Vector2 mousePositionInWorldCoordinates =
@@ -272,7 +272,7 @@ namespace mike_and_conquer
 
         internal Vector2 ConvertScreenLocationToWorldLocation(Vector2 screenLocation)
         {
-            return Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConquerGame.instance.camera2D.TransformMatrix));
+            return Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix));
         }
 
         internal void HandleLeftClick(int mouseX, int mouseY)

@@ -14,14 +14,15 @@ namespace mike_and_conquer.rest
         {
             Minigunner gdiMinigunner = GameWorld.instance.GetGdiOrNodMinigunner(restMinigunnerId.id);
         
-            Vector2 minigunnerLocation = new Microsoft.Xna.Framework.Vector2();
+            Vector2 minigunnerLocation = new Vector2();
             minigunnerLocation.X = gdiMinigunner.positionInWorldCoordinates.X;
-            minigunnerLocation.Y = gdiMinigunner.positionInWorldCoordinates.Y - 10;
+            minigunnerLocation.Y = gdiMinigunner.positionInWorldCoordinates.Y - 20;
         
             Vector2 transformedLocation = gdiMinigunner.GetScreenPosition();
-        
-            int screenWidth = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Width;
-            int screenHeight = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Height;
+
+            int screenWidth = MikeAndConquerGame.instance.defaultViewport.Width;
+            int screenHeight = MikeAndConquerGame.instance.defaultViewport.Height;
+
 
             MouseInputHandler.DoLeftMouseClick((uint)transformedLocation.X, (uint) transformedLocation.Y , screenWidth, screenHeight);
 

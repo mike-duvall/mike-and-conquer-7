@@ -8,8 +8,6 @@ using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
 using Boolean = System.Boolean;
 
 
-
-
 namespace mike_and_conquer.gameview
 {
 
@@ -20,9 +18,6 @@ namespace mike_and_conquer.gameview
         Texture2D texture;
         Texture2D boundingRectangle;
         Boolean drawBoundingRectangle;
-
-        private int worldWidth;
-        private int worldHeight;
 
         private Vector2 middleOfSprite;
 
@@ -36,8 +31,6 @@ namespace mike_and_conquer.gameview
         public UnitSelectionCursor(int x, int y)
         {
 
-            this.worldWidth = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Width;
-            this.worldHeight = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Height;
             this.texture = loadTextureFromShpFile("Content\\select.shp", 0);
 
             position = new Vector2(x, y);
@@ -106,6 +99,8 @@ namespace mike_and_conquer.gameview
             }
         }
 
+
+        // TODO Move this code somewhere more appropriate
         internal Texture2D loadTextureFromShpFile(string shpFileName, int indexOfFrameToLoad)
         {
             //if (loader.IsShpTD(stream))

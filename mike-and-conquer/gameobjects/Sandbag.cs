@@ -48,11 +48,6 @@ namespace mike_and_conquer
         }
 
 
-        //        public Vector2 GetScreenPosition()
-        //        {
-        //            return Vector2.Transform(positionInWordlCoordinates, MikeAndConquerGame.instance.camera2D.TransformMatrix);
-        //        }
-
 
         public bool ContainsPoint(Point aPoint)
         {

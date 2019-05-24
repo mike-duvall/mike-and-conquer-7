@@ -45,10 +45,12 @@ namespace mike_and_conquer
     {
 
 
+        public Viewport defaultViewport;
         private Viewport mapViewport;
         private Viewport toolbarViewport;
         private float testRotation = 0;
-        public Camera2D camera2D;
+        public Camera2D mapViewportCamera;
+        private Camera2D toolbarViewportCamera;
 
         public static MikeAndConquerGame instance;
 
@@ -177,7 +179,7 @@ namespace mike_and_conquer
 
         public static Vector2 ConvertWorldCoordinatesToScreenCoordinates(Vector2 positionInWorldCoordinates)
         {
-            return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.camera2D.TransformMatrix);
+            return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix);
         }
 
 
@@ -191,93 +193,85 @@ namespace mike_and_conquer
         {
             // TODO: Add your initialization logic here
 
-
-//            this.camera2D = new Camera2D(GraphicsDevice.Viewport);
-
-//            this.camera2D.Zoom = 4.0f;
-////            this.camera2D.Zoom = 5.0f;
-//            this.camera2D.Location =
-//                new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
-
             base.Initialize();
 
             gameWorld.Initialize(this.gameMap.numColumns, this.gameMap.numRows);
 
             if (!testMode)
             {
-                bool aiIsOn = false;
-
-                AddGdiMinigunnerAtMapSquareCoordinates(new Point(6, 1));
-
-                AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 3));
-
-                AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
-
-
-//                AddGdiMinigunnerAtMapSquareCoordinates(new Point(15, 16));
-//                AddGdiMinigunnerAtMapSquareCoordinates(new Point(16, 16));
-//                AddGdiMinigunnerAtMapSquareCoordinates(new Point(17, 16));
-//                AddGdiMinigunnerAtMapSquareCoordinates(new Point(17, 15));
-//                AddGdiMinigunnerAtMapSquareCoordinates(new Point(18, 16));
-
-
-                AddSandbag(10, 6, 5);
-                AddSandbag(10, 7, 5);
-                AddSandbag(10, 8, 5);
-                AddSandbag(10, 9, 5);
-                AddSandbag(10, 10, 5);
-
-                AddSandbag(8, 4, 10);
-                AddSandbag(9, 4, 10);
-
-                //                AddSandbag(12, 16, 10);
-
-                //                AddSandbag(11, 16, 2);
-                //                AddSandbag(12, 16, 8);
-                //
-                //
-                //                AddSandbag(14, 5, 0);
-                //                AddSandbag(14, 6, 2);
-                //                AddSandbag(14, 7, 8);
-
-
-
-                gdiBarracksView = AddGDIBarracksViewAtMapSquareCoordinates(new Point(23, 15));
-                minigunnerIconView = new MinigunnerIconView();
-                
-
+                AddTestModeObjects();
             }
 
             InitializeMap();
             InitializeNavigationGraph();
             gameCursor = new GameCursor(1,1);
-//            this.IsMouseVisible = false;
 
-            mapViewport = new Viewport();
-            mapViewport.X = 0;
-            mapViewport.Y = 0;
-            mapViewport.Width = (int) (GraphicsDevice.Viewport.Width * 0.8f);
-            mapViewport.Height = GraphicsDevice.Viewport.Height;
-            mapViewport.MinDepth = 0;
-            mapViewport.MaxDepth = 1;
+            this.defaultViewport = GraphicsDevice.Viewport;
+            SetupMapViewportAndCamera();
+            SetupToolbarViewportAndCamera();
+        }
 
-            this.camera2D = new Camera2D(mapViewport);
+        private void AddTestModeObjects()
+        {
+            bool aiIsOn = false;
 
-            this.camera2D.Zoom = 4.0f;
-            //            this.camera2D.Zoom = 5.0f;
-            this.camera2D.Location =
-                new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
+            AddGdiMinigunnerAtMapSquareCoordinates(new Point(6, 1));
 
+            AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 3));
 
+            AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
+
+            AddSandbag(10, 6, 5);
+            AddSandbag(10, 7, 5);
+            AddSandbag(10, 8, 5);
+            AddSandbag(10, 9, 5);
+            AddSandbag(10, 10, 5);
+
+            AddSandbag(8, 4, 10);
+            AddSandbag(9, 4, 10);
+
+            //                AddSandbag(12, 16, 10);
+
+            //                AddSandbag(11, 16, 2);
+            //                AddSandbag(12, 16, 8);
+            //
+            //
+            //                AddSandbag(14, 5, 0);
+            //                AddSandbag(14, 6, 2);
+            //                AddSandbag(14, 7, 8);
+            gdiBarracksView = AddGDIBarracksViewAtMapSquareCoordinates(new Point(23, 15));
+            minigunnerIconView = new MinigunnerIconView();
+        }
+
+        private void SetupToolbarViewportAndCamera()
+        {
             toolbarViewport = new Viewport();
             toolbarViewport.X = mapViewport.Width + 2;
             toolbarViewport.Y = 0;
-            toolbarViewport.Width = GraphicsDevice.Viewport.Width - mapViewport.Width - 5;
-            toolbarViewport.Height = GraphicsDevice.Viewport.Height;
+            toolbarViewport.Width = defaultViewport.Width - mapViewport.Width - 5;
+            toolbarViewport.Height = defaultViewport.Height;
             toolbarViewport.MinDepth = 0;
             toolbarViewport.MaxDepth = 1;
 
+            toolbarViewportCamera = new Camera2D(toolbarViewport);
+            toolbarViewportCamera.Zoom = 3.0f;
+            toolbarViewportCamera.Location = new Vector2(0, 0);
+        }
 
+        private void SetupMapViewportAndCamera()
+        {
+            mapViewport = new Viewport();
+            mapViewport.X = 0;
+            mapViewport.Y = 0;
+            mapViewport.Width = (int) (defaultViewport.Width * 0.8f);
+            mapViewport.Height = defaultViewport.Height;
+            mapViewport.MinDepth = 0;
+            mapViewport.MaxDepth = 1;
+
+            this.mapViewportCamera = new Camera2D(mapViewport);
+            this.mapViewportCamera.Zoom = 3.0f;
+            this.mapViewportCamera.Location =
+                new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
         }
 
 
@@ -416,11 +410,10 @@ namespace mike_and_conquer
 
         public float CalculateLeftmostScrollX()
         {
-//            int displayWidth = GraphicsDevice.Viewport.Width;
-            int displayWidth = mapViewport.Width;
-            int halfDisplayWidth = displayWidth / 2;
-            float scaledHalfDisplayWidth = halfDisplayWidth / camera2D.Zoom;
-            return scaledHalfDisplayWidth - borderSize;
+            int viewportWidth = mapViewport.Width;
+            int halfViewportWidth = viewportWidth / 2;
+            float scaledHalfViewportWidth = halfViewportWidth / mapViewportCamera.Zoom;
+            return scaledHalfViewportWidth - borderSize;
         }
 
         private float CalculateRightmostScrollX()
@@ -428,22 +421,19 @@ namespace mike_and_conquer
             int widthOfMapSquare = 24;
             int widthOfMapInWorldSpace = MikeAndConquerGame.instance.gameMap.numColumns * widthOfMapSquare;
 
-            //            int displayWidth = GraphicsDevice.Viewport.Width;
-            int displayWidth = mapViewport.Width;
-            int halfDisplayWidth = displayWidth / 2;
-//            int halfDisplayWidth = (displayWidth / 2) + toolbarViewport.Width ;
-//            halfDisplayWidth += (15 * 24);
+            int viewportWidth = mapViewport.Width;
+            int halfViewportWidth = viewportWidth / 2;
 
-            float scaledHalfDisplayWidth = halfDisplayWidth / camera2D.Zoom;
-            float amountToScrollHorizontally = widthOfMapInWorldSpace - scaledHalfDisplayWidth;
+            float scaledHalfViewportWidth = halfViewportWidth / mapViewportCamera.Zoom;
+            float amountToScrollHorizontally = widthOfMapInWorldSpace - scaledHalfViewportWidth;
             return amountToScrollHorizontally + borderSize;
         }
 
         public float CalculateTopmostScrollY()
         {
-            int viewportHeight = GraphicsDevice.Viewport.Height;
+            int viewportHeight = mapViewport.Height;
             int halfViewportHeight = viewportHeight / 2;
-            float scaledHalfViewportHeight = halfViewportHeight / camera2D.Zoom;
+            float scaledHalfViewportHeight = halfViewportHeight / mapViewportCamera.Zoom;
             return scaledHalfViewportHeight - borderSize;
         }
 
@@ -451,18 +441,18 @@ namespace mike_and_conquer
         {
             int heightOfMapSquare = 24;
             int heightOfMapInWorldSpace = MikeAndConquerGame.instance.gameMap.numRows * heightOfMapSquare;
-            int viewportHeight = GraphicsDevice.Viewport.Height;
+            int viewportHeight = mapViewport.Height;
             int halfViewportHeight = viewportHeight / 2;
-            float scaledHalfViewportHeight = halfViewportHeight / camera2D.Zoom;
+            float scaledHalfViewportHeight = halfViewportHeight / mapViewportCamera.Zoom;
             float amountToScrollVertically = heightOfMapInWorldSpace - scaledHalfViewportHeight;
             return amountToScrollVertically + borderSize;
         }
 
 
-        private void ResetCamera()
+        private void SnapMapCameraToBounds()
         {
-            float newX = this.camera2D.Location.X;
-            float newY = this.camera2D.Location.Y;
+            float newX = this.mapViewportCamera.Location.X;
+            float newY = this.mapViewportCamera.Location.Y;
 
             // TODO:  Consider if we store these as class variables
             // and only recalculate when the zoom changes
@@ -491,7 +481,7 @@ namespace mike_and_conquer
                 newY = topmostScrollY;
             }
 
-            this.camera2D.Location = new Vector2(newX, newY);
+            this.mapViewportCamera.Location = new Vector2(newX, newY);
 
         }
 
@@ -528,23 +518,23 @@ namespace mike_and_conquer
 
             if (state.IsKeyDown(Keys.I))
             {
-                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
+                this.mapViewportCamera.Location = new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
             }
             if (state.IsKeyDown(Keys.P))
             {
-                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateTopmostScrollY());
+                this.mapViewportCamera.Location = new Vector2(CalculateRightmostScrollX(), CalculateTopmostScrollY());
             }
             if (state.IsKeyDown(Keys.M))
             {
-                this.camera2D.Location = new Vector2(CalculateLeftmostScrollX(), CalculateBottommostScrollY());
+                this.mapViewportCamera.Location = new Vector2(CalculateLeftmostScrollX(), CalculateBottommostScrollY());
             }
             if (state.IsKeyDown(Keys.OemPeriod))
             {
-                this.camera2D.Location = new Vector2(CalculateRightmostScrollX(), CalculateBottommostScrollY());
+                this.mapViewportCamera.Location = new Vector2(CalculateRightmostScrollX(), CalculateBottommostScrollY());
             }
 
             this.gameWorld.Update(gameTime);
-            this.camera2D.Rotation = testRotation;
+            this.mapViewportCamera.Rotation = testRotation;
             //                        testRotation += 0.05f;
 
 
@@ -566,8 +556,8 @@ namespace mike_and_conquer
 
             KeyboardState newKeyboardState = Keyboard.GetState();  // get the newest state
 
-            int originalX = (int)this.camera2D.Location.X;
-            int originalY = (int)this.camera2D.Location.Y;
+            int originalX = (int)this.mapViewportCamera.Location.X;
+            int originalY = (int)this.mapViewportCamera.Location.Y;
 
 
             HandleMapScrolling(originalY, originalX, newKeyboardState);
@@ -586,59 +576,59 @@ namespace mike_and_conquer
             Microsoft.Xna.Framework.Input.MouseState mouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
 
             float zoomChangeAmount = 0.2f;
-            if (mouseState.Position.X > GraphicsDevice.Viewport.Width - mouseScrollThreshold)
+            if (mouseState.Position.X > defaultViewport.Width - mouseScrollThreshold)
             {
-                int newX = (int) (this.camera2D.Location.X + 2);
-                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
+                int newX = (int) (this.mapViewportCamera.Location.X + 2);
+                this.mapViewportCamera.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
             else if (mouseState.Position.X < mouseScrollThreshold)
             {
-                int newX = (int) (this.camera2D.Location.X - 2);
-                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
+                int newX = (int) (this.mapViewportCamera.Location.X - 2);
+                this.mapViewportCamera.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
-            else if (mouseState.Position.Y > GraphicsDevice.Viewport.Height - mouseScrollThreshold)
+            else if (mouseState.Position.Y > defaultViewport.Height - mouseScrollThreshold)
             {
-                int newY = (int) (this.camera2D.Location.Y + 2);
-                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
+                int newY = (int) (this.mapViewportCamera.Location.Y + 2);
+                this.mapViewportCamera.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
             else if (mouseState.Position.Y < mouseScrollThreshold)
             {
-                int newY = (int) (this.camera2D.Location.Y - 2);
-                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
+                int newY = (int) (this.mapViewportCamera.Location.Y - 2);
+                this.mapViewportCamera.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
 
             else if (oldKeyboardState.IsKeyUp(Keys.Right) && newKeyboardState.IsKeyDown(Keys.Right))
             {
-                int newX = (int) (this.camera2D.Location.X + scrollAmount);
-                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
+                int newX = (int) (this.mapViewportCamera.Location.X + scrollAmount);
+                this.mapViewportCamera.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
             else if (oldKeyboardState.IsKeyUp(Keys.Left) && newKeyboardState.IsKeyDown(Keys.Left))
             {
-                int newX = (int) (this.camera2D.Location.X - scrollAmount);
-                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
+                int newX = (int) (this.mapViewportCamera.Location.X - scrollAmount);
+                this.mapViewportCamera.Location = new Microsoft.Xna.Framework.Vector2(newX, originalY);
             }
             else if (oldKeyboardState.IsKeyUp(Keys.Down) && newKeyboardState.IsKeyDown(Keys.Down))
             {
-                int newY = (int) (this.camera2D.Location.Y + scrollAmount);
-                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
+                int newY = (int) (this.mapViewportCamera.Location.Y + scrollAmount);
+                this.mapViewportCamera.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
             else if (oldKeyboardState.IsKeyUp(Keys.Up) && newKeyboardState.IsKeyDown(Keys.Up))
             {
-                int newY = (int) (this.camera2D.Location.Y - scrollAmount);
-                this.camera2D.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
+                int newY = (int) (this.mapViewportCamera.Location.Y - scrollAmount);
+                this.mapViewportCamera.Location = new Microsoft.Xna.Framework.Vector2(originalX, newY);
             }
             else if (oldKeyboardState.IsKeyUp(Keys.OemPlus) && newKeyboardState.IsKeyDown(Keys.OemPlus))
             {
-                float newZoom = this.camera2D.Zoom + zoomChangeAmount;
-                this.camera2D.Zoom = newZoom;
+                float newZoom = this.mapViewportCamera.Zoom + zoomChangeAmount;
+                this.mapViewportCamera.Zoom = newZoom;
             }
             else if (oldKeyboardState.IsKeyUp(Keys.OemMinus) && newKeyboardState.IsKeyDown(Keys.OemMinus))
             {
-                float newZoom = this.camera2D.Zoom - zoomChangeAmount;
-                this.camera2D.Zoom = newZoom;
+                float newZoom = this.mapViewportCamera.Zoom - zoomChangeAmount;
+                this.mapViewportCamera.Zoom = newZoom;
             }
 
-            ResetCamera();
+            SnapMapCameraToBounds();
         }
 
         private void SwitchToNewGameStateViewIfNeeded()
@@ -691,38 +681,42 @@ namespace mike_and_conquer
         {
             GraphicsDevice.Clear(Color.Crimson);
 
-            Viewport originalViewport = GraphicsDevice.Viewport;
+            DrawMap(gameTime);
+            DrawToolbar(gameTime);
+            DrawGameCursor(gameTime);
 
+            GraphicsDevice.Viewport = defaultViewport;
+            base.Draw(gameTime);
+        }
 
+        private void DrawMap(GameTime gameTime)
+        {
             GraphicsDevice.Viewport = mapViewport;
-            Microsoft.Xna.Framework.Graphics.BlendState nullBlendState = null;
-            Microsoft.Xna.Framework.Graphics.DepthStencilState nullDepthStencilState = null;
-            Microsoft.Xna.Framework.Graphics.RasterizerState nullRasterizerState = null;
-            Microsoft.Xna.Framework.Graphics.Effect nullEffect = null;
+            const BlendState nullBlendState = null;
+            const DepthStencilState nullDepthStencilState = null;
+            const RasterizerState nullRasterizerState = null;
+            const Effect nullEffect = null;
             spriteBatch.Begin(
-                   SpriteSortMode.Deferred,
-                   nullBlendState,
-                   SamplerState.PointClamp,
-                   nullDepthStencilState,
-                   nullRasterizerState,
-                   nullEffect,
-                   camera2D.TransformMatrix);
-
+                SpriteSortMode.Deferred,
+                nullBlendState,
+                SamplerState.PointClamp,
+                nullDepthStencilState,
+                nullRasterizerState,
+                nullEffect,
+                mapViewportCamera.TransformMatrix);
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
+            gdiBarracksView.Draw(gameTime, spriteBatch);
+            spriteBatch.End();
+        }
 
-            
-            gdiBarracksView.Draw(gameTime,spriteBatch);
-
-            spriteBatch.End();//            gameCursor.Draw(gameTime, spriteBatch);
-
-
-            Camera2D toolBarCamera = new Camera2D(toolbarViewport);
-            toolBarCamera.Zoom = 3.0f;
-            //            this.camera2D.Zoom = 5.0f;
-            toolBarCamera.Location =
-                new Vector2(0, 0);
-
+        private void DrawToolbar(GameTime gameTime)
+        {
+            GraphicsDevice.Viewport = toolbarViewport;
+            const BlendState nullBlendState = null;
+            const DepthStencilState nullDepthStencilState = null;
+            const RasterizerState nullRasterizerState = null;
+            const Effect nullEffect = null;
 
             spriteBatch.Begin(
                 SpriteSortMode.Deferred,
@@ -731,14 +725,18 @@ namespace mike_and_conquer
                 nullDepthStencilState,
                 nullRasterizerState,
                 nullEffect,
-                toolBarCamera.TransformMatrix);
-
-
-            GraphicsDevice.Viewport = toolbarViewport;
-
+                toolbarViewportCamera.TransformMatrix);
             minigunnerIconView.Draw(gameTime, spriteBatch);
-
             spriteBatch.End();
+        }
+
+        private void DrawGameCursor(GameTime gameTime)
+        {
+            GraphicsDevice.Viewport = defaultViewport;
+            const BlendState nullBlendState = null;
+            const DepthStencilState nullDepthStencilState = null;
+            const RasterizerState nullRasterizerState = null;
+            const Effect nullEffect = null;
 
             spriteBatch.Begin(
                 SpriteSortMode.Deferred,
@@ -747,15 +745,10 @@ namespace mike_and_conquer
                 nullDepthStencilState,
                 nullRasterizerState,
                 nullEffect);
-
-            GraphicsDevice.Viewport = originalViewport;
-
             gameCursor.Draw(gameTime, spriteBatch);
-
             spriteBatch.End();
 
-//            GraphicsDevice.Viewport = originalViewport;
-            base.Draw(gameTime);
+
         }
 
 

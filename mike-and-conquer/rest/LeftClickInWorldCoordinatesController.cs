@@ -11,8 +11,8 @@ namespace mike_and_conquer.rest
 
         public IHttpActionResult Post([FromBody]RestPoint point)
         {
-            int screenWidth = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Width;
-            int screenHeight = MikeAndConquerGame.instance.GraphicsDevice.Viewport.Height;
+            int screenWidth = MikeAndConquerGame.instance.defaultViewport.Width;
+            int screenHeight = MikeAndConquerGame.instance.defaultViewport.Height;
 
             Vector2 locationInWorldCoordinates = new Vector2(point.x, point.y);
             Vector2 locationInScreenCoordinates = MikeAndConquerGame.ConvertWorldCoordinatesToScreenCoordinates(locationInWorldCoordinates);

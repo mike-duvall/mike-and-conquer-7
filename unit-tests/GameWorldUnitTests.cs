@@ -205,10 +205,12 @@ namespace unit_tests
                 {
                     if (nodeArray[y, x] == 1)
                     {
-                        graph.UpdateNode(x, y, 1);
+                        graph.AddNode(x, y, 1);
                     }
                 }
             }
+
+            graph.RebuildAdajencyGraph();
         }
 
         private Point ConvertMapSquareCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)

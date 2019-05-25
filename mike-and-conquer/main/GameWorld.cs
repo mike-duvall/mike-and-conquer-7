@@ -34,6 +34,14 @@ namespace mike_and_conquer
 
         public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
 
+        private List<BasicMapSquare> basicMapSquareList;
+
+        public List<BasicMapSquare> BasicMapSquareList
+        {
+            get { return basicMapSquareList; }
+        }
+
+
 
         private GameState currentGameState;
 
@@ -49,6 +57,8 @@ namespace mike_and_conquer
             gameEvents = new List<AsyncGameEvent>();
 
             nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
+
+            basicMapSquareList = new List<BasicMapSquare>();
 
             GameWorld.instance = this;
         }
@@ -145,7 +155,7 @@ namespace mike_and_conquer
 
         private static void AssertIsValidMinigunnerPosition(Point positionInWorldCoordinates)
         {
-            foreach (BasicMapSquare nexBasicMapSquare in MikeAndConquerGame.instance.BasicMapSquareList)
+            foreach (BasicMapSquare nexBasicMapSquare in GameWorld.instance.BasicMapSquareList)
             {
                 if (nexBasicMapSquare.ContainsPoint(positionInWorldCoordinates) &&
                     nexBasicMapSquare.IsBlockingTerrain())
@@ -299,6 +309,20 @@ namespace mike_and_conquer
             }
 
             return gameEvent.GetGameState();
+        }
+
+        public BasicMapSquare FindMapSquare(int xWorldCoordinate, int yWorldCoordinate)
+        {
+        
+            foreach (BasicMapSquare nextBasicMapSquare in this.BasicMapSquareList)
+            {
+                if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
+                {
+                    return nextBasicMapSquare;
+                }
+            }
+            throw new Exception("Unable to find BasicMapSquare at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
+        
         }
 
 

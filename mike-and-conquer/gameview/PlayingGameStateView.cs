@@ -10,9 +10,9 @@ namespace mike_and_conquer.gameview
     {
         public override  void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            foreach (BasicMapSquare basicMapSquare in MikeAndConquerGame.instance.BasicMapSquareList)
+            foreach (BasicMapSquareView basicMapSquareView in MikeAndConquerGame.instance.BasicMapSquareViewList)
             {
-                basicMapSquare.Draw(gameTime, spriteBatch);
+                basicMapSquareView.Draw(gameTime, spriteBatch);
             }
 
 

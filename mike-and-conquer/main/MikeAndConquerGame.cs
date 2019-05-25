@@ -63,7 +63,8 @@ namespace mike_and_conquer
         private GDIBarracksView gdiBarracksView;
         private MinigunnerIconView minigunnerIconView;
 
-        private List<BasicMapSquare> basicMapSquareList;
+//        private List<BasicMapSquare> basicMapSquareList;
+        private List<BasicMapSquareView> basicMapSquareViewList;
 
         private List<SandbagView> sandbagViewList;
 
@@ -73,10 +74,17 @@ namespace mike_and_conquer
 
         public UnitSelectionBox unitSelectionBox;
 
-        public List<BasicMapSquare> BasicMapSquareList
+        //        public List<BasicMapSquare> BasicMapSquareList
+        //        {
+        //            get { return basicMapSquareList; }
+        //        }
+
+
+        public List<BasicMapSquareView> BasicMapSquareViewList
         {
-            get { return basicMapSquareList; }
+            get { return basicMapSquareViewList; }
         }
+
 
         public List<MinigunnerView> GdiMinigunnerViewList
         {
@@ -155,7 +163,8 @@ namespace mike_and_conquer
             gameWorld = new GameWorld();
 
 
-            basicMapSquareList = new List<BasicMapSquare>();
+            //            basicMapSquareList = new List<BasicMapSquare>();
+            basicMapSquareViewList = new List<BasicMapSquareView>();
 
             gdiMinigunnerViewList = new List<MinigunnerView>();
             nodMinigunnerViewList = new List<MinigunnerView>();
@@ -291,7 +300,7 @@ namespace mike_and_conquer
             }
 
 
-            foreach (BasicMapSquare nextBasicMapSquare in this.BasicMapSquareList)
+            foreach (BasicMapSquare nextBasicMapSquare in this.gameWorld.BasicMapSquareList)
             {
                 if (nextBasicMapSquare.IsBlockingTerrain())
                 {
@@ -322,8 +331,11 @@ namespace mike_and_conquer
                 MapTile nextMapTile = gameMap.MapTiles[i];
                 BasicMapSquare basicMapSquare =
                     new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex);
+                this.gameWorld.BasicMapSquareList.Add(basicMapSquare);
 
-                BasicMapSquareList.Add(basicMapSquare);
+                BasicMapSquareView basicMapSquareView = new BasicMapSquareView(basicMapSquare);
+                this.basicMapSquareViewList.Add(basicMapSquareView);
+
 
                 x = x + 24;
             
@@ -861,19 +873,36 @@ namespace mike_and_conquer
         }
 
 
-        public BasicMapSquare FindMapSquare(int xWorldCoordinate, int yWorldCoordinate)
+        //        public BasicMapSquare FindMapSquare(int xWorldCoordinate, int yWorldCoordinate)
+        //        {
+        //
+        //            foreach (BasicMapSquare nextBasicMapSquare in this.gameWorld.BasicMapSquareList)
+        //            {
+        //                if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
+        //                {
+        //                    return nextBasicMapSquare;
+        //                }
+        //            }
+        //            throw new Exception("Unable to find BasicMapSquare at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
+        //
+        //        }
+
+        public BasicMapSquareView FindMapSquareView(int xWorldCoordinate, int yWorldCoordinate)
         {
 
-            foreach (BasicMapSquare nextBasicMapSquare in basicMapSquareList)
+            foreach (BasicMapSquareView nextBasicMapSquareView in this.basicMapSquareViewList)
             {
-                if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
+                BasicMapSquare basicMapSquare = nextBasicMapSquareView.myBasicMapSquare;
+                if (basicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
                 {
-                    return nextBasicMapSquare;
+                    return nextBasicMapSquareView;
                 }
             }
             throw new Exception("Unable to find BasicMapSquare at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
 
         }
+
+
     }
 
 }

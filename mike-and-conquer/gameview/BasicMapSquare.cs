@@ -1,6 +1,5 @@
 ﻿
 
-using System;
 using System.Linq;
 using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 
@@ -15,11 +14,46 @@ namespace mike_and_conquer.gameview
 {
     public class BasicMapSquare
     {
-        public GameSprite gameSprite;
+//        public GameSprite gameSprite;
 
         Vector2 positionInWorldCoordinates;
         private int imageIndex;
+
+        public Vector2 PositionInWorldCoordinates
+        {
+            get { return positionInWorldCoordinates; }
+            set { positionInWorldCoordinates = value; }
+        }
+
+
+        public int ImageIndex
+        {
+            get
+            {
+                return imageIndex;
+            }
+            set
+            {
+                imageIndex = value;
+            }
+        }
+
+
         private string textureKey;
+
+        public string TextureKey
+        {
+            get
+            {
+                return textureKey;
+            }
+            set
+            {
+                textureKey = value;
+            }
+        }
+
+
         private Minigunner minigunnerSlot0 = null;
         private Minigunner minigunnerSlot1 = null;
         private Minigunner minigunnerSlot2 = null;
@@ -29,34 +63,34 @@ namespace mike_and_conquer.gameview
         public BasicMapSquare(int x, int y, string textureKey, int imageIndex )
         {
             this.positionInWorldCoordinates = new Vector2(x,y);
-            this.gameSprite = new GameSprite(textureKey);
-            this.gameSprite.drawBoundingRectangle = false;
+//            this.gameSprite = new GameSprite(textureKey);
+//            this.gameSprite.drawBoundingRectangle = false;
             this.imageIndex = imageIndex;
             this.textureKey = textureKey;
-            SetupAnimations();
+//            SetupAnimations();
         }
 
 
-        internal int GetPaletteIndexOfCoordinate(int x, int y)
-        {
-            SpriteTextureList list = MikeAndConquerGame.instance.TextureListMap.GetTextureList(textureKey);
-            ShpFileImage shpFileImage = list.shpFileImageList[imageIndex];
+//        internal int GetPaletteIndexOfCoordinate(int x, int y)
+//        {
+//            SpriteTextureList list = MikeAndConquerGame.instance.TextureListMap.GetTextureList(textureKey);
+//            ShpFileImage shpFileImage = list.shpFileImageList[imageIndex];
+//
+//            int frameDataIndex = y * list.textureWidth + x;
+//            return shpFileImage.frameData[frameDataIndex];
+//        }
 
-            int frameDataIndex = y * list.textureWidth + x;
-            return shpFileImage.frameData[frameDataIndex];
-        }
-
-        private void SetupAnimations()
-        {
-            AnimationSequence animationSequence = new AnimationSequence(1);
-            animationSequence.AddFrame(imageIndex);
-            gameSprite.AddAnimationSequence(0, animationSequence);
-        }
-
-        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            gameSprite.Draw(gameTime, spriteBatch, this.positionInWorldCoordinates);
-        }
+//        private void SetupAnimations()
+//        {
+//            AnimationSequence animationSequence = new AnimationSequence(1);
+//            animationSequence.AddFrame(imageIndex);
+//            gameSprite.AddAnimationSequence(0, animationSequence);
+//        }
+//
+//        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+//        {
+//            gameSprite.Draw(gameTime, spriteBatch, this.positionInWorldCoordinates);
+//        }
 
 
         public bool ContainsPoint(Point aPoint)

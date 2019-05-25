@@ -47,11 +47,7 @@ namespace mike_and_conquer.pathfinding
 
         }
 
-        //        public void AddNode(int xInMapSquareCoordinates, int yInMapSquareCoordinates, int newValue)
-        //        {
-        //            this.nodeArray[xInMapSquareCoordinates, yInMapSquareCoordinates] = newValue;
-        //        }
-
+  
         public void MakeNodeBlockingNode(int xInMapSquareCoordinates, int yInMapSquareCoordinates)
         {
             this.nodeArray[xInMapSquareCoordinates, yInMapSquareCoordinates] = 1;

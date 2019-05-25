@@ -287,7 +287,7 @@ namespace mike_and_conquer
 
             foreach (Sandbag nextSandbag in gameWorld.sandbagList)
             {
-                gameWorld.navigationGraph.AddNode(nextSandbag.GetMapSquareX(), nextSandbag.GetMapSquareY(), 1);
+                gameWorld.navigationGraph.MakeNodeBlockingNode(nextSandbag.GetMapSquareX(), nextSandbag.GetMapSquareY());
             }
 
 
@@ -296,7 +296,7 @@ namespace mike_and_conquer
                 if (nextBasicMapSquare.IsBlockingTerrain())
                 {
 //                    nextBasicMapSquare.gameSprite.drawBoundingRectangle = true;
-                    gameWorld.navigationGraph.AddNode(nextBasicMapSquare.GetMapSquareX(), nextBasicMapSquare.GetMapSquareY(), 1);
+                    gameWorld.navigationGraph.MakeNodeBlockingNode(nextBasicMapSquare.GetMapSquareX(), nextBasicMapSquare.GetMapSquareY());
                 }
             }
 

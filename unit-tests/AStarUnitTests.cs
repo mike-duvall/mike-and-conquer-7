@@ -72,7 +72,8 @@ namespace unit_tests
 //            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(3, 3);
 
-            graph.UpdateNode(1,1,1);
+            graph.MakeNodeBlockingNode(1,1);
+            graph.RebuildAdajencyGraph();
 
             // when
             Path foundPath = aStar.FindPath(graph, 0, 8);
@@ -112,9 +113,10 @@ namespace unit_tests
 
 //            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(3, 3);
-            graph.UpdateNode(2, 0, 1);
-            graph.UpdateNode(1, 1, 1);
-            graph.UpdateNode(2, 1, 1);
+            graph.MakeNodeBlockingNode(2, 0);
+            graph.MakeNodeBlockingNode(1, 1);
+            graph.MakeNodeBlockingNode(2, 1);
+            graph.RebuildAdajencyGraph();
 
             // when
             Path foundPath = aStar.FindPath(graph, 0, 8);
@@ -155,9 +157,10 @@ namespace unit_tests
 //            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(5,3);
 
-            graph.UpdateNode(1, 1, 1);
-            graph.UpdateNode(2, 1, 1);
-            graph.UpdateNode(3, 1, 1);
+            graph.MakeNodeBlockingNode(1, 1);
+            graph.MakeNodeBlockingNode(2, 1);
+            graph.MakeNodeBlockingNode(3, 1);
+            graph.RebuildAdajencyGraph();
 
             // when
             Point startPoint = new Point(2, 0);
@@ -202,9 +205,10 @@ namespace unit_tests
 
             //            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(26, 24);
-            graph.UpdateNode(1, 1, 1);
-            graph.UpdateNode(2, 1, 1);
-            graph.UpdateNode(3, 1, 1);
+            graph.MakeNodeBlockingNode(1, 1);
+            graph.MakeNodeBlockingNode(2, 1);
+            graph.MakeNodeBlockingNode(3, 1);
+            graph.RebuildAdajencyGraph();
 
             // when
             Point startPoint = new Point(2, 0);

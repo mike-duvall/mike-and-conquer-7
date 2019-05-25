@@ -12,18 +12,14 @@ namespace unit_tests
 
 
         [TestMethod]
-        public void BasicPathfindingTest1()
+        public void ShouldHaveCorrectConnectedNodes1()
         {
             // given
-
-            int[,] nodeArray = new int[3, 3];
 //          0, 0, 0
 //          0, 0, 0
 //          0, 0, 0
 
-//            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(3,3);
-
 
             // then
             Node node = graph.nodeList[0];
@@ -105,20 +101,17 @@ namespace unit_tests
 
 
         [TestMethod]
-        public void BasicPathfindingTest2()
+        public void ShouldHaveCorrectConnectedNodes2()
         {
             // given
 
-//            int[,] nodeArray = new int[3, 3];
 //          0, 0, 0
 //          0, 1, 0
 //          0, 0, 0
-//            nodeArray[1, 1] = 1;
 
-//            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(3, 3);
 
-            graph.AddNode(1, 1, 1);
+            graph.MakeNodeBlockingNode(1, 1);
             graph.RebuildAdajencyGraph();
 
 
@@ -187,23 +180,18 @@ namespace unit_tests
 
 
         [TestMethod]
-        public void BasicPathfindingTest3()
+        public void ShouldHaveCorrectConnectedNodes3()
         {
             // given
-//            int[,] nodeArray = new int[3, 3];
 //          0, 0, 1
 //          0, 1, 1
 //          0, 0, 0
-//            nodeArray[2, 0] = 1;
-//            nodeArray[1, 1] = 1;
-//            nodeArray[2, 1] = 1;
 
-//            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(3,3);
 
-            graph.AddNode(2, 0, 1);
-            graph.AddNode(1, 1, 1);
-            graph.AddNode(2, 1, 1);
+            graph.MakeNodeBlockingNode(2, 0);
+            graph.MakeNodeBlockingNode(1, 1);
+            graph.MakeNodeBlockingNode(2, 1);
             graph.RebuildAdajencyGraph();
 
             // then
@@ -262,31 +250,19 @@ namespace unit_tests
 
 
         [TestMethod]
-        public void AsymmetricGraphTest1()
+        public void ShouldHaveCorrectConnectedNodesWithAsymmetricGraph1()
         {
             // given
-//            AStar aStar = new AStar();
-
-            // and
-            //  0, 0, S, 0, 0
+            //  0, 0, 0, 0, 0
             //  0, 1, 1, 1, 0
-            //  0, 0, E, 0, 0
-            //  .
-            //  .
-
-//            int[,] nodeArray = new int[5, 3];
-//
-//            nodeArray[1, 1] = 1;
-//            nodeArray[2, 1] = 1;
-//            nodeArray[3, 1] = 1;
+            //  0, 0, 0, 0, 0
 
             // when
-//            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(5,3);
 
-            graph.AddNode(1, 1, 1);
-            graph.AddNode(2, 1, 1);
-            graph.AddNode(3, 1, 1);
+            graph.MakeNodeBlockingNode(1, 1);
+            graph.MakeNodeBlockingNode(2, 1);
+            graph.MakeNodeBlockingNode(3, 1);
             graph.RebuildAdajencyGraph();
 
 
@@ -370,32 +346,22 @@ namespace unit_tests
 
 
         [TestMethod]
-        public void AsymmetricGraphTest2()
+        public void ShouldHaveCorrectConnectedNodesWithAsymmetricGraph2()
         {
             // given
-//            AStar aStar = new AStar();
-
-            // and
-            //  0, 0, S, 0, 0
-            //  0, 1, 1, 1, 0
-            //  0, 0, E, 0, 0
+            //  0, 0, 0, 0, 0, ... 26 columns
+            //  0, 1, 1, 1, 0, ...
+            //  0, 0, 0, 0, 0, ...
             //  .
             //  .
+            // 24 rows
 
-//            int[,] nodeArray = new int[26, 24];
-//
-//            nodeArray[1, 1] = 1;
-//            nodeArray[2, 1] = 1;
-//            nodeArray[3, 1] = 1;
-
-            // when
-//            Graph graph = new Graph(nodeArray);
             Graph graph = new Graph(26, 24);
 
 
-            graph.AddNode(1, 1, 1);
-            graph.AddNode(2, 1, 1);
-            graph.AddNode(3, 1, 1);
+            graph.MakeNodeBlockingNode(1, 1);
+            graph.MakeNodeBlockingNode(2, 1);
+            graph.MakeNodeBlockingNode(3, 1);
             graph.RebuildAdajencyGraph();
 
             // then

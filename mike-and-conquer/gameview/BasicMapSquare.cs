@@ -14,8 +14,6 @@ namespace mike_and_conquer.gameview
 {
     public class BasicMapSquare
     {
-//        public GameSprite gameSprite;
-
         Vector2 positionInWorldCoordinates;
         private int imageIndex;
 
@@ -24,7 +22,6 @@ namespace mike_and_conquer.gameview
             get { return positionInWorldCoordinates; }
             set { positionInWorldCoordinates = value; }
         }
-
 
         public int ImageIndex
         {
@@ -63,35 +60,9 @@ namespace mike_and_conquer.gameview
         public BasicMapSquare(int x, int y, string textureKey, int imageIndex )
         {
             this.positionInWorldCoordinates = new Vector2(x,y);
-//            this.gameSprite = new GameSprite(textureKey);
-//            this.gameSprite.drawBoundingRectangle = false;
             this.imageIndex = imageIndex;
             this.textureKey = textureKey;
-//            SetupAnimations();
         }
-
-
-//        internal int GetPaletteIndexOfCoordinate(int x, int y)
-//        {
-//            SpriteTextureList list = MikeAndConquerGame.instance.TextureListMap.GetTextureList(textureKey);
-//            ShpFileImage shpFileImage = list.shpFileImageList[imageIndex];
-//
-//            int frameDataIndex = y * list.textureWidth + x;
-//            return shpFileImage.frameData[frameDataIndex];
-//        }
-
-//        private void SetupAnimations()
-//        {
-//            AnimationSequence animationSequence = new AnimationSequence(1);
-//            animationSequence.AddFrame(imageIndex);
-//            gameSprite.AddAnimationSequence(0, animationSequence);
-//        }
-//
-//        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-//        {
-//            gameSprite.Draw(gameTime, spriteBatch, this.positionInWorldCoordinates);
-//        }
-
 
         public bool ContainsPoint(Point aPoint)
         {
@@ -179,7 +150,8 @@ namespace mike_and_conquer.gameview
         public bool IsBlockingTerrain()
         {
 
-            Dictionary<string, int[]> blockingTerrainMap = MikeAndConquerGame.instance.gameMap.blockingTerrainMap;
+            // TODO: Make BasicMapSquare initialized with flag of whether it's blocking or not
+            Dictionary<string, int[]> blockingTerrainMap = GameWorld.instance.gameMap.blockingTerrainMap;
 
             if (blockingTerrainMap.ContainsKey(textureKey))
             {

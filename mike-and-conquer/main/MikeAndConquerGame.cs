@@ -25,8 +25,8 @@ using SandbagView = mike_and_conquer.gameview.SandbagView;
 using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
 
 
-using FileStream = System.IO.FileStream;
-using FileMode = System.IO.FileMode;
+//using FileStream = System.IO.FileStream;
+//using FileMode = System.IO.FileMode;
 
 using Camera2D = mike_and_conquer_6.Camera2D;
 
@@ -63,7 +63,6 @@ namespace mike_and_conquer
         private GDIBarracksView gdiBarracksView;
         private MinigunnerIconView minigunnerIconView;
 
-//        private List<BasicMapSquare> basicMapSquareList;
         private List<BasicMapSquareView> basicMapSquareViewList;
 
         private List<SandbagView> sandbagViewList;
@@ -73,12 +72,6 @@ namespace mike_and_conquer
         public GameCursor gameCursor;
 
         public UnitSelectionBox unitSelectionBox;
-
-        //        public List<BasicMapSquare> BasicMapSquareList
-        //        {
-        //            get { return basicMapSquareList; }
-        //        }
-
 
         public List<BasicMapSquareView> BasicMapSquareViewList
         {
@@ -113,7 +106,7 @@ namespace mike_and_conquer
 
         private bool testMode;
 
-        public GameMap gameMap;
+//        public GameMap gameMap;
 
         private int borderSize = 0;
 
@@ -162,8 +155,6 @@ namespace mike_and_conquer
 
             gameWorld = new GameWorld();
 
-
-            //            basicMapSquareList = new List<BasicMapSquare>();
             basicMapSquareViewList = new List<BasicMapSquareView>();
 
             gdiMinigunnerViewList = new List<MinigunnerView>();
@@ -204,15 +195,16 @@ namespace mike_and_conquer
 
             base.Initialize();
 
-            gameWorld.Initialize(this.gameMap.numColumns, this.gameMap.numRows);
+            gameWorld.Initialize();
 
             if (!testMode)
             {
                 AddTestModeObjects();
             }
 
-            InitializeMap();
-            InitializeNavigationGraph();
+            gameWorld.InitializeMap();
+            CreateBasicMapSquareViews();
+            gameWorld.InitializeNavigationGraph();
             gameCursor = new GameCursor(1,1);
 
             this.defaultViewport = GraphicsDevice.Viewport;
@@ -283,37 +275,43 @@ namespace mike_and_conquer
                 new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
         }
 
+//        private void InitializeMap()
+//        {
+//            //  (Starting at 0x13CC in the file)
+//            //    Trees appear to be SHP vs TMP?
+//            //    Map file only references TMP ?
+//            //    What about placement of initial troops?
+//            //    Sandbags
+//
+//            int x = 12;
+//            int y = 12;
+//
+//            int numSquares = gameMap.MapTiles.Count;
+//            for (int i = 0; i < numSquares; i++)
+//            {
+//            
+//                MapTile nextMapTile = gameMap.MapTiles[i];
+//                BasicMapSquare basicMapSquare =
+//                    new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex);
+//                this.gameWorld.BasicMapSquareList.Add(basicMapSquare);
+//
+////                BasicMapSquareView basicMapSquareView = new BasicMapSquareView(basicMapSquare);
+////                this.basicMapSquareViewList.Add(basicMapSquareView);
+//
+//
+//                x = x + 24;
+//            
+//                bool incrementRow = ((i + 1) % 26) == 0;
+//                if (incrementRow)
+//                {
+//                    x = 12;
+//                    y = y + 24;
+//                }
+//            }
+//
+//        }
 
-        private void InitializeNavigationGraph()
-        {
-            // TODO:  Fix this.  This code should be in GameWorld, not MikeAndConquerGame
-            // but has to be here for now, since BasicMapSquareList is in MikeAndConquerGame
-            // Need to separate out view of BasicMapSquare into a BasicMapSquareView
-            // And let GameWorld hold BasicMapSquareList(with no view data, just
-            // the terrain type and whether it's blocking or not, etc
-
-            gameWorld.navigationGraph.Reset();
-
-            foreach (Sandbag nextSandbag in gameWorld.sandbagList)
-            {
-                gameWorld.navigationGraph.MakeNodeBlockingNode(nextSandbag.GetMapSquareX(), nextSandbag.GetMapSquareY());
-            }
-
-
-            foreach (BasicMapSquare nextBasicMapSquare in this.gameWorld.BasicMapSquareList)
-            {
-                if (nextBasicMapSquare.IsBlockingTerrain())
-                {
-//                    nextBasicMapSquare.gameSprite.drawBoundingRectangle = true;
-                    gameWorld.navigationGraph.MakeNodeBlockingNode(nextBasicMapSquare.GetMapSquareX(), nextBasicMapSquare.GetMapSquareY());
-                }
-            }
-
-            gameWorld.navigationGraph.RebuildAdajencyGraph();
-
-        }
-
-        private void InitializeMap()
+        private void CreateBasicMapSquareViews()
         {
             //  (Starting at 0x13CC in the file)
             //    Trees appear to be SHP vs TMP?
@@ -321,48 +319,27 @@ namespace mike_and_conquer
             //    What about placement of initial troops?
             //    Sandbags
 
-            int x = 12;
-            int y = 12;
-
-            int numSquares = gameMap.MapTiles.Count;
-            for (int i = 0; i < numSquares; i++)
+            foreach(BasicMapSquare basicMapSquare in this.gameWorld.BasicMapSquareList)
             {
-            
-                MapTile nextMapTile = gameMap.MapTiles[i];
-                BasicMapSquare basicMapSquare =
-                    new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex);
-                this.gameWorld.BasicMapSquareList.Add(basicMapSquare);
-
                 BasicMapSquareView basicMapSquareView = new BasicMapSquareView(basicMapSquare);
                 this.basicMapSquareViewList.Add(basicMapSquareView);
-
-
-                x = x + 24;
-            
-                bool incrementRow = ((i + 1) % 26) == 0;
-                if (incrementRow)
-                {
-                    x = 12;
-                    y = y + 24;
-                }
             }
 
         }
 
 
-
-        private void LoadMap()
-        {
-
-            System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
-
-            int startX = 36;
-            int startY = 39;
-            int endX = 61;
-            int endY = 61;
-
-            gameMap = new GameMap(inputStream, startX, startY, endX, endY);
-        }
+//        private void LoadMap()
+//        {
+//
+//            System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
+//
+//            int startX = 36;
+//            int startY = 39;
+//            int endX = 61;
+//            int endY = 61;
+//
+//            gameMap = new GameMap(inputStream, startX, startY, endX, endY);
+//        }
 
 
         /// <summary>
@@ -371,13 +348,13 @@ namespace mike_and_conquer
         /// </summary>
         protected override void LoadContent()
         {
-            LoadMap();
+            gameWorld.LoadMap();
 
             shadowMapper = new ShadowMapper();
 
             List<string> textureKeysAlreadyAdded = new List<string>();
 
-            foreach (MapTile nextMapTile in gameMap.MapTiles)
+            foreach (MapTile nextMapTile in gameWorld.gameMap.MapTiles)
             {
                 string textureKey = nextMapTile.textureKey;
                 if(!textureKeysAlreadyAdded.Contains(textureKey))
@@ -431,7 +408,7 @@ namespace mike_and_conquer
         private float CalculateRightmostScrollX()
         {
             int widthOfMapSquare = 24;
-            int widthOfMapInWorldSpace = MikeAndConquerGame.instance.gameMap.numColumns * widthOfMapSquare;
+            int widthOfMapInWorldSpace = gameWorld.gameMap.numColumns * widthOfMapSquare;
 
             int viewportWidth = mapViewport.Width;
             int halfViewportWidth = viewportWidth / 2;
@@ -452,7 +429,7 @@ namespace mike_and_conquer
         private float CalculateBottommostScrollY()
         {
             int heightOfMapSquare = 24;
-            int heightOfMapInWorldSpace = MikeAndConquerGame.instance.gameMap.numRows * heightOfMapSquare;
+            int heightOfMapInWorldSpace = gameWorld.gameMap.numRows * heightOfMapSquare;
             int viewportHeight = mapViewport.Height;
             int halfViewportHeight = viewportHeight / 2;
             float scaledHalfViewportHeight = halfViewportHeight / mapViewportCamera.Zoom;
@@ -868,24 +845,9 @@ namespace mike_and_conquer
             // because navigation graph depends on what's in the game world
             // and sandbags were not getting cleared before navigation graph was updated
             GameState newGameState = gameWorld.HandleReset();
-            InitializeNavigationGraph();
+            gameWorld.InitializeNavigationGraph();
             return newGameState;
         }
-
-
-        //        public BasicMapSquare FindMapSquare(int xWorldCoordinate, int yWorldCoordinate)
-        //        {
-        //
-        //            foreach (BasicMapSquare nextBasicMapSquare in this.gameWorld.BasicMapSquareList)
-        //            {
-        //                if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
-        //                {
-        //                    return nextBasicMapSquare;
-        //                }
-        //            }
-        //            throw new Exception("Unable to find BasicMapSquare at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
-        //
-        //        }
 
         public BasicMapSquareView FindMapSquareView(int xWorldCoordinate, int yWorldCoordinate)
         {

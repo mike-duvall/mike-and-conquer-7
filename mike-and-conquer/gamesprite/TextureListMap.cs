@@ -130,7 +130,6 @@ namespace mike_and_conquer
                 shpStream.Close();
                 ShpFileImage shpFileImage = new ShpFileImage(texture2D, shadowIndexList, frameData);
                 spriteTextureList.shpFileImageList.Add(shpFileImage);
-                int x = 3;
             }
             return spriteTextureList;
 

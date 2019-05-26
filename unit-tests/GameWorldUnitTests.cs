@@ -26,7 +26,7 @@ namespace unit_tests
             GameWorld gameWorld = new GameWorld();
             const int numColumns = 4;
             const int numRows = 3;
-            gameWorld.Initialize(numColumns, numRows);
+            gameWorld.Initialize();
 
 
             int[,] obstacleArray = new int[numRows, numColumns]
@@ -79,7 +79,7 @@ namespace unit_tests
             GameWorld gameWorld = new GameWorld();
             const int numColumns = 6;
             const int numRows = 5;
-            gameWorld.Initialize(numColumns, numRows);
+            gameWorld.Initialize();
 
 
             int[,] obstacleArray = new int[numRows, numColumns]
@@ -139,7 +139,7 @@ namespace unit_tests
             GameWorld gameWorld = new GameWorld();
             const int numColumns = 6;
             const int numRows = 5;
-            gameWorld.Initialize(numColumns, numRows);
+            gameWorld.Initialize();
 
 
             int[,] obstacleArray = new int[numRows, numColumns]
@@ -301,8 +301,6 @@ namespace unit_tests
 
             int rank1 = pathArray.GetLength(0);
             int rank2 = pathArray.GetLength(1);
-
-            int maxValue = 0;
 
             for (int x = 0; x < rank2; x++)
             {

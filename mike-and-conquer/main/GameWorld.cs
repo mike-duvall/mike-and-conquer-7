@@ -84,8 +84,10 @@ namespace mike_and_conquer
 
         public void Initialize()
         {
-//            navigationGraph = new Graph(numColumns, numRows);
+            //            navigationGraph = new Graph(numColumns, numRows);
+            InitializeMap();
             navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
+
         }
 
 
@@ -332,7 +334,7 @@ namespace mike_and_conquer
         }
 
 
-        public void LoadMap()
+        private void LoadMap()
         {
 
             System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
@@ -346,13 +348,15 @@ namespace mike_and_conquer
         }
 
 
-        public void InitializeMap()
+        private void InitializeMap()
         {
             //  (Starting at 0x13CC in the file)
             //    Trees appear to be SHP vs TMP?
             //    Map file only references TMP ?
             //    What about placement of initial troops?
             //    Sandbags
+
+            LoadMap();
 
             int x = 12;
             int y = 12;

@@ -106,8 +106,6 @@ namespace mike_and_conquer
 
         private bool testMode;
 
-//        public GameMap gameMap;
-
         private int borderSize = 0;
 
         KeyboardState oldKeyboardState;
@@ -193,23 +191,30 @@ namespace mike_and_conquer
         {
             // TODO: Add your initialization logic here
 
-            base.Initialize();
-
             gameWorld.Initialize();
+
+            // NOTE:  Calling base.Initialize() ends up calling LoadContent()
+            // TODO:  Revisit this ordering and revisit when and how maps and map views are created
+            // Because at some point we are going to want to load maps and map views on the fly, outside of
+            // this Initialize() and LoadContent() initialization, so maybe just don't much of anything in
+            // Initialize() and/or LoadContent() and load stuff on the fly?
+            base.Initialize();
+            CreateBasicMapSquareViews();
 
             if (!testMode)
             {
                 AddTestModeObjects();
             }
 
-            gameWorld.InitializeMap();
-            CreateBasicMapSquareViews();
             gameWorld.InitializeNavigationGraph();
             gameCursor = new GameCursor(1,1);
 
             this.defaultViewport = GraphicsDevice.Viewport;
             SetupMapViewportAndCamera();
             SetupToolbarViewportAndCamera();
+
+
+
         }
 
         private void AddTestModeObjects()
@@ -275,41 +280,6 @@ namespace mike_and_conquer
                 new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
         }
 
-//        private void InitializeMap()
-//        {
-//            //  (Starting at 0x13CC in the file)
-//            //    Trees appear to be SHP vs TMP?
-//            //    Map file only references TMP ?
-//            //    What about placement of initial troops?
-//            //    Sandbags
-//
-//            int x = 12;
-//            int y = 12;
-//
-//            int numSquares = gameMap.MapTiles.Count;
-//            for (int i = 0; i < numSquares; i++)
-//            {
-//            
-//                MapTile nextMapTile = gameMap.MapTiles[i];
-//                BasicMapSquare basicMapSquare =
-//                    new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex);
-//                this.gameWorld.BasicMapSquareList.Add(basicMapSquare);
-//
-////                BasicMapSquareView basicMapSquareView = new BasicMapSquareView(basicMapSquare);
-////                this.basicMapSquareViewList.Add(basicMapSquareView);
-//
-//
-//                x = x + 24;
-//            
-//                bool incrementRow = ((i + 1) % 26) == 0;
-//                if (incrementRow)
-//                {
-//                    x = 12;
-//                    y = y + 24;
-//                }
-//            }
-//
-//        }
 
         private void CreateBasicMapSquareViews()
         {
@@ -327,28 +297,13 @@ namespace mike_and_conquer
 
         }
 
-
-//        private void LoadMap()
-//        {
-//
-//            System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
-//
-//            int startX = 36;
-//            int startY = 39;
-//            int endX = 61;
-//            int endY = 61;
-//
-//            gameMap = new GameMap(inputStream, startX, startY, endX, endY);
-//        }
-
-
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
         /// </summary>
         protected override void LoadContent()
         {
-            gameWorld.LoadMap();
+//            gameWorld.LoadMap();
 
             shadowMapper = new ShadowMapper();
 

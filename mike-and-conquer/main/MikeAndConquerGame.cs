@@ -165,6 +165,8 @@ namespace mike_and_conquer
             oldKeyboardState = Keyboard.GetState();
             unitSelectionBox = new UnitSelectionBox();
 
+            shadowMapper = new ShadowMapper();
+
             MikeAndConquerGame.instance = this;
         }
 
@@ -281,11 +283,26 @@ namespace mike_and_conquer
         {
 
             gameWorld.Initialize();
+            LoadTextures();
+            CreateBasicMapSquareViews();
 
-            // Pickup here:  Further separate representation of map from loading of textures
+            if (!testMode)
+            {
+                AddTestModeObjects();
+            }
 
-            shadowMapper = new ShadowMapper();
+            gameWorld.InitializeNavigationGraph();
+            gameCursor = new GameCursor(1, 1);
 
+            this.defaultViewport = GraphicsDevice.Viewport;
+            SetupMapViewportAndCamera();
+            SetupToolbarViewportAndCamera();
+
+        }
+
+
+        private void LoadTextures()
+        {
             LoadMapTextures();
 
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -303,23 +320,7 @@ namespace mike_and_conquer
             LoadSingleTextureFromFile(gameobjects.MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
             LoadSingleTextureFromFile(gameobjects.DestinationSquare.SPRITE_KEY, gameobjects.DestinationSquare.SPRITE_KEY);
 
-
-            CreateBasicMapSquareViews();
-
-            if (!testMode)
-            {
-                AddTestModeObjects();
-            }
-
-            gameWorld.InitializeNavigationGraph();
-            gameCursor = new GameCursor(1, 1);
-
-            this.defaultViewport = GraphicsDevice.Viewport;
-            SetupMapViewportAndCamera();
-            SetupToolbarViewportAndCamera();
-
         }
-
 
         private void LoadMapTextures()
         {

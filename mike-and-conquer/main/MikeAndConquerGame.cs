@@ -187,35 +187,11 @@ namespace mike_and_conquer
         /// related content.  Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-        protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-
-            gameWorld.Initialize();
-
-            // NOTE:  Calling base.Initialize() ends up calling LoadContent()
-            // TODO:  Revisit this ordering and revisit when and how maps and map views are created
-            // Because at some point we are going to want to load maps and map views on the fly, outside of
-            // this Initialize() and LoadContent() initialization, so maybe just don't much of anything in
-            // Initialize() and/or LoadContent() and load stuff on the fly?
-            base.Initialize();
-            CreateBasicMapSquareViews();
-
-            if (!testMode)
-            {
-                AddTestModeObjects();
-            }
-
-            gameWorld.InitializeNavigationGraph();
-            gameCursor = new GameCursor(1,1);
-
-            this.defaultViewport = GraphicsDevice.Viewport;
-            SetupMapViewportAndCamera();
-            SetupToolbarViewportAndCamera();
-
-
-
-        }
+//        protected override void Initialize()
+//        {
+//            // TODO: Add your initialization logic here
+//            base.Initialize();
+//        }
 
         private void AddTestModeObjects()
         {
@@ -303,25 +279,14 @@ namespace mike_and_conquer
         /// </summary>
         protected override void LoadContent()
         {
-//            gameWorld.LoadMap();
+
+            gameWorld.Initialize();
+
+            // Pickup here:  Further separate representation of map from loading of textures
 
             shadowMapper = new ShadowMapper();
 
-            List<string> textureKeysAlreadyAdded = new List<string>();
-
-            foreach (MapTile nextMapTile in gameWorld.gameMap.MapTiles)
-            {
-                string textureKey = nextMapTile.textureKey;
-                if(!textureKeysAlreadyAdded.Contains(textureKey))
-                {
-                    // TODO Remove this null check
-                    if (textureKey != null)
-                    {
-                        textureListMap.LoadSpriteListFromTmpFile(textureKey);
-                        textureKeysAlreadyAdded.Add(textureKey);
-                    }
-                }
-            }
+            LoadMapTextures();
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -339,7 +304,63 @@ namespace mike_and_conquer
             LoadSingleTextureFromFile(gameobjects.DestinationSquare.SPRITE_KEY, gameobjects.DestinationSquare.SPRITE_KEY);
 
 
-            // TODO: use this.Content to load your game content here
+            CreateBasicMapSquareViews();
+
+            if (!testMode)
+            {
+                AddTestModeObjects();
+            }
+
+            gameWorld.InitializeNavigationGraph();
+            gameCursor = new GameCursor(1, 1);
+
+            this.defaultViewport = GraphicsDevice.Viewport;
+            SetupMapViewportAndCamera();
+            SetupToolbarViewportAndCamera();
+
+        }
+
+
+        private void LoadMapTextures()
+        {
+
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.CLEAR1_SHP);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D04_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D09_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D13_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D15_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D20_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D21_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D23_TEM);
+
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P07_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P08_TEM);
+
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S09_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S10_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S11_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S12_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S14_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S22_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S29_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S32_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S34_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S35_TEM);
+
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH1_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH2_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH3_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH4_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH5_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH6_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH9_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH10_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH17_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH18_TEM);
+
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.W1_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.W2_TEM);
+
         }
 
         /// <summary>

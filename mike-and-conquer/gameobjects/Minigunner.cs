@@ -144,7 +144,7 @@ namespace mike_and_conquer
                 Point centerOfDestinationSquare = path[0];
 
                 BasicMapSquare destinationBasicMapSquare =
-                    MikeAndConquerGame.instance.FindMapSquare(centerOfDestinationSquare.X, centerOfDestinationSquare.Y);
+                    GameWorld.instance.FindMapSquare(centerOfDestinationSquare.X, centerOfDestinationSquare.Y);
 
                 Point currentDestinationPoint = destinationBasicMapSquare.GetDestinationSlotForMinigunner(this);
                 SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
@@ -389,7 +389,7 @@ namespace mike_and_conquer
         {
 
             BasicMapSquare currentMapSquareLocation =
-                MikeAndConquerGame.instance.FindMapSquare((int)this.positionInWorldCoordinates.X,
+                GameWorld.instance.FindMapSquare((int)this.positionInWorldCoordinates.X,
                     (int) this.positionInWorldCoordinates.Y);
 
             currentMapSquareLocation.ClearSlotForMinigunner(this);

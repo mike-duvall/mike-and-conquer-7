@@ -25,9 +25,6 @@ using SandbagView = mike_and_conquer.gameview.SandbagView;
 using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
 
 
-using FileStream = System.IO.FileStream;
-using FileMode = System.IO.FileMode;
-
 using Camera2D = mike_and_conquer_6.Camera2D;
 
 using Point = Microsoft.Xna.Framework.Point;
@@ -63,7 +60,7 @@ namespace mike_and_conquer
         private GDIBarracksView gdiBarracksView;
         private MinigunnerIconView minigunnerIconView;
 
-        private List<BasicMapSquare> basicMapSquareList;
+        private List<BasicMapSquareView> basicMapSquareViewList;
 
         private List<SandbagView> sandbagViewList;
 
@@ -73,10 +70,11 @@ namespace mike_and_conquer
 
         public UnitSelectionBox unitSelectionBox;
 
-        public List<BasicMapSquare> BasicMapSquareList
+        public List<BasicMapSquareView> BasicMapSquareViewList
         {
-            get { return basicMapSquareList; }
+            get { return basicMapSquareViewList; }
         }
+
 
         public List<MinigunnerView> GdiMinigunnerViewList
         {
@@ -104,8 +102,6 @@ namespace mike_and_conquer
         private TextureListMap textureListMap;
 
         private bool testMode;
-
-        public GameMap gameMap;
 
         private int borderSize = 0;
 
@@ -154,8 +150,7 @@ namespace mike_and_conquer
 
             gameWorld = new GameWorld();
 
-
-            basicMapSquareList = new List<BasicMapSquare>();
+            basicMapSquareViewList = new List<BasicMapSquareView>();
 
             gdiMinigunnerViewList = new List<MinigunnerView>();
             nodMinigunnerViewList = new List<MinigunnerView>();
@@ -166,6 +161,8 @@ namespace mike_and_conquer
 
             oldKeyboardState = Keyboard.GetState();
             unitSelectionBox = new UnitSelectionBox();
+
+            shadowMapper = new ShadowMapper();
 
             MikeAndConquerGame.instance = this;
         }
@@ -189,27 +186,11 @@ namespace mike_and_conquer
         /// related content.  Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-        protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-
-            base.Initialize();
-
-            gameWorld.Initialize(this.gameMap.numColumns, this.gameMap.numRows);
-
-            if (!testMode)
-            {
-                AddTestModeObjects();
-            }
-
-            InitializeMap();
-            InitializeNavigationGraph();
-            gameCursor = new GameCursor(1,1);
-
-            this.defaultViewport = GraphicsDevice.Viewport;
-            SetupMapViewportAndCamera();
-            SetupToolbarViewportAndCamera();
-        }
+//        protected override void Initialize()
+//        {
+//            // TODO: Add your initialization logic here
+//            base.Initialize();
+//        }
 
         private void AddTestModeObjects()
         {
@@ -275,36 +256,7 @@ namespace mike_and_conquer
         }
 
 
-        private void InitializeNavigationGraph()
-        {
-            // TODO:  Fix this.  This code should be in GameWorld, not MikeAndConquerGame
-            // but has to be here for now, since BasicMapSquareList is in MikeAndConquerGame
-            // Need to separate out view of BasicMapSquare into a BasicMapSquareView
-            // And let GameWorld hold BasicMapSquareList(with no view data, just
-            // the terrain type and whether it's blocking or not, etc
-
-            gameWorld.navigationGraph.Reset();
-
-            foreach (Sandbag nextSandbag in gameWorld.sandbagList)
-            {
-                gameWorld.navigationGraph.MakeNodeBlockingNode(nextSandbag.GetMapSquareX(), nextSandbag.GetMapSquareY());
-            }
-
-
-            foreach (BasicMapSquare nextBasicMapSquare in this.BasicMapSquareList)
-            {
-                if (nextBasicMapSquare.IsBlockingTerrain())
-                {
-//                    nextBasicMapSquare.gameSprite.drawBoundingRectangle = true;
-                    gameWorld.navigationGraph.MakeNodeBlockingNode(nextBasicMapSquare.GetMapSquareX(), nextBasicMapSquare.GetMapSquareY());
-                }
-            }
-
-            gameWorld.navigationGraph.RebuildAdajencyGraph();
-
-        }
-
-        private void InitializeMap()
+        private void CreateBasicMapSquareViews()
         {
             //  (Starting at 0x13CC in the file)
             //    Trees appear to be SHP vs TMP?
@@ -312,46 +264,13 @@ namespace mike_and_conquer
             //    What about placement of initial troops?
             //    Sandbags
 
-            int x = 12;
-            int y = 12;
-
-            int numSquares = gameMap.MapTiles.Count;
-            for (int i = 0; i < numSquares; i++)
+            foreach(BasicMapSquare basicMapSquare in this.gameWorld.BasicMapSquareList)
             {
-            
-                MapTile nextMapTile = gameMap.MapTiles[i];
-                BasicMapSquare basicMapSquare =
-                    new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex);
-
-                BasicMapSquareList.Add(basicMapSquare);
-
-                x = x + 24;
-            
-                bool incrementRow = ((i + 1) % 26) == 0;
-                if (incrementRow)
-                {
-                    x = 12;
-                    y = y + 24;
-                }
+                BasicMapSquareView basicMapSquareView = new BasicMapSquareView(basicMapSquare);
+                this.basicMapSquareViewList.Add(basicMapSquareView);
             }
 
         }
-
-
-
-        private void LoadMap()
-        {
-
-            System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
-
-            int startX = 36;
-            int startY = 39;
-            int endX = 61;
-            int endY = 61;
-
-            gameMap = new GameMap(inputStream, startX, startY, endX, endY);
-        }
-
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -359,25 +278,29 @@ namespace mike_and_conquer
         /// </summary>
         protected override void LoadContent()
         {
-            LoadMap();
 
-            shadowMapper = new ShadowMapper();
+            gameWorld.Initialize();
+            LoadTextures();
+            CreateBasicMapSquareViews();
 
-            List<string> textureKeysAlreadyAdded = new List<string>();
-
-            foreach (MapTile nextMapTile in gameMap.MapTiles)
+            if (!testMode)
             {
-                string textureKey = nextMapTile.textureKey;
-                if(!textureKeysAlreadyAdded.Contains(textureKey))
-                {
-                    // TODO Remove this null check
-                    if (textureKey != null)
-                    {
-                        textureListMap.LoadSpriteListFromTmpFile(textureKey);
-                        textureKeysAlreadyAdded.Add(textureKey);
-                    }
-                }
+                AddTestModeObjects();
             }
+
+            gameWorld.InitializeNavigationGraph();
+            gameCursor = new GameCursor(1, 1);
+
+            this.defaultViewport = GraphicsDevice.Viewport;
+            SetupMapViewportAndCamera();
+            SetupToolbarViewportAndCamera();
+
+        }
+
+
+        private void LoadTextures()
+        {
+            LoadMapTextures();
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -394,8 +317,48 @@ namespace mike_and_conquer
             LoadSingleTextureFromFile(gameobjects.MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
             LoadSingleTextureFromFile(gameobjects.DestinationSquare.SPRITE_KEY, gameobjects.DestinationSquare.SPRITE_KEY);
 
+        }
 
-            // TODO: use this.Content to load your game content here
+        private void LoadMapTextures()
+        {
+
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.CLEAR1_SHP);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D04_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D09_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D13_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D15_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D20_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D21_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D23_TEM);
+
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P07_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P08_TEM);
+
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S09_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S10_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S11_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S12_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S14_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S22_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S29_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S32_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S34_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S35_TEM);
+
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH1_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH2_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH3_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH4_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH5_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH6_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH9_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH10_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH17_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH18_TEM);
+
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.W1_TEM);
+            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.W2_TEM);
+
         }
 
         /// <summary>
@@ -419,7 +382,7 @@ namespace mike_and_conquer
         private float CalculateRightmostScrollX()
         {
             int widthOfMapSquare = 24;
-            int widthOfMapInWorldSpace = MikeAndConquerGame.instance.gameMap.numColumns * widthOfMapSquare;
+            int widthOfMapInWorldSpace = gameWorld.gameMap.numColumns * widthOfMapSquare;
 
             int viewportWidth = mapViewport.Width;
             int halfViewportWidth = viewportWidth / 2;
@@ -440,7 +403,7 @@ namespace mike_and_conquer
         private float CalculateBottommostScrollY()
         {
             int heightOfMapSquare = 24;
-            int heightOfMapInWorldSpace = MikeAndConquerGame.instance.gameMap.numRows * heightOfMapSquare;
+            int heightOfMapInWorldSpace = gameWorld.gameMap.numRows * heightOfMapSquare;
             int viewportHeight = mapViewport.Height;
             int halfViewportHeight = viewportHeight / 2;
             float scaledHalfViewportHeight = halfViewportHeight / mapViewportCamera.Zoom;
@@ -856,24 +819,26 @@ namespace mike_and_conquer
             // because navigation graph depends on what's in the game world
             // and sandbags were not getting cleared before navigation graph was updated
             GameState newGameState = gameWorld.HandleReset();
-            InitializeNavigationGraph();
+            gameWorld.InitializeNavigationGraph();
             return newGameState;
         }
 
-
-        public BasicMapSquare FindMapSquare(int xWorldCoordinate, int yWorldCoordinate)
+        public BasicMapSquareView FindMapSquareView(int xWorldCoordinate, int yWorldCoordinate)
         {
 
-            foreach (BasicMapSquare nextBasicMapSquare in basicMapSquareList)
+            foreach (BasicMapSquareView nextBasicMapSquareView in this.basicMapSquareViewList)
             {
-                if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
+                BasicMapSquare basicMapSquare = nextBasicMapSquareView.myBasicMapSquare;
+                if (basicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
                 {
-                    return nextBasicMapSquare;
+                    return nextBasicMapSquareView;
                 }
             }
             throw new Exception("Unable to find BasicMapSquare at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
 
         }
+
+
     }
 
 }

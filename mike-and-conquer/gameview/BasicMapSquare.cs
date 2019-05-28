@@ -1,6 +1,5 @@
 ﻿
 
-using System;
 using System.Linq;
 using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 
@@ -15,11 +14,12 @@ namespace mike_and_conquer.gameview
 {
     public class BasicMapSquare
     {
-        public GameSprite gameSprite;
+        public Vector2 PositionInWorldCoordinates { get; }
+        public int ImageIndex { get; }
+        public string TextureKey { get; }
 
-        Vector2 positionInWorldCoordinates;
-        private int imageIndex;
-        private string textureKey;
+
+
         private Minigunner minigunnerSlot0 = null;
         private Minigunner minigunnerSlot1 = null;
         private Minigunner minigunnerSlot2 = null;
@@ -28,50 +28,24 @@ namespace mike_and_conquer.gameview
 
         public BasicMapSquare(int x, int y, string textureKey, int imageIndex )
         {
-            this.positionInWorldCoordinates = new Vector2(x,y);
-            this.gameSprite = new GameSprite(textureKey);
-            this.gameSprite.drawBoundingRectangle = false;
-            this.imageIndex = imageIndex;
-            this.textureKey = textureKey;
-            SetupAnimations();
+            this.PositionInWorldCoordinates = new Vector2(x,y);
+            this.ImageIndex = imageIndex;
+            this.TextureKey = textureKey;
         }
-
-
-        internal int GetPaletteIndexOfCoordinate(int x, int y)
-        {
-            SpriteTextureList list = MikeAndConquerGame.instance.TextureListMap.GetTextureList(textureKey);
-            ShpFileImage shpFileImage = list.shpFileImageList[imageIndex];
-
-            int frameDataIndex = y * list.textureWidth + x;
-            return shpFileImage.frameData[frameDataIndex];
-        }
-
-        private void SetupAnimations()
-        {
-            AnimationSequence animationSequence = new AnimationSequence(1);
-            animationSequence.AddFrame(imageIndex);
-            gameSprite.AddAnimationSequence(0, animationSequence);
-        }
-
-        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            gameSprite.Draw(gameTime, spriteBatch, this.positionInWorldCoordinates);
-        }
-
 
         public bool ContainsPoint(Point aPoint)
         {
             int height = 24;
             int width = 24;
-            int leftX = (int) positionInWorldCoordinates.X - (width / 2);
-            int topY = (int) positionInWorldCoordinates.Y - (height / 2);
+            int leftX = (int)PositionInWorldCoordinates.X - (width / 2);
+            int topY = (int)PositionInWorldCoordinates.Y - (height / 2);
             Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);
             return boundRectangle.Contains(aPoint);
         }
 
         public Point GetCenter()
         {
-            return new Point((int) positionInWorldCoordinates.X, (int) positionInWorldCoordinates.Y);
+            return new Point((int)PositionInWorldCoordinates.X, (int)PositionInWorldCoordinates.Y);
         }
 
         public Point GetDestinationSlotForMinigunner(Minigunner aMinigunner)
@@ -145,18 +119,19 @@ namespace mike_and_conquer.gameview
         public bool IsBlockingTerrain()
         {
 
-            Dictionary<string, int[]> blockingTerrainMap = MikeAndConquerGame.instance.gameMap.blockingTerrainMap;
+            // TODO: Make BasicMapSquare initialized with flag of whether it's blocking or not
+            Dictionary<string, int[]> blockingTerrainMap = GameWorld.instance.gameMap.blockingTerrainMap;
 
-            if (blockingTerrainMap.ContainsKey(textureKey))
+            if (blockingTerrainMap.ContainsKey(TextureKey))
             {
-                int[] blockedImageIndexes = blockingTerrainMap[textureKey];
+                int[] blockedImageIndexes = blockingTerrainMap[TextureKey];
                 if (blockedImageIndexes == null)
                 {
                     return true;
                 }
                 else
                 {
-                    return blockedImageIndexes.Contains(imageIndex);
+                    return blockedImageIndexes.Contains(ImageIndex);
                 }
             }
         
@@ -165,13 +140,13 @@ namespace mike_and_conquer.gameview
 
         internal int GetMapSquareX()
         {
-            int mapSquareX = (int)((this.positionInWorldCoordinates.X - 12) / 24);
+            int mapSquareX = (int)((this.PositionInWorldCoordinates.X - 12) / 24);
             return mapSquareX;
         }
 
         internal int GetMapSquareY()
         {
-            int mapSquareY = (int)((this.positionInWorldCoordinates.Y - 12) / 24);
+            int mapSquareY = (int)((this.PositionInWorldCoordinates.Y - 12) / 24);
             return mapSquareY;
 
         }

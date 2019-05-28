@@ -111,8 +111,6 @@ namespace mike_and_conquer.gameview
             ISpriteFrame[] frames = new ISpriteFrame[180];
             shpD2Loader.TryParseSprite(shpStream, out frames);
 
-            int x = 3;
-
             ISpriteFrame frame = frames[indexOfFrameToLoad];
             byte[] frameData = frame.Data;
 

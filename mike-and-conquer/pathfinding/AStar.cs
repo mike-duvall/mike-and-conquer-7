@@ -25,7 +25,6 @@ namespace mike_and_conquer.pathfinding
         public List<Node> nodeList;
         public int width;
         public int height;
-        private int currentRow = 0;
         private int currentNodeId = 0;
 
         private int[,] nodeArray;

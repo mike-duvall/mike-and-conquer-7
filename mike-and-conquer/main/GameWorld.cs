@@ -19,6 +19,10 @@ using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
 
 using Exception = System.Exception;
 
+using FileStream = System.IO.FileStream;
+using FileMode = System.IO.FileMode;
+
+
 namespace mike_and_conquer
 
 {
@@ -33,6 +37,15 @@ namespace mike_and_conquer
         private List<AsyncGameEvent> gameEvents;
 
         public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
+
+        private List<BasicMapSquare> basicMapSquareList;
+
+        public List<BasicMapSquare> BasicMapSquareList
+        {
+            get { return basicMapSquareList; }
+        }
+
+        public GameMap gameMap;
 
 
         private GameState currentGameState;
@@ -49,6 +62,8 @@ namespace mike_and_conquer
             gameEvents = new List<AsyncGameEvent>();
 
             nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
+
+            basicMapSquareList = new List<BasicMapSquare>();
 
             GameWorld.instance = this;
         }
@@ -67,9 +82,12 @@ namespace mike_and_conquer
         }
 
 
-        public void Initialize(int numColumns, int numRows)
+        public void Initialize()
         {
-            navigationGraph = new Graph(numColumns, numRows);
+            //            navigationGraph = new Graph(numColumns, numRows);
+            InitializeMap();
+            navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
+
         }
 
 
@@ -145,7 +163,7 @@ namespace mike_and_conquer
 
         private static void AssertIsValidMinigunnerPosition(Point positionInWorldCoordinates)
         {
-            foreach (BasicMapSquare nexBasicMapSquare in MikeAndConquerGame.instance.BasicMapSquareList)
+            foreach (BasicMapSquare nexBasicMapSquare in GameWorld.instance.BasicMapSquareList)
             {
                 if (nexBasicMapSquare.ContainsPoint(positionInWorldCoordinates) &&
                     nexBasicMapSquare.IsBlockingTerrain())
@@ -299,6 +317,103 @@ namespace mike_and_conquer
             }
 
             return gameEvent.GetGameState();
+        }
+
+        public BasicMapSquare FindMapSquare(int xWorldCoordinate, int yWorldCoordinate)
+        {
+        
+            foreach (BasicMapSquare nextBasicMapSquare in this.BasicMapSquareList)
+            {
+                if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
+                {
+                    return nextBasicMapSquare;
+                }
+            }
+            throw new Exception("Unable to find BasicMapSquare at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
+        
+        }
+
+
+        private void LoadMap()
+        {
+
+            System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
+
+            int startX = 36;
+            int startY = 39;
+            int endX = 61;
+            int endY = 61;
+
+            gameMap = new GameMap(inputStream, startX, startY, endX, endY);
+        }
+
+
+        private void InitializeMap()
+        {
+            //  (Starting at 0x13CC in the file)
+            //    Trees appear to be SHP vs TMP?
+            //    Map file only references TMP ?
+            //    What about placement of initial troops?
+            //    Sandbags
+
+            LoadMap();
+
+            int x = 12;
+            int y = 12;
+
+            int numSquares = gameMap.MapTiles.Count;
+            for (int i = 0; i < numSquares; i++)
+            {
+
+                MapTile nextMapTile = gameMap.MapTiles[i];
+                BasicMapSquare basicMapSquare =
+                    new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex);
+                this.BasicMapSquareList.Add(basicMapSquare);
+
+                //                BasicMapSquareView basicMapSquareView = new BasicMapSquareView(basicMapSquare);
+                //                this.basicMapSquareViewList.Add(basicMapSquareView);
+
+
+                x = x + 24;
+
+                bool incrementRow = ((i + 1) % 26) == 0;
+                if (incrementRow)
+                {
+                    x = 12;
+                    y = y + 24;
+                }
+            }
+
+        }
+
+
+        public void InitializeNavigationGraph()
+        {
+            // TODO:  Fix this.  This code should be in GameWorld, not MikeAndConquerGame
+            // but has to be here for now, since BasicMapSquareList is in MikeAndConquerGame
+            // Need to separate out view of BasicMapSquare into a BasicMapSquareView
+            // And let GameWorld hold BasicMapSquareList(with no view data, just
+            // the terrain type and whether it's blocking or not, etc
+
+            navigationGraph.Reset();
+
+            foreach (Sandbag nextSandbag in sandbagList)
+            {
+                navigationGraph.MakeNodeBlockingNode(nextSandbag.GetMapSquareX(), nextSandbag.GetMapSquareY());
+            }
+
+
+            foreach (BasicMapSquare nextBasicMapSquare in this.BasicMapSquareList)
+            {
+                if (nextBasicMapSquare.IsBlockingTerrain())
+                {
+                    //                    nextBasicMapSquare.gameSprite.drawBoundingRectangle = true;
+                    navigationGraph.MakeNodeBlockingNode(nextBasicMapSquare.GetMapSquareX(), nextBasicMapSquare.GetMapSquareY());
+                }
+            }
+
+            navigationGraph.RebuildAdajencyGraph();
+
         }
 
 

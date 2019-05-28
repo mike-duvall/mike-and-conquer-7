@@ -23,6 +23,8 @@ namespace mike_and_conquer.gamesprite
                 int byte1 = mrfFileStream.ReadByte();
                 shadowMap.Add(i - 256, byte1);
             }
+
+            mrfFileStream.Close();
         }
 
         internal int MapShadowPaletteIndex(int paletteIndex)

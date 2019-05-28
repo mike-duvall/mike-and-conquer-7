@@ -8,6 +8,7 @@ using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
 using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
+using BasicMapSquareView = mike_and_conquer.gameview.BasicMapSquareView;
 
 namespace mike_and_conquer
 {
@@ -99,6 +100,22 @@ namespace mike_and_conquer
             }
         }
 
+
+        // How to draw shadows:
+        // X       Write method that returns current tile, given a point on the map
+        // X       Write method that returns color index of given point on the map
+        //        Write method that then maps the color index to the shadow index color
+        //        Write method that creates new texture for minigunner with shadow colors fixed up 
+        // Create new texture of same size
+        // Copy pixels over one by one
+        // If pixel is the shadow green:
+        //    determine the screen x,y of that pixel 
+        //    determine the palette value of the existing screen background at that position
+        //    map that background to the proper shadow pixel
+        //    set that pixel in the new texture to that shadow pixel
+        // Draw the texture
+        // release the texture? (or release above before creating the new one?
+
         private void updateShadowPixels(Vector2 positionInWorldCoordinates, int imageIndex)
         {
             Color[] texturePixelData = new Color[currentTexture.Width * currentTexture.Height];
@@ -120,20 +137,19 @@ namespace mike_and_conquer
                 int shadowXWorldCoordinates = topLeftXOfSpriteInWorldCoordinates + shadowXSpriteCoordinate;
                 int shadowYWorldCoordinate = topLeftYOfSpriteInWorldCoordinates + shadowYSpriteCoordinate;
 
-                BasicMapSquare underlyingMapSquare =
-                    MikeAndConquerGame.instance.FindMapSquare(shadowXWorldCoordinates,
+                BasicMapSquareView underlyingMapSquareView =
+                    MikeAndConquerGame.instance.FindMapSquareView(shadowXWorldCoordinates,
                         shadowYWorldCoordinate);
 
-
                 // TODO:  Un-hard code 12
-                int topLeftXOfUnderlyingMapSquareWorldCoordinates = underlyingMapSquare.GetCenter().X - 12;
-                int topLeftYOfUnderlyingMapSquareWorldCoordinates = underlyingMapSquare.GetCenter().Y - 12;
+                int topLeftXOfUnderlyingMapSquareWorldCoordinates = underlyingMapSquareView.myBasicMapSquare.GetCenter().X - 12;
+                int topLeftYOfUnderlyingMapSquareWorldCoordinates = underlyingMapSquareView.myBasicMapSquare.GetCenter().Y - 12;
 
                 int shadowXMapSquareCoordinate = shadowXWorldCoordinates - topLeftXOfUnderlyingMapSquareWorldCoordinates;
                 int shadowYMapSquareCoordinate = shadowYWorldCoordinate - topLeftYOfUnderlyingMapSquareWorldCoordinates;
 
                 int nonShadowPaletteIndexAtShadowLocation =
-                    underlyingMapSquare.GetPaletteIndexOfCoordinate(shadowXMapSquareCoordinate, shadowYMapSquareCoordinate);
+                    underlyingMapSquareView.GetPaletteIndexOfCoordinate(shadowXMapSquareCoordinate, shadowYMapSquareCoordinate);
 
                 int shadowPaletteIndex =
                     MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);

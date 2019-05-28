@@ -35,11 +35,6 @@ namespace mike_and_conquer
                 return nextGameState;
             }
 
-//            Pickup here:  Get GameWorldUnitTests working.  HandleInput() below isn't working
-//            consider decoupling PlayingGameState and PlayGameStateView, or something similar
-//            Decouple mouse input from gameworld running
-
-
             HandleInput();
             UpdateAIControllers(gameTime);
             UpdateGDIMinigunners(gameTime);

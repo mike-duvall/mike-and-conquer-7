@@ -25,9 +25,6 @@ using SandbagView = mike_and_conquer.gameview.SandbagView;
 using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
 
 
-//using FileStream = System.IO.FileStream;
-//using FileMode = System.IO.FileMode;
-
 using Camera2D = mike_and_conquer_6.Camera2D;
 
 using Point = Microsoft.Xna.Framework.Point;

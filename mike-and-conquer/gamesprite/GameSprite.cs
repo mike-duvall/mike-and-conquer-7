@@ -137,13 +137,9 @@ namespace mike_and_conquer
                 int shadowXWorldCoordinates = topLeftXOfSpriteInWorldCoordinates + shadowXSpriteCoordinate;
                 int shadowYWorldCoordinate = topLeftYOfSpriteInWorldCoordinates + shadowYSpriteCoordinate;
 
-                //                BasicMapSquare underlyingMapSquare =
-                //                    MikeAndConquerGame.instance.FindMapSquare(shadowXWorldCoordinates,
-                //                        shadowYWorldCoordinate);
                 BasicMapSquareView underlyingMapSquareView =
                     MikeAndConquerGame.instance.FindMapSquareView(shadowXWorldCoordinates,
                         shadowYWorldCoordinate);
-
 
                 // TODO:  Un-hard code 12
                 int topLeftXOfUnderlyingMapSquareWorldCoordinates = underlyingMapSquareView.myBasicMapSquare.GetCenter().X - 12;

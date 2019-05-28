@@ -14,41 +14,10 @@ namespace mike_and_conquer.gameview
 {
     public class BasicMapSquare
     {
-        Vector2 positionInWorldCoordinates;
-        private int imageIndex;
+        public Vector2 PositionInWorldCoordinates { get; }
+        public int ImageIndex { get; }
+        public string TextureKey { get; }
 
-        public Vector2 PositionInWorldCoordinates
-        {
-            get { return positionInWorldCoordinates; }
-            set { positionInWorldCoordinates = value; }
-        }
-
-        public int ImageIndex
-        {
-            get
-            {
-                return imageIndex;
-            }
-            set
-            {
-                imageIndex = value;
-            }
-        }
-
-
-        private string textureKey;
-
-        public string TextureKey
-        {
-            get
-            {
-                return textureKey;
-            }
-            set
-            {
-                textureKey = value;
-            }
-        }
 
 
         private Minigunner minigunnerSlot0 = null;
@@ -59,24 +28,24 @@ namespace mike_and_conquer.gameview
 
         public BasicMapSquare(int x, int y, string textureKey, int imageIndex )
         {
-            this.positionInWorldCoordinates = new Vector2(x,y);
-            this.imageIndex = imageIndex;
-            this.textureKey = textureKey;
+            this.PositionInWorldCoordinates = new Vector2(x,y);
+            this.ImageIndex = imageIndex;
+            this.TextureKey = textureKey;
         }
 
         public bool ContainsPoint(Point aPoint)
         {
             int height = 24;
             int width = 24;
-            int leftX = (int) positionInWorldCoordinates.X - (width / 2);
-            int topY = (int) positionInWorldCoordinates.Y - (height / 2);
+            int leftX = (int)PositionInWorldCoordinates.X - (width / 2);
+            int topY = (int)PositionInWorldCoordinates.Y - (height / 2);
             Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);
             return boundRectangle.Contains(aPoint);
         }
 
         public Point GetCenter()
         {
-            return new Point((int) positionInWorldCoordinates.X, (int) positionInWorldCoordinates.Y);
+            return new Point((int)PositionInWorldCoordinates.X, (int)PositionInWorldCoordinates.Y);
         }
 
         public Point GetDestinationSlotForMinigunner(Minigunner aMinigunner)
@@ -153,16 +122,16 @@ namespace mike_and_conquer.gameview
             // TODO: Make BasicMapSquare initialized with flag of whether it's blocking or not
             Dictionary<string, int[]> blockingTerrainMap = GameWorld.instance.gameMap.blockingTerrainMap;
 
-            if (blockingTerrainMap.ContainsKey(textureKey))
+            if (blockingTerrainMap.ContainsKey(TextureKey))
             {
-                int[] blockedImageIndexes = blockingTerrainMap[textureKey];
+                int[] blockedImageIndexes = blockingTerrainMap[TextureKey];
                 if (blockedImageIndexes == null)
                 {
                     return true;
                 }
                 else
                 {
-                    return blockedImageIndexes.Contains(imageIndex);
+                    return blockedImageIndexes.Contains(ImageIndex);
                 }
             }
         
@@ -171,13 +140,13 @@ namespace mike_and_conquer.gameview
 
         internal int GetMapSquareX()
         {
-            int mapSquareX = (int)((this.positionInWorldCoordinates.X - 12) / 24);
+            int mapSquareX = (int)((this.PositionInWorldCoordinates.X - 12) / 24);
             return mapSquareX;
         }
 
         internal int GetMapSquareY()
         {
-            int mapSquareY = (int)((this.positionInWorldCoordinates.Y - 12) / 24);
+            int mapSquareY = (int)((this.PositionInWorldCoordinates.Y - 12) / 24);
             return mapSquareY;
 
         }

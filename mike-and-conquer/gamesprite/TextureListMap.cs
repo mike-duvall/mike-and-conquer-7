@@ -94,8 +94,8 @@ namespace mike_and_conquer
             OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
 
             System.IO.FileStream shpStream = System.IO.File.Open(shpFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
-            OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader loader = new OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader();
-            ShpTDSprite shpTDSprite = new OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite(shpStream);
+//            OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader loader = new OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader();
+            ShpTDSprite shpTDSprite = new ShpTDSprite(shpStream);
 
             spriteTextureList.textureWidth = shpTDSprite.Frames[0].Size.Width;
             spriteTextureList.textureHeight = shpTDSprite.Frames[0].Size.Height;

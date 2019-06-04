@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
+using mike_and_conquer.openralocal;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
@@ -99,6 +100,10 @@ namespace mike_and_conquer
             get { return textureListMap; }
         }
 
+
+        private RAISpriteFrameManager raiSpriteFrameManager;
+
+
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private TextureListMap textureListMap;
@@ -166,6 +171,8 @@ namespace mike_and_conquer
 
             shadowMapper = new ShadowMapper();
             currentGameState = new PlayingGameState();
+
+            raiSpriteFrameManager = new RAISpriteFrameManager();
 
             MikeAndConquerGame.instance = this;
         }
@@ -319,6 +326,11 @@ namespace mike_and_conquer
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
             LoadSingleTextureFromFile(gameobjects.MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
             LoadSingleTextureFromFile(gameobjects.DestinationSquare.SPRITE_KEY, gameobjects.DestinationSquare.SPRITE_KEY);
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(GdiMinigunnerView.SHP_FILE_NAME,
+                GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
+
+            raiSpriteFrameManager.LoadAllTexturesFromTmpFile(TextureListMap.CLEAR1_SHP);
 
         }
 

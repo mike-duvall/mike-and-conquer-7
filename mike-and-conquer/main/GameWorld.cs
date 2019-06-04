@@ -47,8 +47,7 @@ namespace mike_and_conquer
 
         public GameMap gameMap;
 
-
-        private GameState currentGameState;
+//        private GameState currentGameState;
 
         public static GameWorld instance;
 
@@ -57,7 +56,7 @@ namespace mike_and_conquer
             gdiMinigunnerList = new List<Minigunner>();
             nodMinigunnerList = new List<Minigunner>();
             sandbagList = new List<Sandbag>();
-            currentGameState = new PlayingGameState();
+//            currentGameState = new PlayingGameState();
 
             gameEvents = new List<AsyncGameEvent>();
 
@@ -76,10 +75,6 @@ namespace mike_and_conquer
             return new PlayingGameState();
         }
 
-        internal GameState GetCurrentGameState()
-        {
-            return currentGameState;
-        }
 
 
         public void Initialize()
@@ -148,8 +143,45 @@ namespace mike_and_conquer
 
         public void Update(GameTime gameTime)
         {
-            currentGameState = currentGameState.Update(gameTime);
+//            currentGameState = currentGameState.Update(gameTime);
+            UpdateAIControllers(gameTime);
+            UpdateGDIMinigunners(gameTime);
+            UpdateNodMinigunners(gameTime);
+
         }
+
+
+        private void UpdateNodMinigunners(GameTime gameTime)
+        {
+            foreach (Minigunner nextMinigunner in nodMinigunnerList)
+            {
+                if (nextMinigunner.health > 0)
+                {
+                    nextMinigunner.Update(gameTime);
+                }
+            }
+        }
+
+        private void UpdateGDIMinigunners(GameTime gameTime)
+        {
+            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+            {
+                if (nextMinigunner.health > 0)
+                {
+                    nextMinigunner.Update(gameTime);
+                }
+            }
+        }
+
+        private void UpdateAIControllers(GameTime gameTime)
+        {
+            foreach (MinigunnerAIController nextMinigunnerAIController in nodMinigunnerAIControllerList)
+            {
+                nextMinigunnerAIController.Update(gameTime);
+            }
+        }
+
+
 
 
         public class BadMinigunnerLocationException : Exception
@@ -161,9 +193,9 @@ namespace mike_and_conquer
         }
 
 
-        private static void AssertIsValidMinigunnerPosition(Point positionInWorldCoordinates)
+        private void AssertIsValidMinigunnerPosition(Point positionInWorldCoordinates)
         {
-            foreach (BasicMapSquare nexBasicMapSquare in GameWorld.instance.BasicMapSquareList)
+            foreach (BasicMapSquare nexBasicMapSquare in BasicMapSquareList)
             {
                 if (nexBasicMapSquare.ContainsPoint(positionInWorldCoordinates) &&
                     nexBasicMapSquare.IsBlockingTerrain())

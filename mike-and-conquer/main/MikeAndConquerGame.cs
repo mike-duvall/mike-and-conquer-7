@@ -70,6 +70,8 @@ namespace mike_and_conquer
 
         public UnitSelectionBox unitSelectionBox;
 
+        private GameState currentGameState;
+
         public List<BasicMapSquareView> BasicMapSquareViewList
         {
             get { return basicMapSquareViewList; }
@@ -163,6 +165,7 @@ namespace mike_and_conquer
             unitSelectionBox = new UnitSelectionBox();
 
             shadowMapper = new ShadowMapper();
+            currentGameState = new PlayingGameState();
 
             MikeAndConquerGame.instance = this;
         }
@@ -496,7 +499,8 @@ namespace mike_and_conquer
                 this.mapViewportCamera.Location = new Vector2(CalculateRightmostScrollX(), CalculateBottommostScrollY());
             }
 
-            this.gameWorld.Update(gameTime);
+            currentGameState = this.currentGameState.Update(gameTime);
+//            this.gameWorld.Update(gameTime);
             this.mapViewportCamera.Rotation = testRotation;
             //                        testRotation += 0.05f;
 
@@ -530,6 +534,12 @@ namespace mike_and_conquer
             gameCursor.Update(gameTime);
             base.Update(gameTime);
         }
+
+        public GameState GetCurrentGameState()
+        {
+            return currentGameState;
+        }
+
 
         private void HandleMapScrolling(int originalY, int originalX, KeyboardState newKeyboardState)
         {
@@ -596,7 +606,7 @@ namespace mike_and_conquer
 
         private void SwitchToNewGameStateViewIfNeeded()
         {
-            GameState currentGameState = this.gameWorld.GetCurrentGameState();
+            GameState currentGameState = this.GetCurrentGameState();
             if (currentGameState.GetType().Equals(typeof(PlayingGameState)))
             {
                 HandleSwitchToPlayingGameStateView();

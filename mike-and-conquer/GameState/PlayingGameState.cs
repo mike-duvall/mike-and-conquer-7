@@ -36,9 +36,10 @@ namespace mike_and_conquer
             }
 
             HandleInput();
-            UpdateAIControllers(gameTime);
-            UpdateGDIMinigunners(gameTime);
-            UpdateNodMinigunners(gameTime);
+//            UpdateAIControllers(gameTime);
+//            UpdateGDIMinigunners(gameTime);
+//            UpdateNodMinigunners(gameTime);
+            GameWorld.instance.Update(gameTime);
             return DetermineNextGameState();
         }
 
@@ -98,36 +99,36 @@ namespace mike_and_conquer
             }
         }
 
-        private static void UpdateNodMinigunners(GameTime gameTime)
-        {
-            foreach (Minigunner nextMinigunner in GameWorld.instance.nodMinigunnerList)
-            {
-                if (nextMinigunner.health > 0)
-                {
-                    nextMinigunner.Update(gameTime);
-                }
-            }
-        }
-
-        private static void UpdateGDIMinigunners(GameTime gameTime)
-        {
-            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
-            {
-                if (nextMinigunner.health > 0)
-                {
-                    nextMinigunner.Update(gameTime);
-                }
-            }
-        }
-
-        private static void UpdateAIControllers(GameTime gameTime)
-        {
-            foreach (MinigunnerAIController nextMinigunnerAIController in GameWorld.instance.nodMinigunnerAIControllerList)
-            {
-                nextMinigunnerAIController.Update(gameTime);
-            }
-        }
-
+//        private static void UpdateNodMinigunners(GameTime gameTime)
+//        {
+//            foreach (Minigunner nextMinigunner in GameWorld.instance.nodMinigunnerList)
+//            {
+//                if (nextMinigunner.health > 0)
+//                {
+//                    nextMinigunner.Update(gameTime);
+//                }
+//            }
+//        }
+//
+//        private static void UpdateGDIMinigunners(GameTime gameTime)
+//        {
+//            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
+//            {
+//                if (nextMinigunner.health > 0)
+//                {
+//                    nextMinigunner.Update(gameTime);
+//                }
+//            }
+//        }
+//
+//        private static void UpdateAIControllers(GameTime gameTime)
+//        {
+//            foreach (MinigunnerAIController nextMinigunnerAIController in GameWorld.instance.nodMinigunnerAIControllerList)
+//            {
+//                nextMinigunnerAIController.Update(gameTime);
+//            }
+//        }
+//
 
         private bool LeftMouseButtonIsBeingHeldDown(MouseState newMouseState)
         {

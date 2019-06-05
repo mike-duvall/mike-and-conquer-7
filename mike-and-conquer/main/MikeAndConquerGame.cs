@@ -102,6 +102,7 @@ namespace mike_and_conquer
 
 
         private RAISpriteFrameManager raiSpriteFrameManager;
+        private SpriteSheet spriteSheet;
 
 
         private GraphicsDeviceManager graphics;
@@ -173,6 +174,7 @@ namespace mike_and_conquer
             currentGameState = new PlayingGameState();
 
             raiSpriteFrameManager = new RAISpriteFrameManager();
+            spriteSheet = new SpriteSheet();
 
             MikeAndConquerGame.instance = this;
         }
@@ -328,6 +330,11 @@ namespace mike_and_conquer
             LoadSingleTextureFromFile(gameobjects.DestinationSquare.SPRITE_KEY, gameobjects.DestinationSquare.SPRITE_KEY);
 
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(GdiMinigunnerView.SHP_FILE_NAME,
+                GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
+
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                GdiMinigunnerView.SHP_FILE_NAME,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(GdiMinigunnerView.SHP_FILE_NAME),
                 GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
 
             raiSpriteFrameManager.LoadAllTexturesFromTmpFile(TextureListMap.CLEAR1_SHP);

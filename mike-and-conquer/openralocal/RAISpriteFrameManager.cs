@@ -38,7 +38,10 @@ namespace mike_and_conquer.openralocal
             mapTileSpriteFrameMap.Add(fileName,frames);
         }
 
-
+        public OpenRA.IReadOnlyList<ISpriteFrame> GetSpriteFramesForUnit(string shpFileName)
+        {
+            return unitSpriteFrameMap[shpFileName];
+        }
 
     }
 }

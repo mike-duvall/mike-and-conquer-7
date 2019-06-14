@@ -3,6 +3,7 @@ using GameTime = Microsoft.Xna.Framework.GameTime;
 
 using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
 
+
 namespace mike_and_conquer
 {
     class MissionAccomplishedGameState : GameState

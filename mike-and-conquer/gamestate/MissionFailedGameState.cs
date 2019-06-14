@@ -1,5 +1,6 @@
-﻿using GameTime = Microsoft.Xna.Framework.GameTime;
-using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
+﻿using mike_and_conquer.gameview;
+using GameTime = Microsoft.Xna.Framework.GameTime;
+
 
 namespace mike_and_conquer
 {

@@ -78,6 +78,8 @@
     <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Sandbag.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\UnitSprite.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\MapTileFrame.cs" />
     <Compile Include="mike-and-conquer\gamesprite\ShadowMapper.cs" />
     <Compile Include="mike-and-conquer\gamesprite\ShpFileImage.cs" />
     <Compile Include="mike-and-conquer\gamesprite\SpriteSheet.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="mike-and-conquer\gameview\BasicMapSquare.cs" />
     <Compile Include="mike-and-conquer\gameview\GameCursor.cs" />
     <Compile Include="mike-and-conquer\gameview\MinigunnerIconView.cs" />
+    <Compile Include="mike-and-conquer\gameview\MinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\MissionFailedGameStateView.cs" />
     <Compile Include="mike-and-conquer\gameview\MissionAccomplishedGameStateView.cs" />
     <Compile Include="mike-and-conquer\gameview\GameStateView.cs" />
@@ -95,7 +98,6 @@
     <Compile Include="mike-and-conquer\gameview\SandbagView.cs" />
     <Compile Include="mike-and-conquer\gameview\NodMinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\GdiMinigunnerView.cs" />
-    <Compile Include="mike-and-conquer\gameview\MinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\MissionFailedMessage.cs" />
     <Compile Include="mike-and-conquer\gameview\MissionAccomplishedMessage.cs" />
     <Compile Include="mike-and-conquer\gamesprite\GameSprite.cs" />

@@ -43,5 +43,10 @@ namespace mike_and_conquer.openralocal
             return unitSpriteFrameMap[shpFileName];
         }
 
+        public ISpriteFrame[] GetSpriteFramesForMapTile(string tmpFileName)
+        {
+            return mapTileSpriteFrameMap[tmpFileName];
+        }
+
     }
 }

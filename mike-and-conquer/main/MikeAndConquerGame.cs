@@ -100,6 +100,10 @@ namespace mike_and_conquer
             get { return textureListMap; }
         }
 
+        public SpriteSheet SpriteSheet
+        {
+            get { return spriteSheet; }
+        }
 
         private RAISpriteFrameManager raiSpriteFrameManager;
         private SpriteSheet spriteSheet;
@@ -333,17 +337,36 @@ namespace mike_and_conquer
                 GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
 
             spriteSheet.LoadUnitFramesFromSpriteFrames(
-                GdiMinigunnerView.SHP_FILE_NAME,
+                GdiMinigunnerView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(GdiMinigunnerView.SHP_FILE_NAME),
                 GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
 
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                NodMinigunnerView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(NodMinigunnerView.SHP_FILE_NAME),
+                NodMinigunnerView.SHP_FILE_COLOR_MAPPER);
+
+
+
             raiSpriteFrameManager.LoadAllTexturesFromTmpFile(TextureListMap.CLEAR1_SHP);
+
+            spriteSheet.LoadMapTileFramesFromSpriteFrames(
+                TextureListMap.CLEAR1_SHP,
+                raiSpriteFrameManager.GetSpriteFramesForMapTile(TextureListMap.CLEAR1_SHP));
+
+
+//             Pickup here:
+            // Use code above to load all unit textures and all map textures
+            // Then update existing code to use SpriteSheet instead of of TextureListMap
+            // May need UnitSprite vs MapTileSprite to handle differences
+            // Have already done GdiMinigunnerView
+
+            // Consider LoadMapTexturesNew(), LoadUnitTexturesNew(), LoadOtherTextures() methods
 
         }
 
         private void LoadMapTextures()
         {
-
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.CLEAR1_SHP);
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D04_TEM);
             textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D09_TEM);

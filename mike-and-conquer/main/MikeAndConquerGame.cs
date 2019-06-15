@@ -95,10 +95,10 @@ namespace mike_and_conquer
             get { return sandbagViewList; }
         }
 
-        public TextureListMap TextureListMap
-        {
-            get { return textureListMap; }
-        }
+//        public TextureListMap TextureListMap
+//        {
+//            get { return textureListMap; }
+//        }
 
         public SpriteSheet SpriteSheet
         {
@@ -111,7 +111,7 @@ namespace mike_and_conquer
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private TextureListMap textureListMap;
+//        private TextureListMap textureListMap;
 
         private bool testMode;
 
@@ -169,7 +169,7 @@ namespace mike_and_conquer
 
             sandbagViewList = new List<SandbagView>();
 
-            textureListMap = new TextureListMap();
+//            textureListMap = new TextureListMap();
 
             oldKeyboardState = Keyboard.GetState();
             unitSelectionBox = new UnitSelectionBox();
@@ -316,7 +316,7 @@ namespace mike_and_conquer
 
         private void LoadTextures()
         {
-            LoadMapTextures();
+//            LoadMapTextures();
             LoadMapTextures2();
 
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -419,46 +419,46 @@ namespace mike_and_conquer
         }
 
 
-        private void LoadMapTextures()
-        {
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.CLEAR1_SHP);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D04_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D09_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D13_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D15_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D20_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D21_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D23_TEM);
-
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P07_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P08_TEM);
-
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S09_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S10_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S11_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S12_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S14_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S22_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S29_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S32_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S34_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S35_TEM);
-
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH1_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH2_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH3_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH4_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH5_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH6_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH9_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH10_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH17_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH18_TEM);
-
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.W1_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.W2_TEM);
-
-        }
+//        private void LoadMapTextures()
+//        {
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.CLEAR1_SHP);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D04_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D09_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D13_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D15_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D20_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D21_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D23_TEM);
+//
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P07_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P08_TEM);
+//
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S09_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S10_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S11_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S12_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S14_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S22_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S29_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S32_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S34_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S35_TEM);
+//
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH1_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH2_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH3_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH4_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH5_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH6_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH9_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH10_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH17_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH18_TEM);
+//
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.W1_TEM);
+//            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.W2_TEM);
+//
+//        }
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -900,19 +900,19 @@ namespace mike_and_conquer
         }
 
 
-        private void LoadSingleTextureFromFile(string key, string fileName)
-        {
-            SpriteTextureList spriteTextureList = new SpriteTextureList();
-            Texture2D texture2D = Content.Load<Texture2D>(fileName);
-
-
-            ShpFileImage shpFileImage = new ShpFileImage(texture2D,null,null);
-            spriteTextureList.shpFileImageList.Add(shpFileImage);
-            spriteTextureList.textureWidth = texture2D.Width;
-            spriteTextureList.textureHeight = texture2D.Height;
-
-            TextureListMap.AddTextureList(key, spriteTextureList);
-        }
+//        private void LoadSingleTextureFromFile(string key, string fileName)
+//        {
+//            SpriteTextureList spriteTextureList = new SpriteTextureList();
+//            Texture2D texture2D = Content.Load<Texture2D>(fileName);
+//
+//
+//            ShpFileImage shpFileImage = new ShpFileImage(texture2D,null,null);
+//            spriteTextureList.shpFileImageList.Add(shpFileImage);
+//            spriteTextureList.textureWidth = texture2D.Width;
+//            spriteTextureList.textureHeight = texture2D.Height;
+//
+//            TextureListMap.AddTextureList(key, spriteTextureList);
+//        }
 
 
         public GameState HandleReset()

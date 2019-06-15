@@ -32,24 +32,24 @@ namespace mike_and_conquer
 
         public bool drawShadow;
 
-        public GameSprite(string spriteListKey)
-        {
-            this.animationSequenceMap = new Dictionary<int, util.AnimationSequence>();
-            spriteTextureList = MikeAndConquerGame.instance.TextureListMap.GetTextureList(spriteListKey);
-
-            spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
-
-            middleOfSpriteInSpriteCoordinates = new Vector2();
-
-            middleOfSpriteInSpriteCoordinates.X = spriteTextureList.textureWidth / 2;
-            middleOfSpriteInSpriteCoordinates.Y = spriteTextureList.textureHeight / 2;
-
-            drawBoundingRectangle = false;
-            this.animate = true;
-            int[] remap = { };
-            palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
-            drawShadow = false;
-        }
+//        public GameSprite(string spriteListKey)
+//        {
+//            this.animationSequenceMap = new Dictionary<int, util.AnimationSequence>();
+//            spriteTextureList = MikeAndConquerGame.instance.TextureListMap.GetTextureList(spriteListKey);
+//
+//            spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
+//
+//            middleOfSpriteInSpriteCoordinates = new Vector2();
+//
+//            middleOfSpriteInSpriteCoordinates.X = spriteTextureList.textureWidth / 2;
+//            middleOfSpriteInSpriteCoordinates.Y = spriteTextureList.textureHeight / 2;
+//
+//            drawBoundingRectangle = false;
+//            this.animate = true;
+//            int[] remap = { };
+//            palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
+//            drawShadow = false;
+//        }
 
         public void SetCurrentAnimationSequenceIndex(int animationSequenceIndex)
         {

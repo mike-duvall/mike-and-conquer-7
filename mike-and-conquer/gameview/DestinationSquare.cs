@@ -19,7 +19,8 @@ namespace mike_and_conquer.gameobjects
 
         public DestinationSquare()
         {
-            sprite = new SingleTextureSprite(SPRITE_KEY);
+
+            sprite = new SingleTextureSprite(MikeAndConquerGame.instance.SpriteSheet.GetTextureForKey(SPRITE_KEY));
 
         }
 

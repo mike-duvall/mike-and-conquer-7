@@ -1,4 +1,4 @@
-﻿using AnimationSequence = mike_and_conquer.util.AnimationSequence;
+﻿
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using Boolean = System.Boolean;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -12,39 +12,39 @@ namespace mike_and_conquer
     public class SingleTextureSprite
     {
 
-        Texture2D currentTexture;
+        Texture2D texture;
 
         Texture2D spriteBorderRectangleTexture;
         public Boolean drawBoundingRectangle;
 
         private Vector2 middleOfSpriteInSpriteCoordinates;
 
-        private bool animate;
 
-        private OpenRA.Graphics.ImmutablePalette palette;
-
-        public bool drawShadow;
-
-        public SingleTextureSprite(string spriteKey)
+        public int Width
         {
+            get { return texture.Width; }
+        }
 
-            currentTexture = MikeAndConquerGame.instance.SpriteSheet.GetTextureForKey(spriteKey);
-            spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
+        public int Height
+        {
+            get { return texture.Height; }
+        }
+
+
+        public SingleTextureSprite(Texture2D texture)
+        {
+            this.texture = texture;
+
+            spriteBorderRectangleTexture = CreateSpriteBorderRectangleTexture();
 
             middleOfSpriteInSpriteCoordinates = new Vector2();
 
 
-            middleOfSpriteInSpriteCoordinates.X = currentTexture.Width / 2;
-            middleOfSpriteInSpriteCoordinates.Y = currentTexture.Height / 2;
+            middleOfSpriteInSpriteCoordinates.X = Width / 2;
+            middleOfSpriteInSpriteCoordinates.Y = Height / 2;
 
             drawBoundingRectangle = false;
-            this.animate = true;
-            int[] remap = { };
-            palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
-            drawShadow = false;
         }
-
-
 
         
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates)
@@ -53,7 +53,7 @@ namespace mike_and_conquer
             float defaultScale = 1;
 
 
-            spriteBatch.Draw(currentTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
 
             if (drawBoundingRectangle)
             {
@@ -63,17 +63,15 @@ namespace mike_and_conquer
 
 
 
-        internal Texture2D createSpriteBorderRectangleTexture()
-        {
-//            Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
 
-            Texture2D rectangle =
-                new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, currentTexture.Width, currentTexture.Height);
+        internal Texture2D CreateSpriteBorderRectangleTexture()
+        {
+            Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, Width, Height);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
-            fillVerticalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
-            fillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, Color.White);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
+            FillVerticalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
+            FillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, Color.White);
 
             //            int centerX = (rectangle.Width / 2) - 1;
             //            int centerY = (rectangle.Height / 2) - 1;
@@ -92,7 +90,7 @@ namespace mike_and_conquer
         }
 
 
-        internal void fillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
+        internal void FillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
         {
             int beginIndex = width * lineIndex;
             for (int i = beginIndex; i < (beginIndex + width); ++i)
@@ -101,7 +99,7 @@ namespace mike_and_conquer
             }
         }
 
-        internal void fillVerticalLine(Color[] data, int width, int height, int lineIndex, Color color)
+        internal void FillVerticalLine(Color[] data, int width, int height, int lineIndex, Color color)
         {
             int beginIndex = lineIndex;
             for (int i = beginIndex; i < (width * height); i += width)

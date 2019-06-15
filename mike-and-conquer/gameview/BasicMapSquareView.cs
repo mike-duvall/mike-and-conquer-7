@@ -10,7 +10,7 @@ namespace mike_and_conquer.gameview
     public class BasicMapSquareView
     {
 
-        public MapTileSprite mapTileSprite;
+        public SingleTextureSprite singleTextureSprite;
         public BasicMapSquare myBasicMapSquare;
 
         private int imageIndex;
@@ -23,8 +23,8 @@ namespace mike_and_conquer.gameview
             imageIndex = myBasicMapSquare.ImageIndex;
             textureKey = myBasicMapSquare.TextureKey;
             List<MapTileFrame>  mapTileFrameList = MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
-            this.mapTileSprite = new MapTileSprite(mapTileFrameList[imageIndex].Texture);
-            this.mapTileSprite.drawBoundingRectangle = false;
+            this.singleTextureSprite = new SingleTextureSprite(mapTileFrameList[imageIndex].Texture);
+            this.singleTextureSprite.drawBoundingRectangle = false;
         }
 
 
@@ -35,14 +35,14 @@ namespace mike_and_conquer.gameview
             MapTileFrame mapTileFrame = mapTileFrameList[imageIndex];
             byte[] frameData = mapTileFrame.FrameData;
 
-            int frameDataIndex = y * mapTileSprite.Width + x;
+            int frameDataIndex = y * singleTextureSprite.Width + x;
             return frameData[frameDataIndex];
         }
 
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            mapTileSprite.Draw(gameTime, spriteBatch, this.myBasicMapSquare.PositionInWorldCoordinates);
+            singleTextureSprite.Draw(gameTime, spriteBatch, this.myBasicMapSquare.PositionInWorldCoordinates);
         }
 
 

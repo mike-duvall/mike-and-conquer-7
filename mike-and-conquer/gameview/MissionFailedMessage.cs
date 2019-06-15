@@ -26,10 +26,10 @@ namespace mike_and_conquer.gameobjects
             int baseX = 350;
             int baseY = 100;
 
-            missionSprite = new SingleTextureSprite(MISSION_SPRITE_KEY);
+            missionSprite = new SingleTextureSprite(MikeAndConquerGame.instance.SpriteSheet.GetTextureForKey(MISSION_SPRITE_KEY));
             missionPosition = new Vector2(baseX, baseY);
 
-            accomplishedSprite = new SingleTextureSprite(FAILED_SPRITE_KEY);
+            accomplishedSprite = new SingleTextureSprite(MikeAndConquerGame.instance.SpriteSheet.GetTextureForKey(FAILED_SPRITE_KEY));
             accomplishedPosition = new Vector2(baseX - 5, baseY + 50);
 
         }

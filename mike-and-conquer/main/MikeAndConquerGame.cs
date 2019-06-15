@@ -320,16 +320,6 @@ namespace mike_and_conquer
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //            textureListMap.LoadSpriteListFromShpFile(GdiMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
-            //            textureListMap.LoadSpriteListFromShpFile(NodMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, NodMinigunnerView.SHP_FILE_COLOR_MAPPER);
-            //            textureListMap.LoadSpriteListFromShpFile(SandbagView.SPRITE_KEY, SandbagView.SHP_FILE_NAME, SandbagView.SHP_FILE_COLOR_MAPPER);
-
-
-
-            textureListMap.LoadSpriteListFromShpFile(MinigunnerIconView.SPRITE_KEY, MinigunnerIconView.SHP_FILE_NAME,
-                MinigunnerIconView.SHP_FILE_COLOR_MAPPER);
-
-            textureListMap.LoadSpriteListFromShpFile(GDIBarracksView.SPRITE_KEY, GDIBarracksView.SHP_FILE_NAME, GDIBarracksView.SHP_FILE_COLOR_MAPPER);
 
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
             LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
@@ -337,36 +327,42 @@ namespace mike_and_conquer
             LoadSingleTextureFromFile(gameobjects.DestinationSquare.SPRITE_KEY, gameobjects.DestinationSquare.SPRITE_KEY);
 
 
-            raiSpriteFrameManager.LoadAllTexturesFromShpFile(GdiMinigunnerView.SHP_FILE_NAME,GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
-
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(GdiMinigunnerView.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(
                 GdiMinigunnerView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(GdiMinigunnerView.SHP_FILE_NAME),
                 GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
-
             spriteSheet.LoadUnitFramesFromSpriteFrames(
                 NodMinigunnerView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(NodMinigunnerView.SHP_FILE_NAME),
                 NodMinigunnerView.SHP_FILE_COLOR_MAPPER);
 
 
-            raiSpriteFrameManager.LoadAllTexturesFromShpFile(SandbagView.SHP_FILE_NAME, SandbagView.SHP_FILE_COLOR_MAPPER);
-
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(SandbagView.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(
                 SandbagView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(SandbagView.SHP_FILE_NAME),
                 SandbagView.SHP_FILE_COLOR_MAPPER);
 
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(MinigunnerIconView.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                MinigunnerIconView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(MinigunnerIconView.SHP_FILE_NAME),
+                MinigunnerIconView.SHP_FILE_COLOR_MAPPER);
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(GDIBarracksView.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                GDIBarracksView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(GDIBarracksView.SHP_FILE_NAME),
+                GDIBarracksView.SHP_FILE_COLOR_MAPPER);
 
 
             raiSpriteFrameManager.LoadAllTexturesFromTmpFile(TextureListMap.CLEAR1_SHP);
-
             spriteSheet.LoadMapTileFramesFromSpriteFrames(
                 TextureListMap.CLEAR1_SHP,
                 raiSpriteFrameManager.GetSpriteFramesForMapTile(TextureListMap.CLEAR1_SHP));
 
-
-//             Pickup here:
+            //             Pickup here:
             // Use code above to load all unit textures and all map textures
             // Then update existing code to use SpriteSheet instead of of TextureListMap
             // May need UnitSprite vs MapTileSprite to handle differences

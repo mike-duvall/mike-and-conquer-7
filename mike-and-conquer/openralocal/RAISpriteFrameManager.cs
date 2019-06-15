@@ -20,7 +20,7 @@ namespace mike_and_conquer.openralocal
 
         }
 
-        public void LoadAllTexturesFromShpFile(string shpFileName, ShpFileColorMapper shpFileColorMapper)
+        public void LoadAllTexturesFromShpFile(string shpFileName)
         {
             System.IO.FileStream shpStream = System.IO.File.Open(shpFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
             ShpTDSprite shpTDSprite = new ShpTDSprite(shpStream);

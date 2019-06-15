@@ -11,8 +11,10 @@ namespace mike_and_conquer.gameview
 {
     public class MinigunnerIconView
     {
-        private GameSprite gameSprite;
-//        private Sandbag mySandbag;
+//        private GameSprite gameSprite;
+
+        // TODO Consider ToolBarIconSprite instead of UnitSprite
+        private UnitSprite unitSprite;
 
 
         public const string SPRITE_KEY = "MinigunnerIcon";
@@ -27,8 +29,8 @@ namespace mike_and_conquer.gameview
         public MinigunnerIconView()
         {
 //            this.mySandbag = sandbag;
-            this.gameSprite = new GameSprite(SPRITE_KEY);
-            this.gameSprite.drawShadow = true;
+            this.unitSprite = new UnitSprite(SPRITE_KEY);
+            this.unitSprite.drawShadow = true;
             SetupAnimations();
         }
 
@@ -37,14 +39,14 @@ namespace mike_and_conquer.gameview
         {
             AnimationSequence animationSequence = new AnimationSequence(1);
             animationSequence.AddFrame(0);
-            gameSprite.AddAnimationSequence(0, animationSequence);
+            unitSprite.AddAnimationSequence(0, animationSequence);
         }
 
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-//            gameSprite.Draw(gameTime, spriteBatch, mySandbag.positionInWorldCoordinates);
-            gameSprite.Draw(gameTime, spriteBatch, new Vector2(1,1));
+            //            gameSprite.Draw(gameTime, spriteBatch, mySandbag.positionInWorldCoordinates);
+            unitSprite.Draw(gameTime, spriteBatch, new Vector2(1,1));
         }
 
 

@@ -320,9 +320,12 @@ namespace mike_and_conquer
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            textureListMap.LoadSpriteListFromShpFile(GdiMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
-            textureListMap.LoadSpriteListFromShpFile(NodMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, NodMinigunnerView.SHP_FILE_COLOR_MAPPER);
-            textureListMap.LoadSpriteListFromShpFile(SandbagView.SPRITE_KEY, SandbagView.SHP_FILE_NAME, SandbagView.SHP_FILE_COLOR_MAPPER);
+            //            textureListMap.LoadSpriteListFromShpFile(GdiMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
+            //            textureListMap.LoadSpriteListFromShpFile(NodMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, NodMinigunnerView.SHP_FILE_COLOR_MAPPER);
+            //            textureListMap.LoadSpriteListFromShpFile(SandbagView.SPRITE_KEY, SandbagView.SHP_FILE_NAME, SandbagView.SHP_FILE_COLOR_MAPPER);
+
+
+
             textureListMap.LoadSpriteListFromShpFile(MinigunnerIconView.SPRITE_KEY, MinigunnerIconView.SHP_FILE_NAME,
                 MinigunnerIconView.SHP_FILE_COLOR_MAPPER);
 
@@ -333,8 +336,8 @@ namespace mike_and_conquer
             LoadSingleTextureFromFile(gameobjects.MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
             LoadSingleTextureFromFile(gameobjects.DestinationSquare.SPRITE_KEY, gameobjects.DestinationSquare.SPRITE_KEY);
 
-            raiSpriteFrameManager.LoadAllTexturesFromShpFile(GdiMinigunnerView.SHP_FILE_NAME,
-                GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(GdiMinigunnerView.SHP_FILE_NAME,GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
 
             spriteSheet.LoadUnitFramesFromSpriteFrames(
                 GdiMinigunnerView.SPRITE_KEY,
@@ -345,6 +348,14 @@ namespace mike_and_conquer
                 NodMinigunnerView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(NodMinigunnerView.SHP_FILE_NAME),
                 NodMinigunnerView.SHP_FILE_COLOR_MAPPER);
+
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(SandbagView.SHP_FILE_NAME, SandbagView.SHP_FILE_COLOR_MAPPER);
+
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                SandbagView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(SandbagView.SHP_FILE_NAME),
+                SandbagView.SHP_FILE_COLOR_MAPPER);
 
 
 

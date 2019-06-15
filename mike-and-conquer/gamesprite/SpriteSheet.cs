@@ -25,7 +25,7 @@ namespace mike_and_conquer.gamesprite
             return unitFrameMap[shpFileName];
         }
 
-        public void LoadUnitFramesFromSpriteFrames(string shpFileName, OpenRA.IReadOnlyList<ISpriteFrame> spriteFrameList, ShpFileColorMapper shpFileColorMapper)
+        public void LoadUnitFramesFromSpriteFrames(string spriteKey, OpenRA.IReadOnlyList<ISpriteFrame> spriteFrameList, ShpFileColorMapper shpFileColorMapper)
         {
 
             int[] remap = { };
@@ -63,7 +63,7 @@ namespace mike_and_conquer.gamesprite
                 unitFrameList.Add(unitFrame);
             }
 
-            unitFrameMap.Add(shpFileName, unitFrameList);
+            unitFrameMap.Add(spriteKey, unitFrameList);
 
         }
 

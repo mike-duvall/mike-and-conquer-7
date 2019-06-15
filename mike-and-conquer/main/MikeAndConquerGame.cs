@@ -372,42 +372,42 @@ namespace mike_and_conquer
 
         private void LoadMapTextures()
         {
-            LoadTmpFile(TextureListMap.CLEAR1_SHP);
-            LoadTmpFile(TextureListMap.D04_TEM);
-            LoadTmpFile(TextureListMap.D09_TEM);
-            LoadTmpFile(TextureListMap.D13_TEM);
-            LoadTmpFile(TextureListMap.D15_TEM);
-            LoadTmpFile(TextureListMap.D20_TEM);
-            LoadTmpFile(TextureListMap.D21_TEM);
-            LoadTmpFile(TextureListMap.D23_TEM);
+            LoadTmpFile(GameMap.CLEAR1_SHP);
+            LoadTmpFile(GameMap.D04_TEM);
+            LoadTmpFile(GameMap.D09_TEM);
+            LoadTmpFile(GameMap.D13_TEM);
+            LoadTmpFile(GameMap.D15_TEM);
+            LoadTmpFile(GameMap.D20_TEM);
+            LoadTmpFile(GameMap.D21_TEM);
+            LoadTmpFile(GameMap.D23_TEM);
 
-            LoadTmpFile(TextureListMap.P07_TEM);
-            LoadTmpFile(TextureListMap.P08_TEM);
+            LoadTmpFile(GameMap.P07_TEM);
+            LoadTmpFile(GameMap.P08_TEM);
 
-            LoadTmpFile(TextureListMap.S09_TEM);
-            LoadTmpFile(TextureListMap.S10_TEM);
-            LoadTmpFile(TextureListMap.S11_TEM);
-            LoadTmpFile(TextureListMap.S12_TEM);
-            LoadTmpFile(TextureListMap.S14_TEM);
-            LoadTmpFile(TextureListMap.S22_TEM);
-            LoadTmpFile(TextureListMap.S29_TEM);
-            LoadTmpFile(TextureListMap.S32_TEM);
-            LoadTmpFile(TextureListMap.S34_TEM);
-            LoadTmpFile(TextureListMap.S35_TEM);
+            LoadTmpFile(GameMap.S09_TEM);
+            LoadTmpFile(GameMap.S10_TEM);
+            LoadTmpFile(GameMap.S11_TEM);
+            LoadTmpFile(GameMap.S12_TEM);
+            LoadTmpFile(GameMap.S14_TEM);
+            LoadTmpFile(GameMap.S22_TEM);
+            LoadTmpFile(GameMap.S29_TEM);
+            LoadTmpFile(GameMap.S32_TEM);
+            LoadTmpFile(GameMap.S34_TEM);
+            LoadTmpFile(GameMap.S35_TEM);
 
-            LoadTmpFile(TextureListMap.SH1_TEM);
-            LoadTmpFile(TextureListMap.SH2_TEM);
-            LoadTmpFile(TextureListMap.SH3_TEM);
-            LoadTmpFile(TextureListMap.SH4_TEM);
-            LoadTmpFile(TextureListMap.SH5_TEM);
-            LoadTmpFile(TextureListMap.SH6_TEM);
-            LoadTmpFile(TextureListMap.SH9_TEM);
-            LoadTmpFile(TextureListMap.SH10_TEM);
-            LoadTmpFile(TextureListMap.SH17_TEM);
-            LoadTmpFile(TextureListMap.SH18_TEM);
+            LoadTmpFile(GameMap.SH1_TEM);
+            LoadTmpFile(GameMap.SH2_TEM);
+            LoadTmpFile(GameMap.SH3_TEM);
+            LoadTmpFile(GameMap.SH4_TEM);
+            LoadTmpFile(GameMap.SH5_TEM);
+            LoadTmpFile(GameMap.SH6_TEM);
+            LoadTmpFile(GameMap.SH9_TEM);
+            LoadTmpFile(GameMap.SH10_TEM);
+            LoadTmpFile(GameMap.SH17_TEM);
+            LoadTmpFile(GameMap.SH18_TEM);
 
-            LoadTmpFile(TextureListMap.W1_TEM);
-            LoadTmpFile(TextureListMap.W2_TEM);
+            LoadTmpFile(GameMap.W1_TEM);
+            LoadTmpFile(GameMap.W2_TEM);
 
 
         }

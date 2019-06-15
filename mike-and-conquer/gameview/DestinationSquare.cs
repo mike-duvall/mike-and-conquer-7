@@ -12,23 +12,19 @@ namespace mike_and_conquer.gameobjects
 
         public const string SPRITE_KEY = "DestinationSquare";
 
-        private GameSprite gameSprite;
+        private SingleTextureSprite sprite;
         public Vector2 position;
-
 
         public DestinationSquare()
         {
-            gameSprite = new GameSprite(SPRITE_KEY);
-            AnimationSequence animationSequence = new AnimationSequence(1);
-            animationSequence.AddFrame(0);
-            gameSprite.AddAnimationSequence(0, animationSequence);
-            gameSprite.SetCurrentAnimationSequenceIndex(0);
+
+            sprite = new SingleTextureSprite(MikeAndConquerGame.instance.SpriteSheet.GetTextureForKey(SPRITE_KEY));
 
         }
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            gameSprite.Draw(gameTime, spriteBatch, position);
+            sprite.Draw(gameTime, spriteBatch, position);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
+using mike_and_conquer.openralocal;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
@@ -13,7 +14,6 @@ using Color = Microsoft.Xna.Framework.Color;
 
 using SpriteSortMode = Microsoft.Xna.Framework.Graphics.SpriteSortMode;
 using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
-using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using KeyboardState = Microsoft.Xna.Framework.Input.KeyboardState;
 using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
@@ -94,18 +94,22 @@ namespace mike_and_conquer
             get { return sandbagViewList; }
         }
 
-        public TextureListMap TextureListMap
+        public SpriteSheet SpriteSheet
         {
-            get { return textureListMap; }
+            get { return spriteSheet; }
         }
+
+        private RAISpriteFrameManager raiSpriteFrameManager;
+        private SpriteSheet spriteSheet;
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private TextureListMap textureListMap;
 
         private bool testMode;
 
         private int borderSize = 0;
+
+        private int mouseCounter = 0;
 
         KeyboardState oldKeyboardState;
 
@@ -159,13 +163,14 @@ namespace mike_and_conquer
 
             sandbagViewList = new List<SandbagView>();
 
-            textureListMap = new TextureListMap();
-
             oldKeyboardState = Keyboard.GetState();
             unitSelectionBox = new UnitSelectionBox();
 
             shadowMapper = new ShadowMapper();
             currentGameState = new PlayingGameState();
+
+            raiSpriteFrameManager = new RAISpriteFrameManager();
+            spriteSheet = new SpriteSheet();
 
             MikeAndConquerGame.instance = this;
         }
@@ -282,7 +287,11 @@ namespace mike_and_conquer
         protected override void LoadContent()
         {
 
+
             gameWorld.Initialize();
+
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
             LoadTextures();
             CreateBasicMapSquareViews();
 
@@ -304,65 +313,105 @@ namespace mike_and_conquer
         private void LoadTextures()
         {
             LoadMapTextures();
+            LoadSingleTextures();
+            LoadShpFileTextures();
+        }
 
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            textureListMap.LoadSpriteListFromShpFile(GdiMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
-            textureListMap.LoadSpriteListFromShpFile(NodMinigunnerView.SPRITE_KEY, GdiMinigunnerView.SHP_FILE_NAME, NodMinigunnerView.SHP_FILE_COLOR_MAPPER);
-            textureListMap.LoadSpriteListFromShpFile(SandbagView.SPRITE_KEY, SandbagView.SHP_FILE_NAME, SandbagView.SHP_FILE_COLOR_MAPPER);
-            textureListMap.LoadSpriteListFromShpFile(MinigunnerIconView.SPRITE_KEY, MinigunnerIconView.SHP_FILE_NAME,
+        private void LoadShpFileTextures()
+        {
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(GdiMinigunnerView.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                GdiMinigunnerView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(GdiMinigunnerView.SHP_FILE_NAME),
+                GdiMinigunnerView.SHP_FILE_COLOR_MAPPER);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                NodMinigunnerView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(NodMinigunnerView.SHP_FILE_NAME),
+                NodMinigunnerView.SHP_FILE_COLOR_MAPPER);
+
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(SandbagView.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                SandbagView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(SandbagView.SHP_FILE_NAME),
+                SandbagView.SHP_FILE_COLOR_MAPPER);
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(MinigunnerIconView.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                MinigunnerIconView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(MinigunnerIconView.SHP_FILE_NAME),
                 MinigunnerIconView.SHP_FILE_COLOR_MAPPER);
 
-            textureListMap.LoadSpriteListFromShpFile(GDIBarracksView.SPRITE_KEY, GDIBarracksView.SHP_FILE_NAME, GDIBarracksView.SHP_FILE_COLOR_MAPPER);
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(GDIBarracksView.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                GDIBarracksView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(GDIBarracksView.SHP_FILE_NAME),
+                GDIBarracksView.SHP_FILE_COLOR_MAPPER);
+        }
 
-            LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
-            LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
-            LoadSingleTextureFromFile(gameobjects.MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
-            LoadSingleTextureFromFile(gameobjects.DestinationSquare.SPRITE_KEY, gameobjects.DestinationSquare.SPRITE_KEY);
+        private void LoadSingleTextures()
+        {
+            spriteSheet.LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
+            spriteSheet.LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY,
+                "Accomplished");
+            spriteSheet.LoadSingleTextureFromFile(gameobjects.MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
+            spriteSheet.LoadSingleTextureFromFile(gameobjects.DestinationSquare.SPRITE_KEY,
+                gameobjects.DestinationSquare.SPRITE_KEY);
+        }
+
+
+
+        private void LoadTmpFile(string tmpFileName)
+        {
+            raiSpriteFrameManager.LoadAllTexturesFromTmpFile(tmpFileName);
+            spriteSheet.LoadMapTileFramesFromSpriteFrames(
+                tmpFileName,
+                raiSpriteFrameManager.GetSpriteFramesForMapTile(tmpFileName));
 
         }
 
         private void LoadMapTextures()
         {
+            LoadTmpFile(GameMap.CLEAR1_SHP);
+            LoadTmpFile(GameMap.D04_TEM);
+            LoadTmpFile(GameMap.D09_TEM);
+            LoadTmpFile(GameMap.D13_TEM);
+            LoadTmpFile(GameMap.D15_TEM);
+            LoadTmpFile(GameMap.D20_TEM);
+            LoadTmpFile(GameMap.D21_TEM);
+            LoadTmpFile(GameMap.D23_TEM);
 
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.CLEAR1_SHP);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D04_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D09_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D13_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D15_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D20_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D21_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.D23_TEM);
+            LoadTmpFile(GameMap.P07_TEM);
+            LoadTmpFile(GameMap.P08_TEM);
 
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P07_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.P08_TEM);
+            LoadTmpFile(GameMap.S09_TEM);
+            LoadTmpFile(GameMap.S10_TEM);
+            LoadTmpFile(GameMap.S11_TEM);
+            LoadTmpFile(GameMap.S12_TEM);
+            LoadTmpFile(GameMap.S14_TEM);
+            LoadTmpFile(GameMap.S22_TEM);
+            LoadTmpFile(GameMap.S29_TEM);
+            LoadTmpFile(GameMap.S32_TEM);
+            LoadTmpFile(GameMap.S34_TEM);
+            LoadTmpFile(GameMap.S35_TEM);
 
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S09_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S10_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S11_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S12_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S14_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S22_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S29_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S32_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S34_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.S35_TEM);
+            LoadTmpFile(GameMap.SH1_TEM);
+            LoadTmpFile(GameMap.SH2_TEM);
+            LoadTmpFile(GameMap.SH3_TEM);
+            LoadTmpFile(GameMap.SH4_TEM);
+            LoadTmpFile(GameMap.SH5_TEM);
+            LoadTmpFile(GameMap.SH6_TEM);
+            LoadTmpFile(GameMap.SH9_TEM);
+            LoadTmpFile(GameMap.SH10_TEM);
+            LoadTmpFile(GameMap.SH17_TEM);
+            LoadTmpFile(GameMap.SH18_TEM);
 
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH1_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH2_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH3_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH4_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH5_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH6_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH9_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH10_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH17_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.SH18_TEM);
+            LoadTmpFile(GameMap.W1_TEM);
+            LoadTmpFile(GameMap.W2_TEM);
 
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.W1_TEM);
-            textureListMap.LoadSpriteListFromTmpFile(TextureListMap.W2_TEM);
 
         }
+
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -451,7 +500,7 @@ namespace mike_and_conquer
 
         }
 
-        private int mouseCounter = 0;
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -802,22 +851,6 @@ namespace mike_and_conquer
             NodMinigunnerViewList.Add(newMinigunnerView);
             return newMinigunner;
         }
-
-
-        private void LoadSingleTextureFromFile(string key, string fileName)
-        {
-            SpriteTextureList spriteTextureList = new SpriteTextureList();
-            Texture2D texture2D = Content.Load<Texture2D>(fileName);
-
-
-            ShpFileImage shpFileImage = new ShpFileImage(texture2D,null,null);
-            spriteTextureList.shpFileImageList.Add(shpFileImage);
-            spriteTextureList.textureWidth = texture2D.Width;
-            spriteTextureList.textureHeight = texture2D.Height;
-
-            TextureListMap.AddTextureList(key, spriteTextureList);
-        }
-
 
         public GameState HandleReset()
         {

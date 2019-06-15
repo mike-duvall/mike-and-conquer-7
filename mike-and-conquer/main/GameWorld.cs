@@ -47,8 +47,6 @@ namespace mike_and_conquer
 
         public GameMap gameMap;
 
-//        private GameState currentGameState;
-
         public static GameWorld instance;
 
         public GameWorld()
@@ -56,7 +54,6 @@ namespace mike_and_conquer
             gdiMinigunnerList = new List<Minigunner>();
             nodMinigunnerList = new List<Minigunner>();
             sandbagList = new List<Sandbag>();
-//            currentGameState = new PlayingGameState();
 
             gameEvents = new List<AsyncGameEvent>();
 
@@ -79,10 +76,8 @@ namespace mike_and_conquer
 
         public void Initialize()
         {
-            //            navigationGraph = new Graph(numColumns, numRows);
             InitializeMap();
             navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
-
         }
 
 
@@ -143,11 +138,9 @@ namespace mike_and_conquer
 
         public void Update(GameTime gameTime)
         {
-//            currentGameState = currentGameState.Update(gameTime);
             UpdateAIControllers(gameTime);
             UpdateGDIMinigunners(gameTime);
             UpdateNodMinigunners(gameTime);
-
         }
 
 

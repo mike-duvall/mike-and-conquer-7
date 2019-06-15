@@ -11,7 +11,7 @@ namespace mike_and_conquer.gameview
 {
     public class MinigunnerView
     {
-        private GameSprite gameSprite;
+        private UnitSprite unitSprite;
         private UnitSelectionCursor unitSelectionCursor;
         private DestinationSquare destinationSquare;
         private Minigunner myMinigunner;
@@ -22,9 +22,9 @@ namespace mike_and_conquer.gameview
         protected MinigunnerView(Minigunner minigunner, string spriteListKey)
         {
             this.myMinigunner = minigunner;
-            this.gameSprite = new GameSprite(spriteListKey);
-            this.gameSprite.drawBoundingRectangle = false;
-            this.gameSprite.drawShadow = true;
+            this.unitSprite = new UnitSprite(spriteListKey);
+            this.unitSprite.drawBoundingRectangle = false;
+            this.unitSprite.drawShadow = true;
             this.unitSelectionCursor = new UnitSelectionCursor((int)this.myMinigunner.positionInWorldCoordinates.X, (int)this.myMinigunner.positionInWorldCoordinates.Y);
             this.destinationSquare = new DestinationSquare();
             this.drawDestinationSquare = false;
@@ -42,12 +42,12 @@ namespace mike_and_conquer.gameview
             walkingUpAnimationSequence.AddFrame(20);
             walkingUpAnimationSequence.AddFrame(21);
 
-            gameSprite.AddAnimationSequence((int)AnimationSequences.WALKING_UP, walkingUpAnimationSequence);
+            unitSprite.AddAnimationSequence((int)AnimationSequences.WALKING_UP, walkingUpAnimationSequence);
 
             AnimationSequence standingStillAnimationSequence = new AnimationSequence(10);
             standingStillAnimationSequence.AddFrame(0);
-            gameSprite.AddAnimationSequence((int)AnimationSequences.STANDING_STILL, standingStillAnimationSequence);
-            gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
+            unitSprite.AddAnimationSequence((int)AnimationSequences.STANDING_STILL, standingStillAnimationSequence);
+            unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
 
 
             AnimationSequence shootinUpAnimationSequence = new AnimationSequence(10);
@@ -59,7 +59,7 @@ namespace mike_and_conquer.gameview
             shootinUpAnimationSequence.AddFrame(70);
             shootinUpAnimationSequence.AddFrame(71);
             shootinUpAnimationSequence.AddFrame(72);
-            gameSprite.AddAnimationSequence((int)AnimationSequences.SHOOTING_UP, shootinUpAnimationSequence);
+            unitSprite.AddAnimationSequence((int)AnimationSequences.SHOOTING_UP, shootinUpAnimationSequence);
         }
 
 
@@ -73,18 +73,18 @@ namespace mike_and_conquer.gameview
             unitSelectionCursor.position = new Vector2(myMinigunner.positionInWorldCoordinates.X, myMinigunner.positionInWorldCoordinates.Y);
             if (myMinigunner.state == Minigunner.State.IDLE)
             {
-                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
+                unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
             }
             else if (myMinigunner.state == Minigunner.State.MOVING)
             {
-                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+                unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
             }
             else if (myMinigunner.state == Minigunner.State.ATTACKING)
             {
-                gameSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
+                unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
             }
 
-            gameSprite.Draw(gameTime, spriteBatch, myMinigunner.positionInWorldCoordinates);
+            unitSprite.Draw(gameTime, spriteBatch, myMinigunner.positionInWorldCoordinates);
 
             if (myMinigunner.selected)
             {
@@ -101,7 +101,7 @@ namespace mike_and_conquer.gameview
 
         public void SetAnimate(bool animateFlag)
         {
-            gameSprite.SetAnimate(animateFlag);
+            unitSprite.SetAnimate(animateFlag);
         }
 
 

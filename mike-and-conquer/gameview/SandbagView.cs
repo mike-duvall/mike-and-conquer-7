@@ -11,9 +11,11 @@ namespace mike_and_conquer.gameview
 {
     public class SandbagView
     {
-        private GameSprite gameSprite;
-        private Sandbag mySandbag;
 
+        // TODO:  Using UnitSprite for now.  May need new Sprite
+        // unique to sandbag like things, things like trees, etc
+        private UnitSprite unitSprite;
+        private Sandbag mySandbag;
 
         public const string SPRITE_KEY = "Sandbag";
 
@@ -26,8 +28,8 @@ namespace mike_and_conquer.gameview
         public SandbagView(Sandbag sandbag)
         {
             this.mySandbag = sandbag;
-            this.gameSprite = new GameSprite(SPRITE_KEY);
-            this.gameSprite.drawShadow = true;
+            this.unitSprite = new UnitSprite(SPRITE_KEY);
+            this.unitSprite.drawShadow = true;
             SetupAnimations();
         }
 
@@ -35,13 +37,13 @@ namespace mike_and_conquer.gameview
         {
             AnimationSequence animationSequence = new AnimationSequence(1);
             animationSequence.AddFrame(mySandbag.SandbagType);
-            gameSprite.AddAnimationSequence(0, animationSequence);
+            unitSprite.AddAnimationSequence(0, animationSequence);
         }
 
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            gameSprite.Draw(gameTime, spriteBatch, mySandbag.positionInWorldCoordinates);
+            unitSprite.Draw(gameTime, spriteBatch, mySandbag.positionInWorldCoordinates);
         }
 
 

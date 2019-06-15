@@ -12,11 +12,11 @@ namespace mike_and_conquer.gameview
 {
     public class GDIBarracksView
     {
-        private GameSprite gameSprite;
-//        private Sandbag mySandbag;
+
+        // TODO:  Consider something other than UnitSprite in future
+        private UnitSprite unitSprite;
 
         private Point position;
-
 
         public const string SPRITE_KEY = "Barracks";
 
@@ -29,9 +29,8 @@ namespace mike_and_conquer.gameview
 //        public GDIBarracksView(GDIBarracks barracks)
         public GDIBarracksView(Point aPosition)
         {
-//            this.mySandbag = sandbag;
-            this.gameSprite = new GameSprite(SPRITE_KEY);
-            this.gameSprite.drawShadow = true;
+            this.unitSprite = new UnitSprite(SPRITE_KEY);
+            this.unitSprite.drawShadow = true;
             this.position = aPosition;
             SetupAnimations();
         }
@@ -41,14 +40,13 @@ namespace mike_and_conquer.gameview
         {
             AnimationSequence animationSequence = new AnimationSequence(1);
             animationSequence.AddFrame(0);
-            gameSprite.AddAnimationSequence(0, animationSequence);
+            unitSprite.AddAnimationSequence(0, animationSequence);
         }
 
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-//            gameSprite.Draw(gameTime, spriteBatch, mySandbag.positionInWorldCoordinates);
-            gameSprite.Draw(gameTime, spriteBatch, new Vector2(this.position.X, this.position.Y));
+            unitSprite.Draw(gameTime, spriteBatch, new Vector2(this.position.X, this.position.Y));
         }
 
 

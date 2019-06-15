@@ -19,7 +19,6 @@ namespace mike_and_conquer
         Dictionary<int, AnimationSequence> animationSequenceMap;
         int currentAnimationSequenceIndex;
 
-//        SpriteTextureList spriteTextureList;
         private List<UnitFrame> unitFrameList;
         Texture2D currentTexture;
 
@@ -38,14 +37,11 @@ namespace mike_and_conquer
         {
             this.animationSequenceMap = new Dictionary<int, util.AnimationSequence>();
             unitFrameList = MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(spriteListKey);
-//            spriteTextureList = MikeAndConquerGame.instance.TextureListMap.GetTextureList(spriteListKey);
 
             spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
 
             middleOfSpriteInSpriteCoordinates = new Vector2();
 
-//            middleOfSpriteInSpriteCoordinates.X = spriteTextureList.textureWidth / 2;
-//            middleOfSpriteInSpriteCoordinates.Y = spriteTextureList.textureHeight / 2;
             UnitFrame firstUnitFrame = unitFrameList[0];
             middleOfSpriteInSpriteCoordinates.X = firstUnitFrame.Texture.Width / 2;
             middleOfSpriteInSpriteCoordinates.Y = firstUnitFrame.Texture.Height / 2;
@@ -70,7 +66,6 @@ namespace mike_and_conquer
             animationSequence.SetCurrentFrameIndex(0);
 
             int currentAnimationImageIndex = animationSequence.GetCurrentFrame();
-//            currentTexture = spriteTextureList.shpFileImageList[currentAnimationImageIndex].texture;
             currentTexture = unitFrameList[currentAnimationImageIndex].Texture;
         }
 
@@ -90,7 +85,6 @@ namespace mike_and_conquer
             }
 
             int currentAnimationImageIndex = currentAnimationSequence.GetCurrentFrame();
-//            currentTexture = spriteTextureList.shpFileImageList[currentAnimationImageIndex].texture;
             currentTexture = unitFrameList[currentAnimationImageIndex].Texture;
 
             float defaultScale = 1;
@@ -130,14 +124,10 @@ namespace mike_and_conquer
             currentTexture.GetData(texturePixelData);
 
 
-
-//            List<int> shadowIndexList = spriteTextureList.shpFileImageList[imageIndex].shadowIndexList;
             List<int> shadowIndexList = unitFrameList[imageIndex].ShadowIndexList;
 
             foreach (int shadowIndex in shadowIndexList)
             {
-                //                int shadowXSpriteCoordinate = shadowIndex % spriteTextureList.textureWidth;
-                //                int shadowYSpriteCoordinate = shadowIndex / spriteTextureList.textureWidth;
                 int shadowXSpriteCoordinate = shadowIndex % this.currentTexture.Width;
                 int shadowYSpriteCoordinate = shadowIndex / this.currentTexture.Height;
 
@@ -193,19 +183,15 @@ namespace mike_and_conquer
 
         internal Texture2D createSpriteBorderRectangleTexture()
         {
-//            Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, spriteTextureList.textureWidth, spriteTextureList.textureHeight);
-
             Texture2D rectangle =
                 new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, unitFrameList[0].Texture.Width,
                     unitFrameList[0].Texture.Height);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
-            fillVerticalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
-            fillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, Color.White);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
+            FillVerticalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
+            FillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, Color.White);
 
-            //            int centerX = (rectangle.Width / 2) - 1;
-            //            int centerY = (rectangle.Height / 2) - 1;
             int centerX = (rectangle.Width / 2) ;
             int centerY = (rectangle.Height / 2);
 
@@ -221,7 +207,7 @@ namespace mike_and_conquer
         }
 
 
-        internal void fillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
+        internal void FillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
         {
             int beginIndex = width * lineIndex;
             for (int i = beginIndex; i < (beginIndex + width); ++i)
@@ -230,7 +216,7 @@ namespace mike_and_conquer
             }
         }
 
-        internal void fillVerticalLine(Color[] data, int width, int height, int lineIndex, Color color)
+        internal void FillVerticalLine(Color[] data, int width, int height, int lineIndex, Color color)
         {
             int beginIndex = lineIndex;
             for (int i = beginIndex; i < (width * height); i += width)

@@ -12,13 +12,11 @@ namespace mike_and_conquer.gameview
 {
     public class GDIBarracksView
     {
-//        private GameSprite gameSprite;
 
         // TODO:  Consider something other than UnitSprite in future
         private UnitSprite unitSprite;
 
         private Point position;
-
 
         public const string SPRITE_KEY = "Barracks";
 
@@ -31,7 +29,6 @@ namespace mike_and_conquer.gameview
 //        public GDIBarracksView(GDIBarracks barracks)
         public GDIBarracksView(Point aPosition)
         {
-//            this.mySandbag = sandbag;
             this.unitSprite = new UnitSprite(SPRITE_KEY);
             this.unitSprite.drawShadow = true;
             this.position = aPosition;

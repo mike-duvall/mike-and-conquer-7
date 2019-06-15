@@ -97,8 +97,6 @@ namespace mike_and_conquer.gamesprite
 
                 if (frameData.Length == 0)
                 {
-                    //                    ShpFileImage emptyShpFileImage = new ShpFileImage(null, null, null);
-                    //                    spriteTextureList.shpFileImageList.Add(emptyShpFileImage);
                     MapTileFrame nullMapTileFrame = new MapTileFrame(null, null);
                     mapTileFrameList.Add(nullMapTileFrame);
                     continue;
@@ -127,17 +125,8 @@ namespace mike_and_conquer.gamesprite
 
         public void LoadSingleTextureFromFile(string key, string fileName)
         {
-//            SpriteTextureList spriteTextureList = new SpriteTextureList();
             Texture2D texture2D = MikeAndConquerGame.instance.Content.Load<Texture2D>(fileName);
-
             individualTextureMap.Add(key, texture2D);
-
-//            ShpFileImage shpFileImage = new ShpFileImage(texture2D, null, null);
-//            spriteTextureList.shpFileImageList.Add(shpFileImage);
-//            spriteTextureList.textureWidth = texture2D.Width;
-//            spriteTextureList.textureHeight = texture2D.Height;
-//
-//            TextureListMap.AddTextureList(key, spriteTextureList);
         }
 
 

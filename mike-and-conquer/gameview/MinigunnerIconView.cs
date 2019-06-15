@@ -11,7 +11,6 @@ namespace mike_and_conquer.gameview
 {
     public class MinigunnerIconView
     {
-//        private GameSprite gameSprite;
 
         // TODO Consider ToolBarIconSprite instead of UnitSprite
         private UnitSprite unitSprite;
@@ -19,16 +18,14 @@ namespace mike_and_conquer.gameview
 
         public const string SPRITE_KEY = "MinigunnerIcon";
 
-        // TODO:  SHP_FILE_NAME and ShpFileColorMapper don't really belong in this view
-        // Views should be agnostic about where the sprite data was loaded from
+//        // TODO:  SHP_FILE_NAME and ShpFileColorMapper don't really belong in this view
+//        // Views should be agnostic about where the sprite data was loaded from
         public const string SHP_FILE_NAME = "Content\\e1icnh.tem";
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
 
-//        public GDIBarracksView(GDIBarracks barracks)
         public MinigunnerIconView()
         {
-//            this.mySandbag = sandbag;
             this.unitSprite = new UnitSprite(SPRITE_KEY);
             this.unitSprite.drawShadow = true;
             SetupAnimations();
@@ -45,7 +42,7 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            //            gameSprite.Draw(gameTime, spriteBatch, mySandbag.positionInWorldCoordinates);
+
             unitSprite.Draw(gameTime, spriteBatch, new Vector2(1,1));
         }
 

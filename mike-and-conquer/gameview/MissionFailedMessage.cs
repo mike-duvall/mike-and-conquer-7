@@ -13,11 +13,9 @@ namespace mike_and_conquer.gameobjects
         public const string MISSION_SPRITE_KEY = "MissionMessage";
         public const string FAILED_SPRITE_KEY = "FailedMessage";
 
-//        private GameSprite missionSprite;
         private SingleTextureSprite missionSprite;
         private Vector2 missionPosition;
 
-//        private GameSprite accomplishedSprite;
         private SingleTextureSprite accomplishedSprite;
         private Vector2 accomplishedPosition;
 

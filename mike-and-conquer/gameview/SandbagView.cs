@@ -11,13 +11,11 @@ namespace mike_and_conquer.gameview
 {
     public class SandbagView
     {
-//        private GameSprite gameSprite;
 
         // TODO:  Using UnitSprite for now.  May need new Sprite
         // unique to sandbag like things, things like trees, etc
         private UnitSprite unitSprite;
         private Sandbag mySandbag;
-
 
         public const string SPRITE_KEY = "Sandbag";
 

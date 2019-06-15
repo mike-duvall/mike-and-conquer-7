@@ -317,6 +317,7 @@ namespace mike_and_conquer
         private void LoadTextures()
         {
             LoadMapTextures();
+            LoadMapTextures2();
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -357,10 +358,6 @@ namespace mike_and_conquer
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
 
 
-            raiSpriteFrameManager.LoadAllTexturesFromTmpFile(TextureListMap.CLEAR1_SHP);
-            spriteSheet.LoadMapTileFramesFromSpriteFrames(
-                TextureListMap.CLEAR1_SHP,
-                raiSpriteFrameManager.GetSpriteFramesForMapTile(TextureListMap.CLEAR1_SHP));
 
             //             Pickup here:
             // Use code above to load all unit textures and all map textures
@@ -371,6 +368,60 @@ namespace mike_and_conquer
             // Consider LoadMapTexturesNew(), LoadUnitTexturesNew(), LoadOtherTextures() methods
 
         }
+
+
+        // Rename and refactor this
+        private void DoIt(string shpFileName)
+        {
+            raiSpriteFrameManager.LoadAllTexturesFromTmpFile(shpFileName);
+            spriteSheet.LoadMapTileFramesFromSpriteFrames(
+                shpFileName,
+                raiSpriteFrameManager.GetSpriteFramesForMapTile(shpFileName));
+
+        }
+
+        private void LoadMapTextures2()
+        {
+            DoIt(TextureListMap.CLEAR1_SHP);
+            DoIt(TextureListMap.D04_TEM);
+            DoIt(TextureListMap.D09_TEM);
+            DoIt(TextureListMap.D13_TEM);
+            DoIt(TextureListMap.D15_TEM);
+            DoIt(TextureListMap.D20_TEM);
+            DoIt(TextureListMap.D21_TEM);
+            DoIt(TextureListMap.D23_TEM);
+
+            DoIt(TextureListMap.P07_TEM);
+            DoIt(TextureListMap.P08_TEM);
+
+            DoIt(TextureListMap.S09_TEM);
+            DoIt(TextureListMap.S10_TEM);
+            DoIt(TextureListMap.S11_TEM);
+            DoIt(TextureListMap.S12_TEM);
+            DoIt(TextureListMap.S14_TEM);
+            DoIt(TextureListMap.S22_TEM);
+            DoIt(TextureListMap.S29_TEM);
+            DoIt(TextureListMap.S32_TEM);
+            DoIt(TextureListMap.S34_TEM);
+            DoIt(TextureListMap.S35_TEM);
+
+            DoIt(TextureListMap.SH1_TEM);
+            DoIt(TextureListMap.SH2_TEM);
+            DoIt(TextureListMap.SH3_TEM);
+            DoIt(TextureListMap.SH4_TEM);
+            DoIt(TextureListMap.SH5_TEM);
+            DoIt(TextureListMap.SH6_TEM);
+            DoIt(TextureListMap.SH9_TEM);
+            DoIt(TextureListMap.SH10_TEM);
+            DoIt(TextureListMap.SH17_TEM);
+            DoIt(TextureListMap.SH18_TEM);
+
+            DoIt(TextureListMap.W1_TEM);
+            DoIt(TextureListMap.W2_TEM);
+
+
+        }
+
 
         private void LoadMapTextures()
         {

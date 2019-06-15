@@ -25,6 +25,12 @@ namespace mike_and_conquer.gamesprite
             return unitFrameMap[shpFileName];
         }
 
+
+        public List<MapTileFrame> GetMapTileFrameForTmpFile(string tmpFileName)
+        {
+            return mapTileFrameMap[tmpFileName];
+        }
+
         public void LoadUnitFramesFromSpriteFrames(string spriteKey, OpenRA.IReadOnlyList<ISpriteFrame> spriteFrameList, ShpFileColorMapper shpFileColorMapper)
         {
 

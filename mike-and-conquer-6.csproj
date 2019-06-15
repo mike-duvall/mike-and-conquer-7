@@ -79,6 +79,7 @@
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Sandbag.cs" />
     <Compile Include="mike-and-conquer\gamesprite\MapTileSprite.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\SingleTextureSprite.cs" />
     <Compile Include="mike-and-conquer\gamesprite\UnitSprite.cs" />
     <Compile Include="mike-and-conquer\gamesprite\MapTileFrame.cs" />
     <Compile Include="mike-and-conquer\gamesprite\ShadowMapper.cs" />

@@ -13,11 +13,13 @@ namespace mike_and_conquer.gamesprite
 
         private Dictionary<string, List<UnitFrame>> unitFrameMap;
         private Dictionary<string, List<MapTileFrame>> mapTileFrameMap;
+        private Dictionary<string, Texture2D> individualTextureMap;
 
         public SpriteSheet()
         {
             unitFrameMap = new Dictionary<string, List<UnitFrame>>();
             mapTileFrameMap = new Dictionary<string, List<MapTileFrame>>();
+            individualTextureMap = new Dictionary<string, Texture2D>();
         }
 
         public List<UnitFrame> GetUnitFramesForShpFile(string shpFileName)
@@ -30,6 +32,13 @@ namespace mike_and_conquer.gamesprite
         {
             return mapTileFrameMap[tmpFileName];
         }
+
+
+        public Texture2D GetTextureForKey(string key)
+        {
+            return individualTextureMap[key];
+        }
+
 
         public void LoadUnitFramesFromSpriteFrames(string spriteKey, OpenRA.IReadOnlyList<ISpriteFrame> spriteFrameList, ShpFileColorMapper shpFileColorMapper)
         {
@@ -114,9 +123,24 @@ namespace mike_and_conquer.gamesprite
             }
 
             mapTileFrameMap.Add(tmpFileName, mapTileFrameList);
-
-
         }
+
+        public void LoadSingleTextureFromFile(string key, string fileName)
+        {
+//            SpriteTextureList spriteTextureList = new SpriteTextureList();
+            Texture2D texture2D = MikeAndConquerGame.instance.Content.Load<Texture2D>(fileName);
+
+            individualTextureMap.Add(key, texture2D);
+
+//            ShpFileImage shpFileImage = new ShpFileImage(texture2D, null, null);
+//            spriteTextureList.shpFileImageList.Add(shpFileImage);
+//            spriteTextureList.textureWidth = texture2D.Width;
+//            spriteTextureList.textureHeight = texture2D.Height;
+//
+//            TextureListMap.AddTextureList(key, spriteTextureList);
+        }
+
+
 
     }
 }

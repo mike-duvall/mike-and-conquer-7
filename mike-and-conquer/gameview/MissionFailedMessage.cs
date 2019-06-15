@@ -13,10 +13,12 @@ namespace mike_and_conquer.gameobjects
         public const string MISSION_SPRITE_KEY = "MissionMessage";
         public const string FAILED_SPRITE_KEY = "FailedMessage";
 
-        private GameSprite missionGameSprite;
+//        private GameSprite missionSprite;
+        private SingleTextureSprite missionSprite;
         private Vector2 missionPosition;
 
-        private GameSprite accomplishedGameSprite;
+//        private GameSprite accomplishedSprite;
+        private SingleTextureSprite accomplishedSprite;
         private Vector2 accomplishedPosition;
 
         public MissionFailedMessage()
@@ -24,24 +26,18 @@ namespace mike_and_conquer.gameobjects
             int baseX = 350;
             int baseY = 100;
 
-            missionGameSprite = new GameSprite(MISSION_SPRITE_KEY);
-            AnimationSequence animationSequence = new AnimationSequence(1);
-            animationSequence.AddFrame(0);
-            missionGameSprite.AddAnimationSequence(0, animationSequence);
-            missionGameSprite.SetCurrentAnimationSequenceIndex(0);
+            missionSprite = new SingleTextureSprite(MISSION_SPRITE_KEY);
             missionPosition = new Vector2(baseX, baseY);
 
-            accomplishedGameSprite = new GameSprite(FAILED_SPRITE_KEY);
-            accomplishedGameSprite.AddAnimationSequence(0, animationSequence);
-            accomplishedGameSprite.SetCurrentAnimationSequenceIndex(0);
+            accomplishedSprite = new SingleTextureSprite(FAILED_SPRITE_KEY);
             accomplishedPosition = new Vector2(baseX - 5, baseY + 50);
 
         }
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            missionGameSprite.Draw(gameTime, spriteBatch, missionPosition);
-            accomplishedGameSprite.Draw(gameTime, spriteBatch, accomplishedPosition);
+            missionSprite.Draw(gameTime, spriteBatch, missionPosition);
+            accomplishedSprite.Draw(gameTime, spriteBatch, accomplishedPosition);
 
         }
     }

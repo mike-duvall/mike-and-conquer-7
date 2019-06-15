@@ -35,18 +35,20 @@ namespace mike_and_conquer.gameview
         internal int GetPaletteIndexOfCoordinate(int x, int y)
         {
 
-            // Pickup here
+//            Pickup here
             // Update shadow mapping to not use TextureListMap, but to instead use SpriteSheet to get at the frameData
             // Possible code below:
-//            List<MapTileFrame> mapTileFrameList = MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
-//            MapTileFrame mapTileFrame = mapTileFrameList[imageIndex];
-//            byte[] frameData = mapTileFrame.FrameData;
+            List<MapTileFrame> mapTileFrameList = MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
+            MapTileFrame mapTileFrame = mapTileFrameList[imageIndex];
+            byte[] frameData = mapTileFrame.FrameData;
 
-            SpriteTextureList list = MikeAndConquerGame.instance.TextureListMap.GetTextureList(textureKey);
-            ShpFileImage shpFileImage = list.shpFileImageList[imageIndex];
+//            SpriteTextureList list = MikeAndConquerGame.instance.TextureListMap.GetTextureList(textureKey);
+//            ShpFileImage shpFileImage = list.shpFileImageList[imageIndex];
 
-            int frameDataIndex = y * list.textureWidth + x;
-            return shpFileImage.frameData[frameDataIndex];
+//            int frameDataIndex = y * list.textureWidth + x;
+            int frameDataIndex = y * mapTileSprite.Width + x;
+            //            return shpFileImage.frameData[frameDataIndex];
+            return frameData[frameDataIndex];
         }
 
         private void SetupAnimations()

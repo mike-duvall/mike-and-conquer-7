@@ -36,6 +36,17 @@ namespace mike_and_conquer
         private int width;
         private int height;
 
+        public int Width
+        {
+            get { return width; }
+        }
+
+        public int Height
+        {
+            get { return height; }
+        }
+
+
         public MapTileSprite(string spriteListKey)
         {
             this.animationSequenceMap = new Dictionary<int, util.AnimationSequence>();

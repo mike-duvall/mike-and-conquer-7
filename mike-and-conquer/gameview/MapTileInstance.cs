@@ -16,11 +16,24 @@ namespace mike_and_conquer.gameview
     {
         public Vector2 PositionInWorldCoordinates { get; }
 
-        private MapTileType mapTileType;
-
-        public MapTileType MapTileType
+        private string textureKey;
+        private byte imageIndex;
+        private bool isBlockingTerrain;
+        
+        
+        public string TextureKey
         {
-            get { return mapTileType; }
+            get { return textureKey; }
+        }
+        
+        public byte ImageIndex
+        {
+            get { return imageIndex; }
+        }
+        
+        public bool IsBlockingTerrain
+        {
+            get { return isBlockingTerrain; }
         }
 
         private Minigunner minigunnerSlot0 = null;
@@ -29,10 +42,13 @@ namespace mike_and_conquer.gameview
         private Minigunner minigunnerSlot3 = null;
         private Minigunner minigunnerSlot4 = null;
 
-        public MapTileInstance(int x, int y, MapTileType mapTileType )
+        public MapTileInstance(int x, int y, string textureKey, byte imageIndex, bool isBlockingTerrain)
         {
             this.PositionInWorldCoordinates = new Vector2(x,y);
-            this.mapTileType = mapTileType;
+            this.textureKey = textureKey;
+            this.imageIndex = imageIndex;
+            this.isBlockingTerrain = isBlockingTerrain;
+
         }
 
         public bool ContainsPoint(Point aPoint)
@@ -115,12 +131,6 @@ namespace mike_and_conquer.gameview
                 minigunnerSlot4 = null;
             }
 
-        }
-
-
-        public bool IsBlockingTerrain()
-        {
-            return mapTileType.IsBlockingTerrain;
         }
 
         internal int GetMapSquareX()

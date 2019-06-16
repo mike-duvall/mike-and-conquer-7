@@ -180,7 +180,7 @@ namespace mike_and_conquer
             foreach (MapTileInstance nexBasicMapSquare in this.gameMap.MapTileInstanceList)
             {
                 if (nexBasicMapSquare.ContainsPoint(positionInWorldCoordinates) &&
-                    nexBasicMapSquare.IsBlockingTerrain())
+                    nexBasicMapSquare.IsBlockingTerrain)
                 {
                     throw new BadMinigunnerLocationException(positionInWorldCoordinates);
                 }
@@ -415,7 +415,7 @@ namespace mike_and_conquer
 
             foreach (MapTileInstance nextBasicMapSquare in this.gameMap.MapTileInstanceList)
             {
-                if (nextBasicMapSquare.IsBlockingTerrain())
+                if (nextBasicMapSquare.IsBlockingTerrain)
                 {
                     //                    nextBasicMapSquare.gameSprite.drawBoundingRectangle = true;
                     navigationGraph.MakeNodeBlockingNode(nextBasicMapSquare.GetMapSquareX(), nextBasicMapSquare.GetMapSquareY());

@@ -54,7 +54,7 @@ namespace mike_and_conquer
         public const string W2_TEM = "Content\\w2.tem";
 
 
-        private List<MapTileType> mapTileTypeList;
+//        private List<MapTileType> mapTileTypeList;
 
 
         private List<MapTileInstance> mapTileInstanceList;
@@ -73,24 +73,18 @@ namespace mike_and_conquer
         private Dictionary<string, int[]> blockingTerrainMap = new Dictionary<string, int[]>();
 
 
-        public List<MapTileType> MapTileTypeList
-        {
-            get { return mapTileTypeList; }
-        }
-
         private GameMap()
         {
         }
 
         public GameMap(Stream inputStream, int startX, int startY, int endX, int endY)
-         {
+        {
             LoadCodeToTextureStringMap();
-            mapTileTypeList = new List<MapTileType>();
 
             BinaryReader binaryReader = new BinaryReader(inputStream);
             long numBytes = binaryReader.BaseStream.Length;
             List<byte> allBytes = new List<byte>();
-            for(int i = 0; i < numBytes; i++)
+            for(int ii = 0; ii < numBytes; ii++)
             {
                 byte nextByte = binaryReader.ReadByte();
                 allBytes.Add(nextByte);
@@ -102,12 +96,18 @@ namespace mike_and_conquer
 
             InitializeBlockTerrainMap();
 
+            mapTileInstanceList = new List<MapTileInstance>();
+
+            int x = 12;
+            int y = 12;
+
+            int i = 0;
             for (int row = startY; row <= endY; row++)
             {
                 for (int column = startX; column <= endX; column++)
                 {
-                    int offset = calculateOffset(column, row);
-                    string textureKey =  convertByteToTextureKey(allBytes[offset]);
+                    int offset = CalculateOffset(column, row);
+                    string textureKey = ConvertByteToTextureKey(allBytes[offset]);
                     byte imageIndex;
                     if(textureKey == CLEAR1_SHP)
                     {
@@ -120,39 +120,23 @@ namespace mike_and_conquer
 
                     bool isBlockingTerrain = IsBlockingTerrain(textureKey, imageIndex);
 
-                    MapTileType mapTileType = new MapTileType(textureKey, imageIndex, isBlockingTerrain);
+                    MapTileInstance mapTileInstance =
+                        new MapTileInstance(x, y, textureKey, imageIndex, isBlockingTerrain);
+                    this.MapTileInstanceList.Add(mapTileInstance);
 
-                    mapTileTypeList.Add(mapTileType);
+                    x = x + 24;
+
+                    bool incrementRow = ((i + 1) % 26) == 0;
+                    if (incrementRow)
+                    {
+                        x = 12;
+                        y = y + 24;
+                    }
+
+                    i++;
+
                 }
             }
-
-            mapTileInstanceList = new List<MapTileInstance>();
-
-            int x = 12;
-            int y = 12;
-
-            int numSquares = MapTileTypeList.Count;
-            for (int i = 0; i < numSquares; i++)
-            {
-
-                MapTileType nextMapTileType = MapTileTypeList[i];
-                MapTileInstance mapTileInstance =
-                    new MapTileInstance(x, y, nextMapTileType);
-                this.MapTileInstanceList.Add(mapTileInstance);
-
-                x = x + 24;
-
-                bool incrementRow = ((i + 1) % 26) == 0;
-                if (incrementRow)
-                {
-                    x = 12;
-                    y = y + 24;
-                }
-            }
-
-
-
-
         }
 
         private bool IsBlockingTerrain(string textureKey, byte imageIndex)
@@ -251,7 +235,7 @@ namespace mike_and_conquer
             mapFileCodeToTextureStringMap.Add(0x02, W2_TEM);
         }
 
-        private string convertByteToTextureKey(byte inputByte)
+        private string ConvertByteToTextureKey(byte inputByte)
         {
 
             if(mapFileCodeToTextureStringMap.ContainsKey(inputByte))
@@ -271,7 +255,7 @@ namespace mike_and_conquer
             //return mapFileCodeToTextureStringMap[inputByte];
         }
 
-        private int calculateOffset(int column, int row)
+        private int CalculateOffset(int column, int row)
         {
             return (row * 64 * 2) + (column * 2);
         }

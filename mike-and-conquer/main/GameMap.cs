@@ -53,7 +53,7 @@ namespace mike_and_conquer
         public const string W2_TEM = "Content\\w2.tem";
 
 
-        private List<MapTileType> mapTileTypeListList;
+        private List<MapTileType> mapTileTypeList;
         private Dictionary<byte, string> mapFileCodeToTextureStringMap = new Dictionary<byte, string>();
 
         public int numColumns;
@@ -64,7 +64,7 @@ namespace mike_and_conquer
 
         public List<MapTileType> MapTileTypeList
         {
-            get { return mapTileTypeListList; }
+            get { return mapTileTypeList; }
         }
 
         private GameMap()
@@ -74,7 +74,7 @@ namespace mike_and_conquer
         public GameMap(Stream inputStream, int startX, int startY, int endX, int endY)
          {
             LoadCodeToTextureStringMap();
-            mapTileTypeListList = new List<MapTileType>();
+            mapTileTypeList = new List<MapTileType>();
 
             BinaryReader binaryReader = new BinaryReader(inputStream);
             long numBytes = binaryReader.BaseStream.Length;
@@ -111,7 +111,7 @@ namespace mike_and_conquer
 
                     MapTileType mapTileType = new MapTileType(textureKey, imageIndex, isBlockingTerrain);
 
-                    mapTileTypeListList.Add(mapTileType);
+                    mapTileTypeList.Add(mapTileType);
                 }
             }
 

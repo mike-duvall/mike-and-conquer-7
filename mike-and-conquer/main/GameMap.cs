@@ -7,6 +7,7 @@ using Stream = System.IO.Stream;
 
 using BinaryReader = System.IO.BinaryReader;
 using System.Linq;
+using mike_and_conquer.gameview;
 
 namespace mike_and_conquer
 {
@@ -54,6 +55,16 @@ namespace mike_and_conquer
 
 
         private List<MapTileType> mapTileTypeList;
+
+
+        private List<MapTileInstance> mapTileInstanceList;
+
+        public List<MapTileInstance> MapTileInstanceList
+        {
+            get { return mapTileInstanceList; }
+        }
+
+
         private Dictionary<byte, string> mapFileCodeToTextureStringMap = new Dictionary<byte, string>();
 
         public int numColumns;
@@ -115,9 +126,34 @@ namespace mike_and_conquer
                 }
             }
 
+            mapTileInstanceList = new List<MapTileInstance>();
+
+            int x = 12;
+            int y = 12;
+
+            int numSquares = MapTileTypeList.Count;
+            for (int i = 0; i < numSquares; i++)
+            {
+
+                MapTileType nextMapTileType = MapTileTypeList[i];
+                MapTileInstance mapTileInstance =
+                    new MapTileInstance(x, y, nextMapTileType);
+                this.MapTileInstanceList.Add(mapTileInstance);
+
+                x = x + 24;
+
+                bool incrementRow = ((i + 1) % 26) == 0;
+                if (incrementRow)
+                {
+                    x = 12;
+                    y = y + 24;
+                }
+            }
 
 
-         }
+
+
+        }
 
         private bool IsBlockingTerrain(string textureKey, byte imageIndex)
         {

@@ -268,7 +268,7 @@ namespace mike_and_conquer
             //    What about placement of initial troops?
             //    Sandbags
 
-            foreach(MapTileInstance basicMapSquare in this.gameWorld.MapTileInstanceList)
+            foreach(MapTileInstance basicMapSquare in this.gameWorld.gameMap.MapTileInstanceList)
             {
                 MapTileInstanceView mapTileInstanceView = new MapTileInstanceView(basicMapSquare);
                 this.mapTileInstanceViewList.Add(mapTileInstanceView);

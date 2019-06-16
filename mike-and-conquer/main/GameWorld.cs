@@ -392,10 +392,6 @@ namespace mike_and_conquer
                     new MapTileInstance(x, y, nextMapTileType);
                 this.MapTileInstanceList.Add(mapTileInstance);
 
-                //                MapTileInstanceView basicMapSquareView = new MapTileInstanceView(mapTileInstance);
-                //                this.basicMapSquareViewList.Add(basicMapSquareView);
-
-
                 x = x + 24;
 
                 bool incrementRow = ((i + 1) % 26) == 0;

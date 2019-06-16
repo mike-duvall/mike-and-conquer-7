@@ -12,13 +12,16 @@ using System.Collections.Generic;
 
 namespace mike_and_conquer.gameview
 {
-    public class BasicMapSquare
+    public class MapTileInstance
     {
         public Vector2 PositionInWorldCoordinates { get; }
-        public int ImageIndex { get; }
-        public string TextureKey { get; }
 
+        private MapTileType mapTileType;
 
+        public MapTileType MapTileType
+        {
+            get { return mapTileType; }
+        }
 
         private Minigunner minigunnerSlot0 = null;
         private Minigunner minigunnerSlot1 = null;
@@ -26,11 +29,10 @@ namespace mike_and_conquer.gameview
         private Minigunner minigunnerSlot3 = null;
         private Minigunner minigunnerSlot4 = null;
 
-        public BasicMapSquare(int x, int y, string textureKey, int imageIndex )
+        public MapTileInstance(int x, int y, MapTileType mapTileType )
         {
             this.PositionInWorldCoordinates = new Vector2(x,y);
-            this.ImageIndex = imageIndex;
-            this.TextureKey = textureKey;
+            this.mapTileType = mapTileType;
         }
 
         public bool ContainsPoint(Point aPoint)
@@ -118,24 +120,7 @@ namespace mike_and_conquer.gameview
 
         public bool IsBlockingTerrain()
         {
-
-            // TODO: Make BasicMapSquare initialized with flag of whether it's blocking or not
-            Dictionary<string, int[]> blockingTerrainMap = GameWorld.instance.gameMap.blockingTerrainMap;
-
-            if (blockingTerrainMap.ContainsKey(TextureKey))
-            {
-                int[] blockedImageIndexes = blockingTerrainMap[TextureKey];
-                if (blockedImageIndexes == null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return blockedImageIndexes.Contains(ImageIndex);
-                }
-            }
-        
-            return false;
+            return mapTileType.IsBlockingTerrain;
         }
 
         internal int GetMapSquareX()

@@ -143,10 +143,10 @@ namespace mike_and_conquer
             {
                 Point centerOfDestinationSquare = path[0];
 
-                BasicMapSquare destinationBasicMapSquare =
+                MapTileInstance destinationMapTileInstance =
                     GameWorld.instance.FindMapSquare(centerOfDestinationSquare.X, centerOfDestinationSquare.Y);
 
-                Point currentDestinationPoint = destinationBasicMapSquare.GetDestinationSlotForMinigunner(this);
+                Point currentDestinationPoint = destinationMapTileInstance.GetDestinationSlotForMinigunner(this);
                 SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
 
             }
@@ -388,11 +388,11 @@ namespace mike_and_conquer
         public void OrderToMoveToDestination(Point destination)
         {
 
-            BasicMapSquare currentMapSquareLocation =
+            MapTileInstance currentMapTileInstanceLocation =
                 GameWorld.instance.FindMapSquare((int)this.positionInWorldCoordinates.X,
                     (int) this.positionInWorldCoordinates.Y);
 
-            currentMapSquareLocation.ClearSlotForMinigunner(this);
+            currentMapTileInstanceLocation.ClearSlotForMinigunner(this);
             int startColumn = (int)this.positionInWorldCoordinates.X / 24;
             int startRow = (int)this.positionInWorldCoordinates.Y / 24;
             Point startPoint = new Point(startColumn, startRow);

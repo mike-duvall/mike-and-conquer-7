@@ -21,10 +21,6 @@ using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
 using GdiMinigunnerView = mike_and_conquer.gameview.GdiMinigunnerView;
 using NodMinigunnerView = mike_and_conquer.gameview.NodMinigunnerView;
 using SandbagView = mike_and_conquer.gameview.SandbagView;
-
-using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
-
-
 using Camera2D = mike_and_conquer_6.Camera2D;
 
 using Point = Microsoft.Xna.Framework.Point;
@@ -60,7 +56,7 @@ namespace mike_and_conquer
         private GDIBarracksView gdiBarracksView;
         private MinigunnerIconView minigunnerIconView;
 
-        private List<BasicMapSquareView> basicMapSquareViewList;
+        private List<MapTileInstanceView> mapTileInstanceViewList;
 
         private List<SandbagView> sandbagViewList;
 
@@ -72,9 +68,9 @@ namespace mike_and_conquer
 
         private GameState currentGameState;
 
-        public List<BasicMapSquareView> BasicMapSquareViewList
+        public List<MapTileInstanceView> MapTileInstanceViewList
         {
-            get { return basicMapSquareViewList; }
+            get { return mapTileInstanceViewList; }
         }
 
 
@@ -156,7 +152,7 @@ namespace mike_and_conquer
 
             gameWorld = new GameWorld();
 
-            basicMapSquareViewList = new List<BasicMapSquareView>();
+            mapTileInstanceViewList = new List<MapTileInstanceView>();
 
             gdiMinigunnerViewList = new List<MinigunnerView>();
             nodMinigunnerViewList = new List<MinigunnerView>();
@@ -272,10 +268,10 @@ namespace mike_and_conquer
             //    What about placement of initial troops?
             //    Sandbags
 
-            foreach(BasicMapSquare basicMapSquare in this.gameWorld.BasicMapSquareList)
+            foreach(MapTileInstance basicMapSquare in this.gameWorld.MapTileInstanceList)
             {
-                BasicMapSquareView basicMapSquareView = new BasicMapSquareView(basicMapSquare);
-                this.basicMapSquareViewList.Add(basicMapSquareView);
+                MapTileInstanceView mapTileInstanceView = new MapTileInstanceView(basicMapSquare);
+                this.mapTileInstanceViewList.Add(mapTileInstanceView);
             }
 
         }
@@ -866,18 +862,18 @@ namespace mike_and_conquer
             return newGameState;
         }
 
-        public BasicMapSquareView FindMapSquareView(int xWorldCoordinate, int yWorldCoordinate)
+        public MapTileInstanceView FindMapSquareView(int xWorldCoordinate, int yWorldCoordinate)
         {
 
-            foreach (BasicMapSquareView nextBasicMapSquareView in this.basicMapSquareViewList)
+            foreach (MapTileInstanceView nextBasicMapSquareView in this.mapTileInstanceViewList)
             {
-                BasicMapSquare basicMapSquare = nextBasicMapSquareView.myBasicMapSquare;
-                if (basicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
+                MapTileInstance mapTileInstance = nextBasicMapSquareView.myMapTileInstance;
+                if (mapTileInstance.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
                 {
                     return nextBasicMapSquareView;
                 }
             }
-            throw new Exception("Unable to find BasicMapSquare at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
+            throw new Exception("Unable to find MapTileInstance at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
 
         }
 

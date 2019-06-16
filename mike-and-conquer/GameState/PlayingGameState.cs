@@ -5,9 +5,6 @@ using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Boolean = System.Boolean;
 using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
-
-using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
-
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Matrix = Microsoft.Xna.Framework.Matrix;
@@ -318,9 +315,9 @@ namespace mike_and_conquer
                 {
                     if (IsValidMoveDestination(new Point(mouseX, mouseY)))
                     {
-                        BasicMapSquare clickedBasicMapSquare =
+                        MapTileInstance clickedMapTileInstance =
                             GameWorld.instance.FindMapSquare(mouseX, mouseY);
-                        Point centerOfSquare = clickedBasicMapSquare.GetCenter();
+                        Point centerOfSquare = clickedMapTileInstance.GetCenter();
                         nextMinigunner.OrderToMoveToDestination(centerOfSquare);
                     }
                 }
@@ -331,9 +328,9 @@ namespace mike_and_conquer
         private bool IsValidMoveDestination(Point pointInWorldCoordinates)
         {
             Boolean isValidMoveDestination = true;
-            BasicMapSquare clickedBasicMapSquare =
+            MapTileInstance clickedMapTileInstance =
                 GameWorld.instance.FindMapSquare(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
-            if (clickedBasicMapSquare.IsBlockingTerrain())
+            if (clickedMapTileInstance.IsBlockingTerrain())
             {
                 isValidMoveDestination = false;
             }

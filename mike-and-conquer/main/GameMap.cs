@@ -54,9 +54,6 @@ namespace mike_and_conquer
         public const string W2_TEM = "Content\\w2.tem";
 
 
-//        private List<MapTileType> mapTileTypeList;
-
-
         private List<MapTileInstance> mapTileInstanceList;
 
         public List<MapTileInstance> MapTileInstanceList

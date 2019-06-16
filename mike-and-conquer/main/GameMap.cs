@@ -7,6 +7,7 @@ using Stream = System.IO.Stream;
 
 using BinaryReader = System.IO.BinaryReader;
 using System.Linq;
+using mike_and_conquer.gameview;
 
 namespace mike_and_conquer
 {
@@ -53,7 +54,14 @@ namespace mike_and_conquer
         public const string W2_TEM = "Content\\w2.tem";
 
 
-        private List<MapTileType> mapTileTypeList;
+        private List<MapTileInstance> mapTileInstanceList;
+
+        public List<MapTileInstance> MapTileInstanceList
+        {
+            get { return mapTileInstanceList; }
+        }
+
+
         private Dictionary<byte, string> mapFileCodeToTextureStringMap = new Dictionary<byte, string>();
 
         public int numColumns;
@@ -62,62 +70,82 @@ namespace mike_and_conquer
         private Dictionary<string, int[]> blockingTerrainMap = new Dictionary<string, int[]>();
 
 
-        public List<MapTileType> MapTileTypeList
-        {
-            get { return mapTileTypeList; }
-        }
-
         private GameMap()
         {
         }
 
         public GameMap(Stream inputStream, int startX, int startY, int endX, int endY)
-         {
+        {
             LoadCodeToTextureStringMap();
-            mapTileTypeList = new List<MapTileType>();
 
-            BinaryReader binaryReader = new BinaryReader(inputStream);
-            long numBytes = binaryReader.BaseStream.Length;
-            List<byte> allBytes = new List<byte>();
-            for(int i = 0; i < numBytes; i++)
-            {
-                byte nextByte = binaryReader.ReadByte();
-                allBytes.Add(nextByte);
-            }
-
+            List<byte> allBytes = ReadAllBytesFromStream(inputStream);
 
             numColumns = endX - startX + 1;
             numRows = endY - startY + 1;
 
             InitializeBlockTerrainMap();
 
+            mapTileInstanceList = new List<MapTileInstance>();
+
+            int x = 12;
+            int y = 12;
+
+            int i = 0;
             for (int row = startY; row <= endY; row++)
             {
                 for (int column = startX; column <= endX; column++)
                 {
-                    int offset = calculateOffset(column, row);
-                    string textureKey =  convertByteToTextureKey(allBytes[offset]);
-                    byte imageIndex;
-                    if(textureKey == CLEAR1_SHP)
-                    {
-                        imageIndex = CalculateImageIndexForClear1(column, row);
-                    }
-                    else
-                    {
-                        imageIndex = allBytes[offset + 1];
-                    }
-
+                    int offset = CalculateOffset(column, row);
+                    string textureKey = ConvertByteToTextureKey(allBytes[offset]);
+                    byte imageIndex = CalculateImageIndexForTextureKey(textureKey,allBytes, column, row, offset);
                     bool isBlockingTerrain = IsBlockingTerrain(textureKey, imageIndex);
 
-                    MapTileType mapTileType = new MapTileType(textureKey, imageIndex, isBlockingTerrain);
+                    MapTileInstance mapTileInstance =
+                        new MapTileInstance(x, y, textureKey, imageIndex, isBlockingTerrain);
+                    this.MapTileInstanceList.Add(mapTileInstance);
 
-                    mapTileTypeList.Add(mapTileType);
+                    x = x + 24;
+
+                    bool incrementRow = ((i + 1) % 26) == 0;
+                    if (incrementRow)
+                    {
+                        x = 12;
+                        y = y + 24;
+                    }
+
+                    i++;
+
                 }
             }
+        }
 
+        private byte CalculateImageIndexForTextureKey(string textureKey, List<byte> allBytes, int column, int row, int offset)
+        {
 
+            if (textureKey == CLEAR1_SHP)
+            {
+                return CalculateImageIndexForClear1(column, row);
+            }
+            else
+            {
+                return allBytes[offset + 1];
+            }
 
-         }
+        }
+
+        private List<byte> ReadAllBytesFromStream(Stream inputStream)
+        {
+            BinaryReader binaryReader = new BinaryReader(inputStream);
+            long numBytes = binaryReader.BaseStream.Length;
+            List<byte> allBytes = new List<byte>();
+            for (int i = 0; i < numBytes; i++)
+            {
+                byte nextByte = binaryReader.ReadByte();
+                allBytes.Add(nextByte);
+            }
+
+            return allBytes;
+        }
 
         private bool IsBlockingTerrain(string textureKey, byte imageIndex)
         {
@@ -215,7 +243,7 @@ namespace mike_and_conquer
             mapFileCodeToTextureStringMap.Add(0x02, W2_TEM);
         }
 
-        private string convertByteToTextureKey(byte inputByte)
+        private string ConvertByteToTextureKey(byte inputByte)
         {
 
             if(mapFileCodeToTextureStringMap.ContainsKey(inputByte))
@@ -235,7 +263,7 @@ namespace mike_and_conquer
             //return mapFileCodeToTextureStringMap[inputByte];
         }
 
-        private int calculateOffset(int column, int row)
+        private int CalculateOffset(int column, int row)
         {
             return (row * 64 * 2) + (column * 2);
         }

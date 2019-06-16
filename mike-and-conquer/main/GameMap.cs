@@ -1,10 +1,12 @@
 ﻿
 
+using System;
 using System.Collections.Generic;
 
 using Stream = System.IO.Stream;
 
 using BinaryReader = System.IO.BinaryReader;
+using System.Linq;
 
 namespace mike_and_conquer
 {
@@ -51,18 +53,18 @@ namespace mike_and_conquer
         public const string W2_TEM = "Content\\w2.tem";
 
 
-        private List<MapTile> mapTileList;
+        private List<MapTileType> mapTileTypeListList;
         private Dictionary<byte, string> mapFileCodeToTextureStringMap = new Dictionary<byte, string>();
 
         public int numColumns;
         public int numRows;
 
-        public Dictionary<string, int[]> blockingTerrainMap = new Dictionary<string, int[]>();
+        private Dictionary<string, int[]> blockingTerrainMap = new Dictionary<string, int[]>();
 
 
-        public List<MapTile> MapTiles
+        public List<MapTileType> MapTileTypeList
         {
-            get { return mapTileList; }
+            get { return mapTileTypeListList; }
         }
 
         private GameMap()
@@ -72,7 +74,7 @@ namespace mike_and_conquer
         public GameMap(Stream inputStream, int startX, int startY, int endX, int endY)
          {
             LoadCodeToTextureStringMap();
-            mapTileList = new List<MapTile>();
+            mapTileTypeListList = new List<MapTileType>();
 
             BinaryReader binaryReader = new BinaryReader(inputStream);
             long numBytes = binaryReader.BaseStream.Length;
@@ -87,30 +89,55 @@ namespace mike_and_conquer
             numColumns = endX - startX + 1;
             numRows = endY - startY + 1;
 
+            InitializeBlockTerrainMap();
+
             for (int row = startY; row <= endY; row++)
             {
                 for (int column = startX; column <= endX; column++)
                 {
-                    MapTile mapTile = new MapTile();
                     int offset = calculateOffset(column, row);
-                    mapTile.textureKey = convertByteToTextureKey(allBytes[offset]);
-                    if(mapTile.textureKey == CLEAR1_SHP)
+                    string textureKey =  convertByteToTextureKey(allBytes[offset]);
+                    byte imageIndex;
+                    if(textureKey == CLEAR1_SHP)
                     {
-                        mapTile.imageIndex = CalculateImageIndexForClear1(column, row);
+                        imageIndex = CalculateImageIndexForClear1(column, row);
                     }
                     else
                     {
-                        mapTile.imageIndex = allBytes[offset + 1];
+                        imageIndex = allBytes[offset + 1];
                     }
 
-                    mapTileList.Add(mapTile);
+                    bool isBlockingTerrain = IsBlockingTerrain(textureKey, imageIndex);
+
+                    MapTileType mapTileType = new MapTileType(textureKey, imageIndex, isBlockingTerrain);
+
+                    mapTileTypeListList.Add(mapTileType);
                 }
             }
 
-            InitializeBlockTerrainMap();
+
 
          }
 
+        private bool IsBlockingTerrain(string textureKey, byte imageIndex)
+        {
+            
+            if (blockingTerrainMap.ContainsKey(textureKey))
+            {
+                int[] blockedImageIndexes = blockingTerrainMap[textureKey];
+                if (blockedImageIndexes == null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return blockedImageIndexes.Contains(imageIndex);
+                }
+            }
+
+            return false;
+
+        }
 
         private void InitializeBlockTerrainMap()
         {

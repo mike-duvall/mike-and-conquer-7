@@ -1,8 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-
-
+using mike_and_conquer.gameview;
 using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;
 using Graph = mike_and_conquer.pathfinding.Graph;
 
@@ -15,8 +14,6 @@ using GetCurrentGameStateGameEvent = mike_and_conquer.gameevent.GetCurrentGameSt
 using CreateSandbagGameEvent = mike_and_conquer.gameevent.CreateSandbagGameEvent;
 
 using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
-using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
-
 using Exception = System.Exception;
 
 using FileStream = System.IO.FileStream;
@@ -38,11 +35,11 @@ namespace mike_and_conquer
 
         public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
 
-        private List<BasicMapSquare> basicMapSquareList;
+        private List<MapTileInstance> mapTileInstanceList;
 
-        public List<BasicMapSquare> BasicMapSquareList
+        public List<MapTileInstance> MapTileInstanceList
         {
-            get { return basicMapSquareList; }
+            get { return mapTileInstanceList; }
         }
 
         public GameMap gameMap;
@@ -59,7 +56,7 @@ namespace mike_and_conquer
 
             nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
 
-            basicMapSquareList = new List<BasicMapSquare>();
+            mapTileInstanceList = new List<MapTileInstance>();
 
             GameWorld.instance = this;
         }
@@ -188,7 +185,7 @@ namespace mike_and_conquer
 
         private void AssertIsValidMinigunnerPosition(Point positionInWorldCoordinates)
         {
-            foreach (BasicMapSquare nexBasicMapSquare in BasicMapSquareList)
+            foreach (MapTileInstance nexBasicMapSquare in MapTileInstanceList)
             {
                 if (nexBasicMapSquare.ContainsPoint(positionInWorldCoordinates) &&
                     nexBasicMapSquare.IsBlockingTerrain())
@@ -344,17 +341,17 @@ namespace mike_and_conquer
             return gameEvent.GetGameState();
         }
 
-        public BasicMapSquare FindMapSquare(int xWorldCoordinate, int yWorldCoordinate)
+        public MapTileInstance FindMapSquare(int xWorldCoordinate, int yWorldCoordinate)
         {
         
-            foreach (BasicMapSquare nextBasicMapSquare in this.BasicMapSquareList)
+            foreach (MapTileInstance nextBasicMapSquare in this.MapTileInstanceList)
             {
                 if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
                 {
                     return nextBasicMapSquare;
                 }
             }
-            throw new Exception("Unable to find BasicMapSquare at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
+            throw new Exception("Unable to find MapTileInstance at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
         
         }
 
@@ -386,16 +383,16 @@ namespace mike_and_conquer
             int x = 12;
             int y = 12;
 
-            int numSquares = gameMap.MapTiles.Count;
+            int numSquares = gameMap.MapTileTypeList.Count;
             for (int i = 0; i < numSquares; i++)
             {
 
-                MapTile nextMapTile = gameMap.MapTiles[i];
-                BasicMapSquare basicMapSquare =
-                    new BasicMapSquare(x, y, nextMapTile.textureKey, nextMapTile.imageIndex);
-                this.BasicMapSquareList.Add(basicMapSquare);
+                MapTileType nextMapTileType = gameMap.MapTileTypeList[i];
+                MapTileInstance mapTileInstance =
+                    new MapTileInstance(x, y, nextMapTileType);
+                this.MapTileInstanceList.Add(mapTileInstance);
 
-                //                BasicMapSquareView basicMapSquareView = new BasicMapSquareView(basicMapSquare);
+                //                MapTileInstanceView basicMapSquareView = new MapTileInstanceView(mapTileInstance);
                 //                this.basicMapSquareViewList.Add(basicMapSquareView);
 
 
@@ -415,9 +412,9 @@ namespace mike_and_conquer
         public void InitializeNavigationGraph()
         {
             // TODO:  Fix this.  This code should be in GameWorld, not MikeAndConquerGame
-            // but has to be here for now, since BasicMapSquareList is in MikeAndConquerGame
-            // Need to separate out view of BasicMapSquare into a BasicMapSquareView
-            // And let GameWorld hold BasicMapSquareList(with no view data, just
+            // but has to be here for now, since MapTileInstanceList is in MikeAndConquerGame
+            // Need to separate out view of MapTileInstance into a MapTileInstanceView
+            // And let GameWorld hold MapTileInstanceList(with no view data, just
             // the terrain type and whether it's blocking or not, etc
 
             navigationGraph.Reset();
@@ -428,7 +425,7 @@ namespace mike_and_conquer
             }
 
 
-            foreach (BasicMapSquare nextBasicMapSquare in this.BasicMapSquareList)
+            foreach (MapTileInstance nextBasicMapSquare in this.MapTileInstanceList)
             {
                 if (nextBasicMapSquare.IsBlockingTerrain())
                 {

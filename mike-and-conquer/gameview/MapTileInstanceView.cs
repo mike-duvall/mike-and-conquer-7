@@ -7,21 +7,21 @@ using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 namespace mike_and_conquer.gameview
 {
-    public class BasicMapSquareView
+    public class MapTileInstanceView
     {
 
         public SingleTextureSprite singleTextureSprite;
-        public BasicMapSquare myBasicMapSquare;
+        public MapTileInstance myMapTileInstance;
 
         private int imageIndex;
         private string textureKey;
 
-        public BasicMapSquareView(BasicMapSquare aBasicMapSquare )
+        public MapTileInstanceView(MapTileInstance aMapTileInstance )
         {
 
-            this.myBasicMapSquare = aBasicMapSquare;
-            imageIndex = myBasicMapSquare.ImageIndex;
-            textureKey = myBasicMapSquare.TextureKey;
+            this.myMapTileInstance = aMapTileInstance;
+            imageIndex = myMapTileInstance.MapTileType.ImageIndex;
+            textureKey = myMapTileInstance.MapTileType.TextureKey;
             List<MapTileFrame>  mapTileFrameList = MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
             this.singleTextureSprite = new SingleTextureSprite(mapTileFrameList[imageIndex].Texture);
             this.singleTextureSprite.drawBoundingRectangle = false;
@@ -42,7 +42,7 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            singleTextureSprite.Draw(gameTime, spriteBatch, this.myBasicMapSquare.PositionInWorldCoordinates);
+            singleTextureSprite.Draw(gameTime, spriteBatch, this.myMapTileInstance.PositionInWorldCoordinates);
         }
 
 

@@ -1,6 +1,7 @@
 ﻿using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 using System.Collections.Generic;
 using mike_and_conquer.gamesprite;
+using mike_and_conquer.gameview;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using Boolean = System.Boolean;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -8,8 +9,6 @@ using Color = Microsoft.Xna.Framework.Color;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
-using BasicMapSquare = mike_and_conquer.gameview.BasicMapSquare;
-using BasicMapSquareView = mike_and_conquer.gameview.BasicMapSquareView;
 
 namespace mike_and_conquer
 {
@@ -141,20 +140,20 @@ namespace mike_and_conquer
                 int shadowXWorldCoordinates = topLeftXOfSpriteInWorldCoordinates + shadowXSpriteCoordinate;
                 int shadowYWorldCoordinate = topLeftYOfSpriteInWorldCoordinates + shadowYSpriteCoordinate;
 
-                BasicMapSquareView underlyingMapSquareView =
+                MapTileInstanceView underlyingMapTileInstanceView =
                     MikeAndConquerGame.instance.FindMapSquareView(shadowXWorldCoordinates,
                         shadowYWorldCoordinate);
 
                 // TODO:  Un-hard code 12
-                int topLeftXOfUnderlyingMapSquareWorldCoordinates = underlyingMapSquareView.myBasicMapSquare.GetCenter().X - 12;
-                int topLeftYOfUnderlyingMapSquareWorldCoordinates = underlyingMapSquareView.myBasicMapSquare.GetCenter().Y - 12;
+                int topLeftXOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().X - 12;
+                int topLeftYOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().Y - 12;
 
                 int shadowXMapSquareCoordinate = shadowXWorldCoordinates - topLeftXOfUnderlyingMapSquareWorldCoordinates;
                 int shadowYMapSquareCoordinate = shadowYWorldCoordinate - topLeftYOfUnderlyingMapSquareWorldCoordinates;
 
 
                 int nonShadowPaletteIndexAtShadowLocation =
-                    underlyingMapSquareView.GetPaletteIndexOfCoordinate(shadowXMapSquareCoordinate, shadowYMapSquareCoordinate);
+                    underlyingMapTileInstanceView.GetPaletteIndexOfCoordinate(shadowXMapSquareCoordinate, shadowYMapSquareCoordinate);
 
                 int shadowPaletteIndex =
                     MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);

@@ -85,9 +85,9 @@
     <Compile Include="mike-and-conquer\gamesprite\ShpFileImage.cs" />
     <Compile Include="mike-and-conquer\gamesprite\SpriteSheet.cs" />
     <Compile Include="mike-and-conquer\gamesprite\UnitFrame.cs" />
-    <Compile Include="mike-and-conquer\gameview\BasicMapSquareView.cs" />
+    <Compile Include="mike-and-conquer\gameview\MapTileInstanceView.cs" />
     <Compile Include="mike-and-conquer\gameview\DestinationSquare.cs" />
-    <Compile Include="mike-and-conquer\gameview\BasicMapSquare.cs" />
+    <Compile Include="mike-and-conquer\gameview\MapTileInstance.cs" />
     <Compile Include="mike-and-conquer\gameview\GameCursor.cs" />
     <Compile Include="mike-and-conquer\gameview\MinigunnerIconView.cs" />
     <Compile Include="mike-and-conquer\gameview\MinigunnerView.cs" />
@@ -111,7 +111,7 @@
     <Compile Include="mike-and-conquer\main\Camera2D.cs" />
     <Compile Include="mike-and-conquer\main\GameMap.cs" />
     <Compile Include="mike-and-conquer\main\GameWorld.cs" />
-    <Compile Include="mike-and-conquer\main\MapTile.cs" />
+    <Compile Include="mike-and-conquer\main\MapTileType.cs" />
     <Compile Include="mike-and-conquer\main\MikeAndConquerGame.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Minigunner.cs" />
     <Compile Include="mike-and-conquer\main\MouseInputHandler.cs" />

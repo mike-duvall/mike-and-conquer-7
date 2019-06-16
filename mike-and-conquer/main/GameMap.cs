@@ -78,15 +78,7 @@ namespace mike_and_conquer
         {
             LoadCodeToTextureStringMap();
 
-            BinaryReader binaryReader = new BinaryReader(inputStream);
-            long numBytes = binaryReader.BaseStream.Length;
-            List<byte> allBytes = new List<byte>();
-            for(int ii = 0; ii < numBytes; ii++)
-            {
-                byte nextByte = binaryReader.ReadByte();
-                allBytes.Add(nextByte);
-            }
-
+            List<byte> allBytes = ReadAllBytesFromStream(inputStream);
 
             numColumns = endX - startX + 1;
             numRows = endY - startY + 1;
@@ -105,16 +97,7 @@ namespace mike_and_conquer
                 {
                     int offset = CalculateOffset(column, row);
                     string textureKey = ConvertByteToTextureKey(allBytes[offset]);
-                    byte imageIndex;
-                    if(textureKey == CLEAR1_SHP)
-                    {
-                        imageIndex = CalculateImageIndexForClear1(column, row);
-                    }
-                    else
-                    {
-                        imageIndex = allBytes[offset + 1];
-                    }
-
+                    byte imageIndex = CalculateImageIndexForTextureKey(textureKey,allBytes, column, row, offset);
                     bool isBlockingTerrain = IsBlockingTerrain(textureKey, imageIndex);
 
                     MapTileInstance mapTileInstance =
@@ -134,6 +117,34 @@ namespace mike_and_conquer
 
                 }
             }
+        }
+
+        private byte CalculateImageIndexForTextureKey(string textureKey, List<byte> allBytes, int column, int row, int offset)
+        {
+
+            if (textureKey == CLEAR1_SHP)
+            {
+                return CalculateImageIndexForClear1(column, row);
+            }
+            else
+            {
+                return allBytes[offset + 1];
+            }
+
+        }
+
+        private List<byte> ReadAllBytesFromStream(Stream inputStream)
+        {
+            BinaryReader binaryReader = new BinaryReader(inputStream);
+            long numBytes = binaryReader.BaseStream.Length;
+            List<byte> allBytes = new List<byte>();
+            for (int i = 0; i < numBytes; i++)
+            {
+                byte nextByte = binaryReader.ReadByte();
+                allBytes.Add(nextByte);
+            }
+
+            return allBytes;
         }
 
         private bool IsBlockingTerrain(string textureKey, byte imageIndex)

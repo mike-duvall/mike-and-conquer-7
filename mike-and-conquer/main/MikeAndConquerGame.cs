@@ -187,13 +187,13 @@ namespace mike_and_conquer
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
+        /// related content.  Calling base.InitializeDefaultMap will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-//        protected override void Initialize()
+//        protected override void InitializeDefaultMap()
 //        {
 //            // TODO: Add your initialization logic here
-//            base.Initialize();
+//            base.InitializeDefaultMap();
 //        }
 
         private void AddTestModeObjects()
@@ -284,7 +284,7 @@ namespace mike_and_conquer
         {
 
 
-            gameWorld.Initialize();
+            gameWorld.InitializeDefaultMap();
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -854,9 +854,9 @@ namespace mike_and_conquer
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
             // TODO:  Bogus stuff here
-            // Have to reset world first, before then resetting navigation graph
-            // because navigation graph depends on what's in the game world
-            // and sandbags were not getting cleared before navigation graph was updated
+            // Have to reset world first, before then resetting navigation navigationGraph
+            // because navigation navigationGraph depends on what's in the game world
+            // and sandbags were not getting cleared before navigation navigationGraph was updated
             GameState newGameState = gameWorld.HandleReset();
             gameWorld.InitializeNavigationGraph();
             return newGameState;

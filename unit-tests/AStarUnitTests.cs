@@ -4,7 +4,6 @@ using mike_and_conquer.pathfinding;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AStar = mike_and_conquer.pathfinding.AStar;
 using Path = mike_and_conquer.pathfinding.Path;
-using Graph = mike_and_conquer.pathfinding.Graph;
 using Node = mike_and_conquer.pathfinding.Node;
 
 using Point = Microsoft.Xna.Framework.Point;
@@ -30,16 +29,16 @@ namespace unit_tests
 //          0, 0, E
 
 
-//            Graph graph = new Graph(nodeArray);
-            Graph graph = new Graph(3, 3);
+//            NavigationGraph navigationGraph = new NavigationGraph(nodeArray);
+            NavigationGraph navigationGraph = new NavigationGraph(3, 3);
 
             // when
 
             Point startPoint = new Point(0, 0);
             Point endPoint = new Point(2, 2);
 
-//            Path foundPath = aStar.FindPath(graph,0,8);
-            Path foundPath = aStar.FindPath(graph, startPoint, endPoint);
+//            Path foundPath = aStar.FindPath(navigationGraph,0,8);
+            Path foundPath = aStar.FindPath(navigationGraph, startPoint, endPoint);
 
             // then
             Assert.IsNotNull(foundPath);
@@ -69,14 +68,14 @@ namespace unit_tests
 
 //            nodeArray[1, 1] = 1;
 
-//            Graph graph = new Graph(nodeArray);
-            Graph graph = new Graph(3, 3);
+//            NavigationGraph navigationGraph = new NavigationGraph(nodeArray);
+            NavigationGraph navigationGraph = new NavigationGraph(3, 3);
 
-            graph.MakeNodeBlockingNode(1,1);
-            graph.RebuildAdajencyGraph();
+            navigationGraph.MakeNodeBlockingNode(1,1);
+            navigationGraph.RebuildAdajencyGraph();
 
             // when
-            Path foundPath = aStar.FindPath(graph, 0, 8);
+            Path foundPath = aStar.FindPath(navigationGraph, 0, 8);
 
             // then
             Assert.IsNotNull(foundPath);
@@ -111,15 +110,15 @@ namespace unit_tests
 //            nodeArray[2, 1] = 1;
 
 
-//            Graph graph = new Graph(nodeArray);
-            Graph graph = new Graph(3, 3);
-            graph.MakeNodeBlockingNode(2, 0);
-            graph.MakeNodeBlockingNode(1, 1);
-            graph.MakeNodeBlockingNode(2, 1);
-            graph.RebuildAdajencyGraph();
+//            NavigationGraph navigationGraph = new NavigationGraph(nodeArray);
+            NavigationGraph navigationGraph = new NavigationGraph(3, 3);
+            navigationGraph.MakeNodeBlockingNode(2, 0);
+            navigationGraph.MakeNodeBlockingNode(1, 1);
+            navigationGraph.MakeNodeBlockingNode(2, 1);
+            navigationGraph.RebuildAdajencyGraph();
 
             // when
-            Path foundPath = aStar.FindPath(graph, 0, 8);
+            Path foundPath = aStar.FindPath(navigationGraph, 0, 8);
 
             // then
             Assert.IsNotNull(foundPath);
@@ -154,18 +153,18 @@ namespace unit_tests
 //            nodeArray[2, 1] = 1;
 //            nodeArray[3, 1] = 1;
 
-//            Graph graph = new Graph(nodeArray);
-            Graph graph = new Graph(5,3);
+//            NavigationGraph navigationGraph = new NavigationGraph(nodeArray);
+            NavigationGraph navigationGraph = new NavigationGraph(5,3);
 
-            graph.MakeNodeBlockingNode(1, 1);
-            graph.MakeNodeBlockingNode(2, 1);
-            graph.MakeNodeBlockingNode(3, 1);
-            graph.RebuildAdajencyGraph();
+            navigationGraph.MakeNodeBlockingNode(1, 1);
+            navigationGraph.MakeNodeBlockingNode(2, 1);
+            navigationGraph.MakeNodeBlockingNode(3, 1);
+            navigationGraph.RebuildAdajencyGraph();
 
             // when
             Point startPoint = new Point(2, 0);
             Point endPoint = new Point(2, 2);
-            Path foundPath = aStar.FindPath(graph, startPoint, endPoint);
+            Path foundPath = aStar.FindPath(navigationGraph, startPoint, endPoint);
 
             // then
             Assert.IsNotNull(foundPath);
@@ -203,17 +202,17 @@ namespace unit_tests
 
 
 
-            //            Graph graph = new Graph(nodeArray);
-            Graph graph = new Graph(26, 24);
-            graph.MakeNodeBlockingNode(1, 1);
-            graph.MakeNodeBlockingNode(2, 1);
-            graph.MakeNodeBlockingNode(3, 1);
-            graph.RebuildAdajencyGraph();
+            //            NavigationGraph navigationGraph = new NavigationGraph(nodeArray);
+            NavigationGraph navigationGraph = new NavigationGraph(26, 24);
+            navigationGraph.MakeNodeBlockingNode(1, 1);
+            navigationGraph.MakeNodeBlockingNode(2, 1);
+            navigationGraph.MakeNodeBlockingNode(3, 1);
+            navigationGraph.RebuildAdajencyGraph();
 
             // when
             Point startPoint = new Point(2, 0);
             Point endPoint = new Point(2, 2);
-            Path foundPath = aStar.FindPath(graph, startPoint, endPoint);
+            Path foundPath = aStar.FindPath(navigationGraph, startPoint, endPoint);
 
             // then
             Assert.IsNotNull(foundPath);

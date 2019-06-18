@@ -19,7 +19,7 @@ namespace mike_and_conquer.pathfinding
 
     }
 
-    public class Graph
+    public class NavigationGraph
     {
 
         public List<Node> nodeList;
@@ -29,7 +29,7 @@ namespace mike_and_conquer.pathfinding
 
         private int[,] nodeArray;
 
-        public Graph(int width, int height)
+        public NavigationGraph(int width, int height)
         {
             this.width = width;
             this.height = height;
@@ -131,14 +131,14 @@ namespace mike_and_conquer.pathfinding
 
     public class AStar
     {
-        public Path FindPath(Graph graph, Point startPoint, Point endPoint)
+        public Path FindPath(NavigationGraph navigationGraph, Point startPoint, Point endPoint)
         {
-            int startPointIndex = (startPoint.Y * graph.width) + startPoint.X;
-            int endPointIndex = (endPoint.Y * graph.width) + endPoint.X;
-            return this.FindPath(graph, startPointIndex, endPointIndex);
+            int startPointIndex = (startPoint.Y * navigationGraph.width) + startPoint.X;
+            int endPointIndex = (endPoint.Y * navigationGraph.width) + endPoint.X;
+            return this.FindPath(navigationGraph, startPointIndex, endPointIndex);
         }
 
-        public Path FindPath(Graph graph, int startLocation, int goalLocation)
+        public Path FindPath(NavigationGraph navigationGraph, int startLocation, int goalLocation)
 
         {
 //            frontier = Queue()
@@ -149,7 +149,7 @@ namespace mike_and_conquer.pathfinding
 //            while not frontier.empty()
 //            {
 //                current = frontier.get()
-//                for next in graph.neighbors(current)
+//                for next in navigationGraph.neighbors(current)
 //                {
 //                    if next not in came_from
 //                    {
@@ -160,7 +160,7 @@ namespace mike_and_conquer.pathfinding
 //            }
 
             Queue<Node> frontier  = new Queue<Node>();
-            frontier.Enqueue(graph.nodeList[startLocation]);
+            frontier.Enqueue(navigationGraph.nodeList[startLocation]);
             Dictionary<int, int> came_from = new Dictionary<int, int>();
             came_from[startLocation] = -1;
 
@@ -171,7 +171,7 @@ namespace mike_and_conquer.pathfinding
                 {
                     if (!came_from.ContainsKey(next))
                     {
-                        frontier.Enqueue(graph.nodeList[next]);
+                        frontier.Enqueue(navigationGraph.nodeList[next]);
                         came_from[next] = current.id;
                     }
                 }
@@ -179,7 +179,7 @@ namespace mike_and_conquer.pathfinding
 
             Path thePath = new Path();
 
-            Node nextNode = graph.nodeList[goalLocation];
+            Node nextNode = navigationGraph.nodeList[goalLocation];
             List<Node> nodesInReverseOrder = new List<Node>();
             Boolean moreNodes = true;
             while (moreNodes)
@@ -189,7 +189,7 @@ namespace mike_and_conquer.pathfinding
                 {
                     if (came_from[nextNode.id] != -1)
                     {
-                        nextNode = graph.nodeList[came_from[nextNode.id]];
+                        nextNode = navigationGraph.nodeList[came_from[nextNode.id]];
                     }
                     else
                     {

@@ -52,7 +52,7 @@ namespace mike_and_conquer
 
         private static int globalId = 1;
 
-        private Graph navigationGraph;
+        private NavigationGraph navigationNavigationGraph;
 
         Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()
@@ -66,9 +66,9 @@ namespace mike_and_conquer
         }
 
 
-        public Minigunner(int xInWorldCoordinates, int yInWorldCoordinates, Graph navigationGraph)
+        public Minigunner(int xInWorldCoordinates, int yInWorldCoordinates, NavigationGraph navigationNavigationGraph)
         {
-            this.navigationGraph = navigationGraph;
+            this.navigationNavigationGraph = navigationNavigationGraph;
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;
             positionInWorldCoordinates = new Vector2(xInWorldCoordinates, yInWorldCoordinates);
@@ -403,7 +403,7 @@ namespace mike_and_conquer
             destinationSquare.X = destination.X / 24;
             destinationSquare.Y = destination.Y / 24;
 
-            Path foundPath = aStar.FindPath(navigationGraph, startPoint, destinationSquare);
+            Path foundPath = aStar.FindPath(navigationNavigationGraph, startPoint, destinationSquare);
 
             this.currentCommand = Command.FOLLOW_PATH;
             this.state = State.MOVING;
@@ -423,7 +423,7 @@ namespace mike_and_conquer
 
         private Point ConvertMapSquareIndexToWorldCoordinate(int index)
         {
-            int numColumns = this.navigationGraph.width;
+            int numColumns = this.navigationNavigationGraph.width;
             Point point = new Point();
             int row = index / numColumns;
             int column = index - (row * numColumns);
@@ -465,7 +465,7 @@ namespace mike_and_conquer
             Path foundPath = null;
             try
             {
-                foundPath = aStar.FindPath(navigationGraph, startPoint, destinationSquare);
+                foundPath = aStar.FindPath(navigationNavigationGraph, startPoint, destinationSquare);
             }
             catch (Exception e)
             {

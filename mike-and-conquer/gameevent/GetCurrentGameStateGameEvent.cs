@@ -21,11 +21,5 @@ namespace mike_and_conquer.gameevent
             return currentGameState;
         }
 
-
-
-
-
-
-
     }
 }

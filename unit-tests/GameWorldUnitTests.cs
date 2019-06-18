@@ -3,12 +3,9 @@ using mike_and_conquer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System.Collections.Generic;
+using mike_and_conquer.pathfinding;
 using Minigunner = mike_and_conquer.Minigunner;
 using GameTime = Microsoft.Xna.Framework.GameTime;
-
-
-using Graph = mike_and_conquer.pathfinding.Graph;
-
 using Point = Microsoft.Xna.Framework.Point;
 
 
@@ -26,8 +23,7 @@ namespace unit_tests
             GameWorld gameWorld = new GameWorld();
             const int numColumns = 4;
             const int numRows = 3;
-            gameWorld.Initialize();
-
+            
 
             int[,] obstacleArray = new int[numRows, numColumns]
             {
@@ -36,7 +32,7 @@ namespace unit_tests
                 { 0, 0, 0, 0 }
             };
 
-            UpdateGraphFromFromObstacleArray(gameWorld.navigationGraph, obstacleArray);
+            gameWorld.InitializeTestMap(obstacleArray);
 
             Point minigunnerLocationInMapSquareCoordinates = new Point(0, 0);
             Point minigunnerLocationInWorldCoordinates =
@@ -59,14 +55,12 @@ namespace unit_tests
             gameTime.ElapsedGameTime = timespan;
 
             // then
-            //            WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, gameTime,  destinationInWorldCoordinates);
             int[,] expectedPathArray = new int[numRows, numColumns]
             {
                 { 1, 0, 0, 0 },
                 { 2, 0, 0, 0 },
                 { 0, 3, 4, 5 }
             };
-
 
             WaitForMinigunnerToFollowPath(gameWorld, minigunner, gameTime, expectedPathArray);
         }
@@ -79,7 +73,7 @@ namespace unit_tests
             GameWorld gameWorld = new GameWorld();
             const int numColumns = 6;
             const int numRows = 5;
-            gameWorld.Initialize();
+//            gameWorld.InitializeDefaultMap();
 
 
             int[,] obstacleArray = new int[numRows, numColumns]
@@ -91,7 +85,8 @@ namespace unit_tests
                 { 0, 0, 0, 0, 0, 0 }
             };
 
-            UpdateGraphFromFromObstacleArray(gameWorld.navigationGraph, obstacleArray);
+            gameWorld.InitializeTestMap(obstacleArray);
+            //            UpdateGraphFromFromObstacleArray(gameWorld.navigationGraph, obstacleArray);
 
             Point minigunnerLocationInMapSquareCoordinates = new Point(1, 1);
             Point minigunnerLocationInWorldCoordinates =
@@ -125,8 +120,6 @@ namespace unit_tests
                 { 0, 0, 4, 0, 0, 0 }
             };
 
-
-
             WaitForMinigunnerToFollowPath(gameWorld, minigunner, gameTime, expectedPathArray);
 
         }
@@ -139,7 +132,7 @@ namespace unit_tests
             GameWorld gameWorld = new GameWorld();
             const int numColumns = 6;
             const int numRows = 5;
-            gameWorld.Initialize();
+//            gameWorld.InitializeDefaultMap();
 
 
             int[,] obstacleArray = new int[numRows, numColumns]
@@ -151,7 +144,8 @@ namespace unit_tests
                 { 0, 0, 1, 0, 1, 0 }
             };
 
-            UpdateGraphFromFromObstacleArray(gameWorld.navigationGraph, obstacleArray);
+            //            UpdateGraphFromFromObstacleArray(gameWorld.navigationGraph, obstacleArray);
+            gameWorld.InitializeTestMap(obstacleArray);
 
             Point minigunnerLocationInMapSquareCoordinates = new Point(0, 4);
             Point minigunnerLocationInWorldCoordinates =
@@ -193,26 +187,26 @@ namespace unit_tests
 
 
 
-        private void UpdateGraphFromFromObstacleArray(Graph graph, int[,] nodeArray)
-        {
-
-            int rank1 = nodeArray.GetLength(0);
-            int rank2 = nodeArray.GetLength(1);
-
-            for (int x = 0; x < rank2; x++)
-            {
-                for (int y = 0; y < rank1; y++)
-                {
-                    if (nodeArray[y, x] == 1)
-                    {
-                        graph.MakeNodeBlockingNode(x, y);
-                    }
-                }
-            }
-
-            graph.RebuildAdajencyGraph();
-        }
-
+//        private void UpdateGraphFromFromObstacleArray(NavigationGraph navigationGraph, int[,] nodeArray)
+//        {
+//
+//            int rank1 = nodeArray.GetLength(0);
+//            int rank2 = nodeArray.GetLength(1);
+//
+//            for (int x = 0; x < rank2; x++)
+//            {
+//                for (int y = 0; y < rank1; y++)
+//                {
+//                    if (nodeArray[y, x] == 1)
+//                    {
+//                        navigationGraph.MakeNodeBlockingNode(x, y);
+//                    }
+//                }
+//            }
+//
+//            navigationGraph.RebuildAdajencyGraph();
+//        }
+//
         private Point ConvertMapSquareCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
         {
 
@@ -258,7 +252,8 @@ namespace unit_tests
 
         private bool IsMinigunnerAtDestination(Minigunner minigunner, Point destination)
         {
-            int leeway = 1;
+//            int leeway = 1;
+            float leeway = 0.2f;
             bool isAtXDestination =
                 (minigunner.positionInWorldCoordinates.X > destination.X - leeway) &&
                 (minigunner.positionInWorldCoordinates.X < destination.X + leeway);
@@ -282,16 +277,41 @@ namespace unit_tests
             int currentPathIndex = 1;
             int maxPathIndex = FindMaxPathIndex(expectedPathArray);
 
-
             while (currentPathIndex <= maxPathIndex)
             {
                 Point nextPathPoint = FindPointWithPathIndex(expectedPathArray, currentPathIndex);
-                Point nextDestinationInWorldCoordinates =
-                    ConvertMapSquareCoordinatesToWorldCoordinates(nextPathPoint);
-                WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, gameTime,
-                    nextDestinationInWorldCoordinates);
+
+                if (currentPathIndex != maxPathIndex)
+                {
+                    Point nextDestinationInWorldCoordinates =
+                        ConvertMapSquareCoordinatesToWorldCoordinates(nextPathPoint);
+                    WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, gameTime,
+                        nextDestinationInWorldCoordinates);
+                }
+                else
+                {
+                    // Check for landing at Slot 0
+                    Point landingSquareSlotDestinationInWorldCoordinates =
+                        ConvertMapSquareCoordinatesToWorldCoordinates(nextPathPoint);
+
+                    landingSquareSlotDestinationInWorldCoordinates.X =
+                        landingSquareSlotDestinationInWorldCoordinates.X + 4;
+
+                    landingSquareSlotDestinationInWorldCoordinates.Y =
+                        landingSquareSlotDestinationInWorldCoordinates.Y -3 ;
+
+                    WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, gameTime,
+                        landingSquareSlotDestinationInWorldCoordinates);
+
+                }
+
                 currentPathIndex++;
             }
+
+
+
+
+
 
         }
 
@@ -346,7 +366,7 @@ namespace unit_tests
         {
             bool done = false;
             int numAttempts = 0;
-            int maxNumRepetitions = 2000;
+            int maxNumRepetitions = 3000;
 
             bool isAtDestination = false;
 

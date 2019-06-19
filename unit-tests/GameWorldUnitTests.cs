@@ -3,7 +3,6 @@ using mike_and_conquer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System.Collections.Generic;
-using mike_and_conquer.pathfinding;
 using Minigunner = mike_and_conquer.Minigunner;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using Point = Microsoft.Xna.Framework.Point;
@@ -187,26 +186,6 @@ namespace unit_tests
 
 
 
-//        private void UpdateGraphFromFromObstacleArray(NavigationGraph navigationGraph, int[,] nodeArray)
-//        {
-//
-//            int rank1 = nodeArray.GetLength(0);
-//            int rank2 = nodeArray.GetLength(1);
-//
-//            for (int x = 0; x < rank2; x++)
-//            {
-//                for (int y = 0; y < rank1; y++)
-//                {
-//                    if (nodeArray[y, x] == 1)
-//                    {
-//                        navigationGraph.MakeNodeBlockingNode(x, y);
-//                    }
-//                }
-//            }
-//
-//            navigationGraph.RebuildAdajencyGraph();
-//        }
-//
         private Point ConvertMapSquareCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
         {
 
@@ -307,11 +286,6 @@ namespace unit_tests
 
                 currentPathIndex++;
             }
-
-
-
-
-
 
         }
 

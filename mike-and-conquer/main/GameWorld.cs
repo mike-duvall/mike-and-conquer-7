@@ -216,7 +216,7 @@ namespace mike_and_conquer
             
             AssertIsValidMinigunnerPosition(positionInWorldCoordinates);
 
-            Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this.navigationGraph);
+            Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this );
             gdiMinigunnerList.Add(newMinigunner);
             return newMinigunner;
         }
@@ -228,7 +228,7 @@ namespace mike_and_conquer
             AssertIsValidMinigunnerPosition(positionInWorldCoordinates);
 
 
-            Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this.navigationGraph);
+            Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this);
             this.nodMinigunnerList.Add(newMinigunner);
 
             // TODO:  In future, don't couple Nod having to be AI controlled enemy

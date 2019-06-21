@@ -25,8 +25,9 @@ using Camera2D = mike_and_conquer_6.Camera2D;
 
 using Point = Microsoft.Xna.Framework.Point;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
-
 using Serilog;
+
+using Matrix = Microsoft.Xna.Framework.Matrix;
 
 
 
@@ -178,10 +179,6 @@ namespace mike_and_conquer
         }
 
 
-        public static Vector2 ConvertWorldCoordinatesToScreenCoordinates(Vector2 positionInWorldCoordinates)
-        {
-            return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix);
-        }
 
 
         /// <summary>
@@ -770,22 +767,15 @@ namespace mike_and_conquer
         }
 
 
-        public Point ConvertMapSquareCoordinatesToWorldCoordinates(Point positionInMapSquareCoordinates)
-        {
 
-            int xInWorldCoordinates = positionInMapSquareCoordinates.X * 24 + 12;
-            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * 24 + 12;
 
-            return new Point(xInWorldCoordinates,yInWorldCoordinates);
-
-        }
 
 
         internal Minigunner AddGdiMinigunnerAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
         {
-            Point positionInWorldCoordinates =
-                ConvertMapSquareCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
 
+            Point positionInWorldCoordinates =
+                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
             return AddGdiMinigunner(positionInWorldCoordinates);
         }
 
@@ -818,8 +808,9 @@ namespace mike_and_conquer
 
         internal Minigunner AddNodMinigunnerAtMapSquareCoordinates(Point positionInMapSquareCoordinates, bool aiIsOn)
         {
+
             Point positionInWorldCoordinates =
-                ConvertMapSquareCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
+                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
 
             return AddNodMinigunner(positionInWorldCoordinates, aiIsOn);
         }
@@ -878,6 +869,32 @@ namespace mike_and_conquer
         }
 
 
+        public Vector2 ConvertWorldCoordinatesToScreenCoordinates(Vector2 positionInWorldCoordinates)
+        {
+            return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix);
+        }
+
+        public Vector2 ConvertScreenLocationToWorldLocation(Vector2 screenLocation)
+        {
+            return Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix));
+        }
+
+
+        //        // TODO:  Where does this method go?
+        //        public Point ConvertMapSquareCoordinatesToWorldCoordinates(Point positionInMapSquareCoordinates)
+        //        {
+        //
+        //            int xInWorldCoordinates = positionInMapSquareCoordinates.X * 24 + 12;
+        //            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * 24 + 12;
+        //
+        //            return new Point(xInWorldCoordinates, yInWorldCoordinates);
+        //        }
+
+
+
     }
+
+
+
 
 }

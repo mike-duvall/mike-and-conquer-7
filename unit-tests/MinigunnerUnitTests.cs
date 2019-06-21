@@ -123,56 +123,56 @@ namespace unit_tests
         //        }
         //
 
-        [TestMethod]
-        public void MinigunnerContainsPointShouldWorkBeforeAndAfterMovement()
-        {
-            // given
-            GameWorld gameWorld = new GameWorld();
-            const int numColumns = 4;
-            const int numRows = 3;
-
-
-            int[,] obstacleArray = new int[numRows, numColumns]
-            {
-                { 0, 0, 1, 0 },
-                { 0, 1, 1, 0 },
-                { 0, 0, 0, 0 }
-            };
-
-            gameWorld.InitializeTestMap(obstacleArray);
-
-            Point minigunnerLocationInMapSquareCoordinates = new Point(0, 0);
-            Point minigunnerLocationInWorldCoordinates =
-                ConvertMapSquareCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
-
-            Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
-
-            // when
-            int destinationColumn = 3;
-            int destinationRow = 2;
-            Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
-
-            Point destinationInWorldCoordinates =
-                ConvertMapSquareCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
-
-            minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
-
-            GameTime gameTime = new GameTime();
-            TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 10);
-            gameTime.ElapsedGameTime = timespan;
-
-            // then
-            int[,] expectedPathArray = new int[numRows, numColumns]
-            {
-                { 1, 0, 0, 0 },
-                { 2, 0, 0, 0 },
-                { 0, 3, 4, 5 }
-            };
-
-            WaitForMinigunnerToFollowPath(gameWorld, minigunner, gameTime, expectedPathArray);
-        }
-
-
+//        [TestMethod]
+//        public void MinigunnerContainsPointShouldWorkBeforeAndAfterMovement()
+//        {
+//            // given
+//            GameWorld gameWorld = new GameWorld();
+//            const int numColumns = 4;
+//            const int numRows = 3;
+//
+//
+//            int[,] obstacleArray = new int[numRows, numColumns]
+//            {
+//                { 0, 0, 1, 0 },
+//                { 0, 1, 1, 0 },
+//                { 0, 0, 0, 0 }
+//            };
+//
+//            gameWorld.InitializeTestMap(obstacleArray);
+//
+//            Point minigunnerLocationInMapSquareCoordinates = new Point(0, 0);
+//            Point minigunnerLocationInWorldCoordinates =
+//                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+//
+//            Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
+//
+//            // when
+//            int destinationColumn = 3;
+//            int destinationRow = 2;
+//            Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
+//
+//            Point destinationInWorldCoordinates =
+//                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+//
+//            minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
+//
+//            GameTime gameTime = new GameTime();
+//            TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 10);
+//            gameTime.ElapsedGameTime = timespan;
+//
+//            // then
+//            int[,] expectedPathArray = new int[numRows, numColumns]
+//            {
+//                { 1, 0, 0, 0 },
+//                { 2, 0, 0, 0 },
+//                { 0, 3, 4, 5 }
+//            };
+//
+//            WaitForMinigunnerToFollowPath(gameWorld, minigunner, gameTime, expectedPathArray);
+//        }
+//
+//
 
 
     }

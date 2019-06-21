@@ -35,7 +35,7 @@ namespace unit_tests
 
             Point minigunnerLocationInMapSquareCoordinates = new Point(0, 0);
             Point minigunnerLocationInWorldCoordinates =
-                ConvertMapSquareCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
             
             Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
 
@@ -45,7 +45,7 @@ namespace unit_tests
             Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
 
             Point destinationInWorldCoordinates =
-                ConvertMapSquareCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
 
             minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
 
@@ -89,7 +89,7 @@ namespace unit_tests
 
             Point minigunnerLocationInMapSquareCoordinates = new Point(1, 1);
             Point minigunnerLocationInWorldCoordinates =
-                ConvertMapSquareCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
 
             Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
 
@@ -100,7 +100,7 @@ namespace unit_tests
             Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
 
             Point destinationInWorldCoordinates =
-                ConvertMapSquareCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
 
             minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
 
@@ -148,7 +148,7 @@ namespace unit_tests
 
             Point minigunnerLocationInMapSquareCoordinates = new Point(0, 4);
             Point minigunnerLocationInWorldCoordinates =
-                ConvertMapSquareCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
 
             Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
 
@@ -159,7 +159,7 @@ namespace unit_tests
             Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
 
             Point destinationInWorldCoordinates =
-                ConvertMapSquareCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
 
             minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
 
@@ -185,47 +185,75 @@ namespace unit_tests
         }
 
 
-
-        private Point ConvertMapSquareCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
+        [TestMethod]
+        public void MinigunnerContainsPointShouldWorkBeforeAndAfterMovement()
         {
+            // given
+            GameWorld gameWorld = new GameWorld();
+            const int numColumns = 4;
+            const int numRows = 3;
 
-            int destinationRow = pointInWorldMapSquareCoordinates.Y;
-            int destinationColumn = pointInWorldMapSquareCoordinates.X;
-
-            int mapSquareSize = 24;
-            int halfMapSquareSize = mapSquareSize / 2;
-
-            int destinationX = (destinationColumn * mapSquareSize) + halfMapSquareSize;
-            int destinationY = (destinationRow * mapSquareSize) + halfMapSquareSize;
-
-            return new Point(destinationX, destinationY);
-        }
-
-        private Point ConvertWorldCoordinatesToMapSquareCoordinates(Point pointInWorldCoordinates)
-        {
-
-            int destinationRow = pointInWorldCoordinates.Y;
-            int destinationColumn = pointInWorldCoordinates.X;
-
-            int mapSquareSize = 24;
-
-            int destinationX = destinationColumn / mapSquareSize;
-            int destinationY = destinationRow / mapSquareSize;
-
-            return new Point(destinationX, destinationY);
-        }
-
-
-        private List<Point> ConvertWorldCoordinatesListToMapSquareCoordinatesList(List<Point> worldCoordinatesList)
-        {
-            List<Point> mapSquareCoordinatesList = new List<Point>();
-
-            foreach(Point point in worldCoordinatesList)
+            int[,] obstacleArray = new int[numRows, numColumns]
             {
-                mapSquareCoordinatesList.Add(ConvertWorldCoordinatesToMapSquareCoordinates(point));
-            }
+                { 0, 0, 1, 0 },
+                { 0, 1, 1, 0 },
+                { 0, 0, 0, 0 }
+            };
 
-            return mapSquareCoordinatesList;
+            gameWorld.InitializeTestMap(obstacleArray);
+
+            Point minigunnerLocationInMapTileCoordinates = new Point(0, 0);
+            Point minigunnerLocationInWorldCoordinates =
+                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapTileCoordinates);
+
+            Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
+
+            // when
+            int destinationColumn = 3;
+            int destinationRow = 2;
+            Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
+
+            Point destinationInWorldCoordinates =
+                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+
+            minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
+
+            GameTime gameTime = new GameTime();
+            TimeSpan timespan = new TimeSpan(0, 0, 0, 0, 10);
+            gameTime.ElapsedGameTime = timespan;
+
+            // then
+            bool containsPoint = minigunner.ContainsPoint(minigunnerLocationInWorldCoordinates.X, minigunnerLocationInWorldCoordinates.Y);
+
+
+            // then
+            Assert.IsTrue(containsPoint);
+
+
+            int[,] expectedPathArray = new int[numRows, numColumns]
+            {
+                { 1, 0, 0, 0 },
+                { 2, 0, 0, 0 },
+                { 0, 3, 4, 5 }
+            };
+
+            WaitForMinigunnerToFollowPath(gameWorld, minigunner, gameTime, expectedPathArray);
+
+            // when
+
+            destinationInWorldCoordinates.X =
+                destinationInWorldCoordinates.X + 4;
+
+            destinationInWorldCoordinates.Y =
+                destinationInWorldCoordinates.Y - 3;
+
+            containsPoint = minigunner.ContainsPoint(destinationInWorldCoordinates.X, destinationInWorldCoordinates.Y);
+
+
+            // then
+            Assert.IsTrue(containsPoint);
+
+
         }
 
 
@@ -263,7 +291,7 @@ namespace unit_tests
                 if (currentPathIndex != maxPathIndex)
                 {
                     Point nextDestinationInWorldCoordinates =
-                        ConvertMapSquareCoordinatesToWorldCoordinates(nextPathPoint);
+                        gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(nextPathPoint);
                     WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, gameTime,
                         nextDestinationInWorldCoordinates);
                 }
@@ -271,13 +299,13 @@ namespace unit_tests
                 {
                     // Check for landing at Slot 0
                     Point landingSquareSlotDestinationInWorldCoordinates =
-                        ConvertMapSquareCoordinatesToWorldCoordinates(nextPathPoint);
+                        gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(nextPathPoint);
 
                     landingSquareSlotDestinationInWorldCoordinates.X =
                         landingSquareSlotDestinationInWorldCoordinates.X + 4;
 
                     landingSquareSlotDestinationInWorldCoordinates.Y =
-                        landingSquareSlotDestinationInWorldCoordinates.Y -3 ;
+                        landingSquareSlotDestinationInWorldCoordinates.Y - 3 ;
 
                     WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, gameTime,
                         landingSquareSlotDestinationInWorldCoordinates);
@@ -367,8 +395,6 @@ namespace unit_tests
             Assert.IsTrue(isAtDestination);
 
         }
-
-
 
 
 

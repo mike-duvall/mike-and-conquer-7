@@ -21,7 +21,9 @@ namespace mike_and_conquer.rest
             restMinigunner.id = minigunner.id;
             restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
             restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
-            Vector2 screenPosition = minigunner.GetScreenPosition();
+            Vector2 screenPosition =
+                MikeAndConquerGame.instance.ConvertWorldCoordinatesToScreenCoordinates(minigunner
+                    .positionInWorldCoordinates);
             restMinigunner.screenX = (int)screenPosition.X;
             restMinigunner.screenY = (int)screenPosition.Y;
             restMinigunner.health = minigunner.health;

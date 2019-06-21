@@ -15,7 +15,7 @@ namespace mike_and_conquer.rest
             int screenHeight = MikeAndConquerGame.instance.defaultViewport.Height;
 
             Vector2 locationInWorldCoordinates = new Vector2(point.x, point.y);
-            Vector2 locationInScreenCoordinates = MikeAndConquerGame.ConvertWorldCoordinatesToScreenCoordinates(locationInWorldCoordinates);
+            Vector2 locationInScreenCoordinates = MikeAndConquerGame.instance.ConvertWorldCoordinatesToScreenCoordinates(locationInWorldCoordinates);
             MouseInputHandler.DoLeftMouseClick((uint)locationInScreenCoordinates.X, (uint)locationInScreenCoordinates.Y, screenWidth, screenHeight);
             return Ok();
         }

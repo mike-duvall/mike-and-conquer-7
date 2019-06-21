@@ -10,6 +10,7 @@ namespace mike_and_conquer.rest
     public class LeftClickMinigunnerController : ApiController
     {
 
+
         public IHttpActionResult Post([FromBody]RestMinigunnerId restMinigunnerId)
         {
             Minigunner gdiMinigunner = GameWorld.instance.GetGdiOrNodMinigunner(restMinigunnerId.id);
@@ -17,8 +18,10 @@ namespace mike_and_conquer.rest
             Vector2 minigunnerLocation = new Vector2();
             minigunnerLocation.X = gdiMinigunner.positionInWorldCoordinates.X;
             minigunnerLocation.Y = gdiMinigunner.positionInWorldCoordinates.Y - 20;
-        
-            Vector2 transformedLocation = gdiMinigunner.GetScreenPosition();
+
+            Vector2 transformedLocation =
+                MikeAndConquerGame.instance.ConvertWorldCoordinatesToScreenCoordinates(gdiMinigunner
+                    .positionInWorldCoordinates);
 
             int screenWidth = MikeAndConquerGame.instance.defaultViewport.Width;
             int screenHeight = MikeAndConquerGame.instance.defaultViewport.Height;

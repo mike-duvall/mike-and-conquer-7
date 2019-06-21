@@ -4,12 +4,11 @@ using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Boolean = System.Boolean;
-using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
-using Matrix = Microsoft.Xna.Framework.Matrix;
+
 using Point = Microsoft.Xna.Framework.Point;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
+
 
 namespace mike_and_conquer
 {
@@ -117,7 +116,7 @@ namespace mike_and_conquer
         private Point GetWorldLocationPointFromMouseState(MouseState mouseState)
         {
             Vector2 mouseScreenLocation = new Vector2(mouseState.X, mouseState.Y);
-            Vector2 mouseWorldLocationVector2 = ConvertScreenLocationToWorldLocation(mouseScreenLocation);
+            Vector2 mouseWorldLocationVector2 = MikeAndConquerGame.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
             return new Point((int)mouseWorldLocationVector2.X, (int)mouseWorldLocationVector2.Y);
         }
 
@@ -234,17 +233,12 @@ namespace mike_and_conquer
         }
 
 
-        internal Vector2 ConvertScreenLocationToWorldLocation(Vector2 screenLocation)
-        {
-            return Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix));
-        }
-
         internal void HandleLeftClick(int mouseX, int mouseY)
         {
             MouseState mouseState = Mouse.GetState();
             Point mousePoint = mouseState.Position;
             Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
-            Vector2 mouseWorldLocation = ConvertScreenLocationToWorldLocation(mouseScreenLocation);
+            Vector2 mouseWorldLocation = MikeAndConquerGame.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
 
             int mouseWorldX = (int) mouseWorldLocation.X;
             int mouseWorldY = (int) mouseWorldLocation.Y;

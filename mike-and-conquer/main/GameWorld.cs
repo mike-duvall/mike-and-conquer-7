@@ -405,5 +405,29 @@ namespace mike_and_conquer
         }
 
 
+        public Point ConvertWorldMapTileCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
+        {
+
+            int xInWorldCoordinates = pointInWorldMapSquareCoordinates.X * 24 + 12;
+            int yInWorldCoordinates = pointInWorldMapSquareCoordinates.Y * 24 + 12;
+            
+            return new Point(xInWorldCoordinates, yInWorldCoordinates);
+        }
+
+
+        private Point ConvertWorldCoordinatesToMapTileCoordinates(Point pointInWorldCoordinates)
+        {
+        
+            int destinationRow = pointInWorldCoordinates.Y;
+            int destinationColumn = pointInWorldCoordinates.X;
+        
+            int mapSquareSize = 24;
+        
+            int destinationX = destinationColumn / mapSquareSize;
+            int destinationY = destinationRow / mapSquareSize;
+        
+            return new Point(destinationX, destinationY);
+        }
+
     }
 }

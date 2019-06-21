@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using mike_and_conquer.gameview;
-using mike_and_conquer.pathfinding;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -421,9 +420,6 @@ namespace mike_and_conquer
             SetDestination(listOfPoints[0].X, listOfPoints[0].Y);
         }
 
-        Pickup here
-        //  See pickup here on Kanban board
-
         private Point ConvertMapSquareIndexToWorldCoordinate(int index)
         {
             int numColumns = this.gameWorld.navigationGraph.width;
@@ -496,11 +492,6 @@ namespace mike_and_conquer
 
         }
 
-
-        public Vector2 GetScreenPosition()
-        {
-            return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix);
-        }
 
 
     }

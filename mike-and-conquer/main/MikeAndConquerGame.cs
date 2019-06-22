@@ -426,7 +426,7 @@ namespace mike_and_conquer
 
         private float CalculateRightmostScrollX()
         {
-            int widthOfMapSquare = 24;
+            int widthOfMapSquare = GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
             int widthOfMapInWorldSpace = gameWorld.gameMap.numColumns * widthOfMapSquare;
 
             int viewportWidth = mapViewport.Width;
@@ -447,7 +447,7 @@ namespace mike_and_conquer
 
         private float CalculateBottommostScrollY()
         {
-            int heightOfMapSquare = 24;
+            int heightOfMapSquare = GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
             int heightOfMapInWorldSpace = gameWorld.gameMap.numRows * heightOfMapSquare;
             int viewportHeight = mapViewport.Height;
             int halfViewportHeight = viewportHeight / 2;
@@ -795,8 +795,8 @@ namespace mike_and_conquer
         internal Sandbag AddSandbag(int xInMapSquareCoordinates, int yInMapSquareCoordinates, int sandbagType)
         {
 
-            int xInWorldCoordinates = xInMapSquareCoordinates * 24 + 12;
-            int yInWorldCoordinates = yInMapSquareCoordinates * 24 + 12;
+            int xInWorldCoordinates = xInMapSquareCoordinates * GameWorld.MAP_TILE_HEIGHT_AND_WIDTH + 12;
+            int yInWorldCoordinates = yInMapSquareCoordinates * GameWorld.MAP_TILE_HEIGHT_AND_WIDTH + 12;
 
             Sandbag newSandbag = new Sandbag(xInWorldCoordinates, yInWorldCoordinates, sandbagType);
             GameWorld.instance.sandbagList.Add(newSandbag);
@@ -818,8 +818,8 @@ namespace mike_and_conquer
 
         internal GDIBarracksView AddGDIBarracksViewAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
         {
-            int xInWorldCoordinates = positionInMapSquareCoordinates.X * 24;
-            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * 24;
+            int xInWorldCoordinates = positionInMapSquareCoordinates.X * GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
+            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
 
             Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
 

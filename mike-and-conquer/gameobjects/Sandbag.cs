@@ -35,24 +35,11 @@ namespace mike_and_conquer
             this.sandbagType = sandbagType;
         }
 
-        internal int GetMapSquareX()
-        {
-            int mapSquareX = (int)((this.positionInWorldCoordinates.X - 12) / 24);
-            return mapSquareX;
-        }
-
-        internal int GetMapSquareY()
-        {
-            int mapSquareY = (int)((this.positionInWorldCoordinates.Y - 12) / 24);
-            return mapSquareY;
-        }
-
-
 
         public bool ContainsPoint(Point aPoint)
         {
-            int height = 24;
-            int width = 24;
+            int height = GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
+            int width = GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
             int leftX = (int)positionInWorldCoordinates.X - (width / 2);
             int topY = (int)positionInWorldCoordinates.Y - (height / 2);
             Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);

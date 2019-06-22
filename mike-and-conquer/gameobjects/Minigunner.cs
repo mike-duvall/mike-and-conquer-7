@@ -393,15 +393,15 @@ namespace mike_and_conquer
                     (int) this.positionInWorldCoordinates.Y);
 
             currentMapTileInstanceLocation.ClearSlotForMinigunner(this);
-            int startColumn = (int)this.positionInWorldCoordinates.X / 24;
-            int startRow = (int)this.positionInWorldCoordinates.Y / 24;
+            int startColumn = (int)this.positionInWorldCoordinates.X / GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
+            int startRow = (int)this.positionInWorldCoordinates.Y / GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
             Point startPoint = new Point(startColumn, startRow);
 
             AStar aStar = new AStar();
 
             Point destinationSquare = new Point();
-            destinationSquare.X = destination.X / 24;
-            destinationSquare.Y = destination.Y / 24;
+            destinationSquare.X = destination.X / GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
+            destinationSquare.Y = destination.Y / GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
 
             Path foundPath = aStar.FindPath(gameWorld.navigationGraph, startPoint, destinationSquare);
 
@@ -431,15 +431,15 @@ namespace mike_and_conquer
         internal void OrderToMoveToAndAttackEnemyUnit(Minigunner enemyMinigunner)
         {
 
-            int startColumn = (int)this.positionInWorldCoordinates.X / 24;
-            int startRow = (int)this.positionInWorldCoordinates.Y / 24;
+            int startColumn = (int)this.positionInWorldCoordinates.X / GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
+            int startRow = (int)this.positionInWorldCoordinates.Y / GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
             Point startPoint = new Point(startColumn, startRow);
 
             AStar aStar = new AStar();
 
             Point destinationSquare = new Point();
-            destinationSquare.X = (int)enemyMinigunner.positionInWorldCoordinates.X / 24;
-            destinationSquare.Y = (int)enemyMinigunner.positionInWorldCoordinates.Y / 24;
+            destinationSquare.X = (int)enemyMinigunner.positionInWorldCoordinates.X / GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
+            destinationSquare.Y = (int)enemyMinigunner.positionInWorldCoordinates.Y / GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
 
 
             Path foundPath = null;

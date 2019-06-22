@@ -429,5 +429,20 @@ namespace mike_and_conquer
             return new Point(destinationX, destinationY);
         }
 
+
+        public Point ConvertMapSquareIndexToWorldCoordinate(int index)
+        {
+            int numColumns = navigationGraph.width;
+            Point point = new Point();
+            int row = index / numColumns;
+            int column = index - (row * numColumns);
+            int widthOfMapSquare = 24;
+            int heightOfMapSquare = 24;
+            point.X = (column * widthOfMapSquare) + 12; ;
+            point.Y = (row * heightOfMapSquare) + 12;
+            return point;
+        }
+
+
     }
 }

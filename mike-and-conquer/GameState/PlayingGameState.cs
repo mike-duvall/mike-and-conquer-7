@@ -113,12 +113,6 @@ namespace mike_and_conquer
         }
 
 
-        private Point GetWorldLocationPointFromMouseState(MouseState mouseState)
-        {
-            Vector2 mouseScreenLocation = new Vector2(mouseState.X, mouseState.Y);
-            Vector2 mouseWorldLocationVector2 = MikeAndConquerGame.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
-            return new Point((int)mouseWorldLocationVector2.X, (int)mouseWorldLocationVector2.Y);
-        }
 
         private void UpdateMousePointer(MouseState newMouseState)
         {
@@ -144,6 +138,16 @@ namespace mike_and_conquer
                 MikeAndConquerGame.instance.gameCursor.SetToMainCursor();
             }
         }
+
+
+
+        private Point GetWorldLocationPointFromMouseState(MouseState mouseState)
+        {
+            Vector2 mouseScreenLocation = new Vector2(mouseState.X, mouseState.Y);
+            Vector2 mouseWorldLocationVector2 = MikeAndConquerGame.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
+            return new Point((int)mouseWorldLocationVector2.X, (int)mouseWorldLocationVector2.Y);
+        }
+
 
         private static Point CalculateMousePositionInWorldCoordinates(MouseState newMouseState)
         {

@@ -412,7 +412,7 @@ namespace mike_and_conquer
             List<Node> nodeList = foundPath.nodeList;
             foreach (Node node in nodeList)
             {
-                Point point = ConvertMapSquareIndexToWorldCoordinate(node.id);
+                Point point = gameWorld.ConvertMapSquareIndexToWorldCoordinate(node.id);
                 listOfPoints.Add(point);
             }
 
@@ -420,26 +420,7 @@ namespace mike_and_conquer
             SetDestination(listOfPoints[0].X, listOfPoints[0].Y);
         }
 
-        private Point ConvertMapSquareIndexToWorldCoordinate(int index)
-        {
-            int numColumns = this.gameWorld.navigationGraph.width;
-            Point point = new Point();
-            int row = index / numColumns;
-            int column = index - (row * numColumns);
-            int widthOfMapSquare = 24;
-            int heightOfMapSquare = 24;
-            point.X = (column * widthOfMapSquare) + 12; ;
-            point.Y = (row * heightOfMapSquare) + 12 ;
-            return point;
-        }
 
-        public void OrderToFollowPath(List<Point> listOfPoints)
-        {
-            this.currentCommand = Command.FOLLOW_PATH;
-            this.state = State.MOVING;
-            this.SetPath(listOfPoints);
-            SetDestination(listOfPoints[0].X, listOfPoints[0].Y);
-        }
 
         private void SetPath(List<Point> listOfPoints)
         {
@@ -482,7 +463,7 @@ namespace mike_and_conquer
             List<Node> nodeList = foundPath.nodeList;
             foreach (Node node in nodeList)
             {
-                Point point = ConvertMapSquareIndexToWorldCoordinate(node.id);
+                Point point = gameWorld.ConvertMapSquareIndexToWorldCoordinate(node.id);
                 listOfPoints.Add(point);
             }
 

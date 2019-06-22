@@ -426,8 +426,7 @@ namespace mike_and_conquer
 
         private float CalculateRightmostScrollX()
         {
-            int widthOfMapSquare = 24;
-            int widthOfMapInWorldSpace = gameWorld.gameMap.numColumns * widthOfMapSquare;
+            int widthOfMapInWorldSpace = gameWorld.gameMap.numColumns * GameWorld.MAP_TILE_WIDTH;
 
             int viewportWidth = mapViewport.Width;
             int halfViewportWidth = viewportWidth / 2;
@@ -447,8 +446,7 @@ namespace mike_and_conquer
 
         private float CalculateBottommostScrollY()
         {
-            int heightOfMapSquare = 24;
-            int heightOfMapInWorldSpace = gameWorld.gameMap.numRows * heightOfMapSquare;
+            int heightOfMapInWorldSpace = gameWorld.gameMap.numRows * GameWorld.MAP_TILE_HEIGHT;
             int viewportHeight = mapViewport.Height;
             int halfViewportHeight = viewportHeight / 2;
             float scaledHalfViewportHeight = halfViewportHeight / mapViewportCamera.Zoom;
@@ -795,8 +793,11 @@ namespace mike_and_conquer
         internal Sandbag AddSandbag(int xInMapSquareCoordinates, int yInMapSquareCoordinates, int sandbagType)
         {
 
-            int xInWorldCoordinates = xInMapSquareCoordinates * 24 + 12;
-            int yInWorldCoordinates = yInMapSquareCoordinates * 24 + 12;
+            int xInWorldCoordinates =
+                (xInMapSquareCoordinates * GameWorld.MAP_TILE_WIDTH) + (GameWorld.MAP_TILE_WIDTH / 2);
+
+            int yInWorldCoordinates =
+                (yInMapSquareCoordinates * GameWorld.MAP_TILE_HEIGHT) + (GameWorld.MAP_TILE_HEIGHT / 2);
 
             Sandbag newSandbag = new Sandbag(xInWorldCoordinates, yInWorldCoordinates, sandbagType);
             GameWorld.instance.sandbagList.Add(newSandbag);
@@ -818,8 +819,8 @@ namespace mike_and_conquer
 
         internal GDIBarracksView AddGDIBarracksViewAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
         {
-            int xInWorldCoordinates = positionInMapSquareCoordinates.X * 24;
-            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * 24;
+            int xInWorldCoordinates = positionInMapSquareCoordinates.X * GameWorld.MAP_TILE_WIDTH;
+            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * GameWorld.MAP_TILE_HEIGHT;
 
             Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
 

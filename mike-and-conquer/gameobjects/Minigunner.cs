@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using mike_and_conquer.gameview;
-using mike_and_conquer.pathfinding;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -52,7 +51,7 @@ namespace mike_and_conquer
 
         private static int globalId = 1;
 
-        private Graph navigationGraph;
+        private GameWorld gameWorld;
 
         Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()
@@ -66,9 +65,10 @@ namespace mike_and_conquer
         }
 
 
-        public Minigunner(int xInWorldCoordinates, int yInWorldCoordinates, Graph navigationGraph)
+        public Minigunner(int xInWorldCoordinates, int yInWorldCoordinates, GameWorld gameWorld)
         {
-            this.navigationGraph = navigationGraph;
+            this.gameWorld = gameWorld;
+
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;
             positionInWorldCoordinates = new Vector2(xInWorldCoordinates, yInWorldCoordinates);
@@ -144,7 +144,7 @@ namespace mike_and_conquer
                 Point centerOfDestinationSquare = path[0];
 
                 MapTileInstance destinationMapTileInstance =
-                    GameWorld.instance.FindMapSquare(centerOfDestinationSquare.X, centerOfDestinationSquare.Y);
+                    gameWorld.FindMapSquare(centerOfDestinationSquare.X, centerOfDestinationSquare.Y);
 
                 Point currentDestinationPoint = destinationMapTileInstance.GetDestinationSlotForMinigunner(this);
                 SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
@@ -389,7 +389,7 @@ namespace mike_and_conquer
         {
 
             MapTileInstance currentMapTileInstanceLocation =
-                GameWorld.instance.FindMapSquare((int)this.positionInWorldCoordinates.X,
+                gameWorld.FindMapSquare((int)this.positionInWorldCoordinates.X,
                     (int) this.positionInWorldCoordinates.Y);
 
             currentMapTileInstanceLocation.ClearSlotForMinigunner(this);
@@ -403,7 +403,7 @@ namespace mike_and_conquer
             destinationSquare.X = destination.X / 24;
             destinationSquare.Y = destination.Y / 24;
 
-            Path foundPath = aStar.FindPath(navigationGraph, startPoint, destinationSquare);
+            Path foundPath = aStar.FindPath(gameWorld.navigationGraph, startPoint, destinationSquare);
 
             this.currentCommand = Command.FOLLOW_PATH;
             this.state = State.MOVING;
@@ -412,35 +412,15 @@ namespace mike_and_conquer
             List<Node> nodeList = foundPath.nodeList;
             foreach (Node node in nodeList)
             {
-                Point point = ConvertMapSquareIndexToWorldCoordinate(node.id);
+                Point point = gameWorld.ConvertMapSquareIndexToWorldCoordinate(node.id);
                 listOfPoints.Add(point);
             }
 
             this.SetPath(listOfPoints);
             SetDestination(listOfPoints[0].X, listOfPoints[0].Y);
-
         }
 
-        private Point ConvertMapSquareIndexToWorldCoordinate(int index)
-        {
-            int numColumns = this.navigationGraph.width;
-            Point point = new Point();
-            int row = index / numColumns;
-            int column = index - (row * numColumns);
-            int widthOfMapSquare = 24;
-            int heightOfMapSquare = 24;
-            point.X = (column * widthOfMapSquare) + 12; ;
-            point.Y = (row * heightOfMapSquare) + 12 ;
-            return point;
-        }
 
-        public void OrderToFollowPath(List<Point> listOfPoints)
-        {
-            this.currentCommand = Command.FOLLOW_PATH;
-            this.state = State.MOVING;
-            this.SetPath(listOfPoints);
-            SetDestination(listOfPoints[0].X, listOfPoints[0].Y);
-        }
 
         private void SetPath(List<Point> listOfPoints)
         {
@@ -465,7 +445,7 @@ namespace mike_and_conquer
             Path foundPath = null;
             try
             {
-                foundPath = aStar.FindPath(navigationGraph, startPoint, destinationSquare);
+                foundPath = aStar.FindPath(this.gameWorld.navigationGraph, startPoint, destinationSquare);
             }
             catch (Exception e)
             {
@@ -483,7 +463,7 @@ namespace mike_and_conquer
             List<Node> nodeList = foundPath.nodeList;
             foreach (Node node in nodeList)
             {
-                Point point = ConvertMapSquareIndexToWorldCoordinate(node.id);
+                Point point = gameWorld.ConvertMapSquareIndexToWorldCoordinate(node.id);
                 listOfPoints.Add(point);
             }
 
@@ -493,11 +473,6 @@ namespace mike_and_conquer
 
         }
 
-
-        public Vector2 GetScreenPosition()
-        {
-            return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix);
-        }
 
 
     }

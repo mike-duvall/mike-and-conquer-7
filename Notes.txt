@@ -36,8 +36,8 @@ Coordinates system terms
 
 World Coordinates - x,y, Where they click in the game world (range of (26 * 24) x (24 * 24)...624x576
 Screen Coordinates - x,y, where they click on screen (range of 1920 x 1080)
-World Map Square Coordinates - x,y, the map square as x,y coordinates.  Range of 26 x 24
-World Map Square Index -  the index of the map square, single number, range of 0 to 26*24
-Map Square Coordinates - x,y relative to a map square, where 0,0, is top left of that map square, and (mapsquarewidth,mapsquareheight) is bottom right
-	(not sure what existing map square width and height are....)
+World Map Tile Coordinates - Top left map tile would be 0,0.  Bottom right map tile would be 26,24 (or maybe 25,23?)
+World Map Tile Index -  the index of the map tile, single number, range of 0 to 26*24
+Map Tile Coordinates - x,y relative to a map tile, where 0,0, is top left of that map tile, and (map-tile-width,map-tile-height) is bottom right
+	(not sure what existing map tile width and height are....)
 Sprite Coordinates - x,y, relative to the top left of the sprite

@@ -25,8 +25,9 @@ using Camera2D = mike_and_conquer_6.Camera2D;
 
 using Point = Microsoft.Xna.Framework.Point;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
-
 using Serilog;
+
+using Matrix = Microsoft.Xna.Framework.Matrix;
 
 
 
@@ -178,22 +179,18 @@ namespace mike_and_conquer
         }
 
 
-        public static Vector2 ConvertWorldCoordinatesToScreenCoordinates(Vector2 positionInWorldCoordinates)
-        {
-            return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix);
-        }
 
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
+        /// related content.  Calling base.InitializeDefaultMap will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-//        protected override void Initialize()
+//        protected override void InitializeDefaultMap()
 //        {
 //            // TODO: Add your initialization logic here
-//            base.Initialize();
+//            base.InitializeDefaultMap();
 //        }
 
         private void AddTestModeObjects()
@@ -284,7 +281,7 @@ namespace mike_and_conquer
         {
 
 
-            gameWorld.Initialize();
+            gameWorld.InitializeDefaultMap();
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -770,22 +767,15 @@ namespace mike_and_conquer
         }
 
 
-        public Point ConvertMapSquareCoordinatesToWorldCoordinates(Point positionInMapSquareCoordinates)
-        {
 
-            int xInWorldCoordinates = positionInMapSquareCoordinates.X * 24 + 12;
-            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * 24 + 12;
 
-            return new Point(xInWorldCoordinates,yInWorldCoordinates);
-
-        }
 
 
         internal Minigunner AddGdiMinigunnerAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
         {
-            Point positionInWorldCoordinates =
-                ConvertMapSquareCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
 
+            Point positionInWorldCoordinates =
+                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
             return AddGdiMinigunner(positionInWorldCoordinates);
         }
 
@@ -818,8 +808,9 @@ namespace mike_and_conquer
 
         internal Minigunner AddNodMinigunnerAtMapSquareCoordinates(Point positionInMapSquareCoordinates, bool aiIsOn)
         {
+
             Point positionInWorldCoordinates =
-                ConvertMapSquareCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
+                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
 
             return AddNodMinigunner(positionInWorldCoordinates, aiIsOn);
         }
@@ -854,9 +845,9 @@ namespace mike_and_conquer
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
             // TODO:  Bogus stuff here
-            // Have to reset world first, before then resetting navigation graph
-            // because navigation graph depends on what's in the game world
-            // and sandbags were not getting cleared before navigation graph was updated
+            // Have to reset world first, before then resetting navigation navigationGraph
+            // because navigation navigationGraph depends on what's in the game world
+            // and sandbags were not getting cleared before navigation navigationGraph was updated
             GameState newGameState = gameWorld.HandleReset();
             gameWorld.InitializeNavigationGraph();
             return newGameState;
@@ -878,6 +869,32 @@ namespace mike_and_conquer
         }
 
 
+        public Vector2 ConvertWorldCoordinatesToScreenCoordinates(Vector2 positionInWorldCoordinates)
+        {
+            return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix);
+        }
+
+        public Vector2 ConvertScreenLocationToWorldLocation(Vector2 screenLocation)
+        {
+            return Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix));
+        }
+
+
+        //        // TODO:  Where does this method go?
+        //        public Point ConvertMapSquareCoordinatesToWorldCoordinates(Point positionInMapSquareCoordinates)
+        //        {
+        //
+        //            int xInWorldCoordinates = positionInMapSquareCoordinates.X * 24 + 12;
+        //            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * 24 + 12;
+        //
+        //            return new Point(xInWorldCoordinates, yInWorldCoordinates);
+        //        }
+
+
+
     }
+
+
+
 
 }

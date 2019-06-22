@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using mike_and_conquer.gameview;
+using mike_and_conquer.pathfinding;
 using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;
-using Graph = mike_and_conquer.pathfinding.Graph;
-
 using CreateGDIMinigunnerGameEvent = mike_and_conquer.gameevent.CreateGDIMinigunnerGameEvent;
 using GetGDIMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetGDIMinigunnerByIdGameEvent;
 using CreateNodMinigunnerGameEvent = mike_and_conquer.gameevent.CreateNodMinigunnerGameEvent;
@@ -29,7 +28,7 @@ namespace mike_and_conquer
         public List<Minigunner> nodMinigunnerList { get; }
         public List<Sandbag> sandbagList;
 
-        public Graph navigationGraph;
+        public NavigationGraph navigationGraph;
 
         private List<AsyncGameEvent> gameEvents;
 
@@ -63,10 +62,34 @@ namespace mike_and_conquer
 
 
 
-        public void Initialize()
+
+        public void InitializeDefaultMap()
         {
             LoadMap();
-            navigationGraph = new Graph(this.gameMap.numColumns, this.gameMap.numRows);
+            navigationGraph = new NavigationGraph(this.gameMap.numColumns, this.gameMap.numRows);
+        }
+
+        public void InitializeTestMap(int[,] obstacleArray)
+        {
+            gameMap = new GameMap(obstacleArray);
+            navigationGraph = new NavigationGraph(this.gameMap.numColumns, this.gameMap.numRows);
+            InitializeNavigationGraph();
+        }
+
+
+        private void LoadMap()
+        {
+
+            System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
+
+            //  (Starting at 0x13CC in the file)
+
+            int startX = 36;
+            int startY = 39;
+            int endX = 61;
+            int endY = 61;
+
+            gameMap = new GameMap(inputStream, startX, startY, endX, endY);
         }
 
 
@@ -193,7 +216,7 @@ namespace mike_and_conquer
             
             AssertIsValidMinigunnerPosition(positionInWorldCoordinates);
 
-            Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this.navigationGraph);
+            Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this );
             gdiMinigunnerList.Add(newMinigunner);
             return newMinigunner;
         }
@@ -205,7 +228,7 @@ namespace mike_and_conquer
             AssertIsValidMinigunnerPosition(positionInWorldCoordinates);
 
 
-            Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this.navigationGraph);
+            Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this);
             this.nodMinigunnerList.Add(newMinigunner);
 
             // TODO:  In future, don't couple Nod having to be AI controlled enemy
@@ -348,20 +371,6 @@ namespace mike_and_conquer
         }
 
 
-        private void LoadMap()
-        {
-
-            System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
-
-            //  (Starting at 0x13CC in the file)
-
-            int startX = 36;
-            int startY = 39;
-            int endX = 61;
-            int endY = 61;
-
-            gameMap = new GameMap(inputStream, startX, startY, endX, endY);
-        }
 
 
 
@@ -395,6 +404,44 @@ namespace mike_and_conquer
 
         }
 
+
+        public Point ConvertWorldMapTileCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
+        {
+
+            int xInWorldCoordinates = pointInWorldMapSquareCoordinates.X * 24 + 12;
+            int yInWorldCoordinates = pointInWorldMapSquareCoordinates.Y * 24 + 12;
+            
+            return new Point(xInWorldCoordinates, yInWorldCoordinates);
+        }
+
+
+        private Point ConvertWorldCoordinatesToMapTileCoordinates(Point pointInWorldCoordinates)
+        {
+        
+            int destinationRow = pointInWorldCoordinates.Y;
+            int destinationColumn = pointInWorldCoordinates.X;
+        
+            int mapSquareSize = 24;
+        
+            int destinationX = destinationColumn / mapSquareSize;
+            int destinationY = destinationRow / mapSquareSize;
+        
+            return new Point(destinationX, destinationY);
+        }
+
+
+        public Point ConvertMapSquareIndexToWorldCoordinate(int index)
+        {
+            int numColumns = navigationGraph.width;
+            Point point = new Point();
+            int row = index / numColumns;
+            int column = index - (row * numColumns);
+            int widthOfMapSquare = 24;
+            int heightOfMapSquare = 24;
+            point.X = (column * widthOfMapSquare) + 12; ;
+            point.Y = (row * heightOfMapSquare) + 12;
+            return point;
+        }
 
 
     }

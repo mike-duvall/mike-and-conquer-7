@@ -85,8 +85,8 @@ namespace mike_and_conquer
 
             mapTileInstanceList = new List<MapTileInstance>();
 
-            int x = 12;
-            int y = 12;
+            int x = GameWorld.MAP_TILE_WIDTH / 2;
+            int y = GameWorld.MAP_TILE_HEIGHT / 2;
 
             int i = 0;
             for (int row = startY; row <= endY; row++)
@@ -102,13 +102,13 @@ namespace mike_and_conquer
                         new MapTileInstance(x, y, textureKey, imageIndex, isBlockingTerrain);
                     this.MapTileInstanceList.Add(mapTileInstance);
 
-                    x = x + GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
+                    x = x + GameWorld.MAP_TILE_WIDTH;
 
                     bool incrementRow = ((i + 1) % 26) == 0;
                     if (incrementRow)
                     {
-                        x = 12;
-                        y = y + GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
+                        x = GameWorld.MAP_TILE_WIDTH / 2;
+                        y = y + GameWorld.MAP_TILE_HEIGHT;
                     }
 
                     i++;
@@ -131,8 +131,9 @@ namespace mike_and_conquer
                 for (int x = 0; x < numColumns; x++)
                 {
 
-                    int mapTileInstanceX = (x * GameWorld.MAP_TILE_HEIGHT_AND_WIDTH) + 12;
-                    int mapTileInstanceY = (y * GameWorld.MAP_TILE_HEIGHT_AND_WIDTH) + 12;
+
+                    int mapTileInstanceX = (x * GameWorld.MAP_TILE_WIDTH) + (GameWorld.MAP_TILE_WIDTH / 2);
+                    int mapTileInstanceY = (y * GameWorld.MAP_TILE_HEIGHT) + (GameWorld.MAP_TILE_HEIGHT / 2);
                     string dummyTexture = "";
                     byte dummyImageIndex = 0;
 

@@ -38,8 +38,9 @@ namespace mike_and_conquer
 
         public bool ContainsPoint(Point aPoint)
         {
-            int height = GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
-            int width = GameWorld.MAP_TILE_HEIGHT_AND_WIDTH;
+            int width = GameWorld.MAP_TILE_WIDTH;
+            int height = GameWorld.MAP_TILE_HEIGHT;
+
             int leftX = (int)positionInWorldCoordinates.X - (width / 2);
             int topY = (int)positionInWorldCoordinates.Y - (height / 2);
             Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);

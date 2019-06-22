@@ -25,7 +25,8 @@ namespace mike_and_conquer
     public class GameWorld
     {
 
-        public static int MAP_TILE_HEIGHT_AND_WIDTH = 24;
+        public static int MAP_TILE_WIDTH = 24;
+        public static int MAP_TILE_HEIGHT = 24;
 
 
         public List<Minigunner> gdiMinigunnerList { get; }
@@ -428,9 +429,11 @@ namespace mike_and_conquer
         public Point ConvertWorldMapTileCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
         {
 
-            int xInWorldCoordinates = pointInWorldMapSquareCoordinates.X * MAP_TILE_HEIGHT_AND_WIDTH + 12;
-            int yInWorldCoordinates = pointInWorldMapSquareCoordinates.Y * MAP_TILE_HEIGHT_AND_WIDTH + 12;
-            
+            int xInWorldCoordinates = (pointInWorldMapSquareCoordinates.X * MAP_TILE_WIDTH) +
+                                      (MAP_TILE_WIDTH / 2);
+            int yInWorldCoordinates = pointInWorldMapSquareCoordinates.Y * MAP_TILE_HEIGHT +
+                                      (MAP_TILE_HEIGHT / 2);
+
             return new Point(xInWorldCoordinates, yInWorldCoordinates);
         }
 
@@ -441,10 +444,8 @@ namespace mike_and_conquer
             int destinationRow = pointInWorldCoordinates.Y;
             int destinationColumn = pointInWorldCoordinates.X;
         
-
-        
-            int destinationX = destinationColumn / MAP_TILE_HEIGHT_AND_WIDTH;
-            int destinationY = destinationRow / MAP_TILE_HEIGHT_AND_WIDTH;
+            int destinationX = destinationColumn / MAP_TILE_WIDTH;
+            int destinationY = destinationRow / MAP_TILE_HEIGHT;
         
             return new Point(destinationX, destinationY);
         }
@@ -456,10 +457,9 @@ namespace mike_and_conquer
             Point point = new Point();
             int row = index / numColumns;
             int column = index - (row * numColumns);
-            int widthOfMapSquare = MAP_TILE_HEIGHT_AND_WIDTH;
-            int heightOfMapSquare = MAP_TILE_HEIGHT_AND_WIDTH;
-            point.X = (column * widthOfMapSquare) + 12; ;
-            point.Y = (row * heightOfMapSquare) + 12;
+
+            point.X = (column * GameWorld.MAP_TILE_WIDTH) + (GameWorld.MAP_TILE_WIDTH / 2);
+            point.Y = (row * GameWorld.MAP_TILE_HEIGHT) + (GameWorld.MAP_TILE_HEIGHT / 2);
             return point;
         }
 

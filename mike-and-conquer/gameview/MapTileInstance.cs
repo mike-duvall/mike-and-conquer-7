@@ -47,11 +47,9 @@ namespace mike_and_conquer.gameview
 
         public bool ContainsPoint(Point aPoint)
         {
-            int height = 24;
-            int width = 24;
-            int leftX = (int)PositionInWorldCoordinates.X - (width / 2);
-            int topY = (int)PositionInWorldCoordinates.Y - (height / 2);
-            Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);
+            int leftX = (int)PositionInWorldCoordinates.X - (GameWorld.MAP_TILE_WIDTH / 2);
+            int topY = (int)PositionInWorldCoordinates.Y - (GameWorld.MAP_TILE_HEIGHT / 2);
+            Rectangle boundRectangle = new Rectangle(leftX, topY, GameWorld.MAP_TILE_WIDTH, GameWorld.MAP_TILE_HEIGHT);
             return boundRectangle.Contains(aPoint);
         }
 
@@ -127,18 +125,6 @@ namespace mike_and_conquer.gameview
 
         }
 
-        internal int GetMapSquareX()
-        {
-            int mapSquareX = (int)((this.PositionInWorldCoordinates.X - 12) / 24);
-            return mapSquareX;
-        }
-
-        internal int GetMapSquareY()
-        {
-            int mapSquareY = (int)((this.PositionInWorldCoordinates.Y - 12) / 24);
-            return mapSquareY;
-
-        }
 
     }
 }

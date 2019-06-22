@@ -24,6 +24,11 @@ namespace mike_and_conquer
 {
     public class GameWorld
     {
+
+        public static int MAP_TILE_HEIGHT = 24;
+        public static int MAP_TILE_WIDTH = 24;
+
+
         public List<Minigunner> gdiMinigunnerList { get; }
         public List<Minigunner> nodMinigunnerList { get; }
         public List<Sandbag> sandbagList;
@@ -387,16 +392,27 @@ namespace mike_and_conquer
 
             foreach (Sandbag nextSandbag in sandbagList)
             {
-                navigationGraph.MakeNodeBlockingNode(nextSandbag.GetMapSquareX(), nextSandbag.GetMapSquareY());
+                //                Vector2 sandbagPositionInWorldCoordinates = nextSandbag.positionInWorldCoordinates;
+                //                Point sandbagPositionInMapTileCoorindates = ConvertWorldCoordinatesToMapTileCoordinates(new Point((int) sandbagPositionInWorldCoordinates.X,
+                //                    (int) sandbagPositionInWorldCoordinates.Y));
+                Point sandbagPositionInMapTileCoorindates =
+                    ConvertWorldPositionVector2ToMapTilePositionPoint(nextSandbag.positionInWorldCoordinates);
+                navigationGraph.MakeNodeBlockingNode(sandbagPositionInMapTileCoorindates.X,
+                    sandbagPositionInMapTileCoorindates.Y);
             }
 
 
-            foreach (MapTileInstance nextBasicMapSquare in this.gameMap.MapTileInstanceList)
+            foreach (MapTileInstance nextMapTileInstance in this.gameMap.MapTileInstanceList)
             {
-                if (nextBasicMapSquare.IsBlockingTerrain)
+                if (nextMapTileInstance.IsBlockingTerrain)
                 {
                     //                    nextBasicMapSquare.gameSprite.drawBoundingRectangle = true;
-                    navigationGraph.MakeNodeBlockingNode(nextBasicMapSquare.GetMapSquareX(), nextBasicMapSquare.GetMapSquareY());
+                    Point mapTilePositionInMapTileCoorindates =
+                        ConvertWorldPositionVector2ToMapTilePositionPoint(nextMapTileInstance
+                            .PositionInWorldCoordinates);
+
+                    navigationGraph.MakeNodeBlockingNode(mapTilePositionInMapTileCoorindates.X,
+                        mapTilePositionInMapTileCoorindates.Y);
                 }
             }
 
@@ -404,12 +420,21 @@ namespace mike_and_conquer
 
         }
 
+        private Point ConvertWorldPositionVector2ToMapTilePositionPoint(Vector2 positionInWorldCoordinates)
+        {
+            return ConvertWorldCoordinatesToMapTileCoordinates(new Point((int)positionInWorldCoordinates.X,
+                (int)positionInWorldCoordinates.Y));
+
+        }
+
 
         public Point ConvertWorldMapTileCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
         {
 
-            int xInWorldCoordinates = pointInWorldMapSquareCoordinates.X * 24 + 12;
-            int yInWorldCoordinates = pointInWorldMapSquareCoordinates.Y * 24 + 12;
+            int halfMapTileWidth = MAP_TILE_WIDTH / 2;
+            int halfMapTileHeight = MAP_TILE_HEIGHT / 2;
+            int xInWorldCoordinates = pointInWorldMapSquareCoordinates.X * MAP_TILE_WIDTH + halfMapTileWidth;
+            int yInWorldCoordinates = pointInWorldMapSquareCoordinates.Y * MAP_TILE_HEIGHT + halfMapTileHeight;
             
             return new Point(xInWorldCoordinates, yInWorldCoordinates);
         }
@@ -420,11 +445,9 @@ namespace mike_and_conquer
         
             int destinationRow = pointInWorldCoordinates.Y;
             int destinationColumn = pointInWorldCoordinates.X;
-        
-            int mapSquareSize = 24;
-        
-            int destinationX = destinationColumn / mapSquareSize;
-            int destinationY = destinationRow / mapSquareSize;
+
+            int destinationX = destinationColumn / MAP_TILE_WIDTH;
+            int destinationY = destinationRow / MAP_TILE_HEIGHT;
         
             return new Point(destinationX, destinationY);
         }
@@ -432,14 +455,17 @@ namespace mike_and_conquer
 
         public Point ConvertMapSquareIndexToWorldCoordinate(int index)
         {
+
             int numColumns = navigationGraph.width;
             Point point = new Point();
             int row = index / numColumns;
             int column = index - (row * numColumns);
-            int widthOfMapSquare = 24;
-            int heightOfMapSquare = 24;
-            point.X = (column * widthOfMapSquare) + 12; ;
-            point.Y = (row * heightOfMapSquare) + 12;
+
+            int halfMapTileWidth = MAP_TILE_WIDTH / 2;
+            int halfMapTileHeight = MAP_TILE_HEIGHT / 2;
+
+            point.X = (column * MAP_TILE_WIDTH) + halfMapTileWidth; ;
+            point.Y = (row * MAP_TILE_HEIGHT) + halfMapTileHeight;
             return point;
         }
 

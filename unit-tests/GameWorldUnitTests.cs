@@ -301,11 +301,9 @@ namespace unit_tests
                     Point landingSquareSlotDestinationInWorldCoordinates =
                         gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(nextPathPoint);
 
-                    landingSquareSlotDestinationInWorldCoordinates.X =
-                        landingSquareSlotDestinationInWorldCoordinates.X + 4;
-
-                    landingSquareSlotDestinationInWorldCoordinates.Y =
-                        landingSquareSlotDestinationInWorldCoordinates.Y - 3 ;
+                    landingSquareSlotDestinationInWorldCoordinates =
+                        UnitTestUtils.GetSlotLocationInWorldCoordinates(0,
+                            landingSquareSlotDestinationInWorldCoordinates);
 
                     WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, gameTime,
                         landingSquareSlotDestinationInWorldCoordinates);

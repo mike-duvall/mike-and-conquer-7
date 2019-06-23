@@ -256,25 +256,6 @@ namespace unit_tests
 
         }
 
-
-        private bool IsMinigunnerAtDestination(Minigunner minigunner, Point destination)
-        {
-//            int leeway = 1;
-            float leeway = 0.2f;
-            bool isAtXDestination =
-                (minigunner.positionInWorldCoordinates.X > destination.X - leeway) &&
-                (minigunner.positionInWorldCoordinates.X < destination.X + leeway);
-
-            bool isAtYDestination =
-                (minigunner.positionInWorldCoordinates.Y > destination.Y - leeway) &&
-                (minigunner.positionInWorldCoordinates.Y < destination.Y + leeway);
-
-
-            return isAtXDestination && isAtYDestination;
-        }
-
-
-
         private void WaitForMinigunnerToFollowPath(
             GameWorld gameWorld,
             Minigunner minigunner,
@@ -301,11 +282,9 @@ namespace unit_tests
                     Point landingSquareSlotDestinationInWorldCoordinates =
                         gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(nextPathPoint);
 
-                    landingSquareSlotDestinationInWorldCoordinates.X =
-                        landingSquareSlotDestinationInWorldCoordinates.X + 4;
-
-                    landingSquareSlotDestinationInWorldCoordinates.Y =
-                        landingSquareSlotDestinationInWorldCoordinates.Y - 3 ;
+                    landingSquareSlotDestinationInWorldCoordinates =
+                        UnitTestUtils.GetSlotLocationInWorldCoordinates(0,
+                            landingSquareSlotDestinationInWorldCoordinates);
 
                     WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, gameTime,
                         landingSquareSlotDestinationInWorldCoordinates);
@@ -382,7 +361,7 @@ namespace unit_tests
                 {
 
                     gameWorld.Update(gameTime);
-                    isAtDestination = IsMinigunnerAtDestination(minigunner, destination);
+                    isAtDestination = UnitTestUtils.IsMinigunnerAtDestination(minigunner, destination);
                     if (isAtDestination)
                     {
                         done = true;

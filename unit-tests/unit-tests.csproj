@@ -54,6 +54,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="UnitTestUtils.cs" />
+    <Compile Include="MinigunnerArrivalUnitTests.cs" />
     <Compile Include="GraphUnitTests.cs" />
     <Compile Include="AStarUnitTests.cs" />
     <Compile Include="GameMapUnitTests.cs" />

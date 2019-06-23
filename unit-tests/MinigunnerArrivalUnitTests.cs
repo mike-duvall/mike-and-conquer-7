@@ -82,54 +82,7 @@ namespace unit_tests
 
             Assert.IsTrue(unArrivedMinigunnersList.Count == 0);
 
-
         }
-
-
-
-//        private Point GetSlotLocationInWorldCoordinates(int slotNumber, Point locationInWorldCoordinates)
-//        {
-//            int slotDeltaX;
-//            int slotDeltaY;
-//
-//            if (slotNumber == 0)
-//            {
-//                slotDeltaX = 4;
-//                slotDeltaY = -3;
-//            }
-//            else if (slotNumber == 1)
-//            {
-//                slotDeltaX = -8;
-//                slotDeltaY = -3;
-//            }
-//            else if (slotNumber == 2)
-//            {
-//                slotDeltaX = 4;
-//                slotDeltaY = 10;
-//            }
-//            else if (slotNumber == 3)
-//            {
-//                slotDeltaX = -8;
-//                slotDeltaY = 10;
-//            }
-//            else if (slotNumber == 4)
-//            {
-//                slotDeltaX = -2;
-//                slotDeltaY = 3;
-//            }
-//            else
-//            {
-//                throw new Exception("Invalid slot number:" + slotNumber);
-//            }
-//
-//            locationInWorldCoordinates.X += slotDeltaX;
-//            locationInWorldCoordinates.Y += slotDeltaY;
-//
-//            return locationInWorldCoordinates;
-//
-//
-//        }
-//
 
         private Minigunner AddMinigunnerWorldtMapTileCoordinate(GameWorld gameWorld,int x, int y)
         {
@@ -140,8 +93,6 @@ namespace unit_tests
             return gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
 
         }
-
-
 
         private bool IsMinigunnerAtDestination(Minigunner minigunner, Point destination)
         {
@@ -158,7 +109,6 @@ namespace unit_tests
 
             return isAtXDestination && isAtYDestination;
         }
-
 
         private Minigunner WaitForAnyMinigunnerToArriveAtPosition(GameWorld gameWorld, List<Minigunner> minigunnerList, GameTime gameTime, Point destination)
         {
@@ -194,7 +144,6 @@ namespace unit_tests
             return null;
 
         }
-
 
 
     }

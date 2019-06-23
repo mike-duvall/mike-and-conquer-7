@@ -58,6 +58,23 @@ namespace unit_tests
 
         }
 
+        public static bool IsMinigunnerAtDestination(Minigunner minigunner, Point destination)
+        {
+            //            int leeway = 1;
+            float leeway = 0.2f;
+            bool isAtXDestination =
+                (minigunner.positionInWorldCoordinates.X > destination.X - leeway) &&
+                (minigunner.positionInWorldCoordinates.X < destination.X + leeway);
+
+            bool isAtYDestination =
+                (minigunner.positionInWorldCoordinates.Y > destination.Y - leeway) &&
+                (minigunner.positionInWorldCoordinates.Y < destination.Y + leeway);
+
+
+            return isAtXDestination && isAtYDestination;
+        }
+
+
 
 
 

@@ -28,11 +28,11 @@ namespace unit_tests
             gameWorld.InitializeTestMap(obstacleArray);
 
             List<Minigunner> minigunnerList = new List<Minigunner>();
-            minigunnerList.Add(AddMinigunnerWorldtMapTileCoordinate(gameWorld, 0, 0));
-            minigunnerList.Add(AddMinigunnerWorldtMapTileCoordinate(gameWorld, 1, 0));
-            minigunnerList.Add(AddMinigunnerWorldtMapTileCoordinate(gameWorld, 1, 1));
-            minigunnerList.Add(AddMinigunnerWorldtMapTileCoordinate(gameWorld, 2, 1));
-            minigunnerList.Add(AddMinigunnerWorldtMapTileCoordinate(gameWorld, 2, 2));
+            minigunnerList.Add(AddMinigunnerAtWorldtMapTileCoordinate(gameWorld, 0, 0));
+            minigunnerList.Add(AddMinigunnerAtWorldtMapTileCoordinate(gameWorld, 1, 0));
+            minigunnerList.Add(AddMinigunnerAtWorldtMapTileCoordinate(gameWorld, 1, 1));
+            minigunnerList.Add(AddMinigunnerAtWorldtMapTileCoordinate(gameWorld, 2, 1));
+            minigunnerList.Add(AddMinigunnerAtWorldtMapTileCoordinate(gameWorld, 2, 2));
 
 
             // when
@@ -49,10 +49,10 @@ namespace unit_tests
             }
 
             // then
-            WaitForMinigunnersToArriveAtSlotDestinations(gameWorld, minigunnerList, destinationInWorldMapTileCoordinate);
+            WaitForAllMinigunnersToArriveAtSlotDestinations(gameWorld, minigunnerList, destinationInWorldMapTileCoordinate);
         }
 
-        private void WaitForMinigunnersToArriveAtSlotDestinations(GameWorld gameWorld, List<Minigunner> minigunnerList, Point destinationInWorldMapTileCoordinate)
+        private void WaitForAllMinigunnersToArriveAtSlotDestinations(GameWorld gameWorld, List<Minigunner> minigunnerList, Point destinationInWorldMapTileCoordinate)
         {
 
             GameTime gameTime = new GameTime();
@@ -84,7 +84,7 @@ namespace unit_tests
 
         }
 
-        private Minigunner AddMinigunnerWorldtMapTileCoordinate(GameWorld gameWorld,int x, int y)
+        private Minigunner AddMinigunnerAtWorldtMapTileCoordinate(GameWorld gameWorld,int x, int y)
         {
             Point minigunnerLocationInMapSquareCoordinates = new Point(x, y);
             Point minigunnerLocationInWorldCoordinates =
@@ -94,21 +94,6 @@ namespace unit_tests
 
         }
 
-        private bool IsMinigunnerAtDestination(Minigunner minigunner, Point destination)
-        {
-//            int leeway = 1;
-            float leeway = 0.2f;
-            bool isAtXDestination =
-                (minigunner.positionInWorldCoordinates.X > destination.X - leeway) &&
-                (minigunner.positionInWorldCoordinates.X < destination.X + leeway);
-
-            bool isAtYDestination =
-                (minigunner.positionInWorldCoordinates.Y > destination.Y - leeway) &&
-                (minigunner.positionInWorldCoordinates.Y < destination.Y + leeway);
-
-
-            return isAtXDestination && isAtYDestination;
-        }
 
         private Minigunner WaitForAnyMinigunnerToArriveAtPosition(GameWorld gameWorld, List<Minigunner> minigunnerList, GameTime gameTime, Point destination)
         {
@@ -129,7 +114,7 @@ namespace unit_tests
                     gameWorld.Update(gameTime);
                     foreach (Minigunner minigunner in minigunnerList)
                     {
-                        isAtDestination = IsMinigunnerAtDestination(minigunner, destination);
+                        isAtDestination = UnitTestUtils.IsMinigunnerAtDestination(minigunner, destination);
                         if (isAtDestination)
                         {
                             return minigunner;

@@ -764,11 +764,6 @@ namespace mike_and_conquer
 
         }
 
-
-
-
-
-
         internal Minigunner AddGdiMinigunnerAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
         {
 

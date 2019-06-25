@@ -75,30 +75,43 @@ namespace mike_and_conquer_6.mike_and_conquer
             DoMouseClick(ClickType.LEFT_CLICK, mouseX, mouseY, screenWidth, screenHeight);
         }
 
+        public static void DoLeftMouseClickAndHold(uint mouseX, uint mouseY, int screenWidth, int screenHeight)
+        {
+            DoMouseClickAndHold(ClickType.LEFT_CLICK, mouseX, mouseY, screenWidth, screenHeight);
+        }
+
+        public static void DoReleaseLeftMouseClick(uint mouseX, uint mouseY, int screenWidth, int screenHeight)
+        {
+            DoReleaseMouseClick(ClickType.LEFT_CLICK, mouseX, mouseY, screenWidth, screenHeight);
+        }
+
+
+
         public static void DoRightMouseClick(uint mouseX, uint mouseY, int screenWidth, int screenHeight)
         {
             DoMouseClick(ClickType.RIGHT_CLICK, mouseX, mouseY, screenWidth, screenHeight);
         }
 
 
+
+        public static void MoveMouseToCoordinates(uint mouseX, uint mouseY, int screenWidth, int screenHeight)
+        {
+            INPUT mouseInput = CreateBaseMouseInput(mouseX, mouseY, screenWidth, screenHeight);
+            int mouseInputStructSize = Marshal.SizeOf(mouseInput);
+
+            mouseInput.mkhi.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+            System.Threading.Thread.Sleep(1000);
+
+            uint y3 = SendInput(1, ref mouseInput, mouseInputStructSize);
+
+            System.Threading.Thread.Sleep(1000);
+        }
+
+
         public static void DoMouseClick(ClickType clickType, uint mouseX, uint mouseY, int screenWidth, int screenHeight)
         {
-            mouseX++;
-            mouseY++;
-            // Must normalize mouse coordinates.
-            // See https://msdn.microsoft.com/en-us/library/windows/desktop/ms646260(v=vs.85).aspx
-            double normalizedMouseX = mouseX * (65535.0f / screenWidth);
-            double normalizedMouseY = mouseY * (65535.0f / screenHeight);
-
-            INPUT mouseInput = new INPUT();
-            mouseInput.type = 0;
-            mouseInput.mkhi.mi.mouseData = 0;
-            mouseInput.mkhi.mi.time = (uint)DateTime.Now.Ticks;
-            int size = Marshal.SizeOf(mouseInput);
-            mouseInput.mkhi.mi.dx = (int)normalizedMouseX;
-            mouseInput.mkhi.mi.dy = (int)normalizedMouseY;
-
-
+            INPUT mouseInput = CreateBaseMouseInput(mouseX, mouseY, screenWidth, screenHeight);
+            int mouseInputStructSize = Marshal.SizeOf(mouseInput);
 
             uint mouseDownFlag;
             uint mouseUpFlag;
@@ -115,20 +128,87 @@ namespace mike_and_conquer_6.mike_and_conquer
             }
 
             mouseInput.mkhi.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-            uint y3 = SendInput(1, ref mouseInput, size);
+            uint y3 = SendInput(1, ref mouseInput, mouseInputStructSize);
 
             mouseInput.mkhi.mi.dwFlags = mouseDownFlag;
             mouseInput.mkhi.mi.time = (uint) DateTime.Now.Ticks;
-            uint y = SendInput(1, ref mouseInput, size);
+            uint y = SendInput(1, ref mouseInput, mouseInputStructSize);
 
             System.Threading.Thread.Sleep(1000);
 
             mouseInput.mkhi.mi.dwFlags = mouseUpFlag;
-            uint y2 = SendInput(1, ref mouseInput, size);
+            uint y2 = SendInput(1, ref mouseInput, mouseInputStructSize);
 
             System.Threading.Thread.Sleep(1000);
 
         }
 
+
+        public static void DoMouseClickAndHold(ClickType clickType, uint mouseX, uint mouseY, int screenWidth, int screenHeight)
+        {
+            INPUT mouseInput = CreateBaseMouseInput(mouseX, mouseY, screenWidth, screenHeight);
+            int mouseInputStructSize = Marshal.SizeOf(mouseInput);
+
+            uint mouseDownFlag;
+
+            if (clickType == ClickType.LEFT_CLICK)
+            {
+                mouseDownFlag = MOUSEEVENTF_LEFTDOWN;
+            }
+            else
+            {
+                mouseDownFlag = MOUSEEVENTF_RIGHTDOWN;
+            }
+
+            mouseInput.mkhi.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+            uint y3 = SendInput(1, ref mouseInput, mouseInputStructSize);
+
+            mouseInput.mkhi.mi.dwFlags = mouseDownFlag;
+            mouseInput.mkhi.mi.time = (uint)DateTime.Now.Ticks;
+            uint y = SendInput(1, ref mouseInput, mouseInputStructSize);
+
+            System.Threading.Thread.Sleep(1000);
+
+        }
+
+        public static void DoReleaseMouseClick(ClickType clickType, uint mouseX, uint mouseY, int screenWidth, int screenHeight)
+        {
+            INPUT mouseInput = CreateBaseMouseInput(mouseX, mouseY, screenWidth, screenHeight);
+            int mouseInputStructSize = Marshal.SizeOf(mouseInput);
+
+
+            uint mouseUpFlag;
+
+            if (clickType == ClickType.LEFT_CLICK)
+            {
+                mouseUpFlag = MOUSEEVENTF_LEFTUP;
+            }
+            else
+            {
+                mouseUpFlag = MOUSEEVENTF_RIGHTUP;
+            }
+
+            mouseInput.mkhi.mi.dwFlags = mouseUpFlag;
+            uint y2 = SendInput(1, ref mouseInput, mouseInputStructSize);
+
+            System.Threading.Thread.Sleep(1000);
+
+        }
+
+        private static INPUT CreateBaseMouseInput(uint mouseX, uint mouseY, int screenWidth, int screenHeight)
+        {
+            // Must normalize mouse coordinates.
+            // See https://msdn.microsoft.com/en-us/library/windows/desktop/ms646260(v=vs.85).aspx
+            double normalizedMouseX = mouseX * (65535.0f / screenWidth);
+            double normalizedMouseY = mouseY * (65535.0f / screenHeight);
+
+            INPUT mouseInput = new INPUT();
+            mouseInput.type = 0;
+            mouseInput.mkhi.mi.mouseData = 0;
+            mouseInput.mkhi.mi.time = (uint) DateTime.Now.Ticks;
+            mouseInput.mkhi.mi.dx = (int) normalizedMouseX;
+            mouseInput.mkhi.mi.dy = (int) normalizedMouseY;
+            return mouseInput;
+        }
     }
 }

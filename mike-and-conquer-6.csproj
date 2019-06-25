@@ -129,6 +129,9 @@
     <Compile Include="mike-and-conquer\openra\XORDeltaCompression.cs" />
     <Compile Include="mike-and-conquer\pathfinding\AStar.cs" />
     <Compile Include="mike-and-conquer\rest\GameStateController.cs" />
+    <Compile Include="mike-and-conquer\rest\LeftClickInAndHoldInWorldCoordinatesController.cs" />
+    <Compile Include="mike-and-conquer\rest\ReleaseLeftMouseClickController.cs" />
+    <Compile Include="mike-and-conquer\rest\MoveMouseToWorldCoordinatesController.cs" />
     <Compile Include="mike-and-conquer\rest\LeftClickInWorldCoordinatesController.cs" />
     <Compile Include="mike-and-conquer\rest\RestSandbag.cs" />
     <Compile Include="mike-and-conquer\rest\SandbagController.cs" />

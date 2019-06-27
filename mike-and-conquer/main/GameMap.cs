@@ -340,8 +340,14 @@ namespace mike_and_conquer
         }
 
 
+        public void Reset()
+        {
+            foreach (MapTileInstance mapTileInstance in MapTileInstanceList)
+            {
+                mapTileInstance.ClearAllMinigunnerSlots();
+            }
 
-
+        }
     }
 
 

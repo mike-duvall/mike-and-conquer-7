@@ -129,5 +129,13 @@ namespace mike_and_conquer.gameview
         }
 
 
+        public void ClearAllMinigunnerSlots()
+        {
+            minigunnerSlot0 = null;
+            minigunnerSlot1 = null;
+            minigunnerSlot2 = null;
+            minigunnerSlot3 = null;
+            minigunnerSlot4 = null;
+        }
     }
 }

@@ -62,6 +62,7 @@ namespace mike_and_conquer
             gdiMinigunnerList.Clear();
             nodMinigunnerList.Clear();
             sandbagList.Clear();
+            gameMap.Reset();
             return new PlayingGameState();
         }
 

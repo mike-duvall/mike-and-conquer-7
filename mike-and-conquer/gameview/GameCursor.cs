@@ -183,9 +183,6 @@ namespace mike_and_conquer.gameview
             }
         }
 
-        Pickup here
-         Check in changes for cursor validation tests, in main and test repo
-         Continue with improvements on Kanban board
 
     }
 

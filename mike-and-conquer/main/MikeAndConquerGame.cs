@@ -540,11 +540,8 @@ namespace mike_and_conquer
             }
 
             currentGameState = this.currentGameState.Update(gameTime);
-//            this.gameWorld.Update(gameTime);
             this.mapViewportCamera.Rotation = testRotation;
             //                        testRotation += 0.05f;
-
-
 
             // This is a hack fix to fix an issue where if you change this.IsMouseVisible to false
             // while the Windows pointer is showing the mouse pointer arrow with the blue sworl "busy" icon on the side

@@ -21,6 +21,11 @@ namespace mike_and_conquer.gameview
     {
         public Vector2 position { get; set; }
 
+        public string StateAsString
+        {
+            get { return RenderCursorStateAsString(); }
+        }
+
         private Texture2D texture;
         private Texture2D mainCursorTexture;
         private Texture2D moveToLocationCursorTexture;
@@ -152,6 +157,31 @@ namespace mike_and_conquer.gameview
 
         }
 
+
+
+        private string RenderCursorStateAsString()
+        {
+            if (texture == movementNotAllowedCursorTexture)
+            {
+                return "MovementNoteAllowedCursor";
+            }
+            else if (texture == moveToLocationCursorTexture)
+            {
+                return "MoveToLocationCursor";
+            }
+            else if (texture == attackEnemyCursor)
+            {
+                return "AttackEnemyCursor";
+            }
+            else if (texture == mainCursorTexture)
+            {
+                return "DefaultArrowCursor";
+            }
+            else
+            {
+                return "UnknownCursorState";
+            }
+        }
 
 
     }

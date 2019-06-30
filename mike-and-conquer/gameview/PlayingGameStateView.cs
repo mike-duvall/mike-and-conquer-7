@@ -31,7 +31,7 @@ namespace mike_and_conquer.gameview
                 nextSandbagView.Draw(gameTime, spriteBatch);
             }
 
-//            gdiBarracksView.Draw(gameTime, spriteBatch);
+            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
 
             MikeAndConquerGame.instance.unitSelectionBox.Draw(gameTime, spriteBatch);
 

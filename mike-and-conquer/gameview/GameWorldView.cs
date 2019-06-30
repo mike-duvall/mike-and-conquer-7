@@ -49,6 +49,12 @@ namespace mike_and_conquer.gameview
             get { return sandbagViewList; }
         }
 
+        public GDIBarracksView GDIBarracksView
+        {
+            get { return gdiBarracksView; }
+        }
+
+
         public static GameWorldView instance;
 
 

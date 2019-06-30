@@ -1,4 +1,5 @@
 ﻿
+using mike_and_conquer.gameview;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 
 using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
@@ -13,12 +14,12 @@ namespace mike_and_conquer
         public MissionAccomplishedGameState()
         {
 
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.GdiMinigunnerViewList)
+            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {
                 nextMinigunnerView.SetAnimate(false);
             }
 
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.NodMinigunnerViewList)
+            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
             {
                 nextMinigunnerView.SetAnimate(false);
             }

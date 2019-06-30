@@ -141,7 +141,7 @@ namespace mike_and_conquer
                 int shadowYWorldCoordinate = topLeftYOfSpriteInWorldCoordinates + shadowYSpriteCoordinate;
 
                 MapTileInstanceView underlyingMapTileInstanceView =
-                    MikeAndConquerGame.instance.FindMapSquareView(shadowXWorldCoordinates,
+                    GameWorldView.instance.FindMapSquareView(shadowXWorldCoordinates,
                         shadowYWorldCoordinate);
 
                 // TODO:  Un-hard code 12

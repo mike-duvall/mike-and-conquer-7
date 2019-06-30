@@ -85,6 +85,7 @@
     <Compile Include="mike-and-conquer\gamesprite\ShpFileImage.cs" />
     <Compile Include="mike-and-conquer\gamesprite\SpriteSheet.cs" />
     <Compile Include="mike-and-conquer\gamesprite\UnitFrame.cs" />
+    <Compile Include="mike-and-conquer\gameview\GameWorldView.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileInstanceView.cs" />
     <Compile Include="mike-and-conquer\gameview\DestinationSquare.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileInstance.cs" />

@@ -10,26 +10,28 @@ namespace mike_and_conquer.gameview
     {
         public override  void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            foreach (MapTileInstanceView basicMapSquareView in MikeAndConquerGame.instance.MapTileInstanceViewList)
+            foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
             {
                 basicMapSquareView.Draw(gameTime, spriteBatch);
             }
 
 
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.GdiMinigunnerViewList)
+            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {
                 nextMinigunnerView.Draw(gameTime, spriteBatch);
             }
 
-            foreach (MinigunnerView nextMinigunnerView in MikeAndConquerGame.instance.NodMinigunnerViewList)
+            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
             {
                 nextMinigunnerView.Draw(gameTime, spriteBatch);
             }
 
-            foreach (SandbagView nextSandbagView in MikeAndConquerGame.instance.SandbagViewList)
+            foreach (SandbagView nextSandbagView in GameWorldView.instance.SandbagViewList)
             {
                 nextSandbagView.Draw(gameTime, spriteBatch);
             }
+
+            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
 
             MikeAndConquerGame.instance.unitSelectionBox.Draw(gameTime, spriteBatch);
 

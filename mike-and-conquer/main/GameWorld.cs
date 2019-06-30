@@ -63,6 +63,7 @@ namespace mike_and_conquer
             nodMinigunnerList.Clear();
             sandbagList.Clear();
             gameMap.Reset();
+            InitializeNavigationGraph();
             return new PlayingGameState();
         }
 
@@ -383,11 +384,6 @@ namespace mike_and_conquer
 
         public void InitializeNavigationGraph()
         {
-            // TODO:  Fix this.  This code should be in GameWorld, not MikeAndConquerGame
-            // but has to be here for now, since MapTileInstanceList is in MikeAndConquerGame
-            // Need to separate out view of MapTileInstance into a MapTileInstanceView
-            // And let GameWorld hold MapTileInstanceList(with no view data, just
-            // the terrain type and whether it's blocking or not, etc
 
             navigationGraph.Reset();
 

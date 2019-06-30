@@ -49,17 +49,10 @@ namespace mike_and_conquer
         public static MikeAndConquerGame instance;
 
         public GameWorld gameWorld;
+        private GameWorldView gameWorldView;
 
         public ShadowMapper shadowMapper;
-        private List<MinigunnerView> gdiMinigunnerViewList;
-        private List<MinigunnerView> nodMinigunnerViewList;
-
-        private GDIBarracksView gdiBarracksView;
         private MinigunnerIconView minigunnerIconView;
-
-        private List<MapTileInstanceView> mapTileInstanceViewList;
-
-        private List<SandbagView> sandbagViewList;
 
         private GameStateView currentGameStateView;
 
@@ -68,28 +61,6 @@ namespace mike_and_conquer
         public UnitSelectionBox unitSelectionBox;
 
         private GameState currentGameState;
-
-        public List<MapTileInstanceView> MapTileInstanceViewList
-        {
-            get { return mapTileInstanceViewList; }
-        }
-
-
-        public List<MinigunnerView> GdiMinigunnerViewList
-        {
-            get { return gdiMinigunnerViewList; }
-        }
-
-
-        public List<MinigunnerView> NodMinigunnerViewList
-        {
-            get { return nodMinigunnerViewList; }
-        }
-
-        public List<SandbagView> SandbagViewList
-        {
-            get { return sandbagViewList; }
-        }
 
         public SpriteSheet SpriteSheet
         {
@@ -152,13 +123,7 @@ namespace mike_and_conquer
             this.IsFixedTimeStep = false;
 
             gameWorld = new GameWorld();
-
-            mapTileInstanceViewList = new List<MapTileInstanceView>();
-
-            gdiMinigunnerViewList = new List<MinigunnerView>();
-            nodMinigunnerViewList = new List<MinigunnerView>();
-
-            sandbagViewList = new List<SandbagView>();
+            gameWorldView = new GameWorldView();
 
             oldKeyboardState = Keyboard.GetState();
             unitSelectionBox = new UnitSelectionBox();
@@ -221,8 +186,9 @@ namespace mike_and_conquer
             //                AddSandbag(14, 5, 0);
             //                AddSandbag(14, 6, 2);
             //                AddSandbag(14, 7, 8);
-            gdiBarracksView = AddGDIBarracksViewAtMapSquareCoordinates(new Point(23, 15));
             minigunnerIconView = new MinigunnerIconView();
+            gameWorldView.AddGDIBarracksViewAtMapSquareCoordinates(new Point(23, 15));
+
         }
 
         private void SetupToolbarViewportAndCamera()
@@ -265,10 +231,9 @@ namespace mike_and_conquer
             //    What about placement of initial troops?
             //    Sandbags
 
-            foreach(MapTileInstance basicMapSquare in this.gameWorld.gameMap.MapTileInstanceList)
+            foreach(MapTileInstance mapTileInstance in this.gameWorld.gameMap.MapTileInstanceList)
             {
-                MapTileInstanceView mapTileInstanceView = new MapTileInstanceView(basicMapSquare);
-                this.mapTileInstanceViewList.Add(mapTileInstanceView);
+                gameWorldView.AddMapTileInstanceView(mapTileInstance);
             }
 
         }
@@ -547,6 +512,8 @@ namespace mike_and_conquer
             // while the Windows pointer is showing the mouse pointer arrow with the blue sworl "busy" icon on the side
             // it will continue to show a frozen(non moving) copy of the blue sworl "busy" icon, even after it 
             // stops showing and updating the normal Winodws mouse pointer (in favor of my manually handled one)
+            // TODO:  Investigate replacing countdown timer with direct call to (possibly to native Windows API) to determine
+            // native mouse pointer "busy" status, and wait until ti goes "not busy"
             if (mouseCounter < 20)
             {
                 this.IsMouseVisible = true;
@@ -716,7 +683,6 @@ namespace mike_and_conquer
                 mapViewportCamera.TransformMatrix);
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
-            gdiBarracksView.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
 
@@ -777,8 +743,8 @@ namespace mike_and_conquer
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
             // to enable running headless with no UI
-            MinigunnerView newMinigunnerView = new GdiMinigunnerView(newMinigunner);
-            GdiMinigunnerViewList.Add(newMinigunnerView);
+            gameWorldView.AddGDIMinigunnerView(newMinigunner);
+
             return newMinigunner;
         }
 
@@ -794,8 +760,8 @@ namespace mike_and_conquer
             Sandbag newSandbag = new Sandbag(xInWorldCoordinates, yInWorldCoordinates, sandbagType);
             GameWorld.instance.sandbagList.Add(newSandbag);
 
-            SandbagView newSandbagView = new SandbagView(newSandbag);
-            sandbagViewList.Add(newSandbagView);
+            gameWorldView.AddSandbagView(newSandbag);
+
             return newSandbag;
         }
 
@@ -809,58 +775,20 @@ namespace mike_and_conquer
         }
 
 
-        internal GDIBarracksView AddGDIBarracksViewAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
-        {
-            int xInWorldCoordinates = positionInMapSquareCoordinates.X * GameWorld.MAP_TILE_WIDTH;
-            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * GameWorld.MAP_TILE_HEIGHT;
-
-            Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
-
-            GDIBarracksView gdiBarracksView = new GDIBarracksView(positionInWorldCoordinates);
-            return gdiBarracksView;
-
-        }
-
-
-
         internal Minigunner AddNodMinigunner(Point positionInWorldCoordinates, bool aiIsOn)
         {
             Minigunner newMinigunner = gameWorld.AddNodMinigunner(positionInWorldCoordinates, aiIsOn);
+            gameWorldView.AddNodMinigunnerView(newMinigunner);
 
-            MinigunnerView newMinigunnerView = new NodMinigunnerView(newMinigunner);
-            NodMinigunnerViewList.Add(newMinigunnerView);
             return newMinigunner;
         }
 
         public GameState HandleReset()
         {
-            gdiMinigunnerViewList.Clear();
-            nodMinigunnerViewList.Clear();
-            sandbagViewList.Clear();
-            // TODO:  Bogus stuff here
-            // Have to reset world first, before then resetting navigation navigationGraph
-            // because navigation navigationGraph depends on what's in the game world
-            // and sandbags were not getting cleared before navigation navigationGraph was updated
             GameState newGameState = gameWorld.HandleReset();
-            gameWorld.InitializeNavigationGraph();
+            gameWorldView.HandleReset();
             return newGameState;
         }
-
-        public MapTileInstanceView FindMapSquareView(int xWorldCoordinate, int yWorldCoordinate)
-        {
-
-            foreach (MapTileInstanceView nextBasicMapSquareView in this.mapTileInstanceViewList)
-            {
-                MapTileInstance mapTileInstance = nextBasicMapSquareView.myMapTileInstance;
-                if (mapTileInstance.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
-                {
-                    return nextBasicMapSquareView;
-                }
-            }
-            throw new Exception("Unable to find MapTileInstance at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
-
-        }
-
 
         public Vector2 ConvertWorldCoordinatesToScreenCoordinates(Vector2 positionInWorldCoordinates)
         {

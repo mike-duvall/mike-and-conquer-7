@@ -15,7 +15,6 @@ namespace mike_and_conquer.gameview
         // TODO Consider ToolBarIconSprite instead of UnitSprite
         private UnitSprite unitSprite;
 
-
         public const string SPRITE_KEY = "MinigunnerIcon";
 
 //        // TODO:  SHP_FILE_NAME and ShpFileColorMapper don't really belong in this view
@@ -28,6 +27,7 @@ namespace mike_and_conquer.gameview
         {
             this.unitSprite = new UnitSprite(SPRITE_KEY);
             this.unitSprite.drawShadow = true;
+            this.unitSprite.drawBoundingRectangle = false;
             SetupAnimations();
         }
 
@@ -43,7 +43,8 @@ namespace mike_and_conquer.gameview
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
 
-            unitSprite.Draw(gameTime, spriteBatch, new Vector2(1,1));
+//            unitSprite.Draw(gameTime, spriteBatch, new Vector2(1,1));
+            unitSprite.Draw(gameTime, spriteBatch, new Vector2(unitSprite.Width / 2, unitSprite.Height / 2));
         }
 
 

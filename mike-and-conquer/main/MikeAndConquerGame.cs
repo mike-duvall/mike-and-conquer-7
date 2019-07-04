@@ -399,8 +399,6 @@ namespace mike_and_conquer
             return scaledHalfViewportWidth - borderSize;
         }
 
-
-
         // TODO Unduplicate this code?
         public float CalculateLeftmostScrollX(Viewport viewport, float zoom, int borderSize)
         {

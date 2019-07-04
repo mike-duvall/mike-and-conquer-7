@@ -1,5 +1,6 @@
 ﻿using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
@@ -32,6 +33,19 @@ namespace mike_and_conquer
 
         public bool drawShadow;
 
+        private int width;
+        public int Width
+        {
+            get { return width; }
+        }
+
+        private int height;
+        public int Height
+        {
+            get { return height; }
+        }
+
+
         public UnitSprite(string spriteListKey)
         {
             this.animationSequenceMap = new Dictionary<int, util.AnimationSequence>();
@@ -44,7 +58,8 @@ namespace mike_and_conquer
             UnitFrame firstUnitFrame = unitFrameList[0];
             middleOfSpriteInSpriteCoordinates.X = firstUnitFrame.Texture.Width / 2;
             middleOfSpriteInSpriteCoordinates.Y = firstUnitFrame.Texture.Height / 2;
-
+            this.width = firstUnitFrame.Texture.Width;
+            this.height = firstUnitFrame.Texture.Height;
             drawBoundingRectangle = false;
             this.animate = true;
             int[] remap = { };

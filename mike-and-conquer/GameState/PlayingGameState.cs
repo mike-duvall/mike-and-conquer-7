@@ -243,6 +243,8 @@ namespace mike_and_conquer
             Point mousePoint = mouseState.Position;
             Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
             Vector2 mouseWorldLocation = MikeAndConquerGame.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
+            Vector2 toolbarLocation = MikeAndConquerGame.instance.ConvertScreenLocationToToolbarLocation(mouseScreenLocation);
+
 
             int mouseWorldX = (int) mouseWorldLocation.X;
             int mouseWorldY = (int) mouseWorldLocation.Y;

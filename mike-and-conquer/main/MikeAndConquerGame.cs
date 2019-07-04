@@ -1,6 +1,5 @@
 ﻿
-using System;
-using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
@@ -17,7 +16,6 @@ using SamplerState = Microsoft.Xna.Framework.Graphics.SamplerState;
 using KeyboardState = Microsoft.Xna.Framework.Input.KeyboardState;
 using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
-using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;
 using GdiMinigunnerView = mike_and_conquer.gameview.GdiMinigunnerView;
 using NodMinigunnerView = mike_and_conquer.gameview.NodMinigunnerView;
 using SandbagView = mike_and_conquer.gameview.SandbagView;
@@ -81,6 +79,9 @@ namespace mike_and_conquer
 
         KeyboardState oldKeyboardState;
 
+        private Texture2D mapBackgroundRectangle;
+        private Texture2D toolbarBackgroundRectangle;
+
         public Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()
             //.WriteTo.File("log.txt")
@@ -143,16 +144,13 @@ namespace mike_and_conquer
             System.Diagnostics.Trace.Listeners.Remove("HostingTraceListener");
         }
 
-
-
-
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
         /// related content.  Calling base.InitializeDefaultMap will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-//        protected override void InitializeDefaultMap()
+//        protected override void Initialize()
 //        {
 //            // TODO: Add your initialization logic here
 //            base.InitializeDefaultMap();
@@ -203,7 +201,11 @@ namespace mike_and_conquer
 
             toolbarViewportCamera = new Camera2D(toolbarViewport);
             toolbarViewportCamera.Zoom = 3.0f;
-            toolbarViewportCamera.Location = new Vector2(0, 0);
+
+            float scaledHalfViewportWidth = CalculateLeftmostScrollX(toolbarViewport, toolbarViewportCamera.Zoom, 0);
+            float scaledHalfViewportHeight = CalculateTopmostScrollY(toolbarViewport, toolbarViewportCamera.Zoom, 0);
+
+            toolbarViewportCamera.Location = new Vector2(scaledHalfViewportWidth, scaledHalfViewportHeight);
         }
 
         private void SetupMapViewportAndCamera()
@@ -264,6 +266,14 @@ namespace mike_and_conquer
             this.defaultViewport = GraphicsDevice.Viewport;
             SetupMapViewportAndCamera();
             SetupToolbarViewportAndCamera();
+
+            toolbarBackgroundRectangle = new Texture2D(GraphicsDevice, 1, 1);
+            toolbarBackgroundRectangle.SetData(new[] { Color.LightSkyBlue });
+
+            mapBackgroundRectangle = new Texture2D(GraphicsDevice, 1, 1);
+            mapBackgroundRectangle.SetData(new[] { Color.MediumSeaGreen });
+
+
 
         }
 
@@ -389,6 +399,16 @@ namespace mike_and_conquer
             return scaledHalfViewportWidth - borderSize;
         }
 
+        // TODO Unduplicate this code?
+        public float CalculateLeftmostScrollX(Viewport viewport, float zoom, int borderSize)
+        {
+            int viewportWidth = viewport.Width;
+            int halfViewportWidth = viewportWidth / 2;
+            float scaledHalfViewportWidth = halfViewportWidth / zoom;
+            return scaledHalfViewportWidth - borderSize;
+        }
+
+
         private float CalculateRightmostScrollX()
         {
             int widthOfMapInWorldSpace = gameWorld.gameMap.numColumns * GameWorld.MAP_TILE_WIDTH;
@@ -408,6 +428,16 @@ namespace mike_and_conquer
             float scaledHalfViewportHeight = halfViewportHeight / mapViewportCamera.Zoom;
             return scaledHalfViewportHeight - borderSize;
         }
+
+        // TODO Unduplicate this code?
+        public float CalculateTopmostScrollY(Viewport viewport, float zoom, int borderSize)
+        {
+            int viewportHeight = viewport.Height;
+            int halfViewportHeight = viewportHeight / 2;
+            float scaledHalfViewportHeight = halfViewportHeight / zoom;
+            return scaledHalfViewportHeight - borderSize;
+        }
+
 
         private float CalculateBottommostScrollY()
         {
@@ -682,6 +712,9 @@ namespace mike_and_conquer
                 nullEffect,
                 mapViewportCamera.TransformMatrix);
 
+            spriteBatch.Draw(mapBackgroundRectangle,
+                new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
+
             this.currentGameStateView.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
@@ -689,10 +722,12 @@ namespace mike_and_conquer
         private void DrawToolbar(GameTime gameTime)
         {
             GraphicsDevice.Viewport = toolbarViewport;
+
             const BlendState nullBlendState = null;
             const DepthStencilState nullDepthStencilState = null;
             const RasterizerState nullRasterizerState = null;
             const Effect nullEffect = null;
+
 
             spriteBatch.Begin(
                 SpriteSortMode.Deferred,
@@ -702,6 +737,10 @@ namespace mike_and_conquer
                 nullRasterizerState,
                 nullEffect,
                 toolbarViewportCamera.TransformMatrix);
+
+            spriteBatch.Draw(toolbarBackgroundRectangle,
+                new Rectangle(0, 0, toolbarViewport.Width / 2, toolbarViewport.Height / 2), Color.White);
+
             minigunnerIconView.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
@@ -799,6 +838,14 @@ namespace mike_and_conquer
         {
             return Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix));
         }
+
+        public Vector2 ConvertScreenLocationToToolbarLocation(Vector2 screenLocation)
+        {
+            screenLocation.X = screenLocation.X - toolbarViewport.X;
+            Vector2 result = Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConquerGame.instance.toolbarViewportCamera.TransformMatrix));
+            return result;
+        }
+
 
 
         //        // TODO:  Where does this method go?

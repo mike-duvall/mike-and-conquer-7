@@ -243,13 +243,17 @@ namespace mike_and_conquer
             Point mousePoint = mouseState.Position;
             Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
             Vector2 mouseWorldLocation = MikeAndConquerGame.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
-            Vector2 toolbarLocation = MikeAndConquerGame.instance.ConvertScreenLocationToToolbarLocation(mouseScreenLocation);
+//            Vector2 toolbarLocation = MikeAndConquerGame.instance.ConvertScreenLocationToToolbarLocation(mouseScreenLocation);
 
 
             int mouseWorldX = (int) mouseWorldLocation.X;
             int mouseWorldY = (int) mouseWorldLocation.Y;
 
-            bool handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldX, mouseWorldY);
+            bool handledEvent = CheckForAndHandleLeftClickOnSidebar(mouseScreenLocation);
+            if (!handledEvent)
+            {
+                handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldX, mouseWorldY);
+            }
             if (!handledEvent)
             {
                 handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseWorldX, mouseWorldY);
@@ -315,6 +319,28 @@ namespace mike_and_conquer
 
 
         }
+
+        private int gdiStartX = 200;
+        private int gdiStartY = 200;
+
+        internal Boolean CheckForAndHandleLeftClickOnSidebar(Vector2 mouseScreenLocation)
+        {
+            Boolean handled = false;
+
+            Vector2 toolbarLocation = MikeAndConquerGame.instance.ConvertScreenLocationToToolbarLocation(mouseScreenLocation);
+
+            if (toolbarLocation.X > 0 && toolbarLocation.X < 64 && toolbarLocation.Y > 0 && toolbarLocation.Y < 48)
+            {
+
+                MikeAndConquerGame.instance.AddGdiMinigunner(new Point(gdiStartX, gdiStartY));
+                handled = true;
+                gdiStartX += 30;
+            }
+
+            return handled;
+
+        }
+
 
         internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)
         {

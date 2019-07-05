@@ -185,9 +185,13 @@ namespace mike_and_conquer
             //                AddSandbag(14, 6, 2);
             //                AddSandbag(14, 7, 8);
             minigunnerIconView = new MinigunnerIconView();
-            gameWorldView.AddGDIBarracksViewAtMapSquareCoordinates(new Point(23, 15));
+            AddGDIBarracksAtMapSquareCoordinates(new Point(19, 13));
 
         }
+
+
+
+
 
         private void SetupToolbarViewportAndCamera()
         {
@@ -778,7 +782,7 @@ namespace mike_and_conquer
         internal Minigunner AddGdiMinigunner(Point positionInWorldCoordinates)
         {
 
-            Minigunner newMinigunner =  GameWorld.instance.AddGdiMinigunner(positionInWorldCoordinates);
+            Minigunner newMinigunner =  gameWorld.AddGdiMinigunner(positionInWorldCoordinates);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
             // to enable running headless with no UI
@@ -797,12 +801,31 @@ namespace mike_and_conquer
                 (yInMapSquareCoordinates * GameWorld.MAP_TILE_HEIGHT) + (GameWorld.MAP_TILE_HEIGHT / 2);
 
             Sandbag newSandbag = new Sandbag(xInWorldCoordinates, yInWorldCoordinates, sandbagType);
-            GameWorld.instance.sandbagList.Add(newSandbag);
+            gameWorld.sandbagList.Add(newSandbag);
 
             gameWorldView.AddSandbagView(newSandbag);
 
             return newSandbag;
         }
+
+
+        public void AddGDIBarracksAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
+        {
+            int xInWorldCoordinates = positionInMapSquareCoordinates.X * GameWorld.MAP_TILE_WIDTH;
+            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * GameWorld.MAP_TILE_HEIGHT;
+
+            Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
+
+            
+//            Minigunner newMinigunner = GameWorld.instance.AddGdiMinigunner(positionInWorldCoordinates);
+            GDIBarracks gdiBarracks = gameWorld.AddGDIBarracks(positionInWorldCoordinates);
+            gameWorldView.AddGDIBarracksView(gdiBarracks);
+
+//            gdiBarracksView = new GDIBarracksView(positionInWorldCoordinates);
+
+        }
+
+
 
         internal Minigunner AddNodMinigunnerAtMapSquareCoordinates(Point positionInMapSquareCoordinates, bool aiIsOn)
         {

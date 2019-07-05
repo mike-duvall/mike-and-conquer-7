@@ -33,12 +33,18 @@ namespace mike_and_conquer
         public List<Minigunner> nodMinigunnerList { get; }
         public List<Sandbag> sandbagList;
 
+        private GDIBarracks gdiBarracks;
+        public GDIBarracks GDIBarracks
+        {
+            get { return gdiBarracks; }
+        }
+
+
         public NavigationGraph navigationGraph;
 
         private List<AsyncGameEvent> gameEvents;
 
         public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
-
 
         public GameMap gameMap;
 
@@ -247,6 +253,17 @@ namespace mike_and_conquer
 
             return newMinigunner;
         }
+
+        public GDIBarracks AddGDIBarracks(Point positionInWorldCoordinates)
+        {
+
+//            AssertIsValidMinigunnerPosition(positionInWorldCoordinates);
+
+            // TODO Might want to check if one already exists and throw error if so
+            gdiBarracks = new GDIBarracks(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
+            return gdiBarracks;
+        }
+
 
 
         public GameState ProcessGameEvents()

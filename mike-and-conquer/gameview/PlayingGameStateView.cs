@@ -15,6 +15,7 @@ namespace mike_and_conquer.gameview
                 basicMapSquareView.Draw(gameTime, spriteBatch);
             }
 
+            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {
@@ -31,7 +32,7 @@ namespace mike_and_conquer.gameview
                 nextSandbagView.Draw(gameTime, spriteBatch);
             }
 
-            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
+
 
             MikeAndConquerGame.instance.unitSelectionBox.Draw(gameTime, spriteBatch);
 

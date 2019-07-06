@@ -16,7 +16,7 @@ namespace mike_and_conquer.gameview
         // TODO:  Consider something other than UnitSprite in future
         private UnitSprite unitSprite;
 
-        private Point position;
+        private GDIBarracks myBarracks;
 
         public const string SPRITE_KEY = "Barracks";
 
@@ -26,12 +26,11 @@ namespace mike_and_conquer.gameview
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
 
-//        public GDIBarracksView(GDIBarracks barracks)
-        public GDIBarracksView(Point aPosition)
+        public GDIBarracksView(GDIBarracks barracks)
         {
             this.unitSprite = new UnitSprite(SPRITE_KEY);
             this.unitSprite.drawShadow = true;
-            this.position = aPosition;
+            this.myBarracks = barracks;
             SetupAnimations();
         }
 
@@ -46,7 +45,7 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            unitSprite.Draw(gameTime, spriteBatch, new Vector2(this.position.X, this.position.Y));
+            unitSprite.Draw(gameTime, spriteBatch, myBarracks.positionInWorldCoordinates);
         }
 
 

@@ -1,10 +1,6 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using mike_and_conquer.gameobjects;
-using AnimationSequence = mike_and_conquer.util.AnimationSequence;
-
-using Vector2 = Microsoft.Xna.Framework.Vector2;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using Point = Microsoft.Xna.Framework.Point;
@@ -86,22 +82,6 @@ namespace mike_and_conquer.gameview
 
         }
 
-        public void AddGDIBarracksViewAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
-        {
-            int xInWorldCoordinates = positionInMapSquareCoordinates.X * GameWorld.MAP_TILE_WIDTH;
-            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * GameWorld.MAP_TILE_HEIGHT;
-
-            Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
-
-            gdiBarracksView = new GDIBarracksView(positionInWorldCoordinates);
-
-        }
-
-
-//        public void AddMMinigunnerIconView()
-//        {
-//            minigunnerIconView = new MinigunnerIconView();
-//        }
 
         public void AddMapTileInstanceView(MapTileInstance mapTileInstance)
         {
@@ -121,8 +101,13 @@ namespace mike_and_conquer.gameview
         {
             SandbagView newSandbagView = new SandbagView(newSandbag);
             sandbagViewList.Add(newSandbagView);
-
         }
+
+        public void AddGDIBarracksView(GDIBarracks gdiBarracks)
+        {
+            gdiBarracksView = new GDIBarracksView(gdiBarracks);
+        }
+
 
         public void AddNodMinigunnerView(Minigunner newMinigunner)
         {

@@ -191,8 +191,6 @@ namespace mike_and_conquer
 
 
 
-
-
         private void SetupToolbarViewportAndCamera()
         {
             toolbarViewport = new Viewport();

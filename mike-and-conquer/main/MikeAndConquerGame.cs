@@ -814,13 +814,8 @@ namespace mike_and_conquer
 
             Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
 
-            
-//            Minigunner newMinigunner = GameWorld.instance.AddGdiMinigunner(positionInWorldCoordinates);
             GDIBarracks gdiBarracks = gameWorld.AddGDIBarracks(positionInWorldCoordinates);
             gameWorldView.AddGDIBarracksView(gdiBarracks);
-
-//            gdiBarracksView = new GDIBarracksView(positionInWorldCoordinates);
-
         }
 
 

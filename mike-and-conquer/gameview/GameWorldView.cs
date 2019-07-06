@@ -82,22 +82,6 @@ namespace mike_and_conquer.gameview
 
         }
 
-//        public void AddGDIBarracksViewAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
-//        {
-//            int xInWorldCoordinates = positionInMapSquareCoordinates.X * GameWorld.MAP_TILE_WIDTH;
-//            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * GameWorld.MAP_TILE_HEIGHT;
-//
-//            Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
-//
-//            gdiBarracksView = new GDIBarracksView(positionInWorldCoordinates);
-//
-//        }
-
-
-//        public void AddMMinigunnerIconView()
-//        {
-//            minigunnerIconView = new MinigunnerIconView();
-//        }
 
         public void AddMapTileInstanceView(MapTileInstance mapTileInstance)
         {

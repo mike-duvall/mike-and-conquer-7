@@ -320,8 +320,8 @@ namespace mike_and_conquer
 
         }
 
-        private int minigunnerXOffset = 0;
-        private int minigunnerYOffset = 0;
+//        private int minigunnerXOffset = 0;
+//        private int minigunnerYOffset = 0;
 
         internal Boolean CheckForAndHandleLeftClickOnSidebar(Vector2 mouseScreenLocation)
         {
@@ -332,21 +332,27 @@ namespace mike_and_conquer
             if (toolbarLocation.X > 0 && toolbarLocation.X < 64 && toolbarLocation.Y > 0 && toolbarLocation.Y < 48)
             {
 
-                Vector2 barracksPositionInWC =
-                    GameWorld.instance.GDIBarracks.positionInWorldCoordinates;
-
-                int minigunnerX = (int) (barracksPositionInWC.X + minigunnerXOffset);
-                int minigunnerY = (int)(barracksPositionInWC.Y + minigunnerYOffset);
-
-                Point gdiMinigunnderPosition = new Point(minigunnerX, minigunnerY);
-                MikeAndConquerGame.instance.AddGdiMinigunner(gdiMinigunnderPosition);
-                handled = true;
-                minigunnerXOffset += 5;
+                HandleClickGDIBarracks();
+//                Vector2 barracksPositionInWC =
+//                    GameWorld.instance.GDIBarracks.positionInWorldCoordinates;
+//
+//                int minigunnerX = (int) (barracksPositionInWC.X + minigunnerXOffset);
+//                int minigunnerY = (int)(barracksPositionInWC.Y + minigunnerYOffset);
+//
+//                Point gdiMinigunnderPosition = new Point(minigunnerX, minigunnerY);
+//                MikeAndConquerGame.instance.AddGdiMinigunner(gdiMinigunnderPosition);
+//                handled = true;
+//                minigunnerXOffset += 5;
 //                minigunnerYOffset += 5;
             }
 
             return handled;
 
+        }
+
+        private void HandleClickGDIBarracks()
+        {
+            GameWorld.instance.GDIBarracks.StartBuildingMinigunner();
         }
 
 

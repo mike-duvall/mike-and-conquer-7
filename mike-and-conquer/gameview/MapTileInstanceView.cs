@@ -23,7 +23,7 @@ namespace mike_and_conquer.gameview
             imageIndex = myMapTileInstance.ImageIndex;
             textureKey = myMapTileInstance.TextureKey;
             List<MapTileFrame>  mapTileFrameList = MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
-            this.singleTextureSprite = new SingleTextureSprite(mapTileFrameList[imageIndex].Texture);
+            this.singleTextureSprite = new SingleTextureSprite(mapTileFrameList[imageIndex].Texture, null);
             this.singleTextureSprite.drawBoundingRectangle = false;
         }
 

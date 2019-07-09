@@ -13,7 +13,7 @@ namespace mike_and_conquer.gameview
     {
 
         // TODO Consider ToolBarIconSprite instead of UnitSprite
-        private UnitSprite unitSprite;
+        private SingleTextureSprite singleTextureSprite;
 
         public const string SPRITE_KEY = "MinigunnerIcon";
 
@@ -25,26 +25,22 @@ namespace mike_and_conquer.gameview
 
         public MinigunnerIconView()
         {
-            this.unitSprite = new UnitSprite(SPRITE_KEY);
-            this.unitSprite.drawShadow = true;
-            this.unitSprite.drawBoundingRectangle = false;
-            SetupAnimations();
+            singleTextureSprite =
+                new SingleTextureSprite(
+                    MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY)[0].Texture,
+                    MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY)[0].FrameData);
+            singleTextureSprite.drawCloudTexture = true;
+            singleTextureSprite.RemapAllPixels();
         }
 
 
-        private void SetupAnimations()
-        {
-            AnimationSequence animationSequence = new AnimationSequence(1);
-            animationSequence.AddFrame(0);
-            unitSprite.AddAnimationSequence(0, animationSequence);
-        }
 
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
 
 //            unitSprite.Draw(gameTime, spriteBatch, new Vector2(1,1));
-            unitSprite.Draw(gameTime, spriteBatch, new Vector2(unitSprite.Width / 2, unitSprite.Height / 2));
+            singleTextureSprite.Draw(gameTime, spriteBatch, new Vector2(singleTextureSprite.Width / 2, singleTextureSprite.Height / 2));
         }
 
 

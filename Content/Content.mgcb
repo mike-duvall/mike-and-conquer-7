@@ -193,8 +193,13 @@
 #begin sbag.shp
 /copy:sbag.shp
 
+#begin tclock.mrf
+/copy:tclock.mrf
+
+
 #begin tunits.mrf
 /copy:tunits.mrf
+
 
 #begin pyle.shp
 /copy:pyle.shp

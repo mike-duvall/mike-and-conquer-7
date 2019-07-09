@@ -107,15 +107,18 @@ namespace mike_and_conquer
 //                graphics.PreferredBackBufferHeight = 1080;
                 graphics.PreferredBackBufferWidth = 2880;
                 graphics.PreferredBackBufferHeight = 1800;
-
             }
             else
             {
                 graphics.IsFullScreen = false;
-                //                graphics.PreferredBackBufferWidth = 1280;
-                //                graphics.PreferredBackBufferHeight = 1024;
-                graphics.PreferredBackBufferWidth = 1024;
-                graphics.PreferredBackBufferHeight = 768;
+//                graphics.PreferredBackBufferWidth = 1280;
+//                graphics.PreferredBackBufferHeight = 1024;
+//                graphics.PreferredBackBufferWidth = 1024;
+//                graphics.PreferredBackBufferHeight = 768;
+
+                graphics.PreferredBackBufferWidth = 1920;
+                graphics.PreferredBackBufferHeight = 1080;
+
 
             }
 

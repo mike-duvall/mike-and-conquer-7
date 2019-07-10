@@ -131,6 +131,7 @@ namespace mike_and_conquer
 
         }
 
+
         private void SetupLineDrawingTexture()
         {
 
@@ -142,30 +143,35 @@ namespace mike_and_conquer
             SpriteBatch spriteBatch = new SpriteBatch(MikeAndConquerGame.instance.GraphicsDevice);
 
             spriteBatch.Begin(0, BlendState.Opaque, SamplerState.PointClamp);
-            //            spriteBatch.Draw(lineDrawingTexture, new Rectangle(0, 0, lineDrawingTexture.Width, lineDrawingTexture.Height), Color.Blue);
-            DrawLine(spriteBatch, new Vector2(32, 24), new Vector2(32, 0));
-            DrawLine(spriteBatch, new Vector2(32, 24), new Vector2(64, 0));
+
+            DrawLine(spriteBatch, new Vector2(32,24),  0);
+            DrawLine(spriteBatch, new Vector2(32, 24), 45);
+            DrawLine(spriteBatch, new Vector2(32, 24), 90);
+            DrawLine(spriteBatch, new Vector2(32, 24), 135);
+            DrawLine(spriteBatch, new Vector2(32, 24), 180);
+            DrawLine(spriteBatch, new Vector2(32, 24), 225);
+            DrawLine(spriteBatch, new Vector2(32, 24), 270);
+            DrawLine(spriteBatch, new Vector2(32, 24), 315);
+
             spriteBatch.End();
-
-
-            int numPixels = lineDrawingTexture.Width * lineDrawingTexture.Height;
-            Color[] texturePixelData = new Color[numPixels];
-
-            lineDrawingTexture.GetData(texturePixelData);
 
             MikeAndConquerGame.instance.GraphicsDevice.SetRenderTarget(null);
 
-//            int numPixels = lineDrawingTexture.Width * lineDrawingTexture.Height;
-//            Color[] texturePixelData = new Color[numPixels];
-//
-//
-//            FillHorizontalLine(texturePixelData, lineDrawingTexture.Width, lineDrawingTexture.Height, 0, Color.White);
+        }
 
-
-//            lineDrawingTexture.SetData(texturePixelData);
+        private void DrawLine(SpriteBatch spriteBatch, Vector2 startEndpoint, double angleInDegrees)
+        {
+            double angleDegreeInRadians = DegreeToRadian(angleInDegrees);
+            int x2 = (int)(startEndpoint.X + (60 * Math.Cos(angleDegreeInRadians)));
+            int y2 = (int)(startEndpoint.Y + (60 * Math.Sin(angleDegreeInRadians)));
+            DrawLine(spriteBatch, startEndpoint, new Vector2(x2, y2));
 
         }
 
+        private double DegreeToRadian(double angle)
+        {
+            return Math.PI * angle / 180.0;
+        }
 
         void DrawLine(SpriteBatch sb, Vector2 start, Vector2 end)
         {

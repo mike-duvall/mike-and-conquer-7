@@ -78,14 +78,14 @@ namespace mike_and_conquer.pathfinding
             if (IsLocationOpen(currentNodex, currentNodey))
             {
                 for (int y = currentNodey - 1; y <= currentNodey + 1; y++)
-                for (int x = currentNodex - 1; x <= currentNodex + 1; x++)
-                {
-                    if (IsValidLocation(x, y) && IsLocationOpen(x, y) && !(currentNodex == x && currentNodey == y))
+                    for (int x = currentNodex - 1; x <= currentNodex + 1; x++)
                     {
-                        int adjacentNodeIndex = y * width + x;
-                        adjacentNodes.Add(adjacentNodeIndex);
+                        if (IsValidLocation(x, y) && IsLocationOpen(x, y) && !(currentNodex == x && currentNodey == y))
+                        {
+                            int adjacentNodeIndex = y * width + x;
+                            adjacentNodes.Add(adjacentNodeIndex);
+                        }
                     }
-                }
             }
 
             return adjacentNodes;

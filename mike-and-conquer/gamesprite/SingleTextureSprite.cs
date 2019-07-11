@@ -144,26 +144,134 @@ namespace mike_and_conquer
 
             spriteBatch.Begin(0, BlendState.Opaque, SamplerState.PointClamp);
 
-            DrawLine(spriteBatch, new Vector2(32,24),  0);
-            DrawLine(spriteBatch, new Vector2(32, 24), 45);
-            DrawLine(spriteBatch, new Vector2(32, 24), 90);
-            DrawLine(spriteBatch, new Vector2(32, 24), 135);
-            DrawLine(spriteBatch, new Vector2(32, 24), 180);
-            DrawLine(spriteBatch, new Vector2(32, 24), 225);
-            DrawLine(spriteBatch, new Vector2(32, 24), 270);
-            DrawLine(spriteBatch, new Vector2(32, 24), 315);
 
+
+//            DrawLine(spriteBatch, new Vector2(32, 24), 180);
+//            DrawLine(spriteBatch, new Vector2(32, 24), 225);
+            DrawLine(spriteBatch, new Vector2(32, 24), 270);  // Straight up
+//            DrawLine(spriteBatch, new Vector2(32, 24), 315);  // 45 degrees further, going clockwise
+//            DrawLine(spriteBatch, new Vector2(32, 24), 360);  // 90 degrees further, going clockwise
+//            DrawLine(spriteBatch, new Vector2(32, 24), 45); // 135 degrees
+//            DrawLine(spriteBatch, new Vector2(32, 24), 90);
+            DrawLine(spriteBatch, new Vector2(32, 24), 135);
             spriteBatch.End();
 
+            
+
+
+            FloodFill(spriteBatch, new Point(33, 0));
+
             MikeAndConquerGame.instance.GraphicsDevice.SetRenderTarget(null);
+        }
+
+
+        private void FloodFill(SpriteBatch spriteBatch, Point startPixel)
+        {
+
+            int numPixels = lineDrawingTexture.Width * lineDrawingTexture.Height;
+            Color[] texturePixelData = new Color[numPixels];
+            lineDrawingTexture.GetData(texturePixelData);
+
+            Queue<Point> frontier = new Queue<Point>();
+            frontier.Enqueue(startPixel);
+
+            while (frontier.Count > 0)
+            {
+                Point current = frontier.Dequeue();
+
+                texturePixelData[current.X + (current.Y * lineDrawingTexture.Width)] = Color.Red;
+                List<Point> connectedNodesToFill = CalculateConnectedNodesToFill(current, texturePixelData);
+
+                foreach (Point point in connectedNodesToFill)
+                {
+                    if (!frontier.Contains(point))
+                    {
+                        frontier.Enqueue(point);
+                    }
+
+                }
+
+//                foreach (int next in current.connectedNodes)
+//                {
+//                    if (!came_from.ContainsKey(next))
+//                    {
+//                        frontier.Enqueue(navigationGraph.nodeList[next]);
+//                        came_from[next] = current.id;
+//                    }
+//                }
+            }
+
+            lineDrawingTexture.SetData(texturePixelData);
+
 
         }
+
+        private List<Point> CalculateConnectedNodesToFill(Point current, Color[] texturePixelData)
+        {
+            List<Point> pointList = new List<Point>();
+            Point toRight = new Point(current.X + 1, current.Y);
+            if (IsNodeToFill(toRight, texturePixelData))
+            {
+                pointList.Add(toRight);
+            }
+
+            Point toBottom = new Point(current.X, current.Y + 1 );
+            if (IsNodeToFill(toBottom, texturePixelData))
+            {
+                pointList.Add(toBottom);
+            }
+
+            Point toLeft = new Point(current.X - 1, current.Y);
+            if (IsNodeToFill(toLeft, texturePixelData))
+            {
+                pointList.Add(toLeft);
+            }
+
+            Point toTop = new Point(current.X, current.Y - 1);
+            if (IsNodeToFill(toTop, texturePixelData))
+            {
+                pointList.Add(toTop);
+            }
+            return pointList;
+        }
+
+        private bool IsNodeToFill(Point toRight, Color[] texturePixelData)
+        {
+
+            bool isGoodToFill = false;
+
+//            if (toRight.X <= lineDrawingTexture.Width - 2)
+            if(IsValidLocation(toRight.X, toRight.Y, lineDrawingTexture.Width, lineDrawingTexture.Height))
+            {
+                Color toRightColor = texturePixelData[toRight.X + (toRight.Y * lineDrawingTexture.Width)];
+                if (toRightColor == Color.Black)
+                {
+                    isGoodToFill = true;
+                }
+
+            }
+
+            return isGoodToFill;
+        }
+
+        bool IsValidLocation(int x, int y, int width, int height)
+        {
+            bool isValid = (
+                x >= 0 &&
+                (x <= width - 1) &&
+                y >= 0 &&
+                (y <= height - 1));
+
+            return isValid;
+        }
+
+
 
         private void DrawLine(SpriteBatch spriteBatch, Vector2 startEndpoint, double angleInDegrees)
         {
             double angleDegreeInRadians = DegreeToRadian(angleInDegrees);
-            int x2 = (int)(startEndpoint.X + (60 * Math.Cos(angleDegreeInRadians)));
-            int y2 = (int)(startEndpoint.Y + (60 * Math.Sin(angleDegreeInRadians)));
+            int x2 = (int)(startEndpoint.X + (160 * Math.Cos(angleDegreeInRadians)));
+            int y2 = (int)(startEndpoint.Y + (160 * Math.Sin(angleDegreeInRadians)));
             DrawLine(spriteBatch, startEndpoint, new Vector2(x2, y2));
 
         }

@@ -13,7 +13,7 @@ namespace mike_and_conquer.gameview
     {
 
         // TODO Consider ToolBarIconSprite instead of UnitSprite
-        private SingleTextureSprite singleTextureSprite;
+        private ToolbarBuildIconSprite singleTextureSprite;
 
         public const string SPRITE_KEY = "MinigunnerIcon";
 
@@ -22,24 +22,41 @@ namespace mike_and_conquer.gameview
         public const string SHP_FILE_NAME = "Content\\e1icnh.tem";
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
+        private double angleInDegrees = 315;
 
         public MinigunnerIconView()
         {
             singleTextureSprite =
-                new SingleTextureSprite(
+                new ToolbarBuildIconSprite(
                     MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY)[0].Texture,
                     MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY)[0].FrameData);
             singleTextureSprite.drawCloudTexture = true;
-            singleTextureSprite.RemapAllPixels();
+            singleTextureSprite.RemapAllPixels(angleInDegrees);
         }
 
 
+        //            DrawLine(spriteBatch, new Vector2(33, 24), 315);  // 45 degrees further, going clockwise
+        //            DrawLine(spriteBatch, new Vector2(33, 24), 360);  // 90 degrees further, going clockwise
+        //            DrawLine(spriteBatch, new Vector2(33, 24), 45); // 135 degrees
+        //            DrawLine(spriteBatch, new Vector2(33, 24), 90);
+        //            DrawLine(spriteBatch, new Vector2(33, 24), 135);
+        //            DrawLine(spriteBatch, new Vector2(33, 24), 180);
+        //            DrawLine(spriteBatch, new Vector2(33, 24), 225);
 
+
+        public void Update(GameTime gameTime)
+        {
+            angleInDegrees += 1.0f;
+            if (angleInDegrees > 360)
+            {
+                angleInDegrees = 0;
+            }
+            singleTextureSprite.RemapAllPixels(angleInDegrees);
+
+        }
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-
-//            unitSprite.Draw(gameTime, spriteBatch, new Vector2(1,1));
             singleTextureSprite.Draw(gameTime, spriteBatch, new Vector2(singleTextureSprite.Width / 2, singleTextureSprite.Height / 2));
         }
 

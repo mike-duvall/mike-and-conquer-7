@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using mike_and_conquer.gameview;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using Boolean = System.Boolean;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -16,12 +15,11 @@ using OpenRA.Graphics;
 
 namespace mike_and_conquer
 {
-    public class SingleTextureSprite
+    public class ToolbarBuildIconSprite
     {
 
         Texture2D texture;
         private Texture2D cloudTexture;
-//        private Texture2D lineDrawingTexture;
         private RenderTarget2D lineDrawingTexture;
         public bool drawCloudTexture;
 
@@ -31,7 +29,6 @@ namespace mike_and_conquer
         public Boolean drawBoundingRectangle;
 
         private Vector2 middleOfSpriteInSpriteCoordinates;
-
 
         public int Width
         {
@@ -44,13 +41,8 @@ namespace mike_and_conquer
         }
 
 
-        public SingleTextureSprite(Texture2D texture) : this(texture, null)
-        {
-            
-        }
 
-
-        public SingleTextureSprite(Texture2D texture, byte[] frameData)
+        public ToolbarBuildIconSprite(Texture2D texture, byte[] frameData)
         {
             this.texture = texture;
             this.frameData = frameData;
@@ -95,11 +87,9 @@ namespace mike_and_conquer
 
 
 
-        public  void RemapAllPixels()
+        public void RemapAllPixels(double angleInDegrees)
         {
-
-
-            SetupLineDrawingTexture();
+            SetupLineDrawingTexture(angleInDegrees);
 
             cloudTexture = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, texture.Width, texture.Height);
             int numPixels = cloudTexture.Width * cloudTexture.Height;
@@ -117,8 +107,6 @@ namespace mike_and_conquer
             {
                 int basePaletteIndex = frameData[i];
                 int mappedPaletteIndex = shpFileColorMapper.MapColorIndex(basePaletteIndex);
-//                int shadowPaletteIndex =
-//                    MikeAndConquerGame.instance.shadowMapper.MapSidebarBuildPaletteIndex(mappedPaletteIndex);
 
                 if (lineDrawingTexturePixelData[i] == Color.Black)
                 {
@@ -139,7 +127,7 @@ namespace mike_and_conquer
         }
 
 
-        private void SetupLineDrawingTexture()
+        private void SetupLineDrawingTexture(double angleInDegrees)
         {
 
             //            lineDrawingTexture = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, texture.Width, texture.Height);
@@ -158,7 +146,8 @@ namespace mike_and_conquer
 //            DrawLine(spriteBatch, new Vector2(33, 24), 90);
 //            DrawLine(spriteBatch, new Vector2(33, 24), 135);
 //            DrawLine(spriteBatch, new Vector2(33, 24), 180);
-            DrawLine(spriteBatch, new Vector2(33, 24), 225);
+//            DrawLine(spriteBatch, new Vector2(33, 24), 225);
+            DrawLine(spriteBatch, new Vector2(33, 24), angleInDegrees);
 
             spriteBatch.End();
 
@@ -193,19 +182,9 @@ namespace mike_and_conquer
                     }
 
                 }
-
-//                foreach (int next in current.connectedNodes)
-//                {
-//                    if (!came_from.ContainsKey(next))
-//                    {
-//                        frontier.Enqueue(navigationGraph.nodeList[next]);
-//                        came_from[next] = current.id;
-//                    }
-//                }
             }
 
             lineDrawingTexture.SetData(texturePixelData);
-
 
         }
 
@@ -243,7 +222,6 @@ namespace mike_and_conquer
 
             bool isGoodToFill = false;
 
-//            if (toRight.X <= lineDrawingTexture.Width - 2)
             if(IsValidLocation(toRight.X, toRight.Y, lineDrawingTexture.Width, lineDrawingTexture.Height))
             {
                 Color toRightColor = texturePixelData[toRight.X + (toRight.Y * lineDrawingTexture.Width)];

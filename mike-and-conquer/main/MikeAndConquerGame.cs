@@ -566,12 +566,12 @@ namespace mike_and_conquer
             int originalX = (int)this.mapViewportCamera.Location.X;
             int originalY = (int)this.mapViewportCamera.Location.Y;
 
-
             HandleMapScrolling(originalY, originalX, newKeyboardState);
             oldKeyboardState = newKeyboardState;
 
             SwitchToNewGameStateViewIfNeeded();
             gameCursor.Update(gameTime);
+            minigunnerIconView.Update(gameTime);
             base.Update(gameTime);
         }
 

@@ -98,8 +98,8 @@ namespace mike_and_conquer
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
 
-//            bool makeFullscreen = true;
-            bool makeFullscreen = false;
+            bool makeFullscreen = true;
+//            bool makeFullscreen = false;
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;
@@ -206,6 +206,7 @@ namespace mike_and_conquer
 
             toolbarViewportCamera = new Camera2D(toolbarViewport);
             toolbarViewportCamera.Zoom = 3.0f;
+//            toolbarViewportCamera.Zoom = 1.5f;
 
             float scaledHalfViewportWidth = CalculateLeftmostScrollX(toolbarViewport, toolbarViewportCamera.Zoom, 0);
             float scaledHalfViewportHeight = CalculateTopmostScrollY(toolbarViewport, toolbarViewportCamera.Zoom, 0);

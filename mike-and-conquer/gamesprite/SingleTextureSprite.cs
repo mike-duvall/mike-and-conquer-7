@@ -99,9 +99,16 @@ namespace mike_and_conquer
         public  void RemapAllPixels()
         {
 
+
+            SetupLineDrawingTexture();
+
             cloudTexture = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, texture.Width, texture.Height);
             int numPixels = cloudTexture.Width * cloudTexture.Height;
             Color[] texturePixelData = new Color[numPixels];
+
+            Color[] lineDrawingTexturePixelData = new Color[numPixels];
+            lineDrawingTexture.GetData(lineDrawingTexturePixelData);
+
 
             GdiShpFileColorMapper shpFileColorMapper = new GdiShpFileColorMapper();
             int[] remap = { };
@@ -111,10 +118,16 @@ namespace mike_and_conquer
             {
                 int basePaletteIndex = frameData[i];
                 int mappedPaletteIndex = shpFileColorMapper.MapColorIndex(basePaletteIndex);
-                int shadowPaletteIndex =
-                    MikeAndConquerGame.instance.shadowMapper.MapSidebarBuildPaletteIndex(mappedPaletteIndex);
+//                int shadowPaletteIndex =
+//                    MikeAndConquerGame.instance.shadowMapper.MapSidebarBuildPaletteIndex(mappedPaletteIndex);
 
-                uint mappedColor = palette[shadowPaletteIndex];
+                if (lineDrawingTexturePixelData[i] == Color.Black)
+                {
+                    mappedPaletteIndex =
+                        MikeAndConquerGame.instance.shadowMapper.MapSidebarBuildPaletteIndex(mappedPaletteIndex);
+                }
+
+                uint mappedColor = palette[mappedPaletteIndex];
 
                 System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
                 Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
@@ -125,7 +138,7 @@ namespace mike_and_conquer
             cloudTexture.SetData(texturePixelData);
 
 
-            SetupLineDrawingTexture();
+
 
 
 
@@ -144,28 +157,24 @@ namespace mike_and_conquer
 
             spriteBatch.Begin(0, BlendState.Opaque, SamplerState.PointClamp);
 
-
-
-//            DrawLine(spriteBatch, new Vector2(32, 24), 180);
-//            DrawLine(spriteBatch, new Vector2(32, 24), 225);
             DrawLine(spriteBatch, new Vector2(32, 24), 270);  // Straight up
-//            DrawLine(spriteBatch, new Vector2(32, 24), 315);  // 45 degrees further, going clockwise
-//            DrawLine(spriteBatch, new Vector2(32, 24), 360);  // 90 degrees further, going clockwise
-//            DrawLine(spriteBatch, new Vector2(32, 24), 45); // 135 degrees
-//            DrawLine(spriteBatch, new Vector2(32, 24), 90);
-            DrawLine(spriteBatch, new Vector2(32, 24), 135);
+//            DrawLine(spriteBatch, new Vector2(33, 24), 315);  // 45 degrees further, going clockwise
+//            DrawLine(spriteBatch, new Vector2(33, 24), 360);  // 90 degrees further, going clockwise
+//            DrawLine(spriteBatch, new Vector2(33, 24), 45); // 135 degrees
+//            DrawLine(spriteBatch, new Vector2(33, 24), 90);
+//            DrawLine(spriteBatch, new Vector2(33, 24), 135);
+//            DrawLine(spriteBatch, new Vector2(33, 24), 180);
+            DrawLine(spriteBatch, new Vector2(33, 24), 225);
+
             spriteBatch.End();
 
-            
-
-
-            FloodFill(spriteBatch, new Point(33, 0));
+            FloodFill( new Point(33, 0));
 
             MikeAndConquerGame.instance.GraphicsDevice.SetRenderTarget(null);
         }
 
 
-        private void FloodFill(SpriteBatch spriteBatch, Point startPixel)
+        private void FloodFill(Point startPixel)
         {
 
             int numPixels = lineDrawingTexture.Width * lineDrawingTexture.Height;

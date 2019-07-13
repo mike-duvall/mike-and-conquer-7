@@ -13,7 +13,7 @@ namespace mike_and_conquer.gameview
     {
 
         // TODO Consider ToolBarIconSprite instead of UnitSprite
-        private ToolbarBuildIconSprite singleTextureSprite;
+        private ToolbarBuildIconSprite toolbarBuildIconSprite;
 
         public const string SPRITE_KEY = "MinigunnerIcon";
 
@@ -26,12 +26,12 @@ namespace mike_and_conquer.gameview
 
         public MinigunnerIconView()
         {
-            singleTextureSprite =
+            toolbarBuildIconSprite =
                 new ToolbarBuildIconSprite(
                     MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY)[0].Texture,
                     MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY)[0].FrameData);
-            singleTextureSprite.drawCloudTexture = true;
-            singleTextureSprite.RemapAllPixels(315);
+            toolbarBuildIconSprite.isBuilding = true;
+            toolbarBuildIconSprite.RemapAllPixels(315);
         }
 
 
@@ -57,7 +57,7 @@ namespace mike_and_conquer.gameview
                 {
                     angle -= 360;
                 }
-                singleTextureSprite.RemapAllPixels(angle);                
+                toolbarBuildIconSprite.RemapAllPixels(angle);                
 
             }
             else
@@ -65,20 +65,12 @@ namespace mike_and_conquer.gameview
 
             }
 
-//            float newAngleInDegrees = 360 *
-//            angleInDegrees += 1.0f;
-//            if (angleInDegrees > 360)
-//            {
-//                angleInDegrees = 0;
-//            }
-//            MikeAndConquerGame.instance.gameWorld.GDIBarracks.
-//            singleTextureSprite.RemapAllPixels(angleInDegrees);
 
         }
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            singleTextureSprite.Draw(gameTime, spriteBatch, new Vector2(singleTextureSprite.Width / 2, singleTextureSprite.Height / 2));
+            toolbarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2(toolbarBuildIconSprite.Width / 2, toolbarBuildIconSprite.Height / 2));
         }
 
 

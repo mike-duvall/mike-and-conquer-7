@@ -18,10 +18,10 @@ namespace mike_and_conquer
     public class ToolbarBuildIconSprite
     {
 
-        Texture2D texture;
-        private Texture2D cloudTexture = null;
+        Texture2D staticTexture;
+        private Texture2D buildInProcessTexture = null;
         private RenderTarget2D lineDrawingTexture = null;
-        public bool drawCloudTexture;
+        public bool isBuilding;
 
         private byte[] frameData;
 
@@ -32,21 +32,21 @@ namespace mike_and_conquer
 
         public int Width
         {
-            get { return texture.Width; }
+            get { return staticTexture.Width; }
         }
 
         public int Height
         {
-            get { return texture.Height; }
+            get { return staticTexture.Height; }
         }
 
 
 
-        public ToolbarBuildIconSprite(Texture2D texture, byte[] frameData)
+        public ToolbarBuildIconSprite(Texture2D staticTexture, byte[] frameData)
         {
-            this.texture = texture;
+            this.staticTexture = staticTexture;
             this.frameData = frameData;
-            this.drawCloudTexture = false;
+            this.isBuilding = false;
             spriteBorderRectangleTexture = CreateSpriteBorderRectangleTexture();
 
             middleOfSpriteInSpriteCoordinates = new Vector2();
@@ -65,17 +65,17 @@ namespace mike_and_conquer
 
             float defaultScale = 1;
 
-            spriteBatch.Draw(texture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(staticTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
 
-            if (drawCloudTexture)
+            if (isBuilding)
             {
                 Vector2 cloudPosition = new Vector2(positionInWorldCoordinates.X + 100, positionInWorldCoordinates.Y);
-                spriteBatch.Draw(cloudTexture, cloudPosition, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates,
+                spriteBatch.Draw(buildInProcessTexture, cloudPosition, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates,
                     defaultScale, SpriteEffects.None, 0f);
 
-                Vector2 lineDrawingTexturePosition = new Vector2(positionInWorldCoordinates.X, positionInWorldCoordinates.Y + 100);
-                spriteBatch.Draw(lineDrawingTexture, lineDrawingTexturePosition, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates,
-                    defaultScale, SpriteEffects.None, 0f);
+//                Vector2 lineDrawingTexturePosition = new Vector2(positionInWorldCoordinates.X, positionInWorldCoordinates.Y + 100);
+//                spriteBatch.Draw(lineDrawingTexture, lineDrawingTexturePosition, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates,
+//                    defaultScale, SpriteEffects.None, 0f);
 
             }
 
@@ -91,13 +91,13 @@ namespace mike_and_conquer
         {
             SetupLineDrawingTexture(angleInDegrees);
 
-            if (cloudTexture != null)
+            if (buildInProcessTexture != null)
             {
-                cloudTexture.Dispose();
-                cloudTexture = null;
+                buildInProcessTexture.Dispose();
+                buildInProcessTexture = null;
             }
-            cloudTexture = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, texture.Width, texture.Height);
-            int numPixels = cloudTexture.Width * cloudTexture.Height;
+            buildInProcessTexture = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, staticTexture.Width, staticTexture.Height);
+            int numPixels = buildInProcessTexture.Width * buildInProcessTexture.Height;
             Color[] texturePixelData = new Color[numPixels];
 
             Color[] lineDrawingTexturePixelData = new Color[numPixels];
@@ -127,7 +127,7 @@ namespace mike_and_conquer
 
             }
 
-            cloudTexture.SetData(texturePixelData);
+            buildInProcessTexture.SetData(texturePixelData);
 
         }
 
@@ -140,7 +140,7 @@ namespace mike_and_conquer
                 lineDrawingTexture.Dispose();
                 lineDrawingTexture = null;
             }
-            lineDrawingTexture = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice, texture.Width, texture.Height);
+            lineDrawingTexture = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice, staticTexture.Width, staticTexture.Height);
 
             MikeAndConquerGame.instance.GraphicsDevice.SetRenderTarget(lineDrawingTexture);
             SpriteBatch spriteBatch = new SpriteBatch(MikeAndConquerGame.instance.GraphicsDevice);
@@ -287,7 +287,7 @@ namespace mike_and_conquer
                 new Rectangle(// rectangle defines shape of line and position of start of line
                     (int)start.X,
                     (int)start.Y,
-                    (int)edge.Length(), //sb will strech the texture to fill this rectangle
+                    (int)edge.Length(), //sb will strech the staticTexture to fill this rectangle
                     1), //width of line, change this to make thicker line
                 null,
                 Color.Red, //colour of line

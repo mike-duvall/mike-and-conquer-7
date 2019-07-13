@@ -30,8 +30,8 @@ namespace mike_and_conquer.gameview
                 new ToolbarBuildIconSprite(
                     MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY)[0].Texture,
                     MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY)[0].FrameData);
-            toolbarBuildIconSprite.isBuilding = true;
-            toolbarBuildIconSprite.RemapAllPixels(315);
+//            toolbarBuildIconSprite.isBuilding = true;
+//            toolbarBuildIconSprite.RemapAllPixels(315);
         }
 
 
@@ -57,12 +57,14 @@ namespace mike_and_conquer.gameview
                 {
                     angle -= 360;
                 }
+
+                toolbarBuildIconSprite.isBuilding = true;
                 toolbarBuildIconSprite.RemapAllPixels(angle);                
 
             }
             else
             {
-
+                toolbarBuildIconSprite.isBuilding = false;
             }
 
 

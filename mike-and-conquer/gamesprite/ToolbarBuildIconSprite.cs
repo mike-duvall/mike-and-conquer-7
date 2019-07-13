@@ -65,18 +65,20 @@ namespace mike_and_conquer
 
             float defaultScale = 1;
 
-            spriteBatch.Draw(staticTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
-
             if (isBuilding)
             {
-                Vector2 cloudPosition = new Vector2(positionInWorldCoordinates.X + 100, positionInWorldCoordinates.Y);
-                spriteBatch.Draw(buildInProcessTexture, cloudPosition, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates,
-                    defaultScale, SpriteEffects.None, 0f);
+                //                Vector2 cloudPosition = new Vector2(positionInWorldCoordinates.X + 100, positionInWorldCoordinates.Y);
+                //                spriteBatch.Draw(buildInProcessTexture, cloudPosition, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates,
+                //                    defaultScale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(buildInProcessTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
 
-//                Vector2 lineDrawingTexturePosition = new Vector2(positionInWorldCoordinates.X, positionInWorldCoordinates.Y + 100);
-//                spriteBatch.Draw(lineDrawingTexture, lineDrawingTexturePosition, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates,
-//                    defaultScale, SpriteEffects.None, 0f);
-
+                //                Vector2 lineDrawingTexturePosition = new Vector2(positionInWorldCoordinates.X, positionInWorldCoordinates.Y + 100);
+                //                spriteBatch.Draw(lineDrawingTexture, lineDrawingTexturePosition, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates,
+                //                    defaultScale, SpriteEffects.None, 0f);
+            }
+            else
+            {
+                spriteBatch.Draw(staticTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
             }
 
             if (drawBoundingRectangle)

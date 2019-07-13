@@ -16,6 +16,30 @@ namespace mike_and_conquer
 
         private Boolean isBuildingMinigunner;
         private int minigunnerBuildCountdown;
+        private static int minigunnerBuildCountdownMax = 400;
+
+        public Boolean IsBuildingMinigunner
+        {
+            get { return isBuildingMinigunner; }
+        }
+        
+        public int PercentMinigunnerBuildComplete
+        {
+            get { return CalculatePercentMinigunnerBuildComplete(); }
+        }
+
+
+        private int CalculatePercentMinigunnerBuildComplete()
+        {
+            if (isBuildingMinigunner)
+            {
+                return 100 - ((minigunnerBuildCountdown * 100) / minigunnerBuildCountdownMax);
+            }
+            else
+            {
+                return 100;
+            }
+        }
 
         protected GDIBarracks()
         {
@@ -45,7 +69,7 @@ namespace mike_and_conquer
         {
 
             isBuildingMinigunner = true;
-            minigunnerBuildCountdown = 200;
+            minigunnerBuildCountdown = minigunnerBuildCountdownMax;
         }
 
         public void Update(GameTime gameTime)

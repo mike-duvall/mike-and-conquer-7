@@ -22,7 +22,7 @@ namespace mike_and_conquer.gameview
         public const string SHP_FILE_NAME = "Content\\e1icnh.tem";
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
-        private double angleInDegrees = 315;
+//        private double angleInDegrees = 315;
 
         public MinigunnerIconView()
         {
@@ -31,7 +31,7 @@ namespace mike_and_conquer.gameview
                     MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY)[0].Texture,
                     MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY)[0].FrameData);
             singleTextureSprite.drawCloudTexture = true;
-            singleTextureSprite.RemapAllPixels(angleInDegrees);
+            singleTextureSprite.RemapAllPixels(315);
         }
 
 
@@ -46,12 +46,33 @@ namespace mike_and_conquer.gameview
 
         public void Update(GameTime gameTime)
         {
-            angleInDegrees += 1.0f;
-            if (angleInDegrees > 360)
+
+            GDIBarracks barracks = MikeAndConquerGame.instance.gameWorld.GDIBarracks;
+            if (barracks.IsBuildingMinigunner)
             {
-                angleInDegrees = 0;
+                int percentComplete = barracks.PercentMinigunnerBuildComplete;
+                int angle = 360 * percentComplete / 100;
+                angle += 270;
+                if (angle > 360)
+                {
+                    angle -= 360;
+                }
+                singleTextureSprite.RemapAllPixels(angle);                
+
             }
-            singleTextureSprite.RemapAllPixels(angleInDegrees);
+            else
+            {
+
+            }
+
+//            float newAngleInDegrees = 360 *
+//            angleInDegrees += 1.0f;
+//            if (angleInDegrees > 360)
+//            {
+//                angleInDegrees = 0;
+//            }
+//            MikeAndConquerGame.instance.gameWorld.GDIBarracks.
+//            singleTextureSprite.RemapAllPixels(angleInDegrees);
 
         }
 

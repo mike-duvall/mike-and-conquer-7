@@ -19,8 +19,8 @@ namespace mike_and_conquer
     {
 
         Texture2D texture;
-        private Texture2D cloudTexture;
-        private RenderTarget2D lineDrawingTexture;
+        private Texture2D cloudTexture = null;
+        private RenderTarget2D lineDrawingTexture = null;
         public bool drawCloudTexture;
 
         private byte[] frameData;
@@ -91,6 +91,11 @@ namespace mike_and_conquer
         {
             SetupLineDrawingTexture(angleInDegrees);
 
+            if (cloudTexture != null)
+            {
+                cloudTexture.Dispose();
+                cloudTexture = null;
+            }
             cloudTexture = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, texture.Width, texture.Height);
             int numPixels = cloudTexture.Width * cloudTexture.Height;
             Color[] texturePixelData = new Color[numPixels];
@@ -130,9 +135,12 @@ namespace mike_and_conquer
         private void SetupLineDrawingTexture(double angleInDegrees)
         {
 
-            //            lineDrawingTexture = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, texture.Width, texture.Height);
+            if (lineDrawingTexture != null)
+            {
+                lineDrawingTexture.Dispose();
+                lineDrawingTexture = null;
+            }
             lineDrawingTexture = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice, texture.Width, texture.Height);
-
 
             MikeAndConquerGame.instance.GraphicsDevice.SetRenderTarget(lineDrawingTexture);
             SpriteBatch spriteBatch = new SpriteBatch(MikeAndConquerGame.instance.GraphicsDevice);

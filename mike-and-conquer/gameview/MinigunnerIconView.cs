@@ -28,6 +28,9 @@ namespace mike_and_conquer.gameview
         }
 
 
+        // This code for updating the buildIcon with percent progress shading
+        // Manualy sets and restore GraphicsDevice.renderTarget, so it needs to happen in the "Update" 
+        // part of the loop, rather than the "Draw" part.  I initial put it in Draw and it didn't work
         public void Update(GameTime gameTime)
         {
 

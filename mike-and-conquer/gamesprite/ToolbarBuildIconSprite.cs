@@ -20,7 +20,7 @@ namespace mike_and_conquer
 
         Texture2D staticTexture;
         private Texture2D buildInProcessTexture = null;
-        private RenderTarget2D lineDrawingTexture = null;
+        private RenderTarget2D buildInProcessSkeletonTexture = null;
         public bool isBuilding;
 
         private byte[] frameData;
@@ -73,7 +73,7 @@ namespace mike_and_conquer
                 spriteBatch.Draw(buildInProcessTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
 
                 //                Vector2 lineDrawingTexturePosition = new Vector2(positionInWorldCoordinates.X, positionInWorldCoordinates.Y + 100);
-                //                spriteBatch.Draw(lineDrawingTexture, lineDrawingTexturePosition, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates,
+                //                spriteBatch.Draw(buildInProcessSkeletonTexture, lineDrawingTexturePosition, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates,
                 //                    defaultScale, SpriteEffects.None, 0f);
             }
             else
@@ -88,10 +88,21 @@ namespace mike_and_conquer
         }
 
 
-
-        public void RemapAllPixels(double angleInDegrees)
+        public void SetPercentBuildComplete(int percentComplete)
         {
-            SetupLineDrawingTexture(angleInDegrees);
+            int angle = 360 * percentComplete / 100;
+            angle += 270;
+            if (angle > 360)
+            {
+                angle -= 360;
+            }
+
+            this.UpdateBuildInProcessTexture(angle);
+        }
+
+        private void UpdateBuildInProcessTexture(double angleInDegrees)
+        {
+            UpdateBuildInProcessSkeletonTexture(angleInDegrees);
 
             if (buildInProcessTexture != null)
             {
@@ -103,7 +114,7 @@ namespace mike_and_conquer
             Color[] texturePixelData = new Color[numPixels];
 
             Color[] lineDrawingTexturePixelData = new Color[numPixels];
-            lineDrawingTexture.GetData(lineDrawingTexturePixelData);
+            buildInProcessSkeletonTexture.GetData(lineDrawingTexturePixelData);
 
 
             GdiShpFileColorMapper shpFileColorMapper = new GdiShpFileColorMapper();
@@ -134,29 +145,21 @@ namespace mike_and_conquer
         }
 
 
-        private void SetupLineDrawingTexture(double angleInDegrees)
+        private void UpdateBuildInProcessSkeletonTexture(double angleInDegrees)
         {
-
-            if (lineDrawingTexture != null)
+            if (buildInProcessSkeletonTexture != null)
             {
-                lineDrawingTexture.Dispose();
-                lineDrawingTexture = null;
+                buildInProcessSkeletonTexture.Dispose();
+                buildInProcessSkeletonTexture = null;
             }
-            lineDrawingTexture = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice, staticTexture.Width, staticTexture.Height);
+            buildInProcessSkeletonTexture = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice, staticTexture.Width, staticTexture.Height);
 
-            MikeAndConquerGame.instance.GraphicsDevice.SetRenderTarget(lineDrawingTexture);
+            MikeAndConquerGame.instance.GraphicsDevice.SetRenderTarget(buildInProcessSkeletonTexture);
             SpriteBatch spriteBatch = new SpriteBatch(MikeAndConquerGame.instance.GraphicsDevice);
 
             spriteBatch.Begin(0, BlendState.Opaque, SamplerState.PointClamp);
 
             DrawLine(spriteBatch, new Vector2(32, 24), 270);  // Straight up
-//            DrawLine(spriteBatch, new Vector2(33, 24), 315);  // 45 degrees further, going clockwise
-//            DrawLine(spriteBatch, new Vector2(33, 24), 360);  // 90 degrees further, going clockwise
-//            DrawLine(spriteBatch, new Vector2(33, 24), 45); // 135 degrees
-//            DrawLine(spriteBatch, new Vector2(33, 24), 90);
-//            DrawLine(spriteBatch, new Vector2(33, 24), 135);
-//            DrawLine(spriteBatch, new Vector2(33, 24), 180);
-//            DrawLine(spriteBatch, new Vector2(33, 24), 225);
             DrawLine(spriteBatch, new Vector2(33, 24), angleInDegrees);
 
             spriteBatch.End();
@@ -170,9 +173,9 @@ namespace mike_and_conquer
         private void FloodFill(Point startPixel)
         {
 
-            int numPixels = lineDrawingTexture.Width * lineDrawingTexture.Height;
+            int numPixels = buildInProcessSkeletonTexture.Width * buildInProcessSkeletonTexture.Height;
             Color[] texturePixelData = new Color[numPixels];
-            lineDrawingTexture.GetData(texturePixelData);
+            buildInProcessSkeletonTexture.GetData(texturePixelData);
 
             Queue<Point> frontier = new Queue<Point>();
             frontier.Enqueue(startPixel);
@@ -181,7 +184,7 @@ namespace mike_and_conquer
             {
                 Point current = frontier.Dequeue();
 
-                texturePixelData[current.X + (current.Y * lineDrawingTexture.Width)] = Color.Red;
+                texturePixelData[current.X + (current.Y * buildInProcessSkeletonTexture.Width)] = Color.Red;
                 List<Point> connectedNodesToFill = CalculateConnectedNodesToFill(current, texturePixelData);
 
                 foreach (Point point in connectedNodesToFill)
@@ -194,7 +197,7 @@ namespace mike_and_conquer
                 }
             }
 
-            lineDrawingTexture.SetData(texturePixelData);
+            buildInProcessSkeletonTexture.SetData(texturePixelData);
 
         }
 
@@ -232,9 +235,9 @@ namespace mike_and_conquer
 
             bool isGoodToFill = false;
 
-            if(IsValidLocation(toRight.X, toRight.Y, lineDrawingTexture.Width, lineDrawingTexture.Height))
+            if(IsValidLocation(toRight.X, toRight.Y, buildInProcessSkeletonTexture.Width, buildInProcessSkeletonTexture.Height))
             {
-                Color toRightColor = texturePixelData[toRight.X + (toRight.Y * lineDrawingTexture.Width)];
+                Color toRightColor = texturePixelData[toRight.X + (toRight.Y * buildInProcessSkeletonTexture.Width)];
                 if (toRightColor == Color.Black)
                 {
                     isGoodToFill = true;

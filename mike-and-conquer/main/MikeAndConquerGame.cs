@@ -571,6 +571,7 @@ namespace mike_and_conquer
 
             SwitchToNewGameStateViewIfNeeded();
             gameCursor.Update(gameTime);
+
             minigunnerIconView.Update(gameTime);
             base.Update(gameTime);
         }

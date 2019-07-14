@@ -1,6 +1,4 @@
 ﻿
-using mike_and_conquer.gameobjects;
-using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -36,33 +34,19 @@ namespace mike_and_conquer.gameview
             GDIBarracks barracks = MikeAndConquerGame.instance.gameWorld.GDIBarracks;
             if (barracks.IsBuildingMinigunner)
             {
-//                int percentComplete = barracks.PercentMinigunnerBuildComplete;
-//                int angle = 360 * percentComplete / 100;
-//                angle += 270;
-//                if (angle > 360)
-//                {
-//                    angle -= 360;
-//                }
-//
                 toolbarBuildIconSprite.isBuilding = true;
-//                toolbarBuildIconSprite.RemapAllPixels(angle);
-
                 toolbarBuildIconSprite.SetPercentBuildComplete(barracks.PercentMinigunnerBuildComplete);
             }
             else
             {
                 toolbarBuildIconSprite.isBuilding = false;
             }
-
-
         }
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             toolbarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2(toolbarBuildIconSprite.Width / 2, toolbarBuildIconSprite.Height / 2));
         }
-
-
 
     }
 }

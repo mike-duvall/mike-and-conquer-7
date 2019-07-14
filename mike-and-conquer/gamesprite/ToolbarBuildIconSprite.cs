@@ -19,8 +19,9 @@ namespace mike_and_conquer
     {
 
         Texture2D staticTexture;
-        private Texture2D buildInProcessTexture = null;
-        private RenderTarget2D buildInProcessSkeletonTexture = null;
+        private Texture2D buildInProcessTexture;
+        private RenderTarget2D shadeCalculationHelperTexture;
+
         public bool isBuilding;
 
         private byte[] frameData;
@@ -41,7 +42,6 @@ namespace mike_and_conquer
         }
 
 
-
         public ToolbarBuildIconSprite(Texture2D staticTexture, byte[] frameData)
         {
             this.staticTexture = staticTexture;
@@ -51,12 +51,10 @@ namespace mike_and_conquer
 
             middleOfSpriteInSpriteCoordinates = new Vector2();
 
-
             middleOfSpriteInSpriteCoordinates.X = Width / 2;
             middleOfSpriteInSpriteCoordinates.Y = Height / 2;
 
             drawBoundingRectangle = false;
-
         }
 
         
@@ -67,14 +65,7 @@ namespace mike_and_conquer
 
             if (isBuilding)
             {
-                //                Vector2 cloudPosition = new Vector2(positionInWorldCoordinates.X + 100, positionInWorldCoordinates.Y);
-                //                spriteBatch.Draw(buildInProcessTexture, cloudPosition, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates,
-                //                    defaultScale, SpriteEffects.None, 0f);
                 spriteBatch.Draw(buildInProcessTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
-
-                //                Vector2 lineDrawingTexturePosition = new Vector2(positionInWorldCoordinates.X, positionInWorldCoordinates.Y + 100);
-                //                spriteBatch.Draw(buildInProcessSkeletonTexture, lineDrawingTexturePosition, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates,
-                //                    defaultScale, SpriteEffects.None, 0f);
             }
             else
             {
@@ -102,7 +93,7 @@ namespace mike_and_conquer
 
         private void UpdateBuildInProcessTexture(double angleInDegrees)
         {
-            UpdateBuildInProcessSkeletonTexture(angleInDegrees);
+            UpdateShadeCalculationHelperTexture(angleInDegrees);
 
             if (buildInProcessTexture != null)
             {
@@ -114,7 +105,7 @@ namespace mike_and_conquer
             Color[] texturePixelData = new Color[numPixels];
 
             Color[] lineDrawingTexturePixelData = new Color[numPixels];
-            buildInProcessSkeletonTexture.GetData(lineDrawingTexturePixelData);
+            shadeCalculationHelperTexture.GetData(lineDrawingTexturePixelData);
 
 
             GdiShpFileColorMapper shpFileColorMapper = new GdiShpFileColorMapper();
@@ -145,16 +136,16 @@ namespace mike_and_conquer
         }
 
 
-        private void UpdateBuildInProcessSkeletonTexture(double angleInDegrees)
+        private void UpdateShadeCalculationHelperTexture(double angleInDegrees)
         {
-            if (buildInProcessSkeletonTexture != null)
+            if (shadeCalculationHelperTexture != null)
             {
-                buildInProcessSkeletonTexture.Dispose();
-                buildInProcessSkeletonTexture = null;
+                shadeCalculationHelperTexture.Dispose();
+                shadeCalculationHelperTexture = null;
             }
-            buildInProcessSkeletonTexture = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice, staticTexture.Width, staticTexture.Height);
+            shadeCalculationHelperTexture = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice, staticTexture.Width, staticTexture.Height);
 
-            MikeAndConquerGame.instance.GraphicsDevice.SetRenderTarget(buildInProcessSkeletonTexture);
+            MikeAndConquerGame.instance.GraphicsDevice.SetRenderTarget(shadeCalculationHelperTexture);
             SpriteBatch spriteBatch = new SpriteBatch(MikeAndConquerGame.instance.GraphicsDevice);
 
             spriteBatch.Begin(0, BlendState.Opaque, SamplerState.PointClamp);
@@ -170,12 +161,13 @@ namespace mike_and_conquer
         }
 
 
+        // TODO:  This is fairly hard coded to just work with this texture
+        // Could generalize this in the future if needed. 
         private void FloodFill(Point startPixel)
         {
-
-            int numPixels = buildInProcessSkeletonTexture.Width * buildInProcessSkeletonTexture.Height;
+            int numPixels = shadeCalculationHelperTexture.Width * shadeCalculationHelperTexture.Height;
             Color[] texturePixelData = new Color[numPixels];
-            buildInProcessSkeletonTexture.GetData(texturePixelData);
+            shadeCalculationHelperTexture.GetData(texturePixelData);
 
             Queue<Point> frontier = new Queue<Point>();
             frontier.Enqueue(startPixel);
@@ -184,7 +176,7 @@ namespace mike_and_conquer
             {
                 Point current = frontier.Dequeue();
 
-                texturePixelData[current.X + (current.Y * buildInProcessSkeletonTexture.Width)] = Color.Red;
+                texturePixelData[current.X + (current.Y * shadeCalculationHelperTexture.Width)] = Color.Red;
                 List<Point> connectedNodesToFill = CalculateConnectedNodesToFill(current, texturePixelData);
 
                 foreach (Point point in connectedNodesToFill)
@@ -193,60 +185,54 @@ namespace mike_and_conquer
                     {
                         frontier.Enqueue(point);
                     }
-
                 }
             }
 
-            buildInProcessSkeletonTexture.SetData(texturePixelData);
+            shadeCalculationHelperTexture.SetData(texturePixelData);
 
         }
 
         private List<Point> CalculateConnectedNodesToFill(Point current, Color[] texturePixelData)
         {
             List<Point> pointList = new List<Point>();
-            Point toRight = new Point(current.X + 1, current.Y);
-            if (IsNodeToFill(toRight, texturePixelData))
-            {
-                pointList.Add(toRight);
-            }
+            Point pointToTheRight = new Point(current.X + 1, current.Y);
+            Point pointBelow = new Point(current.X, current.Y + 1);
+            Point pointToTheLeft = new Point(current.X - 1, current.Y);
+            Point pointAbove = new Point(current.X, current.Y - 1);
 
-            Point toBottom = new Point(current.X, current.Y + 1 );
-            if (IsNodeToFill(toBottom, texturePixelData))
-            {
-                pointList.Add(toBottom);
-            }
+            EvaluatePoint(texturePixelData, pointToTheRight, pointList);
+            EvaluatePoint(texturePixelData, pointBelow, pointList);
+            EvaluatePoint(texturePixelData, pointToTheLeft, pointList);
+            EvaluatePoint(texturePixelData, pointAbove, pointList);
 
-            Point toLeft = new Point(current.X - 1, current.Y);
-            if (IsNodeToFill(toLeft, texturePixelData))
-            {
-                pointList.Add(toLeft);
-            }
-
-            Point toTop = new Point(current.X, current.Y - 1);
-            if (IsNodeToFill(toTop, texturePixelData))
-            {
-                pointList.Add(toTop);
-            }
             return pointList;
         }
 
-        private bool IsNodeToFill(Point toRight, Color[] texturePixelData)
+        private void EvaluatePoint(Color[] texturePixelData, Point pointToTheRight, List<Point> pointList)
+        {
+            if (IsNodeToFill(pointToTheRight, texturePixelData))
+            {
+                pointList.Add(pointToTheRight);
+            }
+        }
+
+        private bool IsNodeToFill(Point aPoint, Color[] texturePixelData)
         {
 
             bool isGoodToFill = false;
 
-            if(IsValidLocation(toRight.X, toRight.Y, buildInProcessSkeletonTexture.Width, buildInProcessSkeletonTexture.Height))
+            if(IsValidLocation(aPoint.X, aPoint.Y, shadeCalculationHelperTexture.Width, shadeCalculationHelperTexture.Height))
             {
-                Color toRightColor = texturePixelData[toRight.X + (toRight.Y * buildInProcessSkeletonTexture.Width)];
+                Color toRightColor = texturePixelData[aPoint.X + (aPoint.Y * shadeCalculationHelperTexture.Width)];
                 if (toRightColor == Color.Black)
                 {
                     isGoodToFill = true;
                 }
-
             }
 
             return isGoodToFill;
         }
+
 
         bool IsValidLocation(int x, int y, int width, int height)
         {
@@ -260,14 +246,13 @@ namespace mike_and_conquer
         }
 
 
-
         private void DrawLine(SpriteBatch spriteBatch, Vector2 startEndpoint, double angleInDegrees)
         {
+            int arbitraryLengthLargerThanTheTexture = 160;
             double angleDegreeInRadians = DegreeToRadian(angleInDegrees);
-            int x2 = (int)(startEndpoint.X + (160 * Math.Cos(angleDegreeInRadians)));
-            int y2 = (int)(startEndpoint.Y + (160 * Math.Sin(angleDegreeInRadians)));
+            int x2 = (int)(startEndpoint.X + (arbitraryLengthLargerThanTheTexture * Math.Cos(angleDegreeInRadians)));
+            int y2 = (int)(startEndpoint.Y + (arbitraryLengthLargerThanTheTexture * Math.Sin(angleDegreeInRadians)));
             DrawLine(spriteBatch, startEndpoint, new Vector2(x2, y2));
-
         }
 
         private double DegreeToRadian(double angle)

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 //using System.Linq;
 using OpenRA.Graphics;
-using OpenRA.Mods.Common.SpriteLoaders;
+
 
 namespace mike_and_conquer.gamesprite
 {
@@ -74,7 +74,7 @@ namespace mike_and_conquer.gamesprite
                 }
 
                 texture2D.SetData(texturePixelData);
-                UnitFrame unitFrame = new UnitFrame(texture2D, shadowIndexList);
+                UnitFrame unitFrame = new UnitFrame(texture2D, frameData, shadowIndexList);
                 unitFrameList.Add(unitFrame);
             }
 

@@ -166,8 +166,17 @@ namespace mike_and_conquer
             UpdateAIControllers(gameTime);
             UpdateGDIMinigunners(gameTime);
             UpdateNodMinigunners(gameTime);
+            UpdateBarracks(gameTime);
         }
 
+
+        private void UpdateBarracks(GameTime gameTime)
+        {
+            if (gdiBarracks != null)
+            {
+                gdiBarracks.Update(gameTime);
+            }
+        }
 
         private void UpdateNodMinigunners(GameTime gameTime)
         {

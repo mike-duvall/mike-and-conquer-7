@@ -7,7 +7,9 @@ namespace mike_and_conquer.gamesprite
     public class UnitFrame
     {
         private Texture2D texture;
+        private byte[] frameData;
         private List<int> shadowIndexList;
+
 
         public Texture2D Texture
         {
@@ -19,10 +21,16 @@ namespace mike_and_conquer.gamesprite
             get { return shadowIndexList; }
         }
 
+        public byte[] FrameData
+        {
+            get { return frameData; }
+        }
 
-        public UnitFrame(Texture2D texture, List<int> shadowIndexList)
+
+        public UnitFrame(Texture2D texture, byte[] frameData, List<int> shadowIndexList)
         {
             this.texture = texture;
+            this.frameData = frameData;
             this.shadowIndexList = shadowIndexList;
         }
     }

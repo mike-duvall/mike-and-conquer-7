@@ -14,6 +14,33 @@ namespace mike_and_conquer
 
         public Vector2 positionInWorldCoordinates { get; set; }
 
+        private Boolean isBuildingMinigunner;
+        private int minigunnerBuildCountdown;
+        private static int minigunnerBuildCountdownMax = 400;
+
+        public Boolean IsBuildingMinigunner
+        {
+            get { return isBuildingMinigunner; }
+        }
+        
+        public int PercentMinigunnerBuildComplete
+        {
+            get { return CalculatePercentMinigunnerBuildComplete(); }
+        }
+
+
+        private int CalculatePercentMinigunnerBuildComplete()
+        {
+            if (isBuildingMinigunner)
+            {
+                return 100 - ((minigunnerBuildCountdown * 100) / minigunnerBuildCountdownMax);
+            }
+            else
+            {
+                return 100;
+            }
+        }
+
         protected GDIBarracks()
         {
         }
@@ -23,6 +50,7 @@ namespace mike_and_conquer
         {
             positionInWorldCoordinates = new Vector2(x, y);
         }
+
 
 
 //        public bool ContainsPoint(Point aPoint)
@@ -37,6 +65,38 @@ namespace mike_and_conquer
 //        }
 
 
+        public void StartBuildingMinigunner()
+        {
+
+            isBuildingMinigunner = true;
+            minigunnerBuildCountdown = minigunnerBuildCountdownMax;
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            if (isBuildingMinigunner)
+            {
+                minigunnerBuildCountdown--;
+                if (minigunnerBuildCountdown <= 0)
+                {
+                    CreateMinigunnerFromBarracks();
+                    isBuildingMinigunner = false;
+                }
+            }
+        }
+
+        private void CreateMinigunnerFromBarracks()
+        {
+            int minigunnerX = (int) positionInWorldCoordinates.X;
+            int minigunnerY = (int) (positionInWorldCoordinates.Y);
+
+            Point gdiMinigunnderPosition = new Point(minigunnerX, minigunnerY);
+            Minigunner builtMinigunner = MikeAndConquerGame.instance.AddGdiMinigunner(gdiMinigunnderPosition);
+
+            Point destinationInWC = new Point(gdiMinigunnderPosition.X, gdiMinigunnderPosition.Y + 40);
+            builtMinigunner.OrderToMoveToDestination(destinationInWC);
+
+        }
     }
 
 

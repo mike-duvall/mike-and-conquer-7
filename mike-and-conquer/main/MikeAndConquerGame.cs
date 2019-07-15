@@ -107,15 +107,18 @@ namespace mike_and_conquer
 //                graphics.PreferredBackBufferHeight = 1080;
                 graphics.PreferredBackBufferWidth = 2880;
                 graphics.PreferredBackBufferHeight = 1800;
-
             }
             else
             {
                 graphics.IsFullScreen = false;
-                //                graphics.PreferredBackBufferWidth = 1280;
-                //                graphics.PreferredBackBufferHeight = 1024;
-                graphics.PreferredBackBufferWidth = 1024;
-                graphics.PreferredBackBufferHeight = 768;
+//                graphics.PreferredBackBufferWidth = 1280;
+//                graphics.PreferredBackBufferHeight = 1024;
+//                graphics.PreferredBackBufferWidth = 1024;
+//                graphics.PreferredBackBufferHeight = 768;
+
+                graphics.PreferredBackBufferWidth = 1920;
+                graphics.PreferredBackBufferHeight = 1080;
+
 
             }
 
@@ -203,6 +206,7 @@ namespace mike_and_conquer
 
             toolbarViewportCamera = new Camera2D(toolbarViewport);
             toolbarViewportCamera.Zoom = 3.0f;
+//            toolbarViewportCamera.Zoom = 1.5f;
 
             float scaledHalfViewportWidth = CalculateLeftmostScrollX(toolbarViewport, toolbarViewportCamera.Zoom, 0);
             float scaledHalfViewportHeight = CalculateTopmostScrollY(toolbarViewport, toolbarViewportCamera.Zoom, 0);
@@ -562,12 +566,13 @@ namespace mike_and_conquer
             int originalX = (int)this.mapViewportCamera.Location.X;
             int originalY = (int)this.mapViewportCamera.Location.Y;
 
-
             HandleMapScrolling(originalY, originalX, newKeyboardState);
             oldKeyboardState = newKeyboardState;
 
             SwitchToNewGameStateViewIfNeeded();
             gameCursor.Update(gameTime);
+
+            minigunnerIconView.Update(gameTime);
             base.Update(gameTime);
         }
 

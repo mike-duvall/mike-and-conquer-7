@@ -1,6 +1,4 @@
 ﻿
-using mike_and_conquer.gameobjects;
-using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -12,42 +10,46 @@ namespace mike_and_conquer.gameview
     public class MinigunnerIconView
     {
 
-        // TODO Consider ToolBarIconSprite instead of UnitSprite
-        private UnitSprite unitSprite;
+        private ToolbarBuildIconSprite toolbarBuildIconSprite;
 
         public const string SPRITE_KEY = "MinigunnerIcon";
 
-//        // TODO:  SHP_FILE_NAME and ShpFileColorMapper don't really belong in this view
-//        // Views should be agnostic about where the sprite data was loaded from
         public const string SHP_FILE_NAME = "Content\\e1icnh.tem";
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
 
         public MinigunnerIconView()
         {
-            this.unitSprite = new UnitSprite(SPRITE_KEY);
-            this.unitSprite.drawShadow = true;
-            this.unitSprite.drawBoundingRectangle = false;
-            SetupAnimations();
+            toolbarBuildIconSprite =
+                new ToolbarBuildIconSprite(
+                    MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY)[0].Texture,
+                    MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY)[0].FrameData);
+
         }
 
 
-        private void SetupAnimations()
+        // This code for updating the buildIcon with percent progress shading
+        // Manually sets and restore GraphicsDevice.renderTarget, so it needs to happen in the "Update" 
+        // part of the loop, rather than the "Draw" part.  I initial put it in Draw and it didn't work
+        public void Update(GameTime gameTime)
         {
-            AnimationSequence animationSequence = new AnimationSequence(1);
-            animationSequence.AddFrame(0);
-            unitSprite.AddAnimationSequence(0, animationSequence);
-        }
 
+            GDIBarracks barracks = MikeAndConquerGame.instance.gameWorld.GDIBarracks;
+            if (barracks.IsBuildingMinigunner)
+            {
+                toolbarBuildIconSprite.isBuilding = true;
+                toolbarBuildIconSprite.SetPercentBuildComplete(barracks.PercentMinigunnerBuildComplete);
+            }
+            else
+            {
+                toolbarBuildIconSprite.isBuilding = false;
+            }
+        }
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-
-//            unitSprite.Draw(gameTime, spriteBatch, new Vector2(1,1));
-            unitSprite.Draw(gameTime, spriteBatch, new Vector2(unitSprite.Width / 2, unitSprite.Height / 2));
+            toolbarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2(toolbarBuildIconSprite.Width / 2, toolbarBuildIconSprite.Height / 2));
         }
-
-
 
     }
 }

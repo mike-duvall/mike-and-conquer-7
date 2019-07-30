@@ -97,7 +97,7 @@ namespace mike_and_conquer
 
             //  (Starting at 0x13CC in the file)
 
-            int startX = 36;
+            int startX = 35;
             int startY = 39;
             int endX = 61;
             int endY = 61;

@@ -113,11 +113,11 @@ namespace mike_and_conquer
                 graphics.IsFullScreen = false;
 //                graphics.PreferredBackBufferWidth = 1280;
 //                graphics.PreferredBackBufferHeight = 1024;
-//                graphics.PreferredBackBufferWidth = 1024;
-//                graphics.PreferredBackBufferHeight = 768;
+                graphics.PreferredBackBufferWidth = 1024;
+                graphics.PreferredBackBufferHeight = 768;
 
-                graphics.PreferredBackBufferWidth = 1920;
-                graphics.PreferredBackBufferHeight = 1080;
+//                graphics.PreferredBackBufferWidth = 1920;
+//                graphics.PreferredBackBufferHeight = 1080;
 
 
             }
@@ -225,10 +225,12 @@ namespace mike_and_conquer
             mapViewport.MaxDepth = 1;
 
             this.mapViewportCamera = new Camera2D(mapViewport);
-            this.mapViewportCamera.Zoom = 3.0f;
+//            this.mapViewportCamera.Zoom = 3.0f;
+            this.mapViewportCamera.Zoom = 1.0f;
             this.mapViewportCamera.Location =
                 new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
         }
+
 
 
         private void CreateBasicMapSquareViews()

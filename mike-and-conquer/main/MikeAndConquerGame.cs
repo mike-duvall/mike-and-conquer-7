@@ -225,8 +225,8 @@ namespace mike_and_conquer
             mapViewport.MaxDepth = 1;
 
             this.mapViewportCamera = new Camera2D(mapViewport);
-//            this.mapViewportCamera.Zoom = 3.0f;
-            this.mapViewportCamera.Zoom = 1.0f;
+            this.mapViewportCamera.Zoom = 3.0f;
+//            this.mapViewportCamera.Zoom = 1.0f;
             this.mapViewportCamera.Location =
                 new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
         }

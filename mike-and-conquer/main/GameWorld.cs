@@ -105,8 +105,6 @@ namespace mike_and_conquer
             gameMap = new GameMap(inputStream, startX, startY, endX, endY);
         }
 
-
-
         internal Minigunner GetGdiMinigunner(int id)
         {
             Minigunner foundMinigunner = null;

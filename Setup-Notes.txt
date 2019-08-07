@@ -41,6 +41,19 @@ Also, setup local project config to set build output to be the remote machine an
 * On the Debug tab, Check "Use remote machine", and set the value to "192.168.0.146" (Or whatever the IP address of the remote machine is)
 
 
+
+Git setup
+---------
+From command prompt, do:
+
+  git config --global user.email "my email address"
+  git config --global user.name "mike-duvall"
+
+Then do practice run of pulling repo into test directory, create and pushing to a test branch.
+When you attempt to push to a test branch, it will pop up a GUI asking you to login to git hub.
+Do so, then verify the test branch appeared in github
+
+
 Git Bash setup
 --------------
 To get TAB to cycle through autocomplete selections

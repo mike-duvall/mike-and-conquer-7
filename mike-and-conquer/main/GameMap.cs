@@ -104,7 +104,7 @@ namespace mike_and_conquer
 
                     x = x + GameWorld.MAP_TILE_WIDTH;
 
-                    bool incrementRow = ((i + 1) % 26) == 0;
+                    bool incrementRow = ((i + 1) % numColumns) == 0;
                     if (incrementRow)
                     {
                         x = GameWorld.MAP_TILE_WIDTH / 2;

@@ -97,15 +97,14 @@ namespace mike_and_conquer
 
             //  (Starting at 0x13CC in the file)
 
-            int startX = 36;
+            // TODO Should eventually read this out of the INI file instead of hard coding
+            int startX = 35;
             int startY = 39;
             int endX = 61;
             int endY = 61;
 
             gameMap = new GameMap(inputStream, startX, startY, endX, endY);
         }
-
-
 
         internal Minigunner GetGdiMinigunner(int id)
         {

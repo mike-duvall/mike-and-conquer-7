@@ -17,14 +17,20 @@ namespace mike_and_conquer_6
 
         public Matrix TransformMatrix
         {
-            get {
+            get
+            {
                 return
-                    Matrix.CreateTranslation(new Vector3(-Location.X, -Location.Y, 0)) *
+                    Matrix.CreateTranslation(new Vector3((int)-Location.X, (int)-Location.Y, 0)) *
                     Matrix.CreateRotationZ(Rotation) *
-                    Matrix.CreateScale(Zoom) * 
-                    Matrix.CreateTranslation(new Vector3(Bounds.Width * 0.5f, Bounds.Height * 0.5f, 0));
+                    Matrix.CreateScale(Zoom) *
+                    // Added rounding to int in the second CreateTranslation to solve an issue with
+                    // the first column of the texture getting doubled and the last column dropped, in cases
+                    // when the width had a decimal component (e.g. 809.5 vs 809)
+                    // Also decided to just go ahead and add same cast to (int) in the first CreateTranslation call too
+                    Matrix.CreateTranslation(new Vector3((int)(Bounds.Width * 0.5f), (int)(Bounds.Height * 0.5f), 0));
             }
         }
+
         
         public Camera2D(Viewport viewport)
         {

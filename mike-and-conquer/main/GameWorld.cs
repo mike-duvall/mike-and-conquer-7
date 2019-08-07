@@ -97,6 +97,7 @@ namespace mike_and_conquer
 
             //  (Starting at 0x13CC in the file)
 
+            // TODO Should eventually read this out of the INI file instead of hard coding
             int startX = 35;
             int startY = 39;
             int endX = 61;

@@ -17,7 +17,7 @@ using Exception = System.Exception;
 
 using FileStream = System.IO.FileStream;
 using FileMode = System.IO.FileMode;
-
+using System;
 
 namespace mike_and_conquer
 
@@ -93,7 +93,78 @@ namespace mike_and_conquer
         private void LoadMap()
         {
 
+
+            Point wayPoint0 = ConvertCellNumberToScreenCoordinates(2981);
+            Point wayPoint1 = ConvertCellNumberToScreenCoordinates(3558);
+            Point wayPoint2 = ConvertCellNumberToScreenCoordinates(3572);
+            Point wayPoint3 = ConvertCellNumberToScreenCoordinates(3450);
+
+            Point terrain2555 = ConvertCellNumberToScreenCoordinates(2555);
+            Point terrain3039 = ConvertCellNumberToScreenCoordinates(3039);
+            Point terrain2847 = ConvertCellNumberToScreenCoordinates(2847);
+            Point terrain2017 = ConvertCellNumberToScreenCoordinates(2017);
+            Point terrain2016 = ConvertCellNumberToScreenCoordinates(2016);
+
+            Point terrain2033 = ConvertCellNumberToScreenCoordinates(2033);
+
+
+            Dictionary<int, string> terrainMap = new Dictionary<int, string>();
+            terrainMap.Add(2555, "TC01");
+            terrainMap.Add(3039, "TC05");
+            terrainMap.Add(2847, "TC02");
+            terrainMap.Add(2017, "TC02");
+            terrainMap.Add(2016, "T01");
+            terrainMap.Add(2871, "TC02");
+            terrainMap.Add(2399, "TC02");
+            terrainMap.Add(2213, "TC04");
+            terrainMap.Add(2207, "TC05");
+            terrainMap.Add(2030, "T05");
+            terrainMap.Add(2283, "T06");
+            terrainMap.Add(2408, "T06");
+            terrainMap.Add(2345, "T07");
+            terrainMap.Add(2299, "T07");
+            terrainMap.Add(2032, "T07");
+            terrainMap.Add(2097, "T16");
+            terrainMap.Add(2033, "T17");
+            terrainMap.Add(2042, "TC01");
+            terrainMap.Add(2428, "TC01");
+            terrainMap.Add(2544, "TC02");
+            terrainMap.Add(2416, "T01");
+            terrainMap.Add(3369, "T06");
+            terrainMap.Add(3496, "T06");
+            terrainMap.Add(3246, "TC01");
+            terrainMap.Add(2666, "TC01");
+            terrainMap.Add(2605, "TC05");
+            terrainMap.Add(2794, "TC04");
+            terrainMap.Add(3052, "TC02");
+            terrainMap.Add(2861, "T02");
+            terrainMap.Add(2988, "T01");
+            terrainMap.Add(2860, "T07");
+            terrainMap.Add(2991, "T01");
+            terrainMap.Add(3245, "T16");
+            terrainMap.Add(3056, "TC02");
+            terrainMap.Add(3121, "T01");
+            terrainMap.Add(2936, "T01");
+            terrainMap.Add(2680, "TC05");
+            terrainMap.Add(2938, "TC04");
+            terrainMap.Add(2937, "T16");
+            terrainMap.Add(3303, "T01");
+            terrainMap.Add(3111, "T02");
+
+
+            foreach (int cellnumber in terrainMap.Keys)
+            {
+                Point point = ConvertCellNumberToScreenCoordinates(cellnumber);
+                if (point.X >= 0 && point.Y >= 0)
+                {
+                    int x = 3;
+                }
+
+
+            }
+
             System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
+
 
             //  (Starting at 0x13CC in the file)
 
@@ -104,6 +175,20 @@ namespace mike_and_conquer
             int endY = 61;
 
             gameMap = new GameMap(inputStream, startX, startY, endX, endY);
+        }
+
+        private Point ConvertCellNumberToScreenCoordinates(int cellnumber)
+        {
+            int quotient = cellnumber / 64;
+            int remainder = cellnumber % 64;
+
+            int mapTileX = remainder - 35;
+            int mapTileY = quotient - 39;
+
+            int mapX = mapTileX * 24;
+            int mapY = mapTileY * 24;
+
+            return new Point(mapX, mapY);
         }
 
         internal Minigunner GetGdiMinigunner(int id)

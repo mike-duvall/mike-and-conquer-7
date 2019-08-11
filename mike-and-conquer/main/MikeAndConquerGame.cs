@@ -98,8 +98,8 @@ namespace mike_and_conquer
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
 
-            bool makeFullscreen = true;
-//            bool makeFullscreen = false;
+//            bool makeFullscreen = true;
+            bool makeFullscreen = false;
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;
@@ -178,6 +178,7 @@ namespace mike_and_conquer
             AddSandbag(8, 4, 10);
             AddSandbag(9, 4, 10);
 
+            this.gameWorldView.terrainView = new TerrainView(new Point(576, 0));
             //                AddSandbag(12, 16, 10);
 
             //                AddSandbag(11, 16, 2);
@@ -225,8 +226,8 @@ namespace mike_and_conquer
             mapViewport.MaxDepth = 1;
 
             this.mapViewportCamera = new Camera2D(mapViewport);
-            this.mapViewportCamera.Zoom = 3.0f;
-//            this.mapViewportCamera.Zoom = 1.0f;
+//            this.mapViewportCamera.Zoom = 3.0f;
+            this.mapViewportCamera.Zoom = 1.0f;
             this.mapViewportCamera.Location =
                 new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
         }
@@ -323,6 +324,14 @@ namespace mike_and_conquer
                 GDIBarracksView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(GDIBarracksView.SHP_FILE_NAME),
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(TerrainView.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                TerrainView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(TerrainView.SHP_FILE_NAME),
+                TerrainView.SHP_FILE_COLOR_MAPPER);
+
+
         }
 
         private void LoadSingleTextures()
@@ -725,6 +734,7 @@ namespace mike_and_conquer
                 new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
+            this.gameWorldView.terrainView.Draw(gameTime,spriteBatch);
             spriteBatch.End();
         }
 

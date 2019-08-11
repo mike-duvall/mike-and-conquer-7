@@ -25,7 +25,8 @@ namespace mike_and_conquer
         Texture2D spriteBorderRectangleTexture;
         public Boolean drawBoundingRectangle;
 
-        private Vector2 middleOfSpriteInSpriteCoordinates;
+        //TODO Make this private
+        public Vector2 middleOfSpriteInSpriteCoordinates;
 
         private bool animate;
 
@@ -143,7 +144,7 @@ namespace mike_and_conquer
             foreach (int shadowIndex in shadowIndexList)
             {
                 int shadowXSpriteCoordinate = shadowIndex % this.currentTexture.Width;
-                int shadowYSpriteCoordinate = shadowIndex / this.currentTexture.Height;
+                int shadowYSpriteCoordinate = shadowIndex / this.currentTexture.Width;
 
 
                 int topLeftXOfSpriteInWorldCoordinates =
@@ -155,13 +156,15 @@ namespace mike_and_conquer
                 int shadowXWorldCoordinates = topLeftXOfSpriteInWorldCoordinates + shadowXSpriteCoordinate;
                 int shadowYWorldCoordinate = topLeftYOfSpriteInWorldCoordinates + shadowYSpriteCoordinate;
 
+
+
                 MapTileInstanceView underlyingMapTileInstanceView =
                     GameWorldView.instance.FindMapSquareView(shadowXWorldCoordinates,
                         shadowYWorldCoordinate);
 
-                // TODO:  Un-hard code 12
-                int topLeftXOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().X - 12;
-                int topLeftYOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().Y - 12;
+                int halfWidth = underlyingMapTileInstanceView.singleTextureSprite.Width / 2;
+                int topLeftXOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().X - halfWidth;
+                int topLeftYOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().Y - halfWidth;
 
                 int shadowXMapSquareCoordinate = shadowXWorldCoordinates - topLeftXOfUnderlyingMapSquareWorldCoordinates;
                 int shadowYMapSquareCoordinate = shadowYWorldCoordinate - topLeftYOfUnderlyingMapSquareWorldCoordinates;
@@ -170,8 +173,13 @@ namespace mike_and_conquer
                 int nonShadowPaletteIndexAtShadowLocation =
                     underlyingMapTileInstanceView.GetPaletteIndexOfCoordinate(shadowXMapSquareCoordinate, shadowYMapSquareCoordinate);
 
-                int shadowPaletteIndex =
-                    MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
+
+
+                int shadowPaletteIndex;
+
+                    shadowPaletteIndex =
+                        MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
+
 
                 if (shadowPaletteIndex != nonShadowPaletteIndexAtShadowLocation)
                 {

@@ -54,6 +54,7 @@ namespace mike_and_conquer.gameview
         public static GameWorldView instance;
 
 
+        public TerrainView terrainView;
 
         public GameWorldView()
         {

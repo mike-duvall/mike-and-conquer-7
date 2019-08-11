@@ -30,7 +30,7 @@ namespace mike_and_conquer.gameview
 
         internal int GetPaletteIndexOfCoordinate(int x, int y)
         {
-
+            
             List<MapTileFrame> mapTileFrameList = MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
             MapTileFrame mapTileFrame = mapTileFrameList[imageIndex];
             byte[] frameData = mapTileFrame.FrameData;

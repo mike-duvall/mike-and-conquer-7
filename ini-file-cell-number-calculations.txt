@@ -1,0 +1,58 @@
+ The Hand of Nod coordinates can be calculated form this number:
+   Y=26 and X=21. The cellnumber is [64*Y + X], here 1685.
+
+
+
+Waypoint 0 
+   cellnumber = 2981
+
+   Y=46
+   X=37
+
+   46* 64 = 2944
+
+   2918 - 2944 = 
+
+
+   [MAP]
+TacticalPos=3438
+Height=23
+Width=27
+Y=39
+X=35
+Theater=TEMPERATE
+
+
+Calc offset:
+
+Y=46-39 = 7
+X=37-35 = 2
+
+Looks like this matches
+
+X = 2 * 24 = 48
+Y = 7 * 24 = 168
+
+
+Convert:  
+2030
+
+to map X,Y:
+
+2030 / 64 = 31.7 -> 31
+31 * 64 = 1984
+
+2030 - 1984 = 46
+
+X = 46
+Y = 31
+
+
+Calc offset:
+
+Y=31-39 = -8
+X=46-35 = 11
+
+X = -8 * 24 = -192
+Y = 11 * 24 = 264
+

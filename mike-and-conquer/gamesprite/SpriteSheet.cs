@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,7 +25,16 @@ namespace mike_and_conquer.gamesprite
 
         public List<UnitFrame> GetUnitFramesForShpFile(string shpFileName)
         {
-            return unitFrameMap[shpFileName];
+            try
+            {
+                return unitFrameMap[shpFileName];
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine("Key:" + shpFileName);
+                throw e;
+            }
         }
 
 

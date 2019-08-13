@@ -32,6 +32,10 @@ namespace mike_and_conquer.gameview
                 nextSandbagView.Draw(gameTime, spriteBatch);
             }
 
+            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
+            {
+                nextTerrainView.Draw(gameTime, spriteBatch);
+            }
 
 
             MikeAndConquerGame.instance.unitSelectionBox.Draw(gameTime, spriteBatch);

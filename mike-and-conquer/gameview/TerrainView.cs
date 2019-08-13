@@ -14,33 +14,42 @@ namespace mike_and_conquer.gameview
     {
 
 
-
-
         // TODO:  Using UnitSprite for now.  May need new Sprite
         // unique to sandbag like things, things like trees, etc
         private UnitSprite unitSprite;
 
 
-        public const string SPRITE_KEY = "TC01";
+//        public const string SPRITE_KEY = "TC01";
 
         // TODO:  SHP_FILE_NAME and ShpFileColorMapper don't really belong in this view
         // Views should be agnostic about where the sprite data was loaded from
-        public const string SHP_FILE_NAME = "Content\\TC01.tem";
+//        public const string SHP_FILE_NAME = "Content\\TC01.tem";
 
 
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
         private Point position;
 
 
-        public TerrainView(Point position)
+        //        public TerrainView(Point position, string spriteKey)
+        //        {
+        //            this.unitSprite = new UnitSprite(spriteKey);
+        //            this.unitSprite.middleOfSpriteInSpriteCoordinates = new Vector2(0,0);
+        //            this.unitSprite.drawShadow = true;
+        //            this.position = position;
+        //
+        //            SetupAnimations();
+        //        }
+        public TerrainView(TerrainItem terrainItem)
         {
-            this.unitSprite = new UnitSprite(SPRITE_KEY);
-            this.unitSprite.middleOfSpriteInSpriteCoordinates = new Vector2(0,0);
+            this.unitSprite = new UnitSprite( terrainItem.TerrainItemType);
+            this.unitSprite.middleOfSpriteInSpriteCoordinates = new Vector2(0, 0);
             this.unitSprite.drawShadow = true;
-            this.position = position;
+            this.position = new Point((int) terrainItem.positionInWorldCoordinates.X,
+                (int) terrainItem.positionInWorldCoordinates.Y);
 
             SetupAnimations();
         }
+
 
         private void SetupAnimations()
         {

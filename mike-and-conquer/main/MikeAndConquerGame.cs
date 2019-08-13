@@ -1,4 +1,5 @@
 ﻿
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gamesprite;
@@ -167,18 +168,20 @@ namespace mike_and_conquer
 
             AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 3));
 
-            AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
+//            AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
 
-            AddSandbag(10, 6, 5);
-            AddSandbag(10, 7, 5);
-            AddSandbag(10, 8, 5);
-            AddSandbag(10, 9, 5);
-            AddSandbag(10, 10, 5);
+//            AddSandbag(10, 6, 5);
+//            AddSandbag(10, 7, 5);
+//            AddSandbag(10, 8, 5);
+//            AddSandbag(10, 9, 5);
+//            AddSandbag(10, 10, 5);
+//
+//            AddSandbag(8, 4, 10);
+//            AddSandbag(9, 4, 10);
 
-            AddSandbag(8, 4, 10);
-            AddSandbag(9, 4, 10);
+//            this.gameWorldView.terrainView1 = new TerrainView(new Point(576, 0), "Content\\TC01.tem");
+//            this.gameWorldView.terrainView2 = new TerrainView(new Point(480, 120), "Content\\TC02.tem");
 
-            this.gameWorldView.terrainView = new TerrainView(new Point(576, 0));
             //                AddSandbag(12, 16, 10);
 
             //                AddSandbag(11, 16, 2);
@@ -236,11 +239,6 @@ namespace mike_and_conquer
 
         private void CreateBasicMapSquareViews()
         {
-            //  (Starting at 0x13CC in the file)
-            //    Trees appear to be SHP vs TMP?
-            //    Map file only references TMP ?
-            //    What about placement of initial troops?
-            //    Sandbags
 
             foreach(MapTileInstance mapTileInstance in this.gameWorld.gameMap.MapTileInstanceList)
             {
@@ -248,6 +246,19 @@ namespace mike_and_conquer
             }
 
         }
+
+        private void CreateTerrainItemViews()
+        {
+
+            
+
+            foreach (TerrainItem terrainItem in gameWorld.terrainItemList)
+            {
+                gameWorldView.AddTerrainItemView(terrainItem);
+            }
+
+        }
+
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -263,6 +274,7 @@ namespace mike_and_conquer
 
             LoadTextures();
             CreateBasicMapSquareViews();
+            CreateTerrainItemViews();
 
             if (!testMode)
             {
@@ -325,12 +337,33 @@ namespace mike_and_conquer
                 raiSpriteFrameManager.GetSpriteFramesForUnit(GDIBarracksView.SHP_FILE_NAME),
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
 
-            raiSpriteFrameManager.LoadAllTexturesFromShpFile(TerrainView.SHP_FILE_NAME);
-            spriteSheet.LoadUnitFramesFromSpriteFrames(
-                TerrainView.SPRITE_KEY,
-                raiSpriteFrameManager.GetSpriteFramesForUnit(TerrainView.SHP_FILE_NAME),
-                TerrainView.SHP_FILE_COLOR_MAPPER);
+            //            raiSpriteFrameManager.LoadAllTexturesFromShpFile(TerrainView.SHP_FILE_NAME);
+            //            spriteSheet.LoadUnitFramesFromSpriteFrames(
+            //                TerrainView.SPRITE_KEY,
+            //                raiSpriteFrameManager.GetSpriteFramesForUnit(TerrainView.SHP_FILE_NAME),
+            //                TerrainView.SHP_FILE_COLOR_MAPPER);
 
+            LoadTerrainTexture("Content\\T01.tem");
+            LoadTerrainTexture("Content\\T02.tem");
+            LoadTerrainTexture("Content\\T05.tem");
+            LoadTerrainTexture("Content\\T06.tem");
+            LoadTerrainTexture("Content\\T07.tem");
+            LoadTerrainTexture("Content\\T16.tem");
+            LoadTerrainTexture("Content\\T17.tem");
+            LoadTerrainTexture("Content\\TC01.tem");
+            LoadTerrainTexture("Content\\TC02.tem");
+            LoadTerrainTexture("Content\\TC04.tem");
+            LoadTerrainTexture("Content\\TC05.tem");
+
+        }
+
+        private void LoadTerrainTexture(String filename)
+        {
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(filename);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                filename,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(filename),
+                TerrainView.SHP_FILE_COLOR_MAPPER);
 
         }
 
@@ -734,7 +767,8 @@ namespace mike_and_conquer
                 new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
-            this.gameWorldView.terrainView.Draw(gameTime,spriteBatch);
+//            this.gameWorldView.terrainView1.Draw(gameTime,spriteBatch);
+//            this.gameWorldView.terrainView2.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
 

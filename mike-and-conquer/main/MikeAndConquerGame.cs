@@ -168,6 +168,7 @@ namespace mike_and_conquer
 
             AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 3));
 
+
 //            AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
 
 //            AddSandbag(10, 6, 5);
@@ -737,18 +738,33 @@ namespace mike_and_conquer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+
+
             GraphicsDevice.Clear(Color.Crimson);
 
             DrawMap(gameTime);
-            DrawToolbar(gameTime);
-            DrawGameCursor(gameTime);
+//            DrawToolbar(gameTime);
+//            DrawGameCursor(gameTime);
 
             GraphicsDevice.Viewport = defaultViewport;
             base.Draw(gameTime);
+
+
         }
 
         private void DrawMap(GameTime gameTime)
         {
+            bool renderToTexture = true;
+
+            RenderTarget2D screenRenderTarget2D = null;
+
+            if (renderToTexture)
+            {
+                screenRenderTarget2D = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
+                    mapViewport.Width, mapViewport.Height);
+                GraphicsDevice.SetRenderTarget(screenRenderTarget2D);
+            }
+
             GraphicsDevice.Viewport = mapViewport;
             const BlendState nullBlendState = null;
             const DepthStencilState nullDepthStencilState = null;
@@ -767,9 +783,22 @@ namespace mike_and_conquer
                 new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
-//            this.gameWorldView.terrainView1.Draw(gameTime,spriteBatch);
-//            this.gameWorldView.terrainView2.Draw(gameTime, spriteBatch);
             spriteBatch.End();
+
+            if (renderToTexture)
+            {
+                GraphicsDevice.SetRenderTarget(null);
+
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+                    SamplerState.LinearClamp, DepthStencilState.Default,
+                    RasterizerState.CullNone);
+
+                spriteBatch.Draw(screenRenderTarget2D, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
+
+                spriteBatch.End();
+
+            }
+
         }
 
         private void DrawToolbar(GameTime gameTime)

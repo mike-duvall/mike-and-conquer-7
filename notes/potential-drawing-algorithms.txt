@@ -1,0 +1,47 @@
+
+Possible algorithm:
+
+
+Render to "screen texture" instead of screen
+
+	Render terrain
+	Render shadows of trees as green
+	Render shadows of units as green
+	Render trees (possibly overwriting green shadows)
+	Render units (possibly overwriting green shadows)
+
+	Make final pass of entire "screen bitmap", mapping any remaining green to shadow
+
+Draw "screen texture" to screen
+
+
+
+OR
+
+
+Render to "screen texture" instead of screen
+
+	Render terrain
+	Render shadows of trees(as shadows)
+	Render shadows of units(as shadows)
+	Render units (possibly overwriting shadows)
+	Render trees (possibly overwriting shadows)
+	
+
+Draw "screen texture" to screen
+
+
+
+OR
+
+
+
+Render to "screen texture" instead of screen
+
+	Render terrain
+	Render shadows of trees(as shadows)
+	Render units, with their shadows mapped
+	Render trees, overwriting tree shadows, and units and their shadows
+
+
+Draw "screen texture" to screen

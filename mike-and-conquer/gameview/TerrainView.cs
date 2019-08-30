@@ -6,7 +6,7 @@ using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
-
+using System;
 
 namespace mike_and_conquer.gameview
 {
@@ -28,6 +28,11 @@ namespace mike_and_conquer.gameview
 
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
         private Point position;
+
+        internal void Update()
+        {
+            this.unitSprite.Update();
+        }
 
 
         //        public TerrainView(Point position, string spriteKey)
@@ -66,6 +71,16 @@ namespace mike_and_conquer.gameview
         }
 
 
+        public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            Vector2 positionAsVector2 = new Vector2(position.X, position.Y);
+            this.unitSprite.DrawShadowOnly(gameTime, spriteBatch, positionAsVector2);
+        }
 
+        public void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            Vector2 positionAsVector2 = new Vector2(position.X, position.Y);
+            this.unitSprite.DrawNoShadow(gameTime, spriteBatch, positionAsVector2);
+        }
     }
 }

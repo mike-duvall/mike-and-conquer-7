@@ -15,6 +15,17 @@ namespace mike_and_conquer.gameview
                 basicMapSquareView.Draw(gameTime, spriteBatch);
             }
 
+            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
+            {
+
+                nextTerrainView.Update();
+                nextTerrainView.DrawShadowOnly(gameTime, spriteBatch);
+                //                nextTerrainView.DrawNoShadow(gameTime, spriteBatch);
+                //
+                //                nextTerrainView.Draw(gameTime, spriteBatch);
+            }
+
+
             GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
@@ -34,7 +45,12 @@ namespace mike_and_conquer.gameview
 
             foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
             {
-                nextTerrainView.Draw(gameTime, spriteBatch);
+
+//                nextTerrainView.Update();
+                nextTerrainView.DrawNoShadow(gameTime,spriteBatch);
+                //                nextTerrainView.DrawNoShadow(gameTime, spriteBatch);
+                //
+                //                nextTerrainView.Draw(gameTime, spriteBatch);
             }
 
 

@@ -18,11 +18,14 @@ namespace mike_and_conquer.gameview
             foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
             {
 
-                nextTerrainView.Update();
-                nextTerrainView.DrawShadowOnly(gameTime, spriteBatch);
+//                nextTerrainView.Update();
+//                nextTerrainView.DrawShadowOnly(gameTime, spriteBatch);
                 //                nextTerrainView.DrawNoShadow(gameTime, spriteBatch);
                 //
                 //                nextTerrainView.Draw(gameTime, spriteBatch);
+//                nextTerrainView.Draw(gameTime,spriteBatch);
+                nextTerrainView.Update();
+                nextTerrainView.DrawShadowOnly(gameTime,spriteBatch);
             }
 
 
@@ -45,12 +48,7 @@ namespace mike_and_conquer.gameview
 
             foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
             {
-
-//                nextTerrainView.Update();
                 nextTerrainView.DrawNoShadow(gameTime,spriteBatch);
-                //                nextTerrainView.DrawNoShadow(gameTime, spriteBatch);
-                //
-                //                nextTerrainView.Draw(gameTime, spriteBatch);
             }
 
 

@@ -343,15 +343,7 @@ namespace mike_and_conquer
 
 
 
-        Pickup here
-        Rendering of tree shadows now seems to be working
-        But screen compares are all off, because colors
-        are approximately right but a few clicks off on each color
-
-        Investigate.  Maybe pull back to just rednering terrain
-        and doing compares.
-        And possibly revert back to master and see if screen compares are off there too
-        Something seems to have changes
+     
 
 
         internal Texture2D createSpriteBorderRectangleTexture()

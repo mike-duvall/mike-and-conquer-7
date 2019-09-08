@@ -99,8 +99,8 @@ namespace mike_and_conquer
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
 
-//            bool makeFullscreen = true;
-            bool makeFullscreen = false;
+            bool makeFullscreen = true;
+//            bool makeFullscreen = false;
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;
@@ -166,11 +166,11 @@ namespace mike_and_conquer
 
             AddGdiMinigunnerAtMapSquareCoordinates(new Point(6, 1));
 
-            AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 3));
-
-
+//            AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 3));
+//
+//
 //            AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
-
+//
 //            AddSandbag(10, 6, 5);
 //            AddSandbag(10, 7, 5);
 //            AddSandbag(10, 8, 5);
@@ -230,8 +230,8 @@ namespace mike_and_conquer
             mapViewport.MaxDepth = 1;
 
             this.mapViewportCamera = new Camera2D(mapViewport);
-//            this.mapViewportCamera.Zoom = 3.0f;
-            this.mapViewportCamera.Zoom = 1.0f;
+            this.mapViewportCamera.Zoom = 4.0f;
+//            this.mapViewportCamera.Zoom = 1.0f;
             this.mapViewportCamera.Location =
                 new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
         }
@@ -743,8 +743,8 @@ namespace mike_and_conquer
             GraphicsDevice.Clear(Color.Crimson);
 
             DrawMap(gameTime);
-//            DrawToolbar(gameTime);
-//            DrawGameCursor(gameTime);
+            DrawToolbar(gameTime);
+            DrawGameCursor(gameTime);
 
             GraphicsDevice.Viewport = defaultViewport;
             base.Draw(gameTime);
@@ -796,6 +796,8 @@ namespace mike_and_conquer
                 spriteBatch.Draw(screenRenderTarget2D, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
 
                 spriteBatch.End();
+
+                screenRenderTarget2D.Dispose();
 
             }
 

@@ -18,9 +18,15 @@ namespace mike_and_conquer.gameview
             foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
             {
 
-                nextTerrainView.Update();
-                nextTerrainView.DrawShadowOnly(gameTime,spriteBatch);
+//                nextTerrainView.Update();
+//                nextTerrainView.DrawShadowOnly(gameTime,spriteBatch);
+
+                nextTerrainView.Draw(gameTime, spriteBatch);
+
             }
+
+            Pickup here
+            Fix performance problem, choppy movement
 
 
             GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
@@ -40,10 +46,13 @@ namespace mike_and_conquer.gameview
                 nextSandbagView.Draw(gameTime, spriteBatch);
             }
 
-            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
-            {
-                nextTerrainView.DrawNoShadow(gameTime,spriteBatch);
-            }
+
+            // Restore proper drawing of shadows once I've solved performance issues
+
+//            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
+//            {
+//                nextTerrainView.DrawNoShadow(gameTime,spriteBatch);
+//            }
 
 
             MikeAndConquerGame.instance.unitSelectionBox.Draw(gameTime, spriteBatch);

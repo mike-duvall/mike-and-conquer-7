@@ -99,60 +99,50 @@ namespace mike_and_conquer
             // TODO Revisit what the key name should be, TC01, vs Content\\TC01.tem
 
 
-            Dictionary<int, string> terrainMap = new Dictionary<int, string>();
-//            terrainMap.Add(2555, "Content\\TC01.tem");
-//            terrainMap.Add(3039, "Content\\TC05.tem");
+            SortedDictionary<int, string> terrainMap = new SortedDictionary<int, string>();
+            terrainMap.Add(2555, "Content\\TC01.tem");
+            terrainMap.Add(3039, "Content\\TC05.tem");
             terrainMap.Add(2847, "Content\\TC02.tem");
             terrainMap.Add(2017, "Content\\TC02.tem");
             terrainMap.Add(2016, "Content\\T01.tem");
             terrainMap.Add(2871, "Content\\TC02.tem");
             terrainMap.Add(2399, "Content\\TC02.tem");
-//            terrainMap.Add(2213, "Content\\TC04.tem");
-//            terrainMap.Add(2207, "Content\\TC05.tem");
-//            terrainMap.Add(2030, "Content\\T05.tem");
-//            terrainMap.Add(2283, "Content\\T06.tem");
-//            terrainMap.Add(2408, "Content\\T06.tem");
-//            terrainMap.Add(2345, "Content\\T07.tem");
-//            terrainMap.Add(2299, "Content\\T07.tem");
-//            terrainMap.Add(2032, "Content\\T07.tem");
-//            terrainMap.Add(2097, "Content\\T16.tem");
-//            terrainMap.Add(2033, "Content\\T17.tem");
+            terrainMap.Add(2213, "Content\\TC04.tem");
+            terrainMap.Add(2207, "Content\\TC05.tem");
+            terrainMap.Add(2030, "Content\\T05.tem");
+            terrainMap.Add(2283, "Content\\T06.tem");
+            terrainMap.Add(2408, "Content\\T06.tem");
+            terrainMap.Add(2345, "Content\\T07.tem");
+            terrainMap.Add(2299, "Content\\T07.tem");
+            terrainMap.Add(2032, "Content\\T07.tem");
+            terrainMap.Add(2097, "Content\\T16.tem");
+            terrainMap.Add(2033, "Content\\T17.tem");
             terrainMap.Add(2042, "Content\\TC01.tem");
             terrainMap.Add(2428, "Content\\TC01.tem");
             terrainMap.Add(2544, "Content\\TC02.tem");
             terrainMap.Add(2416, "Content\\T01.tem");
-//            terrainMap.Add(3369, "Content\\T06.tem");
-//            terrainMap.Add(3496, "Content\\T06.tem");
+            terrainMap.Add(3369, "Content\\T06.tem");
+            terrainMap.Add(3496, "Content\\T06.tem");
             terrainMap.Add(3246, "Content\\TC01.tem");
             terrainMap.Add(2666, "Content\\TC01.tem");
-//            terrainMap.Add(2605, "Content\\TC05.tem");
-//            terrainMap.Add(2794, "Content\\TC04.tem");
+            terrainMap.Add(2605, "Content\\TC05.tem");
+            terrainMap.Add(2794, "Content\\TC04.tem");
             terrainMap.Add(3052, "Content\\TC02.tem");
-//            terrainMap.Add(2861, "Content\\T02.tem");
+            terrainMap.Add(2861, "Content\\T02.tem");
             terrainMap.Add(2988, "Content\\T01.tem");
-//            terrainMap.Add(2860, "Content\\T07.tem");
+            terrainMap.Add(2860, "Content\\T07.tem");
             terrainMap.Add(2991, "Content\\T01.tem");
-//            terrainMap.Add(3245, "Content\\T16.tem");
+            terrainMap.Add(3245, "Content\\T16.tem");
             terrainMap.Add(3056, "Content\\TC02.tem");
             terrainMap.Add(3121, "Content\\T01.tem");
             terrainMap.Add(2936, "Content\\T01.tem");
-//            terrainMap.Add(2680, "Content\\TC05.tem");
-//            terrainMap.Add(2938, "Content\\TC04.tem");
-//            terrainMap.Add(2937, "Content\\T16.tem");
+            terrainMap.Add(2680, "Content\\TC05.tem");
+            terrainMap.Add(2938, "Content\\TC04.tem");
+            terrainMap.Add(2937, "Content\\T16.tem");
             terrainMap.Add(3303, "Content\\T01.tem");
-            //            terrainMap.Add(3111, "Content\\T02.tem");
+            terrainMap.Add(3111, "Content\\T02.tem");
 
 
-            Pickup here
-            Screen compares at:  Desktop\TempMikeAndConquerPictures\3
-            are not matching.  Looks like T01.tem is getting drawn on top of TC02.tme
-            Revisit code above and below.
-            Need to duplicate order it's being draw in game
-            Possible ordering:
-                Order it's declared in the INI file
-                Or
-                Order in coordinates, from left to right, top to bottom
-            Experiment and find out
 
 
             foreach (int cellnumber in terrainMap.Keys)

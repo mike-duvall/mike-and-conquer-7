@@ -1,6 +1,5 @@
 ﻿using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
@@ -18,7 +17,9 @@ namespace mike_and_conquer
     {
 
         private List<UnitFrame> unitFrameList;
-        Texture2D currentTexture;
+        Texture2D noShadowTexture;
+
+        private Texture2D shadowOnlytexture2D;
 
         Texture2D spriteBorderRectangleTexture;
         public Boolean drawBoundingRectangle;
@@ -26,14 +27,9 @@ namespace mike_and_conquer
         //TODO Make this private
         public Vector2 middleOfSpriteInSpriteCoordinates;
 
-        private bool animate;
-
         private OpenRA.Graphics.ImmutablePalette palette;
 
-        public bool drawShadow;
-
-
-        private Texture2D shadowOnlytexture2D;
+        private int unitFrameImageIndex;
 
         private int width;
         public int Width
@@ -47,49 +43,49 @@ namespace mike_and_conquer
             get { return height; }
         }
 
-
-
-
         public TerrainSprite(string spriteListKey, Point position )
         {
-//            this.animationSequenceMap = new Dictionary<int, util.AnimationSequence>();
             unitFrameList = MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(spriteListKey);
+            unitFrameImageIndex = 0;
 
-            spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
+            spriteBorderRectangleTexture = CreateSpriteBorderRectangleTexture();
 
             middleOfSpriteInSpriteCoordinates = new Vector2();
 
-            UnitFrame firstUnitFrame = unitFrameList[0];
+            UnitFrame firstUnitFrame = unitFrameList[unitFrameImageIndex];
             middleOfSpriteInSpriteCoordinates.X = firstUnitFrame.Texture.Width / 2;
             middleOfSpriteInSpriteCoordinates.Y = firstUnitFrame.Texture.Height / 2;
             this.width = firstUnitFrame.Texture.Width;
             this.height = firstUnitFrame.Texture.Height;
             drawBoundingRectangle = false;
-            this.animate = true;
             int[] remap = { };
             palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
-            drawShadow = true;
+            InitializeNoShadowTexture(middleOfSpriteInSpriteCoordinates);
             InitializeShadowOnlyTexture(middleOfSpriteInSpriteCoordinates);
+        }
+
+        private void InitializeNoShadowTexture(Vector2 positionInWorldCoordinates)
+        {
+            noShadowTexture = unitFrameList[0].Texture;
+            UpdateShadowPixelsToBlank(positionInWorldCoordinates);
+
         }
 
         private void InitializeShadowOnlyTexture(Vector2 positionInWorldCoordinates)
         {
 
-
-            int imageIndex = 0;
-            currentTexture = unitFrameList[imageIndex].Texture;
-
-            shadowOnlytexture2D = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, currentTexture.Width, currentTexture.Height);
+            shadowOnlytexture2D =
+                new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, this.Width, this.Height);
 
             Color[] texturePixelData = new Color[shadowOnlytexture2D.Width * shadowOnlytexture2D.Height];
             shadowOnlytexture2D.GetData(texturePixelData);
 
-            List<int> shadowIndexList = unitFrameList[imageIndex].ShadowIndexList;
+            List<int> shadowIndexList = unitFrameList[unitFrameImageIndex].ShadowIndexList;
 
             foreach (int shadowIndex in shadowIndexList)
             {
-                int shadowXSpriteCoordinate = shadowIndex % this.currentTexture.Width;
-                int shadowYSpriteCoordinate = shadowIndex / this.currentTexture.Width;
+                int shadowXSpriteCoordinate = shadowIndex % this.Width;
+                int shadowYSpriteCoordinate = shadowIndex / this.Width;
 
 
                 int topLeftXOfSpriteInWorldCoordinates =
@@ -116,8 +112,6 @@ namespace mike_and_conquer
 
                 int nonShadowPaletteIndexAtShadowLocation =
                     underlyingMapTileInstanceView.GetPaletteIndexOfCoordinate(shadowXMapSquareCoordinate, shadowYMapSquareCoordinate);
-
-
 
                 int shadowPaletteIndex;
 
@@ -177,15 +171,9 @@ namespace mike_and_conquer
 
         public void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates)
         {
-            int currentAnimationImageIndex = 0;
             float defaultScale = 1;
 
-            if (drawShadow)
-            {
-                UpdateShadowPixelsToBlank(positionInWorldCoordinates, currentAnimationImageIndex);
-            }
-
-            spriteBatch.Draw(currentTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(noShadowTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
 
             if (drawBoundingRectangle)
             {
@@ -264,29 +252,25 @@ namespace mike_and_conquer
 //        }
 
 
-        private void UpdateShadowPixelsToBlank(Vector2 positionInWorldCoordinates, int imageIndex)
+        private void UpdateShadowPixelsToBlank(Vector2 positionInWorldCoordinates)
         {
-            Color[] texturePixelData = new Color[currentTexture.Width * currentTexture.Height];
-            currentTexture.GetData(texturePixelData);
+            Color[] texturePixelData = new Color[noShadowTexture.Width * noShadowTexture.Height];
+            noShadowTexture.GetData(texturePixelData);
 
 
-            List<int> shadowIndexList = unitFrameList[imageIndex].ShadowIndexList;
+            List<int> shadowIndexList = unitFrameList[0].ShadowIndexList;
 
             foreach (int shadowIndex in shadowIndexList)
             {
-
                 texturePixelData[shadowIndex] = Color.Transparent;
             }
 
-            currentTexture.SetData(texturePixelData);
+            noShadowTexture.SetData(texturePixelData);
         }
 
 
 
-     
-
-
-        internal Texture2D createSpriteBorderRectangleTexture()
+        internal Texture2D CreateSpriteBorderRectangleTexture()
         {
             Texture2D rectangle =
                 new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, unitFrameList[0].Texture.Width,
@@ -329,12 +313,6 @@ namespace mike_and_conquer
                 data[i] = color;
             }
         }
-
-        public void SetAnimate(bool animateFlag)
-        {
-            this.animate = animateFlag;
-        }
-
 
     }
 

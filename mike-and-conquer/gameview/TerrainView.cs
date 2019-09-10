@@ -16,7 +16,7 @@ namespace mike_and_conquer.gameview
 
         // TODO:  Using UnitSprite for now.  May need new Sprite
         // unique to sandbag like things, things like trees, etc
-        private UnitSprite unitSprite;
+        private TerrainSprite terrainSprite;
 
 
 //        public const string SPRITE_KEY = "TC01";
@@ -29,58 +29,52 @@ namespace mike_and_conquer.gameview
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
         private Point position;
 
-        internal void Update()
-        {
-            this.unitSprite.Update();
-        }
+//        internal void Update()
+//        {
+//            this.terrainSprite.Update();
+//        }
 
 
-        //        public TerrainView(Point position, string spriteKey)
-        //        {
-        //            this.unitSprite = new UnitSprite(spriteKey);
-        //            this.unitSprite.middleOfSpriteInSpriteCoordinates = new Vector2(0,0);
-        //            this.unitSprite.drawShadow = true;
-        //            this.position = position;
-        //
-        //            SetupAnimations();
-        //        }
         public TerrainView(TerrainItem terrainItem)
         {
-            this.unitSprite = new UnitSprite( terrainItem.TerrainItemType);
-            this.unitSprite.middleOfSpriteInSpriteCoordinates = new Vector2(0, 0);
-            this.unitSprite.drawShadow = true;
+            this.position = new Point((int)terrainItem.positionInWorldCoordinates.X,
+                (int)terrainItem.positionInWorldCoordinates.Y);
+
+            this.terrainSprite = new TerrainSprite( terrainItem.TerrainItemType, this.position);
+            this.terrainSprite.middleOfSpriteInSpriteCoordinates = new Vector2(0, 0);
+//            this.unitSprite.drawShadow = true;
             this.position = new Point((int) terrainItem.positionInWorldCoordinates.X,
                 (int) terrainItem.positionInWorldCoordinates.Y);
 
-            SetupAnimations();
+//            SetupAnimations();
         }
 
 
-        private void SetupAnimations()
-        {
-            AnimationSequence animationSequence = new AnimationSequence(1);
-            animationSequence.AddFrame(0);
-            unitSprite.AddAnimationSequence(0, animationSequence);
-        }
+//        private void SetupAnimations()
+//        {
+//            AnimationSequence animationSequence = new AnimationSequence(1);
+//            animationSequence.AddFrame(0);
+//            terrainSprite.AddAnimationSequence(0, animationSequence);
+//        }
 
 
-        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            Vector2 positionAsVector2 = new Vector2(position.X, position.Y);
-            unitSprite.Draw(gameTime, spriteBatch, positionAsVector2);
-        }
+//        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+//        {
+//            Vector2 positionAsVector2 = new Vector2(position.X, position.Y);
+//            terrainSprite.Draw(gameTime, spriteBatch, positionAsVector2);
+//        }
 
 
         public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
         {
             Vector2 positionAsVector2 = new Vector2(position.X, position.Y);
-            this.unitSprite.DrawShadowOnly(gameTime, spriteBatch, positionAsVector2);
+            this.terrainSprite.DrawShadowOnly(gameTime, spriteBatch, positionAsVector2);
         }
 
         public void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
         {
             Vector2 positionAsVector2 = new Vector2(position.X, position.Y);
-            this.unitSprite.DrawNoShadow(gameTime, spriteBatch, positionAsVector2);
+            this.terrainSprite.DrawNoShadow(gameTime, spriteBatch, positionAsVector2);
         }
     }
 }

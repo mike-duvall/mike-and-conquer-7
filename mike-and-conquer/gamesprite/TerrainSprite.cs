@@ -43,6 +43,7 @@ namespace mike_and_conquer
             get { return height; }
         }
 
+
         public TerrainSprite(string spriteListKey, Point position )
         {
             unitFrameList = MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(spriteListKey);

@@ -72,94 +72,120 @@ namespace mike_and_conquer
 
         }
 
+
         private void InitializeShadowOnlyTexture(Vector2 positionInWorldCoordinates)
         {
-
             shadowOnlytexture2D =
                 new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, this.Width, this.Height);
-
+            
             Color[] texturePixelData = new Color[shadowOnlytexture2D.Width * shadowOnlytexture2D.Height];
             shadowOnlytexture2D.GetData(texturePixelData);
 
             List<int> shadowIndexList = unitFrameList[unitFrameImageIndex].ShadowIndexList;
 
-            foreach (int shadowIndex in shadowIndexList)
-            {
-                int shadowXSpriteCoordinate = shadowIndex % this.Width;
-                int shadowYSpriteCoordinate = shadowIndex / this.Width;
+            Color[]  texturePixelDatWithShadowsUpdated = ShadowHelper.UpdateShadowPixels(
+                positionInWorldCoordinates,
+                this.middleOfSpriteInSpriteCoordinates,
+                texturePixelData,
+                shadowIndexList,
+                shadowOnlytexture2D.Width,
+                this.palette
+            );
 
+            shadowOnlytexture2D.SetData(texturePixelDatWithShadowsUpdated);
 
-                int topLeftXOfSpriteInWorldCoordinates =
-                    (int)positionInWorldCoordinates.X - (int)middleOfSpriteInSpriteCoordinates.X;
-                int topLeftYOfSpriteInWorldCoordinates =
-                    (int)positionInWorldCoordinates.Y - (int)middleOfSpriteInSpriteCoordinates.Y;
-
-
-                int shadowXWorldCoordinates = topLeftXOfSpriteInWorldCoordinates + shadowXSpriteCoordinate;
-                int shadowYWorldCoordinate = topLeftYOfSpriteInWorldCoordinates + shadowYSpriteCoordinate;
-
-
-                MapTileInstanceView underlyingMapTileInstanceView =
-                    GameWorldView.instance.FindMapSquareView(shadowXWorldCoordinates,
-                        shadowYWorldCoordinate);
-
-                int halfWidth = underlyingMapTileInstanceView.singleTextureSprite.Width / 2;
-                int topLeftXOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().X - halfWidth;
-                int topLeftYOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().Y - halfWidth;
-
-                int shadowXMapSquareCoordinate = shadowXWorldCoordinates - topLeftXOfUnderlyingMapSquareWorldCoordinates;
-                int shadowYMapSquareCoordinate = shadowYWorldCoordinate - topLeftYOfUnderlyingMapSquareWorldCoordinates;
-
-
-                int nonShadowPaletteIndexAtShadowLocation =
-                    underlyingMapTileInstanceView.GetPaletteIndexOfCoordinate(shadowXMapSquareCoordinate, shadowYMapSquareCoordinate);
-
-                int shadowPaletteIndex;
-
-                shadowPaletteIndex =
-                    MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
-
-
-                if (shadowPaletteIndex != nonShadowPaletteIndexAtShadowLocation)
-                {
-                    // If we found a different color for the shadow pixel (which we should)
-                    // remap the color in the texture to be the shadow color
-                    uint mappedColor = palette[shadowPaletteIndex];
-                    System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
-                    Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
-                    texturePixelData[shadowIndex] = xnaColor;
-                }
-                else
-                {
-                    // If we didn't find a different shadow palette color, map it to bright green
-                    // so we can see it and debug it
-                    // TODO:  Or, consider throwing and exception and logging it
-                    texturePixelData[shadowIndex] = new Color(255, 252, 84);
-                }
-            }
-
-            shadowOnlytexture2D.SetData(texturePixelData);
 
         }
 
-//        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates)
-//        {
-//            int currentAnimationImageIndex = 0;
-//
-//            float defaultScale = 1;
-//
-//            if (drawShadow)
-//            {
-//                updateShadowPixels(positionInWorldCoordinates, currentAnimationImageIndex);
-//            }
-//
-//            spriteBatch.Draw(currentTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
-//
-//            if (drawBoundingRectangle)
-//            {
-//                spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
-//            }
-//        }
+
+        //        private void InitializeShadowOnlyTexture(Vector2 positionInWorldCoordinates)
+        //        {
+        //
+        //            shadowOnlytexture2D =
+        //                new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, this.Width, this.Height);
+        //
+        //            Color[] texturePixelData = new Color[shadowOnlytexture2D.Width * shadowOnlytexture2D.Height];
+        //            shadowOnlytexture2D.GetData(texturePixelData);
+        //
+        //            List<int> shadowIndexList = unitFrameList[unitFrameImageIndex].ShadowIndexList;
+        //
+        //            foreach (int shadowIndex in shadowIndexList)
+        //            {
+        //                int shadowXSpriteCoordinate = shadowIndex % this.Width;
+        //                int shadowYSpriteCoordinate = shadowIndex / this.Width;
+        //
+        //
+        //                int topLeftXOfSpriteInWorldCoordinates =
+        //                    (int)positionInWorldCoordinates.X - (int)middleOfSpriteInSpriteCoordinates.X;
+        //                int topLeftYOfSpriteInWorldCoordinates =
+        //                    (int)positionInWorldCoordinates.Y - (int)middleOfSpriteInSpriteCoordinates.Y;
+        //
+        //
+        //                int shadowXWorldCoordinates = topLeftXOfSpriteInWorldCoordinates + shadowXSpriteCoordinate;
+        //                int shadowYWorldCoordinate = topLeftYOfSpriteInWorldCoordinates + shadowYSpriteCoordinate;
+        //
+        //
+        //                MapTileInstanceView underlyingMapTileInstanceView =
+        //                    GameWorldView.instance.FindMapSquareView(shadowXWorldCoordinates,
+        //                        shadowYWorldCoordinate);
+        //
+        //                int halfWidth = underlyingMapTileInstanceView.singleTextureSprite.Width / 2;
+        //                int topLeftXOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().X - halfWidth;
+        //                int topLeftYOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().Y - halfWidth;
+        //
+        //                int shadowXMapSquareCoordinate = shadowXWorldCoordinates - topLeftXOfUnderlyingMapSquareWorldCoordinates;
+        //                int shadowYMapSquareCoordinate = shadowYWorldCoordinate - topLeftYOfUnderlyingMapSquareWorldCoordinates;
+        //
+        //
+        //                int nonShadowPaletteIndexAtShadowLocation =
+        //                    underlyingMapTileInstanceView.GetPaletteIndexOfCoordinate(shadowXMapSquareCoordinate, shadowYMapSquareCoordinate);
+        //
+        //                int shadowPaletteIndex;
+        //
+        //                shadowPaletteIndex =
+        //                    MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
+        //
+        //
+        //                if (shadowPaletteIndex != nonShadowPaletteIndexAtShadowLocation)
+        //                {
+        //                    // If we found a different color for the shadow pixel (which we should)
+        //                    // remap the color in the texture to be the shadow color
+        //                    uint mappedColor = palette[shadowPaletteIndex];
+        //                    System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
+        //                    Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+        //                    texturePixelData[shadowIndex] = xnaColor;
+        //                }
+        //                else
+        //                {
+        //                    // If we didn't find a different shadow palette color, map it to bright green
+        //                    // so we can see it and debug it
+        //                    // TODO:  Or, consider throwing and exception and logging it
+        //                    texturePixelData[shadowIndex] = new Color(255, 252, 84);
+        //                }
+        //            }
+        //
+        //            shadowOnlytexture2D.SetData(texturePixelData);
+        //
+        //        }
+
+        //        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates)
+        //        {
+        //            int currentAnimationImageIndex = 0;
+        //
+        //            float defaultScale = 1;
+        //
+        //            if (drawShadow)
+        //            {
+        //                updateShadowPixels(positionInWorldCoordinates, currentAnimationImageIndex);
+        //            }
+        //
+        //            spriteBatch.Draw(currentTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
+        //
+        //            if (drawBoundingRectangle)
+        //            {
+        //                spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
+        //            }
+        //        }
 
 
         public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates)

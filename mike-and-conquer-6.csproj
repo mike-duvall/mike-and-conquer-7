@@ -83,6 +83,7 @@
     <Compile Include="mike-and-conquer\gamesprite\ToolbarBuildIconSprite.cs" />
     <Compile Include="mike-and-conquer\gamesprite\SingleTextureSprite.cs" />
     <Compile Include="mike-and-conquer\gamesprite\TerrainSprite.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\ShadowHelper.cs" />
     <Compile Include="mike-and-conquer\gamesprite\UnitSprite.cs" />
     <Compile Include="mike-and-conquer\gamesprite\MapTileFrame.cs" />
     <Compile Include="mike-and-conquer\gamesprite\ShadowMapper.cs" />

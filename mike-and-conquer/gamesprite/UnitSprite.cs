@@ -1,5 +1,6 @@
 ﻿using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
@@ -20,6 +21,7 @@ namespace mike_and_conquer
         int currentAnimationSequenceIndex;
 
         private List<UnitFrame> unitFrameList;
+
         Texture2D currentTexture;
 
         Texture2D spriteBorderRectangleTexture;
@@ -115,6 +117,7 @@ namespace mike_and_conquer
             {
                 spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
             }
+
         }
 
 
@@ -261,9 +264,16 @@ namespace mike_and_conquer
             currentTexture.GetData(texturePixelData);
             List<int> shadowIndexList = unitFrameList[imageIndex].ShadowIndexList;
 
+
+            int topLeftXOfSpriteInWorldCoordinates =
+                (int)positionInWorldCoordinates.X - (int)middleOfSpriteInSpriteCoordinates.X;
+            int topLeftYOfSpriteInWorldCoordinates =
+                (int)positionInWorldCoordinates.Y - (int)middleOfSpriteInSpriteCoordinates.Y;
+
+
             texturePixelData = ShadowHelper.UpdateShadowPixels(
-                positionInWorldCoordinates,
-                this.middleOfSpriteInSpriteCoordinates,
+                topLeftXOfSpriteInWorldCoordinates,
+                topLeftYOfSpriteInWorldCoordinates,
                 texturePixelData,
                 shadowIndexList,
                 currentTexture.Width,

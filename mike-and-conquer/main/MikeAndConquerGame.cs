@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gamesprite;
@@ -99,8 +100,8 @@ namespace mike_and_conquer
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
 
-            bool makeFullscreen = true;
-//            bool makeFullscreen = false;
+//            bool makeFullscreen = true;
+            bool makeFullscreen = false;
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;
@@ -230,8 +231,8 @@ namespace mike_and_conquer
             mapViewport.MaxDepth = 1;
 
             this.mapViewportCamera = new Camera2D(mapViewport);
-            this.mapViewportCamera.Zoom = 3.0f;
-//            this.mapViewportCamera.Zoom = 1.0f;
+//            this.mapViewportCamera.Zoom = 3.0f;
+            this.mapViewportCamera.Zoom = 1.0f;
             this.mapViewportCamera.Location =
                 new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
         }
@@ -803,6 +804,75 @@ namespace mike_and_conquer
 
         }
 
+//        public MemoryStream SaveScreenshot(MemoryStream stream)
+//        {
+//
+//            RenderTarget2D screenRenderTarget2D = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
+//                    mapViewport.Width, mapViewport.Height);
+//
+//            GraphicsDevice.SetRenderTarget(screenRenderTarget2D);
+//
+//            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+//                SamplerState.LinearClamp, DepthStencilState.Default,
+//                RasterizerState.CullNone);
+//
+//            spriteBatch.Draw(screenRenderTarget2D, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
+//
+//            spriteBatch.End();
+//
+//            screenRenderTarget2D.SaveAsPng(stream, screenRenderTarget2D.Width, screenRenderTarget2D.Height);
+//
+//            screenRenderTarget2D.Dispose();
+//
+//            return stream;
+//
+//        }
+
+
+        public MemoryStream SaveScreenshot(MemoryStream stream)
+        {
+            bool renderToTexture = true;
+
+            RenderTarget2D screenRenderTarget2D = null;
+
+            if (renderToTexture)
+            {
+                screenRenderTarget2D = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
+                    mapViewport.Width, mapViewport.Height);
+                GraphicsDevice.SetRenderTarget(screenRenderTarget2D);
+            }
+
+            GraphicsDevice.Viewport = mapViewport;
+            const BlendState nullBlendState = null;
+            const DepthStencilState nullDepthStencilState = null;
+            const RasterizerState nullRasterizerState = null;
+            const Effect nullEffect = null;
+            spriteBatch.Begin(
+                SpriteSortMode.Deferred,
+                nullBlendState,
+                SamplerState.PointClamp,
+                nullDepthStencilState,
+                nullRasterizerState,
+                nullEffect,
+                mapViewportCamera.TransformMatrix);
+
+            spriteBatch.Draw(mapBackgroundRectangle,
+                new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
+
+            GameTime gameTime = null;
+            this.currentGameStateView.Draw(gameTime, spriteBatch);
+            spriteBatch.End();
+
+            screenRenderTarget2D.SaveAsPng(stream, screenRenderTarget2D.Width, screenRenderTarget2D.Height);
+
+
+            GraphicsDevice.SetRenderTarget(null);
+
+            return stream;
+
+        }
+
+
         private void DrawToolbar(GameTime gameTime)
         {
             GraphicsDevice.Viewport = toolbarViewport;
@@ -955,7 +1025,6 @@ namespace mike_and_conquer
         //
         //            return new Point(xInWorldCoordinates, yInWorldCoordinates);
         //        }
-
 
 
     }

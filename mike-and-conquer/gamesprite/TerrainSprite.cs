@@ -83,9 +83,15 @@ namespace mike_and_conquer
 
             List<int> shadowIndexList = unitFrameList[unitFrameImageIndex].ShadowIndexList;
 
+            int topLeftXOfSpriteInWorldCoordinates =
+                (int)positionInWorldCoordinates.X - (int)middleOfSpriteInSpriteCoordinates.X;
+            int topLeftYOfSpriteInWorldCoordinates =
+                (int)positionInWorldCoordinates.Y - (int)middleOfSpriteInSpriteCoordinates.Y;
+
+
             Color[]  texturePixelDatWithShadowsUpdated = ShadowHelper.UpdateShadowPixels(
-                positionInWorldCoordinates,
-                this.middleOfSpriteInSpriteCoordinates,
+                topLeftXOfSpriteInWorldCoordinates,
+                topLeftYOfSpriteInWorldCoordinates,
                 texturePixelData,
                 shadowIndexList,
                 shadowOnlytexture2D.Width,
@@ -93,7 +99,6 @@ namespace mike_and_conquer
             );
 
             shadowOnlytexture2D.SetData(texturePixelDatWithShadowsUpdated);
-
 
         }
 

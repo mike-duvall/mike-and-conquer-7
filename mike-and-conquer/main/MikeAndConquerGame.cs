@@ -804,43 +804,28 @@ namespace mike_and_conquer
 
         }
 
-//        public MemoryStream SaveScreenshot(MemoryStream stream)
-//        {
-//
-//            RenderTarget2D screenRenderTarget2D = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
-//                    mapViewport.Width, mapViewport.Height);
-//
-//            GraphicsDevice.SetRenderTarget(screenRenderTarget2D);
-//
-//            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
-//                SamplerState.LinearClamp, DepthStencilState.Default,
-//                RasterizerState.CullNone);
-//
-//            spriteBatch.Draw(screenRenderTarget2D, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
-//
-//            spriteBatch.End();
-//
-//            screenRenderTarget2D.SaveAsPng(stream, screenRenderTarget2D.Width, screenRenderTarget2D.Height);
-//
-//            screenRenderTarget2D.Dispose();
-//
-//            return stream;
-//
-//        }
 
-
-        public MemoryStream SaveScreenshot(MemoryStream stream)
+        public MemoryStream SaveScreenshot()
         {
-            bool renderToTexture = true;
+
+            MemoryStream stream = new MemoryStream();
 
             RenderTarget2D screenRenderTarget2D = null;
 
-            if (renderToTexture)
-            {
-                screenRenderTarget2D = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
-                    mapViewport.Width, mapViewport.Height);
-                GraphicsDevice.SetRenderTarget(screenRenderTarget2D);
-            }
+            int textureWidth = GameWorld.instance.gameMap.numColumns * GameWorld.MAP_TILE_WIDTH;
+            int textureHeight = GameWorld.instance.gameMap.numRows * GameWorld.MAP_TILE_HEIGHT;
+
+            screenRenderTarget2D = new RenderTarget2D(
+                MikeAndConquerGame.instance.GraphicsDevice,
+                textureWidth,
+                textureHeight);
+
+            GraphicsDevice.SetRenderTarget(screenRenderTarget2D);
+
+            float originalZoom = this.mapViewportCamera.Zoom;
+            this.mapViewportCamera.Zoom = 1.0f;
+
+            SnapMapCameraToBounds();
 
             GraphicsDevice.Viewport = mapViewport;
             const BlendState nullBlendState = null;
@@ -865,8 +850,8 @@ namespace mike_and_conquer
 
             screenRenderTarget2D.SaveAsPng(stream, screenRenderTarget2D.Width, screenRenderTarget2D.Height);
 
-
             GraphicsDevice.SetRenderTarget(null);
+            this.mapViewportCamera.Zoom = originalZoom;
 
             return stream;
 
@@ -881,7 +866,6 @@ namespace mike_and_conquer
             const DepthStencilState nullDepthStencilState = null;
             const RasterizerState nullRasterizerState = null;
             const Effect nullEffect = null;
-
 
             spriteBatch.Begin(
                 SpriteSortMode.Deferred,

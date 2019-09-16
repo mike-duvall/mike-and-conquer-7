@@ -20,18 +20,7 @@ namespace mike_and_conquer.rest
         [HttpGet]
         public HttpResponseMessage Generate()
         {
-            var stream = new MemoryStream();
-
-            Pickup here
-            This basic screenshotting is working, but need to 
-            update it so that it happens via Event
-            as it sometimes intertwines with Drawing in the main 
-            loop and gets an error
-
-            Make it something like:
-            MemoryStream stream = GameWorld.instance.GetScreenshotViaEvent()
-
-            stream = MikeAndConquerGame.instance.SaveScreenshot(stream);
+            MemoryStream stream = GameWorld.instance.GetScreenshotViaEvent();
 
             var result = new HttpResponseMessage(HttpStatusCode.OK)
             {

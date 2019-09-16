@@ -58,11 +58,11 @@ namespace mike_and_conquer.gameview
 //        }
 
 
-//        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-//        {
-//            Vector2 positionAsVector2 = new Vector2(position.X, position.Y);
-//            terrainSprite.Draw(gameTime, spriteBatch, positionAsVector2);
-//        }
+        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            Vector2 positionAsVector2 = new Vector2(position.X, position.Y);
+            terrainSprite.Draw(gameTime, spriteBatch, positionAsVector2);
+        }
 
 
         public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)

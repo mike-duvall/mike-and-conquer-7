@@ -15,13 +15,10 @@ namespace mike_and_conquer.gameview
                 basicMapSquareView.Draw(gameTime, spriteBatch);
             }
 
-            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
-            {
-
-//                nextTerrainView.Update();
-                nextTerrainView.DrawShadowOnly(gameTime,spriteBatch);
-//                nextTerrainView.Draw(gameTime, spriteBatch);
-            }
+//            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
+//            {
+//                nextTerrainView.DrawShadowOnly(gameTime,spriteBatch);
+//            }
 
             GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
 
@@ -41,11 +38,11 @@ namespace mike_and_conquer.gameview
             }
 
 
-            // Restore proper drawing of shadows once I've solved performance issues
-
+  
             foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
             {
-                nextTerrainView.DrawNoShadow(gameTime,spriteBatch);
+//                nextTerrainView.DrawNoShadow(gameTime,spriteBatch);
+                nextTerrainView.Draw(gameTime, spriteBatch);
             }
 
 

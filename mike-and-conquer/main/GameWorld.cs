@@ -18,6 +18,8 @@ using Exception = System.Exception;
 using FileStream = System.IO.FileStream;
 using FileMode = System.IO.FileMode;
 using System;
+using System.IO;
+using mike_and_conquer.gameevent;
 
 namespace mike_and_conquer
 
@@ -454,6 +456,24 @@ namespace mike_and_conquer
             }
 
         }
+
+//        MemoryStream stream = GameWorld.instance.GetScreenshotViaEvent();
+
+        public MemoryStream GetScreenshotViaEvent()
+        {
+            GetScreenshotGameEvent gameEvent = new GetScreenshotGameEvent();
+
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+//            Minigunner gdiMinigunner = gameEvent.GetMinigunner();
+//            return gdiMinigunner;
+            MemoryStream memoryStream = gameEvent.GetMemoryStream();
+            return memoryStream;
+        }
+
 
         public GameState GetCurrentGameStateViaEvent()
         {

@@ -72,6 +72,7 @@
     <Compile Include="mike-and-conquer\gameevent\AsyncGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateSandbagGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetCurrentGameStateGameEvent.cs" />
+    <Compile Include="mike-and-conquer\gameevent\GetScreenshotGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\ResetGameGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateNodMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetNodMinigunnerByIdGameEvent.cs" />

@@ -258,8 +258,11 @@ namespace mike_and_conquer
 
                 int shadowPaletteIndex;
 
-                    shadowPaletteIndex =
-                        MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
+                //                    shadowPaletteIndex =
+                //                        MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
+
+                shadowPaletteIndex =
+                    MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
 
 
                 if (shadowPaletteIndex != nonShadowPaletteIndexAtShadowLocation)

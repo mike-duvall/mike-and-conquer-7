@@ -200,6 +200,11 @@
 #begin tunits.mrf
 /copy:tunits.mrf
 
+
+#begin tshade.mrf
+/copy:tshade.mrf
+
+
 #begin pyle.shp
 /copy:pyle.shp
 

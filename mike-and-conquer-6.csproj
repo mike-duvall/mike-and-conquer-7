@@ -122,6 +122,7 @@
     <Compile Include="mike-and-conquer\main\MikeAndConquerGame.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Minigunner.cs" />
     <Compile Include="mike-and-conquer\main\MouseInputHandler.cs" />
+    <Compile Include="mike-and-conquer\main\ScreenCapture.cs" />
     <Compile Include="mike-and-conquer\openralocal\RAISpriteFrameManager.cs" />
     <Compile Include="mike-and-conquer\openra\Exts.cs" />
     <Compile Include="mike-and-conquer\openra\float2.cs" />

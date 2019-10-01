@@ -67,7 +67,29 @@ namespace mike_and_conquer
 
         private void InitializeNoShadowTexture(Vector2 positionInWorldCoordinates)
         {
-            noShadowTexture = unitFrameList[0].Texture;
+            Texture2D sourceTexture = unitFrameList[0].Texture;
+            Color[] sourceTexturePixelData = new Color[sourceTexture.Width * sourceTexture.Height];
+            sourceTexture.GetData(sourceTexturePixelData);
+
+
+
+            noShadowTexture = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, sourceTexture.Width,
+                sourceTexture.Height);
+
+            Color[] noShadowTexturePixelData = new Color[noShadowTexture.Width * noShadowTexture.Height];
+            noShadowTexture.GetData(noShadowTexturePixelData);
+
+            int index = 0;
+            foreach (Color color in sourceTexturePixelData)
+            {
+                noShadowTexturePixelData[index] = color;
+                index++;
+            }
+
+            noShadowTexture.SetData(noShadowTexturePixelData);
+            
+
+//            noShadowTexture = unitFrameList[0].Texture;
 //            UpdateShadowPixelsToBlank(positionInWorldCoordinates);
 
         }
@@ -212,6 +234,7 @@ namespace mike_and_conquer
                 spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
             }
         }
+
 
 
         private void updateShadowPixels(Vector2 positionInWorldCoordinates, int imageIndex)

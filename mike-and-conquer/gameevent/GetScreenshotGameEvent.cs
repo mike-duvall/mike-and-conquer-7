@@ -1,11 +1,6 @@
-﻿
-
-using System;
-using System.Collections.Generic;
+﻿using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ScreenShotDemo;
 
 namespace mike_and_conquer.gameevent
 {
@@ -21,7 +16,9 @@ namespace mike_and_conquer.gameevent
         protected override GameState ProcessImpl()
         {
             GameState newGameState = null;
-            result = MikeAndConquerGame.instance.SaveScreenshot();
+            ScreenCapture sc = new ScreenCapture();
+            MemoryStream stream = new MemoryStream();
+            result = sc.CaptureScreenToMemoryStream(stream, ImageFormat.Png);
             return newGameState;
         }
 

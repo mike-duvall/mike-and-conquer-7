@@ -15,34 +15,34 @@ namespace mike_and_conquer.gameview
                 basicMapSquareView.Draw(gameTime, spriteBatch);
             }
 
-//            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
-//            {
-//                nextTerrainView.DrawShadowOnly(gameTime,spriteBatch);
-//            }
+            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
+            {
+                nextTerrainView.DrawShadowOnly(gameTime,spriteBatch);
+            }
 
 //            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
 
-//            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
-//            {
-//                nextMinigunnerView.Draw(gameTime, spriteBatch);
-//            }
-//
-//            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
-//            {
-//                nextMinigunnerView.Draw(gameTime, spriteBatch);
-//            }
-//
-//            foreach (SandbagView nextSandbagView in GameWorldView.instance.SandbagViewList)
-//            {
-//                nextSandbagView.Draw(gameTime, spriteBatch);
-//            }
+            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
+            {
+                nextMinigunnerView.Draw(gameTime, spriteBatch);
+            }
+
+            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
+            {
+                nextMinigunnerView.Draw(gameTime, spriteBatch);
+            }
+
+            foreach (SandbagView nextSandbagView in GameWorldView.instance.SandbagViewList)
+            {
+                nextSandbagView.Draw(gameTime, spriteBatch);
+            }
 
 
   
             foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
             {
-//                nextTerrainView.DrawNoShadow(gameTime,spriteBatch);
-                nextTerrainView.Draw(gameTime, spriteBatch);
+                nextTerrainView.DrawNoShadow(gameTime,spriteBatch);
+//                nextTerrainView.Draw(gameTime, spriteBatch);
             }
 
 

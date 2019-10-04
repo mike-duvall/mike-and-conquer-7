@@ -41,12 +41,11 @@ namespace mike_and_conquer.gameview
                 (int)terrainItem.positionInWorldCoordinates.Y);
 
             this.terrainSprite = new TerrainSprite( terrainItem.TerrainItemType, this.position);
-            this.terrainSprite.middleOfSpriteInSpriteCoordinates = new Vector2(0, 0);
 //            this.unitSprite.drawShadow = true;
             this.position = new Point((int) terrainItem.positionInWorldCoordinates.X,
                 (int) terrainItem.positionInWorldCoordinates.Y);
 
-//            SetupAnimations();
+
         }
 
 

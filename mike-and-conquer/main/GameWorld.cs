@@ -132,23 +132,15 @@ namespace mike_and_conquer
 
 
             terrainMap.Add(3052, "Content\\TC02.tem");
-
-
             terrainMap.Add(2861, "Content\\T02.tem");
-
-
             terrainMap.Add(2988, "Content\\T01.tem");
-
             terrainMap.Add(2666, "Content\\TC01.tem");
             terrainMap.Add(2605, "Content\\TC05.tem");
             terrainMap.Add(2794, "Content\\TC04.tem");
-
-
             terrainMap.Add(2416, "Content\\T01.tem");
             terrainMap.Add(3369, "Content\\T06.tem");
             terrainMap.Add(3496, "Content\\T06.tem");
             terrainMap.Add(3246, "Content\\TC01.tem");
-
             terrainMap.Add(2860, "Content\\T07.tem");
             terrainMap.Add(2991, "Content\\T01.tem");
             terrainMap.Add(3245, "Content\\T16.tem");
@@ -164,7 +156,7 @@ namespace mike_and_conquer
 
             foreach (int cellnumber in terrainMap.Keys)
             {
-                Point point = ConvertCellNumberToScreenCoordinates(cellnumber);
+                Point point = ConvertCellNumberToTopLeftWorldCoordinates(cellnumber);
                 if (point.X >= 0 && point.Y >= 0)
                 {
                     int x = 3;
@@ -188,7 +180,7 @@ namespace mike_and_conquer
             gameMap = new GameMap(inputStream, startX, startY, endX, endY);
         }
 
-        private Point ConvertCellNumberToScreenCoordinates(int cellnumber)
+        private Point ConvertCellNumberToTopLeftWorldCoordinates(int cellnumber)
         {
             int quotient = cellnumber / 64;
             int remainder = cellnumber % 64;

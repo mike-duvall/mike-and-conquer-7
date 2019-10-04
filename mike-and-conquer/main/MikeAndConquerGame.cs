@@ -105,10 +105,10 @@ namespace mike_and_conquer
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;
-                graphics.PreferredBackBufferWidth = 1920;
-                graphics.PreferredBackBufferHeight = 1080;
-//                graphics.PreferredBackBufferWidth = 2880;
-//                graphics.PreferredBackBufferHeight = 1800;
+//                graphics.PreferredBackBufferWidth = 1920;
+//                graphics.PreferredBackBufferHeight = 1080;
+                graphics.PreferredBackBufferWidth = 2880;
+                graphics.PreferredBackBufferHeight = 1800;
             }
             else
             {

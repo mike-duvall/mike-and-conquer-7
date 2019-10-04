@@ -61,19 +61,12 @@ namespace mike_and_conquer
             drawBoundingRectangle = false;
             int[] remap = { };
             palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
-            InitializeNoShadowTexture(middleOfSpriteInSpriteCoordinates);
 
-
-            // TODO:  Revisit code below.  Seems like we go to great pains to
-            // convert from top left corner of sprite to middle,
-            // only to covert right back inside the method
-            Vector2 positionOfMiddleOfSpriteInWorldCoordinates = new Vector2();
-            positionOfMiddleOfSpriteInWorldCoordinates.X = position.X + middleOfSpriteInSpriteCoordinates.X;
-            positionOfMiddleOfSpriteInWorldCoordinates.Y = position.Y + middleOfSpriteInSpriteCoordinates.Y;
-            InitializeShadowOnlyTexture(positionOfMiddleOfSpriteInWorldCoordinates);
+            InitializeNoShadowTexture();
+            InitializeShadowOnlyTexture(new Vector2(position.X, position.Y));
         }
 
-        private void InitializeNoShadowTexture(Vector2 positionInWorldCoordinates)
+        private void InitializeNoShadowTexture()
         {
             Texture2D sourceTexture = unitFrameList[0].Texture;
             Color[] sourceTexturePixelData = new Color[sourceTexture.Width * sourceTexture.Height];
@@ -98,7 +91,7 @@ namespace mike_and_conquer
             
 
 //            noShadowTexture = unitFrameList[0].Texture;
-            UpdateShadowPixelsToTransparent(positionInWorldCoordinates);
+            UpdateShadowPixelsToTransparent();
 
         }
 
@@ -113,10 +106,14 @@ namespace mike_and_conquer
 
             List<int> shadowIndexList = unitFrameList[unitFrameImageIndex].ShadowIndexList;
 
-            int topLeftXOfSpriteInWorldCoordinates =
-                (int)positionInWorldCoordinates.X - (int)middleOfSpriteInSpriteCoordinates.X;
-            int topLeftYOfSpriteInWorldCoordinates =
-                (int)positionInWorldCoordinates.Y - (int)middleOfSpriteInSpriteCoordinates.Y;
+            //            int topLeftXOfSpriteInWorldCoordinates =
+            //                (int)positionInWorldCoordinates.X - (int)middleOfSpriteInSpriteCoordinates.X;
+            //            int topLeftYOfSpriteInWorldCoordinates =
+            //                (int)positionInWorldCoordinates.Y - (int)middleOfSpriteInSpriteCoordinates.Y;
+
+            int topLeftXOfSpriteInWorldCoordinates = (int) positionInWorldCoordinates.X;
+            int topLeftYOfSpriteInWorldCoordinates = (int) positionInWorldCoordinates.Y; 
+
 
 
             Color[]  texturePixelDatWithShadowsUpdated = ShadowHelper.UpdateShadowPixels(
@@ -408,8 +405,9 @@ namespace mike_and_conquer
 
 
 
+
         // TODO:  position parameter unused?
-        private void UpdateShadowPixelsToTransparent(Vector2 positionInWorldCoordinates)
+        private void UpdateShadowPixelsToTransparent()
         {
             Color[] texturePixelData = new Color[noShadowTexture.Width * noShadowTexture.Height];
             noShadowTexture.GetData(texturePixelData);

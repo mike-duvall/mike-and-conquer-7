@@ -60,7 +60,7 @@ namespace mike_and_conquer
             palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
 
             InitializeNoShadowTexture();
-            InitializeShadowOnlyTexture(new Vector2(position.X, position.Y));
+            InitializeShadowOnlyTexture(position);
         }
 
         private void InitializeNoShadowTexture()
@@ -68,8 +68,6 @@ namespace mike_and_conquer
             Texture2D sourceTexture = unitFrameList[0].Texture;
             Color[] sourceTexturePixelData = new Color[sourceTexture.Width * sourceTexture.Height];
             sourceTexture.GetData(sourceTexturePixelData);
-
-
 
             noShadowTexture = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, sourceTexture.Width,
                 sourceTexture.Height);
@@ -85,7 +83,6 @@ namespace mike_and_conquer
             }
 
             noShadowTexture.SetData(noShadowTexturePixelData);
-            
 
 //            noShadowTexture = unitFrameList[0].Texture;
             UpdateShadowPixelsToTransparent();
@@ -93,8 +90,7 @@ namespace mike_and_conquer
         }
 
 
-        // TODO pass position as Point?
-        private void InitializeShadowOnlyTexture(Vector2 positionInWorldCoordinates)
+        private void InitializeShadowOnlyTexture(Point positionInWorldCoordinates)
         {
             shadowOnlytexture2D =
                 new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, noShadowTexture.Width, noShadowTexture.Height);
@@ -104,8 +100,8 @@ namespace mike_and_conquer
 
             List<int> shadowIndexList = unitFrameList[unitFrameImageIndex].ShadowIndexList;
 
-            int topLeftXOfSpriteInWorldCoordinates = (int) positionInWorldCoordinates.X;
-            int topLeftYOfSpriteInWorldCoordinates = (int) positionInWorldCoordinates.Y; 
+            int topLeftXOfSpriteInWorldCoordinates = positionInWorldCoordinates.X;
+            int topLeftYOfSpriteInWorldCoordinates = positionInWorldCoordinates.Y; 
 
             Color[]  texturePixelDatWithShadowsUpdated = ShadowHelper.UpdateShadowPixels(
                 topLeftXOfSpriteInWorldCoordinates,

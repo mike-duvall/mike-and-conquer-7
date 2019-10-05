@@ -201,10 +201,10 @@ namespace mike_and_conquer
 //                int shadowPaletteIndex;
 //
 //                //                    shadowPaletteIndex =
-//                //                        MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
+//                //                        MikeAndConquerGame.instance.shadowMapper.MapUnitsShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
 //
 //                shadowPaletteIndex =
-//                    MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
+//                    MikeAndConquerGame.instance.shadowMapper.MapUnitsShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
 //
 //
 //                if (shadowPaletteIndex != nonShadowPaletteIndexAtShadowLocation)

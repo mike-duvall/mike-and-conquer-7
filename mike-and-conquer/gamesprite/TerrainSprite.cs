@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using mike_and_conquer.gamesprite;
-using mike_and_conquer.gameview;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using Boolean = System.Boolean;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -10,6 +9,7 @@ using Color = Microsoft.Xna.Framework.Color;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
+using TextureUtil = mike_and_conquer.util.TextureUtil;
 
 namespace mike_and_conquer
 {
@@ -17,14 +17,14 @@ namespace mike_and_conquer
     {
 
         private List<UnitFrame> unitFrameList;
-        Texture2D noShadowTexture;
-
+        private Texture2D noShadowTexture;
         private Texture2D shadowOnlytexture2D;
 
-        Texture2D spriteBorderRectangleTexture;
+        private Texture2D spriteBorderRectangleTexture;
+
         public Boolean drawBoundingRectangle;
 
-        private Vector2 spritOrigin;
+        private Vector2 spriteOrigin;
 
         private OpenRA.Graphics.ImmutablePalette palette;
 
@@ -50,7 +50,7 @@ namespace mike_and_conquer
 
             spriteBorderRectangleTexture = CreateSpriteBorderRectangleTexture();
 
-            spritOrigin = new Vector2(0,0);
+            spriteOrigin = new Vector2(0,0);
 
             UnitFrame firstUnitFrame = unitFrameList[unitFrameImageIndex];
             this.width = firstUnitFrame.Texture.Width;
@@ -66,26 +66,10 @@ namespace mike_and_conquer
         private void InitializeNoShadowTexture()
         {
             Texture2D sourceTexture = unitFrameList[0].Texture;
-            Color[] sourceTexturePixelData = new Color[sourceTexture.Width * sourceTexture.Height];
-            sourceTexture.GetData(sourceTexturePixelData);
+            noShadowTexture = TextureUtil.CopyTexture(sourceTexture);
 
-            noShadowTexture = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, sourceTexture.Width,
-                sourceTexture.Height);
-
-            Color[] noShadowTexturePixelData = new Color[noShadowTexture.Width * noShadowTexture.Height];
-            noShadowTexture.GetData(noShadowTexturePixelData);
-
-            int index = 0;
-            foreach (Color color in sourceTexturePixelData)
-            {
-                noShadowTexturePixelData[index] = color;
-                index++;
-            }
-
-            noShadowTexture.SetData(noShadowTexturePixelData);
-
-//            noShadowTexture = unitFrameList[0].Texture;
-            UpdateShadowPixelsToTransparent();
+            List<int> shadowIndexList = unitFrameList[0].ShadowIndexList;
+            noShadowTexture = TextureUtil.UpdateShadowPixelsToTransparent(noShadowTexture, shadowIndexList);
 
         }
 
@@ -126,11 +110,11 @@ namespace mike_and_conquer
         
             updateShadowPixels2(positionInWorldCoordinates, currentAnimationImageIndex);
         
-            spriteBatch.Draw(noShadowTexture, positionInWorldCoordinates, null, Color.White, 0f, spritOrigin, defaultScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(noShadowTexture, positionInWorldCoordinates, null, Color.White, 0f, spriteOrigin, defaultScale, SpriteEffects.None, 0f);
         
             if (drawBoundingRectangle)
             {
-                spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, spritOrigin, defaultScale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, spriteOrigin, defaultScale, SpriteEffects.None, 0f);
             }
         }
 
@@ -139,7 +123,7 @@ namespace mike_and_conquer
         {
 
             float defaultScale = 1;
-            spriteBatch.Draw(shadowOnlytexture2D, positionInWorldCoordinates, null, Color.White, 0f, spritOrigin, defaultScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(shadowOnlytexture2D, positionInWorldCoordinates, null, Color.White, 0f, spriteOrigin, defaultScale, SpriteEffects.None, 0f);
 
         }
 
@@ -147,86 +131,15 @@ namespace mike_and_conquer
         {
             float defaultScale = 1;
 
-            spriteBatch.Draw(noShadowTexture, positionInWorldCoordinates, null, Color.White, 0f, spritOrigin, defaultScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(noShadowTexture, positionInWorldCoordinates, null, Color.White, 0f, spriteOrigin, defaultScale, SpriteEffects.None, 0f);
 
             if (drawBoundingRectangle)
             {
-                spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, spritOrigin, defaultScale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, spriteOrigin, defaultScale, SpriteEffects.None, 0f);
             }
         }
 
 
-//        private void updateShadowPixels(Vector2 positionInWorldCoordinates, int imageIndex)
-//        {
-//            Color[] texturePixelData = new Color[noShadowTexture.Width * noShadowTexture.Height];
-//            noShadowTexture.GetData(texturePixelData);
-//
-//
-//            List<int> shadowIndexList = unitFrameList[imageIndex].ShadowIndexList;
-//
-//            foreach (int shadowIndex in shadowIndexList)
-//            {
-//                int shadowXSpriteCoordinate = shadowIndex % this.noShadowTexture.Width;
-//                int shadowYSpriteCoordinate = shadowIndex / this.noShadowTexture.Width;
-//
-//
-//                int topLeftXOfSpriteInWorldCoordinates =
-//                    (int) positionInWorldCoordinates.X - (int) spritOrigin.X;
-//                int topLeftYOfSpriteInWorldCoordinates =
-//                    (int) positionInWorldCoordinates.Y - (int) spritOrigin.Y;
-//
-//
-//                int shadowXWorldCoordinates = topLeftXOfSpriteInWorldCoordinates + shadowXSpriteCoordinate;
-//                int shadowYWorldCoordinate = topLeftYOfSpriteInWorldCoordinates + shadowYSpriteCoordinate;
-//
-//
-//
-//                MapTileInstanceView underlyingMapTileInstanceView =
-//                    GameWorldView.instance.FindMapSquareView(shadowXWorldCoordinates,
-//                        shadowYWorldCoordinate);
-//
-//                int halfWidth = underlyingMapTileInstanceView.singleTextureSprite.Width / 2;
-//                int topLeftXOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().X - halfWidth;
-//                int topLeftYOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().Y - halfWidth;
-//
-//                int shadowXMapSquareCoordinate = shadowXWorldCoordinates - topLeftXOfUnderlyingMapSquareWorldCoordinates;
-//                int shadowYMapSquareCoordinate = shadowYWorldCoordinate - topLeftYOfUnderlyingMapSquareWorldCoordinates;
-//
-//
-//                int nonShadowPaletteIndexAtShadowLocation =
-//                    underlyingMapTileInstanceView.GetPaletteIndexOfCoordinate(shadowXMapSquareCoordinate, shadowYMapSquareCoordinate);
-//
-//
-//
-//                int shadowPaletteIndex;
-//
-//                //                    shadowPaletteIndex =
-//                //                        MikeAndConquerGame.instance.shadowMapper.MapUnitsShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
-//
-//                shadowPaletteIndex =
-//                    MikeAndConquerGame.instance.shadowMapper.MapUnitsShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
-//
-//
-//                if (shadowPaletteIndex != nonShadowPaletteIndexAtShadowLocation)
-//                {
-//                    // If we found a different color for the shadow pixel (which we should)
-//                    // remap the color in the texture to be the shadow color
-//                    uint mappedColor = palette[shadowPaletteIndex];
-//                    System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int) mappedColor);
-//                    Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
-//                    texturePixelData[shadowIndex] = xnaColor;
-//                }
-//                else
-//                {
-//                    // If we didn't find a different shadow palette color, map it to bright green
-//                    // so we can see it and debug it
-//                    // TODO:  Or, consider throwing and exception and logging it
-//                    texturePixelData[shadowIndex] = new Color(255, 252, 84);
-//                }
-//            }
-//
-//            noShadowTexture.SetData(texturePixelData);
-//        }
 
         private void updateShadowPixels2(Vector2 positionInWorldCoordinates, int imageIndex)
         {
@@ -236,9 +149,9 @@ namespace mike_and_conquer
 
             List<int> shadowIndexList = unitFrameList[imageIndex].ShadowIndexList;
             int topLeftXOfSpriteInWorldCoordinates =
-                (int)positionInWorldCoordinates.X - (int)spritOrigin.X;
+                (int)positionInWorldCoordinates.X - (int)spriteOrigin.X;
             int topLeftYOfSpriteInWorldCoordinates =
-                (int)positionInWorldCoordinates.Y - (int)spritOrigin.Y;
+                (int)positionInWorldCoordinates.Y - (int)spriteOrigin.Y;
 
 
             Color[] texturePixelDatWithShadowsUpdated = ShadowHelper.UpdateShadowPixels(
@@ -253,24 +166,6 @@ namespace mike_and_conquer
             noShadowTexture.SetData(texturePixelDatWithShadowsUpdated);
 
         }
-
-
-        private void UpdateShadowPixelsToTransparent()
-        {
-            Color[] texturePixelData = new Color[noShadowTexture.Width * noShadowTexture.Height];
-            noShadowTexture.GetData(texturePixelData);
-
-
-            List<int> shadowIndexList = unitFrameList[0].ShadowIndexList;
-
-            foreach (int shadowIndex in shadowIndexList)
-            {
-                texturePixelData[shadowIndex] = Color.Transparent;
-            }
-
-            noShadowTexture.SetData(texturePixelData);
-        }
-
 
 
         internal Texture2D CreateSpriteBorderRectangleTexture()

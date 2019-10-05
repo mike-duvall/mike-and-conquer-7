@@ -159,7 +159,6 @@ namespace mike_and_conquer
         }
 
 
-
 //        private void updateShadowPixels(Vector2 positionInWorldCoordinates, int imageIndex)
 //        {
 //            Color[] texturePixelData = new Color[noShadowTexture.Width * noShadowTexture.Height];

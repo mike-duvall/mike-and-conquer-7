@@ -37,24 +37,17 @@ namespace mike_and_conquer.gameview
 
         public TerrainView(TerrainItem terrainItem)
         {
-            this.position = new Point((int)terrainItem.positionInWorldCoordinates.X,
-                (int)terrainItem.positionInWorldCoordinates.Y);
+            this.position = new Point((int)terrainItem.PositionInWorldCoordinates.X,
+                (int)terrainItem.PositionInWorldCoordinates.Y);
 
             this.terrainSprite = new TerrainSprite( terrainItem.TerrainItemType, this.position);
-//            this.unitSprite.drawShadow = true;
-            this.position = new Point((int) terrainItem.positionInWorldCoordinates.X,
-                (int) terrainItem.positionInWorldCoordinates.Y);
+            this.position = new Point((int) terrainItem.PositionInWorldCoordinates.X,
+                (int) terrainItem.PositionInWorldCoordinates.Y);
 
 
         }
 
 
-//        private void SetupAnimations()
-//        {
-//            AnimationSequence animationSequence = new AnimationSequence(1);
-//            animationSequence.AddFrame(0);
-//            terrainSprite.AddAnimationSequence(0, animationSequence);
-//        }
 
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)

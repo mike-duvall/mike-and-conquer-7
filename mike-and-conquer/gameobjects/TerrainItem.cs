@@ -1,8 +1,4 @@
 ﻿
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
-using GameTime = Microsoft.Xna.Framework.GameTime;
-using Math = System.Math;
 using Point = Microsoft.Xna.Framework.Point;
 using System;
 
@@ -12,9 +8,9 @@ namespace mike_and_conquer
     public class TerrainItem
     {
 
-        private Vector2 positionInWorldCoordinates;
+        private Point positionInWorldCoordinates;
 
-        public Vector2 PositionInWorldCoordinates
+        public Point PositionInWorldCoordinates
         {
             get { return positionInWorldCoordinates; }
         }
@@ -35,7 +31,7 @@ namespace mike_and_conquer
 
         public TerrainItem(int x, int y, String terrainItemType)
         {
-            positionInWorldCoordinates = new Vector2(x, y);
+            positionInWorldCoordinates = new Point(x, y);
             this.terrainItemType = terrainItemType;
         }
 

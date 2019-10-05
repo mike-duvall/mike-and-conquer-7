@@ -93,6 +93,7 @@ namespace mike_and_conquer
         }
 
 
+        // TODO pass position as Point?
         private void InitializeShadowOnlyTexture(Vector2 positionInWorldCoordinates)
         {
             shadowOnlytexture2D =

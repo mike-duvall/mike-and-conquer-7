@@ -3,9 +3,9 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using SharpDX.MediaFoundation;
 
-namespace ScreenShotDemo
+
+namespace mike_and_conquer
 {
     /// <summary>
     /// Provides functions to capture the entire screen, or a particular window, and save it to a file.

@@ -1,1 +1,0 @@
-The trees to the left of barracks, just above the ridge, have incorrect shadow mapping.  The leftmost tree of that grouping is mapping it's shadow on top of the trees to the right, in mike-and-conquer, but not in the real game

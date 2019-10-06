@@ -306,6 +306,7 @@ namespace mike_and_conquer
             LoadMapTextures();
             LoadSingleTextures();
             LoadShpFileTextures();
+            LoadTemFiles();
         }
 
         private void LoadShpFileTextures()
@@ -339,12 +340,12 @@ namespace mike_and_conquer
                 raiSpriteFrameManager.GetSpriteFramesForUnit(GDIBarracksView.SHP_FILE_NAME),
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
 
-            //            raiSpriteFrameManager.LoadAllTexturesFromShpFile(TerrainView.SHP_FILE_NAME);
-            //            spriteSheet.LoadUnitFramesFromSpriteFrames(
-            //                TerrainView.SPRITE_KEY,
-            //                raiSpriteFrameManager.GetSpriteFramesForUnit(TerrainView.SHP_FILE_NAME),
-            //                TerrainView.SHP_FILE_COLOR_MAPPER);
 
+        }
+
+
+        private void LoadTemFiles()
+        {
             LoadTerrainTexture("Content\\T01.tem");
             LoadTerrainTexture("Content\\T02.tem");
             LoadTerrainTexture("Content\\T05.tem");
@@ -358,6 +359,7 @@ namespace mike_and_conquer
             LoadTerrainTexture("Content\\TC05.tem");
 
         }
+
 
         private void LoadTerrainTexture(String filename)
         {
@@ -753,9 +755,11 @@ namespace mike_and_conquer
 
         }
 
+
+
         private void DrawMap(GameTime gameTime)
         {
-            bool renderToTexture = true;
+            bool renderToTexture = false;
 
             RenderTarget2D screenRenderTarget2D = null;
 
@@ -804,58 +808,6 @@ namespace mike_and_conquer
 
         }
 
-
-        public MemoryStream SaveScreenshot()
-        {
-
-            MemoryStream stream = new MemoryStream();
-
-            RenderTarget2D screenRenderTarget2D = null;
-
-            int textureWidth = GameWorld.instance.gameMap.numColumns * GameWorld.MAP_TILE_WIDTH;
-            int textureHeight = GameWorld.instance.gameMap.numRows * GameWorld.MAP_TILE_HEIGHT;
-
-            screenRenderTarget2D = new RenderTarget2D(
-                MikeAndConquerGame.instance.GraphicsDevice,
-                textureWidth,
-                textureHeight);
-
-            GraphicsDevice.SetRenderTarget(screenRenderTarget2D);
-
-            float originalZoom = this.mapViewportCamera.Zoom;
-            this.mapViewportCamera.Zoom = 1.0f;
-
-            SnapMapCameraToBounds();
-
-            GraphicsDevice.Viewport = mapViewport;
-            const BlendState nullBlendState = null;
-            const DepthStencilState nullDepthStencilState = null;
-            const RasterizerState nullRasterizerState = null;
-            const Effect nullEffect = null;
-            spriteBatch.Begin(
-                SpriteSortMode.Deferred,
-                nullBlendState,
-                SamplerState.PointClamp,
-                nullDepthStencilState,
-                nullRasterizerState,
-                nullEffect,
-                mapViewportCamera.TransformMatrix);
-
-            spriteBatch.Draw(mapBackgroundRectangle,
-                new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
-
-            GameTime gameTime = null;
-            this.currentGameStateView.Draw(gameTime, spriteBatch);
-            spriteBatch.End();
-
-            screenRenderTarget2D.SaveAsPng(stream, screenRenderTarget2D.Width, screenRenderTarget2D.Height);
-
-            GraphicsDevice.SetRenderTarget(null);
-            this.mapViewportCamera.Zoom = originalZoom;
-
-            return stream;
-
-        }
 
 
         private void DrawToolbar(GameTime gameTime)

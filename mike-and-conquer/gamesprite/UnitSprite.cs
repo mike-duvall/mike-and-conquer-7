@@ -27,8 +27,7 @@ namespace mike_and_conquer
         Texture2D spriteBorderRectangleTexture;
         public Boolean drawBoundingRectangle;
 
-        //TODO Make this private
-        public Vector2 middleOfSpriteInSpriteCoordinates;
+        private Vector2 middleOfSpriteInSpriteCoordinates;
 
         private bool animate;
 
@@ -136,6 +135,10 @@ namespace mike_and_conquer
         // Draw the texture
 
 
+        // TODO:  Consider if we want to use
+        // MonogameExtended DrawPoint() method to fill in dynamic shadow pixels
+        // for units, rather than this method of directly manipulating texture data
+        // DrawPoint() might be faster since it would be operating on VRAM
         private void UpdateShadowPixels(Vector2 positionInWorldCoordinates, int imageIndex)
         {
             Color[] texturePixelData = new Color[currentTexture.Width * currentTexture.Height];

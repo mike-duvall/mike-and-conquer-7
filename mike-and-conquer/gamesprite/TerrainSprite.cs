@@ -100,15 +100,17 @@ namespace mike_and_conquer
 
         }
 
-
-
+        // This old Draw() method maps the shadow pixels on the fly and is too slow
+        // Keeping around for reference for now
+        // Instead should use the separate DrawShadowOnly() and DrawNoShadow() methods
+        // to draw the pre-rendered shadows, which is much faster
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates)
         {
             int currentAnimationImageIndex = 0;
         
             float defaultScale = 1;
         
-            updateShadowPixels2(positionInWorldCoordinates, currentAnimationImageIndex);
+            UpdateShadowPixels(positionInWorldCoordinates, currentAnimationImageIndex);
         
             spriteBatch.Draw(noShadowTexture, positionInWorldCoordinates, null, Color.White, 0f, spriteOrigin, defaultScale, SpriteEffects.None, 0f);
         
@@ -141,18 +143,15 @@ namespace mike_and_conquer
 
 
 
-        private void updateShadowPixels2(Vector2 positionInWorldCoordinates, int imageIndex)
+        private void UpdateShadowPixels(Vector2 positionInWorldCoordinates, int imageIndex)
         {
             Color[] texturePixelData = new Color[noShadowTexture.Width * noShadowTexture.Height];
             noShadowTexture.GetData(texturePixelData);
 
 
             List<int> shadowIndexList = unitFrameList[imageIndex].ShadowIndexList;
-            int topLeftXOfSpriteInWorldCoordinates =
-                (int)positionInWorldCoordinates.X - (int)spriteOrigin.X;
-            int topLeftYOfSpriteInWorldCoordinates =
-                (int)positionInWorldCoordinates.Y - (int)spriteOrigin.Y;
-
+            int topLeftXOfSpriteInWorldCoordinates = (int) positionInWorldCoordinates.X;
+            int topLeftYOfSpriteInWorldCoordinates = (int) positionInWorldCoordinates.Y;
 
             Color[] texturePixelDatWithShadowsUpdated = ShadowHelper.UpdateShadowPixels(
                 topLeftXOfSpriteInWorldCoordinates,

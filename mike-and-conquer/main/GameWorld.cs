@@ -162,11 +162,9 @@ namespace mike_and_conquer
                     int x = 3;
                     terrainItemList.Add( new TerrainItem(point.X, point.Y, terrainMap[cellnumber]));
                 }
-
-
             }
 
-            System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
+            Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
 
 
             //  (Starting at 0x13CC in the file)
@@ -182,6 +180,7 @@ namespace mike_and_conquer
 
         private Point ConvertCellNumberToTopLeftWorldCoordinates(int cellnumber)
         {
+            // TODO: Eventually update this formula to use non hard coded map size
             int quotient = cellnumber / 64;
             int remainder = cellnumber % 64;
 
@@ -464,8 +463,6 @@ namespace mike_and_conquer
 
         }
 
-//        MemoryStream stream = GameWorld.instance.GetScreenshotViaEvent();
-
         public MemoryStream GetScreenshotViaEvent()
         {
             GetScreenshotGameEvent gameEvent = new GetScreenshotGameEvent();
@@ -475,8 +472,6 @@ namespace mike_and_conquer
                 gameEvents.Add(gameEvent);
             }
 
-//            Minigunner gdiMinigunner = gameEvent.GetMinigunner();
-//            return gdiMinigunner;
             MemoryStream memoryStream = gameEvent.GetMemoryStream();
             return memoryStream;
         }

@@ -50,14 +50,12 @@ namespace mike_and_conquer.gameview
             get { return gdiBarracksView; }
         }
 
+        public List<TerrainView> terrainViewList;
+
 
         public static GameWorldView instance;
 
 
-//        public TerrainView terrainView1;
-//        public TerrainView terrainView2;
-
-        public List<TerrainView> terrainViewList;
 
         public GameWorldView()
         {

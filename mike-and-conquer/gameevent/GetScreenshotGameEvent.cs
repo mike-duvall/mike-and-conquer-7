@@ -1,6 +1,6 @@
 ﻿using System.Drawing.Imaging;
 using System.IO;
-using ScreenShotDemo;
+using mike_and_conquer;
 
 namespace mike_and_conquer.gameevent
 {

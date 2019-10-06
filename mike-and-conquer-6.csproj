@@ -72,15 +72,19 @@
     <Compile Include="mike-and-conquer\gameevent\AsyncGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateSandbagGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetCurrentGameStateGameEvent.cs" />
+    <Compile Include="mike-and-conquer\gameevent\GetScreenshotGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\ResetGameGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateNodMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetNodMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameobjects\GDIBarracks.cs" />
+    <Compile Include="mike-and-conquer\gameobjects\TerrainItem.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Sandbag.cs" />
     <Compile Include="mike-and-conquer\gamesprite\ToolbarBuildIconSprite.cs" />
     <Compile Include="mike-and-conquer\gamesprite\SingleTextureSprite.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\TerrainSprite.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\ShadowHelper.cs" />
     <Compile Include="mike-and-conquer\gamesprite\UnitSprite.cs" />
     <Compile Include="mike-and-conquer\gamesprite\MapTileFrame.cs" />
     <Compile Include="mike-and-conquer\gamesprite\ShadowMapper.cs" />
@@ -99,6 +103,7 @@
     <Compile Include="mike-and-conquer\gameview\GameStateView.cs" />
     <Compile Include="mike-and-conquer\gameview\PlayingGameStateView.cs" />
     <Compile Include="mike-and-conquer\gameview\GDIBarracksView.cs" />
+    <Compile Include="mike-and-conquer\gameview\TerrainView.cs" />
     <Compile Include="mike-and-conquer\gameview\SandbagView.cs" />
     <Compile Include="mike-and-conquer\gameview\NodMinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\GdiMinigunnerView.cs" />
@@ -117,6 +122,7 @@
     <Compile Include="mike-and-conquer\main\MikeAndConquerGame.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Minigunner.cs" />
     <Compile Include="mike-and-conquer\main\MouseInputHandler.cs" />
+    <Compile Include="mike-and-conquer\main\ScreenCapture.cs" />
     <Compile Include="mike-and-conquer\openralocal\RAISpriteFrameManager.cs" />
     <Compile Include="mike-and-conquer\openra\Exts.cs" />
     <Compile Include="mike-and-conquer\openra\float2.cs" />
@@ -131,6 +137,7 @@
     <Compile Include="mike-and-conquer\openra\TmpTDLoader.cs" />
     <Compile Include="mike-and-conquer\openra\XORDeltaCompression.cs" />
     <Compile Include="mike-and-conquer\pathfinding\AStar.cs" />
+    <Compile Include="mike-and-conquer\rest\ScreenshotController.cs" />
     <Compile Include="mike-and-conquer\rest\MouseCursorStateController.cs" />
     <Compile Include="mike-and-conquer\rest\GameStateController.cs" />
     <Compile Include="mike-and-conquer\rest\LeftClickInAndHoldInWorldCoordinatesController.cs" />
@@ -150,6 +157,7 @@
     <Compile Include="mike-and-conquer\openra\ShpTDLoader.cs" />
     <Compile Include="mike-and-conquer\gamesprite\ShpFileColorMapper.cs" />
     <Compile Include="mike-and-conquer\gameview\UnitSelectionCursor.cs" />
+    <Compile Include="mike-and-conquer\util\TextureUtil.cs" />
     <Compile Include="mike-and-conquer\util\AnimationSequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="mike-and-conquer\rest\ResetGameController.cs" />

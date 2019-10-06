@@ -201,10 +201,49 @@
 /copy:tunits.mrf
 
 
+#begin tshade.mrf
+/copy:tshade.mrf
+
+
 #begin pyle.shp
 /copy:pyle.shp
 
 #begin e1icnh.tem
 /copy:e1icnh.tem
 
+#begin T01.tem
+/copy:T01.tem
+
+#begin T02.tem
+/copy:T02.tem
+
+
+#begin T05.tem
+/copy:T05.tem
+
+#begin T06.tem
+/copy:T06.tem
+
+#begin T07.tem
+/copy:T07.tem
+
+#begin T16.tem
+/copy:T16.tem
+
+#begin T17.tem
+/copy:T17.tem
+
+
+
+#begin tc01.tem
+/copy:tc01.tem
+
+#begin tc02.tem
+/copy:tc02.tem
+
+#begin tc04.tem
+/copy:tc04.tem
+
+#begin tc05.tem
+/copy:tc05.tem
 

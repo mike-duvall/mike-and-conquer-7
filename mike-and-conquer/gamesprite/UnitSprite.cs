@@ -1,5 +1,6 @@
 ﻿using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
@@ -20,6 +21,7 @@ namespace mike_and_conquer
         int currentAnimationSequenceIndex;
 
         private List<UnitFrame> unitFrameList;
+
         Texture2D currentTexture;
 
         Texture2D spriteBorderRectangleTexture;
@@ -51,7 +53,7 @@ namespace mike_and_conquer
             this.animationSequenceMap = new Dictionary<int, util.AnimationSequence>();
             unitFrameList = MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(spriteListKey);
 
-            spriteBorderRectangleTexture = createSpriteBorderRectangleTexture();
+            spriteBorderRectangleTexture = CreateSpriteBorderRectangleTexture();
 
             middleOfSpriteInSpriteCoordinates = new Vector2();
 
@@ -89,7 +91,7 @@ namespace mike_and_conquer
             animationSequenceMap[key] = animationSequence;
         }
 
-        
+
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates)
         {
             AnimationSequence currentAnimationSequence = animationSequenceMap[currentAnimationSequenceIndex];
@@ -105,7 +107,7 @@ namespace mike_and_conquer
 
             if (drawShadow)
             {
-                updateShadowPixels(positionInWorldCoordinates, currentAnimationImageIndex);
+                UpdateShadowPixels(positionInWorldCoordinates, currentAnimationImageIndex);
             }
 
             spriteBatch.Draw(currentTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
@@ -114,6 +116,7 @@ namespace mike_and_conquer
             {
                 spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
             }
+
         }
 
 
@@ -130,72 +133,39 @@ namespace mike_and_conquer
         //    map that background to the proper shadow pixel
         //    set that pixel in the new texture to that shadow pixel
         // Draw the texture
-        // release the texture? (or release above before creating the new one?
 
-        private void updateShadowPixels(Vector2 positionInWorldCoordinates, int imageIndex)
+
+        // TODO:  Consider if we want to use
+        // MonogameExtended DrawPoint() method to fill in dynamic shadow pixels
+        // for units, rather than this method of directly manipulating texture data
+        // DrawPoint() might be faster since it would be operating on VRAM
+        private void UpdateShadowPixels(Vector2 positionInWorldCoordinates, int imageIndex)
         {
             Color[] texturePixelData = new Color[currentTexture.Width * currentTexture.Height];
             currentTexture.GetData(texturePixelData);
-
-
             List<int> shadowIndexList = unitFrameList[imageIndex].ShadowIndexList;
 
-            foreach (int shadowIndex in shadowIndexList)
-            {
-                int shadowXSpriteCoordinate = shadowIndex % this.currentTexture.Width;
-                int shadowYSpriteCoordinate = shadowIndex / this.currentTexture.Height;
+
+            int topLeftXOfSpriteInWorldCoordinates =
+                (int)positionInWorldCoordinates.X - (int)middleOfSpriteInSpriteCoordinates.X;
+            int topLeftYOfSpriteInWorldCoordinates =
+                (int)positionInWorldCoordinates.Y - (int)middleOfSpriteInSpriteCoordinates.Y;
 
 
-                int topLeftXOfSpriteInWorldCoordinates =
-                    (int) positionInWorldCoordinates.X - (int) middleOfSpriteInSpriteCoordinates.X;
-                int topLeftYOfSpriteInWorldCoordinates =
-                    (int) positionInWorldCoordinates.Y - (int) middleOfSpriteInSpriteCoordinates.Y;
-
-
-                int shadowXWorldCoordinates = topLeftXOfSpriteInWorldCoordinates + shadowXSpriteCoordinate;
-                int shadowYWorldCoordinate = topLeftYOfSpriteInWorldCoordinates + shadowYSpriteCoordinate;
-
-                MapTileInstanceView underlyingMapTileInstanceView =
-                    GameWorldView.instance.FindMapSquareView(shadowXWorldCoordinates,
-                        shadowYWorldCoordinate);
-
-                // TODO:  Un-hard code 12
-                int topLeftXOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().X - 12;
-                int topLeftYOfUnderlyingMapSquareWorldCoordinates = underlyingMapTileInstanceView.myMapTileInstance.GetCenter().Y - 12;
-
-                int shadowXMapSquareCoordinate = shadowXWorldCoordinates - topLeftXOfUnderlyingMapSquareWorldCoordinates;
-                int shadowYMapSquareCoordinate = shadowYWorldCoordinate - topLeftYOfUnderlyingMapSquareWorldCoordinates;
-
-
-                int nonShadowPaletteIndexAtShadowLocation =
-                    underlyingMapTileInstanceView.GetPaletteIndexOfCoordinate(shadowXMapSquareCoordinate, shadowYMapSquareCoordinate);
-
-                int shadowPaletteIndex =
-                    MikeAndConquerGame.instance.shadowMapper.MapShadowPaletteIndex(nonShadowPaletteIndexAtShadowLocation);
-
-                if (shadowPaletteIndex != nonShadowPaletteIndexAtShadowLocation)
-                {
-                    // If we found a different color for the shadow pixel (which we should)
-                    // remap the color in the texture to be the shadow color
-                    uint mappedColor = palette[shadowPaletteIndex];
-                    System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int) mappedColor);
-                    Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
-                    texturePixelData[shadowIndex] = xnaColor;
-                }
-                else
-                {
-                    // If we didn't find a different shadow palette color, map it to bright green
-                    // so we can see it and debug it
-                    // TODO:  Or, consider throwing and exception and logging it
-                    texturePixelData[shadowIndex] = new Color(255, 252, 84);
-                }
-            }
-
+            texturePixelData = ShadowHelper.UpdateShadowPixels(
+                topLeftXOfSpriteInWorldCoordinates,
+                topLeftYOfSpriteInWorldCoordinates,
+                texturePixelData,
+                shadowIndexList,
+                currentTexture.Width,
+                this.palette
+                );
             currentTexture.SetData(texturePixelData);
+
         }
 
 
-        internal Texture2D createSpriteBorderRectangleTexture()
+        internal Texture2D CreateSpriteBorderRectangleTexture()
         {
             Texture2D rectangle =
                 new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, unitFrameList[0].Texture.Width,

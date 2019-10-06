@@ -1,4 +1,6 @@
 ﻿
+using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gamesprite;
@@ -166,17 +168,21 @@ namespace mike_and_conquer
             AddGdiMinigunnerAtMapSquareCoordinates(new Point(6, 1));
 
             AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 3));
+//
+//
+//            AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
+//
+//            AddSandbag(10, 6, 5);
+//            AddSandbag(10, 7, 5);
+//            AddSandbag(10, 8, 5);
+//            AddSandbag(10, 9, 5);
+//            AddSandbag(10, 10, 5);
+//
+//            AddSandbag(8, 4, 10);
+//            AddSandbag(9, 4, 10);
 
-            AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
-
-            AddSandbag(10, 6, 5);
-            AddSandbag(10, 7, 5);
-            AddSandbag(10, 8, 5);
-            AddSandbag(10, 9, 5);
-            AddSandbag(10, 10, 5);
-
-            AddSandbag(8, 4, 10);
-            AddSandbag(9, 4, 10);
+//            this.gameWorldView.terrainView1 = new TerrainView(new Point(576, 0), "Content\\TC01.tem");
+//            this.gameWorldView.terrainView2 = new TerrainView(new Point(480, 120), "Content\\TC02.tem");
 
             //                AddSandbag(12, 16, 10);
 
@@ -225,8 +231,8 @@ namespace mike_and_conquer
             mapViewport.MaxDepth = 1;
 
             this.mapViewportCamera = new Camera2D(mapViewport);
-            this.mapViewportCamera.Zoom = 3.0f;
-//            this.mapViewportCamera.Zoom = 1.0f;
+//            this.mapViewportCamera.Zoom = 3.0f;
+            this.mapViewportCamera.Zoom = 1.0f;
             this.mapViewportCamera.Location =
                 new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
         }
@@ -235,11 +241,6 @@ namespace mike_and_conquer
 
         private void CreateBasicMapSquareViews()
         {
-            //  (Starting at 0x13CC in the file)
-            //    Trees appear to be SHP vs TMP?
-            //    Map file only references TMP ?
-            //    What about placement of initial troops?
-            //    Sandbags
 
             foreach(MapTileInstance mapTileInstance in this.gameWorld.gameMap.MapTileInstanceList)
             {
@@ -247,6 +248,19 @@ namespace mike_and_conquer
             }
 
         }
+
+        private void CreateTerrainItemViews()
+        {
+
+            
+
+            foreach (TerrainItem terrainItem in gameWorld.terrainItemList)
+            {
+                gameWorldView.AddTerrainItemView(terrainItem);
+            }
+
+        }
+
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -262,6 +276,7 @@ namespace mike_and_conquer
 
             LoadTextures();
             CreateBasicMapSquareViews();
+            CreateTerrainItemViews();
 
             if (!testMode)
             {
@@ -291,6 +306,7 @@ namespace mike_and_conquer
             LoadMapTextures();
             LoadSingleTextures();
             LoadShpFileTextures();
+            LoadTemFiles();
         }
 
         private void LoadShpFileTextures()
@@ -323,6 +339,36 @@ namespace mike_and_conquer
                 GDIBarracksView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(GDIBarracksView.SHP_FILE_NAME),
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
+
+
+        }
+
+
+        private void LoadTemFiles()
+        {
+            LoadTerrainTexture("Content\\T01.tem");
+            LoadTerrainTexture("Content\\T02.tem");
+            LoadTerrainTexture("Content\\T05.tem");
+            LoadTerrainTexture("Content\\T06.tem");
+            LoadTerrainTexture("Content\\T07.tem");
+            LoadTerrainTexture("Content\\T16.tem");
+            LoadTerrainTexture("Content\\T17.tem");
+            LoadTerrainTexture("Content\\TC01.tem");
+            LoadTerrainTexture("Content\\TC02.tem");
+            LoadTerrainTexture("Content\\TC04.tem");
+            LoadTerrainTexture("Content\\TC05.tem");
+
+        }
+
+
+        private void LoadTerrainTexture(String filename)
+        {
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(filename);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                filename,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(filename),
+                TerrainView.SHP_FILE_COLOR_MAPPER);
+
         }
 
         private void LoadSingleTextures()
@@ -695,6 +741,8 @@ namespace mike_and_conquer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+
+
             GraphicsDevice.Clear(Color.Crimson);
 
             DrawMap(gameTime);
@@ -703,10 +751,25 @@ namespace mike_and_conquer
 
             GraphicsDevice.Viewport = defaultViewport;
             base.Draw(gameTime);
+
+
         }
+
+
 
         private void DrawMap(GameTime gameTime)
         {
+            bool renderToTexture = false;
+
+            RenderTarget2D screenRenderTarget2D = null;
+
+            if (renderToTexture)
+            {
+                screenRenderTarget2D = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
+                    mapViewport.Width, mapViewport.Height);
+                GraphicsDevice.SetRenderTarget(screenRenderTarget2D);
+            }
+
             GraphicsDevice.Viewport = mapViewport;
             const BlendState nullBlendState = null;
             const DepthStencilState nullDepthStencilState = null;
@@ -726,7 +789,26 @@ namespace mike_and_conquer
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
             spriteBatch.End();
+
+            if (renderToTexture)
+            {
+                GraphicsDevice.SetRenderTarget(null);
+
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+                    SamplerState.LinearClamp, DepthStencilState.Default,
+                    RasterizerState.CullNone);
+
+                spriteBatch.Draw(screenRenderTarget2D, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
+
+                spriteBatch.End();
+
+                screenRenderTarget2D.Dispose();
+
+            }
+
         }
+
+
 
         private void DrawToolbar(GameTime gameTime)
         {
@@ -736,7 +818,6 @@ namespace mike_and_conquer
             const DepthStencilState nullDepthStencilState = null;
             const RasterizerState nullRasterizerState = null;
             const Effect nullEffect = null;
-
 
             spriteBatch.Begin(
                 SpriteSortMode.Deferred,
@@ -880,7 +961,6 @@ namespace mike_and_conquer
         //
         //            return new Point(xInWorldCoordinates, yInWorldCoordinates);
         //        }
-
 
 
     }

@@ -17,7 +17,9 @@ using Exception = System.Exception;
 
 using FileStream = System.IO.FileStream;
 using FileMode = System.IO.FileMode;
-
+using System;
+using System.IO;
+using mike_and_conquer.gameevent;
 
 namespace mike_and_conquer
 
@@ -32,6 +34,7 @@ namespace mike_and_conquer
         public List<Minigunner> gdiMinigunnerList { get; }
         public List<Minigunner> nodMinigunnerList { get; }
         public List<Sandbag> sandbagList;
+        public List<TerrainItem> terrainItemList;
 
         private GDIBarracks gdiBarracks;
         public GDIBarracks GDIBarracks
@@ -55,6 +58,7 @@ namespace mike_and_conquer
             gdiMinigunnerList = new List<Minigunner>();
             nodMinigunnerList = new List<Minigunner>();
             sandbagList = new List<Sandbag>();
+            terrainItemList = new List<TerrainItem>();
 
             gameEvents = new List<AsyncGameEvent>();
 
@@ -93,7 +97,75 @@ namespace mike_and_conquer
         private void LoadMap()
         {
 
-            System.IO.Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
+
+            // TODO Revisit what the key name should be, TC01, vs Content\\TC01.tem
+
+
+            SortedDictionary<int, string> terrainMap = new SortedDictionary<int, string>();
+            terrainMap.Add(2555, "Content\\TC01.tem");
+            terrainMap.Add(3039, "Content\\TC05.tem");
+
+            terrainMap.Add(2847, "Content\\TC02.tem");
+            terrainMap.Add(2017, "Content\\TC02.tem");
+
+            terrainMap.Add(2016, "Content\\T01.tem");
+
+            terrainMap.Add(2871, "Content\\TC02.tem");
+            terrainMap.Add(2399, "Content\\TC02.tem");
+
+
+            terrainMap.Add(2213, "Content\\TC04.tem");
+            terrainMap.Add(2207, "Content\\TC05.tem");
+            terrainMap.Add(2030, "Content\\T05.tem");
+            terrainMap.Add(2283, "Content\\T06.tem");
+            terrainMap.Add(2408, "Content\\T06.tem");
+            terrainMap.Add(2345, "Content\\T07.tem");
+            terrainMap.Add(2299, "Content\\T07.tem");
+            terrainMap.Add(2032, "Content\\T07.tem");
+            terrainMap.Add(2097, "Content\\T16.tem");
+            terrainMap.Add(2033, "Content\\T17.tem");
+            terrainMap.Add(2042, "Content\\TC01.tem");
+            terrainMap.Add(2428, "Content\\TC01.tem");
+
+
+            terrainMap.Add(2544, "Content\\TC02.tem");   // This is the one
+
+
+            terrainMap.Add(3052, "Content\\TC02.tem");
+            terrainMap.Add(2861, "Content\\T02.tem");
+            terrainMap.Add(2988, "Content\\T01.tem");
+            terrainMap.Add(2666, "Content\\TC01.tem");
+            terrainMap.Add(2605, "Content\\TC05.tem");
+            terrainMap.Add(2794, "Content\\TC04.tem");
+            terrainMap.Add(2416, "Content\\T01.tem");
+            terrainMap.Add(3369, "Content\\T06.tem");
+            terrainMap.Add(3496, "Content\\T06.tem");
+            terrainMap.Add(3246, "Content\\TC01.tem");
+            terrainMap.Add(2860, "Content\\T07.tem");
+            terrainMap.Add(2991, "Content\\T01.tem");
+            terrainMap.Add(3245, "Content\\T16.tem");
+            terrainMap.Add(3056, "Content\\TC02.tem");
+            terrainMap.Add(3121, "Content\\T01.tem");
+            terrainMap.Add(2936, "Content\\T01.tem");
+            terrainMap.Add(2680, "Content\\TC05.tem");
+            terrainMap.Add(2938, "Content\\TC04.tem");
+            terrainMap.Add(2937, "Content\\T16.tem");
+            terrainMap.Add(3303, "Content\\T01.tem");
+            terrainMap.Add(3111, "Content\\T02.tem");
+
+
+            foreach (int cellnumber in terrainMap.Keys)
+            {
+                Point point = ConvertCellNumberToTopLeftWorldCoordinates(cellnumber);
+                if (point.X >= 0 && point.Y >= 0)
+                {
+                    int x = 3;
+                    terrainItemList.Add( new TerrainItem(point.X, point.Y, terrainMap[cellnumber]));
+                }
+            }
+
+            Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
+
 
             //  (Starting at 0x13CC in the file)
 
@@ -104,6 +176,21 @@ namespace mike_and_conquer
             int endY = 61;
 
             gameMap = new GameMap(inputStream, startX, startY, endX, endY);
+        }
+
+        private Point ConvertCellNumberToTopLeftWorldCoordinates(int cellnumber)
+        {
+            // TODO: Eventually update this formula to use non hard coded map size
+            int quotient = cellnumber / 64;
+            int remainder = cellnumber % 64;
+
+            int mapTileX = remainder - 35;
+            int mapTileY = quotient - 39;
+
+            int mapX = mapTileX * 24;
+            int mapY = mapTileY * 24;
+
+            return new Point(mapX, mapY);
         }
 
         internal Minigunner GetGdiMinigunner(int id)
@@ -375,6 +462,20 @@ namespace mike_and_conquer
             }
 
         }
+
+        public MemoryStream GetScreenshotViaEvent()
+        {
+            GetScreenshotGameEvent gameEvent = new GetScreenshotGameEvent();
+
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            MemoryStream memoryStream = gameEvent.GetMemoryStream();
+            return memoryStream;
+        }
+
 
         public GameState GetCurrentGameStateViaEvent()
         {

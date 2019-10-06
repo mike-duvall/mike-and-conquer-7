@@ -50,6 +50,8 @@ namespace mike_and_conquer.gameview
             get { return gdiBarracksView; }
         }
 
+        public List<TerrainView> terrainViewList;
+
 
         public static GameWorldView instance;
 
@@ -63,6 +65,7 @@ namespace mike_and_conquer.gameview
             nodMinigunnerViewList = new List<MinigunnerView>();
 
             sandbagViewList = new List<SandbagView>();
+            terrainViewList = new List<TerrainView>();
             instance = this;
 
         }
@@ -87,8 +90,14 @@ namespace mike_and_conquer.gameview
         {
             MapTileInstanceView mapTileInstanceView = new MapTileInstanceView(mapTileInstance);
             this.mapTileInstanceViewList.Add(mapTileInstanceView);
-
         }
+
+        public void AddTerrainItemView(TerrainItem terrainItem)
+        {
+            TerrainView terrainView = new TerrainView(terrainItem);
+            this.terrainViewList.Add(terrainView);
+        }
+
 
         public void AddGDIMinigunnerView(Minigunner newMinigunner)
         {

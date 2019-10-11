@@ -240,7 +240,8 @@ namespace mike_and_conquer
 
         private void InitializeBlockTerrainMap()
         {
-            blockingTerrainMap.Add(S09_TEM, null);
+
+            blockingTerrainMap.Add(S09_TEM, new int[] {0,1,2,4,5});
             blockingTerrainMap.Add(S10_TEM, null);
             blockingTerrainMap.Add(S11_TEM, null);
             blockingTerrainMap.Add(S12_TEM, null);

@@ -28,6 +28,7 @@ namespace mike_and_conquer.gameview
         public bool IsBlockingTerrain
         {
             get { return isBlockingTerrain; }
+            set { isBlockingTerrain = value; }
         }
 
         private Minigunner minigunnerSlot0 = null;

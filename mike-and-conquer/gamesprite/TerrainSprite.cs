@@ -55,7 +55,7 @@ namespace mike_and_conquer
             UnitFrame firstUnitFrame = unitFrameList[unitFrameImageIndex];
             this.width = firstUnitFrame.Texture.Width;
             this.height = firstUnitFrame.Texture.Height;
-            drawBoundingRectangle = false;
+            drawBoundingRectangle = true;
             int[] remap = { };
             palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
 

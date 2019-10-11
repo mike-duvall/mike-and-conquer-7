@@ -97,11 +97,28 @@ namespace mike_and_conquer
         private void LoadMap()
         {
 
+            Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
 
-            // TODO Revisit what the key name should be, TC01, vs Content\\TC01.tem
+
+            //  (Starting at 0x13CC in the file)
+
+            // TODO Should eventually read this out of the INI file instead of hard coding
+            int startX = 35;
+            int startY = 39;
+            int endX = 61;
+            int endY = 61;
+
+            gameMap = new GameMap(inputStream, startX, startY, endX, endY);
+
+
+            // TODO Revisit what the key name should be, TC01, vs Content\\TC01.tem, vs TC01.tem
 
 
             SortedDictionary<int, string> terrainMap = new SortedDictionary<int, string>();
+
+
+            TerrainItemDescriptor tc01Descriptor = new TerrainItemDescriptor("Content\\TC01.tem", 72, 48);
+
             terrainMap.Add(2555, "Content\\TC01.tem");
             terrainMap.Add(3039, "Content\\TC05.tem");
 
@@ -160,22 +177,23 @@ namespace mike_and_conquer
                 if (point.X >= 0 && point.Y >= 0)
                 {
                     int x = 3;
-                    terrainItemList.Add( new TerrainItem(point.X, point.Y, terrainMap[cellnumber]));
+                    TerrainItem terrainItem = new TerrainItem(point.X, point.Y, terrainMap[cellnumber]);
+                    terrainItemList.Add(terrainItem);
+
+                    List<MapTileInstance> blockeMapTileInstances = terrainItem.GetBlockedMapTileInstances();
+                    foreach(MapTileInstance blockedMapTileInstance in blockeMapTileInstances)
+                    {
+                        if (blockedMapTileInstance != null)
+                        {
+                            blockedMapTileInstance.IsBlockingTerrain = true;
+                        }
+
+                    }
+
+
                 }
             }
 
-            Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
-
-
-            //  (Starting at 0x13CC in the file)
-
-            // TODO Should eventually read this out of the INI file instead of hard coding
-            int startX = 35;
-            int startY = 39;
-            int endX = 61;
-            int endY = 61;
-
-            gameMap = new GameMap(inputStream, startX, startY, endX, endY);
         }
 
         private Point ConvertCellNumberToTopLeftWorldCoordinates(int cellnumber)
@@ -527,7 +545,7 @@ namespace mike_and_conquer
             {
                 if (nextMapTileInstance.IsBlockingTerrain)
                 {
-                    //                    nextBasicMapSquare.gameSprite.drawBoundingRectangle = true;
+                    //                    nextBasicMapSquare.gameSprite.drawWhiteBoundingRectangle = true;
                     Point mapTilePositionInMapTileCoordinates =
                         ConvertWorldPositionVector2ToMapTilePositionPoint(nextMapTileInstance
                             .PositionInWorldCoordinates);

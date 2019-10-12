@@ -1,6 +1,7 @@
 ﻿
 using Point = Microsoft.Xna.Framework.Point;
 using System;
+using System.Collections.Generic;
 
 namespace mike_and_conquer
 { 
@@ -28,18 +29,28 @@ namespace mike_and_conquer
             get { return height; }
         }
 
+        // TODO:  Consider making this in array instead of list of Points
+        private List<Point> blockedMapTileRelativeCoordinates;
 
         protected TerrainItemDescriptor()
         {
         }
 
 
-        public TerrainItemDescriptor(String terrainItemType, int width, int height)
+        public TerrainItemDescriptor(String terrainItemType, int width, int height, List<Point> blockedMapTileRelativeCoordinates)
         {
             this.terrainItemType = terrainItemType;
+            this.width = width;
+            this.height = height;
+            this.blockedMapTileRelativeCoordinates = blockedMapTileRelativeCoordinates;
         }
 
 
+        public List<Point> GetBlockMapTileRelativeCoordinates()
+        {
+
+            return this.blockedMapTileRelativeCoordinates;
+        }
     }
 
 

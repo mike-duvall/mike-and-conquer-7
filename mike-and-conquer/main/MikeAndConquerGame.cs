@@ -193,7 +193,7 @@ namespace mike_and_conquer
             //                AddSandbag(14, 6, 2);
             //                AddSandbag(14, 7, 8);
             minigunnerIconView = new MinigunnerIconView();
-            AddGDIBarracksAtMapSquareCoordinates(new Point(19, 13));
+            AddGDIBarracksAtMapSquareCoordinates(new Point(20, 15));
 
         }
 

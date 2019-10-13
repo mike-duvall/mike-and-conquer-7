@@ -20,7 +20,7 @@ namespace mike_and_conquer.gameview
                 nextTerrainView.DrawShadowOnly(gameTime,spriteBatch);
             }
 
-//            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
+            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {

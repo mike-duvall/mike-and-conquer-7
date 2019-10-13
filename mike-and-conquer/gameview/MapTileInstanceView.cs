@@ -28,7 +28,7 @@ namespace mike_and_conquer.gameview
             this.singleTextureSprite.drawWhiteBoundingRectangle = false;
             if (aMapTileInstance.IsBlockingTerrain)
             {
-                this.singleTextureSprite.drawRedBoundingRectangle = true;
+                this.singleTextureSprite.drawRedBoundingRectangle = false;
             }
         }
 

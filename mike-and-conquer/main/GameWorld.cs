@@ -78,8 +78,6 @@ namespace mike_and_conquer
         }
 
 
-
-
         public void InitializeDefaultMap()
         {
             LoadMap();
@@ -116,17 +114,21 @@ namespace mike_and_conquer
 
             SortedDictionary<int, string> terrainMap = new SortedDictionary<int, string>();
 
+            // TODO:  Eventually create a data file
+            // which has the tile descriptor data(specifically, the blocked tiles)
+            // and read all of this from a file, rather than being hard coded
+            // in the code
             Dictionary<String, TerrainItemDescriptor> terrainItemDescriptorDictionary = new Dictionary<string, TerrainItemDescriptor>();
-            addT01(terrainItemDescriptorDictionary);  // verified
-            addT02(terrainItemDescriptorDictionary);  // verified
+            addT01(terrainItemDescriptorDictionary);  
+            addT02(terrainItemDescriptorDictionary);  
 //            addT05(terrainItemDescriptorDictionary);  // not visible
-            addT06(terrainItemDescriptorDictionary);  // verified
-            addT07(terrainItemDescriptorDictionary);  // can't really verify since it's not isolated on this map
-            addT16(terrainItemDescriptorDictionary);  // verified as much as I can
-            addTC01(terrainItemDescriptorDictionary); // verified
-            addTC02(terrainItemDescriptorDictionary); // verified
-            addTC04(terrainItemDescriptorDictionary); // verified
-            addTC05(terrainItemDescriptorDictionary); // verified
+            addT06(terrainItemDescriptorDictionary);  
+            addT07(terrainItemDescriptorDictionary);  
+            addT16(terrainItemDescriptorDictionary);  
+            addTC01(terrainItemDescriptorDictionary); 
+            addTC02(terrainItemDescriptorDictionary); 
+            addTC04(terrainItemDescriptorDictionary); 
+            addTC05(terrainItemDescriptorDictionary); 
 
             terrainMap.Add(3303, "Content\\T01.tem");
             terrainMap.Add(2988, "Content\\T01.tem");

@@ -100,15 +100,15 @@ namespace mike_and_conquer
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
 
-            bool makeFullscreen = true;
-//            bool makeFullscreen = false;
+//            bool makeFullscreen = true;
+            bool makeFullscreen = false;
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;
-//                graphics.PreferredBackBufferWidth = 1920;
-//                graphics.PreferredBackBufferHeight = 1080;
-                graphics.PreferredBackBufferWidth = 2880;
-                graphics.PreferredBackBufferHeight = 1800;
+                graphics.PreferredBackBufferWidth = 1920;
+                graphics.PreferredBackBufferHeight = 1080;
+//                graphics.PreferredBackBufferWidth = 2880;
+//                graphics.PreferredBackBufferHeight = 1800;
             }
             else
             {
@@ -165,11 +165,11 @@ namespace mike_and_conquer
         {
             bool aiIsOn = false;
 
-//            AddGdiMinigunnerAtMapSquareCoordinates(new Point(6, 1));
-//            AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 3));
-//
-//
-//            AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
+            AddGdiMinigunnerAtMapSquareCoordinates(new Point(6, 1));
+            AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 4));
+
+
+            AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
 //
 //            AddSandbag(10, 6, 5);
 //            AddSandbag(10, 7, 5);

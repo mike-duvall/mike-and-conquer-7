@@ -153,29 +153,6 @@ namespace mike_and_conquer
             terrainMap.Add(2680, "Content\\TC05.tem");  
 
 
-//            terrainMap.Add(2416, "Content\\T01.tem");  // not visible
-//            terrainMap.Add(2016, "Content\\T01.tem");  // not visible
-//            terrainMap.Add(2030, "Content\\T05.tem");  // not visible
-//            terrainMap.Add(2283, "Content\\T06.tem"); // not visible
-//            terrainMap.Add(2408, "Content\\T06.tem"); // not visible
-//            terrainMap.Add(2345, "Content\\T07.tem");  // not visible
-//            terrainMap.Add(2299, "Content\\T07.tem");  // not visible
-//            terrainMap.Add(2032, "Content\\T07.tem");  // not visible
-//            terrainMap.Add(2097, "Content\\T16.tem");  // not visible
-//            terrainMap.Add(2033, "Content\\T17.tem");  // not visible
-//            terrainMap.Add(2042, "Content\\TC01.tem");  // not visible
-//            terrainMap.Add(2428, "Content\\TC01.tem");  // not visible
-//            terrainMap.Add(2847, "Content\\TC02.tem");  // not visible
-//            terrainMap.Add(2017, "Content\\TC02.tem");  // not visible
-//            terrainMap.Add(2399, "Content\\TC02.tem");  // not visible
-//            terrainMap.Add(2213, "Content\\TC04.tem");  // not visible
-//            terrainMap.Add(3039, "Content\\TC05.tem"); // not visible
-//            terrainMap.Add(2207, "Content\\TC05.tem");  // not visible
-
-
-
-            // TODO: revisit which of above are not visible, make them not added
-            // Consider checking world coordinates and not adding if below zero
             foreach (int cellnumber in terrainMap.Keys)
             {
                 Point point = ConvertCellNumberToTopLeftWorldCoordinates(cellnumber);
@@ -183,7 +160,6 @@ namespace mike_and_conquer
                 {
                     String terrainItemType = terrainMap[cellnumber];
                     TerrainItemDescriptor terrainItemDescriptor = terrainItemDescriptorDictionary[terrainItemType];
-//                    TerrainItem terrainItem = new TerrainItem(point.X, point.Y, terrainMap[cellnumber]);
                     TerrainItem terrainItem = new TerrainItem(point.X, point.Y, terrainItemDescriptor);
                     terrainItemList.Add(terrainItem);
 
@@ -196,7 +172,6 @@ namespace mike_and_conquer
                         }
 
                     }
-
 
                 }
             }
@@ -298,29 +273,12 @@ namespace mike_and_conquer
             blockMapTileOffsets.Add(new Point(2, 1));
             blockMapTileOffsets.Add(new Point(0, 2));
 
-            //                MapTileInstance blocked1 = MikeAndConquerGame.instance.gameWorld.FindMapSquare(positionInWorldCoordinates.X + 10,
-            //                    positionInWorldCoordinates.Y + 10);
-            //
-            //                MapTileInstance blocked2 = MikeAndConquerGame.instance.gameWorld.FindMapSquare(positionInWorldCoordinates.X + 10,
-            //                    positionInWorldCoordinates.Y + 34);
-            //
-            //                MapTileInstance blocked3 = MikeAndConquerGame.instance.gameWorld.FindMapSquare(positionInWorldCoordinates.X + 10,
-            //                    positionInWorldCoordinates.Y + 58);
-            //
-            //                MapTileInstance blocked4 = MikeAndConquerGame.instance.gameWorld.FindMapSquare(positionInWorldCoordinates.X + 34,
-            //                    positionInWorldCoordinates.Y + 34);
-            //
-            //                MapTileInstance blocked5 = MikeAndConquerGame.instance.gameWorld.FindMapSquare(positionInWorldCoordinates.X + 58,
-            //                    positionInWorldCoordinates.Y + 34);
-
-
-
-            TerrainItemDescriptor tc01Descriptor = new TerrainItemDescriptor(
+            TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
                 "Content\\TC04.tem",
                 96,
                 72,
                 blockMapTileOffsets);
-            terrainItemDescriptorDictionary.Add(tc01Descriptor.TerrainItemType, tc01Descriptor);
+            terrainItemDescriptorDictionary.Add(descriptor.TerrainItemType, descriptor);
         }
 
 
@@ -334,12 +292,12 @@ namespace mike_and_conquer
             blockMapTileOffsets.Add(new Point(2, 2));
 
 
-            TerrainItemDescriptor tc01Descriptor = new TerrainItemDescriptor(
+            TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
                 "Content\\TC05.tem",
                 96,
                 72,
                 blockMapTileOffsets);
-            terrainItemDescriptorDictionary.Add(tc01Descriptor.TerrainItemType, tc01Descriptor);
+            terrainItemDescriptorDictionary.Add(descriptor.TerrainItemType, descriptor);
         }
 
 
@@ -351,12 +309,12 @@ namespace mike_and_conquer
             blockMapTileOffsets.Add(new Point(1, 1));
 
 
-            TerrainItemDescriptor tc01Descriptor = new TerrainItemDescriptor(
+            TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
                 "Content\\TC02.tem",
                 72,
                 48,
                 blockMapTileOffsets);
-            terrainItemDescriptorDictionary.Add(tc01Descriptor.TerrainItemType, tc01Descriptor);
+            terrainItemDescriptorDictionary.Add(descriptor.TerrainItemType, descriptor);
         }
 
 
@@ -370,8 +328,8 @@ namespace mike_and_conquer
             int mapTileX = remainder - 35;
             int mapTileY = quotient - 39;
 
-            int mapX = mapTileX * 24;
-            int mapY = mapTileY * 24;
+            int mapX = mapTileX * GameWorld.MAP_TILE_WIDTH;
+            int mapY = mapTileY * GameWorld.MAP_TILE_HEIGHT;
 
             return new Point(mapX, mapY);
         }

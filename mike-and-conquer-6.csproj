@@ -79,6 +79,7 @@
     <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameobjects\GDIBarracks.cs" />
+    <Compile Include="mike-and-conquer\gameobjects\TerrainItemDescriptor.cs" />
     <Compile Include="mike-and-conquer\gameobjects\TerrainItem.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Sandbag.cs" />
     <Compile Include="mike-and-conquer\gamesprite\ToolbarBuildIconSprite.cs" />

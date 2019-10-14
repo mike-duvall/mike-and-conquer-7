@@ -1,6 +1,8 @@
 ﻿
 using Point = Microsoft.Xna.Framework.Point;
 using System;
+using System.Collections.Generic;
+using mike_and_conquer.gameview;
 
 namespace mike_and_conquer
 { 
@@ -15,26 +17,42 @@ namespace mike_and_conquer
             get { return positionInWorldCoordinates; }
         }
 
-        private String terrainItemType;
-
         public String TerrainItemType
         {
-            get { return terrainItemType; }
+            get { return terrainItemDescriptor.TerrainItemType; }
         }
 
-
+        private TerrainItemDescriptor terrainItemDescriptor;
 
         protected TerrainItem()
         {
         }
 
 
-        public TerrainItem(int x, int y, String terrainItemType)
+        public TerrainItem(int x, int y, TerrainItemDescriptor terrainItemDescriptor)
         {
             positionInWorldCoordinates = new Point(x, y);
-            this.terrainItemType = terrainItemType;
+            this.terrainItemDescriptor = terrainItemDescriptor;
         }
 
+
+        public List<MapTileInstance> GetBlockedMapTileInstances()
+        {
+            List<MapTileInstance> blockMapTileInstances = new List<MapTileInstance>();
+            List<Point> blockMapTileRelativeCoordinates = terrainItemDescriptor.GetBlockMapTileRelativeCoordinates();
+
+
+            foreach (Point point in blockMapTileRelativeCoordinates)
+            {
+                int mapTileX = positionInWorldCoordinates.X + (point.X * GameWorld.MAP_TILE_WIDTH) + 10;
+                int mapTileY = positionInWorldCoordinates.Y + (point.Y * GameWorld.MAP_TILE_HEIGHT) + 10;
+                MapTileInstance blockedMapTile = MikeAndConquerGame.instance.gameWorld.FindMapSquare(mapTileX, mapTileY);
+                blockMapTileInstances.Add(blockedMapTile);
+            }
+
+            return blockMapTileInstances;
+
+        }
 
     }
 

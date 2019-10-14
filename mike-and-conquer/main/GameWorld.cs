@@ -78,8 +78,6 @@ namespace mike_and_conquer
         }
 
 
-
-
         public void InitializeDefaultMap()
         {
             LoadMap();
@@ -97,73 +95,6 @@ namespace mike_and_conquer
         private void LoadMap()
         {
 
-
-            // TODO Revisit what the key name should be, TC01, vs Content\\TC01.tem
-
-
-            SortedDictionary<int, string> terrainMap = new SortedDictionary<int, string>();
-            terrainMap.Add(2555, "Content\\TC01.tem");
-            terrainMap.Add(3039, "Content\\TC05.tem");
-
-            terrainMap.Add(2847, "Content\\TC02.tem");
-            terrainMap.Add(2017, "Content\\TC02.tem");
-
-            terrainMap.Add(2016, "Content\\T01.tem");
-
-            terrainMap.Add(2871, "Content\\TC02.tem");
-            terrainMap.Add(2399, "Content\\TC02.tem");
-
-
-            terrainMap.Add(2213, "Content\\TC04.tem");
-            terrainMap.Add(2207, "Content\\TC05.tem");
-            terrainMap.Add(2030, "Content\\T05.tem");
-            terrainMap.Add(2283, "Content\\T06.tem");
-            terrainMap.Add(2408, "Content\\T06.tem");
-            terrainMap.Add(2345, "Content\\T07.tem");
-            terrainMap.Add(2299, "Content\\T07.tem");
-            terrainMap.Add(2032, "Content\\T07.tem");
-            terrainMap.Add(2097, "Content\\T16.tem");
-            terrainMap.Add(2033, "Content\\T17.tem");
-            terrainMap.Add(2042, "Content\\TC01.tem");
-            terrainMap.Add(2428, "Content\\TC01.tem");
-
-
-            terrainMap.Add(2544, "Content\\TC02.tem");   // This is the one
-
-
-            terrainMap.Add(3052, "Content\\TC02.tem");
-            terrainMap.Add(2861, "Content\\T02.tem");
-            terrainMap.Add(2988, "Content\\T01.tem");
-            terrainMap.Add(2666, "Content\\TC01.tem");
-            terrainMap.Add(2605, "Content\\TC05.tem");
-            terrainMap.Add(2794, "Content\\TC04.tem");
-            terrainMap.Add(2416, "Content\\T01.tem");
-            terrainMap.Add(3369, "Content\\T06.tem");
-            terrainMap.Add(3496, "Content\\T06.tem");
-            terrainMap.Add(3246, "Content\\TC01.tem");
-            terrainMap.Add(2860, "Content\\T07.tem");
-            terrainMap.Add(2991, "Content\\T01.tem");
-            terrainMap.Add(3245, "Content\\T16.tem");
-            terrainMap.Add(3056, "Content\\TC02.tem");
-            terrainMap.Add(3121, "Content\\T01.tem");
-            terrainMap.Add(2936, "Content\\T01.tem");
-            terrainMap.Add(2680, "Content\\TC05.tem");
-            terrainMap.Add(2938, "Content\\TC04.tem");
-            terrainMap.Add(2937, "Content\\T16.tem");
-            terrainMap.Add(3303, "Content\\T01.tem");
-            terrainMap.Add(3111, "Content\\T02.tem");
-
-
-            foreach (int cellnumber in terrainMap.Keys)
-            {
-                Point point = ConvertCellNumberToTopLeftWorldCoordinates(cellnumber);
-                if (point.X >= 0 && point.Y >= 0)
-                {
-                    int x = 3;
-                    terrainItemList.Add( new TerrainItem(point.X, point.Y, terrainMap[cellnumber]));
-                }
-            }
-
             Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
 
 
@@ -176,7 +107,219 @@ namespace mike_and_conquer
             int endY = 61;
 
             gameMap = new GameMap(inputStream, startX, startY, endX, endY);
+
+
+            // TODO Revisit what the key name should be, TC01, vs Content\\TC01.tem, vs TC01.tem
+
+
+            SortedDictionary<int, string> terrainMap = new SortedDictionary<int, string>();
+
+            // TODO:  Eventually create a data file
+            // which has the tile descriptor data(specifically, the blocked tiles)
+            // and read all of this from a file, rather than being hard coded
+            // in the code
+            Dictionary<String, TerrainItemDescriptor> terrainItemDescriptorDictionary = new Dictionary<string, TerrainItemDescriptor>();
+            addT01(terrainItemDescriptorDictionary);  
+            addT02(terrainItemDescriptorDictionary);  
+//            addT05(terrainItemDescriptorDictionary);  // not visible
+            addT06(terrainItemDescriptorDictionary);  
+            addT07(terrainItemDescriptorDictionary);  
+            addT16(terrainItemDescriptorDictionary);  
+            addTC01(terrainItemDescriptorDictionary); 
+            addTC02(terrainItemDescriptorDictionary); 
+            addTC04(terrainItemDescriptorDictionary); 
+            addTC05(terrainItemDescriptorDictionary); 
+
+            terrainMap.Add(3303, "Content\\T01.tem");
+            terrainMap.Add(2988, "Content\\T01.tem");
+            terrainMap.Add(2991, "Content\\T01.tem");
+            terrainMap.Add(3121, "Content\\T01.tem");
+            terrainMap.Add(2936, "Content\\T01.tem");
+            terrainMap.Add(2861, "Content\\T02.tem");
+            terrainMap.Add(3111, "Content\\T02.tem");
+            terrainMap.Add(3369, "Content\\T06.tem");
+            terrainMap.Add(3496, "Content\\T06.tem");
+            terrainMap.Add(2860, "Content\\T07.tem");
+            terrainMap.Add(3245, "Content\\T16.tem");
+            terrainMap.Add(2937, "Content\\T16.tem");
+            terrainMap.Add(2555, "Content\\TC01.tem");
+            terrainMap.Add(3246, "Content\\TC01.tem");
+            terrainMap.Add(2666, "Content\\TC01.tem");
+            terrainMap.Add(3052, "Content\\TC02.tem");
+            terrainMap.Add(3056, "Content\\TC02.tem");
+            terrainMap.Add(2871, "Content\\TC02.tem");
+            terrainMap.Add(2544, "Content\\TC02.tem");
+            terrainMap.Add(2794, "Content\\TC04.tem");
+            terrainMap.Add(2938, "Content\\TC04.tem");
+            terrainMap.Add(2605, "Content\\TC05.tem");  
+            terrainMap.Add(2680, "Content\\TC05.tem");  
+
+
+            foreach (int cellnumber in terrainMap.Keys)
+            {
+                Point point = ConvertCellNumberToTopLeftWorldCoordinates(cellnumber);
+                if (point.X >= 0 && point.Y >= 0)
+                {
+                    String terrainItemType = terrainMap[cellnumber];
+                    TerrainItemDescriptor terrainItemDescriptor = terrainItemDescriptorDictionary[terrainItemType];
+                    TerrainItem terrainItem = new TerrainItem(point.X, point.Y, terrainItemDescriptor);
+                    terrainItemList.Add(terrainItem);
+
+                    List<MapTileInstance> blockeMapTileInstances = terrainItem.GetBlockedMapTileInstances();
+                    foreach(MapTileInstance blockedMapTileInstance in blockeMapTileInstances)
+                    {
+                        if (blockedMapTileInstance != null)
+                        {
+                            blockedMapTileInstance.IsBlockingTerrain = true;
+                        }
+
+                    }
+
+                }
+            }
+
         }
+
+        private static void addT01(Dictionary<string, TerrainItemDescriptor> terrainItemDescriptorDictionary)
+        {
+            List<Point> blockMapTileOffsets = new List<Point>();
+            blockMapTileOffsets.Add(new Point(0, 1));
+            TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
+                "Content\\T01.tem",
+                48,
+                48,
+                blockMapTileOffsets);
+            terrainItemDescriptorDictionary.Add(descriptor.TerrainItemType, descriptor);
+        }
+
+        private static void addT02(Dictionary<string, TerrainItemDescriptor> terrainItemDescriptorDictionary)
+        {
+            List<Point> blockMapTileOffsets = new List<Point>();
+            blockMapTileOffsets.Add(new Point(0, 1));
+            TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
+                "Content\\T02.tem",
+                48,
+                48,
+                blockMapTileOffsets);
+            terrainItemDescriptorDictionary.Add(descriptor.TerrainItemType, descriptor);
+        }
+
+        private static void addT05(Dictionary<string, TerrainItemDescriptor> terrainItemDescriptorDictionary)
+        {
+            List<Point> blockMapTileOffsets = new List<Point>();
+            blockMapTileOffsets.Add(new Point(0, 1));
+            TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
+                "Content\\T05.tem",
+                48,
+                48,
+                blockMapTileOffsets);
+            terrainItemDescriptorDictionary.Add(descriptor.TerrainItemType, descriptor);
+        }
+
+        private static void addT06(Dictionary<string, TerrainItemDescriptor> terrainItemDescriptorDictionary)
+        {
+            List<Point> blockMapTileOffsets = new List<Point>();
+            blockMapTileOffsets.Add(new Point(0, 1));
+            TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
+                "Content\\T06.tem",
+                48,
+                48,
+                blockMapTileOffsets);
+            terrainItemDescriptorDictionary.Add(descriptor.TerrainItemType, descriptor);
+        }
+
+
+        private static void addT07(Dictionary<string, TerrainItemDescriptor> terrainItemDescriptorDictionary)
+        {
+            List<Point> blockMapTileOffsets = new List<Point>();
+            blockMapTileOffsets.Add(new Point(0, 1));
+            TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
+                "Content\\T07.tem",
+                48,
+                48,
+                blockMapTileOffsets);
+            terrainItemDescriptorDictionary.Add(descriptor.TerrainItemType, descriptor);
+        }
+
+        private static void addT16(Dictionary<string, TerrainItemDescriptor> terrainItemDescriptorDictionary)
+        {
+            List<Point> blockMapTileOffsets = new List<Point>();
+            blockMapTileOffsets.Add(new Point(0, 1));
+            TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
+                "Content\\T16.tem",
+                48,
+                48,
+                blockMapTileOffsets);
+            terrainItemDescriptorDictionary.Add(descriptor.TerrainItemType, descriptor);
+        }
+
+
+        private static void addTC01(Dictionary<string, TerrainItemDescriptor> terrainItemDescriptorDictionary)
+        {
+            List<Point> blockMapTileOffsets = new List<Point>();
+            blockMapTileOffsets.Add(new Point(0, 1));
+            blockMapTileOffsets.Add(new Point(1, 1));
+            TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
+                "Content\\TC01.tem",
+                72,
+                48,
+                blockMapTileOffsets);
+            terrainItemDescriptorDictionary.Add(descriptor.TerrainItemType, descriptor);
+        }
+
+        private static void addTC04(Dictionary<string, TerrainItemDescriptor> terrainItemDescriptorDictionary)
+        {
+            List<Point> blockMapTileOffsets = new List<Point>();
+            blockMapTileOffsets.Add(new Point(0, 1));
+            blockMapTileOffsets.Add(new Point(1, 1));
+            blockMapTileOffsets.Add(new Point(2, 1));
+            blockMapTileOffsets.Add(new Point(0, 2));
+
+            TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
+                "Content\\TC04.tem",
+                96,
+                72,
+                blockMapTileOffsets);
+            terrainItemDescriptorDictionary.Add(descriptor.TerrainItemType, descriptor);
+        }
+
+
+        private static void addTC05(Dictionary<string, TerrainItemDescriptor> terrainItemDescriptorDictionary)
+        {
+            List<Point> blockMapTileOffsets = new List<Point>();
+            blockMapTileOffsets.Add(new Point(0, 1));
+            blockMapTileOffsets.Add(new Point(1, 1));
+            blockMapTileOffsets.Add(new Point(2, 1));
+            blockMapTileOffsets.Add(new Point(1, 2));
+            blockMapTileOffsets.Add(new Point(2, 2));
+
+
+            TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
+                "Content\\TC05.tem",
+                96,
+                72,
+                blockMapTileOffsets);
+            terrainItemDescriptorDictionary.Add(descriptor.TerrainItemType, descriptor);
+        }
+
+
+        private static void addTC02(Dictionary<string, TerrainItemDescriptor> terrainItemDescriptorDictionary)
+        {
+            List<Point> blockMapTileOffsets = new List<Point>();
+            blockMapTileOffsets.Add(new Point(1, 0));
+            blockMapTileOffsets.Add(new Point(0, 1));
+            blockMapTileOffsets.Add(new Point(1, 1));
+
+
+            TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
+                "Content\\TC02.tem",
+                72,
+                48,
+                blockMapTileOffsets);
+            terrainItemDescriptorDictionary.Add(descriptor.TerrainItemType, descriptor);
+        }
+
+
 
         private Point ConvertCellNumberToTopLeftWorldCoordinates(int cellnumber)
         {
@@ -187,8 +330,8 @@ namespace mike_and_conquer
             int mapTileX = remainder - 35;
             int mapTileY = quotient - 39;
 
-            int mapX = mapTileX * 24;
-            int mapY = mapTileY * 24;
+            int mapX = mapTileX * GameWorld.MAP_TILE_WIDTH;
+            int mapY = mapTileY * GameWorld.MAP_TILE_HEIGHT;
 
             return new Point(mapX, mapY);
         }
@@ -527,7 +670,7 @@ namespace mike_and_conquer
             {
                 if (nextMapTileInstance.IsBlockingTerrain)
                 {
-                    //                    nextBasicMapSquare.gameSprite.drawBoundingRectangle = true;
+                    //                    nextBasicMapSquare.gameSprite.drawWhiteBoundingRectangle = true;
                     Point mapTilePositionInMapTileCoordinates =
                         ConvertWorldPositionVector2ToMapTilePositionPoint(nextMapTileInstance
                             .PositionInWorldCoordinates);

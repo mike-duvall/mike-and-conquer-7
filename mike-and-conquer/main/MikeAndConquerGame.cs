@@ -100,8 +100,8 @@ namespace mike_and_conquer
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
 
-//            bool makeFullscreen = true;
-            bool makeFullscreen = false;
+            bool makeFullscreen = true;
+//            bool makeFullscreen = false;
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;

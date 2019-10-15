@@ -118,7 +118,7 @@ namespace mike_and_conquer
         {
             Point mousePositionAsPointInWorldCoordinates = CalculateMousePositionInWorldCoordinates(newMouseState);
 
-            if (IsAMinigunnerSelected())
+            if (GameWorld.instance.IsPointOnMap(mousePositionAsPointInWorldCoordinates) && IsAMinigunnerSelected())
             {
                 if (IsPointOverEnemy(mousePositionAsPointInWorldCoordinates))
                 {
@@ -297,6 +297,7 @@ namespace mike_and_conquer
 
         private bool IsValidMoveDestination(Point pointInWorldCoordinates)
         {
+
             Boolean isValidMoveDestination = true;
             MapTileInstance clickedMapTileInstance =
                 GameWorld.instance.FindMapSquare(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
@@ -330,6 +331,7 @@ namespace mike_and_conquer
             if (toolbarLocation.X > 0 && toolbarLocation.X < 64 && toolbarLocation.Y > 0 && toolbarLocation.Y < 48)
             {
                 HandleClickGDIBarracks();
+                handled = true;
             }
 
             return handled;

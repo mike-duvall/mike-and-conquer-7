@@ -730,5 +730,17 @@ namespace mike_and_conquer
         }
 
 
+        public bool IsPointOnMap(Point pointInWorldCoordinates)
+        {
+            int largestXValue = (this.gameMap.numColumns * GameWorld.MAP_TILE_WIDTH) -1;
+            int largestYValue = (this.gameMap.numRows * GameWorld.MAP_TILE_HEIGHT) -1;
+
+            return (pointInWorldCoordinates.X >= 0 &&
+                    pointInWorldCoordinates.X < largestXValue &&
+                    pointInWorldCoordinates.Y >= 0 &&
+                    pointInWorldCoordinates.Y < largestYValue
+                );
+
+        }
     }
 }

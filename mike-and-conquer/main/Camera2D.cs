@@ -22,7 +22,8 @@ namespace mike_and_conquer_6
                 return
                     Matrix.CreateTranslation(new Vector3((int)-Location.X, (int)-Location.Y, 0)) *
                     Matrix.CreateRotationZ(Rotation) *
-                    Matrix.CreateScale(Zoom) *
+//                    Matrix.CreateScale(Zoom) *
+                    Matrix.CreateScale(Zoom, Zoom, 1.0f) *
                     // Added rounding to int in the second CreateTranslation to solve an issue with
                     // the first column of the texture getting doubled and the last column dropped, in cases
                     // when the width had a decimal component (e.g. 809.5 vs 809)

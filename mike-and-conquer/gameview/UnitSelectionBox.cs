@@ -76,14 +76,14 @@ namespace mike_and_conquer.gameview
         }
 
 
-        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
         {
             if (isDragSelectHappening)
             {
                 InitializeBoundingRectangle();
                 Vector2 origin = new Vector2(0, 0);
                 spriteBatch.Draw(unitSelectionBoxTexture, position, null, Color.White, 0f, origin, defaultScale,
-                    SpriteEffects.None, 0f);
+                    SpriteEffects.None, layerDepth);
             }
 
         }

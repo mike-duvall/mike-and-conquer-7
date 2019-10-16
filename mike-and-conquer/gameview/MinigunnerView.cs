@@ -63,7 +63,7 @@ namespace mike_and_conquer.gameview
         }
 
 
-        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
         {
             if(myMinigunner.health <= 0)
             {
@@ -84,11 +84,11 @@ namespace mike_and_conquer.gameview
                 unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
             }
 
-            unitSprite.Draw(gameTime, spriteBatch, myMinigunner.positionInWorldCoordinates);
+            unitSprite.Draw(gameTime, spriteBatch, myMinigunner.positionInWorldCoordinates, layerDepth);
 
             if (myMinigunner.selected)
             {
-                unitSelectionCursor.Draw(gameTime, spriteBatch);
+                unitSelectionCursor.Draw(gameTime, spriteBatch, layerDepth);
             }
 
             if (this.drawDestinationSquare && this.myMinigunner.state == Minigunner.State.MOVING)

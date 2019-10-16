@@ -121,19 +121,20 @@ namespace mike_and_conquer
         }
 
 
-        public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates)
+        public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, float layerDepth)
         {
 
             float defaultScale = 1;
-            spriteBatch.Draw(shadowOnlytexture2D, positionInWorldCoordinates, null, Color.White, 0f, spriteOrigin, defaultScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(shadowOnlytexture2D, positionInWorldCoordinates, null, Color.White, 0f, spriteOrigin,
+                defaultScale, SpriteEffects.None, layerDepth);
 
         }
 
-        public void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates)
+        public void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, float layerDepth)
         {
             float defaultScale = 1;
 
-            spriteBatch.Draw(noShadowTexture, positionInWorldCoordinates, null, Color.White, 0f, spriteOrigin, defaultScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(noShadowTexture, positionInWorldCoordinates, null, Color.White, 0f, spriteOrigin, defaultScale, SpriteEffects.None, layerDepth);
 
             if (drawBoundingRectangle)
             {

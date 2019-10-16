@@ -33,16 +33,16 @@ namespace mike_and_conquer.gameview
         }
 
 
-        public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
+        public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
         {
             Vector2 positionAsVector2 = new Vector2(terrainItem.PositionInWorldCoordinates.X, terrainItem.PositionInWorldCoordinates.Y);
-            this.terrainSprite.DrawShadowOnly(gameTime, spriteBatch, positionAsVector2);
+            this.terrainSprite.DrawShadowOnly(gameTime, spriteBatch, positionAsVector2, layerDepth);
         }
 
-        public void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
+        public void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
         {
             Vector2 positionAsVector2 = new Vector2(terrainItem.PositionInWorldCoordinates.X, terrainItem.PositionInWorldCoordinates.Y);
-            this.terrainSprite.DrawNoShadow(gameTime, spriteBatch, positionAsVector2);
+            this.terrainSprite.DrawNoShadow(gameTime, spriteBatch, positionAsVector2, layerDepth);
         }
     }
 }

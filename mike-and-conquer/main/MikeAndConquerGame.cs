@@ -100,8 +100,8 @@ namespace mike_and_conquer
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
 
-//            bool makeFullscreen = true;
-            bool makeFullscreen = false;
+            bool makeFullscreen = true;
+//            bool makeFullscreen = false;
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;
@@ -765,8 +765,8 @@ namespace mike_and_conquer
             const RasterizerState nullRasterizerState = null;
             const Effect nullEffect = null;
             spriteBatch.Begin(
-                SpriteSortMode.Deferred,
-//                SpriteSortMode.BackToFront,
+//                SpriteSortMode.Deferred,
+                SpriteSortMode.BackToFront,
                 nullBlendState,
                 SamplerState.PointClamp,
                 nullDepthStencilState,
@@ -780,7 +780,6 @@ namespace mike_and_conquer
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
             spriteBatch.End();
-
 
         }
 

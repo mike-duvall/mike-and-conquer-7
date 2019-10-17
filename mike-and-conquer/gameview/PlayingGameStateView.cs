@@ -12,41 +12,32 @@ namespace mike_and_conquer.gameview
         {
             foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
             {
-                basicMapSquareView.Draw(gameTime, spriteBatch, 1.0f);
+                basicMapSquareView.Draw(gameTime, spriteBatch);
             }
 
-            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
-            {
-                nextTerrainView.DrawShadowOnly(gameTime,spriteBatch, 0.9f);
-            }
-
-            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch, 0.85f);
+            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {
-                nextMinigunnerView.Draw(gameTime, spriteBatch, 0.8f);
+                nextMinigunnerView.Draw(gameTime, spriteBatch);
             }
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
             {
-                nextMinigunnerView.Draw(gameTime, spriteBatch, 0.7f);
+                nextMinigunnerView.Draw(gameTime, spriteBatch);
             }
 
             foreach (SandbagView nextSandbagView in GameWorldView.instance.SandbagViewList)
             {
-                nextSandbagView.Draw(gameTime, spriteBatch, 0.6f);
+                nextSandbagView.Draw(gameTime, spriteBatch);
             }
 
-
-  
             foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
             {
-                nextTerrainView.DrawNoShadow(gameTime,spriteBatch, 0.5f);
-//                nextTerrainView.Draw(gameTime, spriteBatch);
+                nextTerrainView.DrawFull(gameTime, spriteBatch);
             }
 
-
-            MikeAndConquerGame.instance.unitSelectionBox.Draw(gameTime, spriteBatch, 0.4f);
+            MikeAndConquerGame.instance.unitSelectionBox.Draw(gameTime, spriteBatch);
 
 
         }

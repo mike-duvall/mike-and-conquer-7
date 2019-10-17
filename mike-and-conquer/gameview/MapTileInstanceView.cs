@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
 
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -46,9 +47,10 @@ namespace mike_and_conquer.gameview
         }
 
 
-        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
+        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            singleTextureSprite.Draw(gameTime, spriteBatch, this.myMapTileInstance.PositionInWorldCoordinates, layerDepth);
+            singleTextureSprite.Draw(gameTime, spriteBatch, this.myMapTileInstance.PositionInWorldCoordinates,
+                SpriteSortLayers.MAP_SQUARE_DEPTH);
         }
 
 

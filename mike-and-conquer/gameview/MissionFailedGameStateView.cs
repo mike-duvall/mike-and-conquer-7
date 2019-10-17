@@ -22,12 +22,12 @@ namespace mike_and_conquer.gameview
         {
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {
-                nextMinigunnerView.Draw(gameTime, spriteBatch, 0.8f);
+                nextMinigunnerView.Draw(gameTime, spriteBatch);
             }
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
             {
-                nextMinigunnerView.Draw(gameTime, spriteBatch, 0.8f);
+                nextMinigunnerView.Draw(gameTime, spriteBatch);
             }
             message.Draw(gameTime, spriteBatch);
 

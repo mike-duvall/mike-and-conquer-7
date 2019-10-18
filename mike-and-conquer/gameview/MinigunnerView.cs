@@ -84,11 +84,11 @@ namespace mike_and_conquer.gameview
                 unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
             }
 
-            unitSprite.Draw(gameTime, spriteBatch, myMinigunner.positionInWorldCoordinates);
+            unitSprite.Draw(gameTime, spriteBatch, myMinigunner.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
 
             if (myMinigunner.selected)
             {
-                unitSelectionCursor.Draw(gameTime, spriteBatch);
+                unitSelectionCursor.Draw(gameTime, spriteBatch, SpriteSortLayers.UNIT_DEPTH);
             }
 
             if (this.drawDestinationSquare && this.myMinigunner.state == Minigunner.State.MOVING)

@@ -92,7 +92,7 @@ namespace mike_and_conquer
         }
 
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, float layerDepth)
         {
             AnimationSequence currentAnimationSequence = animationSequenceMap[currentAnimationSequenceIndex];
             if (animate)
@@ -110,7 +110,7 @@ namespace mike_and_conquer
                 UpdateShadowPixels(positionInWorldCoordinates, currentAnimationImageIndex);
             }
 
-            spriteBatch.Draw(currentTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(currentTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
 
             if (drawBoundingRectangle)
             {

@@ -45,7 +45,8 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            unitSprite.Draw(gameTime, spriteBatch, myBarracks.positionInWorldCoordinates);
+            unitSprite.Draw(gameTime, spriteBatch, myBarracks.positionInWorldCoordinates,
+                SpriteSortLayers.BUILDING_DEPTH);
         }
 
 

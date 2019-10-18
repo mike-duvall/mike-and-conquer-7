@@ -758,16 +758,9 @@ namespace mike_and_conquer
 
         private void DrawMap(GameTime gameTime)
         {
-            bool renderToTexture = false;
 
-            RenderTarget2D screenRenderTarget2D = null;
-
-            if (renderToTexture)
-            {
-                screenRenderTarget2D = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
-                    mapViewport.Width, mapViewport.Height);
-                GraphicsDevice.SetRenderTarget(screenRenderTarget2D);
-            }
+            // Note:  Look in git history in this method
+            // for example of how to render to RenderTarget2D
 
             GraphicsDevice.Viewport = mapViewport;
             const BlendState nullBlendState = null;
@@ -775,7 +768,7 @@ namespace mike_and_conquer
             const RasterizerState nullRasterizerState = null;
             const Effect nullEffect = null;
             spriteBatch.Begin(
-                SpriteSortMode.Deferred,
+                SpriteSortMode.BackToFront,
                 nullBlendState,
                 SamplerState.PointClamp,
                 nullDepthStencilState,
@@ -783,27 +776,14 @@ namespace mike_and_conquer
                 nullEffect,
                 mapViewportCamera.TransformMatrix);
 
-            spriteBatch.Draw(mapBackgroundRectangle,
-                new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
+            // Leaving this commented out for now.  Revisit if this is even needed and remove if not,
+            // including removing mapBackgroundRectangle
+//            spriteBatch.Draw(mapBackgroundRectangle,
+//                new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
+
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);
             spriteBatch.End();
-
-            if (renderToTexture)
-            {
-                GraphicsDevice.SetRenderTarget(null);
-
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
-                    SamplerState.LinearClamp, DepthStencilState.Default,
-                    RasterizerState.CullNone);
-
-                spriteBatch.Draw(screenRenderTarget2D, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
-
-                spriteBatch.End();
-
-                screenRenderTarget2D.Dispose();
-
-            }
 
         }
 

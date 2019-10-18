@@ -10,6 +10,7 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Point = Microsoft.Xna.Framework.Point;
 using Microsoft.Xna.Framework;
 using System;
+using mike_and_conquer.gameobjects;
 
 namespace mike_and_conquer.gameview
 {
@@ -83,7 +84,7 @@ namespace mike_and_conquer.gameview
                 InitializeBoundingRectangle();
                 Vector2 origin = new Vector2(0, 0);
                 spriteBatch.Draw(unitSelectionBoxTexture, position, null, Color.White, 0f, origin, defaultScale,
-                    SpriteEffects.None, 0f);
+                    SpriteEffects.None, SpriteSortLayers.UNIT_DEPTH);
             }
 
         }

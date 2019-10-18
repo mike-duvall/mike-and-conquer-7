@@ -112,7 +112,6 @@ namespace mike_and_conquer
             // TODO Revisit what the key name should be, TC01, vs Content\\TC01.tem, vs TC01.tem
 
 
-            SortedDictionary<int, string> terrainMap = new SortedDictionary<int, string>();
 
             // TODO:  Eventually create a data file
             // which has the tile descriptor data(specifically, the blocked tiles)
@@ -128,7 +127,9 @@ namespace mike_and_conquer
             addTC01(terrainItemDescriptorDictionary); 
             addTC02(terrainItemDescriptorDictionary); 
             addTC04(terrainItemDescriptorDictionary); 
-            addTC05(terrainItemDescriptorDictionary); 
+            addTC05(terrainItemDescriptorDictionary);
+
+            SortedDictionary<int, string> terrainMap = new SortedDictionary<int, string>();
 
             terrainMap.Add(3303, "Content\\T01.tem");
             terrainMap.Add(2988, "Content\\T01.tem");
@@ -152,9 +153,10 @@ namespace mike_and_conquer
             terrainMap.Add(2794, "Content\\TC04.tem");
             terrainMap.Add(2938, "Content\\TC04.tem");
             terrainMap.Add(2605, "Content\\TC05.tem");  
-            terrainMap.Add(2680, "Content\\TC05.tem");  
+            terrainMap.Add(2680, "Content\\TC05.tem");
 
 
+            float layerDepthOffset = 0.0f;
             foreach (int cellnumber in terrainMap.Keys)
             {
                 Point point = ConvertCellNumberToTopLeftWorldCoordinates(cellnumber);
@@ -162,7 +164,8 @@ namespace mike_and_conquer
                 {
                     String terrainItemType = terrainMap[cellnumber];
                     TerrainItemDescriptor terrainItemDescriptor = terrainItemDescriptorDictionary[terrainItemType];
-                    TerrainItem terrainItem = new TerrainItem(point.X, point.Y, terrainItemDescriptor);
+                    TerrainItem terrainItem = new TerrainItem(point.X, point.Y, terrainItemDescriptor, layerDepthOffset);
+                    layerDepthOffset = layerDepthOffset + 0.01f;
                     terrainItemList.Add(terrainItem);
 
                     List<MapTileInstance> blockeMapTileInstances = terrainItem.GetBlockedMapTileInstances();

@@ -24,15 +24,24 @@ namespace mike_and_conquer
 
         private TerrainItemDescriptor terrainItemDescriptor;
 
+        private float layerDepthOffset;
+
+        public float LayerDepthOffset
+        {
+            get { return layerDepthOffset; }
+        }
+
+
         protected TerrainItem()
         {
         }
 
 
-        public TerrainItem(int x, int y, TerrainItemDescriptor terrainItemDescriptor)
+        public TerrainItem(int x, int y, TerrainItemDescriptor terrainItemDescriptor, float layerDepthOffset)
         {
             positionInWorldCoordinates = new Point(x, y);
             this.terrainItemDescriptor = terrainItemDescriptor;
+            this.layerDepthOffset = layerDepthOffset;
         }
 
 

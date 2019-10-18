@@ -759,13 +759,15 @@ namespace mike_and_conquer
         private void DrawMap(GameTime gameTime)
         {
 
+            // Note:  Look in git history in this method
+            // for example of how to render to RenderTarget2D
+
             GraphicsDevice.Viewport = mapViewport;
             const BlendState nullBlendState = null;
             const DepthStencilState nullDepthStencilState = null;
             const RasterizerState nullRasterizerState = null;
             const Effect nullEffect = null;
             spriteBatch.Begin(
-//                SpriteSortMode.Deferred,
                 SpriteSortMode.BackToFront,
                 nullBlendState,
                 SamplerState.PointClamp,
@@ -774,6 +776,8 @@ namespace mike_and_conquer
                 nullEffect,
                 mapViewportCamera.TransformMatrix);
 
+            // Leaving this commented out for now.  Revisit if this is even needed and remove if not,
+            // including removing mapBackgroundRectangle
 //            spriteBatch.Draw(mapBackgroundRectangle,
 //                new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
 

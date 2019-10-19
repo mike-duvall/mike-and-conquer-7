@@ -592,6 +592,12 @@ namespace mike_and_conquer
                 GameOptions.ToggleDrawTerrainBorder();
             }
 
+            if (!oldKeyboardState.IsKeyDown(Keys.H) && state.IsKeyDown(Keys.H))
+            {
+                GameOptions.ToggleDrawBlockingTerrainBorder();
+            }
+
+
             currentGameState = this.currentGameState.Update(gameTime);
             this.mapViewportCamera.Rotation = testRotation;
             //                        testRotation += 0.05f;

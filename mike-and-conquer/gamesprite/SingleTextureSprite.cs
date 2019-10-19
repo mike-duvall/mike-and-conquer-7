@@ -15,10 +15,7 @@ namespace mike_and_conquer
 
         Texture2D texture;
 
-        Texture2D whiteSpriteBorderRectangleTexture;
-        Texture2D redSpriteBorderRectangleTexture;
-//        public Boolean drawWhiteBoundingRectangle;
-        public Boolean drawRedBoundingRectangle;
+        Texture2D priteBorderRectangleTexture;
 
 
         private Vector2 middleOfSpriteInSpriteCoordinates;
@@ -37,20 +34,20 @@ namespace mike_and_conquer
         public SingleTextureSprite(Texture2D texture)
         {
             this.texture = texture;
-            whiteSpriteBorderRectangleTexture = CreateSpriteBorderRectangleTexture(Color.White);
-            redSpriteBorderRectangleTexture = CreateSpriteBorderRectangleTexture(Color.Red);
-
+            priteBorderRectangleTexture = CreateSpriteBorderRectangleTexture(Color.White);
             middleOfSpriteInSpriteCoordinates = new Vector2();
 
             middleOfSpriteInSpriteCoordinates.X = Width / 2;
             middleOfSpriteInSpriteCoordinates.Y = Height / 2;
-
-//            drawWhiteBoundingRectangle = false;
-            drawRedBoundingRectangle = false;
-
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, bool drawWhiteBoundingRectangle, float layerDepth)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates,
+            float layerDepth)
+        {
+            this.Draw(gameTime, spriteBatch, positionInWorldCoordinates, layerDepth, false, Color.White);
+        }
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, float layerDepth, bool drawWhiteBoundingRectangle, Color boundingRectColor)
         {
 
             float defaultScale = 1;
@@ -59,11 +56,7 @@ namespace mike_and_conquer
 
             if (drawWhiteBoundingRectangle)
             {
-                spriteBatch.Draw(whiteSpriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
-            }
-            if (drawRedBoundingRectangle)
-            {
-                spriteBatch.Draw(redSpriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(priteBorderRectangleTexture, positionInWorldCoordinates, null, boundingRectColor, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
             }
 
         }

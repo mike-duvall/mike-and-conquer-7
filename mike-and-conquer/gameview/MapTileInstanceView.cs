@@ -1,9 +1,8 @@
 ﻿
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
-
-using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 namespace mike_and_conquer.gameview
@@ -26,10 +25,10 @@ namespace mike_and_conquer.gameview
             textureKey = myMapTileInstance.TextureKey;
             List<MapTileFrame>  mapTileFrameList = MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
             this.singleTextureSprite = new SingleTextureSprite(mapTileFrameList[imageIndex].Texture);
-            if (aMapTileInstance.IsBlockingTerrain)
-            {
-                this.singleTextureSprite.drawRedBoundingRectangle = false;
-            }
+//            if (aMapTileInstance.IsBlockingTerrain)
+//            {
+//                this.singleTextureSprite.drawRedBoundingRectangle = false;
+//            }
         }
 
 
@@ -48,8 +47,28 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            singleTextureSprite.Draw(gameTime, spriteBatch, this.myMapTileInstance.PositionInWorldCoordinates, GameOptions.DRAW_TERRAIN_BORDER,
-            SpriteSortLayers.MAP_SQUARE_DEPTH);
+            if (GameOptions.DRAW_BLOCKING_TERRAIN_BORDER && myMapTileInstance.IsBlockingTerrain)
+            {
+                singleTextureSprite.Draw(
+                    gameTime,
+                    spriteBatch,
+                    this.myMapTileInstance.PositionInWorldCoordinates,
+                    SpriteSortLayers.MAP_SQUARE_DEPTH,
+                    GameOptions.DRAW_BLOCKING_TERRAIN_BORDER,
+                    Color.Red);
+
+            }
+            else
+            {
+                singleTextureSprite.Draw(
+                    gameTime,
+                    spriteBatch,
+                    this.myMapTileInstance.PositionInWorldCoordinates,
+                    SpriteSortLayers.MAP_SQUARE_DEPTH,
+                    GameOptions.DRAW_TERRAIN_BORDER,
+                    Color.White);
+            }
+
         }
 
 

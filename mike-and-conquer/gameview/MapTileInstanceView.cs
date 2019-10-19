@@ -26,7 +26,6 @@ namespace mike_and_conquer.gameview
             textureKey = myMapTileInstance.TextureKey;
             List<MapTileFrame>  mapTileFrameList = MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
             this.singleTextureSprite = new SingleTextureSprite(mapTileFrameList[imageIndex].Texture);
-            this.singleTextureSprite.drawWhiteBoundingRectangle = false;
             if (aMapTileInstance.IsBlockingTerrain)
             {
                 this.singleTextureSprite.drawRedBoundingRectangle = false;
@@ -49,8 +48,8 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            singleTextureSprite.Draw(gameTime, spriteBatch, this.myMapTileInstance.PositionInWorldCoordinates,
-                SpriteSortLayers.MAP_SQUARE_DEPTH);
+            singleTextureSprite.Draw(gameTime, spriteBatch, this.myMapTileInstance.PositionInWorldCoordinates, GameOptions.DRAW_TERRAIN_BORDER,
+            SpriteSortLayers.MAP_SQUARE_DEPTH);
         }
 
 

@@ -120,6 +120,7 @@
     <Compile Include="mike-and-conquer\gameview\UnitSelectionBox.cs" />
     <Compile Include="mike-and-conquer\main\Camera2D.cs" />
     <Compile Include="mike-and-conquer\main\GameMap.cs" />
+    <Compile Include="mike-and-conquer\main\GameOption.cs" />
     <Compile Include="mike-and-conquer\main\GameWorld.cs" />
     <Compile Include="mike-and-conquer\main\MikeAndConquerGame.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Minigunner.cs" />

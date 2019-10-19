@@ -17,7 +17,7 @@ namespace mike_and_conquer
 
         Texture2D whiteSpriteBorderRectangleTexture;
         Texture2D redSpriteBorderRectangleTexture;
-        public Boolean drawWhiteBoundingRectangle;
+//        public Boolean drawWhiteBoundingRectangle;
         public Boolean drawRedBoundingRectangle;
 
 
@@ -45,12 +45,12 @@ namespace mike_and_conquer
             middleOfSpriteInSpriteCoordinates.X = Width / 2;
             middleOfSpriteInSpriteCoordinates.Y = Height / 2;
 
-            drawWhiteBoundingRectangle = false;
+//            drawWhiteBoundingRectangle = false;
             drawRedBoundingRectangle = false;
 
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, float layerDepth)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, bool drawWhiteBoundingRectangle, float layerDepth)
         {
 
             float defaultScale = 1;

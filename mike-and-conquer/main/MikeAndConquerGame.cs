@@ -100,8 +100,8 @@ namespace mike_and_conquer
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
 
-            bool makeFullscreen = true;
-//            bool makeFullscreen = false;
+//            bool makeFullscreen = true;
+            bool makeFullscreen = false;
             if (makeFullscreen)
             {
                 graphics.IsFullScreen = true;
@@ -585,6 +585,11 @@ namespace mike_and_conquer
             if (state.IsKeyDown(Keys.OemPeriod))
             {
                 this.mapViewportCamera.Location = new Vector2(CalculateRightmostScrollX(), CalculateBottommostScrollY());
+            }
+
+            if (!oldKeyboardState.IsKeyDown(Keys.Y) && state.IsKeyDown(Keys.Y))
+            {
+                GameOptions.ToggleDrawTerrainBorder();
             }
 
             currentGameState = this.currentGameState.Update(gameTime);

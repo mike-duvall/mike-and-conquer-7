@@ -58,7 +58,7 @@ namespace mike_and_conquer
             this.height = firstUnitFrame.Texture.Height;
             drawBoundingRectangle = false;
             int[] remap = { };
-            palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
+            palette = new OpenRA.Graphics.ImmutablePalette(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "temperat.pal", remap);
 
             InitializeNoShadowTexture();
             InitializeShadowOnlyTexture(position);

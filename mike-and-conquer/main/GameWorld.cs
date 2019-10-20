@@ -95,7 +95,7 @@ namespace mike_and_conquer
         private void LoadMap()
         {
 
-            Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
+            Stream inputStream = new FileStream(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "scg01ea.bin", FileMode.Open);
 
 
             //  (Starting at 0x13CC in the file)
@@ -107,11 +107,6 @@ namespace mike_and_conquer
             int endY = 61;
 
             gameMap = new GameMap(inputStream, startX, startY, endX, endY);
-
-
-            // TODO Revisit what the key name should be, TC01, vs Content\\TC01.tem, vs TC01.tem
-
-
 
             // TODO:  Eventually create a data file
             // which has the tile descriptor data(specifically, the blocked tiles)

@@ -42,10 +42,10 @@ namespace mike_and_conquer.gameview
         public GameCursor(int x, int y)
         {
 
-            this.mainCursorTexture = loadTextureFromD2ShpFile("Content\\mouse.shp", 0);
-            this.moveToLocationCursorTexture = loadTextureFromD2ShpFile("Content\\mouse.shp", 10);
-            this.movementNotAllowedCursorTexture = loadTextureFromD2ShpFile("Content\\mouse.shp", 11);
-            this.attackEnemyCursor = loadTextureFromD2ShpFile("Content\\mouse.shp", 18);
+            this.mainCursorTexture = loadTextureFromD2ShpFile(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "mouse.shp", 0);
+            this.moveToLocationCursorTexture = loadTextureFromD2ShpFile(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "mouse.shp", 10);
+            this.movementNotAllowedCursorTexture = loadTextureFromD2ShpFile(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "mouse.shp", 11);
+            this.attackEnemyCursor = loadTextureFromD2ShpFile(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "mouse.shp", 18);
             // 0 = main cursor
             // 10 = select movement location pointer
             // 11 = movement not allowed to this point, pointer
@@ -108,7 +108,7 @@ namespace mike_and_conquer.gameview
 
             int[] remap = { };
 
-            OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
+            OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "temperat.pal", remap);
 
             System.IO.FileStream shpStream = System.IO.File.Open(shpFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
 

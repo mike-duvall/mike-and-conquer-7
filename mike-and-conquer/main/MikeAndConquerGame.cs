@@ -90,6 +90,8 @@ namespace mike_and_conquer
             .WriteTo.Debug()
             .CreateLogger();
 
+        public const string CONTENT_DIRECTORY_PREFIX = "Content\\";
+
 
         public MikeAndConquerGame(bool testMode)
         {
@@ -172,9 +174,6 @@ namespace mike_and_conquer
 //
 //            AddSandbag(8, 4, 10);
 //            AddSandbag(9, 4, 10);
-
-//            this.gameWorldView.terrainView1 = new TerrainView(new Point(576, 0), "Content\\TC01.tem");
-//            this.gameWorldView.terrainView2 = new TerrainView(new Point(480, 120), "Content\\TC02.tem");
 
             //                AddSandbag(12, 16, 10);
 

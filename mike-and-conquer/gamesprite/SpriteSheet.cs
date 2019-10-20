@@ -54,7 +54,7 @@ namespace mike_and_conquer.gamesprite
         {
 
             int[] remap = { };
-            ImmutablePalette palette = new ImmutablePalette("Content\\temperat.pal", remap);
+            ImmutablePalette palette = new ImmutablePalette(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "temperat.pal", remap);
             List<UnitFrame> unitFrameList = new List<UnitFrame>();
 
 
@@ -99,7 +99,7 @@ namespace mike_and_conquer.gamesprite
 
             List<MapTileFrame> mapTileFrameList = new List<MapTileFrame>();
 
-            ImmutablePalette palette = new ImmutablePalette("Content\\temperat.pal", remap);
+            ImmutablePalette palette = new ImmutablePalette(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "temperat.pal", remap);
 
             foreach (ISpriteFrame frame in spriteFrameArray)
             {

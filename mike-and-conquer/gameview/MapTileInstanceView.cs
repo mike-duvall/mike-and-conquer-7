@@ -25,12 +25,7 @@ namespace mike_and_conquer.gameview
             textureKey = myMapTileInstance.TextureKey;
             List<MapTileFrame>  mapTileFrameList = MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
             this.singleTextureSprite = new SingleTextureSprite(mapTileFrameList[imageIndex].Texture);
-//            if (aMapTileInstance.IsBlockingTerrain)
-//            {
-//                this.singleTextureSprite.drawRedBoundingRectangle = false;
-//            }
         }
-
 
 
         internal int GetPaletteIndexOfCoordinate(int x, int y)

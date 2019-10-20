@@ -38,7 +38,7 @@ namespace mike_and_conquer.gameobjects
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             float layerDepth = 1.0f;
-            missionSprite.Draw(gameTime, spriteBatch, missionPosition,  layerDepth);
+            missionSprite.Draw(gameTime, spriteBatch, missionPosition, layerDepth);
             accomplishedSprite.Draw(gameTime, spriteBatch, accomplishedPosition, layerDepth);
 
         }

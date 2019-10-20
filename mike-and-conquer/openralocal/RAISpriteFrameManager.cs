@@ -42,7 +42,8 @@ namespace mike_and_conquer.openralocal
         public void LoadAllTexturesFromTmpFile(string fileName)
         {
             TmpTDLoader tmpTDLoader = new TmpTDLoader();
-            System.IO.FileStream tmpStream = System.IO.File.Open(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
+            String filePath = "Content\\" + fileName;
+            System.IO.FileStream tmpStream = System.IO.File.Open(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
 
             ISpriteFrame[] frames;
             tmpTDLoader.TryParseSprite(tmpStream, out frames);

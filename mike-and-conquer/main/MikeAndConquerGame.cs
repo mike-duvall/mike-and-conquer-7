@@ -100,15 +100,11 @@ namespace mike_and_conquer
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
 
-            bool makeFullscreen = true;
-//            bool makeFullscreen = false;
-            if (makeFullscreen)
+            if (GameOptions.IS_FULL_SCREEN)
             {
                 graphics.IsFullScreen = true;
-                graphics.PreferredBackBufferWidth = 1920;
-                graphics.PreferredBackBufferHeight = 1080;
-//                graphics.PreferredBackBufferWidth = 2880;
-//                graphics.PreferredBackBufferHeight = 1800;
+                graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             }
             else
             {
@@ -117,9 +113,6 @@ namespace mike_and_conquer
 //                graphics.PreferredBackBufferHeight = 1024;
                 graphics.PreferredBackBufferWidth = 1024;
                 graphics.PreferredBackBufferHeight = 768;
-
-//                graphics.PreferredBackBufferWidth = 1920;
-//                graphics.PreferredBackBufferHeight = 1080;
 
 
             }
@@ -586,6 +579,17 @@ namespace mike_and_conquer
             {
                 this.mapViewportCamera.Location = new Vector2(CalculateRightmostScrollX(), CalculateBottommostScrollY());
             }
+
+            if (!oldKeyboardState.IsKeyDown(Keys.Y) && state.IsKeyDown(Keys.Y))
+            {
+                GameOptions.ToggleDrawTerrainBorder();
+            }
+
+            if (!oldKeyboardState.IsKeyDown(Keys.H) && state.IsKeyDown(Keys.H))
+            {
+                GameOptions.ToggleDrawBlockingTerrainBorder();
+            }
+
 
             currentGameState = this.currentGameState.Update(gameTime);
             this.mapViewportCamera.Rotation = testRotation;

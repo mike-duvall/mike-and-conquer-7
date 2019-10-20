@@ -14,7 +14,7 @@ namespace mike_and_conquer.gameview
 
         public const string SPRITE_KEY = "MinigunnerIcon";
 
-        public const string SHP_FILE_NAME = "Content\\e1icnh.tem";
+        public const string SHP_FILE_NAME = "e1icnh.tem";
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
 

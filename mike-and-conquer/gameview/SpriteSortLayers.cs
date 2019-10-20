@@ -15,7 +15,7 @@ namespace mike_and_conquer.gameobjects
         public const float BUILDING_DEPTH = 0.85f;
         public const float UNIT_DEPTH = 0.8f;
         public const float TERRAIN_DEPTH = 0.5f;
-
+        public const float UNIT_SELECTION_BOX_DEPTH = 0.4f;
 
     }
 }

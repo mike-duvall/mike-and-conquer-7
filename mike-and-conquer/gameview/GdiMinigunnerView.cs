@@ -13,7 +13,7 @@ namespace mike_and_conquer.gameview
 
         // TODO:  SHP_FILE_NAME and ShpFileColorMapper don't really belong in this view
         // Views should be agnostic about where the sprite data was loaded from
-        public const string SHP_FILE_NAME = "Content\\e1.shp";
+        public const string SHP_FILE_NAME = "e1.shp";
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
 

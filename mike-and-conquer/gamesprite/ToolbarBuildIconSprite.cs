@@ -110,7 +110,7 @@ namespace mike_and_conquer
 
             GdiShpFileColorMapper shpFileColorMapper = new GdiShpFileColorMapper();
             int[] remap = { };
-            ImmutablePalette palette = new ImmutablePalette("Content\\temperat.pal", remap);
+            ImmutablePalette palette = new ImmutablePalette(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "temperat.pal", remap);
 
             for (int i = 0; i < numPixels; i++)
             {

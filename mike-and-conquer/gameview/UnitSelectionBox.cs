@@ -84,7 +84,7 @@ namespace mike_and_conquer.gameview
                 InitializeBoundingRectangle();
                 Vector2 origin = new Vector2(0, 0);
                 spriteBatch.Draw(unitSelectionBoxTexture, position, null, Color.White, 0f, origin, defaultScale,
-                    SpriteEffects.None, SpriteSortLayers.UNIT_DEPTH);
+                    SpriteEffects.None, SpriteSortLayers.UNIT_SELECTION_BOX_DEPTH);
             }
 
         }

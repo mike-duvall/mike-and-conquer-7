@@ -1,4 +1,5 @@
 ﻿
+using mike_and_conquer.gameobjects;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
@@ -37,7 +38,7 @@ namespace mike_and_conquer.gameview
         public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
         {
             Vector2 positionAsVector2 = new Vector2(terrainItem.PositionInWorldCoordinates.X, terrainItem.PositionInWorldCoordinates.Y);
-            this.terrainSprite.DrawShadowOnly(gameTime, spriteBatch, positionAsVector2, terrainItem.LayerDepthOffset);
+            this.terrainSprite.DrawShadowOnly(gameTime, spriteBatch, positionAsVector2);
         }
 
         public void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)

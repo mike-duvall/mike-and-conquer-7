@@ -58,7 +58,7 @@ namespace mike_and_conquer
             this.height = firstUnitFrame.Texture.Height;
             drawBoundingRectangle = false;
             int[] remap = { };
-            palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
+            palette = new OpenRA.Graphics.ImmutablePalette(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "temperat.pal", remap);
 
             InitializeNoShadowTexture();
             InitializeShadowOnlyTexture(position);
@@ -122,12 +122,12 @@ namespace mike_and_conquer
         }
 
 
-        public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, float layerDepthOffset)
+        public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates)
         {
 
             float defaultScale = 1;
             spriteBatch.Draw(shadowOnlytexture2D, positionInWorldCoordinates, null, Color.White, 0f, spriteOrigin,
-                defaultScale, SpriteEffects.None, SpriteSortLayers.TERRAIN_SHADOW_DEPTH - layerDepthOffset);
+                defaultScale, SpriteEffects.None, SpriteSortLayers.TERRAIN_SHADOW_DEPTH);
 
         }
 

@@ -31,7 +31,7 @@ namespace mike_and_conquer.gameview
         public UnitSelectionCursor(int x, int y)
         {
 
-            this.texture = loadTextureFromShpFile("Content\\select.shp", 0);
+            this.texture = loadTextureFromShpFile(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "select.shp", 0);
 
             position = new Vector2(x, y);
             boundingRectangle = initializeBoundingRectangle();
@@ -112,7 +112,7 @@ namespace mike_and_conquer.gameview
 
             int[] remap = { };
 
-            OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
+            OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "temperat.pal", remap);
 
             System.IO.FileStream shpStream = System.IO.File.Open(shpFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
             OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader loader = new OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader();

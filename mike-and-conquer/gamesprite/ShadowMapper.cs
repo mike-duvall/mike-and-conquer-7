@@ -18,7 +18,7 @@ namespace mike_and_conquer.gamesprite
         private void LoadUnitsShadowMap()
         {
             unitsShadowMap = new Dictionary<int, int>();
-            System.IO.FileStream mrfFileStream = System.IO.File.Open("Content\\tunits.mrf", System.IO.FileMode.Open,
+            System.IO.FileStream mrfFileStream = System.IO.File.Open(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "tunits.mrf", System.IO.FileMode.Open,
                 System.IO.FileAccess.Read, System.IO.FileShare.None);
             for (int i = 0; i < 256; i++)
                 mrfFileStream.ReadByte();
@@ -36,7 +36,7 @@ namespace mike_and_conquer.gamesprite
         private void LoadSidebarMap()
         {
             sidebarBuildShadowMap = new Dictionary<int, int>();
-            System.IO.FileStream mrfFileStream = System.IO.File.Open("Content\\tclock.mrf", System.IO.FileMode.Open,
+            System.IO.FileStream mrfFileStream = System.IO.File.Open(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "tclock.mrf", System.IO.FileMode.Open,
                 System.IO.FileAccess.Read, System.IO.FileShare.None);
             for (int i = 0; i < 256; i++)
                 mrfFileStream.ReadByte();

@@ -65,7 +65,7 @@ namespace mike_and_conquer
             drawBoundingRectangle = false;
             this.animate = true;
             int[] remap = { };
-            palette = new OpenRA.Graphics.ImmutablePalette("Content\\temperat.pal", remap);
+            palette = new OpenRA.Graphics.ImmutablePalette(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "temperat.pal", remap);
             drawShadow = false;
         }
 

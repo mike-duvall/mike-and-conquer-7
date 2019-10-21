@@ -90,6 +90,8 @@ namespace mike_and_conquer
             .WriteTo.Debug()
             .CreateLogger();
 
+        public const string CONTENT_DIRECTORY_PREFIX = "Content\\";
+
 
         public MikeAndConquerGame(bool testMode)
         {
@@ -172,9 +174,6 @@ namespace mike_and_conquer
 //
 //            AddSandbag(8, 4, 10);
 //            AddSandbag(9, 4, 10);
-
-//            this.gameWorldView.terrainView1 = new TerrainView(new Point(576, 0), "Content\\TC01.tem");
-//            this.gameWorldView.terrainView2 = new TerrainView(new Point(480, 120), "Content\\TC02.tem");
 
             //                AddSandbag(12, 16, 10);
 
@@ -338,17 +337,17 @@ namespace mike_and_conquer
 
         private void LoadTemFiles()
         {
-            LoadTerrainTexture("Content\\T01.tem");
-            LoadTerrainTexture("Content\\T02.tem");
-            LoadTerrainTexture("Content\\T05.tem");
-            LoadTerrainTexture("Content\\T06.tem");
-            LoadTerrainTexture("Content\\T07.tem");
-            LoadTerrainTexture("Content\\T16.tem");
-            LoadTerrainTexture("Content\\T17.tem");
-            LoadTerrainTexture("Content\\TC01.tem");
-            LoadTerrainTexture("Content\\TC02.tem");
-            LoadTerrainTexture("Content\\TC04.tem");
-            LoadTerrainTexture("Content\\TC05.tem");
+            LoadTerrainTexture("T01.tem");
+            LoadTerrainTexture("T02.tem");
+            LoadTerrainTexture("T05.tem");
+            LoadTerrainTexture("T06.tem");
+            LoadTerrainTexture("T07.tem");
+            LoadTerrainTexture("T16.tem");
+            LoadTerrainTexture("T17.tem");
+            LoadTerrainTexture("TC01.tem");
+            LoadTerrainTexture("TC02.tem");
+            LoadTerrainTexture("TC04.tem");
+            LoadTerrainTexture("TC05.tem");
 
         }
 

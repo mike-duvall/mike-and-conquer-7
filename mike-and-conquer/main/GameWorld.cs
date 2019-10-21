@@ -95,7 +95,7 @@ namespace mike_and_conquer
         private void LoadMap()
         {
 
-            Stream inputStream = new FileStream("Content\\scg01ea.bin", FileMode.Open);
+            Stream inputStream = new FileStream(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "scg01ea.bin", FileMode.Open);
 
 
             //  (Starting at 0x13CC in the file)
@@ -107,11 +107,6 @@ namespace mike_and_conquer
             int endY = 61;
 
             gameMap = new GameMap(inputStream, startX, startY, endX, endY);
-
-
-            // TODO Revisit what the key name should be, TC01, vs Content\\TC01.tem, vs TC01.tem
-
-
 
             // TODO:  Eventually create a data file
             // which has the tile descriptor data(specifically, the blocked tiles)
@@ -131,29 +126,29 @@ namespace mike_and_conquer
 
             SortedDictionary<int, string> terrainMap = new SortedDictionary<int, string>();
 
-            terrainMap.Add(3303, "Content\\T01.tem");
-            terrainMap.Add(2988, "Content\\T01.tem");
-            terrainMap.Add(2991, "Content\\T01.tem");
-            terrainMap.Add(3121, "Content\\T01.tem");
-            terrainMap.Add(2936, "Content\\T01.tem");
-            terrainMap.Add(2861, "Content\\T02.tem");
-            terrainMap.Add(3111, "Content\\T02.tem");
-            terrainMap.Add(3369, "Content\\T06.tem");
-            terrainMap.Add(3496, "Content\\T06.tem");
-            terrainMap.Add(2860, "Content\\T07.tem");
-            terrainMap.Add(3245, "Content\\T16.tem");
-            terrainMap.Add(2937, "Content\\T16.tem");
-            terrainMap.Add(2555, "Content\\TC01.tem");
-            terrainMap.Add(3246, "Content\\TC01.tem");
-            terrainMap.Add(2666, "Content\\TC01.tem");
-            terrainMap.Add(3052, "Content\\TC02.tem");
-            terrainMap.Add(3056, "Content\\TC02.tem");
-            terrainMap.Add(2871, "Content\\TC02.tem");
-            terrainMap.Add(2544, "Content\\TC02.tem");
-            terrainMap.Add(2794, "Content\\TC04.tem");
-            terrainMap.Add(2938, "Content\\TC04.tem");
-            terrainMap.Add(2605, "Content\\TC05.tem");  
-            terrainMap.Add(2680, "Content\\TC05.tem");
+            terrainMap.Add(3303, "T01.tem");
+            terrainMap.Add(2988, "T01.tem");
+            terrainMap.Add(2991, "T01.tem");
+            terrainMap.Add(3121, "T01.tem");
+            terrainMap.Add(2936, "T01.tem");
+            terrainMap.Add(2861, "T02.tem");
+            terrainMap.Add(3111, "T02.tem");
+            terrainMap.Add(3369, "T06.tem");
+            terrainMap.Add(3496, "T06.tem");
+            terrainMap.Add(2860, "T07.tem");
+            terrainMap.Add(3245, "T16.tem");
+            terrainMap.Add(2937, "T16.tem");
+            terrainMap.Add(2555, "TC01.tem");
+            terrainMap.Add(3246, "TC01.tem");
+            terrainMap.Add(2666, "TC01.tem");
+            terrainMap.Add(3052, "TC02.tem");
+            terrainMap.Add(3056, "TC02.tem");
+            terrainMap.Add(2871, "TC02.tem");
+            terrainMap.Add(2544, "TC02.tem");
+            terrainMap.Add(2794, "TC04.tem");
+            terrainMap.Add(2938, "TC04.tem");
+            terrainMap.Add(2605, "TC05.tem");  
+            terrainMap.Add(2680, "TC05.tem");
 
 
             float layerDepthOffset = 0.0f;
@@ -188,7 +183,7 @@ namespace mike_and_conquer
             List<Point> blockMapTileOffsets = new List<Point>();
             blockMapTileOffsets.Add(new Point(0, 1));
             TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
-                "Content\\T01.tem",
+                "T01.tem",
                 48,
                 48,
                 blockMapTileOffsets);
@@ -200,7 +195,7 @@ namespace mike_and_conquer
             List<Point> blockMapTileOffsets = new List<Point>();
             blockMapTileOffsets.Add(new Point(0, 1));
             TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
-                "Content\\T02.tem",
+                "T02.tem",
                 48,
                 48,
                 blockMapTileOffsets);
@@ -212,7 +207,7 @@ namespace mike_and_conquer
             List<Point> blockMapTileOffsets = new List<Point>();
             blockMapTileOffsets.Add(new Point(0, 1));
             TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
-                "Content\\T05.tem",
+                "T05.tem",
                 48,
                 48,
                 blockMapTileOffsets);
@@ -224,7 +219,7 @@ namespace mike_and_conquer
             List<Point> blockMapTileOffsets = new List<Point>();
             blockMapTileOffsets.Add(new Point(0, 1));
             TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
-                "Content\\T06.tem",
+                "T06.tem",
                 48,
                 48,
                 blockMapTileOffsets);
@@ -237,7 +232,7 @@ namespace mike_and_conquer
             List<Point> blockMapTileOffsets = new List<Point>();
             blockMapTileOffsets.Add(new Point(0, 1));
             TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
-                "Content\\T07.tem",
+                "T07.tem",
                 48,
                 48,
                 blockMapTileOffsets);
@@ -249,7 +244,7 @@ namespace mike_and_conquer
             List<Point> blockMapTileOffsets = new List<Point>();
             blockMapTileOffsets.Add(new Point(0, 1));
             TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
-                "Content\\T16.tem",
+                "T16.tem",
                 48,
                 48,
                 blockMapTileOffsets);
@@ -263,7 +258,7 @@ namespace mike_and_conquer
             blockMapTileOffsets.Add(new Point(0, 1));
             blockMapTileOffsets.Add(new Point(1, 1));
             TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
-                "Content\\TC01.tem",
+                "TC01.tem",
                 72,
                 48,
                 blockMapTileOffsets);
@@ -279,7 +274,7 @@ namespace mike_and_conquer
             blockMapTileOffsets.Add(new Point(0, 2));
 
             TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
-                "Content\\TC04.tem",
+                "TC04.tem",
                 96,
                 72,
                 blockMapTileOffsets);
@@ -298,7 +293,7 @@ namespace mike_and_conquer
 
 
             TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
-                "Content\\TC05.tem",
+                "TC05.tem",
                 96,
                 72,
                 blockMapTileOffsets);
@@ -315,7 +310,7 @@ namespace mike_and_conquer
 
 
             TerrainItemDescriptor descriptor = new TerrainItemDescriptor(
-                "Content\\TC02.tem",
+                "TC02.tem",
                 72,
                 48,
                 blockMapTileOffsets);

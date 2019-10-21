@@ -15,7 +15,7 @@ namespace mike_and_conquer
 
         Texture2D texture;
 
-        Texture2D priteBorderRectangleTexture;
+        Texture2D spriteBorderRectangleTexture;
 
 
         private Vector2 middleOfSpriteInSpriteCoordinates;
@@ -34,7 +34,7 @@ namespace mike_and_conquer
         public SingleTextureSprite(Texture2D texture)
         {
             this.texture = texture;
-            priteBorderRectangleTexture = CreateSpriteBorderRectangleTexture(Color.White);
+            spriteBorderRectangleTexture = CreateSpriteBorderRectangleTexture(Color.White);
             middleOfSpriteInSpriteCoordinates = new Vector2();
 
             middleOfSpriteInSpriteCoordinates.X = Width / 2;
@@ -47,16 +47,16 @@ namespace mike_and_conquer
             this.Draw(gameTime, spriteBatch, positionInWorldCoordinates, layerDepth, false, Color.White);
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, float layerDepth, bool drawWhiteBoundingRectangle, Color boundingRectColor)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, float layerDepth, bool drawBoundingRectangle, Color boundingRectColor)
         {
 
             float defaultScale = 1;
 
             spriteBatch.Draw(texture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
 
-            if (drawWhiteBoundingRectangle)
+            if (drawBoundingRectangle)
             {
-                spriteBatch.Draw(priteBorderRectangleTexture, positionInWorldCoordinates, null, boundingRectColor, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, boundingRectColor, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
             }
 
         }

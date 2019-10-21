@@ -25,7 +25,8 @@ namespace mike_and_conquer.openralocal
         {
             try
             {
-                System.IO.FileStream shpStream = System.IO.File.Open(shpFileName, System.IO.FileMode.Open,
+                string filePath = MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX  + shpFileName;
+                System.IO.FileStream shpStream = System.IO.File.Open(filePath, System.IO.FileMode.Open,
                     System.IO.FileAccess.Read, System.IO.FileShare.None);
                 ShpTDSprite shpTDSprite = new ShpTDSprite(shpStream);
                 unitSpriteFrameMap.Add(shpFileName, shpTDSprite.Frames);
@@ -42,7 +43,8 @@ namespace mike_and_conquer.openralocal
         public void LoadAllTexturesFromTmpFile(string fileName)
         {
             TmpTDLoader tmpTDLoader = new TmpTDLoader();
-            System.IO.FileStream tmpStream = System.IO.File.Open(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
+            String filePath = MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + fileName;
+            System.IO.FileStream tmpStream = System.IO.File.Open(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
 
             ISpriteFrame[] frames;
             tmpTDLoader.TryParseSprite(tmpStream, out frames);

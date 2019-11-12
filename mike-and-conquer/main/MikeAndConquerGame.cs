@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
 using mike_and_conquer.openralocal;
+using OpenRA.Graphics;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
@@ -92,6 +93,9 @@ namespace mike_and_conquer
 
         public const string CONTENT_DIRECTORY_PREFIX = "Content\\";
 
+        private Effect mapTilePaletteMapperEffect;
+
+        private Texture2D paletteTexture;
 
         public MikeAndConquerGame(bool testMode)
         {
@@ -287,7 +291,24 @@ namespace mike_and_conquer
             mapBackgroundRectangle = new Texture2D(GraphicsDevice, 1, 1);
             mapBackgroundRectangle.SetData(new[] { Color.MediumSeaGreen });
 
+            this.mapTilePaletteMapperEffect = Content.Load<Effect>("Effects\\MapTilePaletteMapperEffect");
 
+            this.paletteTexture = new Texture2D(GraphicsDevice, 256,1);
+            int[] remap = { };
+            ImmutablePalette palette = new ImmutablePalette(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "temperat.pal", remap);
+            int numPixels = 256;
+            Color[] texturePixelData = new Color[numPixels];
+
+            for (int i = 0; i < numPixels; i++)
+            {
+                uint mappedColor = palette[i];
+                System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
+                byte alpha = 255;
+                Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, alpha);
+                texturePixelData[i] = xnaColor;
+            }
+
+            paletteTexture.SetData(texturePixelData);
 
         }
 
@@ -770,8 +791,17 @@ namespace mike_and_conquer
             const DepthStencilState nullDepthStencilState = null;
             const RasterizerState nullRasterizerState = null;
             const Effect nullEffect = null;
+//            spriteBatch.Begin(
+//                SpriteSortMode.BackToFront,
+//                nullBlendState,
+//                SamplerState.PointClamp,
+//                nullDepthStencilState,
+//                nullRasterizerState,
+//                nullEffect,
+//                mapViewportCamera.TransformMatrix);
+
             spriteBatch.Begin(
-                SpriteSortMode.BackToFront,
+                SpriteSortMode.Immediate,
                 nullBlendState,
                 SamplerState.PointClamp,
                 nullDepthStencilState,
@@ -779,10 +809,15 @@ namespace mike_and_conquer
                 nullEffect,
                 mapViewportCamera.TransformMatrix);
 
+            mapTilePaletteMapperEffect.Parameters["PaletteTexture"].SetValue(paletteTexture);
+            mapTilePaletteMapperEffect.CurrentTechnique.Passes[0].Apply();
+
+//            spriteBatch.Draw(paletteTexture, new Vector2(0,0));
+
             // Leaving this commented out for now.  Revisit if this is even needed and remove if not,
             // including removing mapBackgroundRectangle
-//            spriteBatch.Draw(mapBackgroundRectangle,
-//                new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
+            //            spriteBatch.Draw(mapBackgroundRectangle,
+            //                new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
 
 
             this.currentGameStateView.Draw(gameTime, spriteBatch);

@@ -12,6 +12,7 @@ namespace mike_and_conquer
         public static bool DRAW_TERRAIN_BORDER = false;
         public static bool DRAW_BLOCKING_TERRAIN_BORDER = false;
         public static bool IS_FULL_SCREEN = true;
+//        public static bool IS_FULL_SCREEN = false;
 
 
         public static void ToggleDrawTerrainBorder()

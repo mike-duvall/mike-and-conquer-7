@@ -15,29 +15,29 @@ namespace mike_and_conquer.gameview
                 basicMapSquareView.Draw(gameTime, spriteBatch);
             }
 
-            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
-
-            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
-            {
-                nextMinigunnerView.Draw(gameTime, spriteBatch);
-            }
-
-            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
-            {
-                nextMinigunnerView.Draw(gameTime, spriteBatch);
-            }
-
-            foreach (SandbagView nextSandbagView in GameWorldView.instance.SandbagViewList)
-            {
-                nextSandbagView.Draw(gameTime, spriteBatch);
-            }
-
-            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
-            {
-                nextTerrainView.DrawFull(gameTime, spriteBatch);
-            }
-
-            MikeAndConquerGame.instance.unitSelectionBox.Draw(gameTime, spriteBatch);
+//            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
+//
+//            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
+//            {
+//                nextMinigunnerView.Draw(gameTime, spriteBatch);
+//            }
+//
+//            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
+//            {
+//                nextMinigunnerView.Draw(gameTime, spriteBatch);
+//            }
+//
+//            foreach (SandbagView nextSandbagView in GameWorldView.instance.SandbagViewList)
+//            {
+//                nextSandbagView.Draw(gameTime, spriteBatch);
+//            }
+//
+//            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
+//            {
+//                nextTerrainView.DrawFull(gameTime, spriteBatch);
+//            }
+//
+//            MikeAndConquerGame.instance.unitSelectionBox.Draw(gameTime, spriteBatch);
 
 
         }

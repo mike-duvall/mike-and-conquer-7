@@ -118,10 +118,11 @@ namespace mike_and_conquer.gamesprite
                 for (int i = 0; i < numPixels; i++)
                 {
                     int paletteIndex = frameData[i];
-                    uint mappedColor = palette[paletteIndex];
+//                    uint mappedColor = palette[paletteIndex];
+//                    System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
+//                    Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
 
-                    System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
-                    Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+                    Color xnaColor = new Color(paletteIndex, 0, 0, 255);
                     texturePixelData[i] = xnaColor;
                 }
 

@@ -72,9 +72,10 @@ namespace mike_and_conquer.gamesprite
                     int basePaletteIndex = frameData[i];
                     int mappedPaletteIndex = shpFileColorMapper.MapColorIndex(basePaletteIndex);
                     uint mappedColor = palette[mappedPaletteIndex];
-
+                    
                     System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
-                    Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+                    Color xnaColorMapped = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+                    Color xnaColor = new Color(mappedPaletteIndex, 0, 0, xnaColorMapped.A);
                     texturePixelData[i] = xnaColor;
 
                     if (mappedPaletteIndex == 4)

@@ -45,6 +45,7 @@ namespace mike_and_conquer
         private Viewport toolbarViewport;
         private float testRotation = 0;
         public Camera2D mapViewportCamera;
+        public Camera2D renderTargetCamera;
         private Camera2D toolbarViewportCamera;
 
         public static MikeAndConquerGame instance;
@@ -232,6 +233,12 @@ namespace mike_and_conquer
             this.mapViewportCamera.Zoom = 1.0f;
             this.mapViewportCamera.Location =
                 new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
+
+            this.renderTargetCamera = new Camera2D(mapViewport);
+            this.renderTargetCamera.Zoom = 1.0f;
+            this.renderTargetCamera.Location =
+                new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
+
         }
 
 
@@ -818,7 +825,7 @@ namespace mike_and_conquer
                 nullDepthStencilState,
                 nullRasterizerState,
                 nullEffect,
-                mapViewportCamera.TransformMatrix);
+                renderTargetCamera.TransformMatrix);
 
             foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
             {
@@ -838,7 +845,7 @@ namespace mike_and_conquer
                 nullDepthStencilState,
                 nullRasterizerState,
                 nullEffect,
-                mapViewportCamera.TransformMatrix);
+                renderTargetCamera.TransformMatrix);
 
             foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
             {
@@ -858,7 +865,7 @@ namespace mike_and_conquer
                 nullDepthStencilState,
                 nullRasterizerState,
                 nullEffect,
-                mapViewportCamera.TransformMatrix);
+                renderTargetCamera.TransformMatrix);
             
 
             mapTileShadowMapperEffect.Parameters["ShadowTexture"].SetValue(shadowOnlyRenderTarget2D);
@@ -882,7 +889,7 @@ namespace mike_and_conquer
                 nullDepthStencilState,
                 nullRasterizerState,
                 nullEffect,
-                mapViewportCamera.TransformMatrix);
+                renderTargetCamera.TransformMatrix);
 
 
 
@@ -901,9 +908,19 @@ namespace mike_and_conquer
 
             GraphicsDevice.SetRenderTarget(null);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
-                SamplerState.LinearClamp, DepthStencilState.Default,
-                RasterizerState.CullNone);
+//            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+//                SamplerState.LinearClamp, DepthStencilState.Default,
+//                RasterizerState.CullNone);
+
+            spriteBatch.Begin(
+                SpriteSortMode.Immediate,
+                nullBlendState,
+                SamplerState.PointClamp,
+                nullDepthStencilState,
+                nullRasterizerState,
+                nullEffect,
+                mapViewportCamera.TransformMatrix);
+
 
             mapTilePaletteMapperEffect.Parameters["PaletteTexture"].SetValue(paletteTexture);
             mapTilePaletteMapperEffect.CurrentTechnique.Passes[0].Apply();
@@ -937,6 +954,10 @@ namespace mike_and_conquer
 
             // Further, consider having shadow mapping filter set the depth of the shadow to 0 and all others to 1 (or the opposite.  Not sure what is far and what is near)
 
+//            Pickup here
+//            Review code
+//            Get zooming working
+//            Get scrolling working
 
         }
 

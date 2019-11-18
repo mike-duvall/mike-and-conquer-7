@@ -73,8 +73,11 @@ namespace mike_and_conquer.gamesprite
                     int mappedPaletteIndex = shpFileColorMapper.MapColorIndex(basePaletteIndex);
                     uint mappedColor = palette[mappedPaletteIndex];
                     
+
                     System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
                     Color xnaColorMapped = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+
+                    // TODO - Investigate just setting alpha based on the hard coded palette value for black
                     Color xnaColor = new Color(mappedPaletteIndex, 0, 0, xnaColorMapped.A);
                     texturePixelData[i] = xnaColor;
 

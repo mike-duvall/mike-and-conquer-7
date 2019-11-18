@@ -73,6 +73,12 @@
 /processorParam:DebugMode=Auto
 /build:Effects/MapTilePaletteMapperEffect.fx
 
+#begin Effects/MapTileShadowMapperEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/MapTileShadowMapperEffect.fx
+
 #begin Failed.png
 /importer:TextureImporter
 /processor:TextureProcessor

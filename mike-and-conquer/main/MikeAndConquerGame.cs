@@ -94,8 +94,10 @@ namespace mike_and_conquer
         public const string CONTENT_DIRECTORY_PREFIX = "Content\\";
 
         private Effect mapTilePaletteMapperEffect;
+        private Effect mapTileShadowMapperEffect;
 
         private Texture2D paletteTexture;
+        private Texture2D tunitsMrfTexture;
 
         public MikeAndConquerGame(bool testMode)
         {
@@ -292,6 +294,7 @@ namespace mike_and_conquer
             mapBackgroundRectangle.SetData(new[] { Color.MediumSeaGreen });
 
             this.mapTilePaletteMapperEffect = Content.Load<Effect>("Effects\\MapTilePaletteMapperEffect");
+            this.mapTileShadowMapperEffect = Content.Load<Effect>("Effects\\MapTileShadowMapperEffect");
 
             this.paletteTexture = new Texture2D(GraphicsDevice, 256,1);
             int[] remap = { };
@@ -307,9 +310,22 @@ namespace mike_and_conquer
                 Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, alpha);
                 texturePixelData[i] = xnaColor;
             }
-
             paletteTexture.SetData(texturePixelData);
 
+
+            tunitsMrfTexture = new Texture2D(GraphicsDevice, 256, 1);
+            Color[] tunitsMrfTexturePixelData = new Color[numPixels];
+
+            for (int i = 0; i < 256; i++)
+            {
+                byte alpha = 255;
+                int mrfValue = this.shadowMapper.MapUnitsShadowPaletteIndex(i);
+                byte byteMrfValue = (byte) mrfValue;
+                Color xnaColor = new Color(byteMrfValue, (byte)0,(byte) 0, alpha);
+                tunitsMrfTexturePixelData[i] = xnaColor;
+            }
+            tunitsMrfTexture.SetData(tunitsMrfTexturePixelData);
+            
         }
 
 
@@ -783,22 +799,17 @@ namespace mike_and_conquer
         private void DrawMap(GameTime gameTime)
         {
 
-            // Note:  Look in git history in this method
-            // for example of how to render to RenderTarget2D
+            
+
+            RenderTarget2D mapTileRenderTarget = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
+                    mapViewport.Width, mapViewport.Height);
+                GraphicsDevice.SetRenderTarget(mapTileRenderTarget);
 
             GraphicsDevice.Viewport = mapViewport;
             const BlendState nullBlendState = null;
             const DepthStencilState nullDepthStencilState = null;
             const RasterizerState nullRasterizerState = null;
             const Effect nullEffect = null;
-//            spriteBatch.Begin(
-//                SpriteSortMode.BackToFront,
-//                nullBlendState,
-//                SamplerState.PointClamp,
-//                nullDepthStencilState,
-//                nullRasterizerState,
-//                nullEffect,
-//                mapViewportCamera.TransformMatrix);
 
             spriteBatch.Begin(
                 SpriteSortMode.Immediate,
@@ -809,19 +820,123 @@ namespace mike_and_conquer
                 nullEffect,
                 mapViewportCamera.TransformMatrix);
 
+            foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
+            {
+                basicMapSquareView.Draw(gameTime, spriteBatch);
+            }
+
+            spriteBatch.End();
+
+            RenderTarget2D shadowOnlyRenderTarget2D = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
+                mapViewport.Width, mapViewport.Height);
+            GraphicsDevice.SetRenderTarget(shadowOnlyRenderTarget2D);
+
+            spriteBatch.Begin(
+                SpriteSortMode.Immediate,
+                nullBlendState,
+                SamplerState.PointClamp,
+                nullDepthStencilState,
+                nullRasterizerState,
+                nullEffect,
+                mapViewportCamera.TransformMatrix);
+
+            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
+            {
+                nextTerrainView.DrawShadowOnly(gameTime, spriteBatch);
+            }
+            spriteBatch.End();
+
+
+            RenderTarget2D mapTileAndShadowsRenderTarget = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
+                mapViewport.Width, mapViewport.Height);
+            GraphicsDevice.SetRenderTarget(mapTileAndShadowsRenderTarget);
+
+            spriteBatch.Begin(
+                SpriteSortMode.Immediate,
+                nullBlendState,
+                SamplerState.PointClamp,
+                nullDepthStencilState,
+                nullRasterizerState,
+                nullEffect,
+                mapViewportCamera.TransformMatrix);
+            
+
+            mapTileShadowMapperEffect.Parameters["ShadowTexture"].SetValue(shadowOnlyRenderTarget2D);
+            mapTileShadowMapperEffect.Parameters["UnitMrfTexture"].SetValue(tunitsMrfTexture);
+            mapTileShadowMapperEffect.CurrentTechnique.Passes[0].Apply();
+
+            spriteBatch.Draw(mapTileRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
+            spriteBatch.End();
+
+
+
+            ////////////////////////////////////////////
+            RenderTarget2D mapTileShadowsAndTreesRenderTarget = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
+                mapViewport.Width, mapViewport.Height);
+            GraphicsDevice.SetRenderTarget(mapTileShadowsAndTreesRenderTarget);
+
+            spriteBatch.Begin(
+                SpriteSortMode.Immediate,
+                nullBlendState,
+                SamplerState.PointClamp,
+                nullDepthStencilState,
+                nullRasterizerState,
+                nullEffect,
+                mapViewportCamera.TransformMatrix);
+
+
+
+            spriteBatch.Draw(mapTileAndShadowsRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
+            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
+            {
+                nextTerrainView.DrawNoShadow(gameTime, spriteBatch);
+            }
+
+
+            spriteBatch.End();
+
+
+
+            /////////////////////////////////////////////
+
+            GraphicsDevice.SetRenderTarget(null);
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+                SamplerState.LinearClamp, DepthStencilState.Default,
+                RasterizerState.CullNone);
+
             mapTilePaletteMapperEffect.Parameters["PaletteTexture"].SetValue(paletteTexture);
             mapTilePaletteMapperEffect.CurrentTechnique.Passes[0].Apply();
 
-//            spriteBatch.Draw(paletteTexture, new Vector2(0,0));
+            spriteBatch.Draw(mapTileShadowsAndTreesRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
 
-            // Leaving this commented out for now.  Revisit if this is even needed and remove if not,
-            // including removing mapBackgroundRectangle
-            //            spriteBatch.Draw(mapBackgroundRectangle,
-            //                new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
-
-
-            this.currentGameStateView.Draw(gameTime, spriteBatch);
             spriteBatch.End();
+
+            mapTileRenderTarget.Dispose();
+            shadowOnlyRenderTarget2D.Dispose();
+            mapTileAndShadowsRenderTarget.Dispose();
+            mapTileShadowsAndTreesRenderTarget.Dispose();
+
+
+//            Pickup here
+//            Draw maptile squares to maptile rendertarget2d, as palette values  
+//            draw shadow only to separate shadow rendertarget2, as palette values, or just 255
+//            Create texture, just like palette texture, but make it contents of tunits.mrf instead, values are palette values
+//
+//            Draw to yet another rendertarget, maptile-and-shadows rendertarget
+//            Create new shader, that takes maptile rendertarget as main texture, but also pass in shadow rendertarget, AND the mrf palette
+//            New shader
+//                 for each pixel, if shadow rendertarget has no value, just return the maptile palette for color
+//                 if shadow rendertarget DOES have a value, convert the maptile palette value to the shadow value, via 
+//                 lookup in the mrf texture
+//
+//            Then, finally, draw to screen
+//            using results of last rendertarget
+//            using the existing filter that maps palette values to real colors
+
+
+            // Further, consider having shadow mapping filter set the depth of the shadow to 0 and all others to 1 (or the opposite.  Not sure what is far and what is near)
+
 
         }
 

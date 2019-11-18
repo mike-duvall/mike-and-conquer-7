@@ -13,17 +13,33 @@ sampler2D SpriteTextureSampler = sampler_state
 	Texture = <SpriteTexture>;
 };
 
-
-Texture2D PaletteTexture;
-sampler2D PaletteTextureSampler = sampler_state
+Texture2D ShadowTexture;
+sampler2D ShadowTextureSampler = sampler_state
 {
-    Texture = <PaletteTexture>;
+    Texture = <ShadowTexture>;
 	addressU = Clamp;
 	addressV = Clamp;
 	mipfilter = NONE;
 	minfilter = POINT;
 	magfilter = POINT;    
 };
+
+
+Texture2D UnitMrfTexture;
+sampler2D UnitMrfTextureSampler = sampler_state
+{
+    Texture = <UnitMrfTexture>;
+	addressU = Clamp;
+	addressV = Clamp;
+	mipfilter = NONE;
+	minfilter = POINT;
+	magfilter = POINT;    
+};
+
+
+
+
+
 
 
 struct VertexShaderOutput
@@ -36,17 +52,26 @@ struct VertexShaderOutput
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
 	float4 color = tex2D(SpriteTextureSampler, input.TextureCoordinates);
-	if(color.a) {
+	float4 shadowColor = tex2D(ShadowTextureSampler, input.TextureCoordinates);
+	float unitMrfColor = tex2D(UnitMrfTextureSampler, input.TextureCoordinates);
+
+	if(shadowColor.r == 0) {
+		return color;
+	}
+	else {
 		int numPaletteEntries = 256.0f;
 		float paletteIndex = (color.r * 256.0f) / numPaletteEntries;
 		float2 paletteCoordinates = float2(paletteIndex, 0.5f);
 
-	    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
+	    float4 paletteColor = tex2D(UnitMrfTextureSampler, paletteCoordinates);
 	    return paletteColor;
+
 	}
 
-	return color;
 
+//                 for each pixel, if shadow rendertarget has no value, just return the maptile palette for color
+//                 if shadow rendertarget DOES have a value, convert the maptile palette value to the shadow value, via 
+//                 lookup in the mrf texture
 
 
 }

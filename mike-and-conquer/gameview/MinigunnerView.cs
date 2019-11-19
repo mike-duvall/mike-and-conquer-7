@@ -34,7 +34,7 @@ namespace mike_and_conquer.gameview
 
         private void SetupAnimations()
         {
-            AnimationSequence walkingUpAnimationSequence = new AnimationSequence(20);
+            AnimationSequence walkingUpAnimationSequence = new AnimationSequence(40);
             walkingUpAnimationSequence.AddFrame(16);
             walkingUpAnimationSequence.AddFrame(17);
             walkingUpAnimationSequence.AddFrame(18);
@@ -98,6 +98,34 @@ namespace mike_and_conquer.gameview
             }
 
         }
+
+        internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+//            unitSelectionCursor.position = new Vector2(myMinigunner.positionInWorldCoordinates.X, myMinigunner.positionInWorldCoordinates.Y);
+            if (myMinigunner.state == Minigunner.State.IDLE)
+            {
+                unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
+            }
+            else if (myMinigunner.state == Minigunner.State.MOVING)
+            {
+                unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+            }
+            else if (myMinigunner.state == Minigunner.State.ATTACKING)
+            {
+                unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
+            }
+
+
+            unitSprite.DrawNoShadow(gameTime, spriteBatch, myMinigunner.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
+        }
+
+
+        public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            unitSprite.DrawShadowOnly(gameTime, spriteBatch, myMinigunner.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
+        }
+
+
 
         public void SetAnimate(bool animateFlag)
         {

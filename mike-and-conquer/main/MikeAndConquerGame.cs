@@ -100,6 +100,11 @@ namespace mike_and_conquer
         private Texture2D paletteTexture;
         private Texture2D tunitsMrfTexture;
 
+
+        private RenderTarget2D mapTileRenderTarget;
+        private RenderTarget2D shadowOnlyRenderTarget2D;
+        private RenderTarget2D mapTileAndShadowsRenderTarget;
+
         public MikeAndConquerGame(bool testMode)
         {
             RemoveHostingTraceListenerToEliminateDuplicateLogEntries();
@@ -806,11 +811,8 @@ namespace mike_and_conquer
         private void DrawMap(GameTime gameTime)
         {
 
-            
 
-            RenderTarget2D mapTileRenderTarget = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
-                    mapViewport.Width, mapViewport.Height);
-                GraphicsDevice.SetRenderTarget(mapTileRenderTarget);
+
 
             GraphicsDevice.Viewport = mapViewport;
             const BlendState nullBlendState = null;
@@ -818,62 +820,93 @@ namespace mike_and_conquer
             const RasterizerState nullRasterizerState = null;
             const Effect nullEffect = null;
 
-            spriteBatch.Begin(
-                SpriteSortMode.Immediate,
-                nullBlendState,
-                SamplerState.PointClamp,
-                nullDepthStencilState,
-                nullRasterizerState,
-                nullEffect,
-                renderTargetCamera.TransformMatrix);
 
-            foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
+            if (mapTileRenderTarget == null)
             {
-                basicMapSquareView.Draw(gameTime, spriteBatch);
+                mapTileRenderTarget = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
+                    mapViewport.Width, mapViewport.Height);
+                GraphicsDevice.SetRenderTarget(mapTileRenderTarget);
+
+
+                spriteBatch.Begin(
+                    SpriteSortMode.Immediate,
+                    nullBlendState,
+                    SamplerState.PointClamp,
+                    nullDepthStencilState,
+                    nullRasterizerState,
+                    nullEffect,
+                    renderTargetCamera.TransformMatrix);
+
+                foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
+                {
+                    basicMapSquareView.Draw(gameTime, spriteBatch);
+                }
+
+                spriteBatch.End();
             }
 
-            spriteBatch.End();
+//            if (shadowOnlyRenderTarget2D == null)
+//            {
+                shadowOnlyRenderTarget2D = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
+                    mapViewport.Width, mapViewport.Height);
+                GraphicsDevice.SetRenderTarget(shadowOnlyRenderTarget2D);
 
-            RenderTarget2D shadowOnlyRenderTarget2D = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
-                mapViewport.Width, mapViewport.Height);
-            GraphicsDevice.SetRenderTarget(shadowOnlyRenderTarget2D);
-
-            spriteBatch.Begin(
-                SpriteSortMode.Immediate,
-                nullBlendState,
-                SamplerState.PointClamp,
-                nullDepthStencilState,
-                nullRasterizerState,
-                nullEffect,
-                renderTargetCamera.TransformMatrix);
-
-            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
-            {
-                nextTerrainView.DrawShadowOnly(gameTime, spriteBatch);
-            }
-            spriteBatch.End();
+                spriteBatch.Begin(
+                    SpriteSortMode.Immediate,
+                    nullBlendState,
+                    SamplerState.PointClamp,
+                    nullDepthStencilState,
+                    nullRasterizerState,
+                    nullEffect,
+                    renderTargetCamera.TransformMatrix);
 
 
-            RenderTarget2D mapTileAndShadowsRenderTarget = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
-                mapViewport.Width, mapViewport.Height);
-            GraphicsDevice.SetRenderTarget(mapTileAndShadowsRenderTarget);
+                foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
+                {
+                    nextMinigunnerView.DrawShadowOnly(gameTime, spriteBatch);
+                }
 
-            spriteBatch.Begin(
-                SpriteSortMode.Immediate,
-                nullBlendState,
-                SamplerState.PointClamp,
-                nullDepthStencilState,
-                nullRasterizerState,
-                nullEffect,
-                renderTargetCamera.TransformMatrix);
-            
+                foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
+                {
+                    nextMinigunnerView.DrawShadowOnly(gameTime, spriteBatch);
+                }
 
-            mapTileShadowMapperEffect.Parameters["ShadowTexture"].SetValue(shadowOnlyRenderTarget2D);
-            mapTileShadowMapperEffect.Parameters["UnitMrfTexture"].SetValue(tunitsMrfTexture);
-            mapTileShadowMapperEffect.CurrentTechnique.Passes[0].Apply();
+                foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
+                {
+                    nextTerrainView.DrawShadowOnly(gameTime, spriteBatch);
+                }
 
-            spriteBatch.Draw(mapTileRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
-            spriteBatch.End();
+
+
+                spriteBatch.End();
+//            }
+
+//            if (mapTileAndShadowsRenderTarget == null)
+//            {
+                mapTileAndShadowsRenderTarget = new RenderTarget2D(
+                    MikeAndConquerGame.instance.GraphicsDevice,
+                    mapViewport.Width, mapViewport.Height);
+                GraphicsDevice.SetRenderTarget(mapTileAndShadowsRenderTarget);
+
+                spriteBatch.Begin(
+                    SpriteSortMode.Immediate,
+                    nullBlendState,
+                    SamplerState.PointClamp,
+                    nullDepthStencilState,
+                    nullRasterizerState,
+                    nullEffect,
+                    renderTargetCamera.TransformMatrix);
+
+
+                mapTileShadowMapperEffect.Parameters["ShadowTexture"].SetValue(shadowOnlyRenderTarget2D);
+                mapTileShadowMapperEffect.Parameters["UnitMrfTexture"].SetValue(tunitsMrfTexture);
+                mapTileShadowMapperEffect.CurrentTechnique.Passes[0].Apply();
+
+                spriteBatch.Draw(mapTileRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height),
+                    Color.White);
+                spriteBatch.End();
+
+//            }
 
 
 
@@ -894,6 +927,18 @@ namespace mike_and_conquer
 
 
             spriteBatch.Draw(mapTileAndShadowsRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
+
+            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
+            {
+                nextMinigunnerView.DrawNoShadow(gameTime, spriteBatch);
+            }
+            
+            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
+            {
+                nextMinigunnerView.DrawNoShadow(gameTime, spriteBatch);
+            }
+
+
             foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
             {
                 nextTerrainView.DrawNoShadow(gameTime, spriteBatch);
@@ -907,10 +952,6 @@ namespace mike_and_conquer
             /////////////////////////////////////////////
 
             GraphicsDevice.SetRenderTarget(null);
-
-//            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
-//                SamplerState.LinearClamp, DepthStencilState.Default,
-//                RasterizerState.CullNone);
 
             spriteBatch.Begin(
                 SpriteSortMode.Immediate,
@@ -929,7 +970,7 @@ namespace mike_and_conquer
 
             spriteBatch.End();
 
-            mapTileRenderTarget.Dispose();
+//            mapTileRenderTarget.Dispose();
             shadowOnlyRenderTarget2D.Dispose();
             mapTileAndShadowsRenderTarget.Dispose();
             mapTileShadowsAndTreesRenderTarget.Dispose();

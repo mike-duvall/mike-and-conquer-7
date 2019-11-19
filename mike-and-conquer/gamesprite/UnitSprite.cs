@@ -119,6 +119,50 @@ namespace mike_and_conquer
 
         }
 
+        public void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, float layerDepth)
+        {
+            AnimationSequence currentAnimationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+            if (animate)
+            {
+                currentAnimationSequence.Update();
+            }
+
+            int currentAnimationImageIndex = currentAnimationSequence.GetCurrentFrame();
+            currentTexture = unitFrameList[currentAnimationImageIndex].Texture;
+
+            float defaultScale = 1;
+
+
+            spriteBatch.Draw(currentTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
+
+            if (drawBoundingRectangle)
+            {
+                spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
+            }
+
+        }
+
+
+
+
+        public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, float layerDepth)
+        {
+            AnimationSequence currentAnimationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+            if (animate)
+            {
+                currentAnimationSequence.Update();
+            }
+
+            int currentAnimationImageIndex = currentAnimationSequence.GetCurrentFrame();
+            Texture2D shadowOnlyTexture = unitFrameList[currentAnimationImageIndex].ShadowOnlyTexture;
+
+            float defaultScale = 1;
+
+            spriteBatch.Draw(shadowOnlyTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
+
+
+        }
+
 
         // How to draw shadows:
         // X       Write method that returns current tile, given a point on the map

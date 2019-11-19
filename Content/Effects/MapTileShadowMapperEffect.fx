@@ -38,10 +38,6 @@ sampler2D UnitMrfTextureSampler = sampler_state
 
 
 
-
-
-
-
 struct VertexShaderOutput
 {
 	float4 Position : SV_POSITION;
@@ -51,6 +47,11 @@ struct VertexShaderOutput
 
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
+
+//                 for each pixel, if shadow rendertarget has no value, just return the maptile palette for color
+//                 if shadow rendertarget DOES have a value, convert the maptile palette value to the shadow value, via 
+//                 lookup in the mrf texture
+
 	float4 color = tex2D(SpriteTextureSampler, input.TextureCoordinates);
 	float4 shadowColor = tex2D(ShadowTextureSampler, input.TextureCoordinates);
 	float unitMrfColor = tex2D(UnitMrfTextureSampler, input.TextureCoordinates);
@@ -69,9 +70,6 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	}
 
 
-//                 for each pixel, if shadow rendertarget has no value, just return the maptile palette for color
-//                 if shadow rendertarget DOES have a value, convert the maptile palette value to the shadow value, via 
-//                 lookup in the mrf texture
 
 
 }

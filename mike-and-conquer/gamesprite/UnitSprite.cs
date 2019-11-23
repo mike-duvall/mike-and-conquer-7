@@ -1,4 +1,5 @@
-﻿using AnimationSequence = mike_and_conquer.util.AnimationSequence;
+﻿using System;
+using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -128,12 +129,20 @@ namespace mike_and_conquer
             }
 
             int currentAnimationImageIndex = currentAnimationSequence.GetCurrentFrame();
+
+//            int currentAnimationImageIndex = 0;
+
             currentTexture = unitFrameList[currentAnimationImageIndex].Texture;
 
             float defaultScale = 1;
 
+            int roundedX = (int)Math.Round(positionInWorldCoordinates.X, 0);
+            int roundedY = (int)Math.Round(positionInWorldCoordinates.Y, 0);
 
-            spriteBatch.Draw(currentTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
+            Vector2 snappedPositionInWordCoordinates = new Vector2(roundedX, roundedY);
+
+
+            spriteBatch.Draw(currentTexture, snappedPositionInWordCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
 
             if (drawBoundingRectangle)
             {
@@ -154,6 +163,9 @@ namespace mike_and_conquer
             }
 
             int currentAnimationImageIndex = currentAnimationSequence.GetCurrentFrame();
+
+//            int currentAnimationImageIndex = 0;
+
             Texture2D shadowOnlyTexture = unitFrameList[currentAnimationImageIndex].ShadowOnlyTexture;
 
             float defaultScale = 1;

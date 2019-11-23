@@ -46,7 +46,7 @@ namespace mike_and_conquer
 
         private List<Point> path;
 
-        double movementVelocity = .015;
+        double movementVelocity = .010;
         double movementDistanceEpsilon;
 
         private static int globalId = 1;

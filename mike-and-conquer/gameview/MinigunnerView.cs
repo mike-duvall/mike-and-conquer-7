@@ -34,7 +34,7 @@ namespace mike_and_conquer.gameview
 
         private void SetupAnimations()
         {
-            AnimationSequence walkingUpAnimationSequence = new AnimationSequence(40);
+            AnimationSequence walkingUpAnimationSequence = new AnimationSequence(25);
             walkingUpAnimationSequence.AddFrame(16);
             walkingUpAnimationSequence.AddFrame(17);
             walkingUpAnimationSequence.AddFrame(18);

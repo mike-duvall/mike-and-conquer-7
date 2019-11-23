@@ -146,6 +146,7 @@ namespace mike_and_conquer
 
             if (drawBoundingRectangle)
             {
+                // TODO use snapped coordinates?
                 spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
             }
 
@@ -170,7 +171,12 @@ namespace mike_and_conquer
 
             float defaultScale = 1;
 
-            spriteBatch.Draw(shadowOnlyTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
+            int roundedX = (int)Math.Round(positionInWorldCoordinates.X, 0);
+            int roundedY = (int)Math.Round(positionInWorldCoordinates.Y, 0);
+
+            Vector2 snappedPositionInWordCoordinates = new Vector2(roundedX, roundedY);
+
+            spriteBatch.Draw(shadowOnlyTexture, snappedPositionInWordCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
 
 
         }

@@ -1030,11 +1030,11 @@ namespace mike_and_conquer
                 {
                     nextMinigunnerView.DrawShadowOnly(gameTime, spriteBatch);
                 }
-//
-//                foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
-//                {
-//                    nextMinigunnerView.DrawShadowOnly(gameTime, spriteBatch);
-//                }
+
+                foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
+                {
+                    nextMinigunnerView.DrawShadowOnly(gameTime, spriteBatch);
+                }
 
                 foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
                 {
@@ -1137,10 +1137,18 @@ namespace mike_and_conquer
                 nextMinigunnerView.DrawNoShadow(gameTime, spriteBatch);
             }
 
+            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
+            {
+                nextMinigunnerView.DrawNoShadow(gameTime, spriteBatch);
+            }
+
+
             foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
             {
                 nextTerrainView.DrawNoShadow(gameTime, spriteBatch);
             }
+
+            unitSelectionBox.Draw(gameTime, spriteBatch);
 
 
             spriteBatch.End();

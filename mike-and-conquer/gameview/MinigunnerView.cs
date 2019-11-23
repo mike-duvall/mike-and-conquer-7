@@ -101,7 +101,7 @@ namespace mike_and_conquer.gameview
 
         internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
         {
-//            unitSelectionCursor.position = new Vector2(myMinigunner.positionInWorldCoordinates.X, myMinigunner.positionInWorldCoordinates.Y);
+            unitSelectionCursor.position = new Vector2(myMinigunner.positionInWorldCoordinates.X, myMinigunner.positionInWorldCoordinates.Y);
             if (myMinigunner.state == Minigunner.State.IDLE)
             {
                 unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
@@ -117,6 +117,12 @@ namespace mike_and_conquer.gameview
 
 
             unitSprite.DrawNoShadow(gameTime, spriteBatch, myMinigunner.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
+
+            if (myMinigunner.selected)
+            {
+                unitSelectionCursor.Draw(gameTime, spriteBatch, SpriteSortLayers.UNIT_DEPTH);
+            }
+
         }
 
 

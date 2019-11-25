@@ -236,7 +236,14 @@ namespace mike_and_conquer
 
             this.mapViewportCamera = new Camera2D(mapViewport);
             this.mapViewportCamera.Zoom = 1.0f;
-//            this.mapViewportCamera.Zoom = 1.0f;
+
+
+            // Note:  Zoom 3.0f, full screen, gives approximately the same size
+            // as real command and conquer on my laptop
+            // But not setting to 3.0f initially right now
+            // because it's needs to be 1.0f initially to make zooming
+            // work with new shader code.  Need to fix that
+//            this.mapViewportCamera.Zoom = 3.0f;
             this.mapViewportCamera.Location =
                 new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
 
@@ -380,6 +387,14 @@ namespace mike_and_conquer
                 GDIBarracksView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(GDIBarracksView.SHP_FILE_NAME),
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(UnitSelectionCursor.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                UnitSelectionCursor.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(UnitSelectionCursor.SHP_FILE_NAME),
+                UnitSelectionCursor.SHP_FILE_COLOR_MAPPER);
+
+
 
 
         }
@@ -596,6 +611,7 @@ namespace mike_and_conquer
             KeyboardState state = Keyboard.GetState();
 
             // If they hit esc, exit
+
             if (state.IsKeyDown(Keys.Escape))
             {
                 Program.restServer.Dispose();
@@ -616,6 +632,7 @@ namespace mike_and_conquer
             {
                 this.mapViewportCamera.Location = new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
             }
+
             if (state.IsKeyDown(Keys.P))
             {
                 this.mapViewportCamera.Location = new Vector2(CalculateRightmostScrollX(), CalculateTopmostScrollY());
@@ -1132,6 +1149,8 @@ namespace mike_and_conquer
             //spriteBatch.Draw(mapTileShadowsAndTreesRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
             spriteBatch.Draw(mapTileAndShadowsRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
 
+            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
+
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {
                 nextMinigunnerView.DrawNoShadow(gameTime, spriteBatch);
@@ -1149,6 +1168,7 @@ namespace mike_and_conquer
             }
 
             unitSelectionBox.Draw(gameTime, spriteBatch);
+
 
 
             spriteBatch.End();

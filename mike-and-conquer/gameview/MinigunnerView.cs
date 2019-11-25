@@ -34,7 +34,7 @@ namespace mike_and_conquer.gameview
 
         private void SetupAnimations()
         {
-            AnimationSequence walkingUpAnimationSequence = new AnimationSequence(25);
+            AnimationSequence walkingUpAnimationSequence = new AnimationSequence(40);
             walkingUpAnimationSequence.AddFrame(16);
             walkingUpAnimationSequence.AddFrame(17);
             walkingUpAnimationSequence.AddFrame(18);
@@ -65,6 +65,8 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+
+
             if(myMinigunner.health <= 0)
             {
                 return;
@@ -101,6 +103,12 @@ namespace mike_and_conquer.gameview
 
         internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            if (myMinigunner.health <= 0)
+            {
+                return;
+            }
+
+
             unitSelectionCursor.position = new Vector2(myMinigunner.positionInWorldCoordinates.X, myMinigunner.positionInWorldCoordinates.Y);
             if (myMinigunner.state == Minigunner.State.IDLE)
             {
@@ -128,6 +136,12 @@ namespace mike_and_conquer.gameview
 
         public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
         {
+
+            if (myMinigunner.health <= 0)
+            {
+                return;
+            }
+
             unitSprite.DrawShadowOnly(gameTime, spriteBatch, myMinigunner.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
         }
 

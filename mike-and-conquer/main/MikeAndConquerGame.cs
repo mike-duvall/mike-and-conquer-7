@@ -173,11 +173,12 @@ namespace mike_and_conquer
         {
             bool aiIsOn = false;
 
-            AddGdiMinigunnerAtMapSquareCoordinates(new Point(6, 1));
-            AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 4));
+            AddGdiMinigunnerAtMapSquareCoordinates(new Point(17, 16));
+//            AddGdiMinigunnerAtMapSquareCoordinates(new Point(6, 1));
+//            AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 4));
 
 
-            AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
+//            AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
 //
 //            AddSandbag(10, 6, 5);
 //            AddSandbag(10, 7, 5);

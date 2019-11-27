@@ -31,6 +31,22 @@ namespace mike_and_conquer.gameview
             set { isBlockingTerrain = value; }
         }
 
+
+        public enum MapTileVisibility
+        {
+            NotVisible,
+            PartiallyVisible,
+            Visible
+        }
+
+        private MapTileVisibility mapTileVisibility;
+
+        public MapTileVisibility Visibility
+        {
+            get { return mapTileVisibility; }
+            set { mapTileVisibility = value; }
+        }
+
         private Minigunner minigunnerSlot0 = null;
         private Minigunner minigunnerSlot1 = null;
         private Minigunner minigunnerSlot2 = null;
@@ -43,6 +59,7 @@ namespace mike_and_conquer.gameview
             this.textureKey = textureKey;
             this.imageIndex = imageIndex;
             this.isBlockingTerrain = isBlockingTerrain;
+            this.Visibility = MapTileInstance.MapTileVisibility.NotVisible;
 
         }
 

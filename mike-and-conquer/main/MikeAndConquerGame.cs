@@ -105,6 +105,7 @@ namespace mike_and_conquer
         private RenderTarget2D shadowOnlyRenderTarget2D;
         private RenderTarget2D mapTileAndShadowsRenderTarget;
         private RenderTarget2D mapTileShadowsAndTreesRenderTarget;
+        private RenderTarget2D mapTileVisibilityRenderTarget;
 
         public MikeAndConquerGame(bool testMode)
         {
@@ -1060,7 +1061,7 @@ namespace mike_and_conquer
                 }
 
                 spriteBatch.End();
-//            }
+
 
             if (mapTileAndShadowsRenderTarget == null)
             {
@@ -1089,7 +1090,34 @@ namespace mike_and_conquer
                     Color.White);
                 spriteBatch.End();
 
-//            }
+
+            if (mapTileVisibilityRenderTarget == null)
+            {
+                mapTileVisibilityRenderTarget = new RenderTarget2D(
+                    MikeAndConquerGame.instance.GraphicsDevice,
+                    mapViewport.Width, mapViewport.Height);
+            }
+
+            GraphicsDevice.SetRenderTarget(mapTileVisibilityRenderTarget);
+
+            GraphicsDevice.Clear(Color.Black);
+
+            spriteBatch.Begin(
+                SpriteSortMode.Immediate,
+                nullBlendState,
+                SamplerState.PointClamp,
+                nullDepthStencilState,
+                nullRasterizerState,
+                nullEffect,
+                renderTargetCamera.TransformMatrix);
+
+
+            foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
+            {
+                basicMapSquareView.DrawVisbilityMask(gameTime, spriteBatch);
+            }
+
+            spriteBatch.End();
 
 
             /////////////////////////////////////////////
@@ -1107,11 +1135,12 @@ namespace mike_and_conquer
 
 
             mapTilePaletteMapperEffect.Parameters["PaletteTexture"].SetValue(paletteTexture);
+            mapTilePaletteMapperEffect.Parameters["MapTileVisibilityTexture"].SetValue(mapTileVisibilityRenderTarget);
             mapTilePaletteMapperEffect.CurrentTechnique.Passes[0].Apply();
 
             spriteBatch.Draw(mapTileAndShadowsRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
 
-            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
+//            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {

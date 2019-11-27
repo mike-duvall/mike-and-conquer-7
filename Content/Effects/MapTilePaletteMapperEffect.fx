@@ -1,4 +1,4 @@
-﻿#if OPENGL
+#if OPENGL
 	#define SV_POSITION POSITION
 	#define VS_SHADERMODEL vs_3_0
 	#define PS_SHADERMODEL ps_3_0
@@ -26,6 +26,19 @@ sampler2D PaletteTextureSampler = sampler_state
 };
 
 
+Texture2D MapTileVisibilityTexture;
+sampler2D MapTileVisibilityTextureSampler = sampler_state
+{
+    Texture = <MapTileVisibilityTexture>;
+	addressU = Clamp;
+	addressV = Clamp;
+	mipfilter = NONE;
+	minfilter = POINT;
+	magfilter = POINT;    
+};
+
+
+
 struct VertexShaderOutput
 {
 	float4 Position : SV_POSITION;
@@ -36,6 +49,16 @@ struct VertexShaderOutput
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
 	float4 color = tex2D(SpriteTextureSampler, input.TextureCoordinates);
+	float4 mapTileVisibilityColor = tex2D(MapTileVisibilityTextureSampler, input.TextureCoordinates);	
+	// if(mapTileVisibilityColor.a == 1) {
+	// 	return float4(0,0,0,1);
+	// }
+
+	if( mapTileVisibilityColor.r == 1 && mapTileVisibilityColor.r == 1 && mapTileVisibilityColor.b == 1) {
+		return float4(0,0,0,1);
+	}
+
+
 	if(color.a) {
 		int numPaletteEntries = 256.0f;
 		float paletteIndex = (color.r * 256.0f) / numPaletteEntries;

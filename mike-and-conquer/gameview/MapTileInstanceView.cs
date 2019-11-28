@@ -42,7 +42,8 @@ namespace mike_and_conquer.gameview
 
                 for (int i = 0; i < numPixels; i++)
                 {
-                    Color xnaColor = new Color(255, 255, 255, 0);
+//                    Color xnaColor = new Color(255, 254, 253, 0);
+                    Color xnaColor = new Color(255, 154, 53, 0);
                     textureData[i] = xnaColor;
                 }
 
@@ -102,13 +103,13 @@ namespace mike_and_conquer.gameview
 
             if (this.myMapTileInstance.Visibility == MapTileInstance.MapTileVisibility.Visible)
             {
-                singleTextureSprite.Draw(
-                    gameTime,
-                    spriteBatch,
-                    this.myMapTileInstance.PositionInWorldCoordinates,
-                    SpriteSortLayers.MAP_SQUARE_DEPTH,
-                    GameOptions.DRAW_TERRAIN_BORDER,
-                    Color.White);
+//                singleTextureSprite.Draw(
+//                    gameTime,
+//                    spriteBatch,
+//                    this.myMapTileInstance.PositionInWorldCoordinates,
+//                    SpriteSortLayers.MAP_SQUARE_DEPTH,
+//                    GameOptions.DRAW_TERRAIN_BORDER,
+//                    Color.White);
 
                 float defaultScale = 1;
 //                spriteBatch.Draw(visibleMask, this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f,

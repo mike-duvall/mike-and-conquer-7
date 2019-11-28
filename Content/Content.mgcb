@@ -76,7 +76,7 @@
 #begin Effects/MapTileShadowMapperEffect.fx
 /importer:EffectImporter
 /processor:EffectProcessor
-/processorParam:DebugMode=Auto
+/processorParam:DebugMode=Optimize
 /build:Effects/MapTileShadowMapperEffect.fx
 
 #begin Failed.png

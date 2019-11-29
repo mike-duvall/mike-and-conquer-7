@@ -100,6 +100,11 @@ namespace mike_and_conquer
         private Texture2D paletteTexture;
         private Texture2D tunitsMrfTexture;
 
+        private Texture2D tshadow13MrfTexture;
+        private Texture2D tshadow14MrfTexture;
+        private Texture2D tshadow15MrfTexture;
+        private Texture2D tshadow16MrfTexture;
+
 
         private RenderTarget2D mapTileRenderTarget;
         private RenderTarget2D shadowOnlyRenderTarget;
@@ -336,20 +341,109 @@ namespace mike_and_conquer
             paletteTexture.SetData(texturePixelData);
 
 
+            LoadTUnitsMrfTexture();
+            LoadTShadow13MrfTexture();
+            LoadTShadow14MrfTexture();
+            LoadTShadow15MrfTexture();
+            LoadTShadow16MrfTexture();
+
+
+
+
+        }
+
+        private void LoadTUnitsMrfTexture()
+        {
+
+            int numPixels = 256;
             tunitsMrfTexture = new Texture2D(GraphicsDevice, 256, 1);
-            Color[] tunitsMrfTexturePixelData = new Color[numPixels];
+            Color[] texturePixelData = new Color[numPixels];
 
             for (int i = 0; i < 256; i++)
             {
                 byte alpha = 255;
                 int mrfValue = this.shadowMapper.MapUnitsShadowPaletteIndex(i);
                 byte byteMrfValue = (byte) mrfValue;
-                Color xnaColor = new Color(byteMrfValue, (byte)0,(byte) 0, alpha);
-                tunitsMrfTexturePixelData[i] = xnaColor;
+                Color xnaColor = new Color(byteMrfValue, (byte) 0, (byte) 0, alpha);
+                texturePixelData[i] = xnaColor;
             }
-            tunitsMrfTexture.SetData(tunitsMrfTexturePixelData);
-            
+
+            tunitsMrfTexture.SetData(texturePixelData);
         }
+
+        private void LoadTShadow13MrfTexture()
+        {
+            int numPixels = 256;
+            tshadow13MrfTexture = new Texture2D(GraphicsDevice, 256, 1);
+            Color[] texturePixelData = new Color[numPixels];
+
+            for (int i = 0; i < 256; i++)
+            {
+                byte alpha = 255;
+                int mrfValue = this.shadowMapper.MapMapTile13PaletteIndex(i);
+                byte byteMrfValue = (byte)mrfValue;
+                Color xnaColor = new Color(byteMrfValue, (byte)0, (byte)0, alpha);
+                texturePixelData[i] = xnaColor;
+            }
+
+            tshadow13MrfTexture.SetData(texturePixelData);
+        }
+
+        private void LoadTShadow14MrfTexture()
+        {
+            int numPixels = 256;
+            tshadow14MrfTexture = new Texture2D(GraphicsDevice, 256, 1);
+            Color[] texturePixelData = new Color[numPixels];
+
+            for (int i = 0; i < 256; i++)
+            {
+                byte alpha = 255;
+                int mrfValue = this.shadowMapper.MapMapTile14PaletteIndex(i);
+                byte byteMrfValue = (byte)mrfValue;
+                Color xnaColor = new Color(byteMrfValue, (byte)0, (byte)0, alpha);
+                texturePixelData[i] = xnaColor;
+            }
+
+            tshadow14MrfTexture.SetData(texturePixelData);
+        }
+
+        private void LoadTShadow15MrfTexture()
+        {
+            int numPixels = 256;
+            tshadow15MrfTexture = new Texture2D(GraphicsDevice, 256, 1);
+            Color[] texturePixelData = new Color[numPixels];
+
+            for (int i = 0; i < 256; i++)
+            {
+                byte alpha = 255;
+                int mrfValue = this.shadowMapper.MapMapTile15PaletteIndex(i);
+                byte byteMrfValue = (byte)mrfValue;
+                Color xnaColor = new Color(byteMrfValue, (byte)0, (byte)0, alpha);
+                texturePixelData[i] = xnaColor;
+            }
+
+            tshadow15MrfTexture.SetData(texturePixelData);
+        }
+
+
+        private void LoadTShadow16MrfTexture()
+        {
+            int numPixels = 256;
+            tshadow16MrfTexture = new Texture2D(GraphicsDevice, 256, 1);
+            Color[] texturePixelData = new Color[numPixels];
+
+            for (int i = 0; i < 256; i++)
+            {
+                byte alpha = 255;
+                int mrfValue = this.shadowMapper.MapMapTile16PaletteIndex(i);
+                byte byteMrfValue = (byte)mrfValue;
+                Color xnaColor = new Color(byteMrfValue, (byte)0, (byte)0, alpha);
+                texturePixelData[i] = xnaColor;
+            }
+
+            tshadow16MrfTexture.SetData(texturePixelData);
+        }
+
 
 
         private void LoadTextures()
@@ -389,6 +483,13 @@ namespace mike_and_conquer
             spriteSheet.LoadUnitFramesFromSpriteFrames(
                 GDIBarracksView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(GDIBarracksView.SHP_FILE_NAME),
+                GDIBarracksView.SHP_FILE_COLOR_MAPPER);
+
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile("shadow.shp");
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                "MapTileShadow",
+                raiSpriteFrameManager.GetSpriteFramesForUnit("shadow.shp"),
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
 
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(UnitSelectionCursor.SHP_FILE_NAME);
@@ -851,7 +952,7 @@ namespace mike_and_conquer
 
 
 
-            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.SetRenderTarget( null);
 
             spriteBatch.Begin(
                 SpriteSortMode.Immediate,

@@ -57,30 +57,9 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	float4 color = tex2D(SpriteTextureSampler, input.TextureCoordinates);
 	float4 mapTileVisibilityColor = tex2D(MapTileVisibilityTextureSampler, input.TextureCoordinates);	
 
-	// if(mapTileVisibilityColor.a == 1) {
-	// 	return float4(0,0,0,1);
-	// }
-
-	// if( mapTileVisibilityColor.r == 1 && mapTileVisibilityColor.r == 1 && mapTileVisibilityColor.b == 1 ) {
-	// 	return float4(0,0,0,1);
-	// }
-	// float sentinelR = 255.0f / 255.0f;
-	// float sentinelG = 254.0f / 255.0f;
-	// float sentinelB = 253.0f / 255.0f;
-
 	float sentinelR = 255.0f / 255.0f;
-	float sentinelG = 154.0f / 255.0f;
-	float sentinelB = 53.0f / 255.0f;
-
-
-	// if( mapTileVisibilityColor.r == 0 && mapTileVisibilityColor.r == 0 && mapTileVisibilityColor.b == 0 ) {
-	// 	return float4(0,0,0,1);
-	// }
-
-	// if( (mapTileVisibilityColor.r != sentinelR) && (mapTileVisibilityColor.g != sentinelG) && (mapTileVisibilityColor.b != sentinelB) ) {
-	// 	return float4(0,0,0,1);		
-	// }
-
+	float sentinelG = 254.0f / 255.0f;
+	float sentinelB = 253.0f / 255.0f;
 
 	if( (mapTileVisibilityColor.r == sentinelR) && (mapTileVisibilityColor.g == sentinelG) && (mapTileVisibilityColor.b == sentinelB) ) {
 	// if( mapTileVisibilityColor.a == 0.0f ) {		
@@ -99,18 +78,6 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	else {
 		return float4(0,0,0,1);			
 	}
-
-
-	// if(color.a) {
-	// 	int numPaletteEntries = 256.0f;
-	// 	float paletteIndex = (color.r * 256.0f) / numPaletteEntries;
-	// 	float2 paletteCoordinates = float2(paletteIndex, 0.5f);
-
-	//     float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
-	//     return paletteColor;
-	// }
-
-	// return color;
 
 }
 

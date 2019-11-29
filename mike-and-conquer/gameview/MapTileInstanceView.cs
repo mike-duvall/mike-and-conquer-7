@@ -42,8 +42,7 @@ namespace mike_and_conquer.gameview
 
                 for (int i = 0; i < numPixels; i++)
                 {
-//                    Color xnaColor = new Color(255, 254, 253, 0);
-                    Color xnaColor = new Color(255, 154, 53, 0);
+                    Color xnaColor = new Color(255, 254, 253, 0);
                     textureData[i] = xnaColor;
                 }
 
@@ -52,9 +51,6 @@ namespace mike_and_conquer.gameview
 
                 middleOfSpriteInSpriteCoordinates.X = visibleMask.Width / 2;
                 middleOfSpriteInSpriteCoordinates.Y = visibleMask.Height / 2;
-
-                int x = 3;
-
 
             }
         }

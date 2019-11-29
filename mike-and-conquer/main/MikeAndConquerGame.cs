@@ -941,18 +941,22 @@ namespace mike_and_conquer
             UpdateMapTileVisibilityRenderTarget(gameTime); // mapTileVisibilityRenderTarget
             UpdateUnitsAndTerrainRenderTarget(gameTime); //    unitsAndTerrainRenderTarget:    draw mapTileAndShadowsRenderTarget, then units and terrain
 
-            /////////////////////////////////////////////
+            DrawAndApplyPaletteAndMapTileVisbility();
 
 
+//            DrawVisibilityMaskAsTest();
+//            DrawShadowShapeAsTest();
+        }
 
+        private void DrawAndApplyPaletteAndMapTileVisbility()
+        {
             const BlendState nullBlendState = null;
             const DepthStencilState nullDepthStencilState = null;
             const RasterizerState nullRasterizerState = null;
             const Effect nullEffect = null;
 
 
-
-            GraphicsDevice.SetRenderTarget( null);
+            GraphicsDevice.SetRenderTarget(null);
 
             spriteBatch.Begin(
                 SpriteSortMode.Immediate,
@@ -966,12 +970,69 @@ namespace mike_and_conquer
 
             mapTilePaletteMapperEffect.Parameters["PaletteTexture"].SetValue(paletteTexture);
             mapTilePaletteMapperEffect.Parameters["MapTileVisibilityTexture"].SetValue(mapTileVisibilityRenderTarget);
+            mapTilePaletteMapperEffect.Parameters["Value13MrfTexture"].SetValue(tshadow13MrfTexture);
+            mapTilePaletteMapperEffect.Parameters["Value14MrfTexture"].SetValue(tshadow14MrfTexture);
+            mapTilePaletteMapperEffect.Parameters["Value15MrfTexture"].SetValue(tshadow15MrfTexture);
+            mapTilePaletteMapperEffect.Parameters["Value16MrfTexture"].SetValue(tshadow16MrfTexture);
+
+
             mapTilePaletteMapperEffect.CurrentTechnique.Passes[0].Apply();
 
-            spriteBatch.Draw(unitsAndTerrainRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height), Color.White);
+            spriteBatch.Draw(unitsAndTerrainRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height),
+                Color.White);
             spriteBatch.End();
-
         }
+
+        private void DrawShadowShapeAsTest()
+        {
+            const BlendState nullBlendState = null;
+            const DepthStencilState nullDepthStencilState = null;
+            const RasterizerState nullRasterizerState = null;
+            const Effect nullEffect = null;
+
+
+            GraphicsDevice.SetRenderTarget(null);
+
+            spriteBatch.Begin(
+                SpriteSortMode.Immediate,
+                nullBlendState,
+                SamplerState.PointClamp,
+                nullDepthStencilState,
+                nullRasterizerState,
+                nullEffect,
+                mapViewportCamera.TransformMatrix);
+
+            
+            spriteBatch.Draw(MapTileInstanceView.partiallyVisibleMask, new Rectangle(0, 0, 24,24),
+                Color.White);
+            spriteBatch.End();
+        }
+
+        private void DrawVisibilityMaskAsTest()
+        {
+            const BlendState nullBlendState = null;
+            const DepthStencilState nullDepthStencilState = null;
+            const RasterizerState nullRasterizerState = null;
+            const Effect nullEffect = null;
+
+
+            GraphicsDevice.SetRenderTarget(null);
+
+            spriteBatch.Begin(
+                SpriteSortMode.Immediate,
+                nullBlendState,
+                SamplerState.PointClamp,
+                nullDepthStencilState,
+                nullRasterizerState,
+                nullEffect,
+                mapViewportCamera.TransformMatrix);
+
+
+            spriteBatch.Draw(mapTileVisibilityRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height),
+                Color.White);
+            spriteBatch.End();
+        }
+
 
         private void UpdateUnitsAndTerrainRenderTarget(GameTime gameTime)
         {

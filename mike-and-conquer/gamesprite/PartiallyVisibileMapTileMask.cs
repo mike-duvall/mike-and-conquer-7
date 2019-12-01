@@ -11,9 +11,23 @@ namespace mike_and_conquer
     {
         private static Texture2D partiallyVisibleMask = null;
 
-
         public const string SPRITE_KEY = "MapTileShadow";
         public const string SHP_FILE_NAME = "shadow.shp";
+
+        private List<UnitFrame> shadowFrameList;
+
+
+        public PartiallyVisibileMapTileMask()
+        {
+            shadowFrameList =
+                MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
+
+            if (PartiallyVisibileMapTileMask.partiallyVisibleMask == null)
+            {
+                FixupTextures();
+            }
+        }
+
 
         public static Texture2D PartiallyVisibleMask
         {
@@ -34,25 +48,48 @@ namespace mike_and_conquer
 
             UnitFrame unitFrame = shadowFrameList[3];
             partiallyVisibleMask = unitFrame.Texture;
+        }
 
-            int numPixels = partiallyVisibleMask.Width *
-                            partiallyVisibleMask.Height;
-            Color[] textureData = new Color[numPixels];
-            partiallyVisibleMask.GetData(textureData);
-            for (int i = 0; i < numPixels; i++)
+        private void FixupTextures()
+        {
+
+//            List<UnitFrame> shadowFrameList =
+//                MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
+
+            foreach (UnitFrame unitFrame in shadowFrameList)
             {
-                Color color = textureData[i];
-                if (color.R == 0 && color.G == 0 && color.B == 0)
+                Texture2D nextTexture  = unitFrame.Texture;
+                int numPixels = nextTexture.Width *
+                                nextTexture.Height;
+                Color[] textureData = new Color[numPixels];
+                nextTexture.GetData(textureData);
+                for (int i = 0; i < numPixels; i++)
                 {
-                    color.R = 1;
-                    color.G = 2;
-                    color.B = 3;
-                    color.A = 255;
-                    textureData[i] = color;
+                    Color color = textureData[i];
+                    if (color.R == 0 && color.G == 0 && color.B == 0)
+                    {
+                        color.R = 1;
+                        color.G = 2;
+                        color.B = 3;
+                        color.A = 255;
+                        textureData[i] = color;
+                    }
                 }
+
+                nextTexture.SetData(textureData);
             }
 
-            partiallyVisibleMask.SetData(textureData);
+
+        }
+
+//        public Texture2D GetCurrentMask()
+//        {
+//            return PartiallyVisibleMask;
+//        }
+
+        public Texture2D GetMask(int index)
+        {
+            return shadowFrameList[index].Texture;
         }
     }
 }

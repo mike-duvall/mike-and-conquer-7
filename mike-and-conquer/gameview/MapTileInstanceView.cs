@@ -15,8 +15,10 @@ namespace mike_and_conquer.gameview
         public MapTileInstance myMapTileInstance;
 
         private static Texture2D visibleMask = null;
-//        public static Texture2D partiallyVisibleMask = null;
         private static Vector2 middleOfSpriteInSpriteCoordinates;
+
+
+        private PartiallyVisibileMapTileMask partiallyVisibileMapTileMask;
 
         private int imageIndex;
         private string textureKey;
@@ -54,35 +56,7 @@ namespace mike_and_conquer.gameview
                 middleOfSpriteInSpriteCoordinates.Y = visibleMask.Height / 2;
             }
 
-//            if (MapTileInstanceView.partiallyVisibleMask == null)
-//            {
-//                List<UnitFrame> shadowFrameList =
-//                    MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile("MapTileShadow");
-//
-//                UnitFrame unitFrame = shadowFrameList[3];
-//                MapTileInstanceView.partiallyVisibleMask = unitFrame.Texture;
-//
-//                int numPixels = MapTileInstanceView.partiallyVisibleMask.Width *
-//                                MapTileInstanceView.partiallyVisibleMask.Height;
-//                Color[] textureData = new Color[numPixels];
-//                partiallyVisibleMask.GetData(textureData);
-//                for (int i = 0; i < numPixels; i++)
-//                {
-//                    Color color = textureData[i];
-//                    if (color.R == 0 && color.G == 0 && color.B == 0)
-//                    {
-//                        color.R = 1;
-//                        color.G = 2;
-//                        color.B = 3;
-//                        color.A = 255;
-//                        textureData[i] = color;
-//                    }
-//
-//                }
-//
-//                MapTileInstanceView.partiallyVisibleMask.SetData(textureData);
-//
-//            }
+            partiallyVisibileMapTileMask = new PartiallyVisibileMapTileMask();
         }
 
 
@@ -124,6 +98,24 @@ namespace mike_and_conquer.gameview
 
         }
 
+        private int DeterminePartiallyVisibleMaskTile()
+        {
+
+            int halfTileHeight = GameWorld.MAP_TILE_HEIGHT / 2;
+            MapTileInstance below = GameWorld.instance.FindMapSquare(
+                (int)myMapTileInstance.PositionInWorldCoordinates.X, (int) (myMapTileInstance.PositionInWorldCoordinates.Y + halfTileHeight));
+
+            if (below.Visibility == MapTileInstance.MapTileVisibility.Visible)
+            {
+                return 3;
+            }
+            else
+            {
+                return 1;
+            }
+
+        }
+
         internal void DrawVisbilityMask(GameTime gameTime, SpriteBatch spriteBatch)
         {
 
@@ -144,11 +136,13 @@ namespace mike_and_conquer.gameview
             }
             else if (this.myMapTileInstance.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
             {
-                spriteBatch.Draw(PartiallyVisibileMapTileMask.PartiallyVisibleMask, this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f,
+                //                spriteBatch.Draw(PartiallyVisibileMapTileMask.PartiallyVisibleMask, this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f,
+                //                    middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 1.0f);
+                int index = DeterminePartiallyVisibleMaskTile();
+                spriteBatch.Draw(partiallyVisibileMapTileMask.GetMask(index), this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f,
                     middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 1.0f);
+
             }
-
-
 
         }
 

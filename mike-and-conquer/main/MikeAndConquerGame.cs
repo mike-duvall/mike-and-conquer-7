@@ -492,6 +492,7 @@ namespace mike_and_conquer
             spriteSheet.LoadUnitFramesFromSpriteFrames(PartiallyVisibileMapTileMask.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(PartiallyVisibileMapTileMask.SHP_FILE_NAME),
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
+//            PartiallyVisibileMapTileMask.FixupTextures();
 
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(UnitSelectionCursor.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(

@@ -101,18 +101,68 @@ namespace mike_and_conquer.gameview
         private int DeterminePartiallyVisibleMaskTile()
         {
 
-            int halfTileHeight = GameWorld.MAP_TILE_HEIGHT / 2;
+            int verticalOffset = GameWorld.MAP_TILE_HEIGHT / 2 + 2;
+            int horizontalOffset = GameWorld.MAP_TILE_WIDTH / 2 + 2;
             MapTileInstance below = GameWorld.instance.FindMapSquare(
-                (int)myMapTileInstance.PositionInWorldCoordinates.X, (int) (myMapTileInstance.PositionInWorldCoordinates.Y + halfTileHeight));
+                (int)myMapTileInstance.PositionInWorldCoordinates.X, (int) (myMapTileInstance.PositionInWorldCoordinates.Y + verticalOffset));
 
-            if (below.Visibility == MapTileInstance.MapTileVisibility.Visible)
+            MapTileInstance above = GameWorld.instance.FindMapSquare(
+                (int)myMapTileInstance.PositionInWorldCoordinates.X, (int)(myMapTileInstance.PositionInWorldCoordinates.Y - verticalOffset));
+
+
+            MapTileInstance left = GameWorld.instance.FindMapSquare(
+                (int)myMapTileInstance.PositionInWorldCoordinates.X - horizontalOffset, (int)(myMapTileInstance.PositionInWorldCoordinates.Y));
+
+
+            MapTileInstance right = GameWorld.instance.FindMapSquare(
+                (int)myMapTileInstance.PositionInWorldCoordinates.X + horizontalOffset, (int)(myMapTileInstance.PositionInWorldCoordinates.Y));
+
+
+            if (right.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && below.Visibility == MapTileInstance.MapTileVisibility.Visible &&
+                left.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && above.Visibility == MapTileInstance.MapTileVisibility.NotVisible)
             {
                 return 3;
             }
-            else
+
+            if( right.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && below.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+                left.Visibility == MapTileInstance.MapTileVisibility.NotVisible && above.Visibility == MapTileInstance.MapTileVisibility.NotVisible)
             {
-                return 1;
+                return 9;
             }
+
+            if (right.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && below.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
+            left.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&  above.Visibility == MapTileInstance.MapTileVisibility.Visible)
+            {
+                return 0;
+            }
+
+            if (right.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && below.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
+                left.Visibility == MapTileInstance.MapTileVisibility.NotVisible && above.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
+            {
+                return 8;
+            }
+
+
+            if (right.Visibility == MapTileInstance.MapTileVisibility.NotVisible && below.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+                left.Visibility == MapTileInstance.MapTileVisibility.Visible && above.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
+            {
+                return 5;
+            }
+
+            if (right.Visibility == MapTileInstance.MapTileVisibility.NotVisible && below.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+                left.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && above.Visibility == MapTileInstance.MapTileVisibility.NotVisible)
+            {
+                return 10;
+            }
+
+            if (right.Visibility == MapTileInstance.MapTileVisibility.NotVisible && below.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
+                left.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && above.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
+            {
+                return 11;
+            }
+
+
+            return 1;
 
         }
 

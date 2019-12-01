@@ -488,10 +488,9 @@ namespace mike_and_conquer
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
 
 
-            raiSpriteFrameManager.LoadAllTexturesFromShpFile("shadow.shp");
-            spriteSheet.LoadUnitFramesFromSpriteFrames(
-                "MapTileShadow",
-                raiSpriteFrameManager.GetSpriteFramesForUnit("shadow.shp"),
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(PartiallyVisibileMapTileMask.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(PartiallyVisibileMapTileMask.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(PartiallyVisibileMapTileMask.SHP_FILE_NAME),
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
 
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(UnitSelectionCursor.SHP_FILE_NAME);
@@ -499,9 +498,6 @@ namespace mike_and_conquer
                 UnitSelectionCursor.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(UnitSelectionCursor.SHP_FILE_NAME),
                 UnitSelectionCursor.SHP_FILE_COLOR_MAPPER);
-
-
-
 
         }
 

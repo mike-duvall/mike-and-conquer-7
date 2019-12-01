@@ -12,6 +12,9 @@ namespace mike_and_conquer
         private static Texture2D partiallyVisibleMask = null;
 
 
+        public const string SPRITE_KEY = "MapTileShadow";
+        public const string SHP_FILE_NAME = "shadow.shp";
+
         public static Texture2D PartiallyVisibleMask
         {
             get
@@ -27,7 +30,7 @@ namespace mike_and_conquer
         private static void InitializePartiallyVisiblyMask()
         {
             List<UnitFrame> shadowFrameList =
-                MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile("MapTileShadow");
+                MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
 
             UnitFrame unitFrame = shadowFrameList[3];
             partiallyVisibleMask = unitFrame.Texture;

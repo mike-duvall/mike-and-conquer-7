@@ -127,11 +127,6 @@
 #begin pyle.shp
 /copy:pyle.shp
 
-
-#begin shadow.shp
-/copy:shadow.shp
-
-
 #begin s09.tem
 /copy:s09.tem
 
@@ -200,6 +195,9 @@
 
 #begin sh9.tem
 /copy:sh9.tem
+
+#begin shadow.shp
+/copy:shadow.shp
 
 #begin T01.tem
 /copy:T01.tem

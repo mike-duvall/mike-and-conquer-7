@@ -118,18 +118,11 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	float rValueFor2 = 2.0f / 255.0f;
 	float rValueFor3 = 3.0f / 255.0f;
 
+	int numPaletteEntries = 256.0f;
 
 	if( (mapTileVisibilityColor.r == sentinelR) && (mapTileVisibilityColor.g == sentinelG) && (mapTileVisibilityColor.b == sentinelB) ) {
 
-		// Pickup here code:
-		// Need to pass in 13,14,15,16 mrf mapperTextures
-		// Then, if mapTileVisibilityColor.r = 13, map using 13 mrfmapper, 
-		// same for 14,15,16
-		// for 12, map it to black,
-		// else, do code below
-
 		if(color.a) {
-			int numPaletteEntries = 256.0f;
 			float paletteIndex = (color.r * 256.0f) / numPaletteEntries;
 			float2 paletteCoordinates = float2(paletteIndex, 0.5f);
 
@@ -142,12 +135,6 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 
 	}
 	else if((mapTileVisibilityColor.r == rValueFor1) && (mapTileVisibilityColor.g == rValueFor2) && (mapTileVisibilityColor.b == rValueFor3)) {
-		// return float4 (0,0,0,1);
-
-		// Pickup here, this code does the "opposite" in some way
-		// need to somehow mark black ones as maybe 17 ? and then map them?
-		// Consider putting sentinel values in partiallyVisibleMask texture for then it's black
-		// and check for that here, and then do code below
 
 			int numPaletteEntries = 256.0f;
 			float paletteIndex = (color.r * 256.0f) / numPaletteEntries;
@@ -156,7 +143,7 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 		    return paletteColor;
 	}
 	else if(mapTileVisibilityColor.r == rValueFor13) {
-			int numPaletteEntries = 256.0f;
+
 			float mrfPaletteIndex = (color.r * 256.0f) / numPaletteEntries;
 			float2 mrfPaletteCoordinates = float2(mrfPaletteIndex, 0.5f);
 		    float4 mrfColor = tex2D(Value13MrfTextureSampler, mrfPaletteCoordinates);
@@ -164,11 +151,10 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 		    float paletteIndex = (mrfColor.r * 256.0f) / numPaletteEntries;
 			float2 paletteCoordinates = float2(paletteIndex, 0.5f);		    
 
-		    float paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
+		    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
 		    return paletteColor;
 	}
 	else if(mapTileVisibilityColor.r == rValueFor14) {
-			int numPaletteEntries = 256.0f;
 			float mrfPaletteIndex = (color.r * 256.0f) / numPaletteEntries;
 			float2 mrfPaletteCoordinates = float2(mrfPaletteIndex, 0.5f);
 		    float4 mrfColor = tex2D(Value14MrfTextureSampler, mrfPaletteCoordinates);
@@ -176,11 +162,10 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 		    float paletteIndex = (mrfColor.r * 256.0f) / numPaletteEntries;
 			float2 paletteCoordinates = float2(paletteIndex, 0.5f);		    
 
-		    float paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
+		    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
 		    return paletteColor;
 	}
 	else if(mapTileVisibilityColor.r == rValueFor15) {
-			int numPaletteEntries = 256.0f;
 			float mrfPaletteIndex = (color.r * 256.0f) / numPaletteEntries;
 			float2 mrfPaletteCoordinates = float2(mrfPaletteIndex, 0.5f);
 		    float4 mrfColor = tex2D(Value15MrfTextureSampler, mrfPaletteCoordinates);
@@ -188,11 +173,10 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 		    float paletteIndex = (mrfColor.r * 256.0f) / numPaletteEntries;
 			float2 paletteCoordinates = float2(paletteIndex, 0.5f);		    
 
-		    float paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
+		    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
 		    return paletteColor;
 	}
 	else if(mapTileVisibilityColor.r == rValueFor16) {
-			int numPaletteEntries = 256.0f;
 			float mrfPaletteIndex = (color.r * 256.0f) / numPaletteEntries;
 			float2 mrfPaletteCoordinates = float2(mrfPaletteIndex, 0.5f);
 		    float4 mrfColor = tex2D(Value16MrfTextureSampler, mrfPaletteCoordinates);
@@ -200,11 +184,11 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 		    float paletteIndex = (mrfColor.r * 256.0f) / numPaletteEntries;
 			float2 paletteCoordinates = float2(paletteIndex, 0.5f);		    
 
-		    float paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
+		    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
 		    return paletteColor;
 	}
-
-	else {
+	else
+	{
 		return float4(0,0,0,1);			
 	}
 

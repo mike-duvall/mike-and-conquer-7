@@ -25,40 +25,49 @@ namespace mike_and_conquer.gamesprite
 
         private void LoadMapTileShadowMaps()
         {
+            // See here:  https://forums.cncnet.org/topic/2253-mrf-creation-tool-finished/?tab=comments#comment-19465
+            // "The shroud, in ?shadow.mrf, also uses this, to link its four filters (0, 1, 2, 3) to the indices 16, 15, 14 and 13 respectively. If you look at the shroud SHP file, you see it indeed uses these indices as its different shroud gradations in the fade to black."
+            // So:
+            // 0 maps to 16
+            // 1 maps to 15
+            // 2 maps to 14
+            // 3 maps to 13
+            // Where 0 through three is the offset of the order of how these appear in the MRF file,
+            // meaning, we, the order they appear in the file is:
+            // 16,15,14,13
+
             System.IO.FileStream mrfFileStream = System.IO.File.Open("Content\\tshadow.mrf", System.IO.FileMode.Open,
                 System.IO.FileAccess.Read, System.IO.FileShare.None);
             for (int i = 0; i < 256; i++)
                 mrfFileStream.ReadByte();
 
 
-            mapTileShadowMap13 = new Dictionary<int, int>();
-            for (int i = 256; i < 512; i++)
-            {
-                int byte1 = mrfFileStream.ReadByte();
-                mapTileShadowMap13.Add(i - 256, byte1);
-            }
-
-            mapTileShadowMap14 = new Dictionary<int, int>();
-            for (int i = 256; i < 512; i++)
-            {
-                int byte1 = mrfFileStream.ReadByte();
-                mapTileShadowMap14.Add(i - 256, byte1);
-            }
-            mapTileShadowMap15 = new Dictionary<int, int>();
-            for (int i = 256; i < 512; i++)
-            {
-                int byte1 = mrfFileStream.ReadByte();
-                mapTileShadowMap15.Add(i - 256, byte1);
-            }
-
             mapTileShadowMap16 = new Dictionary<int, int>();
-            for (int i = 256; i < 512; i++)
+            for (int i = 0; i < 256; i++)
             {
                 int byte1 = mrfFileStream.ReadByte();
-                mapTileShadowMap16.Add(i - 256, byte1);
+                mapTileShadowMap16.Add(i, byte1);
             }
 
+            mapTileShadowMap15 = new Dictionary<int, int>();
+            for (int i = 0; i < 256; i++)
+            {
+                int byte1 = mrfFileStream.ReadByte();
+                mapTileShadowMap15.Add(i, byte1);
+            }
+            mapTileShadowMap14 = new Dictionary<int, int>();
+            for (int i = 0; i < 256; i++)
+            {
+                int byte1 = mrfFileStream.ReadByte();
+                mapTileShadowMap14.Add(i, byte1);
+            }
 
+            mapTileShadowMap13 = new Dictionary<int, int>();
+            for (int i = 0; i < 256; i++)
+            {
+                int byte1 = mrfFileStream.ReadByte();
+                mapTileShadowMap13.Add(i, byte1);
+            }
 
             mrfFileStream.Close();
         }
@@ -122,7 +131,7 @@ namespace mike_and_conquer.gamesprite
             // mapTileShadowMap14 does NOT work
             // mapTileShadowMap13 does NOT work
             int mappedValue;
-            mapTileShadowMap16.TryGetValue(paletteIndex, out mappedValue);
+            mapTileShadowMap13.TryGetValue(paletteIndex, out mappedValue);
             return mappedValue;
         }
 
@@ -135,7 +144,7 @@ namespace mike_and_conquer.gamesprite
             // mapTileShadowMap13 might work
 
             int mappedValue;
-            mapTileShadowMap15.TryGetValue(paletteIndex, out mappedValue);
+            mapTileShadowMap14.TryGetValue(paletteIndex, out mappedValue);
             return mappedValue;
         }
 
@@ -148,7 +157,7 @@ namespace mike_and_conquer.gamesprite
             // mapTileShadowMap13 might work but lighter
 
             int mappedValue;
-            mapTileShadowMap14.TryGetValue(paletteIndex, out mappedValue);
+            mapTileShadowMap15.TryGetValue(paletteIndex, out mappedValue);
             return mappedValue;
         }
 
@@ -163,7 +172,7 @@ namespace mike_and_conquer.gamesprite
 
 
             int mappedValue;
-            mapTileShadowMap13.TryGetValue(paletteIndex, out mappedValue);
+            mapTileShadowMap16.TryGetValue(paletteIndex, out mappedValue);
             return mappedValue;
         }
 

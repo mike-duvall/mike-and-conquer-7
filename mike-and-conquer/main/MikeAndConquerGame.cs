@@ -176,11 +176,13 @@ namespace mike_and_conquer
 //            base.InitializeDefaultMap();
 //        }
 
+
+
         private void AddTestModeObjects()
         {
             bool aiIsOn = false;
 
-            AddGdiMinigunnerAtMapSquareCoordinates(new Point(17, 16));
+            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
 //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(6, 1));
 //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 4));
 
@@ -944,6 +946,7 @@ namespace mike_and_conquer
             DrawAndApplyPaletteAndMapTileVisbility();
 
 
+//            DrawMrf16Texture();
 //            DrawVisibilityMaskAsTest();
 //            DrawShadowShapeAsTest();
         }
@@ -974,7 +977,6 @@ namespace mike_and_conquer
             mapTilePaletteMapperEffect.Parameters["Value14MrfTexture"].SetValue(tshadow14MrfTexture);
             mapTilePaletteMapperEffect.Parameters["Value15MrfTexture"].SetValue(tshadow15MrfTexture);
             mapTilePaletteMapperEffect.Parameters["Value16MrfTexture"].SetValue(tshadow16MrfTexture);
-
 
             mapTilePaletteMapperEffect.CurrentTechnique.Passes[0].Apply();
 
@@ -1007,6 +1009,35 @@ namespace mike_and_conquer
                 Color.White);
             spriteBatch.End();
         }
+
+
+        private void DrawMrf16Texture()
+        {
+            const BlendState nullBlendState = null;
+            const DepthStencilState nullDepthStencilState = null;
+            const RasterizerState nullRasterizerState = null;
+            const Effect nullEffect = null;
+
+
+            GraphicsDevice.SetRenderTarget(null);
+
+            spriteBatch.Begin(
+                SpriteSortMode.Immediate,
+                nullBlendState,
+                SamplerState.PointClamp,
+                nullDepthStencilState,
+                nullRasterizerState,
+                nullEffect,
+                mapViewportCamera.TransformMatrix);
+
+
+//            spriteBatch.Draw(tshadow16MrfTexture, new Rectangle(0, 0, 256, 24),
+//                Color.White);
+
+            spriteBatch.Draw(tshadow16MrfTexture, new Vector2(0,0), Color.White);
+            spriteBatch.End();
+        }
+
 
         private void DrawVisibilityMaskAsTest()
         {

@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
-using SharpDX.Direct3D9;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 namespace mike_and_conquer.gameview
@@ -16,7 +15,7 @@ namespace mike_and_conquer.gameview
         public MapTileInstance myMapTileInstance;
 
         private static Texture2D visibleMask = null;
-        public static Texture2D partiallyVisibleMask = null;
+//        public static Texture2D partiallyVisibleMask = null;
         private static Vector2 middleOfSpriteInSpriteCoordinates;
 
         private int imageIndex;
@@ -55,39 +54,35 @@ namespace mike_and_conquer.gameview
                 middleOfSpriteInSpriteCoordinates.Y = visibleMask.Height / 2;
             }
 
-            if (MapTileInstanceView.partiallyVisibleMask == null)
-            {
-                List<UnitFrame> shadowFrameList =
-                    MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile("MapTileShadow");
-
-                UnitFrame unitFrame = shadowFrameList[3];
-                MapTileInstanceView.partiallyVisibleMask = unitFrame.Texture;
-
-                int numPixels = MapTileInstanceView.partiallyVisibleMask.Width *
-                                MapTileInstanceView.partiallyVisibleMask.Height;
-                Color[] textureData = new Color[numPixels];
-                partiallyVisibleMask.GetData(textureData);
-                for (int i = 0; i < numPixels; i++)
-                {
-                    Color color = textureData[i];
-                    if (color.R == 0 && color.G == 0 && color.B == 0)
-                    {
-                        color.R = 1;
-                        color.G = 2;
-                        color.B = 3;
-                        color.A = 255;
-                        textureData[i] = color;
-                    }
-
-
-                }
-
-                MapTileInstanceView.partiallyVisibleMask.SetData(textureData);
-
-                int x = 3;
-
-
-            }
+//            if (MapTileInstanceView.partiallyVisibleMask == null)
+//            {
+//                List<UnitFrame> shadowFrameList =
+//                    MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile("MapTileShadow");
+//
+//                UnitFrame unitFrame = shadowFrameList[3];
+//                MapTileInstanceView.partiallyVisibleMask = unitFrame.Texture;
+//
+//                int numPixels = MapTileInstanceView.partiallyVisibleMask.Width *
+//                                MapTileInstanceView.partiallyVisibleMask.Height;
+//                Color[] textureData = new Color[numPixels];
+//                partiallyVisibleMask.GetData(textureData);
+//                for (int i = 0; i < numPixels; i++)
+//                {
+//                    Color color = textureData[i];
+//                    if (color.R == 0 && color.G == 0 && color.B == 0)
+//                    {
+//                        color.R = 1;
+//                        color.G = 2;
+//                        color.B = 3;
+//                        color.A = 255;
+//                        textureData[i] = color;
+//                    }
+//
+//                }
+//
+//                MapTileInstanceView.partiallyVisibleMask.SetData(textureData);
+//
+//            }
         }
 
 
@@ -149,7 +144,7 @@ namespace mike_and_conquer.gameview
             }
             else if (this.myMapTileInstance.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
             {
-                spriteBatch.Draw(partiallyVisibleMask, this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f,
+                spriteBatch.Draw(PartiallyVisibileMapTileMask.PartiallyVisibleMask, this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f,
                     middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 1.0f);
             }
 

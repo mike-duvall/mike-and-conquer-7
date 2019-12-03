@@ -99,6 +99,31 @@ struct VertexShaderOutput
 
 bool DrawShroud;
 
+
+float4 RenderPaletteValue(float4 color)
+{
+	int numPaletteEntries = 256.0f;
+	if(color.a) {
+		float paletteIndex = (color.r * 256.0f) / numPaletteEntries;
+		float2 paletteCoordinates = float2(paletteIndex, 0.5f);
+	    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
+	    return paletteColor;
+	}
+	return color;
+
+}
+
+
+float4 GetColorFromSampler(float4 color, sampler2D aSampler) 
+{
+	int numPaletteEntries = 256.0f;	
+	float mrfPaletteIndex = (color.r * 256.0f) / numPaletteEntries;
+	float2 mrfPaletteCoordinates = float2(mrfPaletteIndex, 0.5f);
+    float4 mrfColor = tex2D(aSampler, mrfPaletteCoordinates);
+    return mrfColor;
+
+}
+
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
 	float4 color = tex2D(SpriteTextureSampler, input.TextureCoordinates);
@@ -121,86 +146,31 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	int numPaletteEntries = 256.0f;
 
 	if(!DrawShroud) {
-		if(color.a) {
-			float paletteIndex = (color.r * 256.0f) / numPaletteEntries;
-			float2 paletteCoordinates = float2(paletteIndex, 0.5f);
-
-
-		    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
-		    return paletteColor;
-		}
-
-		return color;
-
-
+		return RenderPaletteValue(color);
 	}
 
 	if( (mapTileVisibilityColor.r == sentinelR) && (mapTileVisibilityColor.g == sentinelG) && (mapTileVisibilityColor.b == sentinelB) ) {
-
-		if(color.a) {
-			float paletteIndex = (color.r * 256.0f) / numPaletteEntries;
-			float2 paletteCoordinates = float2(paletteIndex, 0.5f);
-
-
-		    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
-		    return paletteColor;
-		}
-
-		return color;
+		return RenderPaletteValue(color);		
 
 	}
 	else if((mapTileVisibilityColor.r == rValueFor1) && (mapTileVisibilityColor.g == rValueFor2) && (mapTileVisibilityColor.b == rValueFor3)) {
-
-			int numPaletteEntries = 256.0f;
-			float paletteIndex = (color.r * 256.0f) / numPaletteEntries;
-			float2 paletteCoordinates = float2(paletteIndex, 0.5f);
-		    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
-		    return paletteColor;
+		return RenderPaletteValue(color);		    
 	}
 	else if(mapTileVisibilityColor.r == rValueFor13) {
-
-			float mrfPaletteIndex = (color.r * 256.0f) / numPaletteEntries;
-			float2 mrfPaletteCoordinates = float2(mrfPaletteIndex, 0.5f);
-		    float4 mrfColor = tex2D(Value13MrfTextureSampler, mrfPaletteCoordinates);
-
-		    float paletteIndex = (mrfColor.r * 256.0f) / numPaletteEntries;
-			float2 paletteCoordinates = float2(paletteIndex, 0.5f);		    
-
-		    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
-		    return paletteColor;
+	    float4 mrfColor = GetColorFromSampler(color, Value13MrfTextureSampler);
+	    return RenderPaletteValue(mrfColor);		    
 	}
 	else if(mapTileVisibilityColor.r == rValueFor14) {
-			float mrfPaletteIndex = (color.r * 256.0f) / numPaletteEntries;
-			float2 mrfPaletteCoordinates = float2(mrfPaletteIndex, 0.5f);
-		    float4 mrfColor = tex2D(Value14MrfTextureSampler, mrfPaletteCoordinates);
-
-		    float paletteIndex = (mrfColor.r * 256.0f) / numPaletteEntries;
-			float2 paletteCoordinates = float2(paletteIndex, 0.5f);		    
-
-		    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
-		    return paletteColor;
+	    float4 mrfColor = GetColorFromSampler(color, Value14MrfTextureSampler);	    
+	    return RenderPaletteValue(mrfColor);		    
 	}
 	else if(mapTileVisibilityColor.r == rValueFor15) {
-			float mrfPaletteIndex = (color.r * 256.0f) / numPaletteEntries;
-			float2 mrfPaletteCoordinates = float2(mrfPaletteIndex, 0.5f);
-		    float4 mrfColor = tex2D(Value15MrfTextureSampler, mrfPaletteCoordinates);
-
-		    float paletteIndex = (mrfColor.r * 256.0f) / numPaletteEntries;
-			float2 paletteCoordinates = float2(paletteIndex, 0.5f);		    
-
-		    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
-		    return paletteColor;
+	    float4 mrfColor = GetColorFromSampler(color, Value15MrfTextureSampler);	    	    
+	    return RenderPaletteValue(mrfColor);		    		    
 	}
 	else if(mapTileVisibilityColor.r == rValueFor16) {
-			float mrfPaletteIndex = (color.r * 256.0f) / numPaletteEntries;
-			float2 mrfPaletteCoordinates = float2(mrfPaletteIndex, 0.5f);
-		    float4 mrfColor = tex2D(Value16MrfTextureSampler, mrfPaletteCoordinates);
-
-		    float paletteIndex = (mrfColor.r * 256.0f) / numPaletteEntries;
-			float2 paletteCoordinates = float2(paletteIndex, 0.5f);		    
-
-		    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
-		    return paletteColor;
+	    float4 mrfColor = GetColorFromSampler(color, Value16MrfTextureSampler);	    	    
+	    return RenderPaletteValue(mrfColor);		    		    
 	}
 	else
 	{

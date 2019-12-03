@@ -760,6 +760,12 @@ namespace mike_and_conquer
             }
 
 
+            if (!oldKeyboardState.IsKeyDown(Keys.S) && state.IsKeyDown(Keys.S))
+            {
+                GameOptions.ToggleDrawShroud();
+            }
+
+
             currentGameState = this.currentGameState.Update(gameTime);
             this.mapViewportCamera.Rotation = testRotation;
 //                                    testRotation += 0.01f;
@@ -971,6 +977,7 @@ namespace mike_and_conquer
 
             mapTilePaletteMapperEffect.Parameters["PaletteTexture"].SetValue(paletteTexture);
             mapTilePaletteMapperEffect.Parameters["MapTileVisibilityTexture"].SetValue(mapTileVisibilityRenderTarget);
+            mapTilePaletteMapperEffect.Parameters["DrawShroud"].SetValue(GameOptions.DRAW_SHROUD);
             mapTilePaletteMapperEffect.Parameters["Value13MrfTexture"].SetValue(tshadow13MrfTexture);
             mapTilePaletteMapperEffect.Parameters["Value14MrfTexture"].SetValue(tshadow14MrfTexture);
             mapTilePaletteMapperEffect.Parameters["Value15MrfTexture"].SetValue(tshadow15MrfTexture);

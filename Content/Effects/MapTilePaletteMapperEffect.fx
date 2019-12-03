@@ -90,14 +90,14 @@ sampler2D Value16MrfTextureSampler = sampler_state
 };
 
 
-
-
 struct VertexShaderOutput
 {
 	float4 Position : SV_POSITION;
 	float4 Color : COLOR0;
 	float2 TextureCoordinates : TEXCOORD0;
 };
+
+bool DrawShroud;
 
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
@@ -119,6 +119,21 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	float rValueFor3 = 3.0f / 255.0f;
 
 	int numPaletteEntries = 256.0f;
+
+	if(!DrawShroud) {
+		if(color.a) {
+			float paletteIndex = (color.r * 256.0f) / numPaletteEntries;
+			float2 paletteCoordinates = float2(paletteIndex, 0.5f);
+
+
+		    float4 paletteColor = tex2D(PaletteTextureSampler, paletteCoordinates);
+		    return paletteColor;
+		}
+
+		return color;
+
+
+	}
 
 	if( (mapTileVisibilityColor.r == sentinelR) && (mapTileVisibilityColor.g == sentinelG) && (mapTileVisibilityColor.b == sentinelB) ) {
 

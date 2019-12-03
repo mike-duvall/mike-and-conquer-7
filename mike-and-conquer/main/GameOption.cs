@@ -14,6 +14,8 @@ namespace mike_and_conquer
         public static bool IS_FULL_SCREEN = true;
 //        public static bool IS_FULL_SCREEN = false;
 
+        public static bool DRAW_SHROUD = true;
+
         public static void ToggleDrawTerrainBorder()
         {
             DRAW_TERRAIN_BORDER = !DRAW_TERRAIN_BORDER;
@@ -22,6 +24,11 @@ namespace mike_and_conquer
         public static void ToggleDrawBlockingTerrainBorder()
         {
             DRAW_BLOCKING_TERRAIN_BORDER = !DRAW_BLOCKING_TERRAIN_BORDER;
+        }
+
+        public static void ToggleDrawShroud()
+        {
+            DRAW_SHROUD = !DRAW_SHROUD;
         }
 
     }

@@ -113,6 +113,7 @@ namespace mike_and_conquer
         private RenderTarget2D mapTileVisibilityRenderTarget;
         private RenderTarget2D unitsAndTerrainRenderTarget;
 
+
         public MikeAndConquerGame(bool testMode)
         {
             RemoveHostingTraceListenerToEliminateDuplicateLogEntries();
@@ -492,7 +493,6 @@ namespace mike_and_conquer
             spriteSheet.LoadUnitFramesFromSpriteFrames(PartiallyVisibileMapTileMask.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(PartiallyVisibileMapTileMask.SHP_FILE_NAME),
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
-//            PartiallyVisibileMapTileMask.FixupTextures();
 
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(UnitSelectionCursor.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(
@@ -762,7 +762,7 @@ namespace mike_and_conquer
 
             currentGameState = this.currentGameState.Update(gameTime);
             this.mapViewportCamera.Rotation = testRotation;
-            //                        testRotation += 0.05f;
+//                                    testRotation += 0.01f;
 
             // This is a hack fix to fix an issue where if you change this.IsMouseVisible to false
             // while the Windows pointer is showing the mouse pointer arrow with the blue sworl "busy" icon on the side
@@ -939,14 +939,15 @@ namespace mike_and_conquer
             UpdateMapTileAndShadowsRenderTarget();  // mapTileAndShadowsRenderTarget:  Drawing mapTileRenderTarget with shadowOnlyRenderTarget shadows mapped to it, as palette values
             UpdateMapTileVisibilityRenderTarget(gameTime); // mapTileVisibilityRenderTarget
             UpdateUnitsAndTerrainRenderTarget(gameTime); //    unitsAndTerrainRenderTarget:    draw mapTileAndShadowsRenderTarget, then units and terrain
-
             DrawAndApplyPaletteAndMapTileVisbility();
 
-
-//            DrawMrf16Texture();
-//            DrawVisibilityMaskAsTest();
-//            DrawShadowShapeAsTest();
+            //            DrawMrf16Texture();
+            //            DrawVisibilityMaskAsTest();
+            //            DrawShadowShapeAsTest();
         }
+
+
+
 
         private void DrawAndApplyPaletteAndMapTileVisbility()
         {
@@ -979,7 +980,24 @@ namespace mike_and_conquer
 
             spriteBatch.Draw(unitsAndTerrainRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height),
                 Color.White);
+
+
             spriteBatch.End();
+
+            spriteBatch.Begin(
+                SpriteSortMode.Immediate,
+                nullBlendState,
+                SamplerState.PointClamp,
+                nullDepthStencilState,
+                nullRasterizerState,
+                nullEffect,
+                mapViewportCamera.TransformMatrix);
+
+
+            MikeAndConquerGame.instance.unitSelectionBox.Draw(spriteBatch);
+
+            spriteBatch.End();
+
         }
 
         private void DrawShadowShapeAsTest()
@@ -1015,7 +1033,6 @@ namespace mike_and_conquer
             const RasterizerState nullRasterizerState = null;
             const Effect nullEffect = null;
 
-
             GraphicsDevice.SetRenderTarget(null);
 
             spriteBatch.Begin(
@@ -1026,10 +1043,6 @@ namespace mike_and_conquer
                 nullRasterizerState,
                 nullEffect,
                 mapViewportCamera.TransformMatrix);
-
-
-//            spriteBatch.Draw(tshadow16MrfTexture, new Rectangle(0, 0, 256, 24),
-//                Color.White);
 
             spriteBatch.Draw(tshadow16MrfTexture, new Vector2(0,0), Color.White);
             spriteBatch.End();
@@ -1080,8 +1093,6 @@ namespace mike_and_conquer
 
             GraphicsDevice.SetRenderTarget(unitsAndTerrainRenderTarget);
 
-//            GraphicsDevice.Clear(Color.Black);
-
             spriteBatch.Begin(
                 SpriteSortMode.Immediate,
                 nullBlendState,
@@ -1091,10 +1102,8 @@ namespace mike_and_conquer
                 nullEffect,
                 renderTargetCamera.TransformMatrix);
 
-
             spriteBatch.Draw(mapTileAndShadowsRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height),
                 Color.White);
-
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {
@@ -1111,7 +1120,6 @@ namespace mike_and_conquer
             {
                 nextTerrainView.DrawNoShadow(gameTime, spriteBatch);
             }
-
 
             spriteBatch.End();
         }

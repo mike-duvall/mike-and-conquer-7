@@ -77,7 +77,7 @@ namespace mike_and_conquer.gameview
         }
 
 
-        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        internal void Draw( SpriteBatch spriteBatch)
         {
             if (isDragSelectHappening)
             {

@@ -240,31 +240,23 @@ namespace mike_and_conquer
             mapViewport = new Viewport();
             mapViewport.X = 0;
             mapViewport.Y = 0;
-            mapViewport.Width = (int) (defaultViewport.Width * 0.8f);
+            mapViewport.Width = (int)(defaultViewport.Width * 0.8f);
             mapViewport.Height = defaultViewport.Height;
             mapViewport.MinDepth = 0;
             mapViewport.MaxDepth = 1;
 
             this.mapViewportCamera = new Camera2D(mapViewport);
-            this.mapViewportCamera.Zoom = 1.0f;
 
-
-            // Note:  Zoom 3.0f, full screen, gives approximately the same size
-            // as real command and conquer on my laptop
-            // But not setting to 3.0f initially right now
-            // because it's needs to be 1.0f initially to make zooming
-            // work with new shader code.  Need to fix that
-//            this.mapViewportCamera.Zoom = 3.0f;
+            this.mapViewportCamera.Zoom = GameOptions.INITIAL_MAP_ZOOM;
             this.mapViewportCamera.Location =
                 new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
 
             this.renderTargetCamera = new Camera2D(mapViewport);
             this.renderTargetCamera.Zoom = 1.0f;
             this.renderTargetCamera.Location =
-                new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
+                new Vector2(CalculateLeftmostScrollX(mapViewport, renderTargetCamera.Zoom, borderSize), CalculateTopmostScrollY(mapViewport, renderTargetCamera.Zoom, borderSize));
 
         }
-
 
 
         private void CreateBasicMapSquareViews()

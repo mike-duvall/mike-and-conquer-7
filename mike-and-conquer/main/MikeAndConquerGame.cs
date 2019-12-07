@@ -113,6 +113,7 @@ namespace mike_and_conquer
         private RenderTarget2D mapTileVisibilityRenderTarget;
         private RenderTarget2D unitsAndTerrainRenderTarget;
 
+        private bool redrawBaseMapTiles;
 
         public MikeAndConquerGame(bool testMode)
         {
@@ -157,6 +158,7 @@ namespace mike_and_conquer
             spriteSheet = new SpriteSheet();
 
             MikeAndConquerGame.instance = this;
+            redrawBaseMapTiles = true;
         }
 
 
@@ -744,11 +746,13 @@ namespace mike_and_conquer
             if (!oldKeyboardState.IsKeyDown(Keys.Y) && state.IsKeyDown(Keys.Y))
             {
                 GameOptions.ToggleDrawTerrainBorder();
+                redrawBaseMapTiles = true;
             }
 
             if (!oldKeyboardState.IsKeyDown(Keys.H) && state.IsKeyDown(Keys.H))
             {
                 GameOptions.ToggleDrawBlockingTerrainBorder();
+                redrawBaseMapTiles = true;
             }
 
 
@@ -932,6 +936,7 @@ namespace mike_and_conquer
 
             GraphicsDevice.Viewport = mapViewport;
 
+            // TODO: Reorder methods in file to match order they are called below
             UpdateMapTileRenderTarget(gameTime);  // mapTileRenderTarget:  Just map tiles, as palette values
             UpdateShadowOnlyRenderTarget(gameTime);  // shadowOnlyRenderTarget:  shadows of units and trees, as palette values
             UpdateMapTileAndShadowsRenderTarget();  // mapTileAndShadowsRenderTarget:  Drawing mapTileRenderTarget with shadowOnlyRenderTarget shadows mapped to it, as palette values
@@ -1091,7 +1096,7 @@ namespace mike_and_conquer
             }
 
             GraphicsDevice.SetRenderTarget(unitsAndTerrainRenderTarget);
-
+            GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin(
                 SpriteSortMode.Immediate,
                 nullBlendState,
@@ -1180,6 +1185,8 @@ namespace mike_and_conquer
 
             GraphicsDevice.SetRenderTarget(mapTileAndShadowsRenderTarget);
 
+            GraphicsDevice.Clear(Color.Black);
+
             spriteBatch.Begin(
                 SpriteSortMode.Immediate,
                 nullBlendState,
@@ -1256,9 +1263,14 @@ namespace mike_and_conquer
             {
                 mapTileRenderTarget = new RenderTarget2D(MikeAndConquerGame.instance.GraphicsDevice,
                     mapViewport.Width, mapViewport.Height);
+
+            }
+
+            if(redrawBaseMapTiles)
+            {
+                redrawBaseMapTiles = false;
                 GraphicsDevice.SetRenderTarget(mapTileRenderTarget);
-
-
+                GraphicsDevice.Clear(Color.Black);
                 spriteBatch.Begin(
                     SpriteSortMode.Immediate,
                     nullBlendState,

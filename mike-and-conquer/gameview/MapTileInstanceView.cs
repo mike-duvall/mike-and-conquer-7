@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
+using mike_and_conquer.util;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 namespace mike_and_conquer.gameview
@@ -14,6 +15,7 @@ namespace mike_and_conquer.gameview
         public SingleTextureSprite singleTextureSprite;
         public MapTileInstance myMapTileInstance;
 
+        // TODO Revisit handling of these visiblity masks and whether this field should be static
         private static Texture2D visibleMask = null;
         private static Vector2 middleOfSpriteInSpriteCoordinates;
 
@@ -22,6 +24,10 @@ namespace mike_and_conquer.gameview
 
         private int imageIndex;
         private string textureKey;
+
+        private Texture2D mapTileBorder;
+        private Texture2D mapTileBlockingTerrainBorder;
+
 
 
         public MapTileInstanceView(MapTileInstance aMapTileInstance )
@@ -57,6 +63,16 @@ namespace mike_and_conquer.gameview
             }
 
             partiallyVisibileMapTileMask = new PartiallyVisibileMapTileMask();
+            mapTileBorder = TextureUtil.CreateSpriteBorderRectangleTexture(
+                    Color.White,
+                    this.singleTextureSprite.Width,
+                    this.singleTextureSprite.Height);
+
+            mapTileBlockingTerrainBorder = TextureUtil.CreateSpriteBorderRectangleTexture(
+                new Color(127, 255, 255, 255),
+                this.singleTextureSprite.Width,
+                this.singleTextureSprite.Height);
+
         }
 
 
@@ -74,27 +90,52 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (GameOptions.DRAW_BLOCKING_TERRAIN_BORDER && myMapTileInstance.IsBlockingTerrain)
+//            if (GameOptions.DRAW_BLOCKING_TERRAIN_BORDER && myMapTileInstance.IsBlockingTerrain)
+//            {
+//                singleTextureSprite.Draw(
+//                    gameTime,
+//                    spriteBatch,
+//                    this.myMapTileInstance.PositionInWorldCoordinates,
+//                    SpriteSortLayers.MAP_SQUARE_DEPTH,
+//                    GameOptions.DRAW_BLOCKING_TERRAIN_BORDER,
+//                    Color.Red);
+//
+//            }
+//            else
+//            {
+//                singleTextureSprite.Draw(
+//                    gameTime,
+//                    spriteBatch,
+//                    this.myMapTileInstance.PositionInWorldCoordinates,
+//                    SpriteSortLayers.MAP_SQUARE_DEPTH,
+//                    GameOptions.DRAW_TERRAIN_BORDER,
+//                    Color.White);
+//            }
+
+            singleTextureSprite.Draw(
+                gameTime,
+                spriteBatch,
+                this.myMapTileInstance.PositionInWorldCoordinates,
+                SpriteSortLayers.MAP_SQUARE_DEPTH,
+                false,
+                Color.White);
+
+            if (GameOptions.DRAW_TERRAIN_BORDER)
             {
-                singleTextureSprite.Draw(
-                    gameTime,
-                    spriteBatch,
-                    this.myMapTileInstance.PositionInWorldCoordinates,
-                    SpriteSortLayers.MAP_SQUARE_DEPTH,
-                    GameOptions.DRAW_BLOCKING_TERRAIN_BORDER,
-                    Color.Red);
+                float defaultScale = 1;
+                float layerDepth = 0;
+                spriteBatch.Draw(mapTileBorder, this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
 
             }
-            else
+
+            if (GameOptions.DRAW_BLOCKING_TERRAIN_BORDER && myMapTileInstance.IsBlockingTerrain)
             {
-                singleTextureSprite.Draw(
-                    gameTime,
-                    spriteBatch,
-                    this.myMapTileInstance.PositionInWorldCoordinates,
-                    SpriteSortLayers.MAP_SQUARE_DEPTH,
-                    GameOptions.DRAW_TERRAIN_BORDER,
-                    Color.White);
+                float defaultScale = 1;
+                float layerDepth = 0;
+                spriteBatch.Draw(mapTileBlockingTerrainBorder, this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
+
             }
+
 
         }
 
@@ -173,25 +214,15 @@ namespace mike_and_conquer.gameview
 
             if (this.myMapTileInstance.Visibility == MapTileInstance.MapTileVisibility.Visible)
             {
-//                singleTextureSprite.Draw(
-//                    gameTime,
-//                    spriteBatch,
-//                    this.myMapTileInstance.PositionInWorldCoordinates,
-//                    SpriteSortLayers.MAP_SQUARE_DEPTH,
-//                    GameOptions.DRAW_TERRAIN_BORDER,
-//                    Color.White);
 
                 spriteBatch.Draw(visibleMask, this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f,
                     middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 1.0f);
             }
             else if (this.myMapTileInstance.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
             {
-                //                spriteBatch.Draw(PartiallyVisibileMapTileMask.PartiallyVisibleMask, this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f,
-                //                    middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 1.0f);
                 int index = DeterminePartiallyVisibleMaskTile();
                 spriteBatch.Draw(partiallyVisibileMapTileMask.GetMask(index), this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f,
                     middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 1.0f);
-
             }
 
         }

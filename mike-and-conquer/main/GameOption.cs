@@ -9,15 +9,20 @@ namespace mike_and_conquer
     {
 
 
-        public static bool DRAW_TERRAIN_BORDER = false;
-        public static bool DRAW_BLOCKING_TERRAIN_BORDER = false;
-        public static bool IS_FULL_SCREEN = true;
-//        public static bool IS_FULL_SCREEN = false;
+//        public static bool DRAW_TERRAIN_BORDER = false;
+        public static bool DRAW_TERRAIN_BORDER = true;
+
+//        public static bool DRAW_BLOCKING_TERRAIN_BORDER = false;
+        public static bool DRAW_BLOCKING_TERRAIN_BORDER = true;
+
+        //        public static bool IS_FULL_SCREEN = true;
+        public static bool IS_FULL_SCREEN = false;
 
         public static bool DRAW_SHROUD = true;
 
         public static float INITIAL_MAP_ZOOM = 1.0f;
 //        public static float INITIAL_MAP_ZOOM = 3.0f;
+
 
         public static void ToggleDrawTerrainBorder()
         {

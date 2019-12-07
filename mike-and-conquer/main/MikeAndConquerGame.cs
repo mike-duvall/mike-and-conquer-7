@@ -1101,10 +1101,16 @@ namespace mike_and_conquer
                 renderTargetCamera.TransformMatrix);
 
 
-            foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
+            // TODO: Consider removing this if once shroud is fully working
+            if (GameOptions.DRAW_SHROUD)
             {
-                basicMapSquareView.DrawVisbilityMask(gameTime, spriteBatch);
+                foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
+                {
+                    basicMapSquareView.DrawVisbilityMask(gameTime, spriteBatch);
+                }
+
             }
+
 
             spriteBatch.End();
         }

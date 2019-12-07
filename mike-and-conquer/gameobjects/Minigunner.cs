@@ -104,6 +104,12 @@ namespace mike_and_conquer
         private void UpdateVisibleMapTiles()
         {
 
+            // TODO: Consider removing this if statement once map shroud is fully working
+            if (GameOptions.DRAW_SHROUD == false)
+            {
+                return;
+            }
+
             UpdateNearbyMapTileVisibility(0, 0, MapTileInstance.MapTileVisibility.Visible);
 
             // right side

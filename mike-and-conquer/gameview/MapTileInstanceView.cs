@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,7 +11,6 @@ namespace mike_and_conquer.gameview
 {
     public class MapTileInstanceView
     {
-
         public SingleTextureSprite singleTextureSprite;
         public MapTileInstance myMapTileInstance;
 
@@ -28,15 +27,16 @@ namespace mike_and_conquer.gameview
         private Texture2D mapTileBorder;
         private Texture2D mapTileBlockingTerrainBorder;
 
+        private List<MapTileShroudMapping> mapTileShroudMappingList;
 
 
-        public MapTileInstanceView(MapTileInstance aMapTileInstance )
+        public MapTileInstanceView(MapTileInstance aMapTileInstance)
         {
-
             this.myMapTileInstance = aMapTileInstance;
             imageIndex = myMapTileInstance.ImageIndex;
             textureKey = myMapTileInstance.TextureKey;
-            List<MapTileFrame>  mapTileFrameList = MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
+            List<MapTileFrame> mapTileFrameList =
+                MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
             this.singleTextureSprite = new SingleTextureSprite(mapTileFrameList[imageIndex].Texture);
             if (MapTileInstanceView.visibleMask == null)
             {
@@ -64,22 +64,26 @@ namespace mike_and_conquer.gameview
 
             partiallyVisibileMapTileMask = new PartiallyVisibileMapTileMask();
             mapTileBorder = TextureUtil.CreateSpriteBorderRectangleTexture(
-                    Color.White,
-                    this.singleTextureSprite.Width,
-                    this.singleTextureSprite.Height);
+                Color.White,
+                this.singleTextureSprite.Width,
+                this.singleTextureSprite.Height);
 
             mapTileBlockingTerrainBorder = TextureUtil.CreateSpriteBorderRectangleTexture(
                 new Color(127, 255, 255, 255),
                 this.singleTextureSprite.Width,
                 this.singleTextureSprite.Height);
 
+
+            InitializeMapTileShroudMappingList();
+
         }
+
 
 
         internal int GetPaletteIndexOfCoordinate(int x, int y)
         {
-            
-            List<MapTileFrame> mapTileFrameList = MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
+            List<MapTileFrame> mapTileFrameList =
+                MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
             MapTileFrame mapTileFrame = mapTileFrameList[imageIndex];
             byte[] frameData = mapTileFrame.FrameData;
 
@@ -124,109 +128,220 @@ namespace mike_and_conquer.gameview
             {
                 float defaultScale = 1;
                 float layerDepth = 0;
-                spriteBatch.Draw(mapTileBorder, this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
-
+                spriteBatch.Draw(mapTileBorder, this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White,
+                    0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
             }
 
             if (GameOptions.DRAW_BLOCKING_TERRAIN_BORDER && myMapTileInstance.IsBlockingTerrain)
             {
                 float defaultScale = 1;
                 float layerDepth = 0;
-                spriteBatch.Draw(mapTileBlockingTerrainBorder, this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
-
+                spriteBatch.Draw(mapTileBlockingTerrainBorder, this.myMapTileInstance.PositionInWorldCoordinates, null,
+                    Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
             }
+        }
+
+        private void InitializeMapTileShroudMappingList()
+        {
+            mapTileShroudMappingList = new List<MapTileShroudMapping>();
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                3));
+
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                9));
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                0));
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                8));
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                5));
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                10));
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                11));
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                4));
+
+        }
+
+        private int FindMapTileShroudMapping(MapTileInstance.MapTileVisibility right,
+            MapTileInstance.MapTileVisibility below,
+            MapTileInstance.MapTileVisibility left,
+            MapTileInstance.MapTileVisibility above)
+        {
+            foreach (MapTileShroudMapping mapping in mapTileShroudMappingList)
+            {
+                if (mapping.right == right &&
+                    mapping.below == below &&
+                    mapping.left == left &&
+                    mapping.above == above)
+                {
+                    return mapping.shroudTileIndex;
+                }
+            }
+
+
+            Pickup here
+            Continue figuring out more mappings
+            Work on other three corners next
+
+            //            throw new Exception("Didn't find match");
+            return 1;
 
 
         }
 
         private int DeterminePartiallyVisibleMaskTile()
         {
-
             int verticalOffset = GameWorld.MAP_TILE_HEIGHT / 2 + 2;
             int horizontalOffset = GameWorld.MAP_TILE_WIDTH / 2 + 2;
             MapTileInstance below = GameWorld.instance.FindMapSquare(
-                (int)myMapTileInstance.PositionInWorldCoordinates.X, (int) (myMapTileInstance.PositionInWorldCoordinates.Y + verticalOffset));
+                (int) myMapTileInstance.PositionInWorldCoordinates.X,
+                (int) (myMapTileInstance.PositionInWorldCoordinates.Y + verticalOffset));
 
             MapTileInstance above = GameWorld.instance.FindMapSquare(
-                (int)myMapTileInstance.PositionInWorldCoordinates.X, (int)(myMapTileInstance.PositionInWorldCoordinates.Y - verticalOffset));
+                (int) myMapTileInstance.PositionInWorldCoordinates.X,
+                (int) (myMapTileInstance.PositionInWorldCoordinates.Y - verticalOffset));
 
 
             MapTileInstance left = GameWorld.instance.FindMapSquare(
-                (int)myMapTileInstance.PositionInWorldCoordinates.X - horizontalOffset, (int)(myMapTileInstance.PositionInWorldCoordinates.Y));
+                (int) myMapTileInstance.PositionInWorldCoordinates.X - horizontalOffset,
+                (int) (myMapTileInstance.PositionInWorldCoordinates.Y));
 
 
             MapTileInstance right = GameWorld.instance.FindMapSquare(
-                (int)myMapTileInstance.PositionInWorldCoordinates.X + horizontalOffset, (int)(myMapTileInstance.PositionInWorldCoordinates.Y));
+                (int) myMapTileInstance.PositionInWorldCoordinates.X + horizontalOffset,
+                (int) (myMapTileInstance.PositionInWorldCoordinates.Y));
 
+            return FindMapTileShroudMapping(right.Visibility, below.Visibility, left.Visibility, above.Visibility);
 
-            if (right.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && below.Visibility == MapTileInstance.MapTileVisibility.Visible &&
-                left.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && above.Visibility == MapTileInstance.MapTileVisibility.NotVisible)
-            {
-                return 3;
-            }
+//            if (right.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+//                below.Visibility == MapTileInstance.MapTileVisibility.Visible &&
+//                left.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+//                above.Visibility == MapTileInstance.MapTileVisibility.NotVisible)
+//            {
+//                return 3;
+//            }
+//
+//            if (right.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+//                below.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+//                left.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
+//                above.Visibility == MapTileInstance.MapTileVisibility.NotVisible)
+//            {
+//                return 9;
+//            }
+//
+//            if (right.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+//                below.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
+//                left.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+//                above.Visibility == MapTileInstance.MapTileVisibility.Visible)
+//            {
+//                return 0;
+//            }
+//
+//            if (right.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+//                below.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
+//                left.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
+//                above.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
+//            {
+//                return 8;
+//            }
+//
+//
+//            if (right.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
+//                below.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+//                left.Visibility == MapTileInstance.MapTileVisibility.Visible &&
+//                above.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
+//            {
+//                return 5;
+//            }
+//
+//            if (right.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
+//                below.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+//                left.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+//                above.Visibility == MapTileInstance.MapTileVisibility.NotVisible)
+//            {
+//                return 10;
+//            }
+//
+//            if (right.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
+//                below.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
+//                left.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+//                above.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
+//            {
+//                return 11;
+//            }
+//
+//
+//            if (right.Visibility == MapTileInstance.MapTileVisibility.Visible &&
+//                below.Visibility == MapTileInstance.MapTileVisibility.Visible &&
+//                left.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+//                above.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
+//            {
+//                return 4;
+//            }
+//
 
-            if( right.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && below.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
-                left.Visibility == MapTileInstance.MapTileVisibility.NotVisible && above.Visibility == MapTileInstance.MapTileVisibility.NotVisible)
-            {
-                return 9;
-            }
-
-            if (right.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && below.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
-            left.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&  above.Visibility == MapTileInstance.MapTileVisibility.Visible)
-            {
-                return 0;
-            }
-
-            if (right.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && below.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
-                left.Visibility == MapTileInstance.MapTileVisibility.NotVisible && above.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
-            {
-                return 8;
-            }
-
-
-            if (right.Visibility == MapTileInstance.MapTileVisibility.NotVisible && below.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
-                left.Visibility == MapTileInstance.MapTileVisibility.Visible && above.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
-            {
-                return 5;
-            }
-
-            if (right.Visibility == MapTileInstance.MapTileVisibility.NotVisible && below.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
-                left.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && above.Visibility == MapTileInstance.MapTileVisibility.NotVisible)
-            {
-                return 10;
-            }
-
-            if (right.Visibility == MapTileInstance.MapTileVisibility.NotVisible && below.Visibility == MapTileInstance.MapTileVisibility.NotVisible &&
-                left.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible && above.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
-            {
-                return 11;
-            }
-
-
-            return 1;
-
+            //            throw new Exception("Didn't find match");
+//            return 1;
         }
 
         internal void DrawVisbilityMask(GameTime gameTime, SpriteBatch spriteBatch)
         {
-
             float defaultScale = 1;
 
             if (this.myMapTileInstance.Visibility == MapTileInstance.MapTileVisibility.Visible)
             {
-
                 spriteBatch.Draw(visibleMask, this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f,
                     middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 1.0f);
             }
             else if (this.myMapTileInstance.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
             {
                 int index = DeterminePartiallyVisibleMaskTile();
-                spriteBatch.Draw(partiallyVisibileMapTileMask.GetMask(index), this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f,
+                spriteBatch.Draw(partiallyVisibileMapTileMask.GetMask(index),
+                    this.myMapTileInstance.PositionInWorldCoordinates, null, Color.White, 0f,
                     middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 1.0f);
             }
-
         }
-
-
     }
 }

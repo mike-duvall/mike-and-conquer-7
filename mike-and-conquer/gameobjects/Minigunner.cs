@@ -110,6 +110,7 @@ namespace mike_and_conquer
                 return;
             }
 
+
             UpdateNearbyMapTileVisibility(0, 0, MapTileInstance.MapTileVisibility.Visible);
 
             // right side
@@ -168,13 +169,16 @@ namespace mike_and_conquer
         {
             xOffset = xOffset * 24;
             yOffset = yOffset * 24;
-            MapTileInstance mapTileInstance = GameWorld.instance.FindMapSquare((int)positionInWorldCoordinates.X + xOffset, (int)positionInWorldCoordinates.Y + yOffset);
-            if (mapTileInstance.Visibility != MapTileInstance.MapTileVisibility.Visible)
+            MapTileInstance mapTileInstance = GameWorld.instance.FindMapSquareAllowNull((int)positionInWorldCoordinates.X + xOffset, (int)positionInWorldCoordinates.Y + yOffset);
+
+            if (mapTileInstance != null && mapTileInstance.Visibility != MapTileInstance.MapTileVisibility.Visible)
             {
                 mapTileInstance.Visibility = mapTileVisibility;
             }
 
         }
+
+
 
 
 

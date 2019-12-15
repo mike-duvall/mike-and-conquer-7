@@ -185,7 +185,7 @@ namespace mike_and_conquer
         {
             bool aiIsOn = false;
 
-            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 16));
+//            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 14));
 
             MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
             MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
@@ -1422,10 +1422,6 @@ namespace mike_and_conquer
             gameWorld.MakeMapSquareVisible(positionInWorldCoordinates, visibility);
 
         }
-
-
-        
-
 
         internal Minigunner AddGdiMinigunner(Point positionInWorldCoordinates)
         {

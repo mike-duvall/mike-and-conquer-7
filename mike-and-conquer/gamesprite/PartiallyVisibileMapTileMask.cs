@@ -13,15 +13,18 @@ namespace mike_and_conquer
         public const string SPRITE_KEY = "MapTileShadow";
         public const string SHP_FILE_NAME = "shadow.shp";
 
-        private List<UnitFrame> shadowFrameList;
+        private static List<UnitFrame> shadowFrameList;
 
 
         public PartiallyVisibileMapTileMask()
         {
-            shadowFrameList =
-                MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
+            if (shadowFrameList == null)
+            {
+                shadowFrameList =
+                    MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
 
-            FixupTextures();
+                FixupTextures();
+            }
         }
 
         private void FixupTextures()

@@ -51,7 +51,7 @@ namespace mike_and_conquer.gameview
 
                 for (int i = 0; i < numPixels; i++)
                 {
-                    Color xnaColor = new Color(255, 254, 253, 0);
+                    Color xnaColor = new Color(1, 2, 3, 0);
                     textureData[i] = xnaColor;
                 }
 
@@ -94,28 +94,6 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-//            if (GameOptions.DRAW_BLOCKING_TERRAIN_BORDER && myMapTileInstance.IsBlockingTerrain)
-//            {
-//                singleTextureSprite.Draw(
-//                    gameTime,
-//                    spriteBatch,
-//                    this.myMapTileInstance.PositionInWorldCoordinates,
-//                    SpriteSortLayers.MAP_SQUARE_DEPTH,
-//                    GameOptions.DRAW_BLOCKING_TERRAIN_BORDER,
-//                    Color.Red);
-//
-//            }
-//            else
-//            {
-//                singleTextureSprite.Draw(
-//                    gameTime,
-//                    spriteBatch,
-//                    this.myMapTileInstance.PositionInWorldCoordinates,
-//                    SpriteSortLayers.MAP_SQUARE_DEPTH,
-//                    GameOptions.DRAW_TERRAIN_BORDER,
-//                    Color.White);
-//            }
-
             singleTextureSprite.Draw(
                 gameTime,
                 spriteBatch,

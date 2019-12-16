@@ -129,9 +129,6 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	float4 color = tex2D(SpriteTextureSampler, input.TextureCoordinates);
 	float4 mapTileVisibilityColor = tex2D(MapTileVisibilityTextureSampler, input.TextureCoordinates);	
 
-	float sentinelR = 255.0f / 255.0f;
-	float sentinelG = 254.0f / 255.0f;
-	float sentinelB = 253.0f / 255.0f;
 
 	float rValueFor12 = 12.0f / 255.0f;
 	float rValueFor13 = 13.0f / 255.0f;
@@ -149,11 +146,7 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 		return RenderPaletteValue(color);
 	}
 
-	if( (mapTileVisibilityColor.r == sentinelR) && (mapTileVisibilityColor.g == sentinelG) && (mapTileVisibilityColor.b == sentinelB) ) {
-		return RenderPaletteValue(color);		
-
-	}
-	else if((mapTileVisibilityColor.r == rValueFor1) && (mapTileVisibilityColor.g == rValueFor2) && (mapTileVisibilityColor.b == rValueFor3)) {
+	if((mapTileVisibilityColor.r == rValueFor1) && (mapTileVisibilityColor.g == rValueFor2) && (mapTileVisibilityColor.b == rValueFor3)) {
 		return RenderPaletteValue(color);		    
 	}
 	else if(mapTileVisibilityColor.r == rValueFor13) {
@@ -163,8 +156,8 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	else if(mapTileVisibilityColor.r == rValueFor14) {
 	    float4 mrfColor = GetColorFromSampler(color, Value14MrfTextureSampler);	    
 	    return RenderPaletteValue(mrfColor);		    
-	}
-	else if(mapTileVisibilityColor.r == rValueFor15) {
+	
+}	else if(mapTileVisibilityColor.r == rValueFor15) {
 	    float4 mrfColor = GetColorFromSampler(color, Value15MrfTextureSampler);	    	    
 	    return RenderPaletteValue(mrfColor);		    		    
 	}

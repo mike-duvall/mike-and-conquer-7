@@ -53,9 +53,6 @@ namespace mike_and_conquer
         private void FixupTextures()
         {
 
-//            List<UnitFrame> shadowFrameList =
-//                MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
-
             foreach (UnitFrame unitFrame in shadowFrameList)
             {
                 Texture2D nextTexture  = unitFrame.Texture;

@@ -1300,8 +1300,8 @@ namespace mike_and_conquer
                 mapViewportCamera.TransformMatrix);
 
             
-            spriteBatch.Draw(PartiallyVisibileMapTileMask.PartiallyVisibleMask, new Rectangle(0, 0, 24,24),
-                Color.White);
+//            spriteBatch.Draw(PartiallyVisibileMapTileMask.PartiallyVisibleMask, new Rectangle(0, 0, 24,24),
+//                Color.White);
             spriteBatch.End();
         }
 

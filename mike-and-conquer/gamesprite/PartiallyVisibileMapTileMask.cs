@@ -9,7 +9,6 @@ namespace mike_and_conquer
 {
     class PartiallyVisibileMapTileMask
     {
-        private static Texture2D partiallyVisibleMask = null;
 
         public const string SPRITE_KEY = "MapTileShadow";
         public const string SHP_FILE_NAME = "shadow.shp";
@@ -22,32 +21,7 @@ namespace mike_and_conquer
             shadowFrameList =
                 MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
 
-            if (PartiallyVisibileMapTileMask.partiallyVisibleMask == null)
-            {
-                FixupTextures();
-            }
-        }
-
-
-        public static Texture2D PartiallyVisibleMask
-        {
-            get
-            {
-                if (partiallyVisibleMask == null)
-                {
-                    InitializePartiallyVisiblyMask();
-                }
-                return partiallyVisibleMask;
-            }
-        }
-
-        private static void InitializePartiallyVisiblyMask()
-        {
-            List<UnitFrame> shadowFrameList =
-                MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
-
-            UnitFrame unitFrame = shadowFrameList[3];
-            partiallyVisibleMask = unitFrame.Texture;
+            FixupTextures();
         }
 
         private void FixupTextures()
@@ -76,13 +50,7 @@ namespace mike_and_conquer
                 nextTexture.SetData(textureData);
             }
 
-
         }
-
-//        public Texture2D GetCurrentMask()
-//        {
-//            return PartiallyVisibleMask;
-//        }
 
         public Texture2D GetMask(int index)
         {

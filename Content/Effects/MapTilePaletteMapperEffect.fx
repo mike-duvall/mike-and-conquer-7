@@ -163,7 +163,7 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	}
 	else
 	{
-		// If it's part of visible map
+		// If it's not part of visible map
 		// and it's not part of the shroud
 		// then return Black
 		return float4(0,0,0,1);			

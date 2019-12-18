@@ -51,7 +51,9 @@ namespace mike_and_conquer.gameview
 
                 for (int i = 0; i < numPixels; i++)
                 {
-                    Color xnaColor = new Color(1, 2, 3, 0);
+//                    Color xnaColor = new Color(1, 2, 3, 0);
+//                    Color xnaColor = new Color(0, 0, 0, 0);
+                    Color xnaColor = Color.Transparent;
                     textureData[i] = xnaColor;
                 }
 

@@ -23,7 +23,7 @@ namespace mike_and_conquer
                 shadowFrameList =
                     MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
 
-                FixupTextures();
+//                FixupTextures();
             }
         }
 
@@ -45,7 +45,7 @@ namespace mike_and_conquer
                         color.R = 1;
                         color.G = 2;
                         color.B = 3;
-                        color.A = 255;
+                        color.A = 0;
                         textureData[i] = color;
                     }
                 }

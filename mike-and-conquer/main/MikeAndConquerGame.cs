@@ -1138,7 +1138,14 @@ namespace mike_and_conquer
         private void UpdateMapTileVisibilityRenderTarget(GameTime gameTime)
         {
 
-            const BlendState nullBlendState = null;
+
+            // Setting blendstate to Opaque because we want the 
+            // transparent pixels (alpha = 0) to be preserved in
+            // mapTileVisibilityRenderTarget, because the shader
+            // uses alpha to determine whether to render the underlying tile
+            // Without setting it to Opaque, alpha was getting set to 0 for 
+            // the pertinent pixels
+            BlendState blendState = BlendState.Opaque;
             const DepthStencilState nullDepthStencilState = null;
             const RasterizerState nullRasterizerState = null;
             const Effect nullEffect = null;
@@ -1153,28 +1160,24 @@ namespace mike_and_conquer
 
             GraphicsDevice.SetRenderTarget(mapTileVisibilityRenderTarget);
 
-            GraphicsDevice.Clear(Color.Black);
+//            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(
                 SpriteSortMode.Immediate,
-                nullBlendState,
+                blendState,
                 SamplerState.PointClamp,
                 nullDepthStencilState,
                 nullRasterizerState,
                 nullEffect,
                 renderTargetCamera.TransformMatrix);
 
-
-            // TODO: Consider removing this if once shroud is fully working
             if (GameOptions.DRAW_SHROUD)
             {
                 foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
                 {
                     basicMapSquareView.DrawVisbilityMask(gameTime, spriteBatch);
                 }
-
             }
-
 
             spriteBatch.End();
         }

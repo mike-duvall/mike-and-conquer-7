@@ -129,16 +129,11 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	float4 color = tex2D(SpriteTextureSampler, input.TextureCoordinates);
 	float4 mapTileVisibilityColor = tex2D(MapTileVisibilityTextureSampler, input.TextureCoordinates);	
 
-
 	float rValueFor12 = 12.0f / 255.0f;
 	float rValueFor13 = 13.0f / 255.0f;
 	float rValueFor14 = 14.0f / 255.0f;
 	float rValueFor15 = 15.0f / 255.0f;
 	float rValueFor16 = 16.0f / 255.0f;
-
-	float rValueFor1 = 1.0f / 255.0f;
-	float rValueFor2 = 2.0f / 255.0f;
-	float rValueFor3 = 3.0f / 255.0f;
 
 	int numPaletteEntries = 256.0f;
 
@@ -146,7 +141,7 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 		return RenderPaletteValue(color);
 	}
 
-	if((mapTileVisibilityColor.r == rValueFor1) && (mapTileVisibilityColor.g == rValueFor2) && (mapTileVisibilityColor.b == rValueFor3)) {
+	if(mapTileVisibilityColor.a == 0)  {
 		return RenderPaletteValue(color);		    
 	}
 	else if(mapTileVisibilityColor.r == rValueFor13) {
@@ -157,7 +152,8 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	    float4 mrfColor = GetColorFromSampler(color, Value14MrfTextureSampler);	    
 	    return RenderPaletteValue(mrfColor);		    
 	
-}	else if(mapTileVisibilityColor.r == rValueFor15) {
+	}
+	else if(mapTileVisibilityColor.r == rValueFor15) {
 	    float4 mrfColor = GetColorFromSampler(color, Value15MrfTextureSampler);	    	    
 	    return RenderPaletteValue(mrfColor);		    		    
 	}
@@ -167,6 +163,9 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	}
 	else
 	{
+		// If it's part of visible map
+		// and it's not part of the shroud
+		// then return Black
 		return float4(0,0,0,1);			
 	}
 

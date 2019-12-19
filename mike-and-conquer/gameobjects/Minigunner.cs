@@ -111,6 +111,8 @@ namespace mike_and_conquer
             }
 
 
+            // TODO:  Code below needs to handle literal edge cases where minigunner is near edge of 
+            // map and there is NO right or left tile, etc
             UpdateNearbyMapTileVisibility(0, 0, MapTileInstance.MapTileVisibility.Visible);
 
             // right side

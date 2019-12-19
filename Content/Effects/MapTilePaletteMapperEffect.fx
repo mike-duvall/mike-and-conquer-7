@@ -114,15 +114,16 @@ float4 RenderPaletteValue(float4 color)
 }
 
 
-float4 GetColorFromSampler(float4 color, sampler2D aSampler) 
+float4 MapPixelToShadowValue(float4 originalColor, sampler2D mrfSampler) 
 {
 	int numPaletteEntries = 256.0f;	
-	float mrfPaletteIndex = (color.r * 256.0f) / numPaletteEntries;
+	float mrfPaletteIndex = (originalColor.r * 256.0f) / numPaletteEntries;
 	float2 mrfPaletteCoordinates = float2(mrfPaletteIndex, 0.5f);
-    float4 mrfColor = tex2D(aSampler, mrfPaletteCoordinates);
+    float4 mrfColor = tex2D(mrfSampler, mrfPaletteCoordinates);
     return mrfColor;
-
 }
+
+
 
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
@@ -145,20 +146,20 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 		return RenderPaletteValue(color);		    
 	}
 	else if(mapTileVisibilityColor.r == rValueFor13) {
-	    float4 mrfColor = GetColorFromSampler(color, Value13MrfTextureSampler);
+	    float4 mrfColor = MapPixelToShadowValue(color, Value13MrfTextureSampler);
 	    return RenderPaletteValue(mrfColor);		    
 	}
 	else if(mapTileVisibilityColor.r == rValueFor14) {
-	    float4 mrfColor = GetColorFromSampler(color, Value14MrfTextureSampler);	    
+	    float4 mrfColor = MapPixelToShadowValue(color, Value14MrfTextureSampler);	    
 	    return RenderPaletteValue(mrfColor);		    
 	
 	}
 	else if(mapTileVisibilityColor.r == rValueFor15) {
-	    float4 mrfColor = GetColorFromSampler(color, Value15MrfTextureSampler);	    	    
+	    float4 mrfColor = MapPixelToShadowValue(color, Value15MrfTextureSampler);	    	    
 	    return RenderPaletteValue(mrfColor);		    		    
 	}
 	else if(mapTileVisibilityColor.r == rValueFor16) {
-	    float4 mrfColor = GetColorFromSampler(color, Value16MrfTextureSampler);	    	    
+	    float4 mrfColor = MapPixelToShadowValue(color, Value16MrfTextureSampler);	    	    
 	    return RenderPaletteValue(mrfColor);		    		    
 	}
 	else

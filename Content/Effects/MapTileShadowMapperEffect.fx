@@ -36,8 +36,6 @@ sampler2D UnitMrfTextureSampler = sampler_state
 	magfilter = POINT;    
 };
 
-
-
 struct VertexShaderOutput
 {
 	float4 Position : SV_POSITION;
@@ -45,34 +43,50 @@ struct VertexShaderOutput
 	float2 TextureCoordinates : TEXCOORD0;
 };
 
+float4 MapPixelToShadowValue(float4 originalColor, sampler2D mrfSampler) 
+{
+	int numPaletteEntries = 256.0f;	
+	float mrfPaletteIndex = (originalColor.r * 256.0f) / numPaletteEntries;
+	float2 mrfPaletteCoordinates = float2(mrfPaletteIndex, 0.5f);
+    float4 mrfColor = tex2D(mrfSampler, mrfPaletteCoordinates);
+    return mrfColor;
+}
+
+bool HasShadow(float4 shadowColor)
+{
+	if(shadowColor.r == 0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+// Input:
+//      SpriteTexture:  Texture with map tiles rendered to it, where r == palette value (g and b are ignored)
+// 		ShadowTexture:  Texture with just unit and terrain shadows for entire map.  Non-zero value in r means there is a shadow for that pixel
+//      UnitMrfTexture: A 256x1 texture for mapping terrain pixels to their shadow value (This texture is derived from the tunits.mrf file)
+//
+// Output:
+//      If the pixel is in shadow, returns the appropriate shadow value(as palette value)
+//      If the pixel is NOT in shadow, returns the original pixel from SpriteTexture(as palette value)
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
 
-//                 for each pixel, if shadow rendertarget has no value, just return the maptile palette for color
-//                 if shadow rendertarget DOES have a value, convert the maptile palette value to the shadow value, via 
-//                 lookup in the mrf texture
-
 	float4 color = tex2D(SpriteTextureSampler, input.TextureCoordinates);
 	float4 shadowColor = tex2D(ShadowTextureSampler, input.TextureCoordinates);
-	float unitMrfColor = tex2D(UnitMrfTextureSampler, input.TextureCoordinates);
 
-	if(shadowColor.r == 0) {
-		return color;
+	if(HasShadow(shadowColor)) {
+	 	return MapPixelToShadowValue(color,UnitMrfTextureSampler);		
 	}
 	else {
-		int numPaletteEntries = 256.0f;
-		float paletteIndex = (color.r * 256.0f) / numPaletteEntries;
-		float2 paletteCoordinates = float2(paletteIndex, 0.5f);
-
-	    float4 paletteColor = tex2D(UnitMrfTextureSampler, paletteCoordinates);
-	    return paletteColor;
-
+		return color;
 	}
 
-
-
-
 }
+
 
 technique SpriteDrawing
 {

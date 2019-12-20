@@ -17,9 +17,7 @@ namespace mike_and_conquer.gameobjects
 
         public DestinationSquare()
         {
-
             sprite = new SingleTextureSprite(MikeAndConquerGame.instance.SpriteSheet.GetTextureForKey(SPRITE_KEY));
-
         }
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)

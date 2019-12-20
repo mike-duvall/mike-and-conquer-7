@@ -41,6 +41,7 @@
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -66,6 +67,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="mike-and-conquer\aicontroller\MinigunnerAIController.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="mike-and-conquer\gameobjects\TerrainItemDescriptor.cs" />
     <Compile Include="mike-and-conquer\gameobjects\TerrainItem.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Sandbag.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\PartiallyVisibileMapTileMask.cs" />
     <Compile Include="mike-and-conquer\gamesprite\ToolbarBuildIconSprite.cs" />
     <Compile Include="mike-and-conquer\gamesprite\SingleTextureSprite.cs" />
     <Compile Include="mike-and-conquer\gamesprite\TerrainSprite.cs" />
@@ -92,6 +95,7 @@
     <Compile Include="mike-and-conquer\gamesprite\ShpFileImage.cs" />
     <Compile Include="mike-and-conquer\gamesprite\SpriteSheet.cs" />
     <Compile Include="mike-and-conquer\gamesprite\UnitFrame.cs" />
+    <Compile Include="mike-and-conquer\gameview\MapTileShroudMapping.cs" />
     <Compile Include="mike-and-conquer\gameview\SpriteSortLayers.cs" />
     <Compile Include="mike-and-conquer\gameview\GameWorldView.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileInstanceView.cs" />

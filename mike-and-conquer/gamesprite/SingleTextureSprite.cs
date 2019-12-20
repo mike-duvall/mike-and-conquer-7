@@ -1,4 +1,5 @@
 ﻿
+using mike_and_conquer.util;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using Boolean = System.Boolean;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -34,7 +35,7 @@ namespace mike_and_conquer
         public SingleTextureSprite(Texture2D texture)
         {
             this.texture = texture;
-            spriteBorderRectangleTexture = CreateSpriteBorderRectangleTexture(Color.White);
+            spriteBorderRectangleTexture = TextureUtil.CreateSpriteBorderRectangleTexture(Color.White, Width,Height);
             middleOfSpriteInSpriteCoordinates = new Vector2();
 
             middleOfSpriteInSpriteCoordinates.X = Width / 2;
@@ -51,7 +52,6 @@ namespace mike_and_conquer
         {
 
             float defaultScale = 1;
-
             spriteBatch.Draw(texture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
 
             if (drawBoundingRectangle)
@@ -59,48 +59,6 @@ namespace mike_and_conquer
                 spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, boundingRectColor, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
             }
 
-        }
-
-        internal Texture2D CreateSpriteBorderRectangleTexture(Color color)
-        {
-            Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, Width, Height);
-            Color[] data = new Color[rectangle.Width * rectangle.Height];
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, color);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, color);
-            FillVerticalLine(data, rectangle.Width, rectangle.Height, 0, color);
-            FillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, color);
-
-            //            int centerX = (rectangle.Width / 2) - 1;
-            //            int centerY = (rectangle.Height / 2) - 1;
-            int centerX = (rectangle.Width / 2) ;
-            int centerY = (rectangle.Height / 2);
-
-            // Check how this works for even sized sprites with true center
-
-            int centerOffset = (centerY * rectangle.Width) + centerX;
-
-            data[centerOffset] = Color.Red;
-
-            rectangle.SetData(data);
-            return rectangle;
-        }
-
-        internal void FillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
-        {
-            int beginIndex = width * lineIndex;
-            for (int i = beginIndex; i < (beginIndex + width); ++i)
-            {
-                data[i] = color;
-            }
-        }
-
-        internal void FillVerticalLine(Color[] data, int width, int height, int lineIndex, Color color)
-        {
-            int beginIndex = lineIndex;
-            for (int i = beginIndex; i < (width * height); i += width)
-            {
-                data[i] = color;
-            }
         }
 
     }

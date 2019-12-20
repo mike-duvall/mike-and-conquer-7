@@ -46,6 +46,48 @@ namespace mike_and_conquer.util
         }
 
 
+        public static Texture2D CreateSpriteBorderRectangleTexture(Color color, int width, int height)
+        {
+            Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, width, height);
+            Color[] data = new Color[rectangle.Width * rectangle.Height];
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, color);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, color);
+            FillVerticalLine(data, rectangle.Width, rectangle.Height, 0, color);
+            FillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, color);
+
+            int centerX = (rectangle.Width / 2);
+            int centerY = (rectangle.Height / 2);
+
+            // Check how this works for even sized sprites with true center
+
+            int centerOffset = (centerY * rectangle.Width) + centerX;
+
+            data[centerOffset] = Color.Red;
+
+            rectangle.SetData(data);
+            return rectangle;
+        }
+
+        private static void FillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
+        {
+            int beginIndex = width * lineIndex;
+            for (int i = beginIndex; i < (beginIndex + width); ++i)
+            {
+                data[i] = color;
+            }
+        }
+
+        private static void FillVerticalLine(Color[] data, int width, int height, int lineIndex, Color color)
+        {
+            int beginIndex = lineIndex;
+            for (int i = beginIndex; i < (width * height); i += width)
+            {
+                data[i] = color;
+            }
+        }
+
+
+
 
     }
 }

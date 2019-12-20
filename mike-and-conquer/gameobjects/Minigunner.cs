@@ -46,7 +46,7 @@ namespace mike_and_conquer
 
         private List<Point> path;
 
-        double movementVelocity = .015;
+        double movementVelocity = .010;
         double movementDistanceEpsilon;
 
         private static int globalId = 1;
@@ -85,6 +85,7 @@ namespace mike_and_conquer
         public void Update(GameTime gameTime)
         {
 
+            UpdateVisibleMapTiles();
             if (this.currentCommand == Command.NONE)
             {
                 HandleCommandNone(gameTime);
@@ -99,6 +100,89 @@ namespace mike_and_conquer
             }
 
         }
+
+        private void UpdateVisibleMapTiles()
+        {
+
+            // TODO: Consider removing this if statement once map shroud is fully working
+            if (GameOptions.DRAW_SHROUD == false)
+            {
+                return;
+            }
+
+
+            // TODO:  Code below needs to handle literal edge cases where minigunner is near edge of 
+            // map and there is NO right or left tile, etc
+            UpdateNearbyMapTileVisibility(0, 0, MapTileInstance.MapTileVisibility.Visible);
+
+            // right side
+            UpdateNearbyMapTileVisibility(1, -1, MapTileInstance.MapTileVisibility.Visible);
+            UpdateNearbyMapTileVisibility(1, 0, MapTileInstance.MapTileVisibility.Visible);
+            UpdateNearbyMapTileVisibility(1, 1, MapTileInstance.MapTileVisibility.Visible);
+
+            UpdateNearbyMapTileVisibility(2, -2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(2, -1, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(2, 0, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(2, 1, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(2, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+
+
+
+            // left side
+            UpdateNearbyMapTileVisibility(-1, -1, MapTileInstance.MapTileVisibility.Visible);
+            UpdateNearbyMapTileVisibility(-1, 0, MapTileInstance.MapTileVisibility.Visible);
+            UpdateNearbyMapTileVisibility(-1, 1, MapTileInstance.MapTileVisibility.Visible);
+
+            UpdateNearbyMapTileVisibility(-2, -2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(-2, -1, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(-2, 0, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(-2, 1, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(-2, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+
+
+
+            // top side
+            UpdateNearbyMapTileVisibility(-1, -1, MapTileInstance.MapTileVisibility.Visible);
+            UpdateNearbyMapTileVisibility(0, -1, MapTileInstance.MapTileVisibility.Visible);
+            UpdateNearbyMapTileVisibility(1, -1, MapTileInstance.MapTileVisibility.Visible);
+
+            UpdateNearbyMapTileVisibility(-2, -2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(-1, -2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(0, -2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(1, -2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(2, -2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+
+
+            // bottom
+            UpdateNearbyMapTileVisibility(-1, 1, MapTileInstance.MapTileVisibility.Visible);
+            UpdateNearbyMapTileVisibility(0, 1, MapTileInstance.MapTileVisibility.Visible);
+            UpdateNearbyMapTileVisibility(1, 1, MapTileInstance.MapTileVisibility.Visible);
+
+            UpdateNearbyMapTileVisibility(-2, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(-1, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(0, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(1, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(2, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+
+
+        }
+
+        private void UpdateNearbyMapTileVisibility(int xOffset, int yOffset, MapTileInstance.MapTileVisibility mapTileVisibility)
+        {
+            xOffset = xOffset * 24;
+            yOffset = yOffset * 24;
+            MapTileInstance mapTileInstance = GameWorld.instance.FindMapSquareAllowNull((int)positionInWorldCoordinates.X + xOffset, (int)positionInWorldCoordinates.Y + yOffset);
+
+            if (mapTileInstance != null && mapTileInstance.Visibility != MapTileInstance.MapTileVisibility.Visible)
+            {
+                mapTileInstance.Visibility = mapTileVisibility;
+            }
+
+        }
+
+
+
+
 
 
         internal Rectangle CreateClickDetectionRectangle()

@@ -644,6 +644,21 @@ namespace mike_and_conquer
         
         }
 
+        public MapTileInstance FindMapSquareAllowNull(int xWorldCoordinate, int yWorldCoordinate)
+        {
+
+            foreach (MapTileInstance nextBasicMapSquare in this.gameMap.MapTileInstanceList)
+            {
+                if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
+                {
+                    return nextBasicMapSquare;
+                }
+            }
+
+            return null;
+
+        }
+
 
 
 
@@ -739,6 +754,12 @@ namespace mike_and_conquer
                     pointInWorldCoordinates.Y < largestYValue
                 );
 
+        }
+
+        public void MakeMapSquareVisible(Point positionInWorldCoordinates, MapTileInstance.MapTileVisibility visibility)
+        {
+            MapTileInstance mapTileInstance = this.FindMapSquare(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
+            mapTileInstance.Visibility = visibility;
         }
     }
 }

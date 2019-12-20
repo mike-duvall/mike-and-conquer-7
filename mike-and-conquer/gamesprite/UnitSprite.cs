@@ -1,4 +1,5 @@
-﻿using AnimationSequence = mike_and_conquer.util.AnimationSequence;
+﻿using System;
+using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -116,6 +117,67 @@ namespace mike_and_conquer
             {
                 spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
             }
+
+        }
+
+        public void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, float layerDepth)
+        {
+            AnimationSequence currentAnimationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+            if (animate)
+            {
+                currentAnimationSequence.Update();
+            }
+
+            int currentAnimationImageIndex = currentAnimationSequence.GetCurrentFrame();
+
+//            int currentAnimationImageIndex = 0;
+
+            currentTexture = unitFrameList[currentAnimationImageIndex].Texture;
+
+            float defaultScale = 1;
+
+            int roundedX = (int)Math.Round(positionInWorldCoordinates.X, 0);
+            int roundedY = (int)Math.Round(positionInWorldCoordinates.Y, 0);
+
+            Vector2 snappedPositionInWordCoordinates = new Vector2(roundedX, roundedY);
+
+
+            spriteBatch.Draw(currentTexture, snappedPositionInWordCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
+
+            if (drawBoundingRectangle)
+            {
+                // TODO use snapped coordinates?
+                spriteBatch.Draw(spriteBorderRectangleTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, 0f);
+            }
+
+        }
+
+
+
+
+        public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch, Vector2 positionInWorldCoordinates, float layerDepth)
+        {
+            AnimationSequence currentAnimationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+            if (animate)
+            {
+                currentAnimationSequence.Update();
+            }
+
+            int currentAnimationImageIndex = currentAnimationSequence.GetCurrentFrame();
+
+//            int currentAnimationImageIndex = 0;
+
+            Texture2D shadowOnlyTexture = unitFrameList[currentAnimationImageIndex].ShadowOnlyTexture;
+
+            float defaultScale = 1;
+
+            int roundedX = (int)Math.Round(positionInWorldCoordinates.X, 0);
+            int roundedY = (int)Math.Round(positionInWorldCoordinates.Y, 0);
+
+            Vector2 snappedPositionInWordCoordinates = new Vector2(roundedX, roundedY);
+
+            spriteBatch.Draw(shadowOnlyTexture, snappedPositionInWordCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
+
 
         }
 

@@ -1,4 +1,6 @@
-﻿using ShpTDSprite = OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite;
+﻿using System.Collections.Generic;
+using mike_and_conquer.gamesprite;
+using ShpTDSprite = OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using Color = Microsoft.Xna.Framework.Color;
@@ -23,6 +25,11 @@ namespace mike_and_conquer.gameview
 
         float defaultScale = 1;
 
+
+        public const string SHP_FILE_NAME = "select.shp";
+        public const string SPRITE_KEY = "UnitSelectionCursor";
+        public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
+
         private UnitSelectionCursor()
         {
 
@@ -31,7 +38,12 @@ namespace mike_and_conquer.gameview
         public UnitSelectionCursor(int x, int y)
         {
 
-            this.texture = loadTextureFromShpFile(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "select.shp", 0);
+//            this.texture = loadTextureFromShpFile(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "select.shp", 0);
+            List<UnitFrame> unitFrameList = MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
+            UnitFrame theUnitFrame = unitFrameList[0];
+
+            this.texture = theUnitFrame.Texture;
+
 
             position = new Vector2(x, y);
             boundingRectangle = initializeBoundingRectangle();
@@ -100,44 +112,6 @@ namespace mike_and_conquer.gameview
         }
 
 
-        // TODO Move this code somewhere more appropriate
-        internal Texture2D loadTextureFromShpFile(string shpFileName, int indexOfFrameToLoad)
-        {
-            //if (loader.IsShpTD(stream))
-            //{
-            //    frames = null;
-            //    return false;
-            //}
-            //loader.TryParseSprite(stream, out frames);
-
-            int[] remap = { };
-
-            OpenRA.Graphics.ImmutablePalette palette = new OpenRA.Graphics.ImmutablePalette(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "temperat.pal", remap);
-
-            System.IO.FileStream shpStream = System.IO.File.Open(shpFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None);
-            OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader loader = new OpenRA.Mods.Common.SpriteLoaders.ShpTDLoader();
-            ShpTDSprite shpTDSprite = new OpenRA.Mods.Common.SpriteLoaders.ShpTDSprite(shpStream);
-
-
-            OpenRA.Graphics.ISpriteFrame frame = shpTDSprite.Frames[indexOfFrameToLoad];
-            byte[] frameData = frame.Data;
-
-            Texture2D texture2D = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, shpTDSprite.Size.Width, shpTDSprite.Size.Height);
-            int numPixels = texture2D.Width * texture2D.Height;
-            Color[] texturePixelData = new Color[numPixels];
-
-            for (int i = 0; i < numPixels; i++)
-            {
-                uint paletteX = palette[frameData[i]];
-                System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)palette[frameData[i]]);
-                Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
-                texturePixelData[i] = xnaColor;
-            }
-            texture2D.SetData(texturePixelData);
-            shpStream.Close();
-            return texture2D;
-
-        }
 
 
     }

@@ -72,9 +72,13 @@ namespace mike_and_conquer.gamesprite
                     int basePaletteIndex = frameData[i];
                     int mappedPaletteIndex = shpFileColorMapper.MapColorIndex(basePaletteIndex);
                     uint mappedColor = palette[mappedPaletteIndex];
+                    
 
                     System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
-                    Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+                    Color xnaColorMapped = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+
+                    // TODO - Investigate just setting alpha based on the hard coded palette value for black
+                    Color xnaColor = new Color(mappedPaletteIndex, 0, 0, xnaColorMapped.A);
                     texturePixelData[i] = xnaColor;
 
                     if (mappedPaletteIndex == 4)
@@ -92,6 +96,8 @@ namespace mike_and_conquer.gamesprite
 
         }
 
+
+        // TODO:  Revisit why we need to separate methods.  Can they at least share code?
         public void LoadMapTileFramesFromSpriteFrames(string tmpFileName, ISpriteFrame[] spriteFrameArray)
         {
 
@@ -118,10 +124,8 @@ namespace mike_and_conquer.gamesprite
                 for (int i = 0; i < numPixels; i++)
                 {
                     int paletteIndex = frameData[i];
-                    uint mappedColor = palette[paletteIndex];
-
-                    System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
-                    Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, systemColor.A);
+                    // TODO:  Revisit this hard coding of alpha to 255
+                    Color xnaColor = new Color(paletteIndex, 0, 0, 255);
                     texturePixelData[i] = xnaColor;
                 }
 

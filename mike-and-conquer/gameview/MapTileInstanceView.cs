@@ -14,12 +14,10 @@ namespace mike_and_conquer.gameview
         public SingleTextureSprite singleTextureSprite;
         public MapTileInstance myMapTileInstance;
 
-        // TODO Revisit handling of these visiblity masks and whether this field should be static
+        // TODO Refactor handling of map shroud masks.  Consider pulling out everything into separate class(es)
         private static Texture2D visibleMask = null;
-        private static Vector2 middleOfSpriteInSpriteCoordinates;
-
-
         private PartiallyVisibileMapTileMask partiallyVisibileMapTileMask;
+        private static Vector2 middleOfSpriteInSpriteCoordinates;
 
         private int imageIndex;
         private string textureKey;
@@ -38,33 +36,12 @@ namespace mike_and_conquer.gameview
             List<MapTileFrame> mapTileFrameList =
                 MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
             this.singleTextureSprite = new SingleTextureSprite(mapTileFrameList[imageIndex].Texture);
-            if (MapTileInstanceView.visibleMask == null)
-            {
-                visibleMask = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice,
-                    mapTileFrameList[imageIndex].Texture.Width, mapTileFrameList[imageIndex].Texture.Height);
 
-                int numPixels = mapTileFrameList[imageIndex].Texture.Width *
-                                mapTileFrameList[imageIndex].Texture.Height;
 
-                Color[] textureData = new Color[numPixels];
-                visibleMask.GetData(textureData);
-
-                for (int i = 0; i < numPixels; i++)
-                {
-//                    Color xnaColor = new Color(1, 2, 3, 0);
-//                    Color xnaColor = new Color(0, 0, 0, 0);
-                    Color xnaColor = Color.Transparent;
-                    textureData[i] = xnaColor;
-                }
-
-                visibleMask.SetData(textureData);
-                middleOfSpriteInSpriteCoordinates = new Vector2();
-
-                middleOfSpriteInSpriteCoordinates.X = visibleMask.Width / 2;
-                middleOfSpriteInSpriteCoordinates.Y = visibleMask.Height / 2;
-            }
+            InitializeVisibleMask(mapTileFrameList);
 
             partiallyVisibileMapTileMask = new PartiallyVisibileMapTileMask();
+
             mapTileBorder = TextureUtil.CreateSpriteBorderRectangleTexture(
                 Color.White,
                 this.singleTextureSprite.Width,
@@ -80,18 +57,44 @@ namespace mike_and_conquer.gameview
 
         }
 
-
-
-        internal int GetPaletteIndexOfCoordinate(int x, int y)
+        private void InitializeVisibleMask(List<MapTileFrame> mapTileFrameList)
         {
-            List<MapTileFrame> mapTileFrameList =
-                MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
-            MapTileFrame mapTileFrame = mapTileFrameList[imageIndex];
-            byte[] frameData = mapTileFrame.FrameData;
+            if (MapTileInstanceView.visibleMask == null)
+            {
+                visibleMask = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice,
+                    mapTileFrameList[imageIndex].Texture.Width, mapTileFrameList[imageIndex].Texture.Height);
 
-            int frameDataIndex = y * singleTextureSprite.Width + x;
-            return frameData[frameDataIndex];
+                int numPixels = mapTileFrameList[imageIndex].Texture.Width *
+                                mapTileFrameList[imageIndex].Texture.Height;
+
+                Color[] textureData = new Color[numPixels];
+                visibleMask.GetData(textureData);
+
+                for (int i = 0; i < numPixels; i++)
+                {
+                    Color xnaColor = Color.Transparent;
+                    textureData[i] = xnaColor;
+                }
+
+                visibleMask.SetData(textureData);
+                middleOfSpriteInSpriteCoordinates = new Vector2();
+
+                middleOfSpriteInSpriteCoordinates.X = visibleMask.Width / 2;
+                middleOfSpriteInSpriteCoordinates.Y = visibleMask.Height / 2;
+            }
         }
+
+
+//        internal int GetPaletteIndexOfCoordinate(int x, int y)
+//        {
+//            List<MapTileFrame> mapTileFrameList =
+//                MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
+//            MapTileFrame mapTileFrame = mapTileFrameList[imageIndex];
+//            byte[] frameData = mapTileFrame.FrameData;
+//
+//            int frameDataIndex = y * singleTextureSprite.Width + x;
+//            return frameData[frameDataIndex];
+//        }
 
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -123,7 +126,7 @@ namespace mike_and_conquer.gameview
 
 
 
-
+        // TODO:  Consider pulling map shroud code into seprate class(es)
         private void InitializeMapTileShroudMappingList()
         {
             mapTileShroudMappingList = new List<MapTileShroudMapping>();

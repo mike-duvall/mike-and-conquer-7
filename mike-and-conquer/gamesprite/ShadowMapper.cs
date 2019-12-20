@@ -125,11 +125,6 @@ namespace mike_and_conquer.gamesprite
 
         internal int MapMapTile13PaletteIndex(int paletteIndex)
         {
-            // 13 is darkest shadow
-            // mapTileShadowMap16 works, dark
-            // mapTileShadowMap15 works, dark
-            // mapTileShadowMap14 does NOT work
-            // mapTileShadowMap13 does NOT work
             int mappedValue;
             mapTileShadowMap13.TryGetValue(paletteIndex, out mappedValue);
             return mappedValue;
@@ -137,12 +132,6 @@ namespace mike_and_conquer.gamesprite
 
         internal int MapMapTile14PaletteIndex(int paletteIndex)
         {
-            // 14 is the next darkest shadow
-            // mapTileShadowMap16 does NOT work, dark
-            // mapTileShadowMap15 does NOT work, dark
-            // mapTileShadowMap14 might work
-            // mapTileShadowMap13 might work
-
             int mappedValue;
             mapTileShadowMap14.TryGetValue(paletteIndex, out mappedValue);
             return mappedValue;
@@ -150,12 +139,6 @@ namespace mike_and_conquer.gamesprite
 
         internal int MapMapTile15PaletteIndex(int paletteIndex)
         {
-            // 15 is the next darkest shadow
-            // mapTileShadowMap16 does NOT work, dark
-            // mapTileShadowMap15 does NOT work, dark
-            // mapTileShadowMap14 might work
-            // mapTileShadowMap13 might work but lighter
-
             int mappedValue;
             mapTileShadowMap15.TryGetValue(paletteIndex, out mappedValue);
             return mappedValue;
@@ -163,14 +146,6 @@ namespace mike_and_conquer.gamesprite
 
         internal int MapMapTile16PaletteIndex(int paletteIndex)
         {
-
-            // 16 is the next darkest shadow
-            // mapTileShadowMap16 
-            // mapTileShadowMap15 
-            // mapTileShadowMap14 
-            // mapTileShadowMap13 
-
-
             int mappedValue;
             mapTileShadowMap16.TryGetValue(paletteIndex, out mappedValue);
             return mappedValue;

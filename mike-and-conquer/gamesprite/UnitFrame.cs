@@ -55,10 +55,8 @@ namespace mike_and_conquer.gamesprite
 
             foreach (int shadowIndex in shadowIndexList)
             {
-                Color xnaColor = new Color(255, 0, 0, 255);
-
+                Color xnaColor = ShadowHelper.SHADOW_COLOR;
                 texturePixelData[shadowIndex] = xnaColor;
-
             }
 
             shadowOnlyTexture.SetData(texturePixelData);

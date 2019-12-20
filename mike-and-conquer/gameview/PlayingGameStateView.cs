@@ -15,6 +15,7 @@ namespace mike_and_conquer.gameview
                 basicMapSquareView.Draw(gameTime, spriteBatch);
             }
 
+            // TODO:  Consider pulling this code back into this class, from MikeAndConquerGame
 //            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
 //
 //            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)

@@ -240,6 +240,7 @@ namespace mike_and_conquer.gameview
                 }
             }
 
+
             //            throw new Exception("Didn't find match");
             MikeAndConquerGame.instance.log.Information("Didn't find MapTileShroudMapping for: right:" + right + ", below:" + below + ", left:" + left + ", above:" + above );
 

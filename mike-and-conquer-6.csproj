@@ -81,6 +81,7 @@
     <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameobjects\GDIBarracks.cs" />
+    <Compile Include="mike-and-conquer\gameobjects\MCV.cs" />
     <Compile Include="mike-and-conquer\gameobjects\TerrainItemDescriptor.cs" />
     <Compile Include="mike-and-conquer\gameobjects\TerrainItem.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Sandbag.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="mike-and-conquer\gamesprite\SpriteSheet.cs" />
     <Compile Include="mike-and-conquer\gamesprite\UnitFrame.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileShroudMapping.cs" />
+    <Compile Include="mike-and-conquer\gameview\MCVView.cs" />
     <Compile Include="mike-and-conquer\gameview\SpriteSortLayers.cs" />
     <Compile Include="mike-and-conquer\gameview\GameWorldView.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileInstanceView.cs" />

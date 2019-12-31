@@ -187,6 +187,8 @@ namespace mike_and_conquer
 
 //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 14));
 
+            AddMCVAtMapSquareCoordinates(new Point(22,15));
+
             MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
             MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
             MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
@@ -526,6 +528,14 @@ namespace mike_and_conquer
                 NodMinigunnerView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(NodMinigunnerView.SHP_FILE_NAME),
                 NodMinigunnerView.SHP_FILE_COLOR_MAPPER);
+
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(MCVView.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                MCVView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(MCVView.SHP_FILE_NAME),
+                MCVView.SHP_FILE_COLOR_MAPPER);
+
 
 
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(SandbagView.SHP_FILE_NAME);
@@ -1093,6 +1103,11 @@ namespace mike_and_conquer
                 nextTerrainView.DrawShadowOnly(gameTime, spriteBatch);
             }
 
+            GameWorldView.instance.mcvView.DrawShadowOnly(gameTime, spriteBatch);
+
+
+
+
             spriteBatch.End();
         }
 
@@ -1227,6 +1242,8 @@ namespace mike_and_conquer
             {
                 nextTerrainView.DrawNoShadow(gameTime, spriteBatch);
             }
+
+            GameWorldView.instance.mcvView.DrawNoShadow(gameTime, spriteBatch);
 
             spriteBatch.End();
         }
@@ -1468,6 +1485,17 @@ namespace mike_and_conquer
         }
 
 
+        public void AddMCVAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
+        {
+            int xInWorldCoordinates = (positionInMapSquareCoordinates.X * GameWorld.MAP_TILE_WIDTH) - (GameWorld.MAP_TILE_WIDTH / 2);
+            int yInWorldCoordinates = (positionInMapSquareCoordinates.Y * GameWorld.MAP_TILE_HEIGHT) - (GameWorld.MAP_TILE_HEIGHT /2 );
+
+            Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
+
+            MCV mcv = gameWorld.AddMCV(positionInWorldCoordinates);
+            gameWorldView.AddMCVView(mcv);
+
+        }
 
         internal Minigunner AddNodMinigunnerAtMapSquareCoordinates(Point positionInMapSquareCoordinates, bool aiIsOn)
         {

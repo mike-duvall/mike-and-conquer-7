@@ -42,6 +42,11 @@ namespace mike_and_conquer
             get { return gdiBarracks; }
         }
 
+        private MCV mcv;
+        public MCV MCV
+        {
+            get { return mcv; }
+        }
 
         public NavigationGraph navigationGraph;
 
@@ -394,6 +399,7 @@ namespace mike_and_conquer
             UpdateGDIMinigunners(gameTime);
             UpdateNodMinigunners(gameTime);
             UpdateBarracks(gameTime);
+            mcv.Update(gameTime);
         }
 
 
@@ -468,6 +474,13 @@ namespace mike_and_conquer
             Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this );
             gdiMinigunnerList.Add(newMinigunner);
             return newMinigunner;
+        }
+
+
+        public MCV AddMCV(Point positionInWorldCoordinates)
+        {
+            mcv = new MCV(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this);
+            return mcv;
         }
 
 

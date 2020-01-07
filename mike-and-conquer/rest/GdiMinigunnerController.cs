@@ -65,6 +65,8 @@ namespace mike_and_conquer.rest
 
         public void Delete(int id)
         {
+            Minigunner minigunner = GameWorld.instance.GetGDIMinigunnerByIdViaEvent(id);
+            minigunner.health = 0;
         }
     }
 }

@@ -22,6 +22,8 @@ namespace mike_and_conquer
         public static float INITIAL_MAP_ZOOM = 1.0f;
 //        public static float INITIAL_MAP_ZOOM = 3.0f;
 
+
+
         public static void ToggleDrawTerrainBorder()
         {
             DRAW_TERRAIN_BORDER = !DRAW_TERRAIN_BORDER;

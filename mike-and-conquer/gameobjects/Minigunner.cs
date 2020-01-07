@@ -111,11 +111,11 @@ namespace mike_and_conquer
             }
 
 
-            // TODO:  Code below needs to handle literal edge cases where minigunner is near edge of 
-            // map and there is NO right or left tile, etc
+            // TODO:  Code south needs to handle literal edge cases where minigunner is near edge of 
+            // map and there is NO east or west tile, etc
             UpdateNearbyMapTileVisibility(0, 0, MapTileInstance.MapTileVisibility.Visible);
 
-            // right side
+            // east side
             UpdateNearbyMapTileVisibility(1, -1, MapTileInstance.MapTileVisibility.Visible);
             UpdateNearbyMapTileVisibility(1, 0, MapTileInstance.MapTileVisibility.Visible);
             UpdateNearbyMapTileVisibility(1, 1, MapTileInstance.MapTileVisibility.Visible);
@@ -128,7 +128,7 @@ namespace mike_and_conquer
 
 
 
-            // left side
+            // west side
             UpdateNearbyMapTileVisibility(-1, -1, MapTileInstance.MapTileVisibility.Visible);
             UpdateNearbyMapTileVisibility(-1, 0, MapTileInstance.MapTileVisibility.Visible);
             UpdateNearbyMapTileVisibility(-1, 1, MapTileInstance.MapTileVisibility.Visible);
@@ -166,6 +166,7 @@ namespace mike_and_conquer
 
 
         }
+
 
         private void UpdateNearbyMapTileVisibility(int xOffset, int yOffset, MapTileInstance.MapTileVisibility mapTileVisibility)
         {

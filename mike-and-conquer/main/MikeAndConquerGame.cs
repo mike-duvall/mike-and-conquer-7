@@ -187,7 +187,7 @@ namespace mike_and_conquer
 
 //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 14));
 
-            AddMCVAtMapSquareCoordinates(new Point(22,15));
+            AddMCVAtMapSquareCoordinates(new Point(22,13));
 
 //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
 //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);

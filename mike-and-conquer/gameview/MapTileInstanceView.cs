@@ -272,6 +272,18 @@ namespace mike_and_conquer.gameview
         //
 
 
+        private bool VisibilityMatches(Nullable<MapTileInstance.MapTileVisibility> expectedVisibility,
+            Nullable<MapTileInstance.MapTileVisibility> actualVisibility)
+        {
+            if (!expectedVisibility.HasValue)
+            {
+                return true;
+            }
+
+            return expectedVisibility == actualVisibility;
+        }
+
+
         private int FindMapTileShroudMapping(MapTileInstance.MapTileVisibility east,
             MapTileInstance.MapTileVisibility south,
             MapTileInstance.MapTileVisibility west,
@@ -284,30 +296,23 @@ namespace mike_and_conquer.gameview
                 if (mapping.east == east &&
                     mapping.south == south &&
                     mapping.west == west &&
-                    mapping.north == north)
+                    mapping.north == north &&
+                    VisibilityMatches(mapping.northEast,northEast ) &&
+                    VisibilityMatches(mapping.southEast, southEast))
                 {
-                    if (!mapping.northEast.HasValue && !mapping.southEast.HasValue)
-                    {
-                        return mapping.shroudTileIndex;
-                    }
-
-                    if (mapping.northEast.HasValue && mapping.northEast == northEast)
-                    {
-                        return mapping.shroudTileIndex;
-                    }
-
-                    // TODO:  This won't work if both northEast AND southEast have a value
-                    if (mapping.southEast.HasValue && mapping.southEast == southEast)
-                    {
-                        return mapping.shroudTileIndex;
-                    }
-
+                    return mapping.shroudTileIndex;
                 }
             }
 
 
             //            throw new Exception("Didn't find match");
-            MikeAndConquerGame.instance.log.Information("Didn't find MapTileShroudMapping for: east:" + east + ", south:" + south + ", west:" + west + ", north:" + north);
+            String message = "Didn't find MapTileShroudMapping for: east:" + east
+                            + ", south:" + south
+                            + ", west:" + west
+                            + ", north:" + north
+                            + ", northEast:" + northEast
+                            + ", southEast:" + southEast;
+            MikeAndConquerGame.instance.log.Information(message);
 
             return 1;
 

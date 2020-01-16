@@ -189,37 +189,38 @@ namespace mike_and_conquer
 
             AddMCVAtMapSquareCoordinates(new Point(22,13));
 
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
-//
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(18, 12), MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 12), MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 12), MapTileInstance.MapTileVisibility.Visible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 12), MapTileInstance.MapTileVisibility.Visible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 12), MapTileInstance.MapTileVisibility.Visible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 12), MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(24, 12), MapTileInstance.MapTileVisibility.PartiallyVisible);
-//
-//
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(18, 13), MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 13), MapTileInstance.MapTileVisibility.Visible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 13), MapTileInstance.MapTileVisibility.Visible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 13), MapTileInstance.MapTileVisibility.Visible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 13), MapTileInstance.MapTileVisibility.Visible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 13), MapTileInstance.MapTileVisibility.Visible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(24, 13), MapTileInstance.MapTileVisibility.PartiallyVisible);
-//
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(18, 14), MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 14), MapTileInstance.MapTileVisibility.Visible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 14), MapTileInstance.MapTileVisibility.Visible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 14), MapTileInstance.MapTileVisibility.Visible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 14), MapTileInstance.MapTileVisibility.Visible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 14), MapTileInstance.MapTileVisibility.Visible);
-//            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(24, 14), MapTileInstance.MapTileVisibility.PartiallyVisible);
-//
+
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
+            //
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(18, 12), MapTileInstance.MapTileVisibility.PartiallyVisible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 12), MapTileInstance.MapTileVisibility.PartiallyVisible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 12), MapTileInstance.MapTileVisibility.Visible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 12), MapTileInstance.MapTileVisibility.Visible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 12), MapTileInstance.MapTileVisibility.Visible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 12), MapTileInstance.MapTileVisibility.PartiallyVisible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(24, 12), MapTileInstance.MapTileVisibility.PartiallyVisible);
+            //
+            //
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(18, 13), MapTileInstance.MapTileVisibility.PartiallyVisible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 13), MapTileInstance.MapTileVisibility.Visible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 13), MapTileInstance.MapTileVisibility.Visible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 13), MapTileInstance.MapTileVisibility.Visible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 13), MapTileInstance.MapTileVisibility.Visible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 13), MapTileInstance.MapTileVisibility.Visible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(24, 13), MapTileInstance.MapTileVisibility.PartiallyVisible);
+            //
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(18, 14), MapTileInstance.MapTileVisibility.PartiallyVisible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 14), MapTileInstance.MapTileVisibility.Visible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 14), MapTileInstance.MapTileVisibility.Visible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 14), MapTileInstance.MapTileVisibility.Visible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 14), MapTileInstance.MapTileVisibility.Visible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 14), MapTileInstance.MapTileVisibility.Visible);
+            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(24, 14), MapTileInstance.MapTileVisibility.PartiallyVisible);
+            //
 
             //
             //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 15), MapTileInstance.MapTileVisibility.Visible);

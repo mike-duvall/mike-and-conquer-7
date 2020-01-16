@@ -245,33 +245,6 @@ namespace mike_and_conquer.gameview
 
         }
 
-        //        private int FindMapTileShroudMapping(MapTileInstance.MapTileVisibility east,
-        //            MapTileInstance.MapTileVisibility south,
-        //            MapTileInstance.MapTileVisibility west,
-        //            MapTileInstance.MapTileVisibility north)
-        //        {
-        //            foreach (MapTileShroudMapping mapping in mapTileShroudMappingList)
-        //            {
-        //                if (mapping.east == east &&
-        //                    mapping.south == south &&
-        //                    mapping.west == west &&
-        //                    mapping.north == north)
-        //                {
-        //                    return mapping.shroudTileIndex;
-        //                }
-        //            }
-        //
-        //
-        //            //            throw new Exception("Didn't find match");
-        //            MikeAndConquerGame.instance.log.Information("Didn't find MapTileShroudMapping for: east:" + east + ", south:" + south + ", west:" + west + ", north:" + north );
-        //
-        //            return 1;
-        //
-        //
-        //        }
-        //
-
-
         private bool VisibilityMatches(Nullable<MapTileInstance.MapTileVisibility> expectedVisibility,
             Nullable<MapTileInstance.MapTileVisibility> actualVisibility)
         {

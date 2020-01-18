@@ -185,9 +185,10 @@ namespace mike_and_conquer
         {
             bool aiIsOn = false;
 
-//            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 14));
+            //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 14));
 
-            AddMCVAtMapSquareCoordinates(new Point(22,13));
+//            AddMCVAtMapSquareCoordinates(new Point(22,13));
+            AddMCVAtMapSquareCoordinates(new Point(21, 12));
 
 
             //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
@@ -1486,10 +1487,9 @@ namespace mike_and_conquer
 
         public void AddMCVAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
         {
-            int xInWorldCoordinates = (positionInMapSquareCoordinates.X * GameWorld.MAP_TILE_WIDTH) - (GameWorld.MAP_TILE_WIDTH / 2);
-            int yInWorldCoordinates = (positionInMapSquareCoordinates.Y * GameWorld.MAP_TILE_HEIGHT) - (GameWorld.MAP_TILE_HEIGHT /2 );
+            Point positionInWorldCoordinates =
+                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
 
-            Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
 
             MCV mcv = gameWorld.AddMCV(positionInWorldCoordinates);
             gameWorldView.AddMCVView(mcv);

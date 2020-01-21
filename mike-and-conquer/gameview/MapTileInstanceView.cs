@@ -301,50 +301,73 @@ namespace mike_and_conquer.gameview
             MapTileInstance south = GameWorld.instance.FindMapSquareAllowNull(
                 (int) myMapTileInstance.PositionInWorldCoordinates.X,
                 (int) (myMapTileInstance.PositionInWorldCoordinates.Y + verticalOffset));
-            MapTileInstance.MapTileVisibility belowVisibility = MapTileInstance.MapTileVisibility.NotVisible;
+            MapTileInstance.MapTileVisibility southVisibility = MapTileInstance.MapTileVisibility.NotVisible;
             if (south != null)
             {
-                belowVisibility = south.Visibility;
+                southVisibility = south.Visibility;
             }
 
 
             MapTileInstance north = GameWorld.instance.FindMapSquare(
                 (int) myMapTileInstance.PositionInWorldCoordinates.X,
                 (int) (myMapTileInstance.PositionInWorldCoordinates.Y - verticalOffset));
+            MapTileInstance.MapTileVisibility northVisibility = MapTileInstance.MapTileVisibility.NotVisible;
+            if (north != null)
+            {
+                northVisibility = north.Visibility;
+            }
 
 
             MapTileInstance west = GameWorld.instance.FindMapSquare(
                 (int) myMapTileInstance.PositionInWorldCoordinates.X - horizontalOffset,
                 (int) (myMapTileInstance.PositionInWorldCoordinates.Y));
+            MapTileInstance.MapTileVisibility westVisibility = MapTileInstance.MapTileVisibility.NotVisible;
+            if (west != null)
+            {
+                westVisibility = west.Visibility;
+            }
 
 
             MapTileInstance east = GameWorld.instance.FindMapSquareAllowNull(
                 (int) myMapTileInstance.PositionInWorldCoordinates.X + horizontalOffset,
                 (int) (myMapTileInstance.PositionInWorldCoordinates.Y));
-            MapTileInstance.MapTileVisibility rightVisibility = MapTileInstance.MapTileVisibility.NotVisible;
+            MapTileInstance.MapTileVisibility eastVisibility = MapTileInstance.MapTileVisibility.NotVisible;
             if (east != null)
             {
-                rightVisibility = east.Visibility;
+                eastVisibility = east.Visibility;
             }
 
             MapTileInstance northEast = GameWorld.instance.FindMapSquareAllowNull(
                 (int)myMapTileInstance.PositionInWorldCoordinates.X + horizontalOffset,
                 (int)(myMapTileInstance.PositionInWorldCoordinates.Y - verticalOffset));
+            MapTileInstance.MapTileVisibility northEastVisibility = MapTileInstance.MapTileVisibility.NotVisible;
+            if (northEast != null)
+            {
+                northEastVisibility = northEast.Visibility;
+            }
 
             MapTileInstance southEast = GameWorld.instance.FindMapSquareAllowNull(
                 (int)myMapTileInstance.PositionInWorldCoordinates.X + horizontalOffset,
                 (int)(myMapTileInstance.PositionInWorldCoordinates.Y + verticalOffset));
+            MapTileInstance.MapTileVisibility southEastVisibility = MapTileInstance.MapTileVisibility.NotVisible;
+            if (southEast != null)
+            {
+                southEastVisibility = southEast.Visibility;
+            }
+
 
 
             return FindMapTileShroudMapping(
-                rightVisibility, 
-                belowVisibility, 
-                west.Visibility, 
-                north.Visibility,
-                northEast.Visibility,
-                southEast.Visibility);
+                eastVisibility, 
+                southVisibility, 
+                westVisibility, 
+                northVisibility,
+                northEastVisibility,
+                southEastVisibility);
 
         }
+
+
 
         internal void DrawVisbilityMask(GameTime gameTime, SpriteBatch spriteBatch)
         {

@@ -132,6 +132,23 @@ namespace mike_and_conquer
                 UpdateNearbyMapTileVisibility(3, 1, MapTileInstance.MapTileVisibility.PartiallyVisible);
                 UpdateNearbyMapTileVisibility(3, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
             }
+            else if (IsSpecialCaseForNorthEastMapTileInstance())
+            {
+
+                UpdateNearbyMapTileVisibility(1, -1, MapTileInstance.MapTileVisibility.Visible);
+                UpdateNearbyMapTileVisibility(1, 0, MapTileInstance.MapTileVisibility.Visible);
+                UpdateNearbyMapTileVisibility(1, 1, MapTileInstance.MapTileVisibility.Visible);
+
+                UpdateNearbyMapTileVisibility(2, -2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+                UpdateNearbyMapTileVisibility(2, -1, MapTileInstance.MapTileVisibility.PartiallyVisible);
+                UpdateNearbyMapTileVisibility(2, 0, MapTileInstance.MapTileVisibility.Visible);
+                UpdateNearbyMapTileVisibility(2, 1, MapTileInstance.MapTileVisibility.PartiallyVisible);
+                UpdateNearbyMapTileVisibility(2, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+
+                UpdateNearbyMapTileVisibility(3, -1, MapTileInstance.MapTileVisibility.PartiallyVisible);
+                UpdateNearbyMapTileVisibility(3, 0, MapTileInstance.MapTileVisibility.PartiallyVisible);
+                UpdateNearbyMapTileVisibility(3, 1, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            }
             else
             {
                 UpdateNearbyMapTileVisibility(1, -1, MapTileInstance.MapTileVisibility.Visible);
@@ -203,8 +220,26 @@ namespace mike_and_conquer
             }
 
             return isSpecialCase;
+        }
+
+        private bool IsSpecialCaseForNorthEastMapTileInstance()
+        {
+            bool isSpecialCase = false;
+            MapTileInstance mapTile1 = FindNearbyMapTileByOffset(1, 0);
+            MapTileInstance mapTile2 = FindNearbyMapTileByOffset(1, -1);
+            MapTileInstance mapTile3 = FindNearbyMapTileByOffset(2, 0);
+
+            if (mapTile1.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+                mapTile2.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+                mapTile3.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
+            {
+                isSpecialCase = true;
+            }
+
+            return isSpecialCase;
 
         }
+
 
         private MapTileInstance FindNearbyMapTileByOffset(int xOffset, int yOffset)
         {

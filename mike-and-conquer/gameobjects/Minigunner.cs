@@ -205,6 +205,12 @@ namespace mike_and_conquer
 
         }
 
+        private bool MapTileHasVisibility(MapTileInstance mapTileInstance, MapTileInstance.MapTileVisibility expectedVisbility)
+        {
+            return mapTileInstance != null && mapTileInstance.Visibility == expectedVisbility;
+
+        }
+
         private bool IsSpecialCaseForSouthEastMapTileInstance()
         {
             bool isSpecialCase = false;
@@ -212,9 +218,9 @@ namespace mike_and_conquer
             MapTileInstance mapTile2 = FindNearbyMapTileByOffset(1, 1);
             MapTileInstance mapTile3 = FindNearbyMapTileByOffset(2, 1);
 
-            if (mapTile1.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
-                mapTile2.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
-                mapTile3.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
+            if (MapTileHasVisibility(mapTile1, MapTileInstance.MapTileVisibility.PartiallyVisible) &&
+                MapTileHasVisibility(mapTile2, MapTileInstance.MapTileVisibility.PartiallyVisible) &&
+                MapTileHasVisibility(mapTile2, MapTileInstance.MapTileVisibility.PartiallyVisible) )
             {
                 isSpecialCase = true;
             }
@@ -229,12 +235,13 @@ namespace mike_and_conquer
             MapTileInstance mapTile2 = FindNearbyMapTileByOffset(1, -1);
             MapTileInstance mapTile3 = FindNearbyMapTileByOffset(2, 0);
 
-            if (mapTile1.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
-                mapTile2.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible &&
-                mapTile3.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
+            if (MapTileHasVisibility(mapTile1, MapTileInstance.MapTileVisibility.PartiallyVisible) &&
+                MapTileHasVisibility(mapTile2, MapTileInstance.MapTileVisibility.PartiallyVisible) &&
+                MapTileHasVisibility(mapTile2, MapTileInstance.MapTileVisibility.PartiallyVisible))
             {
                 isSpecialCase = true;
             }
+
 
             return isSpecialCase;
 

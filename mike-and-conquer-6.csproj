@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="mike-and-conquer\aicontroller\MinigunnerAIController.cs" />
     <Compile Include="mike-and-conquer\gameevent\AsyncGameEvent.cs" />
+    <Compile Include="mike-and-conquer\gameevent\SetGDIMinigunnerHealthGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateSandbagGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetCurrentGameStateGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetScreenshotGameEvent.cs" />

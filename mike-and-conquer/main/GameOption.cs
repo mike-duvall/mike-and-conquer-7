@@ -8,7 +8,6 @@ namespace mike_and_conquer
     public class GameOptions
     {
 
-
         public static bool DRAW_TERRAIN_BORDER = false;
         public static bool DRAW_BLOCKING_TERRAIN_BORDER = false;
 

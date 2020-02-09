@@ -1446,12 +1446,14 @@ namespace mike_and_conquer
         internal Minigunner AddGdiMinigunner(Point positionInWorldCoordinates)
         {
 
+            log.Information("Entering AddGdiMinigunner()");
             Minigunner newMinigunner =  gameWorld.AddGdiMinigunner(positionInWorldCoordinates);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
             // to enable running headless with no UI
             gameWorldView.AddGDIMinigunnerView(newMinigunner);
 
+            log.Information("Leaving AddGdiMinigunner(), minigunner id:" + newMinigunner.id);
             return newMinigunner;
         }
 

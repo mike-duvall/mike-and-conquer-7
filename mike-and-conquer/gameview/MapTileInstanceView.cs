@@ -313,7 +313,7 @@ namespace mike_and_conquer.gameview
         {
             int verticalOffset = GameWorld.MAP_TILE_HEIGHT / 2 + 2;
             int horizontalOffset = GameWorld.MAP_TILE_WIDTH / 2 + 2;
-            MapTileInstance south = GameWorld.instance.FindMapSquareAllowNull(
+            MapTileInstance south = GameWorld.instance.FindMapTileInstanceAllowNull(
                 (int) myMapTileInstance.PositionInWorldCoordinates.X,
                 (int) (myMapTileInstance.PositionInWorldCoordinates.Y + verticalOffset));
             MapTileInstance.MapTileVisibility southVisibility = MapTileInstance.MapTileVisibility.NotVisible;
@@ -323,7 +323,7 @@ namespace mike_and_conquer.gameview
             }
 
 
-            MapTileInstance north = GameWorld.instance.FindMapSquare(
+            MapTileInstance north = GameWorld.instance.FindMapTileInstance(
                 (int) myMapTileInstance.PositionInWorldCoordinates.X,
                 (int) (myMapTileInstance.PositionInWorldCoordinates.Y - verticalOffset));
             MapTileInstance.MapTileVisibility northVisibility = MapTileInstance.MapTileVisibility.NotVisible;
@@ -333,7 +333,7 @@ namespace mike_and_conquer.gameview
             }
 
 
-            MapTileInstance west = GameWorld.instance.FindMapSquare(
+            MapTileInstance west = GameWorld.instance.FindMapTileInstance(
                 (int) myMapTileInstance.PositionInWorldCoordinates.X - horizontalOffset,
                 (int) (myMapTileInstance.PositionInWorldCoordinates.Y));
             MapTileInstance.MapTileVisibility westVisibility = MapTileInstance.MapTileVisibility.NotVisible;
@@ -343,7 +343,7 @@ namespace mike_and_conquer.gameview
             }
 
 
-            MapTileInstance east = GameWorld.instance.FindMapSquareAllowNull(
+            MapTileInstance east = GameWorld.instance.FindMapTileInstanceAllowNull(
                 (int) myMapTileInstance.PositionInWorldCoordinates.X + horizontalOffset,
                 (int) (myMapTileInstance.PositionInWorldCoordinates.Y));
             MapTileInstance.MapTileVisibility eastVisibility = MapTileInstance.MapTileVisibility.NotVisible;
@@ -352,7 +352,7 @@ namespace mike_and_conquer.gameview
                 eastVisibility = east.Visibility;
             }
 
-            MapTileInstance northEast = GameWorld.instance.FindMapSquareAllowNull(
+            MapTileInstance northEast = GameWorld.instance.FindMapTileInstanceAllowNull(
                 (int)myMapTileInstance.PositionInWorldCoordinates.X + horizontalOffset,
                 (int)(myMapTileInstance.PositionInWorldCoordinates.Y - verticalOffset));
             MapTileInstance.MapTileVisibility northEastVisibility = MapTileInstance.MapTileVisibility.NotVisible;
@@ -361,7 +361,7 @@ namespace mike_and_conquer.gameview
                 northEastVisibility = northEast.Visibility;
             }
 
-            MapTileInstance southEast = GameWorld.instance.FindMapSquareAllowNull(
+            MapTileInstance southEast = GameWorld.instance.FindMapTileInstanceAllowNull(
                 (int)myMapTileInstance.PositionInWorldCoordinates.X + horizontalOffset,
                 (int)(myMapTileInstance.PositionInWorldCoordinates.Y + verticalOffset));
             MapTileInstance.MapTileVisibility southEastVisibility = MapTileInstance.MapTileVisibility.NotVisible;

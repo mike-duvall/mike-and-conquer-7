@@ -36,7 +36,9 @@ namespace mike_and_conquer.rest
 
         public IHttpActionResult Post([FromBody]RestMinigunner inputMinigunner)
         {
-            
+
+            MikeAndConquerGame.instance.log.Information("Entering Post() for minigunner");
+
             Point minigunnerPositionInWorldCoordinates = new Point(inputMinigunner.x, inputMinigunner.y);
 
             Minigunner minigunner;
@@ -56,6 +58,8 @@ namespace mike_and_conquer.rest
             restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
             restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
             restMinigunner.health = minigunner.health;
+
+            MikeAndConquerGame.instance.log.Information("leaving Post() for minigunner, id:" + restMinigunner.id);
             return Ok(restMinigunner);
         }
 
@@ -65,8 +69,9 @@ namespace mike_and_conquer.rest
 
         public void Delete(int id)
         {
-            Minigunner minigunner = GameWorld.instance.GetGDIMinigunnerByIdViaEvent(id);
-            minigunner.health = 0;
+            MikeAndConquerGame.instance.log.Information("Entering Delete() for minigunner, id:" + id);
+            GameWorld.instance.SetGDIMinigunnerHealthViaEvent(id, 0);
+            MikeAndConquerGame.instance.log.Information("Leaving Delete() for minigunner, id:" + id);
         }
     }
 }

@@ -208,7 +208,7 @@ namespace mike_and_conquer
         {
             xOffset = xOffset * 24;
             yOffset = yOffset * 24;
-            MapTileInstance mapTileInstance = GameWorld.instance.FindMapSquareAllowNull((int)positionInWorldCoordinates.X + xOffset, (int)positionInWorldCoordinates.Y + yOffset);
+            MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstanceAllowNull((int)positionInWorldCoordinates.X + xOffset, (int)positionInWorldCoordinates.Y + yOffset);
 
             if (mapTileInstance != null && mapTileInstance.Visibility != MapTileInstance.MapTileVisibility.Visible)
             {
@@ -257,7 +257,7 @@ namespace mike_and_conquer
                 Point centerOfDestinationSquare = path[0];
 
                 MapTileInstance destinationMapTileInstance =
-                    gameWorld.FindMapSquare(centerOfDestinationSquare.X, centerOfDestinationSquare.Y);
+                    gameWorld.FindMapTileInstance(centerOfDestinationSquare.X, centerOfDestinationSquare.Y);
 
 //                Point currentDestinationPoint = destinationMapTileInstance.GetDestinationSlotForMinigunner(this);
                 Point currentDestinationPoint = centerOfDestinationSquare;
@@ -460,7 +460,7 @@ namespace mike_and_conquer
         {
 
             MapTileInstance currentMapTileInstanceLocation =
-                gameWorld.FindMapSquare((int)this.positionInWorldCoordinates.X,
+                gameWorld.FindMapTileInstance((int)this.positionInWorldCoordinates.X,
                     (int) this.positionInWorldCoordinates.Y);
 
 //            currentMapTileInstanceLocation.ClearSlotForMinigunner(this);

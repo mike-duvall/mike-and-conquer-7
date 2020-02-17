@@ -77,6 +77,7 @@ namespace mike_and_conquer
             gdiMinigunnerList.Clear();
             nodMinigunnerList.Clear();
             sandbagList.Clear();
+            mcv = null;
             gameMap.Reset();
             InitializeNavigationGraph();
             return new PlayingGameState();
@@ -399,7 +400,11 @@ namespace mike_and_conquer
             UpdateGDIMinigunners(gameTime);
             UpdateNodMinigunners(gameTime);
             UpdateBarracks(gameTime);
-            mcv.Update(gameTime);
+            if (mcv != null)
+            {
+                mcv.Update(gameTime);
+            }
+
         }
 
 
@@ -549,6 +554,21 @@ namespace mike_and_conquer
             return gdiMinigunner;
 
         }
+
+        public MCV CreateMCVViaEvent(Point position)
+        {
+            CreateMCVGameEvent gameEvent = new CreateMCVGameEvent(position);
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            MCV mcv = gameEvent.GetMCV();
+            return mcv;
+
+        }
+
+
 
         public void SetGDIMinigunnerHealthViaEvent(int minigunnerId, int newHealth)
         {

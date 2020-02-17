@@ -59,7 +59,7 @@ namespace mike_and_conquer.rest
             restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
             restMinigunner.health = minigunner.health;
 
-            MikeAndConquerGame.instance.log.Information("leaving Post() for minigunner, id:" + restMinigunner.id);
+            // MikeAndConquerGame.instance.log.Information("leaving Post() for minigunner, id:" + restMinigunner.id);
             return Ok(restMinigunner);
         }
 

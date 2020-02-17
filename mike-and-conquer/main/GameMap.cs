@@ -346,6 +346,7 @@ namespace mike_and_conquer
             foreach (MapTileInstance mapTileInstance in MapTileInstanceList)
             {
                 mapTileInstance.ClearAllMinigunnerSlots();
+                mapTileInstance.Visibility = MapTileInstance.MapTileVisibility.NotVisible;
             }
 
         }

@@ -188,75 +188,11 @@ namespace mike_and_conquer
             //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 14));
 
 //            AddMCVAtMapSquareCoordinates(new Point(22,13));
-            AddMCVAtMapSquareCoordinates(new Point(21, 12));
-
-
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 11), MapTileInstance.MapTileVisibility.PartiallyVisible);
-            //
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(18, 12), MapTileInstance.MapTileVisibility.PartiallyVisible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 12), MapTileInstance.MapTileVisibility.PartiallyVisible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 12), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 12), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 12), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 12), MapTileInstance.MapTileVisibility.PartiallyVisible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(24, 12), MapTileInstance.MapTileVisibility.PartiallyVisible);
-            //
-            //
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(18, 13), MapTileInstance.MapTileVisibility.PartiallyVisible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 13), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 13), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 13), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 13), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 13), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(24, 13), MapTileInstance.MapTileVisibility.PartiallyVisible);
-            //
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(18, 14), MapTileInstance.MapTileVisibility.PartiallyVisible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 14), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 14), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 14), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 14), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 14), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(24, 14), MapTileInstance.MapTileVisibility.PartiallyVisible);
-            //
-
-            //
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 15), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 15), MapTileInstance.MapTileVisibility.Visible);
-            //
-            //
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 16), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 16), MapTileInstance.MapTileVisibility.Visible);
-            //
-            //
-            //
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 17), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 17), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 17), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 17), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 17), MapTileInstance.MapTileVisibility.Visible);
-            //
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 18), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 18), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 18), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 18), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 18), MapTileInstance.MapTileVisibility.Visible);
-            //
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(19, 19), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(20, 19), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(21, 19), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(22, 19), MapTileInstance.MapTileVisibility.Visible);
-            //            MakeMapSquareVisibleAtMapSquareCoorindates(new Point(23, 19), MapTileInstance.MapTileVisibility.Visible);
-
-
+//            AddMCVAtMapSquareCoordinates(new Point(21, 12));
 
 
             //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(6, 1));
             //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 4));
-
 
             //            AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
             //
@@ -1105,7 +1041,11 @@ namespace mike_and_conquer
                 nextTerrainView.DrawShadowOnly(gameTime, spriteBatch);
             }
 
-            GameWorldView.instance.mcvView.DrawShadowOnly(gameTime, spriteBatch);
+            if (GameWorldView.instance.mcvView != null)
+            {
+                GameWorldView.instance.mcvView.DrawShadowOnly(gameTime, spriteBatch);
+            }
+
 
 
             spriteBatch.End();
@@ -1243,7 +1183,11 @@ namespace mike_and_conquer
                 nextTerrainView.DrawNoShadow(gameTime, spriteBatch);
             }
 
-            GameWorldView.instance.mcvView.DrawNoShadow(gameTime, spriteBatch);
+            if (GameWorldView.instance.mcvView != null)
+            {
+                GameWorldView.instance.mcvView.DrawNoShadow(gameTime, spriteBatch);
+            }
+
 
             spriteBatch.End();
         }
@@ -1446,14 +1390,12 @@ namespace mike_and_conquer
         internal Minigunner AddGdiMinigunner(Point positionInWorldCoordinates)
         {
 
-            log.Information("Entering AddGdiMinigunner()");
             Minigunner newMinigunner =  gameWorld.AddGdiMinigunner(positionInWorldCoordinates);
 
             // TODO:  In future, decouple always adding a view when adding a minigunner
             // to enable running headless with no UI
             gameWorldView.AddGDIMinigunnerView(newMinigunner);
 
-            log.Information("Leaving AddGdiMinigunner(), minigunner id:" + newMinigunner.id);
             return newMinigunner;
         }
 
@@ -1497,6 +1439,17 @@ namespace mike_and_conquer
             gameWorldView.AddMCVView(mcv);
 
         }
+
+        public MCV AddMCVAtWorldCoordinates(Point positionInWorldCoordinates)
+        {
+
+            MCV mcv = gameWorld.AddMCV(positionInWorldCoordinates);
+            gameWorldView.AddMCVView(mcv);
+            return mcv;
+
+        }
+
+
 
         internal Minigunner AddNodMinigunnerAtMapSquareCoordinates(Point positionInMapSquareCoordinates, bool aiIsOn)
         {

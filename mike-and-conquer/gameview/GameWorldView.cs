@@ -79,11 +79,13 @@ namespace mike_and_conquer.gameview
         }
 
 
+
         public void HandleReset()
         {
             gdiMinigunnerViewList.Clear();
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
+            mcvView = null;
 
         }
 

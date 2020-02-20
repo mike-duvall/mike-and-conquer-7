@@ -6,9 +6,9 @@ namespace mike_and_conquer.rest
     public class ResetGameController : ApiController
     {
 
-        public void Post()
+        public void Post([FromBody]RestResetOptions resetOptions)
         {
-            GameWorld.instance.ResetGameViaEvent();
+            GameWorld.instance.ResetGameViaEvent(resetOptions.drawShroud);
         }
 
 

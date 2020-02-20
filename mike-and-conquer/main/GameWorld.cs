@@ -639,9 +639,9 @@ namespace mike_and_conquer
         }
 
 
-        public void ResetGameViaEvent()
+        public void ResetGameViaEvent(bool drawShroud)
         {
-            ResetGameGameEvent gameEvent = new ResetGameGameEvent();
+            ResetGameGameEvent gameEvent = new ResetGameGameEvent(drawShroud);
 
             lock (gameEvents)
             {

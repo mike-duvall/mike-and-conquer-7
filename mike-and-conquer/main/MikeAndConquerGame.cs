@@ -180,15 +180,13 @@ namespace mike_and_conquer
 //        }
 
 
-
         private void AddTestModeObjects()
         {
             bool aiIsOn = false;
 
             //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 14));
 
-//            AddMCVAtMapSquareCoordinates(new Point(22,13));
-//            AddMCVAtMapSquareCoordinates(new Point(21, 12));
+            // AddMCVAtMapSquareCoordinates(new Point(21, 12));
 
 
             //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(6, 1));
@@ -1469,8 +1467,9 @@ namespace mike_and_conquer
             return newMinigunner;
         }
 
-        public GameState HandleReset()
+        public GameState HandleReset(bool drawShroud)
         {
+            GameOptions.DRAW_SHROUD = drawShroud;
             GameState newGameState = gameWorld.HandleReset();
             gameWorldView.HandleReset();
             return newGameState;

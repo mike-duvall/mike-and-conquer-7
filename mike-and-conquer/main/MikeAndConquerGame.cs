@@ -184,15 +184,11 @@ namespace mike_and_conquer
         {
             bool aiIsOn = false;
 
-            //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 14));
 
+            // AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
             // AddMCVAtMapSquareCoordinates(new Point(21, 12));
 
 
-            //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(6, 1));
-            //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(8, 4));
-
-            //            AddNodMinigunnerAtMapSquareCoordinates(new Point(10, 3), aiIsOn);
             //
             //            AddSandbag(10, 6, 5);
             //            AddSandbag(10, 7, 5);

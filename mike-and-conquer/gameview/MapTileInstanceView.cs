@@ -241,6 +241,13 @@ namespace mike_and_conquer.gameview
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 8));
 
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                8));
+
 
 
             mapTileShroudMappingList.Add(new MapTileShroudMapping(

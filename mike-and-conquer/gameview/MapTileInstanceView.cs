@@ -131,13 +131,74 @@ namespace mike_and_conquer.gameview
         {
             mapTileShroudMappingList = new List<MapTileShroudMapping>();
 
+            // Original
+            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
+            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
+            //     MapTileInstance.MapTileVisibility.NotVisible,
+            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
+            //     MapTileInstance.MapTileVisibility.Visible,
+            //     0));
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                0));
+
+
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                0));
+
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                0));
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.Visible,
                 0));
 
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.Visible,
+                0));
+
+
+
+
+            /////////////////////////
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
@@ -260,12 +321,55 @@ namespace mike_and_conquer.gameview
                 9));
 
 
+            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
+            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
+            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
+            //     MapTileInstance.MapTileVisibility.NotVisible,
+            //     MapTileInstance.MapTileVisibility.NotVisible,
+            //     9));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                9));
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                9));
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 9));
+
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                9));
+
+
+
 
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.NotVisible,
@@ -303,21 +407,35 @@ namespace mike_and_conquer.gameview
         }
 
 
+
         private int FindMapTileShroudMapping(MapTileInstance.MapTileVisibility east,
             MapTileInstance.MapTileVisibility south,
             MapTileInstance.MapTileVisibility west,
             MapTileInstance.MapTileVisibility north,
             MapTileInstance.MapTileVisibility northEast,
-            MapTileInstance.MapTileVisibility southEast)
+            MapTileInstance.MapTileVisibility southEast,
+            MapTileInstance.MapTileVisibility southWest,
+            MapTileInstance.MapTileVisibility northWest)
         {
+            {
+
+            }
             foreach (MapTileShroudMapping mapping in mapTileShroudMappingList)
             {
+
+                if (!mapping.northEast.HasValue || !mapping.southEast.HasValue || !mapping.southWest.HasValue ||
+                    !mapping.northWest.HasValue)
+                {
+                    int x = 3;
+                }
                 if (mapping.east == east &&
                     mapping.south == south &&
                     mapping.west == west &&
                     mapping.north == north &&
                     VisibilityMatches(mapping.northEast,northEast ) &&
-                    VisibilityMatches(mapping.southEast, southEast))
+                    VisibilityMatches(mapping.southEast, southEast) &&
+                    VisibilityMatches(mapping.southWest, southWest) &&
+                    VisibilityMatches(mapping.northWest, northWest))
                 {
                     return mapping.shroudTileIndex;
                 }
@@ -326,11 +444,13 @@ namespace mike_and_conquer.gameview
 
             //            throw new Exception("Didn't find match");
             String message = "Didn't find MapTileShroudMapping for: east:" + east
+                            + ", southEast:" + southEast
                             + ", south:" + south
+                            + ", southWest:" + southWest
                             + ", west:" + west
+                            + ", northWest:" + northWest
                             + ", north:" + north
-                            + ", northEast:" + northEast
-                            + ", southEast:" + southEast;
+                            + ", northEast:" + northEast;
             MikeAndConquerGame.instance.log.Information(message);
 
             return 1;
@@ -401,6 +521,23 @@ namespace mike_and_conquer.gameview
                 southEastVisibility = southEast.Visibility;
             }
 
+            MapTileInstance southWest = GameWorld.instance.FindMapTileInstanceAllowNull(
+                (int)myMapTileInstance.PositionInWorldCoordinates.X - horizontalOffset,
+                (int)(myMapTileInstance.PositionInWorldCoordinates.Y + verticalOffset));
+            MapTileInstance.MapTileVisibility southWestVisibility = MapTileInstance.MapTileVisibility.NotVisible;
+            if (southEast != null)
+            {
+                southWestVisibility = southWest.Visibility;
+            }
+
+            MapTileInstance northWest = GameWorld.instance.FindMapTileInstanceAllowNull(
+                (int)myMapTileInstance.PositionInWorldCoordinates.X - horizontalOffset,
+                (int)(myMapTileInstance.PositionInWorldCoordinates.Y + verticalOffset));
+            MapTileInstance.MapTileVisibility northWestVisibility = MapTileInstance.MapTileVisibility.NotVisible;
+            if (southEast != null)
+            {
+                northWestVisibility = northWest.Visibility;
+            }
 
 
             return FindMapTileShroudMapping(
@@ -409,7 +546,9 @@ namespace mike_and_conquer.gameview
                 westVisibility, 
                 northVisibility,
                 northEastVisibility,
-                southEastVisibility);
+                southEastVisibility,
+                southWestVisibility,
+                northWestVisibility);
 
         }
 

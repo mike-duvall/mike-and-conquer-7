@@ -85,16 +85,16 @@ namespace mike_and_conquer.gameview
         }
 
 
-//        internal int GetPaletteIndexOfCoordinate(int x, int y)
-//        {
-//            List<MapTileFrame> mapTileFrameList =
-//                MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
-//            MapTileFrame mapTileFrame = mapTileFrameList[imageIndex];
-//            byte[] frameData = mapTileFrame.FrameData;
-//
-//            int frameDataIndex = y * singleTextureSprite.Width + x;
-//            return frameData[frameDataIndex];
-//        }
+        //        internal int GetPaletteIndexOfCoordinate(int x, int y)
+        //        {
+        //            List<MapTileFrame> mapTileFrameList =
+        //                MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(textureKey);
+        //            MapTileFrame mapTileFrame = mapTileFrameList[imageIndex];
+        //            byte[] frameData = mapTileFrame.FrameData;
+        //
+        //            int frameDataIndex = y * singleTextureSprite.Width + x;
+        //            return frameData[frameDataIndex];
+        //        }
 
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -378,36 +378,12 @@ namespace mike_and_conquer.gameview
                 4));
 
 
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     5));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 5));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                5));
-
-
-
 
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
@@ -443,35 +419,12 @@ namespace mike_and_conquer.gameview
                 MapTileInstance.MapTileVisibility.NotVisible,
                 7));
 
-            // original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     8));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
                 8));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                8));
-
-
 
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
@@ -593,45 +546,12 @@ namespace mike_and_conquer.gameview
 
 
 
-            // original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     11));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                11));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                11));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 11));
-
-
 
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
@@ -675,7 +595,7 @@ namespace mike_and_conquer.gameview
                     mapping.south == south &&
                     mapping.west == west &&
                     mapping.north == north &&
-                    VisibilityMatches(mapping.northEast,northEast ) &&
+                    VisibilityMatches(mapping.northEast, northEast) &&
                     VisibilityMatches(mapping.southEast, southEast) &&
                     VisibilityMatches(mapping.southWest, southWest) &&
                     VisibilityMatches(mapping.northWest, northWest))
@@ -762,8 +682,8 @@ namespace mike_and_conquer.gameview
             int verticalOffset = GameWorld.MAP_TILE_HEIGHT / 2 + 2;
             int horizontalOffset = GameWorld.MAP_TILE_WIDTH / 2 + 2;
             MapTileInstance south = GameWorld.instance.FindMapTileInstanceAllowNull(
-                (int) myMapTileInstance.PositionInWorldCoordinates.X,
-                (int) (myMapTileInstance.PositionInWorldCoordinates.Y + verticalOffset));
+                (int)myMapTileInstance.PositionInWorldCoordinates.X,
+                (int)(myMapTileInstance.PositionInWorldCoordinates.Y + verticalOffset));
             MapTileInstance.MapTileVisibility southVisibility = MapTileInstance.MapTileVisibility.NotVisible;
             if (south != null)
             {
@@ -772,8 +692,8 @@ namespace mike_and_conquer.gameview
 
 
             MapTileInstance north = GameWorld.instance.FindMapTileInstance(
-                (int) myMapTileInstance.PositionInWorldCoordinates.X,
-                (int) (myMapTileInstance.PositionInWorldCoordinates.Y - verticalOffset));
+                (int)myMapTileInstance.PositionInWorldCoordinates.X,
+                (int)(myMapTileInstance.PositionInWorldCoordinates.Y - verticalOffset));
             MapTileInstance.MapTileVisibility northVisibility = MapTileInstance.MapTileVisibility.NotVisible;
             if (north != null)
             {
@@ -782,8 +702,8 @@ namespace mike_and_conquer.gameview
 
 
             MapTileInstance west = GameWorld.instance.FindMapTileInstance(
-                (int) myMapTileInstance.PositionInWorldCoordinates.X - horizontalOffset,
-                (int) (myMapTileInstance.PositionInWorldCoordinates.Y));
+                (int)myMapTileInstance.PositionInWorldCoordinates.X - horizontalOffset,
+                (int)(myMapTileInstance.PositionInWorldCoordinates.Y));
             MapTileInstance.MapTileVisibility westVisibility = MapTileInstance.MapTileVisibility.NotVisible;
             if (west != null)
             {
@@ -792,8 +712,8 @@ namespace mike_and_conquer.gameview
 
 
             MapTileInstance east = GameWorld.instance.FindMapTileInstanceAllowNull(
-                (int) myMapTileInstance.PositionInWorldCoordinates.X + horizontalOffset,
-                (int) (myMapTileInstance.PositionInWorldCoordinates.Y));
+                (int)myMapTileInstance.PositionInWorldCoordinates.X + horizontalOffset,
+                (int)(myMapTileInstance.PositionInWorldCoordinates.Y));
             MapTileInstance.MapTileVisibility eastVisibility = MapTileInstance.MapTileVisibility.NotVisible;
             if (east != null)
             {
@@ -838,9 +758,9 @@ namespace mike_and_conquer.gameview
 
 
             return FindMapTileShroudMapping(
-                eastVisibility, 
-                southVisibility, 
-                westVisibility, 
+                eastVisibility,
+                southVisibility,
+                westVisibility,
                 northVisibility,
                 northEastVisibility,
                 southEastVisibility,

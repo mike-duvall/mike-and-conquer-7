@@ -69,9 +69,7 @@ namespace mike_and_conquer.rest
 
         public void Delete(int id)
         {
-            MikeAndConquerGame.instance.log.Information("Entering Delete() for minigunner, id:" + id);
             GameWorld.instance.SetGDIMinigunnerHealthViaEvent(id, 0);
-            MikeAndConquerGame.instance.log.Information("Leaving Delete() for minigunner, id:" + id);
         }
     }
 }

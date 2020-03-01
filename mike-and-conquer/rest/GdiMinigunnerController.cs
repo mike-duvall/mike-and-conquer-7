@@ -37,7 +37,6 @@ namespace mike_and_conquer.rest
         public IHttpActionResult Post([FromBody]RestMinigunner inputMinigunner)
         {
 
-            MikeAndConquerGame.instance.log.Information("Entering Post() for minigunner");
 
             Point minigunnerPositionInWorldCoordinates = new Point(inputMinigunner.x, inputMinigunner.y);
 

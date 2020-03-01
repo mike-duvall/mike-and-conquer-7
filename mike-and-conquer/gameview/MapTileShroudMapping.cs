@@ -17,43 +17,43 @@ namespace mike_and_conquer.gameview
 
         public int shroudTileIndex;
         
-        public MapTileShroudMapping(
-            MapTileInstance.MapTileVisibility east,
-            MapTileInstance.MapTileVisibility south,
-            MapTileInstance.MapTileVisibility west,
-            MapTileInstance.MapTileVisibility north,
-            int shroudTileIndex)
-        {
-            this.east = east;
-            this.south = south;
-            this.west = west;
-            this.north = north;
-            this.northEast = null;
-            this.southEast = null;
-            this.southWest = null;
-            this.northWest = null;
-            this.shroudTileIndex = shroudTileIndex;
-        }
+        // public MapTileShroudMapping(
+        //     MapTileInstance.MapTileVisibility east,
+        //     MapTileInstance.MapTileVisibility south,
+        //     MapTileInstance.MapTileVisibility west,
+        //     MapTileInstance.MapTileVisibility north,
+        //     int shroudTileIndex)
+        // {
+        //     this.east = east;
+        //     this.south = south;
+        //     this.west = west;
+        //     this.north = north;
+        //     this.northEast = null;
+        //     this.southEast = null;
+        //     this.southWest = null;
+        //     this.northWest = null;
+        //     this.shroudTileIndex = shroudTileIndex;
+        // }
 
-        public MapTileShroudMapping(
-            MapTileInstance.MapTileVisibility east,
-            MapTileInstance.MapTileVisibility south,
-            MapTileInstance.MapTileVisibility west,
-            MapTileInstance.MapTileVisibility north,
-            MapTileInstance.MapTileVisibility northEast,
-            MapTileInstance.MapTileVisibility southEast,
-            int shroudTileIndex)
-        {
-            this.east = east;
-            this.south = south;
-            this.west = west;
-            this.north = north;
-            this.northEast = northEast;
-            this.southEast = southEast;
-            this.southWest = null;
-            this.northWest = null;
-            this.shroudTileIndex = shroudTileIndex;
-        }
+        // public MapTileShroudMapping(
+        //     MapTileInstance.MapTileVisibility east,
+        //     MapTileInstance.MapTileVisibility south,
+        //     MapTileInstance.MapTileVisibility west,
+        //     MapTileInstance.MapTileVisibility north,
+        //     MapTileInstance.MapTileVisibility northEast,
+        //     MapTileInstance.MapTileVisibility southEast,
+        //     int shroudTileIndex)
+        // {
+        //     this.east = east;
+        //     this.south = south;
+        //     this.west = west;
+        //     this.north = north;
+        //     this.northEast = northEast;
+        //     this.southEast = southEast;
+        //     this.southWest = null;
+        //     this.northWest = null;
+        //     this.shroudTileIndex = shroudTileIndex;
+        // }
 
 
         public MapTileShroudMapping(

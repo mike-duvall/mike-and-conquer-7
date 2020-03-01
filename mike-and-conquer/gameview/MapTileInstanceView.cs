@@ -805,14 +805,14 @@ namespace mike_and_conquer.gameview
                 9));
 
 
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                9));
+            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
+            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
+            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
+            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
+            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
+            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
+            //     MapTileInstance.MapTileVisibility.Visible,
+            //     9));
 
 
 

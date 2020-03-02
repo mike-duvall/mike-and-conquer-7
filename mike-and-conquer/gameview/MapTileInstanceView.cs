@@ -131,642 +131,136 @@ namespace mike_and_conquer.gameview
         {
             mapTileShroudMappingList = new List<MapTileShroudMapping>();
 
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     0));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                0));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                0));
-
-
-
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                0));
-
-
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                0));
-
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.Visible,
                 0));
 
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.Visible,
                 0));
 
 
-
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     0));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                0));
-
-
-            // original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     1));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                1));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                1));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                1));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                1));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
                 1));
 
 
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                1));
-
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                1));
-
-
-
-
-
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     2));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                2));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                2));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                2));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.Visible,
                 2));
 
-
-
-
-
-
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     3));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 3));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                3));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                3));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                3));
 
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     3));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 3));
 
 
-
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     4));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                4));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                4));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 4));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                4));
 
 
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     5));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                5));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                5));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                5));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                5));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                5));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 5));
 
-
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     5));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 5));
 
 
 
-
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     6));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                6));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                6));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                6));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                6));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.Visible,
                 6));
 
 
-
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     7));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 7));
 
 
-
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     7));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 7));
 
-
-
-            // original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     8));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
                 8));
+
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                8));
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
                 8));
 
 
 
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     8));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.Visible,
-                8));
-
-
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     8));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                8));
-
-
-
-
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     9));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
                 9));
 
 
+            // Original
             // mapTileShroudMappingList.Add(new MapTileShroudMapping(
             //     MapTileInstance.MapTileVisibility.PartiallyVisible,
             //     MapTileInstance.MapTileVisibility.PartiallyVisible,
@@ -787,147 +281,47 @@ namespace mike_and_conquer.gameview
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                9));
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 9));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                9));
-
-
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.Visible,
-            //     9));
 
 
 
 
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     10));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                10));
+
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.Visible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                10));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 10));
 
-
-
-
-            // 8
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     11));
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                11));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                11));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                11));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                11));
-
-
-
-
-
-            // Original
-            // mapTileShroudMappingList.Add(new MapTileShroudMapping(
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.NotVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     MapTileInstance.MapTileVisibility.PartiallyVisible,
-            //     11));
-            mapTileShroudMappingList.Add(new MapTileShroudMapping(
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.NotVisible,
-                MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.NotVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 11));
 
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                11));
 
 
         }
@@ -943,6 +337,41 @@ namespace mike_and_conquer.gameview
             return expectedVisibility == actualVisibility;
         }
 
+
+        // private int FindMapTileShroudMapping(MapTileInstance.MapTileVisibility east,
+        //     MapTileInstance.MapTileVisibility south,
+        //     MapTileInstance.MapTileVisibility west,
+        //     MapTileInstance.MapTileVisibility north,
+        //     MapTileInstance.MapTileVisibility northEast,
+        //     MapTileInstance.MapTileVisibility southEast)
+        // {
+        //     foreach (MapTileShroudMapping mapping in mapTileShroudMappingList)
+        //     {
+        //         if (mapping.east == east &&
+        //             mapping.south == south &&
+        //             mapping.west == west &&
+        //             mapping.north == north &&
+        //             VisibilityMatches(mapping.northEast, northEast) &&
+        //             VisibilityMatches(mapping.southEast, southEast))
+        //         {
+        //             return mapping.shroudTileIndex;
+        //         }
+        //     }
+        //
+        //
+        //     //            throw new Exception("Didn't find match");
+        //     String message = "Didn't find MapTileShroudMapping for: east:" + east
+        //                     + ", south:" + south
+        //                     + ", west:" + west
+        //                     + ", north:" + north
+        //                     + ", northEast:" + northEast
+        //                     + ", southEast:" + southEast;
+        //     MikeAndConquerGame.instance.log.Information(message);
+        //
+        //     return 1;
+        //
+        //
+        // }
 
 
         private int FindMapTileShroudMapping(MapTileInstance.MapTileVisibility east,
@@ -1107,6 +536,7 @@ namespace mike_and_conquer.gameview
                 southEastVisibility = southEast.Visibility;
             }
 
+
             MapTileInstance southWest = GameWorld.instance.FindMapTileInstanceAllowNull(
                 (int)myMapTileInstance.PositionInWorldCoordinates.X - horizontalOffset,
                 (int)(myMapTileInstance.PositionInWorldCoordinates.Y + verticalOffset));
@@ -1118,7 +548,7 @@ namespace mike_and_conquer.gameview
 
             MapTileInstance northWest = GameWorld.instance.FindMapTileInstanceAllowNull(
                 (int)myMapTileInstance.PositionInWorldCoordinates.X - horizontalOffset,
-                (int)(myMapTileInstance.PositionInWorldCoordinates.Y + verticalOffset));
+                (int)(myMapTileInstance.PositionInWorldCoordinates.Y - verticalOffset));
             MapTileInstance.MapTileVisibility northWestVisibility = MapTileInstance.MapTileVisibility.NotVisible;
             if (southEast != null)
             {
@@ -1135,6 +565,7 @@ namespace mike_and_conquer.gameview
                 southEastVisibility,
                 southWestVisibility,
                 northWestVisibility);
+
 
         }
 

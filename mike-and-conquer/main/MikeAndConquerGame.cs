@@ -185,8 +185,11 @@ namespace mike_and_conquer
             bool aiIsOn = false;
 
 
-            // AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
-            // AddMCVAtMapSquareCoordinates(new Point(21, 12));
+            if (!GameOptions.IS_FULL_SCREEN)
+            {
+                AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
+                AddMCVAtMapSquareCoordinates(new Point(21, 12));
+            }
 
 
             //

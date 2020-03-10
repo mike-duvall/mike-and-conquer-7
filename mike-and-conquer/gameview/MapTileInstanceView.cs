@@ -326,6 +326,18 @@ namespace mike_and_conquer.gameview
                 1));
 
 
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                1));
+
+
 
             // Original
             // mapTileShroudMappingList.Add(new MapTileShroudMapping(
@@ -843,6 +855,8 @@ namespace mike_and_conquer.gameview
                 MapTileInstance.MapTileVisibility.Visible,
                 8));  // TODO:  No test for this one
 
+
+
             // Original
             // mapTileShroudMappingList.Add(new MapTileShroudMapping(
             //     MapTileInstance.MapTileVisibility.PartiallyVisible,
@@ -861,6 +875,17 @@ namespace mike_and_conquer.gameview
                 MapTileInstance.MapTileVisibility.Visible,
                 8));
 
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                8));
 
 
             // Original
@@ -932,6 +957,17 @@ namespace mike_and_conquer.gameview
                 MapTileInstance.MapTileVisibility.PartiallyVisible,
                 9));
 
+
+            mapTileShroudMappingList.Add(new MapTileShroudMapping(
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.Visible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.NotVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                MapTileInstance.MapTileVisibility.PartiallyVisible,
+                9));
 
 
 
@@ -1165,14 +1201,6 @@ namespace mike_and_conquer.gameview
 
 
             //            throw new Exception("Didn't find match");
-            // String message = "Didn't find MapTileShroudMapping for: east:" + east
-            //                 + ", southEast:" + southEast
-            //                 + ", south:" + south
-            //                 + ", southWest:" + southWest
-            //                 + ", west:" + west
-            //                 + ", northWest:" + northWest
-            //                 + ", north:" + north
-            //                 + ", northEast:" + northEast;
             String missingMapping = "\nMissing mapping:\nmapTileShroudMappingList.Add(new MapTileShroudMapping( \n" +
                                      "MapTileInstance.MapTileVisibility." + east + ", \n" +
                                      "MapTileInstance.MapTileVisibility." + southEast + ", \n" +
@@ -1187,7 +1215,8 @@ namespace mike_and_conquer.gameview
 
             MikeAndConquerGame.instance.log.Information(missingMapping);
 
-            return 1;
+            throw new Exception("Didn't find match");
+            return PartiallyVisibileMapTileMask.MISSING_MAPPING_INDEX;
 
 
         }

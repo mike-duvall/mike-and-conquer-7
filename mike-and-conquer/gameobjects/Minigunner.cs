@@ -53,6 +53,8 @@ namespace mike_and_conquer
 
         private GameWorld gameWorld;
 
+        private MapTileInstance currentMapTileInstance;
+
         Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()
             //.WriteTo.File("log.txt")
@@ -80,6 +82,7 @@ namespace mike_and_conquer
             clickDetectionRectangle = CreateClickDetectionRectangle();
             movementDistanceEpsilon = movementVelocity + (double).04f;
             selected = false;
+
         }
 
         public void Update(GameTime gameTime)
@@ -109,6 +112,15 @@ namespace mike_and_conquer
                 return;
             }
 
+            MapTileInstance possibleNewMapTileInstance =
+                GameWorld.instance.FindMapTileInstance((int) positionInWorldCoordinates.X, (int) positionInWorldCoordinates.Y);
+
+            if (possibleNewMapTileInstance == currentMapTileInstance)
+            {
+                return;
+            }
+
+            currentMapTileInstance = possibleNewMapTileInstance;
 
             // TODO:  Code south needs to handle literal edge cases where minigunner is near edge of 
             // map and there is NO east or west tile, etc

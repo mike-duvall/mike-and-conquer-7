@@ -59,6 +59,8 @@ namespace mike_and_conquer
             .CreateLogger();
 
 
+        private MapTileInstance currentMapTileInstance;
+
         protected MCV()
         {
         }
@@ -104,6 +106,18 @@ namespace mike_and_conquer
             {
                 return;
             }
+
+
+            MapTileInstance possibleNewMapTileInstance =
+                GameWorld.instance.FindMapTileInstance((int)positionInWorldCoordinates.X, (int)positionInWorldCoordinates.Y);
+
+            if (possibleNewMapTileInstance == currentMapTileInstance)
+            {
+                return;
+            }
+
+            currentMapTileInstance = possibleNewMapTileInstance;
+
 
 
             // TODO:  Code south needs to handle literal edge cases where minigunner is near edge of 

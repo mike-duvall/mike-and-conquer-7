@@ -360,6 +360,7 @@ namespace mike_and_conquer.gameview
                 1));  // TODO:  No test to justify this mapping
 
 
+
             mapTileShroudMappingList.Add(new MapTileShroudMapping(
                 MapTileInstance.MapTileVisibility.Visible,
                 MapTileInstance.MapTileVisibility.Visible,

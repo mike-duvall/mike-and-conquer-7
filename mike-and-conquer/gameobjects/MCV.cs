@@ -124,31 +124,6 @@ namespace mike_and_conquer
             // map and there is NO east or west tile, etc
             UpdateNearbyMapTileVisibility(0, 0, MapTileInstance.MapTileVisibility.Visible);
 
-//            // east side
-//            UpdateNearbyMapTileVisibility(1, -1, MapTileInstance.MapTileVisibility.Visible);
-//            UpdateNearbyMapTileVisibility(1, 0, MapTileInstance.MapTileVisibility.Visible);
-//            UpdateNearbyMapTileVisibility(1, 1, MapTileInstance.MapTileVisibility.Visible);
-//
-//            UpdateNearbyMapTileVisibility(2, -2, MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            UpdateNearbyMapTileVisibility(2, -1, MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            UpdateNearbyMapTileVisibility(2, 0, MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            UpdateNearbyMapTileVisibility(2, 1, MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            UpdateNearbyMapTileVisibility(2, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
-//
-//
-//
-//            // west side
-//            UpdateNearbyMapTileVisibility(-1, -1, MapTileInstance.MapTileVisibility.Visible);
-//            UpdateNearbyMapTileVisibility(-1, 0, MapTileInstance.MapTileVisibility.Visible);
-//            UpdateNearbyMapTileVisibility(-1, 1, MapTileInstance.MapTileVisibility.Visible);
-//
-//            UpdateNearbyMapTileVisibility(-2, -2, MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            UpdateNearbyMapTileVisibility(-2, -1, MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            UpdateNearbyMapTileVisibility(-2, 0, MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            UpdateNearbyMapTileVisibility(-2, 1, MapTileInstance.MapTileVisibility.PartiallyVisible);
-//            UpdateNearbyMapTileVisibility(-2, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
-
-
 
             // top side
             UpdateNearbyMapTileVisibility(-2, -3, MapTileInstance.MapTileVisibility.PartiallyVisible);
@@ -209,12 +184,6 @@ namespace mike_and_conquer
             UpdateNearbyMapTileVisibility(0, 3, MapTileInstance.MapTileVisibility.PartiallyVisible);
             UpdateNearbyMapTileVisibility(1, 3, MapTileInstance.MapTileVisibility.PartiallyVisible);
             UpdateNearbyMapTileVisibility(2, 3, MapTileInstance.MapTileVisibility.PartiallyVisible);
-
-
-
-
-
-
 
         }
 

@@ -207,33 +207,16 @@ namespace mike_and_conquer
                 int x = 3;
             }
             // south side
-            if (IsSpecialCaseForSouthWestMapTileInstance())
-            {
-                MikeAndConquerGame.instance.log.Information("IsSpecialCaseForSouthWestMapTileInstance() returned true.  minigunner.id=" + this.id);
-                UpdateNearbyMapTileVisibility(-2, 1, MapTileInstance.MapTileVisibility.Visible);
-                UpdateNearbyMapTileVisibility(-1, 1, MapTileInstance.MapTileVisibility.Visible);
-                UpdateNearbyMapTileVisibility(0, 1, MapTileInstance.MapTileVisibility.Visible);
-                UpdateNearbyMapTileVisibility(1, 1, MapTileInstance.MapTileVisibility.Visible);
+            UpdateNearbyMapTileVisibility(-1, 1, MapTileInstance.MapTileVisibility.Visible);
+            UpdateNearbyMapTileVisibility(0, 1, MapTileInstance.MapTileVisibility.Visible);
+            UpdateNearbyMapTileVisibility(1, 1, MapTileInstance.MapTileVisibility.Visible);
 
-                UpdateNearbyMapTileVisibility(-2, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
-                UpdateNearbyMapTileVisibility(-1, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
-                UpdateNearbyMapTileVisibility(0, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
-                UpdateNearbyMapTileVisibility(1, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
-                UpdateNearbyMapTileVisibility(2, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(-2, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(-1, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(0, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(1, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
+            UpdateNearbyMapTileVisibility(2, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
 
-            }
-            else
-            {
-                UpdateNearbyMapTileVisibility(-1, 1, MapTileInstance.MapTileVisibility.Visible);
-                UpdateNearbyMapTileVisibility(0, 1, MapTileInstance.MapTileVisibility.Visible);
-                UpdateNearbyMapTileVisibility(1, 1, MapTileInstance.MapTileVisibility.Visible);
-
-                UpdateNearbyMapTileVisibility(-2, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
-                UpdateNearbyMapTileVisibility(-1, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
-                UpdateNearbyMapTileVisibility(0, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
-                UpdateNearbyMapTileVisibility(1, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
-                UpdateNearbyMapTileVisibility(2, 2, MapTileInstance.MapTileVisibility.PartiallyVisible);
-            }
 
 
             foreach(MapTileInstance mapTileInstance in GameWorld.instance.gameMap.MapTileInstanceList)
@@ -322,45 +305,6 @@ namespace mike_and_conquer
         }
 
 
-
-        private bool IsSpecialCaseForSouthWestMapTileInstance()
-        {
-            if (true)
-                return false;
-
-            bool isSpecialCase = false;
-//            MapTileInstance mapTile1 = FindNearbyMapTileByOffset(-1, 2);
-//            MapTileInstance mapTile2 = FindNearbyMapTileByOffset(-2, 2);
-//            MapTileInstance mapTile3 = FindNearbyMapTileByOffset(-2, 3);
-
-            MapTileInstance mapTile1 = FindNearbyMapTileByOffset(-1, 1);
-            MapTileInstance mapTile2 = FindNearbyMapTileByOffset(-2, 1);
-            MapTileInstance mapTile3 = FindNearbyMapTileByOffset(-2, 2);
-
-
-            if (MapTileHasVisibility(mapTile1, MapTileInstance.MapTileVisibility.PartiallyVisible) &&
-                MapTileHasVisibility(mapTile2, MapTileInstance.MapTileVisibility.PartiallyVisible) &&
-                MapTileHasVisibility(mapTile3, MapTileInstance.MapTileVisibility.PartiallyVisible))
-            {
-                isSpecialCase = true;
-            }
-
-
-            if (this.id == 10)
-            {
-                string message = "IsSpecialCaseForSouthWestMapTileInstance() info for minigunner.id=" + this.id + ",isSpecialCase=" + isSpecialCase;
-                message += ", mapTile1.Visibility=" + mapTile1.Visibility + ",mapTile1.Position" +
-                           mapTile1.PositionInWorldCoordinates +
-                           ",mapTile2.Visibility=" + mapTile2.Visibility + ",mapTile2.Position" + mapTile2.PositionInWorldCoordinates +
-                            ",mapTile3.Visibility=" + mapTile3.Visibility + ",mapTile3.Position" +
-                           mapTile3.PositionInWorldCoordinates;
-                MikeAndConquerGame.instance.log.Information(message);
-
-            }
-            return isSpecialCase;
-        }
-
-
         MapTileInstance FindNearbyMapTileByOffset(Vector2 basePosition, int xOffset, int yOffset)
         {
             xOffset = xOffset * 24;
@@ -369,9 +313,6 @@ namespace mike_and_conquer
             return mapTileInstance;
 
         }
-
-
-
 
         MapTileInstance FindNearbyMapTileByOffset(int xOffset, int yOffset)
         {
@@ -383,39 +324,17 @@ namespace mike_and_conquer
         {
             MapTileInstance mapTileInstance = FindNearbyMapTileByOffset(xOffset, yOffset);
 
-            if (mapTileInstance != null && mapTileInstance.PositionInWorldCoordinates.X == 612 &&
-                mapTileInstance.PositionInWorldCoordinates.Y == 276 && mapTileVisibility == MapTileInstance.MapTileVisibility.Visible)
-            {
-                int x = 3;
-            }
+            // if (mapTileInstance != null && mapTileInstance.PositionInWorldCoordinates.X == 612 &&
+            //     mapTileInstance.PositionInWorldCoordinates.Y == 276 && mapTileVisibility == MapTileInstance.MapTileVisibility.Visible)
+            // {
+            //     int x = 3;
+            // }
             if (mapTileInstance != null && mapTileInstance.Visibility != MapTileInstance.MapTileVisibility.Visible)
             {
                 mapTileInstance.Visibility = mapTileVisibility;
             }
 
-
-//            if (mapTileInstance != null && mapTileInstance.Visibility == MapTileInstance.MapTileVisibility.PartiallyVisible)
-//            {
-//                MapTileInstance northInstance = gameWorld.FindMapTileInstanceAllowNull(
-//                    (int) mapTileInstance.PositionInWorldCoordinates.X, (int) mapTileInstance.PositionInWorldCoordinates.Y - GameWorld.MAP_TILE_HEIGHT);
-//
-//                MapTileInstance eastInstance = gameWorld.FindMapTileInstanceAllowNull(
-//                    (int)mapTileInstance.PositionInWorldCoordinates.X + GameWorld.MAP_TILE_WIDTH, (int)mapTileInstance.PositionInWorldCoordinates.Y );
-//
-//                MapTileInstance southInstance = gameWorld.FindMapTileInstanceAllowNull(
-//                    (int)mapTileInstance.PositionInWorldCoordinates.X + GameWorld.MAP_TILE_WIDTH, (int)mapTileInstance.PositionInWorldCoordinates.Y + GameWorld.MAP_TILE_HEIGHT);
-//
-//                if (MapTileHasVisibility(northInstance, MapTileInstance.MapTileVisibility.Visible) &&
-//                    MapTileHasVisibility(eastInstance, MapTileInstance.MapTileVisibility.Visible) &&
-//                    MapTileHasVisibility(southInstance, MapTileInstance.MapTileVisibility.Visible))
-//                {
-//                    mapTileInstance.Visibility = MapTileInstance.MapTileVisibility.Visible;
-//                }
-//
-//            }
-
         }
-
 
 
         internal Rectangle CreateClickDetectionRectangle()

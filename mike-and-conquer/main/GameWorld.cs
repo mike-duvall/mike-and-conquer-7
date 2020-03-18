@@ -42,6 +42,11 @@ namespace mike_and_conquer
             get { return gdiBarracks; }
         }
 
+        private MCV mcv;
+        public MCV MCV
+        {
+            get { return mcv; }
+        }
 
         public NavigationGraph navigationGraph;
 
@@ -72,6 +77,7 @@ namespace mike_and_conquer
             gdiMinigunnerList.Clear();
             nodMinigunnerList.Clear();
             sandbagList.Clear();
+            mcv = null;
             gameMap.Reset();
             InitializeNavigationGraph();
             return new PlayingGameState();
@@ -394,6 +400,11 @@ namespace mike_and_conquer
             UpdateGDIMinigunners(gameTime);
             UpdateNodMinigunners(gameTime);
             UpdateBarracks(gameTime);
+            if (mcv != null)
+            {
+                mcv.Update(gameTime);
+            }
+
         }
 
 
@@ -471,6 +482,13 @@ namespace mike_and_conquer
         }
 
 
+        public MCV AddMCV(Point positionInWorldCoordinates)
+        {
+            mcv = new MCV(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this);
+            return mcv;
+        }
+
+
         public Minigunner AddNodMinigunner(Point positionInWorldCoordinates, bool aiIsOn)
         {
 
@@ -537,6 +555,34 @@ namespace mike_and_conquer
 
         }
 
+        public MCV CreateMCVViaEvent(Point position)
+        {
+            CreateMCVGameEvent gameEvent = new CreateMCVGameEvent(position);
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            MCV mcv = gameEvent.GetMCV();
+            return mcv;
+
+        }
+
+
+
+        public void SetGDIMinigunnerHealthViaEvent(int minigunnerId, int newHealth)
+        {
+            SetGDIMinigunnerHealthGameEvent gameEvent = new SetGDIMinigunnerHealthGameEvent(minigunnerId, newHealth);
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+        }
+
+
+        
+
         public Sandbag CreateSandbagViaEvent(int x, int y, int index)
         {
             CreateSandbagGameEvent gameEvent = new CreateSandbagGameEvent(x, y, index);
@@ -593,9 +639,9 @@ namespace mike_and_conquer
         }
 
 
-        public void ResetGameViaEvent()
+        public void ResetGameViaEvent(bool drawShroud)
         {
-            ResetGameGameEvent gameEvent = new ResetGameGameEvent();
+            ResetGameGameEvent gameEvent = new ResetGameGameEvent(drawShroud);
 
             lock (gameEvents)
             {
@@ -630,7 +676,7 @@ namespace mike_and_conquer
             return gameEvent.GetGameState();
         }
 
-        public MapTileInstance FindMapSquare(int xWorldCoordinate, int yWorldCoordinate)
+        public MapTileInstance FindMapTileInstance(int xWorldCoordinate, int yWorldCoordinate)
         {
         
             foreach (MapTileInstance nextBasicMapSquare in this.gameMap.MapTileInstanceList)
@@ -644,7 +690,7 @@ namespace mike_and_conquer
         
         }
 
-        public MapTileInstance FindMapSquareAllowNull(int xWorldCoordinate, int yWorldCoordinate)
+        public MapTileInstance FindMapTileInstanceAllowNull(int xWorldCoordinate, int yWorldCoordinate)
         {
 
             foreach (MapTileInstance nextBasicMapSquare in this.gameMap.MapTileInstanceList)
@@ -758,7 +804,7 @@ namespace mike_and_conquer
 
         public void MakeMapSquareVisible(Point positionInWorldCoordinates, MapTileInstance.MapTileVisibility visibility)
         {
-            MapTileInstance mapTileInstance = this.FindMapSquare(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
+            MapTileInstance mapTileInstance = this.FindMapTileInstance(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
             mapTileInstance.Visibility = visibility;
         }
     }

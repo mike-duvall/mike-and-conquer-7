@@ -286,7 +286,7 @@ namespace mike_and_conquer
                     if (IsValidMoveDestination(new Point(mouseX, mouseY)))
                     {
                         MapTileInstance clickedMapTileInstance =
-                            GameWorld.instance.FindMapSquare(mouseX, mouseY);
+                            GameWorld.instance.FindMapTileInstance(mouseX, mouseY);
                         Point centerOfSquare = clickedMapTileInstance.GetCenter();
                         nextMinigunner.OrderToMoveToDestination(centerOfSquare);
                     }
@@ -300,7 +300,7 @@ namespace mike_and_conquer
 
             Boolean isValidMoveDestination = true;
             MapTileInstance clickedMapTileInstance =
-                GameWorld.instance.FindMapSquare(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
+                GameWorld.instance.FindMapTileInstance(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
             if (clickedMapTileInstance.IsBlockingTerrain)
             {
                 isValidMoveDestination = false;

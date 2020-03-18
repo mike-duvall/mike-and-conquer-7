@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gamesprite;
-
+using Microsoft.Xna.Framework;
 
 namespace mike_and_conquer
 {
@@ -13,6 +13,8 @@ namespace mike_and_conquer
         public const string SHP_FILE_NAME = "shadow.shp";
 
         private static List<UnitFrame> shadowFrameList;
+        private static Texture2D blankMask;
+        public static int MISSING_MAPPING_INDEX = 666;
 
 
         public PartiallyVisibileMapTileMask()
@@ -21,13 +23,37 @@ namespace mike_and_conquer
             {
                 shadowFrameList =
                     MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
+                InitializeMissingMappingMask();
             }
+
+        }
+
+        private static void InitializeMissingMappingMask()
+        {
+            blankMask = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, 24, 24);
+            Color[] colorData = new Color[blankMask.Width * blankMask.Height];
+            int numPixels = 24 * 24;
+            for (int i = 0; i < numPixels; i++)
+            {
+                Color xnaColor = new Color(16, 0, 0, 1);
+                colorData[i] = xnaColor;
+            }
+
+            blankMask.SetData(colorData);
         }
 
 
         public Texture2D GetMask(int index)
         {
-            return shadowFrameList[index].Texture;
+            if (index == MISSING_MAPPING_INDEX)
+            {
+                return blankMask;
+            }
+            else
+            {
+                return shadowFrameList[index].Texture;
+            }
+
         }
     }
 }

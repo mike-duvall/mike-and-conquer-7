@@ -72,6 +72,8 @@
   <ItemGroup>
     <Compile Include="mike-and-conquer\aicontroller\MinigunnerAIController.cs" />
     <Compile Include="mike-and-conquer\gameevent\AsyncGameEvent.cs" />
+    <Compile Include="mike-and-conquer\gameevent\CreateMCVGameEvent.cs" />
+    <Compile Include="mike-and-conquer\gameevent\SetGDIMinigunnerHealthGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateSandbagGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetCurrentGameStateGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetScreenshotGameEvent.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameobjects\GDIBarracks.cs" />
+    <Compile Include="mike-and-conquer\gameobjects\MCV.cs" />
     <Compile Include="mike-and-conquer\gameobjects\TerrainItemDescriptor.cs" />
     <Compile Include="mike-and-conquer\gameobjects\TerrainItem.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Sandbag.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="mike-and-conquer\gamesprite\SpriteSheet.cs" />
     <Compile Include="mike-and-conquer\gamesprite\UnitFrame.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileShroudMapping.cs" />
+    <Compile Include="mike-and-conquer\gameview\MCVView.cs" />
     <Compile Include="mike-and-conquer\gameview\SpriteSortLayers.cs" />
     <Compile Include="mike-and-conquer\gameview\GameWorldView.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileInstanceView.cs" />
@@ -144,6 +148,9 @@
     <Compile Include="mike-and-conquer\openra\TmpTDLoader.cs" />
     <Compile Include="mike-and-conquer\openra\XORDeltaCompression.cs" />
     <Compile Include="mike-and-conquer\pathfinding\AStar.cs" />
+    <Compile Include="mike-and-conquer\rest\MCVController.cs" />
+    <Compile Include="mike-and-conquer\rest\RestResetOptions.cs" />
+    <Compile Include="mike-and-conquer\rest\RestMinigunner.cs" />
     <Compile Include="mike-and-conquer\rest\ScreenshotController.cs" />
     <Compile Include="mike-and-conquer\rest\MouseCursorStateController.cs" />
     <Compile Include="mike-and-conquer\rest\GameStateController.cs" />
@@ -158,7 +165,7 @@
     <Compile Include="mike-and-conquer\rest\RightClickController.cs" />
     <Compile Include="mike-and-conquer\rest\LeftClickController.cs" />
     <Compile Include="mike-and-conquer\rest\RestPoint.cs" />
-    <Compile Include="mike-and-conquer\rest\RestMinigunner.cs" />
+    <Compile Include="mike-and-conquer\rest\RestMCV.cs" />
     <Compile Include="mike-and-conquer\rest\NodMinigunnerController.cs" />
     <Compile Include="mike-and-conquer\main\Program.cs" />
     <Compile Include="mike-and-conquer\openra\ShpTDLoader.cs" />

@@ -52,8 +52,10 @@ namespace mike_and_conquer.gameview
 
         public List<TerrainView> terrainViewList;
 
+        public MCVView mcvView;
 
         public static GameWorldView instance;
+
 
 
 
@@ -77,11 +79,13 @@ namespace mike_and_conquer.gameview
         }
 
 
+
         public void HandleReset()
         {
             gdiMinigunnerViewList.Clear();
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
+            mcvView = null;
 
         }
 
@@ -115,6 +119,11 @@ namespace mike_and_conquer.gameview
         public void AddGDIBarracksView(GDIBarracks gdiBarracks)
         {
             gdiBarracksView = new GDIBarracksView(gdiBarracks);
+        }
+
+        public void AddMCVView(MCV mcv)
+        {
+            mcvView = new MCVView(mcv);
         }
 
 

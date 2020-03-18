@@ -1202,16 +1202,16 @@ namespace mike_and_conquer.gameview
 
         }
 
-        private bool VisibilityMatches(Nullable<MapTileInstance.MapTileVisibility> expectedVisibility,
-            Nullable<MapTileInstance.MapTileVisibility> actualVisibility)
-        {
-            if (!expectedVisibility.HasValue)
-            {
-                return true;
-            }
-
-            return expectedVisibility == actualVisibility;
-        }
+        // private bool VisibilityMatches(Nullable<MapTileInstance.MapTileVisibility> expectedVisibility,
+        //     Nullable<MapTileInstance.MapTileVisibility> actualVisibility)
+        // {
+        //     if (!expectedVisibility.HasValue)
+        //     {
+        //         return true;
+        //     }
+        //
+        //     return expectedVisibility == actualVisibility;
+        // }
 
 
 
@@ -1235,51 +1235,56 @@ namespace mike_and_conquer.gameview
                     mapping.south == south &&
                     mapping.west == west &&
                     mapping.north == north &&
-                    VisibilityMatches(mapping.northEast, northEast) &&
-                    VisibilityMatches(mapping.southEast, southEast) &&
-                    VisibilityMatches(mapping.southWest, southWest) &&
-                    VisibilityMatches(mapping.northWest, northWest))
+                    // VisibilityMatches(mapping.northEast, northEast) &&
+                    // VisibilityMatches(mapping.southEast, southEast) &&
+                    // VisibilityMatches(mapping.southWest, southWest) &&
+                    // VisibilityMatches(mapping.northWest, northWest))
+                    mapping.northEast == northEast &&
+                    mapping.southEast == southEast &&
+                    mapping.southWest == southWest &&
+                    mapping.northWest == northWest)
+
                 {
 
 
-                    if (!mapping.northEast.HasValue || !mapping.southEast.HasValue || !mapping.southWest.HasValue ||
-                        !mapping.northWest.HasValue)
-                    {
-
-
-                        String nullEntryMessages = "\nMapping had null entries: \neast:" + mapping.east + "\n" +
-                                            "south:" + mapping.south + "\n" +
-                                            "west:" + mapping.west + "\n" +
-                                            "north:" + mapping.north + "\n" +
-                                            "shroudTileIndex=" + mapping.shroudTileIndex;
-
-                        MikeAndConquerGame.instance.log.Information(nullEntryMessages);
-
-
-                        String matchingMapping = "\n\nmapTileShroudMappingList.Add(new MapTileShroudMapping( \n" +
-                                                 "MapTileInstance.MapTileVisibility." + east + ", \n" +
-                                                 "MapTileInstance.MapTileVisibility." + southEast + ", \n" +
-                                                 "MapTileInstance.MapTileVisibility." + south + ", \n" +
-                                                 "MapTileInstance.MapTileVisibility." + southWest + ", \n" +
-                                                 "MapTileInstance.MapTileVisibility." + west + ", \n" +
-                                                 "MapTileInstance.MapTileVisibility." + northWest + ", \n" +
-                                                 "MapTileInstance.MapTileVisibility." + north + ", \n" +
-                                                 "MapTileInstance.MapTileVisibility." + northEast + ", \n" +
-                                                 mapping.shroudTileIndex + "));";
-                        MikeAndConquerGame.instance.log.Information(matchingMapping);
-
-
-                        if (east == MapTileInstance.MapTileVisibility.NotVisible &&
-                            south == MapTileInstance.MapTileVisibility.NotVisible &&
-                            west == MapTileInstance.MapTileVisibility.PartiallyVisible &&
-                            north == MapTileInstance.MapTileVisibility.Visible)
-                        {
-                            int xx = 3;
-                        }
-
-
-
-                    }
+                    // if (!mapping.northEast.HasValue || !mapping.southEast.HasValue || !mapping.southWest.HasValue ||
+                    //     !mapping.northWest.HasValue)
+                    // {
+                    //
+                    //
+                    //     String nullEntryMessages = "\nMapping had null entries: \neast:" + mapping.east + "\n" +
+                    //                         "south:" + mapping.south + "\n" +
+                    //                         "west:" + mapping.west + "\n" +
+                    //                         "north:" + mapping.north + "\n" +
+                    //                         "shroudTileIndex=" + mapping.shroudTileIndex;
+                    //
+                    //     MikeAndConquerGame.instance.log.Information(nullEntryMessages);
+                    //
+                    //
+                    //     String matchingMapping = "\n\nmapTileShroudMappingList.Add(new MapTileShroudMapping( \n" +
+                    //                              "MapTileInstance.MapTileVisibility." + east + ", \n" +
+                    //                              "MapTileInstance.MapTileVisibility." + southEast + ", \n" +
+                    //                              "MapTileInstance.MapTileVisibility." + south + ", \n" +
+                    //                              "MapTileInstance.MapTileVisibility." + southWest + ", \n" +
+                    //                              "MapTileInstance.MapTileVisibility." + west + ", \n" +
+                    //                              "MapTileInstance.MapTileVisibility." + northWest + ", \n" +
+                    //                              "MapTileInstance.MapTileVisibility." + north + ", \n" +
+                    //                              "MapTileInstance.MapTileVisibility." + northEast + ", \n" +
+                    //                              mapping.shroudTileIndex + "));";
+                    //     MikeAndConquerGame.instance.log.Information(matchingMapping);
+                    //
+                    //
+                    //     if (east == MapTileInstance.MapTileVisibility.NotVisible &&
+                    //         south == MapTileInstance.MapTileVisibility.NotVisible &&
+                    //         west == MapTileInstance.MapTileVisibility.PartiallyVisible &&
+                    //         north == MapTileInstance.MapTileVisibility.Visible)
+                    //     {
+                    //         int xx = 3;
+                    //     }
+                    //
+                    //
+                    //
+                    // }
 
 
                     return mapping.shroudTileIndex;

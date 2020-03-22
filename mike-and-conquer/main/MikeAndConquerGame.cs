@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gamesprite;
@@ -29,6 +28,8 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Serilog;
 
 using Matrix = Microsoft.Xna.Framework.Matrix;
+
+using MCVSelectionBox = mike_and_conquer.gameobjects.MCVSelectionBox;
 
 
 
@@ -536,11 +537,10 @@ namespace mike_and_conquer
         private void LoadSingleTextures()
         {
             spriteSheet.LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.MISSION_SPRITE_KEY, "Mission");
-            spriteSheet.LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY,
-                "Accomplished");
+            spriteSheet.LoadSingleTextureFromFile(gameobjects.MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
             spriteSheet.LoadSingleTextureFromFile(gameobjects.MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
-            spriteSheet.LoadSingleTextureFromFile(gameobjects.DestinationSquare.SPRITE_KEY,
-                gameobjects.DestinationSquare.SPRITE_KEY);
+            spriteSheet.LoadSingleTextureFromFile(gameobjects.DestinationSquare.SPRITE_KEY, gameobjects.DestinationSquare.SPRITE_KEY);
+            spriteSheet.LoadSingleTextureFromFile(MCVSelectionBox.SPRITE_KEY, MCVSelectionBox.SPRITE_KEY);
         }
 
 

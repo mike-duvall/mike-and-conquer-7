@@ -80,7 +80,7 @@ namespace mike_and_conquer
 
             clickDetectionRectangle = CreateClickDetectionRectangle();
             movementDistanceEpsilon = movementVelocity + (double).04f;
-            selected = false;
+            selected = true;
         }
 
         public void Update(GameTime gameTime)

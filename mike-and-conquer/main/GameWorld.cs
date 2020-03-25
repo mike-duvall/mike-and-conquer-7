@@ -381,18 +381,46 @@ namespace mike_and_conquer
             return foundMinigunner;
         }
 
-        internal void SelectSingleGDIUnit(Minigunner minigunner)
+
+        void DeslectAllUnits()
         {
-            minigunner.selected = true;
             foreach (Minigunner nextMinigunner in gdiMinigunnerList)
             {
-                if (nextMinigunner.id != minigunner.id)
-                {
-                    nextMinigunner.selected = false;
-                }
+                nextMinigunner.selected = false;
+            }
+
+            if (GameWorld.instance.MCV != null)
+            {
+                GameWorld.instance.MCV.selected = false;
             }
 
         }
+
+        internal void SelectSingleGDIUnit(Minigunner minigunner)
+        {
+            DeslectAllUnits();
+            minigunner.selected = true;
+            // foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+            // {
+            //     if (nextMinigunner.id != minigunner.id)
+            //     {
+            //         nextMinigunner.selected = false;
+            //     }
+            // }
+        }
+
+        internal void SelectMCV(MCV mcv)
+        {
+            DeslectAllUnits();
+            mcv.selected = true;
+            // foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+            // {
+            //     nextMinigunner.selected = false;
+            // }
+
+        }
+
+
 
         public void Update(GameTime gameTime)
         {

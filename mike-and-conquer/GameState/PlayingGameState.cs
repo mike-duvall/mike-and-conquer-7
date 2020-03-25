@@ -272,6 +272,11 @@ namespace mike_and_conquer
                 nextMinigunner.selected = false;
             }
 
+            if (GameWorld.instance.MCV != null)
+            {
+                GameWorld.instance.MCV.selected = false;
+            }
+
         }
 
 
@@ -356,9 +361,22 @@ namespace mike_and_conquer
                 }
             }
 
-            return handled;
+            if (!handled)
+            {
+                if (GameWorld.instance.MCV != null)
+                {
+                    if (GameWorld.instance.MCV.ContainsPoint(mouseX, mouseY))
+                    {
+                        handled = true;
+                        GameWorld.instance.SelectMCV(GameWorld.instance.MCV);
+                    }
+                }
 
+            }
+
+            return handled;
         }
+
 
         internal Boolean CheckForAndHandleLeftClickOnEnemyUnit(int mouseX, int mouseY)
         {

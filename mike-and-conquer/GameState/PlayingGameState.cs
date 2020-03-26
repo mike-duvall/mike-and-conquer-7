@@ -281,7 +281,6 @@ namespace mike_and_conquer
 
 
 
-
         private bool CheckForAndHandleLeftClickOnMap(int mouseX, int mouseY)
         {
             foreach(Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
@@ -295,6 +294,22 @@ namespace mike_and_conquer
                         Point centerOfSquare = clickedMapTileInstance.GetCenter();
                         nextMinigunner.OrderToMoveToDestination(centerOfSquare);
                     }
+                }
+            }
+
+            MCV mcv = GameWorld.instance.MCV;
+            if (mcv != null)
+            {
+                if (mcv.selected == true)
+                {
+                    if (IsValidMoveDestination(new Point(mouseX, mouseY)))
+                    {
+                        MapTileInstance clickedMapTileInstance =
+                            GameWorld.instance.FindMapTileInstance(mouseX, mouseY);
+                        Point centerOfSquare = clickedMapTileInstance.GetCenter();
+                        mcv.OrderToMoveToDestination(centerOfSquare);
+                    }
+
                 }
             }
             return true;

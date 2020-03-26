@@ -9,9 +9,24 @@ namespace mike_and_conquer.rest
 
     public class MCVController : ApiController
     {
-        public IEnumerable<string> Get()
+        public IHttpActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            MCV mcv = GameWorld.instance.MCV;
+            RestMCV restMCV = new RestMCV();
+
+            restMCV.x = (int)mcv.positionInWorldCoordinates.X;
+            restMCV.y = (int)mcv.positionInWorldCoordinates.Y;
+            // Vector2 screenPosition =
+            //     MikeAndConquerGame.instance.ConvertWorldCoordinatesToScreenCoordinates(minigunner
+            //         .positionInWorldCoordinates);
+            // restMinigunner.screenX = (int)screenPosition.X;
+            // restMinigunner.screenY = (int)screenPosition.Y;
+            // restMinigunner.health = minigunner.health;
+            // restMinigunner.selected = minigunner.selected;
+            // restMinigunner.destinationX = (int) minigunner.destination.X;
+            // restMinigunner.destinationY = (int)minigunner.destination.Y;
+            return Ok(restMCV);
+
         }
 
         // public IHttpActionResult Get(int id)

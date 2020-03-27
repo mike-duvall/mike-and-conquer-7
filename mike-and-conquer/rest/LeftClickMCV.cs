@@ -55,6 +55,5 @@ namespace mike_and_conquer.rest
             return Ok();
         }
 
-
     }
 }

@@ -133,6 +133,18 @@ namespace mike_and_conquer
                     MikeAndConquerGame.instance.gameCursor.SetToMovementNotAllowedCursor();
                 }
             }
+            else if (GameWorld.instance.IsPointOnMap(mousePositionAsPointInWorldCoordinates) && IsAnMCVSelected())
+            {
+                if (IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToMoveToLocationCursor();
+                }
+                else
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToMovementNotAllowedCursor();
+                }
+            }
+
             else
             {
                 MikeAndConquerGame.instance.gameCursor.SetToMainCursor();
@@ -194,11 +206,19 @@ namespace mike_and_conquer
                     return true;
                 }
             }
-
             return false;
-
         }
 
+        bool IsAnMCVSelected()
+        {
+            MCV mcv = GameWorld.instance.MCV;
+            if (mcv != null)
+            {
+                return mcv.selected;
+            }
+
+            return false;
+        }
 
 
         internal Boolean NodMinigunnersExistAndAreAllDead()

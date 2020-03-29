@@ -31,6 +31,7 @@ namespace mike_and_conquer.gameview
         private Texture2D moveToLocationCursorTexture;
         private Texture2D movementNotAllowedCursorTexture;
         private Texture2D attackEnemyCursor;
+        private Texture2D buildConstructionYardCursorTexture;
 
         private Vector2 middleOfSprite;
 
@@ -46,10 +47,12 @@ namespace mike_and_conquer.gameview
             this.moveToLocationCursorTexture = loadTextureFromD2ShpFile(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "mouse.shp", 10);
             this.movementNotAllowedCursorTexture = loadTextureFromD2ShpFile(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "mouse.shp", 11);
             this.attackEnemyCursor = loadTextureFromD2ShpFile(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "mouse.shp", 18);
+            this.buildConstructionYardCursorTexture = loadTextureFromD2ShpFile(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "mouse.shp", 55);
             // 0 = main cursor
             // 10 = select movement location pointer
             // 11 = movement not allowed to this point, pointer
             // 18 through 25, attack enemy pointer
+            // 54?? through 62??, build construction yard point
 
             this.texture = mainCursorTexture;
             position = new Vector2(x, y);
@@ -86,6 +89,14 @@ namespace mike_and_conquer.gameview
             this.texture = attackEnemyCursor;
             middleOfSprite.X = this.texture.Width / 2;
             middleOfSprite.Y = this.texture.Height / 2;
+        }
+
+        public void SetToBuildConstructionYardCursor()
+        {
+            this.texture = buildConstructionYardCursorTexture;
+            middleOfSprite.X = this.texture.Width / 2;
+            middleOfSprite.Y = this.texture.Height / 2;
+
         }
 
 
@@ -127,11 +138,14 @@ namespace mike_and_conquer.gameview
             {
 
                 int paletteCode = frameData[i];
-                if (indexOfFrameToLoad == 10)
+
+
+                if (indexOfFrameToLoad == 10 || indexOfFrameToLoad == 55)
                 {
                     // TODO, BOGUS: Having to manually
                     // tweak the palette offsets for the 
-                    // movement destination cursor
+                    // movement destination and
+                    // "build construction yard" cursors
                     // Not sure why.  Other ones
                     // seems to need no tweak
                     if (paletteCode == 124)
@@ -176,6 +190,10 @@ namespace mike_and_conquer.gameview
             else if (texture == mainCursorTexture)
             {
                 return "DefaultArrowCursor";
+            }
+            else if (texture == buildConstructionYardCursorTexture)
+            {
+                return "BuildConstructionYardCursor";
             }
             else
             {

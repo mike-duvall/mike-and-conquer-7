@@ -15,11 +15,8 @@ namespace mike_and_conquer
     {
 
         Texture2D texture;
-
         Texture2D spriteBorderRectangleTexture;
-
-
-        private Vector2 middleOfSpriteInSpriteCoordinates;
+        public Vector2 middleOfSpriteInSpriteCoordinates;
 
 
         public int Width

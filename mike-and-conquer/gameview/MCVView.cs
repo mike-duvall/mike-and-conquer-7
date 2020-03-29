@@ -12,9 +12,8 @@ namespace mike_and_conquer.gameview
     public class MCVView
     {
         private UnitSprite unitSprite;
-        private UnitSelectionCursor unitSelectionCursor;
+        private MCVSelectionBox mcvSelectionBox;
         private DestinationSquare destinationSquare;
-//        private Minigunner myMinigunner;
         private MCV myMCV;
         private bool drawDestinationSquare;
 
@@ -32,7 +31,7 @@ namespace mike_and_conquer.gameview
             this.unitSprite = new UnitSprite(SPRITE_KEY);
             this.unitSprite.drawBoundingRectangle = false;
             this.unitSprite.drawShadow = true;
-            this.unitSelectionCursor = new UnitSelectionCursor((int)this.myMCV.positionInWorldCoordinates.X, (int)this.myMCV.positionInWorldCoordinates.Y);
+            this.mcvSelectionBox = new MCVSelectionBox();
             this.destinationSquare = new DestinationSquare();
             this.drawDestinationSquare = false;
 
@@ -41,7 +40,6 @@ namespace mike_and_conquer.gameview
             unitSprite.AddAnimationSequence(0, animationSequence);
 
         }
-
 
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -53,13 +51,13 @@ namespace mike_and_conquer.gameview
                 return;
             }
 
-            unitSelectionCursor.position = new Vector2(myMCV.positionInWorldCoordinates.X, myMCV.positionInWorldCoordinates.Y);
+            mcvSelectionBox.position = new Vector2(myMCV.positionInWorldCoordinates.X, myMCV.positionInWorldCoordinates.Y);
 
             unitSprite.Draw(gameTime, spriteBatch, myMCV.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
 
             if (myMCV.selected)
             {
-                unitSelectionCursor.Draw(gameTime, spriteBatch, SpriteSortLayers.UNIT_DEPTH);
+                mcvSelectionBox.Draw(gameTime, spriteBatch);
             }
 
             if (this.drawDestinationSquare && this.myMCV.state == MCV.State.MOVING)
@@ -78,14 +76,13 @@ namespace mike_and_conquer.gameview
             }
 
 
-            unitSelectionCursor.position = new Vector2(myMCV.positionInWorldCoordinates.X, myMCV.positionInWorldCoordinates.Y);
-
+            mcvSelectionBox.position = new Vector2(myMCV.positionInWorldCoordinates.X, myMCV.positionInWorldCoordinates.Y);
 
             unitSprite.DrawNoShadow(gameTime, spriteBatch, myMCV.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
 
             if (myMCV.selected)
             {
-                unitSelectionCursor.Draw(gameTime, spriteBatch, SpriteSortLayers.UNIT_DEPTH);
+                mcvSelectionBox.Draw(gameTime, spriteBatch);
             }
 
         }

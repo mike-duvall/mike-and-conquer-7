@@ -103,6 +103,18 @@
 /processorParam:TextureFormat=Color
 /build:m3.png
 
+#begin MCVSelectionBox.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MCVSelectionBox.png
+
 #begin Mission.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -244,13 +256,11 @@
 #begin tshade.mrf
 /copy:tshade.mrf
 
-#begin tunits.mrf
-/copy:tunits.mrf
-
-
 #begin tshadow.mrf
 /copy:tshadow.mrf
 
+#begin tunits.mrf
+/copy:tunits.mrf
 
 #begin v14.tem
 /copy:v14.tem

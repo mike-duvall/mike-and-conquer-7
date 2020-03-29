@@ -133,6 +133,22 @@ namespace mike_and_conquer
                     MikeAndConquerGame.instance.gameCursor.SetToMovementNotAllowedCursor();
                 }
             }
+            else if (GameWorld.instance.IsPointOnMap(mousePositionAsPointInWorldCoordinates) && IsAnMCVSelected())
+            {
+                if (IsPointOverMCV(mousePositionAsPointInWorldCoordinates))
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToBuildConstructionYardCursor();
+                }
+                else if (IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToMoveToLocationCursor();
+                }
+                else
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToMovementNotAllowedCursor();
+                }
+            }
+
             else
             {
                 MikeAndConquerGame.instance.gameCursor.SetToMainCursor();
@@ -185,6 +201,21 @@ namespace mike_and_conquer
             return false;
         }
 
+        bool IsPointOverMCV(Point pointInWorldCoordinates)
+        {
+
+            if (GameWorld.instance.MCV != null)
+            {
+                if (GameWorld.instance.MCV.ContainsPoint(pointInWorldCoordinates.X, pointInWorldCoordinates.Y))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
         bool IsAMinigunnerSelected()
         {
             foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
@@ -194,11 +225,19 @@ namespace mike_and_conquer
                     return true;
                 }
             }
-
             return false;
-
         }
 
+        bool IsAnMCVSelected()
+        {
+            MCV mcv = GameWorld.instance.MCV;
+            if (mcv != null)
+            {
+                return mcv.selected;
+            }
+
+            return false;
+        }
 
 
         internal Boolean NodMinigunnersExistAndAreAllDead()
@@ -272,8 +311,12 @@ namespace mike_and_conquer
                 nextMinigunner.selected = false;
             }
 
-        }
+            if (GameWorld.instance.MCV != null)
+            {
+                GameWorld.instance.MCV.selected = false;
+            }
 
+        }
 
 
 
@@ -290,6 +333,22 @@ namespace mike_and_conquer
                         Point centerOfSquare = clickedMapTileInstance.GetCenter();
                         nextMinigunner.OrderToMoveToDestination(centerOfSquare);
                     }
+                }
+            }
+
+            MCV mcv = GameWorld.instance.MCV;
+            if (mcv != null)
+            {
+                if (mcv.selected == true)
+                {
+                    if (IsValidMoveDestination(new Point(mouseX, mouseY)))
+                    {
+                        MapTileInstance clickedMapTileInstance =
+                            GameWorld.instance.FindMapTileInstance(mouseX, mouseY);
+                        Point centerOfSquare = clickedMapTileInstance.GetCenter();
+                        mcv.OrderToMoveToDestination(centerOfSquare);
+                    }
+
                 }
             }
             return true;
@@ -356,9 +415,22 @@ namespace mike_and_conquer
                 }
             }
 
-            return handled;
+            if (!handled)
+            {
+                if (GameWorld.instance.MCV != null)
+                {
+                    if (GameWorld.instance.MCV.ContainsPoint(mouseX, mouseY))
+                    {
+                        handled = true;
+                        GameWorld.instance.SelectMCV(GameWorld.instance.MCV);
+                    }
+                }
 
+            }
+
+            return handled;
         }
+
 
         internal Boolean CheckForAndHandleLeftClickOnEnemyUnit(int mouseX, int mouseY)
         {

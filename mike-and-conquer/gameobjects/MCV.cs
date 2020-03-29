@@ -203,11 +203,20 @@ namespace mike_and_conquer
         internal Rectangle CreateClickDetectionRectangle()
         {
 
-            int unitWidth = 12;
-            int unitHeight = 12;
+            int unitWidth = 24;
+            int unitHeight = 24;
+
 
             int x = (int)(positionInWorldCoordinates.X - (unitWidth / 2));
-            int y = (int)(positionInWorldCoordinates.Y - unitHeight) + (int)(1);  
+            // int y = (int)(positionInWorldCoordinates.Y - unitHeight) + (int)(1);
+             int y = (int)(positionInWorldCoordinates.Y - (unitHeight / 2)) + (int)(1);
+
+
+            // float yyy = unitHeight / 2;
+            //
+            // int y = (int)(positionInWorldCoordinates.Y - yyy) + (int)(1);
+
+
 
             Rectangle rectangle = new Rectangle(x,y,unitWidth,unitHeight);
             return rectangle;

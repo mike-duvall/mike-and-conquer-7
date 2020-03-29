@@ -100,6 +100,7 @@
     <Compile Include="mike-and-conquer\gamesprite\UnitFrame.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileShroudMapping.cs" />
     <Compile Include="mike-and-conquer\gameview\MCVView.cs" />
+    <Compile Include="mike-and-conquer\gameview\MCVSelectionBox.cs" />
     <Compile Include="mike-and-conquer\gameview\SpriteSortLayers.cs" />
     <Compile Include="mike-and-conquer\gameview\GameWorldView.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileInstanceView.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="mike-and-conquer\openra\TmpTDLoader.cs" />
     <Compile Include="mike-and-conquer\openra\XORDeltaCompression.cs" />
     <Compile Include="mike-and-conquer\pathfinding\AStar.cs" />
+    <Compile Include="mike-and-conquer\rest\LeftClickMCV.cs" />
     <Compile Include="mike-and-conquer\rest\MCVController.cs" />
     <Compile Include="mike-and-conquer\rest\RestResetOptions.cs" />
     <Compile Include="mike-and-conquer\rest\RestMinigunner.cs" />

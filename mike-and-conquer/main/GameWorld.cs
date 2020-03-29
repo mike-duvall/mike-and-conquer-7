@@ -400,24 +400,12 @@ namespace mike_and_conquer
         {
             DeslectAllUnits();
             minigunner.selected = true;
-            // foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            // {
-            //     if (nextMinigunner.id != minigunner.id)
-            //     {
-            //         nextMinigunner.selected = false;
-            //     }
-            // }
         }
 
         internal void SelectMCV(MCV mcv)
         {
             DeslectAllUnits();
             mcv.selected = true;
-            // foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            // {
-            //     nextMinigunner.selected = false;
-            // }
-
         }
 
 

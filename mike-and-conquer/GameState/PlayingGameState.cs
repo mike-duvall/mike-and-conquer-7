@@ -135,7 +135,11 @@ namespace mike_and_conquer
             }
             else if (GameWorld.instance.IsPointOnMap(mousePositionAsPointInWorldCoordinates) && IsAnMCVSelected())
             {
-                if (IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
+                if (IsPointOverMCV(mousePositionAsPointInWorldCoordinates))
+                {
+                    MikeAndConquerGame.instance.gameCursor.SetToBuildConstructionYardCursor();
+                }
+                else if (IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
                 {
                     MikeAndConquerGame.instance.gameCursor.SetToMoveToLocationCursor();
                 }
@@ -196,6 +200,21 @@ namespace mike_and_conquer
 
             return false;
         }
+
+        bool IsPointOverMCV(Point pointInWorldCoordinates)
+        {
+
+            if (GameWorld.instance.MCV != null)
+            {
+                if (GameWorld.instance.MCV.ContainsPoint(pointInWorldCoordinates.X, pointInWorldCoordinates.Y))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
 
         bool IsAMinigunnerSelected()
         {

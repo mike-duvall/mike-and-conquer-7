@@ -193,6 +193,10 @@ namespace mike_and_conquer
             }
 
 
+            // AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
+            // AddMCVAtMapSquareCoordinates(new Point(21, 12));
+
+
             //
             //            AddSandbag(10, 6, 5);
             //            AddSandbag(10, 7, 5);

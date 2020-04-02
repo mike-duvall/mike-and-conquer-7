@@ -12,6 +12,10 @@ namespace mike_and_conquer.rest
         public IHttpActionResult Get()
         {
             MCV mcv = GameWorld.instance.MCV;
+            if (mcv == null)
+            {
+                return NotFound();
+            }
             RestMCV restMCV = new RestMCV();
 
             restMCV.x = (int)mcv.positionInWorldCoordinates.X;

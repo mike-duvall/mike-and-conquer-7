@@ -16,7 +16,9 @@ namespace mike_and_conquer.gameview
         private List<MinigunnerView> nodMinigunnerViewList;
 
         private GDIBarracksView gdiBarracksView;
-//        private MinigunnerIconView minigunnerIconView;
+
+        private GDIConstructionYardView gdiConstructionYardView;
+        //        private MinigunnerIconView minigunnerIconView;
 
         private List<MapTileInstanceView> mapTileInstanceViewList;
 
@@ -49,6 +51,13 @@ namespace mike_and_conquer.gameview
         {
             get { return gdiBarracksView; }
         }
+
+        public GDIConstructionYardView GdiConstructionYardView
+        {
+            get { return gdiConstructionYardView; }
+        }
+
+
 
         public List<TerrainView> terrainViewList;
 
@@ -120,6 +129,13 @@ namespace mike_and_conquer.gameview
         {
             gdiBarracksView = new GDIBarracksView(gdiBarracks);
         }
+
+        public void AddGDIConstructionYardView(GDIConstructionYard gdiConstructionYard)
+        {
+            gdiConstructionYardView = new GDIConstructionYardView(gdiConstructionYard);
+        }
+
+
 
         public void AddMCVView(MCV mcv)
         {

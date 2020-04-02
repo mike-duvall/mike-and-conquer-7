@@ -42,10 +42,19 @@ namespace mike_and_conquer
             get { return gdiBarracks; }
         }
 
+        private GDIConstructionYard gdiConstructionYard;
+        public GDIConstructionYard GDIConstructionYard
+        {
+            get { return gdiConstructionYard; }
+        }
+
+
+
         private MCV mcv;
         public MCV MCV
         {
             get { return mcv; }
+            set { mcv = value; }
         }
 
         public NavigationGraph navigationGraph;
@@ -78,6 +87,7 @@ namespace mike_and_conquer
             nodMinigunnerList.Clear();
             sandbagList.Clear();
             mcv = null;
+            gdiConstructionYard = null;
             gameMap.Reset();
             InitializeNavigationGraph();
             return new PlayingGameState();
@@ -534,6 +544,14 @@ namespace mike_and_conquer
             return gdiBarracks;
         }
 
+        public GDIConstructionYard AddGDIConstructionYard(Point positionInWorldCoordinates)
+        {
+            //            AssertIsValidMinigunnerPosition(positionInWorldCoordinates);
+
+            // TODO Might want to check if one already exists and throw error if so
+            gdiConstructionYard = new GDIConstructionYard(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
+            return gdiConstructionYard;
+        }
 
 
         public GameState ProcessGameEvents()
@@ -779,7 +797,7 @@ namespace mike_and_conquer
         }
 
 
-        private Point ConvertWorldCoordinatesToMapTileCoordinates(Point pointInWorldCoordinates)
+        public Point ConvertWorldCoordinatesToMapTileCoordinates(Point pointInWorldCoordinates)
         {
         
             int destinationRow = pointInWorldCoordinates.Y;

@@ -417,12 +417,28 @@ namespace mike_and_conquer
 
             if (!handled)
             {
-                if (GameWorld.instance.MCV != null)
+                MCV mcv = GameWorld.instance.MCV;
+                if (mcv != null)
                 {
-                    if (GameWorld.instance.MCV.ContainsPoint(mouseX, mouseY))
+                    if (mcv.ContainsPoint(mouseX, mouseY))
                     {
                         handled = true;
-                        GameWorld.instance.SelectMCV(GameWorld.instance.MCV);
+                        if (mcv.selected == false)
+                        {
+                            GameWorld.instance.SelectMCV(GameWorld.instance.MCV);
+                        }
+                        else
+                        {
+
+
+                            Point mcvPositionInWorldCoordinates = new Point((int) mcv.positionInWorldCoordinates.X, (int) mcv.positionInWorldCoordinates.Y);
+                            // Point mcvPositionInMapTileCoordinates = GameWorld.instance.ConvertWorldCoordinatesToMapTileCoordinates(
+                            //     mcvPositionInWorldCoordinates);
+
+                            MikeAndConquerGame.instance.RemoveMCV();
+                            MikeAndConquerGame.instance.AddGDIConstructionYardAtWorldCoordinates(mcvPositionInWorldCoordinates);
+                        }
+
                     }
                 }
 

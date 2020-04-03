@@ -1362,6 +1362,7 @@ namespace mike_and_conquer
             spriteBatch.End();
         }
 
+
         private void DrawGameCursor(GameTime gameTime)
         {
             GraphicsDevice.Viewport = defaultViewport;

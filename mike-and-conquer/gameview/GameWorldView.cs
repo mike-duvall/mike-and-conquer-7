@@ -95,6 +95,7 @@ namespace mike_and_conquer.gameview
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
             mcvView = null;
+            gdiConstructionYardView = null;
 
         }
 

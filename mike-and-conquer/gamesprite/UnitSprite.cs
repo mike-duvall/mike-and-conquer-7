@@ -28,7 +28,7 @@ namespace mike_and_conquer
         Texture2D spriteBorderRectangleTexture;
         public Boolean drawBoundingRectangle;
 
-        private Vector2 middleOfSpriteInSpriteCoordinates;
+        public Vector2 middleOfSpriteInSpriteCoordinates;
 
         private bool animate;
 

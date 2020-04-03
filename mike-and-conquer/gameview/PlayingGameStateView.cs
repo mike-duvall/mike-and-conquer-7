@@ -17,6 +17,7 @@ namespace mike_and_conquer.gameview
 
             // TODO:  Consider pulling this code back into this class, from MikeAndConquerGame
 //            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
+            GameWorldView.instance.GdiConstructionYardView.Draw(gameTime,spriteBatch);
 //
 //            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
 //            {

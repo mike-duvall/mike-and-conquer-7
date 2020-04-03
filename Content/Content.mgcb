@@ -214,6 +214,11 @@
 #begin Shp/mcv.shp
 /copy:Shp/mcv.shp
 
+
+#begin Shp/fact.shp
+/copy:Shp/fact.shp
+
+
 #begin T01.tem
 /copy:T01.tem
 

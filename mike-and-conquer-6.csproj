@@ -82,6 +82,7 @@
     <Compile Include="mike-and-conquer\gameevent\GetNodMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="mike-and-conquer\gameevent\CreateGDIMinigunnerGameEvent.cs" />
+    <Compile Include="mike-and-conquer\gameobjects\GDIConstructionYard.cs" />
     <Compile Include="mike-and-conquer\gameobjects\GDIBarracks.cs" />
     <Compile Include="mike-and-conquer\gameobjects\MCV.cs" />
     <Compile Include="mike-and-conquer\gameobjects\TerrainItemDescriptor.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="mike-and-conquer\gamesprite\ShpFileImage.cs" />
     <Compile Include="mike-and-conquer\gamesprite\SpriteSheet.cs" />
     <Compile Include="mike-and-conquer\gamesprite\UnitFrame.cs" />
+    <Compile Include="mike-and-conquer\gameview\GDIConstructionYardView.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileShroudMapping.cs" />
     <Compile Include="mike-and-conquer\gameview\MCVView.cs" />
     <Compile Include="mike-and-conquer\gameview\MCVSelectionBox.cs" />
@@ -150,7 +152,9 @@
     <Compile Include="mike-and-conquer\openra\XORDeltaCompression.cs" />
     <Compile Include="mike-and-conquer\pathfinding\AStar.cs" />
     <Compile Include="mike-and-conquer\rest\LeftClickMCV.cs" />
+    <Compile Include="mike-and-conquer\rest\GDIConstructionYardController.cs" />
     <Compile Include="mike-and-conquer\rest\MCVController.cs" />
+    <Compile Include="mike-and-conquer\rest\RestGDIConstructionYard.cs" />
     <Compile Include="mike-and-conquer\rest\RestResetOptions.cs" />
     <Compile Include="mike-and-conquer\rest\RestMinigunner.cs" />
     <Compile Include="mike-and-conquer\rest\ScreenshotController.cs" />
@@ -284,7 +288,9 @@
     <Content Include="xcc-mixer-notes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
+    <MonoGameContentReference Include="Content\Content.mgcb">
+      <SubType>Designer</SubType>
+    </MonoGameContentReference>
     <None Include="app.manifest" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

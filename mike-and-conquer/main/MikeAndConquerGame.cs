@@ -311,6 +311,8 @@ namespace mike_and_conquer
                 AddTestModeObjects();
             }
 
+            //AddGDIConstructionYardAtMapTileCoordinates(new Point(20, 15));
+
             gameWorld.InitializeNavigationGraph();
             gameCursor = new GameCursor(1, 1);
 
@@ -496,6 +498,11 @@ namespace mike_and_conquer
                 raiSpriteFrameManager.GetSpriteFramesForUnit(GDIBarracksView.SHP_FILE_NAME),
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
 
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(GDIConstructionYardView.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                GDIConstructionYardView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(GDIConstructionYardView.SHP_FILE_NAME),
+                GDIConstructionYardView.SHP_FILE_COLOR_MAPPER);
 
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(PartiallyVisibileMapTileMask.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(PartiallyVisibileMapTileMask.SPRITE_KEY,
@@ -1189,6 +1196,12 @@ namespace mike_and_conquer
                 GameWorldView.instance.mcvView.DrawNoShadow(gameTime, spriteBatch);
             }
 
+            if (GameWorldView.instance.GdiConstructionYardView != null)
+            {
+                GameWorldView.instance.GdiConstructionYardView.DrawNoShadow(gameTime, spriteBatch);
+            }
+
+
 
             spriteBatch.End();
         }
@@ -1349,6 +1362,7 @@ namespace mike_and_conquer
             spriteBatch.End();
         }
 
+
         private void DrawGameCursor(GameTime gameTime)
         {
             GraphicsDevice.Viewport = defaultViewport;
@@ -1430,26 +1444,50 @@ namespace mike_and_conquer
         }
 
 
+        public void AddGDIConstructionYardAtMapTileCoordinates(Point positionInMapSquareCoordinates)
+        {
+            int xInWorldCoordinates = positionInMapSquareCoordinates.X * GameWorld.MAP_TILE_WIDTH;
+            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * GameWorld.MAP_TILE_HEIGHT;
+
+            Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
+
+            GDIConstructionYard gdiConstructionYard = gameWorld.AddGDIConstructionYard(positionInWorldCoordinates);
+            gameWorldView.AddGDIConstructionYardView(gdiConstructionYard);
+        }
+
+
+        public void AddGDIConstructionYardAtWorldCoordinates(Point positionInWorldCoordinates)
+        {
+
+            GDIConstructionYard gdiConstructionYard = gameWorld.AddGDIConstructionYard(positionInWorldCoordinates);
+            gameWorldView.AddGDIConstructionYardView(gdiConstructionYard);
+        }
+
+
+
         public void AddMCVAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
         {
             Point positionInWorldCoordinates =
                 gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
 
-
             MCV mcv = gameWorld.AddMCV(positionInWorldCoordinates);
             gameWorldView.AddMCVView(mcv);
-
         }
 
         public MCV AddMCVAtWorldCoordinates(Point positionInWorldCoordinates)
         {
-
             MCV mcv = gameWorld.AddMCV(positionInWorldCoordinates);
             gameWorldView.AddMCVView(mcv);
             return mcv;
-
         }
 
+
+        public void RemoveMCV()
+        {
+            GameWorld.instance.MCV = null;
+            GameWorldView.instance.mcvView = null;
+
+        }
 
 
         internal Minigunner AddNodMinigunnerAtMapSquareCoordinates(Point positionInMapSquareCoordinates, bool aiIsOn)

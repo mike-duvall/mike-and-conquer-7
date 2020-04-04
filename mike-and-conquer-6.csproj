@@ -103,13 +103,14 @@
     <Compile Include="mike-and-conquer\gameview\MapTileShroudMapping.cs" />
     <Compile Include="mike-and-conquer\gameview\MCVView.cs" />
     <Compile Include="mike-and-conquer\gameview\MCVSelectionBox.cs" />
+    <Compile Include="mike-and-conquer\gameview\sidebar\BarrackToolbarIconView.cs" />
     <Compile Include="mike-and-conquer\gameview\SpriteSortLayers.cs" />
     <Compile Include="mike-and-conquer\gameview\GameWorldView.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileInstanceView.cs" />
     <Compile Include="mike-and-conquer\gameview\DestinationSquare.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileInstance.cs" />
     <Compile Include="mike-and-conquer\gameview\GameCursor.cs" />
-    <Compile Include="mike-and-conquer\gameview\MinigunnerIconView.cs" />
+    <Compile Include="mike-and-conquer\gameview\sidebar\MinigunnerIconView.cs" />
     <Compile Include="mike-and-conquer\gameview\MinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\MissionFailedGameStateView.cs" />
     <Compile Include="mike-and-conquer\gameview\MissionAccomplishedGameStateView.cs" />
@@ -308,6 +309,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <Import Project="packages\MonoGame.Framework.WindowsDX.3.7.1.189\build\MonoGame.Framework.WindowsDX.targets" Condition="Exists('packages\MonoGame.Framework.WindowsDX.3.7.1.189\build\MonoGame.Framework.WindowsDX.targets')" />

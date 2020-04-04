@@ -56,6 +56,8 @@ namespace mike_and_conquer
 
         public ShadowMapper shadowMapper;
         private MinigunnerIconView minigunnerIconView;
+        private BarracksToolbarIconView barracksToolbarIconView;
+
 
         private GameStateView currentGameStateView;
 
@@ -217,6 +219,7 @@ namespace mike_and_conquer
             //                AddSandbag(14, 6, 2);
             //                AddSandbag(14, 7, 8);
             minigunnerIconView = new MinigunnerIconView();
+            barracksToolbarIconView = new BarracksToolbarIconView();
             AddGDIBarracksAtMapSquareCoordinates(new Point(20, 15));
 
         }
@@ -491,6 +494,14 @@ namespace mike_and_conquer
                 MinigunnerIconView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(MinigunnerIconView.SHP_FILE_NAME),
                 MinigunnerIconView.SHP_FILE_COLOR_MAPPER);
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(BarracksToolbarIconView.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                BarracksToolbarIconView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(BarracksToolbarIconView.SHP_FILE_NAME),
+                BarracksToolbarIconView.SHP_FILE_COLOR_MAPPER);
+
+
 
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(GDIBarracksView.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(
@@ -1358,7 +1369,13 @@ namespace mike_and_conquer
             spriteBatch.Draw(toolbarBackgroundRectangle,
                 new Rectangle(0, 0, toolbarViewport.Width / 2, toolbarViewport.Height / 2), Color.White);
 
-            minigunnerIconView.Draw(gameTime, spriteBatch);
+            if (minigunnerIconView != null)
+            {
+                minigunnerIconView.Draw(gameTime, spriteBatch);
+            }
+
+            barracksToolbarIconView.Draw(gameTime, spriteBatch);
+
             spriteBatch.End();
         }
 

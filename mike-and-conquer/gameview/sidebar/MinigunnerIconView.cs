@@ -18,7 +18,7 @@ namespace mike_and_conquer.gameview
 
         public const string SPRITE_KEY = "MinigunnerIcon";
 
-        public const string SHP_FILE_NAME = "e1icnh.tem";
+        public const string SHP_FILE_NAME = "SideBar/e1icnh.tem";
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
 
@@ -91,7 +91,7 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            toolbarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2(toolbarBuildIconSprite.Width / 2, toolbarBuildIconSprite.Height / 2));
+            toolbarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2((toolbarBuildIconSprite.Width / 2) + 80, toolbarBuildIconSprite.Height / 2));
         }
 
     }

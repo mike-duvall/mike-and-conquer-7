@@ -77,11 +77,12 @@ namespace mike_and_conquer.gameview
         public void Update(GameTime gameTime)
         {
 
-            GDIBarracks barracks = MikeAndConquerGame.instance.gameWorld.GDIBarracks;
-            if (barracks.IsBuildingMinigunner)
+            // GDIBarracks barracks = MikeAndConquerGame.instance.gameWorld.GDIBarracks;
+            GDIConstructionYard constructionYard = MikeAndConquerGame.instance.gameWorld.GDIConstructionYard;
+            if (constructionYard.IsBuildingBarracks)
             {
                 toolbarBuildIconSprite.isBuilding = true;
-                toolbarBuildIconSprite.SetPercentBuildComplete(barracks.PercentMinigunnerBuildComplete);
+                toolbarBuildIconSprite.SetPercentBuildComplete(constructionYard.PercentBarracksBuildComplete);
             }
             else
             {

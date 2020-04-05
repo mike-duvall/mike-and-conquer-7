@@ -49,6 +49,15 @@ namespace mike_and_conquer.gameview
                 SpriteSortLayers.BUILDING_DEPTH);
         }
 
+        internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            unitSprite.DrawNoShadow(gameTime, spriteBatch, myBarracks.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
+        }
+
+        internal void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            unitSprite.DrawShadowOnly(gameTime, spriteBatch, myBarracks.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
+        }
 
 
     }

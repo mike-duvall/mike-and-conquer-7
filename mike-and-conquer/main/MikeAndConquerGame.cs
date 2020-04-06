@@ -55,8 +55,8 @@ namespace mike_and_conquer
         private GameWorldView gameWorldView;
 
         public ShadowMapper shadowMapper;
-        private MinigunnerIconView minigunnerIconView;
-        private BarracksToolbarIconView barracksToolbarIconView;
+        public MinigunnerIconView minigunnerIconView;
+        public BarracksToolbarIconView barracksToolbarIconView;
 
 
         private GameStateView currentGameStateView;
@@ -218,7 +218,7 @@ namespace mike_and_conquer
             //                AddSandbag(14, 5, 0);
             //                AddSandbag(14, 6, 2);
             //                AddSandbag(14, 7, 8);
-            minigunnerIconView = new MinigunnerIconView();
+//            minigunnerIconView = new MinigunnerIconView();
 //            AddGDIBarracksAtMapSquareCoordinates(new Point(20, 15));
 
         }
@@ -1218,6 +1218,7 @@ namespace mike_and_conquer
                 GameWorldView.instance.GdiConstructionYardView.DrawNoShadow(gameTime, spriteBatch);
             }
 
+            
 
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
@@ -1501,6 +1502,8 @@ namespace mike_and_conquer
 
             GDIBarracks gdiBarracks = gameWorld.AddGDIBarracks(positionInWorldCoordinates);
             gameWorldView.AddGDIBarracksView(gdiBarracks);
+
+            minigunnerIconView = new MinigunnerIconView();
         }
 
 

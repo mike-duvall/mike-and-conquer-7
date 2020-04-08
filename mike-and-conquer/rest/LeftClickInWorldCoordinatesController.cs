@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using Microsoft.Xna.Framework;
 using MouseInputHandler = mike_and_conquer_6.mike_and_conquer.MouseInputHandler;
 
@@ -17,6 +18,7 @@ namespace mike_and_conquer.rest
             Vector2 locationInWorldCoordinates = new Vector2(point.x, point.y);
             Vector2 locationInScreenCoordinates = MikeAndConquerGame.instance.ConvertWorldCoordinatesToScreenCoordinates(locationInWorldCoordinates);
             MouseInputHandler.DoLeftMouseClick((uint)locationInScreenCoordinates.X, (uint)locationInScreenCoordinates.Y, screenWidth, screenHeight);
+
             return Ok();
         }
 

@@ -97,6 +97,7 @@ namespace mike_and_conquer.gameview
             mcvView = null;
             gdiConstructionYardView = null;
 
+
         }
 
 

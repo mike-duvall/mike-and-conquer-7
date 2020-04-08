@@ -957,6 +957,10 @@ namespace mike_and_conquer
         {
 
 
+            long amountOfMemory = GC.GetTotalMemory(false);
+            amountOfMemory = GC.GetTotalMemory(true);
+
+
             GraphicsDevice.Clear(Color.Crimson);
 
             DrawMap(gameTime);
@@ -1497,6 +1501,7 @@ namespace mike_and_conquer
             AddGDIBarracksAtWorldCoordinates(positionInWorldCoordinates);
         }
 
+
         public void AddGDIBarracksAtWorldCoordinates(Point positionInWorldCoordinates)
         {
 
@@ -1566,6 +1571,8 @@ namespace mike_and_conquer
             GameOptions.DRAW_SHROUD = drawShroud;
             GameState newGameState = gameWorld.HandleReset();
             gameWorldView.HandleReset();
+            barracksToolbarIconView = null;
+            minigunnerIconView = null;
             return newGameState;
         }
 

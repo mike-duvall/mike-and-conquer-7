@@ -90,6 +90,13 @@ namespace mike_and_conquer.gameview
             }
         }
 
+        public Point GetPosition()
+        {
+            Point position = new Point(toolbarBuildIconSprite.Width / 2, toolbarBuildIconSprite.Height / 2);
+            return position;
+
+        }
+
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             toolbarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2(toolbarBuildIconSprite.Width / 2, toolbarBuildIconSprite.Height / 2));

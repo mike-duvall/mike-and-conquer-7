@@ -88,6 +88,7 @@ namespace mike_and_conquer
             sandbagList.Clear();
             mcv = null;
             gdiConstructionYard = null;
+            gdiBarracks = null;
             gameMap.Reset();
             InitializeNavigationGraph();
             return new PlayingGameState();

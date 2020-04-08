@@ -43,7 +43,8 @@ namespace mike_and_conquer
 
         public Viewport defaultViewport;
         private Viewport mapViewport;
-        private Viewport toolbarViewport;
+        
+        public Viewport toolbarViewport;  // TODO: Make this private again
         private float testRotation = 0;
         public Camera2D mapViewportCamera;
         public Camera2D renderTargetCamera;

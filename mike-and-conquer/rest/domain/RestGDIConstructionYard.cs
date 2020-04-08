@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 namespace mike_and_conquer.rest.domain
 {
 
-    public class RestSidebarItem
+    public class RestGDIConstructionYard
     {
-
-        public string item { get; set; }
+        // public int id { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
 
     }
 

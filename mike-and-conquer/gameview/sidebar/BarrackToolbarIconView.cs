@@ -21,12 +21,15 @@ namespace mike_and_conquer.gameview
         public const string SHP_FILE_NAME = "SideBar/pyleicnh.tem";
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
+        private Point position;
 
-        public BarracksToolbarIconView()
+
+        public BarracksToolbarIconView(Point position)
         {
             // TODO:  At some point, instead of rendering this as real color texture
             // and handling the mapping of the unit build countdown timer in the code
             // Consider creating separate shader for the toolbar to handle that
+            this.position = position;
             Texture2D textureInPaletteValues =
                 MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY)[0].Texture;
             Texture2D textureInRealColorValues = RenderPaletteTextureAsRealColors(textureInPaletteValues);
@@ -99,7 +102,8 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            toolbarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2(toolbarBuildIconSprite.Width / 2, toolbarBuildIconSprite.Height / 2));
+            // toolbarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2(toolbarBuildIconSprite.Width / 2, toolbarBuildIconSprite.Height / 2));
+            toolbarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2(position.X, position.Y));
         }
 
     }

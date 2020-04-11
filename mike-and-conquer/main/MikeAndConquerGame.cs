@@ -1509,7 +1509,7 @@ namespace mike_and_conquer
             GDIBarracks gdiBarracks = gameWorld.AddGDIBarracks(positionInWorldCoordinates);
             gameWorldView.AddGDIBarracksView(gdiBarracks);
 
-            minigunnerIconView = new MinigunnerIconView();
+            minigunnerIconView = new MinigunnerIconView(new Point(112,24));
         }
 
 
@@ -1519,7 +1519,7 @@ namespace mike_and_conquer
 
             GDIConstructionYard gdiConstructionYard = gameWorld.AddGDIConstructionYard(positionInWorldCoordinates);
             gameWorldView.AddGDIConstructionYardView(gdiConstructionYard);
-            barracksToolbarIconView = new BarracksToolbarIconView();
+            barracksToolbarIconView = new BarracksToolbarIconView(new Point(32,24));
         }
 
 

@@ -9,9 +9,53 @@ namespace mike_and_conquer.rest
 
     public class GdiMinigunnersController : ApiController
     {
-        public IEnumerable<string> Get()
+        public IEnumerable<RestMinigunner> Get()
         {
-            return new string[] { "value1", "value2" };
+
+            RestMinigunner[] restMinigunners = new RestMinigunner[GameWorld.instance.gdiMinigunnerList.Count];
+
+            int i = 0;
+            foreach (Minigunner minigunner in GameWorld.instance.gdiMinigunnerList)
+            {
+                RestMinigunner restMinigunner = new RestMinigunner();
+                restMinigunner.id = minigunner.id;
+                restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
+                restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
+                Vector2 screenPosition =
+                    MikeAndConquerGame.instance.ConvertWorldCoordinatesToScreenCoordinates(minigunner
+                        .positionInWorldCoordinates);
+                restMinigunner.screenX = (int)screenPosition.X;
+                restMinigunner.screenY = (int)screenPosition.Y;
+                restMinigunner.health = minigunner.health;
+                restMinigunner.selected = minigunner.selected;
+                restMinigunner.destinationX = (int)minigunner.destination.X;
+                restMinigunner.destinationY = (int)minigunner.destination.Y;
+                restMinigunners[i] = restMinigunner;
+            }
+
+            // return Ok(restMinigunners);
+            return restMinigunners;
+
+            // Minigunner minigunner = GameWorld.instance.GetGDIMinigunnerByIdViaEvent(id);
+            // RestMinigunner restMinigunner = new RestMinigunner();
+            // restMinigunner.id = minigunner.id;
+            // restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
+            // restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
+            // Vector2 screenPosition =
+            //     MikeAndConquerGame.instance.ConvertWorldCoordinatesToScreenCoordinates(minigunner
+            //         .positionInWorldCoordinates);
+            // restMinigunner.screenX = (int)screenPosition.X;
+            // restMinigunner.screenY = (int)screenPosition.Y;
+            // restMinigunner.health = minigunner.health;
+            // restMinigunner.selected = minigunner.selected;
+            // restMinigunner.destinationX = (int)minigunner.destination.X;
+            // restMinigunner.destinationY = (int)minigunner.destination.Y;
+            // return Ok(restMinigunner);
+
+
+
+            // return new string[] { "value1", "value2" };
+
         }
 
 

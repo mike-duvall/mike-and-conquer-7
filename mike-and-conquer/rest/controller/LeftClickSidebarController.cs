@@ -15,13 +15,24 @@ namespace mike_and_conquer.rest.controller
 
         public IHttpActionResult Post([FromBody]RestSidebarItem sidebarItem)
         {
+            Point position = new Point();
+
+            if (sidebarItem.item == "Barracks")
+            {
+                // Point position = MikeAndConquerGame.instance.barracksToolbarIconView.GetPosition();
+                position = MikeAndConquerGame.instance.barracksToolbarIconView.GetPosition();
+                position.X = position.X + MikeAndConquerGame.instance.toolbarViewport.X;
+            }
+            else if (sidebarItem.item == "Minigunner")
+            {
+                position = MikeAndConquerGame.instance.minigunnerIconView.GetPosition();
+                position.X = position.X + MikeAndConquerGame.instance.toolbarViewport.X;
+                position.X += 240;
+
+            }
 
 
 
-
-            Point position = MikeAndConquerGame.instance.barracksToolbarIconView.GetPosition();
-            position.X = position.X + MikeAndConquerGame.instance.toolbarViewport.X;
-            
             Vector2 positionInWorldCoordinates = new Vector2(position.X, position.Y);
             
             Vector2 transformedLocation =

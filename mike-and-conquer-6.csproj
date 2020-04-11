@@ -103,13 +103,14 @@
     <Compile Include="mike-and-conquer\gameview\MapTileShroudMapping.cs" />
     <Compile Include="mike-and-conquer\gameview\MCVView.cs" />
     <Compile Include="mike-and-conquer\gameview\MCVSelectionBox.cs" />
+    <Compile Include="mike-and-conquer\gameview\sidebar\BarrackToolbarIconView.cs" />
     <Compile Include="mike-and-conquer\gameview\SpriteSortLayers.cs" />
     <Compile Include="mike-and-conquer\gameview\GameWorldView.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileInstanceView.cs" />
     <Compile Include="mike-and-conquer\gameview\DestinationSquare.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileInstance.cs" />
     <Compile Include="mike-and-conquer\gameview\GameCursor.cs" />
-    <Compile Include="mike-and-conquer\gameview\MinigunnerIconView.cs" />
+    <Compile Include="mike-and-conquer\gameview\sidebar\MinigunnerIconView.cs" />
     <Compile Include="mike-and-conquer\gameview\MinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\MissionFailedGameStateView.cs" />
     <Compile Include="mike-and-conquer\gameview\MissionAccomplishedGameStateView.cs" />
@@ -151,10 +152,16 @@
     <Compile Include="mike-and-conquer\openra\TmpTDLoader.cs" />
     <Compile Include="mike-and-conquer\openra\XORDeltaCompression.cs" />
     <Compile Include="mike-and-conquer\pathfinding\AStar.cs" />
+    <Compile Include="mike-and-conquer\rest\controller\GDIBarracksController.cs" />
+    <Compile Include="mike-and-conquer\rest\controller\LeftClickSidebarController.cs" />
+    <Compile Include="mike-and-conquer\rest\domain\RestGDIBarracks.cs" />
+    <Compile Include="mike-and-conquer\rest\domain\RestSidebarItem.cs" />
+    <Compile Include="mike-and-conquer\rest\domain\RestSidebar.cs" />
+    <Compile Include="mike-and-conquer\rest\SidebarController.cs" />
     <Compile Include="mike-and-conquer\rest\LeftClickMCV.cs" />
-    <Compile Include="mike-and-conquer\rest\GDIConstructionYardController.cs" />
+    <Compile Include="mike-and-conquer\rest\controller\GDIConstructionYardController.cs" />
     <Compile Include="mike-and-conquer\rest\MCVController.cs" />
-    <Compile Include="mike-and-conquer\rest\RestGDIConstructionYard.cs" />
+    <Compile Include="mike-and-conquer\rest\domain\RestGDIConstructionYard.cs" />
     <Compile Include="mike-and-conquer\rest\RestResetOptions.cs" />
     <Compile Include="mike-and-conquer\rest\RestMinigunner.cs" />
     <Compile Include="mike-and-conquer\rest\ScreenshotController.cs" />
@@ -182,7 +189,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="mike-and-conquer\rest\ResetGameController.cs" />
     <Compile Include="mike-and-conquer\main\Startup.cs" />
-    <Compile Include="mike-and-conquer\rest\GdiMinigunnerController.cs" />
+    <Compile Include="mike-and-conquer\rest\GdiMinigunnersController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -308,6 +315,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <Import Project="packages\MonoGame.Framework.WindowsDX.3.7.1.189\build\MonoGame.Framework.WindowsDX.targets" Condition="Exists('packages\MonoGame.Framework.WindowsDX.3.7.1.189\build\MonoGame.Framework.WindowsDX.targets')" />

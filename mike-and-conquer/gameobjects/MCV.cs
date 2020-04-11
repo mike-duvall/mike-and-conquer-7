@@ -50,6 +50,8 @@ namespace mike_and_conquer
 
         private static int globalId = 1;
 
+
+
         private GameWorld gameWorld;
 
         Serilog.Core.Logger log = new LoggerConfiguration()

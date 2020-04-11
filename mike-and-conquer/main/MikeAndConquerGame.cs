@@ -43,7 +43,8 @@ namespace mike_and_conquer
 
         public Viewport defaultViewport;
         private Viewport mapViewport;
-        private Viewport toolbarViewport;
+        
+        public Viewport toolbarViewport;  // TODO: Make this private again
         private float testRotation = 0;
         public Camera2D mapViewportCamera;
         public Camera2D renderTargetCamera;
@@ -55,7 +56,9 @@ namespace mike_and_conquer
         private GameWorldView gameWorldView;
 
         public ShadowMapper shadowMapper;
-        private MinigunnerIconView minigunnerIconView;
+        public MinigunnerIconView minigunnerIconView;
+        public BarracksToolbarIconView barracksToolbarIconView;
+
 
         private GameStateView currentGameStateView;
 
@@ -216,8 +219,8 @@ namespace mike_and_conquer
             //                AddSandbag(14, 5, 0);
             //                AddSandbag(14, 6, 2);
             //                AddSandbag(14, 7, 8);
-            minigunnerIconView = new MinigunnerIconView();
-            AddGDIBarracksAtMapSquareCoordinates(new Point(20, 15));
+//            minigunnerIconView = new MinigunnerIconView();
+//            AddGDIBarracksAtMapSquareCoordinates(new Point(20, 15));
 
         }
 
@@ -491,6 +494,14 @@ namespace mike_and_conquer
                 MinigunnerIconView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(MinigunnerIconView.SHP_FILE_NAME),
                 MinigunnerIconView.SHP_FILE_COLOR_MAPPER);
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(BarracksToolbarIconView.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                BarracksToolbarIconView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(BarracksToolbarIconView.SHP_FILE_NAME),
+                BarracksToolbarIconView.SHP_FILE_COLOR_MAPPER);
+
+
 
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(GDIBarracksView.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(
@@ -814,7 +825,17 @@ namespace mike_and_conquer
             SwitchToNewGameStateViewIfNeeded();
             gameCursor.Update(gameTime);
 
-            minigunnerIconView.Update(gameTime);
+            if (GameWorld.instance.GDIBarracks != null)
+            {
+                minigunnerIconView.Update(gameTime);
+            }
+
+            if (GameWorld.instance.GDIConstructionYard != null)
+            {
+                barracksToolbarIconView.Update(gameTime);
+            }
+
+
             base.Update(gameTime);
         }
 
@@ -937,6 +958,10 @@ namespace mike_and_conquer
         {
 
 
+            long amountOfMemory = GC.GetTotalMemory(false);
+            amountOfMemory = GC.GetTotalMemory(true);
+
+
             GraphicsDevice.Clear(Color.Crimson);
 
             DrawMap(gameTime);
@@ -1033,6 +1058,17 @@ namespace mike_and_conquer
                 nullEffect,
                 renderTargetCamera.TransformMatrix);
 
+            if (GameWorldView.instance.GDIBarracksView != null)
+            {
+                GameWorldView.instance.GDIBarracksView.DrawShadowOnly(gameTime, spriteBatch);
+            }
+
+            if (GameWorldView.instance.GdiConstructionYardView != null)
+            {
+                GameWorldView.instance.GdiConstructionYardView.DrawShadowOnly(gameTime, spriteBatch);
+            }
+
+
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {
@@ -1053,6 +1089,7 @@ namespace mike_and_conquer
             {
                 GameWorldView.instance.mcvView.DrawShadowOnly(gameTime, spriteBatch);
             }
+
 
 
 
@@ -1175,6 +1212,20 @@ namespace mike_and_conquer
             spriteBatch.Draw(mapTileAndShadowsRenderTarget, new Rectangle(0, 0, mapViewport.Width, mapViewport.Height),
                 Color.White);
 
+
+            if (GameWorldView.instance.GDIBarracksView != null)
+            {
+                GameWorldView.instance.GDIBarracksView.DrawNoShadow(gameTime, spriteBatch);
+            }
+
+            if (GameWorldView.instance.GdiConstructionYardView != null)
+            {
+                GameWorldView.instance.GdiConstructionYardView.DrawNoShadow(gameTime, spriteBatch);
+            }
+
+            
+
+
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {
                 nextMinigunnerView.DrawNoShadow(gameTime, spriteBatch);
@@ -1196,10 +1247,9 @@ namespace mike_and_conquer
                 GameWorldView.instance.mcvView.DrawNoShadow(gameTime, spriteBatch);
             }
 
-            if (GameWorldView.instance.GdiConstructionYardView != null)
-            {
-                GameWorldView.instance.GdiConstructionYardView.DrawNoShadow(gameTime, spriteBatch);
-            }
+
+
+
 
 
 
@@ -1358,7 +1408,17 @@ namespace mike_and_conquer
             spriteBatch.Draw(toolbarBackgroundRectangle,
                 new Rectangle(0, 0, toolbarViewport.Width / 2, toolbarViewport.Height / 2), Color.White);
 
-            minigunnerIconView.Draw(gameTime, spriteBatch);
+            if (minigunnerIconView != null)
+            {
+                minigunnerIconView.Draw(gameTime, spriteBatch);
+            }
+
+            if (barracksToolbarIconView != null)
+            {
+                barracksToolbarIconView.Draw(gameTime, spriteBatch);
+            }
+
+
             spriteBatch.End();
         }
 
@@ -1439,21 +1499,19 @@ namespace mike_and_conquer
 
             Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
 
+            AddGDIBarracksAtWorldCoordinates(positionInWorldCoordinates);
+        }
+
+
+        public void AddGDIBarracksAtWorldCoordinates(Point positionInWorldCoordinates)
+        {
+
             GDIBarracks gdiBarracks = gameWorld.AddGDIBarracks(positionInWorldCoordinates);
             gameWorldView.AddGDIBarracksView(gdiBarracks);
+
+            minigunnerIconView = new MinigunnerIconView(new Point(112,24));
         }
 
-
-        public void AddGDIConstructionYardAtMapTileCoordinates(Point positionInMapSquareCoordinates)
-        {
-            int xInWorldCoordinates = positionInMapSquareCoordinates.X * GameWorld.MAP_TILE_WIDTH;
-            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * GameWorld.MAP_TILE_HEIGHT;
-
-            Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
-
-            GDIConstructionYard gdiConstructionYard = gameWorld.AddGDIConstructionYard(positionInWorldCoordinates);
-            gameWorldView.AddGDIConstructionYardView(gdiConstructionYard);
-        }
 
 
         public void AddGDIConstructionYardAtWorldCoordinates(Point positionInWorldCoordinates)
@@ -1461,6 +1519,7 @@ namespace mike_and_conquer
 
             GDIConstructionYard gdiConstructionYard = gameWorld.AddGDIConstructionYard(positionInWorldCoordinates);
             gameWorldView.AddGDIConstructionYardView(gdiConstructionYard);
+            barracksToolbarIconView = new BarracksToolbarIconView(new Point(32,24));
         }
 
 
@@ -1513,6 +1572,8 @@ namespace mike_and_conquer
             GameOptions.DRAW_SHROUD = drawShroud;
             GameState newGameState = gameWorld.HandleReset();
             gameWorldView.HandleReset();
+            barracksToolbarIconView = null;
+            minigunnerIconView = null;
             return newGameState;
         }
 

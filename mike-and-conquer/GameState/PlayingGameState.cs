@@ -381,6 +381,8 @@ namespace mike_and_conquer
         }
 
 
+        // TODO:  Add Sidebar class, have build buttons sit inside of it, iterate through
+        // them and ask if they contain point where sidebar was clicked
         internal Boolean CheckForAndHandleLeftClickOnSidebar(Vector2 mouseScreenLocation)
         {
             Boolean handled = false;
@@ -389,15 +391,30 @@ namespace mike_and_conquer
 
             if (toolbarLocation.X > 0 && toolbarLocation.X < 64 && toolbarLocation.Y > 0 && toolbarLocation.Y < 48)
             {
-                HandleClickGDIBarracks();
+                // HandleClickOnBuildMinigunner();
+                HandleClickOnBuildBarracks();
                 handled = true;
             }
+            else if (toolbarLocation.X > 80 && toolbarLocation.X < 144 && toolbarLocation.Y > 0 && toolbarLocation.Y < 48)
+            {
+                HandleClickOnBuildMinigunner();
+                // HandleClickOnBuildBarracks();
+                handled = true;
+            }
+
 
             return handled;
 
         }
 
-        private void HandleClickGDIBarracks()
+
+        private void HandleClickOnBuildBarracks()
+        {
+            GameWorld.instance.GDIConstructionYard.StartBuildingMinigunner();
+        }
+
+
+        private void HandleClickOnBuildMinigunner()
         {
             GameWorld.instance.GDIBarracks.StartBuildingMinigunner();
         }

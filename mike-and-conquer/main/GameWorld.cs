@@ -88,6 +88,7 @@ namespace mike_and_conquer
             sandbagList.Clear();
             mcv = null;
             gdiConstructionYard = null;
+            gdiBarracks = null;
             gameMap.Reset();
             InitializeNavigationGraph();
             return new PlayingGameState();
@@ -426,6 +427,7 @@ namespace mike_and_conquer
             UpdateGDIMinigunners(gameTime);
             UpdateNodMinigunners(gameTime);
             UpdateBarracks(gameTime);
+            UpdateConstructionYard(gameTime);
             if (mcv != null)
             {
                 mcv.Update(gameTime);
@@ -441,6 +443,16 @@ namespace mike_and_conquer
                 gdiBarracks.Update(gameTime);
             }
         }
+
+
+        private void UpdateConstructionYard(GameTime gameTime)
+        {
+            if (gdiConstructionYard != null)
+            {
+                gdiConstructionYard.Update(gameTime);
+            }
+        }
+
 
         private void UpdateNodMinigunners(GameTime gameTime)
         {

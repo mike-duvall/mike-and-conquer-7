@@ -30,7 +30,6 @@ namespace mike_and_conquer_6
                     Matrix.CreateTranslation(new Vector3((int)(Bounds.Width * 0.5f), (int)(Bounds.Height * 0.5f), 0));
             }
         }
-
         
         public Camera2D(Viewport viewport)
         {

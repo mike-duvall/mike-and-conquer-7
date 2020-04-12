@@ -16,10 +16,6 @@ namespace mike_and_conquer.gameview.sidebar
 
         protected ToolbarBuildIconSprite toolbarBuildIconSprite;
 
-        // public const string SPRITE_KEY = "BarracksToolbarIcon";
-        // public const string SHP_FILE_NAME = "SideBar/pyleicnh.tem";
-
-        // public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
         private Point position;
 

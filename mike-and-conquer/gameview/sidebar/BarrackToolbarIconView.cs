@@ -24,6 +24,8 @@ namespace mike_and_conquer.gameview.sidebar
 
         protected override bool IsBuilding()
         {
+            // TODO:  Make GDIConstructionYard and Barrackas implement Buildable interface?
+            // With methods for IsBulding() and PercentBuildCompleted() ?
             GDIConstructionYard constructionYard = MikeAndConquerGame.instance.gameWorld.GDIConstructionYard;
             return constructionYard.IsBuildingBarracks;
         }

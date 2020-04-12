@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameview;
+using mike_and_conquer.gameview.sidebar;
 using mike_and_conquer.openralocal;
 using OpenRA.Graphics;
 using Game = Microsoft.Xna.Framework.Game;
@@ -1581,6 +1582,17 @@ namespace mike_and_conquer
         {
             return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix);
         }
+
+        public Vector2 ConvertWorldCoordinatesToScreenCoordinatesForToolbar(Vector2 positionInWorldCoordinates)
+        {
+            // TODO:  Consider if above code could better be done with call to Viewport.Project()
+            // OR, should this be done by the Camera class?
+            Vector2 positionInCameraViewportCoordinates = Vector2.Transform(positionInWorldCoordinates,
+                MikeAndConquerGame.instance.toolbarViewportCamera.TransformMatrix);
+            positionInCameraViewportCoordinates.X += MikeAndConquerGame.instance.toolbarViewport.X;
+            return positionInCameraViewportCoordinates;
+        }
+
 
         public Vector2 ConvertScreenLocationToWorldLocation(Vector2 screenLocation)
         {

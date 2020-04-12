@@ -75,25 +75,27 @@ namespace mike_and_conquer.gameview.sidebar
 
         }
 
+        protected abstract bool IsBuilding();
+        protected abstract int PercentBuildCompleted();
 
         // This code for updating the buildIcon with percent progress shading
         // Manually sets and restore GraphicsDevice.renderTarget, so it needs to happen in the "Update" 
         // part of the loop, rather than the "Draw" part.  I initial put it in Draw and it didn't work
-        public abstract void Update(GameTime gameTime);
-        // {
-        //
-        //     // GDIBarracks barracks = MikeAndConquerGame.instance.gameWorld.GDIBarracks;
-        //     GDIConstructionYard constructionYard = MikeAndConquerGame.instance.gameWorld.GDIConstructionYard;
-        //     if (constructionYard.IsBuildingBarracks)
-        //     {
-        //         toolbarBuildIconSprite.isBuilding = true;
-        //         toolbarBuildIconSprite.SetPercentBuildComplete(constructionYard.PercentBarracksBuildComplete);
-        //     }
-        //     else
-        //     {
-        //         toolbarBuildIconSprite.isBuilding = false;
-        //     }
-        // }
+        public void Update(GameTime gameTime)
+        {
+        
+            if (IsBuilding())
+            {
+                toolbarBuildIconSprite.isBuilding = true;
+                toolbarBuildIconSprite.SetPercentBuildComplete(PercentBuildCompleted());
+            }
+            else
+            {
+                toolbarBuildIconSprite.isBuilding = false;
+            }
+        }
+
+
 
         public Point GetPosition()
         {
@@ -102,7 +104,7 @@ namespace mike_and_conquer.gameview.sidebar
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            // toolbarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2(toolbarBuildIconSprite.Width / 2, toolbarBuildIconSprite.Height / 2));
+
             toolbarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2(position.X, position.Y));
         }
 

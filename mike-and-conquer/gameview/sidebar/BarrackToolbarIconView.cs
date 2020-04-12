@@ -1,12 +1,6 @@
 ﻿
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using mike_and_conquer.gamesprite;
-using OpenRA.Graphics;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-using GameTime = Microsoft.Xna.Framework.GameTime;
-using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 
 namespace mike_and_conquer.gameview.sidebar
@@ -28,23 +22,16 @@ namespace mike_and_conquer.gameview.sidebar
             return SPRITE_KEY;
         }
 
-        // This code for updating the buildIcon with percent progress shading
-        // Manually sets and restore GraphicsDevice.renderTarget, so it needs to happen in the "Update" 
-        // part of the loop, rather than the "Draw" part.  I initial put it in Draw and it didn't work
-        public override void Update(GameTime gameTime)
+        protected override bool IsBuilding()
         {
-
-            // GDIBarracks barracks = MikeAndConquerGame.instance.gameWorld.GDIBarracks;
             GDIConstructionYard constructionYard = MikeAndConquerGame.instance.gameWorld.GDIConstructionYard;
-            if (constructionYard.IsBuildingBarracks)
-            {
-                toolbarBuildIconSprite.isBuilding = true;
-                toolbarBuildIconSprite.SetPercentBuildComplete(constructionYard.PercentBarracksBuildComplete);
-            }
-            else
-            {
-                toolbarBuildIconSprite.isBuilding = false;
-            }
+            return constructionYard.IsBuildingBarracks;
+        }
+
+        protected override int PercentBuildCompleted()
+        {
+            GDIConstructionYard constructionYard = MikeAndConquerGame.instance.gameWorld.GDIConstructionYard;
+            return constructionYard.PercentBarracksBuildComplete;
         }
 
 

@@ -1582,6 +1582,15 @@ namespace mike_and_conquer
             return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix);
         }
 
+        public Vector2 ConvertWorldCoordinatesToScreenCoordinatesForToolbar(Vector2 positionInWorldCoordinates)
+        {
+            Vector2 positionInCameraViewportCoordinates = Vector2.Transform(positionInWorldCoordinates,
+                MikeAndConquerGame.instance.toolbarViewportCamera.TransformMatrix);
+            positionInCameraViewportCoordinates.X += MikeAndConquerGame.instance.toolbarViewport.X;
+            return positionInCameraViewportCoordinates;
+        }
+
+
         public Vector2 ConvertScreenLocationToWorldLocation(Vector2 screenLocation)
         {
             return Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix));

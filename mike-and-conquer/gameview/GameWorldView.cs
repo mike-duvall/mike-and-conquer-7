@@ -18,7 +18,7 @@ namespace mike_and_conquer.gameview
         private GDIBarracksView gdiBarracksView;
 
         private GDIConstructionYardView gdiConstructionYardView;
-        //        private MinigunnerIconView minigunnerIconView;
+        //        private MinigunnerSidebarIconView minigunnerSidebarIconView;
 
         private List<MapTileInstanceView> mapTileInstanceViewList;
 

@@ -5,14 +5,14 @@ using Microsoft.Xna.Framework;
 
 namespace mike_and_conquer.gameview.sidebar
 {
-    public class MinigunnerIconView : ToolbarIconView
+    public class MinigunnerSidebarIconView : SidebarIconView
     {
 
         public const string SPRITE_KEY = "MinigunnerIcon";
         public const string SHP_FILE_NAME = "SideBar/e1icnh.tem";
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
 
-        public MinigunnerIconView(Point position) : base(position)
+        public MinigunnerSidebarIconView(Point position) : base(position)
         {
         }
 

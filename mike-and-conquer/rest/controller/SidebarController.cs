@@ -14,12 +14,12 @@ namespace mike_and_conquer.rest.controller
             sidebar.buildBarracksEnabled = false;
             sidebar.buildMinigunnerEnabled = false;
 
-            if (MikeAndConquerGame.instance.barracksToolbarIconView != null)
+            if (MikeAndConquerGame.instance.barracksSidebarIconView != null)
             {
                 sidebar.buildBarracksEnabled = true;
             }
 
-            if (MikeAndConquerGame.instance.minigunnerIconView != null)
+            if (MikeAndConquerGame.instance.minigunnerSidebarIconView != null)
             {
                 sidebar.buildMinigunnerEnabled = true;
             }

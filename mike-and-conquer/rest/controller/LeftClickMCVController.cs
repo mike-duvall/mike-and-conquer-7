@@ -1,10 +1,10 @@
 ﻿using System.Web.Http;
-
+using mike_and_conquer.rest.domain;
 using MouseInputHandler = mike_and_conquer_6.mike_and_conquer.MouseInputHandler;
 
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
-namespace mike_and_conquer.rest
+namespace mike_and_conquer.rest.controller
 {
 
     public class LeftClickMCVController : ApiController

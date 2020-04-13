@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
+﻿using System.Web.Http;
+using mike_and_conquer.rest.domain;
 
 
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-
-
-namespace mike_and_conquer.rest
+namespace mike_and_conquer.rest.controller
 {
 
     public class SandbagController : ApiController

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mike_and_conquer.rest
+namespace mike_and_conquer.rest.domain
 {
 
-    public class RestPoint
+    public class RestMCV
     {
 
         public int x { get; set; }

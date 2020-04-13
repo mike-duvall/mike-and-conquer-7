@@ -2,7 +2,7 @@
 using System.Web.Http;
 using mike_and_conquer.rest.domain;
 
-namespace mike_and_conquer.rest
+namespace mike_and_conquer.rest.controller
 {
 
     public class SidebarController : ApiController

@@ -1,8 +1,9 @@
 ﻿using System.Web.Http;
 using Microsoft.Xna.Framework;
+using mike_and_conquer.rest.domain;
 using MouseInputHandler = mike_and_conquer_6.mike_and_conquer.MouseInputHandler;
 
-namespace mike_and_conquer.rest
+namespace mike_and_conquer.rest.controller
 {
 
     public class MoveMouseToWorldCoordinatesController : ApiController

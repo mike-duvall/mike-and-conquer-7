@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
+﻿using System.Web.Http;
 
-namespace mike_and_conquer.rest
+namespace mike_and_conquer.rest.controller
 {
 
 

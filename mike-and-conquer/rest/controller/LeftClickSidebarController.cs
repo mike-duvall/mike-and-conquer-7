@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Web.Http;
 using Microsoft.Xna.Framework;
 using mike_and_conquer.rest.domain;

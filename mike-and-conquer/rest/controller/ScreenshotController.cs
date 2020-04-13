@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using Microsoft.Xna.Framework.Graphics;
-using mike_and_conquer.gameview;
-using SharpDX.MediaFoundation;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-using Point = Microsoft.Xna.Framework.Point;
-using BadMinigunnerLocationException = mike_and_conquer.GameWorld.BadMinigunnerLocationException;
 
-namespace mike_and_conquer.rest
+namespace mike_and_conquer.rest.controller
 {
 
     public class ScreenshotController : ApiController

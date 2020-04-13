@@ -282,7 +282,7 @@ namespace mike_and_conquer
             Point mousePoint = mouseState.Position;
             Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
             Vector2 mouseWorldLocation = MikeAndConquerGame.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
-//            Vector2 toolbarLocation = MikeAndConquerGame.instance.ConvertScreenLocationToToolbarLocation(mouseScreenLocation);
+//            Vector2 sidebarLocation = MikeAndConquerGame.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
 
 
             int mouseWorldX = (int) mouseWorldLocation.X;
@@ -387,15 +387,15 @@ namespace mike_and_conquer
         {
             Boolean handled = false;
 
-            Vector2 toolbarLocation = MikeAndConquerGame.instance.ConvertScreenLocationToToolbarLocation(mouseScreenLocation);
+            Vector2 sidebarLocation = MikeAndConquerGame.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
 
-            if (toolbarLocation.X > 0 && toolbarLocation.X < 64 && toolbarLocation.Y > 0 && toolbarLocation.Y < 48)
+            if (sidebarLocation.X > 0 && sidebarLocation.X < 64 && sidebarLocation.Y > 0 && sidebarLocation.Y < 48)
             {
                 // HandleClickOnBuildMinigunner();
                 HandleClickOnBuildBarracks();
                 handled = true;
             }
-            else if (toolbarLocation.X > 80 && toolbarLocation.X < 144 && toolbarLocation.Y > 0 && toolbarLocation.Y < 48)
+            else if (sidebarLocation.X > 80 && sidebarLocation.X < 144 && sidebarLocation.Y > 0 && sidebarLocation.Y < 48)
             {
                 HandleClickOnBuildMinigunner();
                 // HandleClickOnBuildBarracks();

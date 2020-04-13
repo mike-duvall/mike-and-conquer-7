@@ -15,7 +15,7 @@ using OpenRA.Graphics;
 
 namespace mike_and_conquer
 {
-    public class ToolbarBuildIconSprite
+    public class SidebarBuildIconSprite
     {
 
         Texture2D staticTexture;
@@ -42,7 +42,7 @@ namespace mike_and_conquer
         }
 
 
-        public ToolbarBuildIconSprite(Texture2D staticTexture, byte[] frameData)
+        public SidebarBuildIconSprite(Texture2D staticTexture, byte[] frameData)
         {
             this.staticTexture = staticTexture;
             this.frameData = frameData;

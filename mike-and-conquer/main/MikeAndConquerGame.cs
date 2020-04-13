@@ -45,11 +45,11 @@ namespace mike_and_conquer
         public Viewport defaultViewport;
         private Viewport mapViewport;
         
-        public Viewport toolbarViewport;  // TODO: Make this private again
+        public Viewport sidebarViewport;  // TODO: Make this private again
         private float testRotation = 0;
         public Camera2D mapViewportCamera;
         public Camera2D renderTargetCamera;
-        private Camera2D toolbarViewportCamera;
+        private Camera2D sidebarViewportCamera;
 
         public static MikeAndConquerGame instance;
 
@@ -57,8 +57,8 @@ namespace mike_and_conquer
         private GameWorldView gameWorldView;
 
         public ShadowMapper shadowMapper;
-        public MinigunnerIconView minigunnerIconView;
-        public BarracksToolbarIconView barracksToolbarIconView;
+        public MinigunnerSidebarIconView minigunnerSidebarIconView;
+        public BarracksSidebarIconView barracksSidebarIconView;
 
 
         private GameStateView currentGameStateView;
@@ -89,7 +89,7 @@ namespace mike_and_conquer
         KeyboardState oldKeyboardState;
 
         private Texture2D mapBackgroundRectangle;
-        private Texture2D toolbarBackgroundRectangle;
+        private Texture2D sidebarBackgroundRectangle;
 
         public Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()
@@ -220,31 +220,31 @@ namespace mike_and_conquer
             //                AddSandbag(14, 5, 0);
             //                AddSandbag(14, 6, 2);
             //                AddSandbag(14, 7, 8);
-//            minigunnerIconView = new MinigunnerIconView();
+//            minigunnerSidebarIconView = new MinigunnerSidebarIconView();
 //            AddGDIBarracksAtMapSquareCoordinates(new Point(20, 15));
 
         }
 
 
 
-        private void SetupToolbarViewportAndCamera()
+        private void SetupSidebarViewportAndCamera()
         {
-            toolbarViewport = new Viewport();
-            toolbarViewport.X = mapViewport.Width + 2;
-            toolbarViewport.Y = 0;
-            toolbarViewport.Width = defaultViewport.Width - mapViewport.Width - 5;
-            toolbarViewport.Height = defaultViewport.Height;
-            toolbarViewport.MinDepth = 0;
-            toolbarViewport.MaxDepth = 1;
+            sidebarViewport = new Viewport();
+            sidebarViewport.X = mapViewport.Width + 2;
+            sidebarViewport.Y = 0;
+            sidebarViewport.Width = defaultViewport.Width - mapViewport.Width - 5;
+            sidebarViewport.Height = defaultViewport.Height;
+            sidebarViewport.MinDepth = 0;
+            sidebarViewport.MaxDepth = 1;
 
-            toolbarViewportCamera = new Camera2D(toolbarViewport);
-            toolbarViewportCamera.Zoom = 3.0f;
-//            toolbarViewportCamera.Zoom = 1.5f;
+            sidebarViewportCamera = new Camera2D(sidebarViewport);
+            sidebarViewportCamera.Zoom = 3.0f;
+//            sidebarViewportCamera.Zoom = 1.5f;
 
-            float scaledHalfViewportWidth = CalculateLeftmostScrollX(toolbarViewport, toolbarViewportCamera.Zoom, 0);
-            float scaledHalfViewportHeight = CalculateTopmostScrollY(toolbarViewport, toolbarViewportCamera.Zoom, 0);
+            float scaledHalfViewportWidth = CalculateLeftmostScrollX(sidebarViewport, sidebarViewportCamera.Zoom, 0);
+            float scaledHalfViewportHeight = CalculateTopmostScrollY(sidebarViewport, sidebarViewportCamera.Zoom, 0);
 
-            toolbarViewportCamera.Location = new Vector2(scaledHalfViewportWidth, scaledHalfViewportHeight);
+            sidebarViewportCamera.Location = new Vector2(scaledHalfViewportWidth, scaledHalfViewportHeight);
         }
 
         private void SetupMapViewportAndCamera()
@@ -322,10 +322,10 @@ namespace mike_and_conquer
 
             this.defaultViewport = GraphicsDevice.Viewport;
             SetupMapViewportAndCamera();
-            SetupToolbarViewportAndCamera();
+            SetupSidebarViewportAndCamera();
 
-            toolbarBackgroundRectangle = new Texture2D(GraphicsDevice, 1, 1);
-            toolbarBackgroundRectangle.SetData(new[] { Color.LightSkyBlue });
+            sidebarBackgroundRectangle = new Texture2D(GraphicsDevice, 1, 1);
+            sidebarBackgroundRectangle.SetData(new[] { Color.LightSkyBlue });
 
             mapBackgroundRectangle = new Texture2D(GraphicsDevice, 1, 1);
             mapBackgroundRectangle.SetData(new[] { Color.MediumSeaGreen });
@@ -490,17 +490,17 @@ namespace mike_and_conquer
                 raiSpriteFrameManager.GetSpriteFramesForUnit(SandbagView.SHP_FILE_NAME),
                 SandbagView.SHP_FILE_COLOR_MAPPER);
 
-            raiSpriteFrameManager.LoadAllTexturesFromShpFile(MinigunnerIconView.SHP_FILE_NAME);
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(MinigunnerSidebarIconView.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(
-                MinigunnerIconView.SPRITE_KEY,
-                raiSpriteFrameManager.GetSpriteFramesForUnit(MinigunnerIconView.SHP_FILE_NAME),
-                MinigunnerIconView.SHP_FILE_COLOR_MAPPER);
+                MinigunnerSidebarIconView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(MinigunnerSidebarIconView.SHP_FILE_NAME),
+                MinigunnerSidebarIconView.SHP_FILE_COLOR_MAPPER);
 
-            raiSpriteFrameManager.LoadAllTexturesFromShpFile(BarracksToolbarIconView.SHP_FILE_NAME);
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(BarracksSidebarIconView.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(
-                BarracksToolbarIconView.SPRITE_KEY,
-                raiSpriteFrameManager.GetSpriteFramesForUnit(BarracksToolbarIconView.SHP_FILE_NAME),
-                BarracksToolbarIconView.SHP_FILE_COLOR_MAPPER);
+                BarracksSidebarIconView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(BarracksSidebarIconView.SHP_FILE_NAME),
+                BarracksSidebarIconView.SHP_FILE_COLOR_MAPPER);
 
 
 
@@ -828,12 +828,12 @@ namespace mike_and_conquer
 
             if (GameWorld.instance.GDIBarracks != null)
             {
-                minigunnerIconView.Update(gameTime);
+                minigunnerSidebarIconView.Update(gameTime);
             }
 
             if (GameWorld.instance.GDIConstructionYard != null)
             {
-                barracksToolbarIconView.Update(gameTime);
+                barracksSidebarIconView.Update(gameTime);
             }
 
 
@@ -958,15 +958,13 @@ namespace mike_and_conquer
         protected override void Draw(GameTime gameTime)
         {
 
-
-            long amountOfMemory = GC.GetTotalMemory(false);
-            amountOfMemory = GC.GetTotalMemory(true);
-
+            // long amountOfMemory = GC.GetTotalMemory(false);
+            // amountOfMemory = GC.GetTotalMemory(true);
 
             GraphicsDevice.Clear(Color.Crimson);
 
             DrawMap(gameTime);
-            DrawToolbar(gameTime);
+            DrawSidebar(gameTime);
             DrawGameCursor(gameTime);
 
             GraphicsDevice.Viewport = defaultViewport;
@@ -1388,9 +1386,9 @@ namespace mike_and_conquer
 
 
 
-        private void DrawToolbar(GameTime gameTime)
+        private void DrawSidebar(GameTime gameTime)
         {
-            GraphicsDevice.Viewport = toolbarViewport;
+            GraphicsDevice.Viewport = sidebarViewport;
 
             const BlendState nullBlendState = null;
             const DepthStencilState nullDepthStencilState = null;
@@ -1404,19 +1402,19 @@ namespace mike_and_conquer
                 nullDepthStencilState,
                 nullRasterizerState,
                 nullEffect,
-                toolbarViewportCamera.TransformMatrix);
+                sidebarViewportCamera.TransformMatrix);
 
-            spriteBatch.Draw(toolbarBackgroundRectangle,
-                new Rectangle(0, 0, toolbarViewport.Width / 2, toolbarViewport.Height / 2), Color.White);
+            spriteBatch.Draw(sidebarBackgroundRectangle,
+                new Rectangle(0, 0, sidebarViewport.Width / 2, sidebarViewport.Height / 2), Color.White);
 
-            if (minigunnerIconView != null)
+            if (minigunnerSidebarIconView != null)
             {
-                minigunnerIconView.Draw(gameTime, spriteBatch);
+                minigunnerSidebarIconView.Draw(gameTime, spriteBatch);
             }
 
-            if (barracksToolbarIconView != null)
+            if (barracksSidebarIconView != null)
             {
-                barracksToolbarIconView.Draw(gameTime, spriteBatch);
+                barracksSidebarIconView.Draw(gameTime, spriteBatch);
             }
 
 
@@ -1510,7 +1508,7 @@ namespace mike_and_conquer
             GDIBarracks gdiBarracks = gameWorld.AddGDIBarracks(positionInWorldCoordinates);
             gameWorldView.AddGDIBarracksView(gdiBarracks);
 
-            minigunnerIconView = new MinigunnerIconView(new Point(112,24));
+            minigunnerSidebarIconView = new MinigunnerSidebarIconView(new Point(112,24));
         }
 
 
@@ -1520,7 +1518,7 @@ namespace mike_and_conquer
 
             GDIConstructionYard gdiConstructionYard = gameWorld.AddGDIConstructionYard(positionInWorldCoordinates);
             gameWorldView.AddGDIConstructionYardView(gdiConstructionYard);
-            barracksToolbarIconView = new BarracksToolbarIconView(new Point(32,24));
+            barracksSidebarIconView = new BarracksSidebarIconView(new Point(32,24));
         }
 
 
@@ -1573,8 +1571,8 @@ namespace mike_and_conquer
             GameOptions.DRAW_SHROUD = drawShroud;
             GameState newGameState = gameWorld.HandleReset();
             gameWorldView.HandleReset();
-            barracksToolbarIconView = null;
-            minigunnerIconView = null;
+            barracksSidebarIconView = null;
+            minigunnerSidebarIconView = null;
             return newGameState;
         }
 
@@ -1583,13 +1581,13 @@ namespace mike_and_conquer
             return Vector2.Transform(positionInWorldCoordinates, MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix);
         }
 
-        public Vector2 ConvertWorldCoordinatesToScreenCoordinatesForToolbar(Vector2 positionInWorldCoordinates)
+        public Vector2 ConvertWorldCoordinatesToScreenCoordinatesForSidebar(Vector2 positionInWorldCoordinates)
         {
             // TODO:  Consider if above code could better be done with call to Viewport.Project()
             // OR, should this be done by the Camera class?
             Vector2 positionInCameraViewportCoordinates = Vector2.Transform(positionInWorldCoordinates,
-                MikeAndConquerGame.instance.toolbarViewportCamera.TransformMatrix);
-            positionInCameraViewportCoordinates.X += MikeAndConquerGame.instance.toolbarViewport.X;
+                MikeAndConquerGame.instance.sidebarViewportCamera.TransformMatrix);
+            positionInCameraViewportCoordinates.X += MikeAndConquerGame.instance.sidebarViewport.X;
             return positionInCameraViewportCoordinates;
         }
 
@@ -1599,10 +1597,10 @@ namespace mike_and_conquer
             return Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConquerGame.instance.mapViewportCamera.TransformMatrix));
         }
 
-        public Vector2 ConvertScreenLocationToToolbarLocation(Vector2 screenLocation)
+        public Vector2 ConvertScreenLocationToSidebarLocation(Vector2 screenLocation)
         {
-            screenLocation.X = screenLocation.X - toolbarViewport.X;
-            Vector2 result = Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConquerGame.instance.toolbarViewportCamera.TransformMatrix));
+            screenLocation.X = screenLocation.X - sidebarViewport.X;
+            Vector2 result = Vector2.Transform(screenLocation, Matrix.Invert(MikeAndConquerGame.instance.sidebarViewportCamera.TransformMatrix));
             return result;
         }
 

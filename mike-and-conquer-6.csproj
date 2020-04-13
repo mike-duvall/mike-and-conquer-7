@@ -89,7 +89,7 @@
     <Compile Include="mike-and-conquer\gameobjects\TerrainItem.cs" />
     <Compile Include="mike-and-conquer\gameobjects\Sandbag.cs" />
     <Compile Include="mike-and-conquer\gamesprite\PartiallyVisibileMapTileMask.cs" />
-    <Compile Include="mike-and-conquer\gamesprite\ToolbarBuildIconSprite.cs" />
+    <Compile Include="mike-and-conquer\gamesprite\SidebarBuildIconSprite.cs" />
     <Compile Include="mike-and-conquer\gamesprite\SingleTextureSprite.cs" />
     <Compile Include="mike-and-conquer\gamesprite\TerrainSprite.cs" />
     <Compile Include="mike-and-conquer\gamesprite\ShadowHelper.cs" />
@@ -103,15 +103,15 @@
     <Compile Include="mike-and-conquer\gameview\MapTileShroudMapping.cs" />
     <Compile Include="mike-and-conquer\gameview\MCVView.cs" />
     <Compile Include="mike-and-conquer\gameview\MCVSelectionBox.cs" />
-    <Compile Include="mike-and-conquer\gameview\sidebar\ToolbarIconView.cs" />
-    <Compile Include="mike-and-conquer\gameview\sidebar\BarrackToolbarIconView.cs" />
+    <Compile Include="mike-and-conquer\gameview\sidebar\SidebarIconView.cs" />
+    <Compile Include="mike-and-conquer\gameview\sidebar\BarrackSidebarIconView.cs" />
     <Compile Include="mike-and-conquer\gameview\SpriteSortLayers.cs" />
     <Compile Include="mike-and-conquer\gameview\GameWorldView.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileInstanceView.cs" />
     <Compile Include="mike-and-conquer\gameview\DestinationSquare.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileInstance.cs" />
     <Compile Include="mike-and-conquer\gameview\GameCursor.cs" />
-    <Compile Include="mike-and-conquer\gameview\sidebar\MinigunnerIconView.cs" />
+    <Compile Include="mike-and-conquer\gameview\sidebar\MinigunnerSidebarIconView.cs" />
     <Compile Include="mike-and-conquer\gameview\MinigunnerView.cs" />
     <Compile Include="mike-and-conquer\gameview\MissionFailedGameStateView.cs" />
     <Compile Include="mike-and-conquer\gameview\MissionAccomplishedGameStateView.cs" />

@@ -19,17 +19,17 @@ namespace mike_and_conquer.rest.controller
 
             if (sidebarItem.item == "Barracks")
             {
-                position = MikeAndConquerGame.instance.barracksToolbarIconView.GetPosition();
+                position = MikeAndConquerGame.instance.barracksSidebarIconView.GetPosition();
             }
             else if (sidebarItem.item == "Minigunner")
             {
-                position = MikeAndConquerGame.instance.minigunnerIconView.GetPosition();
+                position = MikeAndConquerGame.instance.minigunnerSidebarIconView.GetPosition();
             }
 
             Vector2 positionInWorldCoordinates = new Vector2(position.X, position.Y);
 
             Vector2 transformedLocation =
-                MikeAndConquerGame.instance.ConvertWorldCoordinatesToScreenCoordinatesForToolbar(positionInWorldCoordinates);
+                MikeAndConquerGame.instance.ConvertWorldCoordinatesToScreenCoordinatesForSidebar(positionInWorldCoordinates);
 
 
             int screenWidth = MikeAndConquerGame.instance.defaultViewport.Width;

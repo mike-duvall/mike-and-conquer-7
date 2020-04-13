@@ -11,10 +11,10 @@ using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 namespace mike_and_conquer.gameview.sidebar
 {
-    public abstract class ToolbarIconView
+    public abstract class SidebarIconView
     {
 
-        protected ToolbarBuildIconSprite toolbarBuildIconSprite;
+        protected SidebarBuildIconSprite sidebarBuildIconSprite;
 
 
         private Point position;
@@ -22,17 +22,17 @@ namespace mike_and_conquer.gameview.sidebar
 
         protected abstract string GetSpriteKey();
 
-        public ToolbarIconView(Point position)
+        public SidebarIconView(Point position)
         {
             // TODO:  At some point, instead of rendering this as real color texture
             // and handling the mapping of the unit build countdown timer in the code
-            // Consider creating separate shader for the toolbar to handle that
+            // Consider creating separate shader for the sidebar to handle that
             this.position = position;
             Texture2D textureInPaletteValues =
                 MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(GetSpriteKey())[0].Texture;
             Texture2D textureInRealColorValues = RenderPaletteTextureAsRealColors(textureInPaletteValues);
-            toolbarBuildIconSprite =
-                new ToolbarBuildIconSprite(
+            sidebarBuildIconSprite =
+                new SidebarBuildIconSprite(
                     textureInRealColorValues,
                     MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(GetSpriteKey())[0].FrameData);
 
@@ -82,12 +82,12 @@ namespace mike_and_conquer.gameview.sidebar
         
             if (IsBuilding())
             {
-                toolbarBuildIconSprite.isBuilding = true;
-                toolbarBuildIconSprite.SetPercentBuildComplete(PercentBuildCompleted());
+                sidebarBuildIconSprite.isBuilding = true;
+                sidebarBuildIconSprite.SetPercentBuildComplete(PercentBuildCompleted());
             }
             else
             {
-                toolbarBuildIconSprite.isBuilding = false;
+                sidebarBuildIconSprite.isBuilding = false;
             }
         }
 
@@ -101,7 +101,7 @@ namespace mike_and_conquer.gameview.sidebar
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
 
-            toolbarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2(position.X, position.Y));
+            sidebarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2(position.X, position.Y));
         }
 
     }

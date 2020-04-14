@@ -19,11 +19,11 @@ namespace mike_and_conquer.rest.controller
 
             if (sidebarItem.item == "Barracks")
             {
-                position = MikeAndConquerGame.instance.barracksSidebarIconView.GetPosition();
+                position = MikeAndConquerGame.instance.sidebarView.barracksSidebarIconView.GetPosition();
             }
             else if (sidebarItem.item == "Minigunner")
             {
-                position = MikeAndConquerGame.instance.minigunnerSidebarIconView.GetPosition();
+                position = MikeAndConquerGame.instance.sidebarView.minigunnerSidebarIconView.GetPosition();
             }
 
             Vector2 positionInWorldCoordinates = new Vector2(position.X, position.Y);

@@ -57,8 +57,8 @@ namespace mike_and_conquer
         private GameWorldView gameWorldView;
 
         public ShadowMapper shadowMapper;
-        public MinigunnerSidebarIconView minigunnerSidebarIconView;
-        public BarracksSidebarIconView barracksSidebarIconView;
+        // public MinigunnerSidebarIconView minigunnerSidebarIconView;
+        // public BarracksSidebarIconView barracksSidebarIconView;
 
 
         private GameStateView currentGameStateView;
@@ -90,6 +90,7 @@ namespace mike_and_conquer
 
         private Texture2D mapBackgroundRectangle;
         private Texture2D sidebarBackgroundRectangle;
+        public SidebarView sidebarView;
 
         public Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()
@@ -326,6 +327,7 @@ namespace mike_and_conquer
 
             sidebarBackgroundRectangle = new Texture2D(GraphicsDevice, 1, 1);
             sidebarBackgroundRectangle.SetData(new[] { Color.LightSkyBlue });
+            sidebarView = new SidebarView(GraphicsDevice);
 
             mapBackgroundRectangle = new Texture2D(GraphicsDevice, 1, 1);
             mapBackgroundRectangle.SetData(new[] { Color.MediumSeaGreen });
@@ -826,15 +828,16 @@ namespace mike_and_conquer
             SwitchToNewGameStateViewIfNeeded();
             gameCursor.Update(gameTime);
 
-            if (GameWorld.instance.GDIBarracks != null)
-            {
-                minigunnerSidebarIconView.Update(gameTime);
-            }
-
-            if (GameWorld.instance.GDIConstructionYard != null)
-            {
-                barracksSidebarIconView.Update(gameTime);
-            }
+            // if (GameWorld.instance.GDIBarracks != null)
+            // {
+            //     minigunnerSidebarIconView.Update(gameTime);
+            // }
+            //
+            // if (GameWorld.instance.GDIConstructionYard != null)
+            // {
+            //     barracksSidebarIconView.Update(gameTime);
+            // }
+            sidebarView.Update(gameTime);
 
 
             base.Update(gameTime);
@@ -1407,16 +1410,17 @@ namespace mike_and_conquer
             spriteBatch.Draw(sidebarBackgroundRectangle,
                 new Rectangle(0, 0, sidebarViewport.Width / 2, sidebarViewport.Height / 2), Color.White);
 
-            if (minigunnerSidebarIconView != null)
-            {
-                minigunnerSidebarIconView.Draw(gameTime, spriteBatch);
-            }
+            // if (minigunnerSidebarIconView != null)
+            // {
+            //     minigunnerSidebarIconView.Draw(gameTime, spriteBatch);
+            // }
+            //
+            // if (barracksSidebarIconView != null)
+            // {
+            //     barracksSidebarIconView.Draw(gameTime, spriteBatch);
+            // }
 
-            if (barracksSidebarIconView != null)
-            {
-                barracksSidebarIconView.Draw(gameTime, spriteBatch);
-            }
-
+            sidebarView.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
         }
@@ -1508,7 +1512,9 @@ namespace mike_and_conquer
             GDIBarracks gdiBarracks = gameWorld.AddGDIBarracks(positionInWorldCoordinates);
             gameWorldView.AddGDIBarracksView(gdiBarracks);
 
-            minigunnerSidebarIconView = new MinigunnerSidebarIconView(new Point(112,24));
+            // minigunnerSidebarIconView = new MinigunnerSidebarIconView(new Point(112,24));
+            sidebarView.AddMinigunnerSidebarIconView();
+
         }
 
 
@@ -1518,7 +1524,9 @@ namespace mike_and_conquer
 
             GDIConstructionYard gdiConstructionYard = gameWorld.AddGDIConstructionYard(positionInWorldCoordinates);
             gameWorldView.AddGDIConstructionYardView(gdiConstructionYard);
-            barracksSidebarIconView = new BarracksSidebarIconView(new Point(32,24));
+            // barracksSidebarIconView = new BarracksSidebarIconView(new Point(32,24));
+            sidebarView.AddBarracksSidebarIconView();
+
         }
 
 
@@ -1571,8 +1579,11 @@ namespace mike_and_conquer
             GameOptions.DRAW_SHROUD = drawShroud;
             GameState newGameState = gameWorld.HandleReset();
             gameWorldView.HandleReset();
-            barracksSidebarIconView = null;
-            minigunnerSidebarIconView = null;
+
+            // barracksSidebarIconView = null;
+            // minigunnerSidebarIconView = null;
+
+            sidebarView.HandleReset();
             return newGameState;
         }
 

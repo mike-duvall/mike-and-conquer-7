@@ -105,6 +105,7 @@
     <Compile Include="mike-and-conquer\gameview\MCVSelectionBox.cs" />
     <Compile Include="mike-and-conquer\gameview\sidebar\SidebarIconView.cs" />
     <Compile Include="mike-and-conquer\gameview\sidebar\BarrackSidebarIconView.cs" />
+    <Compile Include="mike-and-conquer\gameview\sidebar\SidebarView.cs" />
     <Compile Include="mike-and-conquer\gameview\SpriteSortLayers.cs" />
     <Compile Include="mike-and-conquer\gameview\GameWorldView.cs" />
     <Compile Include="mike-and-conquer\gameview\MapTileInstanceView.cs" />

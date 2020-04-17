@@ -122,36 +122,36 @@ namespace mike_and_conquer
             {
                 if (IsPointOverEnemy(mousePositionAsPointInWorldCoordinates))
                 {
-                    MikeAndConquerGame.instance.gameCursor.SetToAttackEnemyLocationCursor();
+                    GameWorldView.instance.gameCursor.SetToAttackEnemyLocationCursor();
                 }
                 else if (IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
                 {
-                    MikeAndConquerGame.instance.gameCursor.SetToMoveToLocationCursor();
+                    GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
                 }
                 else
                 {
-                    MikeAndConquerGame.instance.gameCursor.SetToMovementNotAllowedCursor();
+                    GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
                 }
             }
             else if (GameWorld.instance.IsPointOnMap(mousePositionAsPointInWorldCoordinates) && IsAnMCVSelected())
             {
                 if (IsPointOverMCV(mousePositionAsPointInWorldCoordinates))
                 {
-                    MikeAndConquerGame.instance.gameCursor.SetToBuildConstructionYardCursor();
+                    GameWorldView.instance.gameCursor.SetToBuildConstructionYardCursor();
                 }
                 else if (IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
                 {
-                    MikeAndConquerGame.instance.gameCursor.SetToMoveToLocationCursor();
+                    GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
                 }
                 else
                 {
-                    MikeAndConquerGame.instance.gameCursor.SetToMovementNotAllowedCursor();
+                    GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
                 }
             }
 
             else
             {
-                MikeAndConquerGame.instance.gameCursor.SetToMainCursor();
+                GameWorldView.instance.gameCursor.SetToMainCursor();
             }
         }
 
@@ -160,21 +160,21 @@ namespace mike_and_conquer
         private Point GetWorldLocationPointFromMouseState(MouseState mouseState)
         {
             Vector2 mouseScreenLocation = new Vector2(mouseState.X, mouseState.Y);
-            Vector2 mouseWorldLocationVector2 = MikeAndConquerGame.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
+            Vector2 mouseWorldLocationVector2 = GameWorldView.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
             return new Point((int)mouseWorldLocationVector2.X, (int)mouseWorldLocationVector2.Y);
         }
 
 
         private static Point CalculateMousePositionInWorldCoordinates(MouseState newMouseState)
         {
-            float scale = MikeAndConquerGame.instance.mapViewportCamera.Zoom;
-            float leftMostScrollX = MikeAndConquerGame.instance.CalculateLeftmostScrollX();
-            float topMostScrollY = MikeAndConquerGame.instance.CalculateTopmostScrollY();
+            float scale = GameWorldView.instance.mapViewportCamera.Zoom;
+            float leftMostScrollX = GameWorldView.instance.CalculateLeftmostScrollX();
+            float topMostScrollY = GameWorldView.instance.CalculateTopmostScrollY();
 
-            float cameraOffsetX = MikeAndConquerGame.instance.mapViewportCamera.Location.X - leftMostScrollX;
+            float cameraOffsetX = GameWorldView.instance.mapViewportCamera.Location.X - leftMostScrollX;
             float mousePositionYInWorldCoordinates = (newMouseState.X / scale) + cameraOffsetX;
 
-            float cameraOffsetY = MikeAndConquerGame.instance.mapViewportCamera.Location.Y - topMostScrollY;
+            float cameraOffsetY = GameWorldView.instance.mapViewportCamera.Location.Y - topMostScrollY;
             float mousePositionXInWorldCoordinates = (newMouseState.Y / scale) + cameraOffsetY;
 
             Vector2 mousePositionInWorldCoordinates =
@@ -281,7 +281,7 @@ namespace mike_and_conquer
             MouseState mouseState = Mouse.GetState();
             Point mousePoint = mouseState.Position;
             Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
-            Vector2 mouseWorldLocation = MikeAndConquerGame.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
+            Vector2 mouseWorldLocation = GameWorldView.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
 //            Vector2 sidebarLocation = MikeAndConquerGame.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
 
 
@@ -387,7 +387,7 @@ namespace mike_and_conquer
         {
             Boolean handled = false;
 
-            Vector2 sidebarLocation = MikeAndConquerGame.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
+            Vector2 sidebarLocation = GameWorldView.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
 
             if (sidebarLocation.X > 0 && sidebarLocation.X < 64 && sidebarLocation.Y > 0 && sidebarLocation.Y < 48)
             {

@@ -13,6 +13,8 @@ using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
 
 using OpenRA.Graphics;
 
+using GameWorldView = mike_and_conquer.gameview.GameWorldView;
+
 namespace mike_and_conquer
 {
     public class SidebarBuildIconSprite
@@ -120,7 +122,8 @@ namespace mike_and_conquer
                 if (lineDrawingTexturePixelData[i] == Color.Black)
                 {
                     mappedPaletteIndex =
-                        MikeAndConquerGame.instance.shadowMapper.MapSidebarBuildPaletteIndex(mappedPaletteIndex);
+                        // MikeAndConquerGame.instance.shadowMapper.MapSidebarBuildPaletteIndex(mappedPaletteIndex);
+                        gameview.GameWorldView.instance.shadowMapper.MapSidebarBuildPaletteIndex(mappedPaletteIndex);
                 }
 
                 uint mappedColor = palette[mappedPaletteIndex];

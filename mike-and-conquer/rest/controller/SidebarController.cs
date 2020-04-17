@@ -2,6 +2,8 @@
 using System.Web.Http;
 using mike_and_conquer.rest.domain;
 
+using GameWorldView = mike_and_conquer.gameview.GameWorldView;
+
 namespace mike_and_conquer.rest.controller
 {
 
@@ -14,12 +16,12 @@ namespace mike_and_conquer.rest.controller
             sidebar.buildBarracksEnabled = false;
             sidebar.buildMinigunnerEnabled = false;
 
-            if (MikeAndConquerGame.instance.barracksSidebarIconView != null)
+            if (GameWorldView.instance.barracksSidebarIconView != null)
             {
                 sidebar.buildBarracksEnabled = true;
             }
 
-            if (MikeAndConquerGame.instance.minigunnerSidebarIconView != null)
+            if (GameWorldView.instance.minigunnerSidebarIconView != null)
             {
                 sidebar.buildMinigunnerEnabled = true;
             }

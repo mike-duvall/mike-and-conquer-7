@@ -5,6 +5,9 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Point = Microsoft.Xna.Framework.Point;
 using BadMinigunnerLocationException = mike_and_conquer.GameWorld.BadMinigunnerLocationException;
 
+using GameWorldView = mike_and_conquer.gameview.GameWorldView;
+
+
 namespace mike_and_conquer.rest.controller
 {
 
@@ -23,7 +26,7 @@ namespace mike_and_conquer.rest.controller
                 restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
                 restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
                 Vector2 screenPosition =
-                    MikeAndConquerGame.instance.ConvertWorldCoordinatesToScreenCoordinates(minigunner
+                    GameWorldView.instance.ConvertWorldCoordinatesToScreenCoordinates(minigunner
                         .positionInWorldCoordinates);
                 restMinigunner.screenX = (int)screenPosition.X;
                 restMinigunner.screenY = (int)screenPosition.Y;
@@ -36,11 +39,7 @@ namespace mike_and_conquer.rest.controller
 
             // return Ok(restMinigunners);
             return restMinigunners;
-
-
         }
-
-
 
         public IHttpActionResult Get(int id)
         {
@@ -50,7 +49,7 @@ namespace mike_and_conquer.rest.controller
             restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
             restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
             Vector2 screenPosition =
-                MikeAndConquerGame.instance.ConvertWorldCoordinatesToScreenCoordinates(minigunner
+                GameWorldView.instance.ConvertWorldCoordinatesToScreenCoordinates(minigunner
                     .positionInWorldCoordinates);
             restMinigunner.screenX = (int)screenPosition.X;
             restMinigunner.screenY = (int)screenPosition.Y;

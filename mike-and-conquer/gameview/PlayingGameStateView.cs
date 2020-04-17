@@ -8,16 +8,17 @@ namespace mike_and_conquer.gameview
 {
     class PlayingGameStateView : GameStateView
     {
-        public override  void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override  void Draw(GameTime gameTime)
         {
-            foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
-            {
-                basicMapSquareView.Draw(gameTime, spriteBatch);
-            }
-
+            GameWorldView.instance.Draw(gameTime);
+            // foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
+            // {
+            //     basicMapSquareView.Draw(gameTime, spriteBatch);
+            // }
+            //
             // TODO:  Consider pulling this code back into this class, from MikeAndConquerGame
 //            GameWorldView.instance.GDIBarracksView.Draw(gameTime, spriteBatch);
-            GameWorldView.instance.GdiConstructionYardView.Draw(gameTime,spriteBatch);
+            // GameWorldView.instance.GdiConstructionYardView.Draw(gameTime,spriteBatch);
 //
 //            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
 //            {
@@ -34,10 +35,10 @@ namespace mike_and_conquer.gameview
 //                nextSandbagView.Draw(gameTime, spriteBatch);
 //            }
 //
-            foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
-            {
-                nextTerrainView.DrawFull(gameTime, spriteBatch);
-            }
+            // foreach (TerrainView nextTerrainView in GameWorldView.instance.terrainViewList)
+            // {
+            //     nextTerrainView.DrawFull(gameTime, spriteBatch);
+            // }
 //
 //            MikeAndConquerGame.instance.unitSelectionBox.Draw(gameTime, spriteBatch);
 

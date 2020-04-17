@@ -2,6 +2,8 @@
 using mike_and_conquer.rest.domain;
 using MouseInputHandler = mike_and_conquer_6.mike_and_conquer.MouseInputHandler;
 
+using GameWorldView = mike_and_conquer.gameview.GameWorldView;
+
 namespace mike_and_conquer.rest.controller
 {
 
@@ -11,8 +13,8 @@ namespace mike_and_conquer.rest.controller
 
         public IHttpActionResult Post([FromBody]RestPoint point)
         {
-            int screenWidth = MikeAndConquerGame.instance.defaultViewport.Width;
-            int screenHeight = MikeAndConquerGame.instance.defaultViewport.Height;
+            int screenWidth = GameWorldView.instance.defaultViewport.Width;
+            int screenHeight = GameWorldView.instance.defaultViewport.Height;
 
             MouseInputHandler.DoLeftMouseClick( (uint)point.x, (uint)point.y, screenWidth, screenHeight);
             return Ok();

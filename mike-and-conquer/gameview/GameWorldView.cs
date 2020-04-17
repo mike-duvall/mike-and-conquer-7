@@ -966,9 +966,14 @@ namespace mike_and_conquer.gameview
                 redrawBaseMapTiles = true;
             }
 
+            if (!oldKeyboardState.IsKeyDown(Keys.S) && newKeyboardState.IsKeyDown(Keys.S))
+            {
+                GameOptions.ToggleDrawShroud();
+            }
+
+
             // this.mapViewportCamera.Rotation = testRotation;
             //                                    testRotation += 0.01f;
-
 
             // KeyboardState newKeyboardState = Keyboard.GetState();  // get the newest state
 

@@ -289,6 +289,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <Content Include="notes\errors.txt" />
+    <Content Include="notes\ini-file-cell-number-calculations.txt" />
+    <Content Include="notes\Notes.txt" />
+    <Content Include="notes\potential-drawing-algorithms.txt" />
+    <Content Include="notes\Setup-Notes.txt" />
+    <Content Include="notes\shadow-color-mapping-notes.txt" />
+    <Content Include="notes\xcc-mixer-notes.txt" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb">

@@ -1,5 +1,6 @@
 ﻿using System;
-using Microsoft.Owin.Hosting;
+using mike_and_conquer.src.externalcontrol;
+
 
 namespace mike_and_conquer.main
 {
@@ -8,7 +9,7 @@ namespace mike_and_conquer.main
     /// </summary>
     public static class Program
     {
-        public static IDisposable restServer;
+        // public static IDisposable restServer;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -25,9 +26,7 @@ namespace mike_and_conquer.main
                         testMode = true;
                 }
 
-                //string baseAddress = "http://localhost:11369/";
-                string baseAddress = "http://*:11369/";
-                restServer = WebApp.Start<Startup>(url: baseAddress);
+                RestServerManager.Initialize();
                 using (var game = new MikeAndConquerGame(testMode))
                     game.Run();
             }

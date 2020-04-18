@@ -6,6 +6,7 @@ using mike_and_conquer.gamestate;
 using mike_and_conquer.gameview;
 using mike_and_conquer.gameview.sidebar;
 using mike_and_conquer.openralocal;
+using mike_and_conquer.src.externalcontrol;
 using Serilog;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -416,7 +417,7 @@ namespace mike_and_conquer.main
 
             if (newKeyboardState.IsKeyDown(Keys.Escape))
             {
-                Program.restServer.Dispose();
+                RestServerManager.Shutdown();
                 Exit();
             }
 

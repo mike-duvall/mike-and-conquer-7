@@ -6,6 +6,9 @@ using MouseInputHandler = mike_and_conquer_6.mike_and_conquer.MouseInputHandler;
 
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
+using GameWorldView = mike_and_conquer.gameview.GameWorldView;
+
+
 namespace mike_and_conquer.rest.controller
 {
 
@@ -19,21 +22,21 @@ namespace mike_and_conquer.rest.controller
 
             if (sidebarItem.item == "Barracks")
             {
-                position = MikeAndConquerGame.instance.barracksSidebarIconView.GetPosition();
+                position = GameWorldView.instance.barracksSidebarIconView.GetPosition();
             }
             else if (sidebarItem.item == "Minigunner")
             {
-                position = MikeAndConquerGame.instance.minigunnerSidebarIconView.GetPosition();
+                position = GameWorldView.instance.minigunnerSidebarIconView.GetPosition();
             }
 
             Vector2 positionInWorldCoordinates = new Vector2(position.X, position.Y);
 
             Vector2 transformedLocation =
-                MikeAndConquerGame.instance.ConvertWorldCoordinatesToScreenCoordinatesForSidebar(positionInWorldCoordinates);
+                GameWorldView.instance.ConvertWorldCoordinatesToScreenCoordinatesForSidebar(positionInWorldCoordinates);
 
 
-            int screenWidth = MikeAndConquerGame.instance.defaultViewport.Width;
-            int screenHeight = MikeAndConquerGame.instance.defaultViewport.Height;
+            int screenWidth = GameWorldView.instance.defaultViewport.Width;
+            int screenHeight = GameWorldView.instance.defaultViewport.Height;
            
             
             MouseInputHandler.DoLeftMouseClick((uint)transformedLocation.X, (uint) transformedLocation.Y , screenWidth, screenHeight);

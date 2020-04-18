@@ -1,5 +1,7 @@
 ﻿using System.Web.Http;
 
+using GameWorldView = mike_and_conquer.gameview.GameWorldView;
+
 namespace mike_and_conquer.rest.controller
 {
 
@@ -16,7 +18,7 @@ namespace mike_and_conquer.rest.controller
         public IHttpActionResult Get()
         {
             MouseCursorState mouseCursorState = new MouseCursorState();
-            mouseCursorState.cursorState = MikeAndConquerGame.instance.gameCursor.StateAsString;
+            mouseCursorState.cursorState = GameWorldView.instance.gameCursor.StateAsString;
             return Ok(mouseCursorState);
         }
 

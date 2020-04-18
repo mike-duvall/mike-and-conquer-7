@@ -18,20 +18,27 @@ namespace mike_and_conquer.gameview
         }
 
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
-            {
-                nextMinigunnerView.Draw(gameTime, spriteBatch);
-            }
+        // public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        // {
+        //     foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
+        //     {
+        //         nextMinigunnerView.Draw(gameTime, spriteBatch);
+        //     }
+        //
+        //     foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
+        //     {
+        //         nextMinigunnerView.Draw(gameTime, spriteBatch);
+        //     }
+        //     message.Draw(gameTime, spriteBatch);
+        //
+        // }
 
-            foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.NodMinigunnerViewList)
-            {
-                nextMinigunnerView.Draw(gameTime, spriteBatch);
-            }
-            message.Draw(gameTime, spriteBatch);
+        public override void Draw(GameTime gameTime)
+        {
+            GameWorldView.instance.Draw(gameTime);
 
         }
+
 
     }
 }

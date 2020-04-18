@@ -6,6 +6,6 @@ namespace mike_and_conquer.gameview
 {
     abstract class GameStateView
     {
-        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        public abstract void Draw(GameTime gameTime);
     }
 }

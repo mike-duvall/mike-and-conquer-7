@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mike-and-conquer-6", "mike-and-conquer-6.csproj", "{3FDAB4B1-0B3E-4315-B3AC-EC183A401206}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mike-and-conquer", "mike-and-conquer.csproj", "{3FDAB4B1-0B3E-4315-B3AC-EC183A401206}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unit-tests", "unit-tests\unit-tests.csproj", "{6421C0C9-6A57-49DE-809D-30251560167D}"
 EndProject

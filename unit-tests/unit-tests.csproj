@@ -65,9 +65,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\mike-and-conquer-6.csproj">
+    <ProjectReference Include="..\mike-and-conquer.csproj">
       <Project>{3fdab4b1-0b3e-4315-b3ac-ec183a401206}</Project>
-      <Name>mike-and-conquer-6</Name>
+      <Name>mike-and-conquer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -9,8 +9,8 @@
     <ProjectGuid>{3FDAB4B1-0B3E-4315-B3AC-EC183A401206}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>mike_and_conquer_6</RootNamespace>
-    <AssemblyName>mike-and-conquer-6</AssemblyName>
+    <RootNamespace>mike_and_conquer</RootNamespace>
+    <AssemblyName>mike-and-conquer</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>

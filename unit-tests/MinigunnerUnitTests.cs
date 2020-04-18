@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using mike_and_conquer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using mike_and_conquer.pathfinding;
-using Minigunner = mike_and_conquer.Minigunner;
+using Minigunner = mike_and_conquer.gameobjects.Minigunner;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using Point = Microsoft.Xna.Framework.Point;
 

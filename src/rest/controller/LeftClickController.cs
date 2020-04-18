@@ -1,0 +1,24 @@
+﻿using System.Web.Http;
+using mike_and_conquer.rest.domain;
+using MouseInputHandler = mike_and_conquer.main.MouseInputHandler;
+
+using GameWorldView = mike_and_conquer.gameview.GameWorldView;
+
+namespace mike_and_conquer.rest.controller
+{
+
+    public class LeftClickController : ApiController
+    {
+
+
+        public IHttpActionResult Post([FromBody]RestPoint point)
+        {
+            int screenWidth = GameWorldView.instance.defaultViewport.Width;
+            int screenHeight = GameWorldView.instance.defaultViewport.Height;
+
+            MouseInputHandler.DoLeftMouseClick( (uint)point.x, (uint)point.y, screenWidth, screenHeight);
+            return Ok();
+        }
+
+    }
+}

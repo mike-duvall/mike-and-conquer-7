@@ -854,5 +854,31 @@ namespace mike_and_conquer.main
             MapTileInstance mapTileInstance = this.FindMapTileInstance(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
             mapTileInstance.Visibility = visibility;
         }
+
+        public  bool IsValidMoveDestination(Point pointInWorldCoordinates)
+        {
+
+            Boolean isValidMoveDestination = true;
+            MapTileInstance clickedMapTileInstance =
+                FindMapTileInstance(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
+            if (clickedMapTileInstance.IsBlockingTerrain)
+            {
+                isValidMoveDestination = false;
+            }
+
+
+            foreach (Sandbag nextSandbag in MikeAndConquerGame.instance.gameWorld.sandbagList)
+            {
+
+                if (nextSandbag.ContainsPoint(pointInWorldCoordinates))
+                {
+                    isValidMoveDestination = false;
+                }
+            }
+
+            return isValidMoveDestination;
+        }
+
+
     }
 }

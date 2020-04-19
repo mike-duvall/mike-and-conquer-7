@@ -39,6 +39,9 @@ namespace mike_and_conquer.gameview
 
         }
 
-
+        public override void Update(GameTime gameTime)
+        {
+            
+        }
     }
 }

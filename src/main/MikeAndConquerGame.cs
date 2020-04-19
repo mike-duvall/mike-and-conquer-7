@@ -423,7 +423,9 @@ namespace mike_and_conquer.main
 
             gameWorldView.Update(gameTime, newKeyboardState);
 
+
             currentGameState = this.currentGameState.Update(gameTime);
+            this.currentGameStateView.Update(gameTime);
 
             // This is a hack fix to fix an issue where if you change this.IsMouseVisible to false
             // while the Windows pointer is showing the mouse pointer arrow with the blue sworl "busy" icon on the side

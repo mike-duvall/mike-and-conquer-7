@@ -132,6 +132,7 @@
     <Compile Include="src\gamesprite\NodShpFileColorMapper.cs" />
     <Compile Include="src\gamesprite\GdiShpFileColorMapper.cs" />
     <Compile Include="src\gameview\UnitSelectionBox.cs" />
+    <Compile Include="src\inputhandler\windows\WindowsPlayingGameStateInputHandler.cs" />
     <Compile Include="src\main\Camera2D.cs" />
     <Compile Include="src\main\GameMap.cs" />
     <Compile Include="src\main\GameOption.cs" />

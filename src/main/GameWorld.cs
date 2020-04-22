@@ -66,6 +66,8 @@ namespace mike_and_conquer.main
 
         public GameMap gameMap;
 
+        public UnitSelectionBox unitSelectionBox;
+
         public static GameWorld instance;
 
         public GameWorld()
@@ -78,6 +80,7 @@ namespace mike_and_conquer.main
             gameEvents = new List<AsyncGameEvent>();
 
             nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
+            unitSelectionBox = new UnitSelectionBox();
 
             GameWorld.instance = this;
         }
@@ -878,6 +881,57 @@ namespace mike_and_conquer.main
 
             return isValidMoveDestination;
         }
+
+        public bool IsPointOverEnemy(Point pointInWorldCoordinates)
+        {
+            foreach (Minigunner nextNodMinigunner in nodMinigunnerList)
+            {
+                if (nextNodMinigunner.ContainsPoint(pointInWorldCoordinates.X, pointInWorldCoordinates.Y))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool IsPointOverMCV(Point pointInWorldCoordinates)
+        {
+
+            if (this.mcv != null)
+            {
+                if (mcv.ContainsPoint(pointInWorldCoordinates.X, pointInWorldCoordinates.Y))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        public bool IsAMinigunnerSelected()
+        {
+            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+            {
+                if (nextMinigunner.selected)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool IsAnMCVSelected()
+        {
+            if (mcv != null)
+            {
+                return mcv.selected;
+            }
+
+            return false;
+        }
+
 
 
     }

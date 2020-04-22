@@ -131,6 +131,7 @@
     <Compile Include="src\gamestate\PlayingGameState.cs" />
     <Compile Include="src\gamesprite\NodShpFileColorMapper.cs" />
     <Compile Include="src\gamesprite\GdiShpFileColorMapper.cs" />
+    <Compile Include="src\gameview\UnitSelectionBoxView.cs" />
     <Compile Include="src\gameview\UnitSelectionBox.cs" />
     <Compile Include="src\inputhandler\windows\WindowsPlayingGameStateInputHandler.cs" />
     <Compile Include="src\main\Camera2D.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="src\openra\ShpTDLoader.cs" />
     <Compile Include="src\gamesprite\ShpFileColorMapper.cs" />
     <Compile Include="src\gameview\UnitSelectionCursor.cs" />
+    <Compile Include="src\util\PointUtil.cs" />
     <Compile Include="src\util\TextureUtil.cs" />
     <Compile Include="src\util\AnimationSequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

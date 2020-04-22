@@ -101,6 +101,7 @@ namespace mike_and_conquer.gameview
 
         private List<SandbagView> sandbagViewList;
 
+        private UnitSelectionBoxView unitSelectionBoxView;
 
         public List<MapTileInstanceView> MapTileInstanceViewList
         {
@@ -154,6 +155,9 @@ namespace mike_and_conquer.gameview
 
             sandbagViewList = new List<SandbagView>();
             terrainViewList = new List<TerrainView>();
+
+            unitSelectionBoxView =
+                new UnitSelectionBoxView(GameWorld.instance.unitSelectionBox);
 
             shadowMapper = new ShadowMapper();
             redrawBaseMapTiles = true;
@@ -652,7 +656,7 @@ namespace mike_and_conquer.gameview
                 mapViewportCamera.TransformMatrix);
 
 
-            MikeAndConquerGame.instance.unitSelectionBox.Draw(spriteBatch);
+            unitSelectionBoxView.Draw(spriteBatch);
 
             spriteBatch.End();
 

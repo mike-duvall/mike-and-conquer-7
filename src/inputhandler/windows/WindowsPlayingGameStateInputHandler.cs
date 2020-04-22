@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gameview;
 using mike_and_conquer.main;
+using mike_and_conquer.util;
 using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -16,16 +17,15 @@ namespace mike_and_conquer.src.inputhandler.windows
     class WindowsPlayingGameStateInputHandler
     {
 
-
         public static WindowsPlayingGameStateInputHandler instance;
 
         private MouseState oldMouseState;
+
 
         public MouseState MouseState
         {
             get { return oldMouseState; }
         }
-
 
         public WindowsPlayingGameStateInputHandler()
         {
@@ -36,10 +36,11 @@ namespace mike_and_conquer.src.inputhandler.windows
         {
             MouseState newMouseState = Mouse.GetState();
 
-            // UpdateMousePointer(newMouseState);
+            UpdateMousePointer(newMouseState);
 
             Point mouseWorldLocationPoint = GetWorldLocationPointFromMouseState(newMouseState);
-            UnitSelectionBox unitSelectionBox = MikeAndConquerGame.instance.unitSelectionBox;
+
+            UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
 
             if (LeftMouseButtonUnclicked(newMouseState))
             {
@@ -72,46 +73,51 @@ namespace mike_and_conquer.src.inputhandler.windows
 
         }
 
-        // private void UpdateMousePointer(MouseState newMouseState)
-        // {
-        //     Point mousePositionAsPointInWorldCoordinates = CalculateMousePositionInWorldCoordinates(newMouseState);
-        //
-        //     if (GameWorld.instance.IsPointOnMap(mousePositionAsPointInWorldCoordinates) && IsAMinigunnerSelected())
-        //     {
-        //         if (IsPointOverEnemy(mousePositionAsPointInWorldCoordinates))
-        //         {
-        //             GameWorldView.instance.gameCursor.SetToAttackEnemyLocationCursor();
-        //         }
-        //         else if (IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
-        //         {
-        //             GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
-        //         }
-        //         else
-        //         {
-        //             GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
-        //         }
-        //     }
-        //     else if (GameWorld.instance.IsPointOnMap(mousePositionAsPointInWorldCoordinates) && IsAnMCVSelected())
-        //     {
-        //         if (IsPointOverMCV(mousePositionAsPointInWorldCoordinates))
-        //         {
-        //             GameWorldView.instance.gameCursor.SetToBuildConstructionYardCursor();
-        //         }
-        //         else if (IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
-        //         {
-        //             GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
-        //         }
-        //         else
-        //         {
-        //             GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
-        //         }
-        //     }
-        //
-        //     else
-        //     {
-        //         GameWorldView.instance.gameCursor.SetToMainCursor();
-        //     }
-        // }
+        private void UpdateMousePointer(MouseState mouseState)
+        {
+            Vector2 mousePointerLocation = new Vector2(mouseState.X, mouseState.Y);
+            Vector2 mousePositionAsPointInWorldCoordinatesAsVector2 =
+                GameWorldView.instance.ConvertScreenLocationToWorldLocation(mousePointerLocation);
+
+            Point mousePositionAsPointInWorldCoordinates =
+                PointUtil.ConvertVector2ToPoint(mousePositionAsPointInWorldCoordinatesAsVector2);
+
+            if (GameWorld.instance.IsPointOnMap(mousePositionAsPointInWorldCoordinates) && GameWorld.instance.IsAMinigunnerSelected())
+            {
+                if (GameWorld.instance.IsPointOverEnemy(mousePositionAsPointInWorldCoordinates))
+                {
+                    GameWorldView.instance.gameCursor.SetToAttackEnemyLocationCursor();
+                }
+                else if (GameWorld.instance.IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
+                {
+                    GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
+                }
+                else
+                {
+                    GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
+                }
+            }
+            else if (GameWorld.instance.IsPointOnMap(mousePositionAsPointInWorldCoordinates) && GameWorld.instance.IsAnMCVSelected())
+            {
+                if (GameWorld.instance.IsPointOverMCV(mousePositionAsPointInWorldCoordinates))
+                {
+                    GameWorldView.instance.gameCursor.SetToBuildConstructionYardCursor();
+                }
+                else if (GameWorld.instance.IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
+                {
+                    GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
+                }
+                else
+                {
+                    GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
+                }
+            }
+        
+            else
+            {
+                GameWorldView.instance.gameCursor.SetToMainCursor();
+            }
+        }
 
         private Point GetWorldLocationPointFromMouseState(MouseState mouseState)
         {
@@ -140,36 +146,12 @@ namespace mike_and_conquer.src.inputhandler.windows
             return newMouseState.LeftButton == ButtonState.Released && oldMouseState.LeftButton == ButtonState.Pressed;
         }
 
-        // private static Point CalculateMousePositionInWorldCoordinates(MouseState newMouseState)
-        // {
-        //     float scale = GameWorldView.instance.mapViewportCamera.Zoom;
-        //     float leftMostScrollX = GameWorldView.instance.CalculateLeftmostScrollX();
-        //     float topMostScrollY = GameWorldView.instance.CalculateTopmostScrollY();
-        //
-        //     float cameraOffsetX = GameWorldView.instance.mapViewportCamera.Location.X - leftMostScrollX;
-        //     float mousePositionYInWorldCoordinates = (newMouseState.X / scale) + cameraOffsetX;
-        //
-        //     float cameraOffsetY = GameWorldView.instance.mapViewportCamera.Location.Y - topMostScrollY;
-        //     float mousePositionXInWorldCoordinates = (newMouseState.Y / scale) + cameraOffsetY;
-        //
-        //     Vector2 mousePositionInWorldCoordinates =
-        //         new Vector2(mousePositionYInWorldCoordinates, mousePositionXInWorldCoordinates);
-        //
-        //
-        //     Point mousePositionAsPointInWorldCoordinates = new Point();
-        //     mousePositionAsPointInWorldCoordinates.X = (int)mousePositionInWorldCoordinates.X;
-        //     mousePositionAsPointInWorldCoordinates.Y = (int)mousePositionInWorldCoordinates.Y;
-        //
-        //     return mousePositionAsPointInWorldCoordinates;
-        // }
-
         internal void HandleLeftClick(int mouseX, int mouseY)
         {
             MouseState mouseState = Mouse.GetState();
             Point mousePoint = mouseState.Position;
             Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
             Vector2 mouseWorldLocation = GameWorldView.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
-            //            Vector2 sidebarLocation = MikeAndConquerGame.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
 
 
             int mouseWorldX = (int)mouseWorldLocation.X;
@@ -205,8 +187,6 @@ namespace mike_and_conquer.src.inputhandler.windows
 
         }
 
-
-
         private bool CheckForAndHandleLeftClickOnMap(int mouseX, int mouseY)
         {
             foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
@@ -241,81 +221,6 @@ namespace mike_and_conquer.src.inputhandler.windows
             return true;
         }
 
-        // bool IsPointOverEnemy(Point pointInWorldCoordinates)
-        // {
-        //     foreach (Minigunner nextNodMinigunner in GameWorld.instance.nodMinigunnerList)
-        //     {
-        //         if (nextNodMinigunner.ContainsPoint(pointInWorldCoordinates.X, pointInWorldCoordinates.Y))
-        //         {
-        //             return true;
-        //         }
-        //     }
-        //
-        //     return false;
-        // }
-        //
-        // bool IsPointOverMCV(Point pointInWorldCoordinates)
-        // {
-        //
-        //     if (GameWorld.instance.MCV != null)
-        //     {
-        //         if (GameWorld.instance.MCV.ContainsPoint(pointInWorldCoordinates.X, pointInWorldCoordinates.Y))
-        //         {
-        //             return true;
-        //         }
-        //     }
-        //
-        //     return false;
-        // }
-        //
-        //
-        // bool IsAMinigunnerSelected()
-        // {
-        //     foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
-        //     {
-        //         if (nextMinigunner.selected)
-        //         {
-        //             return true;
-        //         }
-        //     }
-        //     return false;
-        // }
-        //
-        // bool IsAnMCVSelected()
-        // {
-        //     MCV mcv = GameWorld.instance.MCV;
-        //     if (mcv != null)
-        //     {
-        //         return mcv.selected;
-        //     }
-        //
-        //     return false;
-        // }
-
-        // private bool IsValidMoveDestination(Point pointInWorldCoordinates)
-        // {
-        //
-        //     Boolean isValidMoveDestination = true;
-        //     MapTileInstance clickedMapTileInstance =
-        //         GameWorld.instance.FindMapTileInstance(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
-        //     if (clickedMapTileInstance.IsBlockingTerrain)
-        //     {
-        //         isValidMoveDestination = false;
-        //     }
-        //
-        //
-        //     foreach (Sandbag nextSandbag in MikeAndConquerGame.instance.gameWorld.sandbagList)
-        //     {
-        //
-        //         if (nextSandbag.ContainsPoint(pointInWorldCoordinates))
-        //         {
-        //             isValidMoveDestination = false;
-        //         }
-        //     }
-        //
-        //     return isValidMoveDestination;
-        // }
-
 
         // TODO:  Add Sidebar class, have build buttons sit inside of it, iterate through
         // them and ask if they contain point where sidebar was clicked
@@ -327,17 +232,14 @@ namespace mike_and_conquer.src.inputhandler.windows
 
             if (sidebarLocation.X > 0 && sidebarLocation.X < 64 && sidebarLocation.Y > 0 && sidebarLocation.Y < 48)
             {
-                // HandleClickOnBuildMinigunner();
                 HandleClickOnBuildBarracks();
                 handled = true;
             }
             else if (sidebarLocation.X > 80 && sidebarLocation.X < 144 && sidebarLocation.Y > 0 && sidebarLocation.Y < 48)
             {
                 HandleClickOnBuildMinigunner();
-                // HandleClickOnBuildBarracks();
                 handled = true;
             }
-
 
             return handled;
 
@@ -422,10 +324,7 @@ namespace mike_and_conquer.src.inputhandler.windows
             }
 
             return handled;
-
         }
-
-
 
 
     }

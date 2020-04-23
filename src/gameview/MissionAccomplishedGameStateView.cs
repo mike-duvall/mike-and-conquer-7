@@ -40,5 +40,9 @@ namespace mike_and_conquer.gameview
             GameWorldView.instance.Draw(gameTime);
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            
+        }
     }
 }

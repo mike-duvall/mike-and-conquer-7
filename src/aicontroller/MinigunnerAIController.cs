@@ -29,7 +29,7 @@ namespace mike_and_conquer.aicontroller
 
         private Minigunner FindFirstNonDeadGdiMinigunner()
         {
-            List<Minigunner> gdiMinigunners = (GameWorld.instance.gdiMinigunnerList);
+            List<Minigunner> gdiMinigunners = (GameWorld.instance.GDIMinigunnerList);
 
             foreach (Minigunner nextMinigunner in gdiMinigunners)
             {

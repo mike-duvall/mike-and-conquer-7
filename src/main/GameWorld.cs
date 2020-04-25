@@ -31,32 +31,44 @@ namespace mike_and_conquer.main
         public static int MAP_TILE_WIDTH = 24;
         public static int MAP_TILE_HEIGHT = 24;
 
+        private GDIPlayer gdiPlayer;
 
-        public List<Minigunner> gdiMinigunnerList { get; }
+        // public List<Minigunner> gdiMinigunnerList { get; }
         public List<Minigunner> nodMinigunnerList { get; }
         public List<Sandbag> sandbagList;
         public List<TerrainItem> terrainItemList;
 
-        private GDIBarracks gdiBarracks;
+        public List<Minigunner> GDIMinigunnerList
+        {
+            get { return gdiPlayer.GdiMinigunnerList; }
+        }
+
+        // private GDIBarracks gdiBarracks;
         public GDIBarracks GDIBarracks
         {
-            get { return gdiBarracks; }
+            get { return gdiPlayer.GDIBarracks; }
         }
-
-        private GDIConstructionYard gdiConstructionYard;
+        //
+        // private GDIConstructionYard gdiConstructionYard;
         public GDIConstructionYard GDIConstructionYard
         {
-            get { return gdiConstructionYard; }
+            get { return gdiPlayer.GDIConstructionYard; }
         }
+        //
+        //
+        //
+        // private MCV mcv;
+        // public MCV MCV
+        // {
+        //     get { return mcv; }
+        //     set { mcv = value; }
+        // }
 
-
-
-        private MCV mcv;
         public MCV MCV
         {
-            get { return mcv; }
-            set { mcv = value; }
+            get { return gdiPlayer.MCV; }
         }
+
 
         public NavigationGraph navigationGraph;
 
@@ -72,7 +84,8 @@ namespace mike_and_conquer.main
 
         public GameWorld()
         {
-            gdiMinigunnerList = new List<Minigunner>();
+            // gdiMinigunnerList = new List<Minigunner>();
+            gdiPlayer = new GDIPlayer();
             nodMinigunnerList = new List<Minigunner>();
             sandbagList = new List<Sandbag>();
             terrainItemList = new List<TerrainItem>();
@@ -87,12 +100,13 @@ namespace mike_and_conquer.main
 
         public GameState HandleReset()
         {
-            gdiMinigunnerList.Clear();
+            // gdiMinigunnerList.Clear();
+            gdiPlayer.HandleReset();
             nodMinigunnerList.Clear();
             sandbagList.Clear();
-            mcv = null;
-            gdiConstructionYard = null;
-            gdiBarracks = null;
+            // mcv = null;
+            // gdiConstructionYard = null;
+            // gdiBarracks = null;
             gameMap.Reset();
             InitializeNavigationGraph();
             return new PlayingGameState();
@@ -357,16 +371,18 @@ namespace mike_and_conquer.main
 
         internal Minigunner GetGdiMinigunner(int id)
         {
-            Minigunner foundMinigunner = null;
-            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            {
-                if (nextMinigunner.id == id)
-                {
-                    foundMinigunner = nextMinigunner;
-                }
-            }
+            // Minigunner foundMinigunner = null;
+            // foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+            // {
+            //     if (nextMinigunner.id == id)
+            //     {
+            //         foundMinigunner = nextMinigunner;
+            //     }
+            // }
+            //
+            // return foundMinigunner;
 
-            return foundMinigunner;
+            return gdiPlayer.GetMinigunner(id);
         }
 
 
@@ -399,15 +415,17 @@ namespace mike_and_conquer.main
 
         void DeslectAllUnits()
         {
-            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            {
-                nextMinigunner.selected = false;
-            }
+            // foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+            // {
+            //     nextMinigunner.selected = false;
+            // }
+            //
+            // if (GameWorld.instance.MCV != null)
+            // {
+            //     GameWorld.instance.MCV.selected = false;
+            // }
 
-            if (GameWorld.instance.MCV != null)
-            {
-                GameWorld.instance.MCV.selected = false;
-            }
+            gdiPlayer.DeslectAllUnits();
 
         }
 
@@ -428,34 +446,36 @@ namespace mike_and_conquer.main
         public void Update(GameTime gameTime)
         {
             UpdateAIControllers(gameTime);
-            UpdateGDIMinigunners(gameTime);
+            // UpdateGDIMinigunners(gameTime);
             UpdateNodMinigunners(gameTime);
-            UpdateBarracks(gameTime);
-            UpdateConstructionYard(gameTime);
-            if (mcv != null)
-            {
-                mcv.Update(gameTime);
-            }
+            // UpdateBarracks(gameTime);
+            // UpdateConstructionYard(gameTime);
+
+            gdiPlayer.Update(gameTime);
+            // if (mcv != null)
+            // {
+            //     mcv.Update(gameTime);
+            // }
 
         }
 
 
-        private void UpdateBarracks(GameTime gameTime)
-        {
-            if (gdiBarracks != null)
-            {
-                gdiBarracks.Update(gameTime);
-            }
-        }
-
-
-        private void UpdateConstructionYard(GameTime gameTime)
-        {
-            if (gdiConstructionYard != null)
-            {
-                gdiConstructionYard.Update(gameTime);
-            }
-        }
+        // private void UpdateBarracks(GameTime gameTime)
+        // {
+        //     if (gdiBarracks != null)
+        //     {
+        //         gdiBarracks.Update(gameTime);
+        //     }
+        // }
+        //
+        //
+        // private void UpdateConstructionYard(GameTime gameTime)
+        // {
+        //     if (gdiConstructionYard != null)
+        //     {
+        //         gdiConstructionYard.Update(gameTime);
+        //     }
+        // }
 
 
         private void UpdateNodMinigunners(GameTime gameTime)
@@ -469,16 +489,16 @@ namespace mike_and_conquer.main
             }
         }
 
-        private void UpdateGDIMinigunners(GameTime gameTime)
-        {
-            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            {
-                if (nextMinigunner.health > 0)
-                {
-                    nextMinigunner.Update(gameTime);
-                }
-            }
-        }
+        // private void UpdateGDIMinigunners(GameTime gameTime)
+        // {
+        //     foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+        //     {
+        //         if (nextMinigunner.health > 0)
+        //         {
+        //             nextMinigunner.Update(gameTime);
+        //         }
+        //     }
+        // }
 
         private void UpdateAIControllers(GameTime gameTime)
         {
@@ -519,15 +539,18 @@ namespace mike_and_conquer.main
             AssertIsValidMinigunnerPosition(positionInWorldCoordinates);
 
             Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this );
-            gdiMinigunnerList.Add(newMinigunner);
+            gdiPlayer.AddMinigunner(newMinigunner);
+            // gdiMinigunnerList.Add(newMinigunner);
             return newMinigunner;
         }
 
 
         public MCV AddMCV(Point positionInWorldCoordinates)
         {
-            mcv = new MCV(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this);
-            return mcv;
+            // mcv = new MCV(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this);
+            // return mcv;
+
+            return gdiPlayer.AddMCV(positionInWorldCoordinates);
         }
 
 
@@ -552,21 +575,19 @@ namespace mike_and_conquer.main
 
         public GDIBarracks AddGDIBarracks(Point positionInWorldCoordinates)
         {
-
-//            AssertIsValidMinigunnerPosition(positionInWorldCoordinates);
-
-            // TODO Might want to check if one already exists and throw error if so
-            gdiBarracks = new GDIBarracks(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
-            return gdiBarracks;
+            // // TODO Might want to check if one already exists and throw error if so
+            // gdiBarracks = new GDIBarracks(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
+            // return gdiBarracks;
+            return gdiPlayer.AddGDIBarracks(positionInWorldCoordinates);
         }
 
         public GDIConstructionYard AddGDIConstructionYard(Point positionInWorldCoordinates)
         {
-            //            AssertIsValidMinigunnerPosition(positionInWorldCoordinates);
+            // // TODO Might want to check if one already exists and throw error if so
+            // gdiConstructionYard = new GDIConstructionYard(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
+            // return gdiConstructionYard;
 
-            // TODO Might want to check if one already exists and throw error if so
-            gdiConstructionYard = new GDIConstructionYard(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
-            return gdiConstructionYard;
+            return gdiPlayer.AddGDIConstructionYard(positionInWorldCoordinates);
         }
 
 
@@ -898,41 +919,48 @@ namespace mike_and_conquer.main
         public bool IsPointOverMCV(Point pointInWorldCoordinates)
         {
 
-            if (this.mcv != null)
-            {
-                if (mcv.ContainsPoint(pointInWorldCoordinates.X, pointInWorldCoordinates.Y))
-                {
-                    return true;
-                }
-            }
+            // if (this.mcv != null)
+            // {
+            //     if (mcv.ContainsPoint(pointInWorldCoordinates.X, pointInWorldCoordinates.Y))
+            //     {
+            //         return true;
+            //     }
+            // }
+            //
+            // return false;
 
-            return false;
+            return gdiPlayer.IsPointOverMCV(pointInWorldCoordinates);
         }
 
 
         public bool IsAMinigunnerSelected()
         {
-            foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            {
-                if (nextMinigunner.selected)
-                {
-                    return true;
-                }
-            }
-            return false;
+            // foreach (Minigunner nextMinigunner in gdiMinigunnerList)
+            // {
+            //     if (nextMinigunner.selected)
+            //     {
+            //         return true;
+            //     }
+            // }
+            // return false;
+            return gdiPlayer.IsAMinigunnerSelected();
         }
 
         public bool IsAnMCVSelected()
         {
-            if (mcv != null)
-            {
-                return mcv.selected;
-            }
-
-            return false;
+            // if (mcv != null)
+            // {
+            //     return mcv.selected;
+            // }
+            //
+            // return false;
+            return IsAnMCVSelected();
         }
 
 
-
+        public void RemoveMCV()
+        {
+            gdiPlayer.RemoveMCV();
+        }
     }
 }

@@ -18,10 +18,10 @@ namespace mike_and_conquer.externalcontrol.rest.controller
         public IEnumerable<RestMinigunner> Get()
         {
 
-            RestMinigunner[] restMinigunners = new RestMinigunner[GameWorld.instance.gdiMinigunnerList.Count];
+            RestMinigunner[] restMinigunners = new RestMinigunner[GameWorld.instance.GDIMinigunnerList.Count];
 
             int i = 0;
-            foreach (Minigunner minigunner in GameWorld.instance.gdiMinigunnerList)
+            foreach (Minigunner minigunner in GameWorld.instance.GDIMinigunnerList)
             {
                 RestMinigunner restMinigunner = new RestMinigunner();
                 restMinigunner.id = minigunner.id;

@@ -66,9 +66,8 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-        public MCV(int xInWorldCoordinates, int yInWorldCoordinates, GameWorld gameWorld)
+        public MCV(int xInWorldCoordinates, int yInWorldCoordinates)
         {
-            this.gameWorld = gameWorld;
 
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;

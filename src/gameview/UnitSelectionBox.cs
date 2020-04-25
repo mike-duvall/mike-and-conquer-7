@@ -124,7 +124,7 @@ namespace mike_and_conquer.gameview
             // a single square can only hold 5 minigunners
             int numMinigunnersSelected = 0;
             int maxAllowedSelected = 5;
-            foreach (Minigunner minigunner in MikeAndConquerGame.instance.gameWorld.gdiMinigunnerList)
+            foreach (Minigunner minigunner in MikeAndConquerGame.instance.gameWorld.GDIMinigunnerList)
             {
                 if (numMinigunnersSelected < maxAllowedSelected && selectionBoxRectangle.Contains(minigunner.positionInWorldCoordinates))
                 {

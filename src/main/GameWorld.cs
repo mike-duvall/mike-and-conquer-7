@@ -954,7 +954,7 @@ namespace mike_and_conquer.main
             // }
             //
             // return false;
-            return IsAnMCVSelected();
+            return gdiPlayer.IsAnMCVSelected();
         }
 
 

@@ -16,7 +16,7 @@ using ResetGameGameEvent = mike_and_conquer.gameevent.ResetGameGameEvent;
 using GetCurrentGameStateGameEvent = mike_and_conquer.gameevent.GetCurrentGameStateGameEvent;
 using CreateSandbagGameEvent = mike_and_conquer.gameevent.CreateSandbagGameEvent;
 
-using MinigunnerAIController = mike_and_conquer.aicontroller.MinigunnerAIController;
+
 using Exception = System.Exception;
 
 using FileStream = System.IO.FileStream;
@@ -32,9 +32,11 @@ namespace mike_and_conquer.main
         public static int MAP_TILE_HEIGHT = 24;
 
         private GDIPlayer gdiPlayer;
+        private NodPlayer nodPlayer;
+
 
         // public List<Minigunner> gdiMinigunnerList { get; }
-        public List<Minigunner> nodMinigunnerList { get; }
+        // public List<Minigunner> nodMinigunnerList { get; }
         public List<Sandbag> sandbagList;
         public List<TerrainItem> terrainItemList;
 
@@ -42,6 +44,13 @@ namespace mike_and_conquer.main
         {
             get { return gdiPlayer.GdiMinigunnerList; }
         }
+
+        public List<Minigunner> NodMinigunnerList
+        {
+            get { return nodPlayer.NodMinigunnerList; }
+        }
+
+
 
         // private GDIBarracks gdiBarracks;
         public GDIBarracks GDIBarracks
@@ -74,7 +83,7 @@ namespace mike_and_conquer.main
 
         private List<AsyncGameEvent> gameEvents;
 
-        public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
+        // public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
 
         public GameMap gameMap;
 
@@ -86,13 +95,14 @@ namespace mike_and_conquer.main
         {
             // gdiMinigunnerList = new List<Minigunner>();
             gdiPlayer = new GDIPlayer();
-            nodMinigunnerList = new List<Minigunner>();
+            nodPlayer = new NodPlayer();
+            // nodMinigunnerList = new List<Minigunner>();
             sandbagList = new List<Sandbag>();
             terrainItemList = new List<TerrainItem>();
 
             gameEvents = new List<AsyncGameEvent>();
 
-            nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
+            // nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
             unitSelectionBox = new UnitSelectionBox();
 
             GameWorld.instance = this;
@@ -102,7 +112,8 @@ namespace mike_and_conquer.main
         {
             // gdiMinigunnerList.Clear();
             gdiPlayer.HandleReset();
-            nodMinigunnerList.Clear();
+            nodPlayer.HandleReset();
+            // nodMinigunnerList.Clear();
             sandbagList.Clear();
             // mcv = null;
             // gdiConstructionYard = null;
@@ -388,16 +399,17 @@ namespace mike_and_conquer.main
 
         internal Minigunner GetNodMinigunner(int id)
         {
-            Minigunner foundMinigunner = null;
-            foreach (Minigunner nextMinigunner in nodMinigunnerList)
-            {
-                if (nextMinigunner.id == id)
-                {
-                    foundMinigunner = nextMinigunner;
-                }
-
-            }
-            return foundMinigunner;
+            // Minigunner foundMinigunner = null;
+            // foreach (Minigunner nextMinigunner in nodMinigunnerList)
+            // {
+            //     if (nextMinigunner.id == id)
+            //     {
+            //         foundMinigunner = nextMinigunner;
+            //     }
+            //
+            // }
+            // return foundMinigunner;
+            return nodPlayer.GetNodMinigunner(id);
         }
 
 
@@ -445,13 +457,14 @@ namespace mike_and_conquer.main
 
         public void Update(GameTime gameTime)
         {
-            UpdateAIControllers(gameTime);
+            // UpdateAIControllers(gameTime);
             // UpdateGDIMinigunners(gameTime);
-            UpdateNodMinigunners(gameTime);
+            // UpdateNodMinigunners(gameTime);
             // UpdateBarracks(gameTime);
             // UpdateConstructionYard(gameTime);
 
             gdiPlayer.Update(gameTime);
+            nodPlayer.Update(gameTime);
             // if (mcv != null)
             // {
             //     mcv.Update(gameTime);
@@ -478,16 +491,16 @@ namespace mike_and_conquer.main
         // }
 
 
-        private void UpdateNodMinigunners(GameTime gameTime)
-        {
-            foreach (Minigunner nextMinigunner in nodMinigunnerList)
-            {
-                if (nextMinigunner.health > 0)
-                {
-                    nextMinigunner.Update(gameTime);
-                }
-            }
-        }
+        // private void UpdateNodMinigunners(GameTime gameTime)
+        // {
+        //     foreach (Minigunner nextMinigunner in nodMinigunnerList)
+        //     {
+        //         if (nextMinigunner.health > 0)
+        //         {
+        //             nextMinigunner.Update(gameTime);
+        //         }
+        //     }
+        // }
 
         // private void UpdateGDIMinigunners(GameTime gameTime)
         // {
@@ -500,13 +513,13 @@ namespace mike_and_conquer.main
         //     }
         // }
 
-        private void UpdateAIControllers(GameTime gameTime)
-        {
-            foreach (MinigunnerAIController nextMinigunnerAIController in nodMinigunnerAIControllerList)
-            {
-                nextMinigunnerAIController.Update(gameTime);
-            }
-        }
+        // private void UpdateAIControllers(GameTime gameTime)
+        // {
+        //     foreach (MinigunnerAIController nextMinigunnerAIController in nodMinigunnerAIControllerList)
+        //     {
+        //         nextMinigunnerAIController.Update(gameTime);
+        //     }
+        // }
 
 
 
@@ -561,16 +574,17 @@ namespace mike_and_conquer.main
 
 
             Minigunner newMinigunner = new Minigunner(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, this);
-            this.nodMinigunnerList.Add(newMinigunner);
-
-            // TODO:  In future, don't couple Nod having to be AI controlled enemy
-            if (aiIsOn)
-            {
-                MinigunnerAIController minigunnerAIController = new MinigunnerAIController(newMinigunner);
-                nodMinigunnerAIControllerList.Add(minigunnerAIController);
-            }
-
-            return newMinigunner;
+            // this.nodMinigunnerList.Add(newMinigunner);
+            
+            // // TODO:  In future, don't couple Nod having to be AI controlled enemy
+            // if (aiIsOn)
+            // {
+            //     MinigunnerAIController minigunnerAIController = new MinigunnerAIController(newMinigunner);
+            //     nodMinigunnerAIControllerList.Add(minigunnerAIController);
+            // }
+            
+            // return newMinigunner;
+            return nodPlayer.AddNodMinigunner(newMinigunner, aiIsOn);
         }
 
         public GDIBarracks AddGDIBarracks(Point positionInWorldCoordinates)
@@ -905,15 +919,17 @@ namespace mike_and_conquer.main
 
         public bool IsPointOverEnemy(Point pointInWorldCoordinates)
         {
-            foreach (Minigunner nextNodMinigunner in nodMinigunnerList)
-            {
-                if (nextNodMinigunner.ContainsPoint(pointInWorldCoordinates.X, pointInWorldCoordinates.Y))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            // foreach (Minigunner nextNodMinigunner in nodMinigunnerList)
+            // {
+            //     if (nextNodMinigunner.ContainsPoint(pointInWorldCoordinates.X, pointInWorldCoordinates.Y))
+            //     {
+            //         return true;
+            //     }
+            // }
+            //
+            // return false;
+            //
+            return nodPlayer.IsPointOverMinigunner(pointInWorldCoordinates);
         }
 
         public bool IsPointOverMCV(Point pointInWorldCoordinates)

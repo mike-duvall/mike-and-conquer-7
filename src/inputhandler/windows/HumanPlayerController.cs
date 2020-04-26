@@ -308,7 +308,7 @@ namespace mike_and_conquer.src.inputhandler.windows
         internal Boolean CheckForAndHandleLeftClickOnEnemyUnit(int mouseX, int mouseY)
         {
             bool handled = false;
-            foreach (Minigunner nextNodMinigunner in GameWorld.instance.nodMinigunnerList)
+            foreach (Minigunner nextNodMinigunner in GameWorld.instance.NodMinigunnerList)
             {
                 if (nextNodMinigunner.ContainsPoint(mouseX, mouseY))
                 {

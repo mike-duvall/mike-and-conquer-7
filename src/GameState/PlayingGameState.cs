@@ -62,12 +62,12 @@ namespace mike_and_conquer.gamestate
 
         internal Boolean NodMinigunnersExistAndAreAllDead()
         {
-            if(GameWorld.instance.nodMinigunnerList.Count == 0)
+            if(GameWorld.instance.NodMinigunnerList.Count == 0)
             {
                 return false;
             }
             Boolean allDead = true;
-            foreach (Minigunner nextMinigunner in GameWorld.instance.nodMinigunnerList)
+            foreach (Minigunner nextMinigunner in GameWorld.instance.NodMinigunnerList)
             {
                 if( nextMinigunner.health > 0)
                 {

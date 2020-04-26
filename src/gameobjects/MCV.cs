@@ -479,6 +479,7 @@ namespace mike_and_conquer.gameobjects
             SetDestination(listOfPoints[0].X, listOfPoints[0].Y);
         }
 
+        
 
 
         private void SetPath(List<Point> listOfPoints)

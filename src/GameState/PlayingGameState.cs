@@ -14,11 +14,11 @@ namespace mike_and_conquer.gamestate
     class PlayingGameState : GameState
     {
 
-        private HumanPlayerController playerController;
+        // private HumanPlayerController playerController;
 
         public PlayingGameState()
         {
-            playerController = new HumanPlayerController();;
+            // playerController = new HumanPlayerController();;
         }
 
         public override string GetName()
@@ -35,7 +35,6 @@ namespace mike_and_conquer.gamestate
                 return newGameState;
             }
 
-            playerController.Update();
             GameWorld.instance.Update(gameTime);
             return DetermineNextGameState();
         }

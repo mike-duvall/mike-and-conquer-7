@@ -1,5 +1,6 @@
 ﻿
 using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gameview;
@@ -14,7 +15,7 @@ using Point = Microsoft.Xna.Framework.Point;
 
 namespace mike_and_conquer.src.inputhandler.windows
 {
-    class HumanPlayerController
+    class HumanPlayerController : PlayerController
     {
 
         public static HumanPlayerController instance;
@@ -32,7 +33,7 @@ namespace mike_and_conquer.src.inputhandler.windows
             instance = this;
         }
 
-        public void Update()
+        public override void Update(GameTime gameTime)
         {
             MouseState newMouseState = Mouse.GetState();
 

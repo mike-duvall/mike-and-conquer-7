@@ -7,6 +7,8 @@ namespace mike_and_conquer.main
 {
     class GDIPlayer
     {
+
+
         private PlayerController playerController;
 
         public List<Minigunner> gdiMinigunnerList;
@@ -38,9 +40,10 @@ namespace mike_and_conquer.main
             set { mcv = value; }
         }
 
-        public GDIPlayer()
+        public GDIPlayer(PlayerController playerController)
         {
             gdiMinigunnerList = new List<Minigunner>();
+            this.playerController = playerController;
         }
 
         public void HandleReset()
@@ -83,7 +86,7 @@ namespace mike_and_conquer.main
 
         public void Update(GameTime gameTime)
         {
-
+            playerController.Update(gameTime);
             UpdateGDIMinigunners(gameTime);
             UpdateBarracks(gameTime);
             UpdateConstructionYard(gameTime);

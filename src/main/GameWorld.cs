@@ -7,6 +7,7 @@ using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamestate;
 using mike_and_conquer.gameview;
 using mike_and_conquer.pathfinding;
+using mike_and_conquer.src.inputhandler.windows;
 using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;
 using CreateGDIMinigunnerGameEvent = mike_and_conquer.gameevent.CreateGDIMinigunnerGameEvent;
 using GetGDIMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetGDIMinigunnerByIdGameEvent;
@@ -94,7 +95,7 @@ namespace mike_and_conquer.main
         public GameWorld()
         {
             // gdiMinigunnerList = new List<Minigunner>();
-            gdiPlayer = new GDIPlayer();
+            gdiPlayer = new GDIPlayer(new HumanPlayerController());
             nodPlayer = new NodPlayer();
             // nodMinigunnerList = new List<Minigunner>();
             sandbagList = new List<Sandbag>();

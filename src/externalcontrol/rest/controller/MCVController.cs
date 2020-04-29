@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using mike_and_conquer.externalcontrol.rest.domain;
 using mike_and_conquer.gameobjects;
-using mike_and_conquer.main;
+using mike_and_conquer.gameworld;
 using Point = Microsoft.Xna.Framework.Point;
 
 

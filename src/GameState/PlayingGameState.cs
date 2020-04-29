@@ -1,7 +1,6 @@
 ﻿using mike_and_conquer.gameobjects;
+using mike_and_conquer.gameworld;
 
-using mike_and_conquer.main;
-using mike_and_conquer.src.inputhandler.windows;
 using Boolean = System.Boolean;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 
@@ -14,12 +13,6 @@ namespace mike_and_conquer.gamestate
     class PlayingGameState : GameState
     {
 
-        // private HumanPlayerController playerController;
-
-        public PlayingGameState()
-        {
-            // playerController = new HumanPlayerController();;
-        }
 
         public override string GetName()
         {

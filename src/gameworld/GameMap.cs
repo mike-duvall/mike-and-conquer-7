@@ -5,7 +5,7 @@ using Stream = System.IO.Stream;
 
 using BinaryReader = System.IO.BinaryReader;
 
-namespace mike_and_conquer.main
+namespace mike_and_conquer.gameworld
 {
     public class GameMap
     {

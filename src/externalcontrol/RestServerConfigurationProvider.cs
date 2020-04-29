@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using Owin;
 
-namespace mike_and_conquer.main
+namespace mike_and_conquer.externalcontrol
 {
     public class RestServerConfigurationProvider
     {

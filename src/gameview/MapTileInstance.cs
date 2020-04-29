@@ -1,6 +1,7 @@
 ﻿
 using mike_and_conquer.gameobjects;
-using mike_and_conquer.main;
+using mike_and_conquer.gameworld;
+
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using mike_and_conquer.gameview;
+using mike_and_conquer.gameworld;
 using mike_and_conquer.main;
 using Point = Microsoft.Xna.Framework.Point;
 

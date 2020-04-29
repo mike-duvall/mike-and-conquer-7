@@ -1,14 +1,15 @@
 ﻿
-using Microsoft.Xna.Framework;
+
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
-using mike_and_conquer.main;
+using mike_and_conquer.gameworld;
+
 using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 
-using Vector2 = Microsoft.Xna.Framework.Vector2;
+
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
-using Point = Microsoft.Xna.Framework.Point;
+
 
 
 namespace mike_and_conquer.gameview

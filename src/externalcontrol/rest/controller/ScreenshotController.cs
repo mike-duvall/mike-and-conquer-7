@@ -3,7 +3,8 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using mike_and_conquer.main;
+using mike_and_conquer.gameworld;
+
 
 namespace mike_and_conquer.externalcontrol.rest.controller
 {

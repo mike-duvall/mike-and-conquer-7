@@ -1,9 +1,9 @@
 ﻿using System.Web.Http;
 using mike_and_conquer.externalcontrol.rest.domain;
 using mike_and_conquer.gameobjects;
-using mike_and_conquer.main;
+using mike_and_conquer.gameworld;
 using Point = Microsoft.Xna.Framework.Point;
-using BadMinigunnerLocationException = mike_and_conquer.main.GameWorld.BadMinigunnerLocationException;
+using BadMinigunnerLocationException = mike_and_conquer.gameworld.GameWorld.BadMinigunnerLocationException;
 
 namespace mike_and_conquer.externalcontrol.rest.controller
 {

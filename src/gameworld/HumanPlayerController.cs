@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using mike_and_conquer.gameobjects;
@@ -13,7 +12,7 @@ using Point = Microsoft.Xna.Framework.Point;
 
 
 
-namespace mike_and_conquer.src.inputhandler.windows
+namespace mike_and_conquer.gameworld
 {
     class HumanPlayerController : PlayerController
     {
@@ -72,6 +71,13 @@ namespace mike_and_conquer.src.inputhandler.windows
 
             oldMouseState = newMouseState;
 
+        }
+
+        public override void Add(Minigunner minigunner, bool aiIsOn)
+        {
+            // Do nothing
+            // TODO: This was added to AI controller could know about new minigunners
+            // Reconsider how this is handled
         }
 
         private void UpdateMousePointer(MouseState mouseState)

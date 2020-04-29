@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using mike_and_conquer.gamestate;
-using mike_and_conquer.main;
+using mike_and_conquer.gameworld;
+
 
 namespace mike_and_conquer.externalcontrol.rest.controller
 {

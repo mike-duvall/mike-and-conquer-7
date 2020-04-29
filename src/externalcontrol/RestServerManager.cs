@@ -1,8 +1,7 @@
 ﻿using System;
 using Microsoft.Owin.Hosting;
-using mike_and_conquer.main;
 
-namespace mike_and_conquer.src.externalcontrol
+namespace mike_and_conquer.externalcontrol
 {
     public class RestServerManager
     {

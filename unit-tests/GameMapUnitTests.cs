@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
-using GameMap = mike_and_conquer.main.GameMap;
+using GameMap = mike_and_conquer.gameworld.GameMap;
 
 
 using FileStream = System.IO.FileStream;

@@ -1,9 +1,8 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using mike_and_conquer.gameobjects;
 
-namespace mike_and_conquer.main
+namespace mike_and_conquer.gameworld
 {
     class GDIPlayer
     {

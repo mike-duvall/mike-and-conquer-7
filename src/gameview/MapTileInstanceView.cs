@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.gamesprite;
+using mike_and_conquer.gameworld;
 using mike_and_conquer.main;
 using mike_and_conquer.util;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;

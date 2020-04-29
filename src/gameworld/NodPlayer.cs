@@ -1,10 +1,9 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using mike_and_conquer.aicontroller;
 using mike_and_conquer.gameobjects;
 
-namespace mike_and_conquer.main
+namespace mike_and_conquer.gameworld
 {
     class NodPlayer
     {
@@ -12,7 +11,7 @@ namespace mike_and_conquer.main
 
 
         public List<Minigunner> nodMinigunnerList { get; }
-        public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
+        // public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
 
 
         public List<Minigunner> NodMinigunnerList
@@ -21,12 +20,11 @@ namespace mike_and_conquer.main
         }
 
 
-        //
-
-        public NodPlayer()
+        public NodPlayer(PlayerController playerController)
         {
             nodMinigunnerList = new List<Minigunner>();
-            nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
+            this.playerController = playerController;
+            // nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
         }
 
 
@@ -51,6 +49,7 @@ namespace mike_and_conquer.main
 
         public void Update(GameTime gameTime)
         {
+            playerController.Update(gameTime);
             foreach (Minigunner nextMinigunner in nodMinigunnerList)
             {
                 if (nextMinigunner.health > 0)
@@ -59,18 +58,18 @@ namespace mike_and_conquer.main
                 }
             }
 
-            UpdateAIControllers(gameTime);
+            // UpdateAIControllers(gameTime);
 
         }
 
 
-        private void UpdateAIControllers(GameTime gameTime)
-        {
-            foreach (MinigunnerAIController nextMinigunnerAIController in nodMinigunnerAIControllerList)
-            {
-                nextMinigunnerAIController.Update(gameTime);
-            }
-        }
+        // private void UpdateAIControllers(GameTime gameTime)
+        // {
+        //     foreach (MinigunnerAIController nextMinigunnerAIController in nodMinigunnerAIControllerList)
+        //     {
+        //         nextMinigunnerAIController.Update(gameTime);
+        //     }
+        // }
 
 
 
@@ -78,13 +77,16 @@ namespace mike_and_conquer.main
         {
 
             this.nodMinigunnerList.Add(minigunner);
+            playerController.Add(minigunner, aiIsOn);
 
-            // TODO:  In future, don't couple Nod having to be AI controlled enemy
-            if (aiIsOn)
-            {
-                MinigunnerAIController minigunnerAIController = new MinigunnerAIController(minigunner);
-                nodMinigunnerAIControllerList.Add(minigunnerAIController);
-            }
+
+            // // TODO:  In future, don't couple Nod having to be AI controlled enemy
+            // if (aiIsOn)
+            // {
+            //     MinigunnerAIController minigunnerAIController = new MinigunnerAIController(minigunner);
+            //     playerController.
+            //     nodMinigunnerAIControllerList.Add(minigunnerAIController);
+            // }
 
             return minigunner;
 

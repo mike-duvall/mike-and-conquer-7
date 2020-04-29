@@ -6,8 +6,8 @@ using mike_and_conquer.gameevent;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamestate;
 using mike_and_conquer.gameview;
+using mike_and_conquer.main;
 using mike_and_conquer.pathfinding;
-using mike_and_conquer.src.inputhandler.windows;
 using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;
 using CreateGDIMinigunnerGameEvent = mike_and_conquer.gameevent.CreateGDIMinigunnerGameEvent;
 using GetGDIMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetGDIMinigunnerByIdGameEvent;
@@ -23,7 +23,7 @@ using Exception = System.Exception;
 using FileStream = System.IO.FileStream;
 using FileMode = System.IO.FileMode;
 
-namespace mike_and_conquer.main
+namespace mike_and_conquer.gameworld
 
 {
     public class GameWorld
@@ -96,7 +96,7 @@ namespace mike_and_conquer.main
         {
             // gdiMinigunnerList = new List<Minigunner>();
             gdiPlayer = new GDIPlayer(new HumanPlayerController());
-            nodPlayer = new NodPlayer();
+            nodPlayer = new NodPlayer(new NodAIPlayerController());
             // nodMinigunnerList = new List<Minigunner>();
             sandbagList = new List<Sandbag>();
             terrainItemList = new List<TerrainItem>();

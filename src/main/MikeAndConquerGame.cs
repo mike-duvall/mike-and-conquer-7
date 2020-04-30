@@ -616,10 +616,8 @@ namespace mike_and_conquer.main
 
         public void RemoveMCV()
         {
-            // GameWorld.instance.MCV = null;
             GameWorld.instance.RemoveMCV();
             GameWorldView.instance.mcvView = null;
-
         }
 
 

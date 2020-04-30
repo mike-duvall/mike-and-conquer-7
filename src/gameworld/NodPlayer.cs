@@ -11,8 +11,6 @@ namespace mike_and_conquer.gameworld
 
 
         public List<Minigunner> nodMinigunnerList { get; }
-        // public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
-
 
         public List<Minigunner> NodMinigunnerList
         {
@@ -24,7 +22,6 @@ namespace mike_and_conquer.gameworld
         {
             nodMinigunnerList = new List<Minigunner>();
             this.playerController = playerController;
-            // nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
         }
 
 
@@ -58,36 +55,13 @@ namespace mike_and_conquer.gameworld
                 }
             }
 
-            // UpdateAIControllers(gameTime);
-
         }
-
-
-        // private void UpdateAIControllers(GameTime gameTime)
-        // {
-        //     foreach (MinigunnerAIController nextMinigunnerAIController in nodMinigunnerAIControllerList)
-        //     {
-        //         nextMinigunnerAIController.Update(gameTime);
-        //     }
-        // }
-
 
 
         public Minigunner AddNodMinigunner(Minigunner minigunner, bool aiIsOn)
         {
-
             this.nodMinigunnerList.Add(minigunner);
             playerController.Add(minigunner, aiIsOn);
-
-
-            // // TODO:  In future, don't couple Nod having to be AI controlled enemy
-            // if (aiIsOn)
-            // {
-            //     MinigunnerAIController minigunnerAIController = new MinigunnerAIController(minigunner);
-            //     playerController.
-            //     nodMinigunnerAIControllerList.Add(minigunnerAIController);
-            // }
-
             return minigunner;
 
         }

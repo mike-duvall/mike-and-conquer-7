@@ -4,9 +4,6 @@ using mike_and_conquer.gamestate;
 using mike_and_conquer.main;
 using Point = Microsoft.Xna.Framework.Point;
 
-using Exception = System.Exception;
-
-using BadMinigunnerLocationException = mike_and_conquer.main.GameWorld.BadMinigunnerLocationException;
 
 namespace mike_and_conquer.gameevent
 {

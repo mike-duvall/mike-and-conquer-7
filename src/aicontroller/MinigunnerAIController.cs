@@ -2,7 +2,8 @@
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using System.Collections.Generic;
 using mike_and_conquer.gameobjects;
-using mike_and_conquer.main;
+using mike_and_conquer.gameworld;
+
 
 
 namespace mike_and_conquer.aicontroller
@@ -29,7 +30,7 @@ namespace mike_and_conquer.aicontroller
 
         private Minigunner FindFirstNonDeadGdiMinigunner()
         {
-            List<Minigunner> gdiMinigunners = (GameWorld.instance.gdiMinigunnerList);
+            List<Minigunner> gdiMinigunners = (GameWorld.instance.GDIMinigunnerList);
 
             foreach (Minigunner nextMinigunner in gdiMinigunners)
             {

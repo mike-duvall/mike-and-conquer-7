@@ -1,5 +1,5 @@
 ﻿using System;
-using mike_and_conquer.src.externalcontrol;
+using mike_and_conquer.externalcontrol;
 
 
 namespace mike_and_conquer.main

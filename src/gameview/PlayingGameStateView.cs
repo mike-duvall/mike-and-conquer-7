@@ -1,14 +1,7 @@
 ﻿
 
-using mike_and_conquer.gameobjects;
-using mike_and_conquer.main;
-using mike_and_conquer.src.inputhandler.windows;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 // using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
-using Point = Microsoft.Xna.Framework.Point;
-
-using MouseState = Microsoft.Xna.Framework.Input.MouseState;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace mike_and_conquer.gameview
 {

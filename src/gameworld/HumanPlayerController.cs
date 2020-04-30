@@ -1,5 +1,5 @@
-﻿
-using System;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gameview;
@@ -12,12 +12,12 @@ using Point = Microsoft.Xna.Framework.Point;
 
 
 
-namespace mike_and_conquer.src.inputhandler.windows
+namespace mike_and_conquer.gameworld
 {
-    class WindowsPlayingGameStateInputHandler
+    class HumanPlayerController : PlayerController
     {
 
-        public static WindowsPlayingGameStateInputHandler instance;
+        public static HumanPlayerController instance;
 
         private MouseState oldMouseState;
 
@@ -27,12 +27,12 @@ namespace mike_and_conquer.src.inputhandler.windows
             get { return oldMouseState; }
         }
 
-        public WindowsPlayingGameStateInputHandler()
+        public HumanPlayerController()
         {
             instance = this;
         }
 
-        public void HandleInput()
+        public override void Update(GameTime gameTime)
         {
             MouseState newMouseState = Mouse.GetState();
 
@@ -71,6 +71,13 @@ namespace mike_and_conquer.src.inputhandler.windows
 
             oldMouseState = newMouseState;
 
+        }
+
+        public override void Add(Minigunner minigunner, bool aiIsOn)
+        {
+            // Do nothing
+            // TODO: This was added to AI controller could know about new minigunners
+            // Reconsider how this is handled
         }
 
         private void UpdateMousePointer(MouseState mouseState)
@@ -175,7 +182,7 @@ namespace mike_and_conquer.src.inputhandler.windows
 
         internal void HandleRightClick(int mouseX, int mouseY)
         {
-            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
+            foreach (Minigunner nextMinigunner in GameWorld.instance.GDIMinigunnerList)
             {
                 nextMinigunner.selected = false;
             }
@@ -189,7 +196,7 @@ namespace mike_and_conquer.src.inputhandler.windows
 
         private bool CheckForAndHandleLeftClickOnMap(int mouseX, int mouseY)
         {
-            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
+            foreach (Minigunner nextMinigunner in GameWorld.instance.GDIMinigunnerList)
             {
                 if (nextMinigunner.selected == true)
                 {
@@ -261,7 +268,7 @@ namespace mike_and_conquer.src.inputhandler.windows
         internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)
         {
             Boolean handled = false;
-            foreach (Minigunner nextMinigunner in GameWorld.instance.gdiMinigunnerList)
+            foreach (Minigunner nextMinigunner in GameWorld.instance.GDIMinigunnerList)
             {
                 if (nextMinigunner.ContainsPoint(mouseX, mouseY))
                 {
@@ -308,12 +315,12 @@ namespace mike_and_conquer.src.inputhandler.windows
         internal Boolean CheckForAndHandleLeftClickOnEnemyUnit(int mouseX, int mouseY)
         {
             bool handled = false;
-            foreach (Minigunner nextNodMinigunner in GameWorld.instance.nodMinigunnerList)
+            foreach (Minigunner nextNodMinigunner in GameWorld.instance.NodMinigunnerList)
             {
                 if (nextNodMinigunner.ContainsPoint(mouseX, mouseY))
                 {
                     handled = true;
-                    foreach (Minigunner nextGdiMinigunner in GameWorld.instance.gdiMinigunnerList)
+                    foreach (Minigunner nextGdiMinigunner in GameWorld.instance.GDIMinigunnerList)
                     {
                         if (nextGdiMinigunner.selected)
                         {

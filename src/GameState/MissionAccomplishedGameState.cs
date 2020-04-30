@@ -1,5 +1,5 @@
 ﻿using mike_and_conquer.gameview;
-using mike_and_conquer.main;
+using mike_and_conquer.gameworld;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 
 using MinigunnerView = mike_and_conquer.gameview.MinigunnerView;

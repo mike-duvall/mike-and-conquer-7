@@ -2,10 +2,10 @@
 using System.Web.Http;
 using mike_and_conquer.externalcontrol.rest.domain;
 using mike_and_conquer.gameobjects;
-using mike_and_conquer.main;
+using mike_and_conquer.gameworld;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Point = Microsoft.Xna.Framework.Point;
-using BadMinigunnerLocationException = mike_and_conquer.main.GameWorld.BadMinigunnerLocationException;
+using BadMinigunnerLocationException = mike_and_conquer.gameworld.GameWorld.BadMinigunnerLocationException;
 
 using GameWorldView = mike_and_conquer.gameview.GameWorldView;
 
@@ -18,10 +18,10 @@ namespace mike_and_conquer.externalcontrol.rest.controller
         public IEnumerable<RestMinigunner> Get()
         {
 
-            RestMinigunner[] restMinigunners = new RestMinigunner[GameWorld.instance.gdiMinigunnerList.Count];
+            RestMinigunner[] restMinigunners = new RestMinigunner[GameWorld.instance.GDIMinigunnerList.Count];
 
             int i = 0;
-            foreach (Minigunner minigunner in GameWorld.instance.gdiMinigunnerList)
+            foreach (Minigunner minigunner in GameWorld.instance.GDIMinigunnerList)
             {
                 RestMinigunner restMinigunner = new RestMinigunner();
                 restMinigunner.id = minigunner.id;

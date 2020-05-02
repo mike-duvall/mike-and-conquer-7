@@ -61,8 +61,6 @@ namespace mike_and_conquer.main
 
         private int mouseCounter = 0;
 
-        KeyboardState oldKeyboardState;
-
         public Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()
             //.WriteTo.File("log.txt")
@@ -103,9 +101,6 @@ namespace mike_and_conquer.main
 
             gameWorld = new GameWorld();
             gameWorldView = new GameWorldView();
-
-            oldKeyboardState = Keyboard.GetState();
-
 
             currentGameState = new PlayingGameState();
 
@@ -176,23 +171,6 @@ namespace mike_and_conquer.main
         }
 
 
-        private void CreateBasicMapSquareViews()
-        {
-            foreach(MapTileInstance mapTileInstance in this.gameWorld.gameMap.MapTileInstanceList)
-            {
-                gameWorldView.AddMapTileInstanceView(mapTileInstance);
-            }
-        }
-
-        private void CreateTerrainItemViews()
-        {
-            foreach (TerrainItem terrainItem in gameWorld.terrainItemList)
-            {
-                gameWorldView.AddTerrainItemView(terrainItem);
-            }
-        }
-
-
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
@@ -205,8 +183,6 @@ namespace mike_and_conquer.main
             // spriteBatch = new SpriteBatch(GraphicsDevice);
 
             LoadTextures();
-            CreateBasicMapSquareViews();
-            CreateTerrainItemViews();
 
             if (!testMode)
             {
@@ -246,8 +222,6 @@ namespace mike_and_conquer.main
                 raiSpriteFrameManager.GetSpriteFramesForUnit(MCVView.SHP_FILE_NAME),
                 MCVView.SHP_FILE_COLOR_MAPPER);
 
-
-
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(SandbagView.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(
                 SandbagView.SPRITE_KEY,
@@ -265,8 +239,6 @@ namespace mike_and_conquer.main
                 BarracksSidebarIconView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(BarracksSidebarIconView.SHP_FILE_NAME),
                 BarracksSidebarIconView.SHP_FILE_COLOR_MAPPER);
-
-
 
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(GDIBarracksView.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(
@@ -425,6 +397,14 @@ namespace mike_and_conquer.main
             currentGameState = this.currentGameState.Update(gameTime);
             this.currentGameStateView.Update(gameTime);
 
+            FixMousePointerProblem();
+
+            base.Update(gameTime);
+        }
+
+
+        private void FixMousePointerProblem()
+        {
             // This is a hack fix to fix an issue where if you change this.IsMouseVisible to false
             // while the Windows pointer is showing the mouse pointer arrow with the blue sworl "busy" icon on the side
             // it will continue to show a frozen(non moving) copy of the blue sworl "busy" icon, even after it 
@@ -440,9 +420,6 @@ namespace mike_and_conquer.main
             {
                 this.IsMouseVisible = false;
             }
-
-
-            base.Update(gameTime);
         }
 
         public GameState GetCurrentGameState()

@@ -12,8 +12,9 @@ namespace mike_and_conquer.externalcontrol.rest.controller
 
         public IHttpActionResult Post([FromBody]RestPoint point)
         {
-            int screenWidth = GameWorldView.instance.defaultViewport.Width;
-            int screenHeight = GameWorldView.instance.defaultViewport.Height;
+            int screenWidth = GameWorldView.instance.ScreenWidth;
+            int screenHeight = GameWorldView.instance.ScreenHeight;
+
 
             Vector2 locationInWorldCoordinates = new Vector2(point.x, point.y);
             Vector2 locationInScreenCoordinates = GameWorldView.instance.ConvertWorldCoordinatesToScreenCoordinates(locationInWorldCoordinates);

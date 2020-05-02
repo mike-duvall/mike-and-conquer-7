@@ -25,8 +25,8 @@ namespace mike_and_conquer.externalcontrol.rest.controller
                 GameWorldView.instance.ConvertWorldCoordinatesToScreenCoordinates(gdiMinigunner
                     .positionInWorldCoordinates);
 
-            int screenWidth = GameWorldView.instance.defaultViewport.Width;
-            int screenHeight = GameWorldView.instance.defaultViewport.Height;
+            int screenWidth = GameWorldView.instance.ScreenWidth;
+            int screenHeight = GameWorldView.instance.ScreenHeight;
 
 
             MouseInputHandler.DoLeftMouseClick((uint)transformedLocation.X, (uint) transformedLocation.Y , screenWidth, screenHeight);

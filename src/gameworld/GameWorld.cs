@@ -35,9 +35,6 @@ namespace mike_and_conquer.gameworld
         private GDIPlayer gdiPlayer;
         private NodPlayer nodPlayer;
 
-
-        // public List<Minigunner> gdiMinigunnerList { get; }
-        // public List<Minigunner> nodMinigunnerList { get; }
         public List<Sandbag> sandbagList;
         public List<TerrainItem> terrainItemList;
 
@@ -51,40 +48,24 @@ namespace mike_and_conquer.gameworld
             get { return nodPlayer.NodMinigunnerList; }
         }
 
-
-
-        // private GDIBarracks gdiBarracks;
         public GDIBarracks GDIBarracks
         {
             get { return gdiPlayer.GDIBarracks; }
         }
-        //
-        // private GDIConstructionYard gdiConstructionYard;
+
         public GDIConstructionYard GDIConstructionYard
         {
             get { return gdiPlayer.GDIConstructionYard; }
         }
-        //
-        //
-        //
-        // private MCV mcv;
-        // public MCV MCV
-        // {
-        //     get { return mcv; }
-        //     set { mcv = value; }
-        // }
 
         public MCV MCV
         {
             get { return gdiPlayer.MCV; }
         }
 
-
         public NavigationGraph navigationGraph;
 
         private List<AsyncGameEvent> gameEvents;
-
-        // public List<MinigunnerAIController> nodMinigunnerAIControllerList { get; }
 
         public GameMap gameMap;
 

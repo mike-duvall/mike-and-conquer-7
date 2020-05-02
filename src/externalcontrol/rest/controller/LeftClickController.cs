@@ -11,8 +11,8 @@ namespace mike_and_conquer.externalcontrol.rest.controller
 
         public IHttpActionResult Post([FromBody]RestPoint point)
         {
-            int screenWidth = GameWorldView.instance.defaultViewport.Width;
-            int screenHeight = GameWorldView.instance.defaultViewport.Height;
+            int screenWidth = GameWorldView.instance.ScreenWidth;
+            int screenHeight = GameWorldView.instance.ScreenHeight;
 
             MouseInputHandler.DoLeftMouseClick( (uint)point.x, (uint)point.y, screenWidth, screenHeight);
             return Ok();

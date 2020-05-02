@@ -42,30 +42,41 @@ namespace mike_and_conquer.gameview
     public class GameWorldView
     {
 
-
-        private Viewport mapViewport;
-        public Viewport defaultViewport;
-        private SpriteBatch spriteBatch;
         public GameCursor gameCursor;
-        public Viewport sidebarViewport;  // TODO: Make this private again
-
-
-        public Camera2D mapViewportCamera;
-        public Camera2D renderTargetCamera;
-        private Camera2D sidebarViewportCamera;
-
-        private Texture2D sidebarBackgroundRectangle;
 
         public ShadowMapper shadowMapper;
         public MinigunnerSidebarIconView minigunnerSidebarIconView;
         public BarracksSidebarIconView barracksSidebarIconView;
 
+        public float MapZoom
+        {
+            get { return mapViewportCamera.Zoom; }
+        }
+
+        public int ScreenHeight
+        {
+            get { return defaultViewport.Height; }
+        }
+
+        public int ScreenWidth
+        {
+            get { return defaultViewport.Width; }
+        }
+
+        private Viewport defaultViewport;
+        private Camera2D mapViewportCamera;
+        private Viewport sidebarViewport;  // TODO: Make this private again
+        private Viewport mapViewport;
+        private Camera2D renderTargetCamera;
+        private Camera2D sidebarViewportCamera;
+
+        private Texture2D sidebarBackgroundRectangle;
+        private SpriteBatch spriteBatch;
 
         private Texture2D tshadow13MrfTexture;
         private Texture2D tshadow14MrfTexture;
         private Texture2D tshadow15MrfTexture;
         private Texture2D tshadow16MrfTexture;
-
 
         private RenderTarget2D mapTileRenderTarget;
         private RenderTarget2D shadowOnlyRenderTarget;
@@ -84,9 +95,7 @@ namespace mike_and_conquer.gameview
 
         private Texture2D mapBackgroundRectangle;
 
-
         private int borderSize = 0;
-
 
         private KeyboardState oldKeyboardState;
 

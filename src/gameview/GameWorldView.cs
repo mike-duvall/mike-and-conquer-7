@@ -749,8 +749,29 @@ namespace mike_and_conquer.gameview
         }
 
 
+        private void CreateBasicMapSquareViews()
+        {
+            foreach (MapTileInstance mapTileInstance in GameWorld.instance.gameMap.MapTileInstanceList)
+            {
+                AddMapTileInstanceView(mapTileInstance);
+            }
+        }
+
+        private void CreateTerrainItemViews()
+        {
+            foreach (TerrainItem terrainItem in GameWorld.instance.terrainItemList)
+            {
+                AddTerrainItemView(terrainItem);
+            }
+        }
+
+
         public void LoadContent()
         {
+
+            CreateBasicMapSquareViews();
+            CreateTerrainItemViews();
+
             spriteBatch = new SpriteBatch(MikeAndConquerGame.instance.GraphicsDevice);
             gameCursor = new GameCursor(1, 1);
 

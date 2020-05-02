@@ -377,29 +377,29 @@ namespace mike_and_conquer.main
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //      log.Information("gameTime.ElapsedGameTime.TotalMilliseconds:" + gameTime.ElapsedGameTime.TotalMilliseconds);
 
-
-//            log.Information("gameTime.ElapsedGameTime.TotalMilliseconds:" + gameTime.ElapsedGameTime.TotalMilliseconds);
+            FixMousePointerProblem();
 
             KeyboardState newKeyboardState = Keyboard.GetState();
+            ExitIfEscPressed(newKeyboardState);
 
+            gameWorldView.Update(gameTime, newKeyboardState);
+
+            currentGameState = this.currentGameState.Update(gameTime);
+            this.currentGameStateView.Update(gameTime);
+
+            base.Update(gameTime);
+        }
+
+        private void ExitIfEscPressed(KeyboardState newKeyboardState)
+        {
             // If they hit esc, exit
-
             if (newKeyboardState.IsKeyDown(Keys.Escape))
             {
                 RestServerManager.Shutdown();
                 Exit();
             }
-
-            gameWorldView.Update(gameTime, newKeyboardState);
-
-
-            currentGameState = this.currentGameState.Update(gameTime);
-            this.currentGameStateView.Update(gameTime);
-
-            FixMousePointerProblem();
-
-            base.Update(gameTime);
         }
 
 

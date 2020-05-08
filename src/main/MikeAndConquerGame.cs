@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.externalcontrol;
 using mike_and_conquer.gameobjects;
@@ -201,7 +202,48 @@ namespace mike_and_conquer.main
             LoadSingleTextures();
             LoadShpFileTextures();
             LoadTemFiles();
+            LoadBarracksPlacementTexture();
         }
+
+        private void LoadBarracksPlacementTexture()
+        {
+            LoadTmpFile(BarracksPlacementIndicatorView.FILE_NAME);
+            MapBlackMapTileFramePixelsToToTransparent(BarracksPlacementIndicatorView.FILE_NAME);
+        }
+
+
+        private void MapBlackMapTileFramePixelsToToTransparent(string tmpFileName)
+        {
+            List<MapTileFrame> mapTileFrameList = spriteSheet.GetMapTileFrameForTmpFile(tmpFileName);
+            foreach (MapTileFrame mapTileFrame in mapTileFrameList)
+            {
+                Texture2D theTexture = mapTileFrame.Texture;
+                int numPixels = theTexture.Height * theTexture.Width;
+                Color[] originalTexturePixelData = new Color[numPixels];
+                Color[] changedTexturePixelData = new Color[numPixels];
+                theTexture.GetData(originalTexturePixelData);
+
+                int i = 0;
+                foreach (Color color in originalTexturePixelData)
+                {
+                    if (color.R == 0)
+                    {
+                        Color newColor = new Color(0, 0, 0, 0);
+                        changedTexturePixelData[i] = newColor;
+                    }
+                    else
+                    {
+                        changedTexturePixelData[i] = color;
+                    }
+
+                    i++;
+                }
+                theTexture.SetData(changedTexturePixelData);
+
+            }
+
+        }
+
 
         private void LoadShpFileTextures()
         {
@@ -351,8 +393,6 @@ namespace mike_and_conquer.main
 
             LoadTmpFile(GameMap.W1_TEM);
             LoadTmpFile(GameMap.W2_TEM);
-
-
         }
 
 

@@ -259,6 +259,9 @@
 #begin temperat.pal
 /copy:temperat.pal
 
+#begin trans.icn
+/copy:trans.icn
+
 #begin tshade.mrf
 /copy:tshade.mrf
 

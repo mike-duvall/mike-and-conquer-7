@@ -16,6 +16,7 @@ using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 namespace mike_and_conquer.gameview
 {
 
+
     public class GameCursor
     {
         public Vector2 position { get; set; }

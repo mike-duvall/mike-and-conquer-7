@@ -114,7 +114,7 @@ namespace mike_and_conquer.gamesprite
 
                 if (frameData.Length == 0)
                 {
-                    MapTileFrame nullMapTileFrame = new MapTileFrame(null, null);
+                    MapTileFrame nullMapTileFrame = new MapTileFrame(null);
                     mapTileFrameList.Add(nullMapTileFrame);
                     continue;
                 }
@@ -131,7 +131,7 @@ namespace mike_and_conquer.gamesprite
                 }
 
                 texture2D.SetData(texturePixelData);
-                MapTileFrame mapTileFrame = new MapTileFrame(texture2D, frameData);
+                MapTileFrame mapTileFrame = new MapTileFrame(texture2D);
                 mapTileFrameList.Add(mapTileFrame);
             }
 

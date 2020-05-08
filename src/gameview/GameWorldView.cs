@@ -153,7 +153,7 @@ namespace mike_and_conquer.gameview
 
         public static GameWorldView instance;
 
-
+        private BarracksPlacementIndicatorView barracksPlacementIndicatorView;
 
 
         public GameWorldView()
@@ -279,9 +279,6 @@ namespace mike_and_conquer.gameview
 
         }
 
-
-
-
         private void DrawMap(GameTime gameTime)
         {
 
@@ -388,13 +385,19 @@ namespace mike_and_conquer.gameview
                     nullEffect,
                     renderTargetCamera.TransformMatrix);
 
-                foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
+                foreach (MapTileInstanceView mapTileInstanceView in GameWorldView.instance.MapTileInstanceViewList)
                 {
-                    basicMapSquareView.Draw(gameTime, spriteBatch);
+                    mapTileInstanceView.Draw(gameTime, spriteBatch);
                 }
 
+                barracksPlacementIndicatorView.Draw(gameTime, spriteBatch);
+
                 spriteBatch.End();
+
             }
+
+
+
         }
 
         private void UpdateShadowOnlyRenderTarget(GameTime gameTime)
@@ -611,12 +614,6 @@ namespace mike_and_conquer.gameview
                 GameWorldView.instance.mcvView.DrawNoShadow(gameTime, spriteBatch);
             }
 
-
-
-
-
-
-
             spriteBatch.End();
         }
 
@@ -819,6 +816,9 @@ namespace mike_and_conquer.gameview
             LoadTShadow14MrfTexture();
             LoadTShadow15MrfTexture();
             LoadTShadow16MrfTexture();
+
+//            LoadTmpFile(BarracksPlacementIndicatorView.FILE_NAME);
+            barracksPlacementIndicatorView = new BarracksPlacementIndicatorView();
         }
 
         private void LoadTUnitsMrfTexture()

@@ -143,8 +143,8 @@ namespace mike_and_conquer.main
             }
 
 
-            // AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
-            // AddMCVAtMapSquareCoordinates(new Point(21, 12));
+            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
+            AddMCVAtMapSquareCoordinates(new Point(21, 12));
 
 
             //
@@ -282,6 +282,9 @@ namespace mike_and_conquer.main
                 raiSpriteFrameManager.GetSpriteFramesForUnit(BarracksSidebarIconView.SHP_FILE_NAME),
                 BarracksSidebarIconView.SHP_FILE_COLOR_MAPPER);
 
+
+
+
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(GDIBarracksView.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(
                 GDIBarracksView.SPRITE_KEY,
@@ -342,6 +345,8 @@ namespace mike_and_conquer.main
             spriteSheet.LoadSingleTextureFromFile(MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
             spriteSheet.LoadSingleTextureFromFile(DestinationSquare.SPRITE_KEY, DestinationSquare.SPRITE_KEY);
             spriteSheet.LoadSingleTextureFromFile(MCVSelectionBox.SPRITE_KEY, MCVSelectionBox.SPRITE_KEY);
+            spriteSheet.LoadSingleTextureFromFile(ReadyOverlay.SPRITE_KEY, ReadyOverlay.SPRITE_KEY);
+
         }
 
 

@@ -16,6 +16,7 @@ namespace mike_and_conquer.gameview.sidebar
     {
 
         protected SidebarBuildIconSprite sidebarBuildIconSprite;
+        protected ReadyOverlay readyOverlay;
 
 
         private Point position;
@@ -36,6 +37,8 @@ namespace mike_and_conquer.gameview.sidebar
                 new SidebarBuildIconSprite(
                     textureInRealColorValues,
                     MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(GetSpriteKey())[0].FrameData);
+
+            readyOverlay = new ReadyOverlay();
 
         }
 
@@ -99,10 +102,11 @@ namespace mike_and_conquer.gameview.sidebar
             return position;
         }
 
-        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
 
             sidebarBuildIconSprite.Draw(gameTime, spriteBatch, new Vector2(position.X, position.Y));
+//            readyOverlay.Draw(gameTime,spriteBatch);
         }
 
     }

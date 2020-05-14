@@ -255,7 +255,17 @@ namespace mike_and_conquer.gameworld
 
         private void HandleClickOnBuildBarracks()
         {
-            GameWorld.instance.GDIConstructionYard.StartBuildingMinigunner();
+            GDIConstructionYard gdiConstructionYard = GameWorld.instance.GDIConstructionYard;
+
+            if (gdiConstructionYard.IsBarracksReadyToPlace)
+            {
+                gdiConstructionYard.CreateBarracksFromConstructionYard();
+            }
+            else if (!gdiConstructionYard.IsBuildingBarracks)
+            {
+                GameWorld.instance.GDIConstructionYard.StartBuildingBarracks();
+            }
+
         }
 
 

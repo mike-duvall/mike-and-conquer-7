@@ -15,6 +15,7 @@ namespace mike_and_conquer.gameobjects
         private Boolean isBuildingBarracks;
         private int barracksBuildCountdown;
         private static int barracksBuildCountdownMax = 400;
+        private Boolean isBarracksReadyToPlace;
 
         public Boolean IsBuildingBarracks
         {
@@ -26,6 +27,10 @@ namespace mike_and_conquer.gameobjects
             get { return CalculatePercentBarracksBuildComplete(); }
         }
 
+        public Boolean IsBarracksReadyToPlace
+        {
+            get { return isBarracksReadyToPlace; }
+        }
 
         private int CalculatePercentBarracksBuildComplete()
         {
@@ -67,7 +72,7 @@ namespace mike_and_conquer.gameobjects
 
 
 
-        public void StartBuildingMinigunner()
+        public void StartBuildingBarracks()
         {
 
             isBuildingBarracks = true;
@@ -81,7 +86,7 @@ namespace mike_and_conquer.gameobjects
                 barracksBuildCountdown--;
                 if (barracksBuildCountdown <= 0)
                 {
-                    CreateBarracksFromConstructionYard();
+                    isBarracksReadyToPlace = true;
                     isBuildingBarracks = false;
                 }
             }
@@ -100,14 +105,15 @@ namespace mike_and_conquer.gameobjects
         //
         // }
 
-        private void CreateBarracksFromConstructionYard()
+        public void CreateBarracksFromConstructionYard()
         {
             int barracksX = (int)positionInWorldCoordinates.X + 60;
             int barracksY = (int)(positionInWorldCoordinates.Y);
 
             Point barracksPosition = new Point(barracksX, barracksY);
             MikeAndConquerGame.instance.AddGDIBarracksAtWorldCoordinates(barracksPosition);
-
+            isBarracksReadyToPlace = false;
+            isBuildingBarracks = false;
         }
 
 

@@ -143,8 +143,8 @@ namespace mike_and_conquer.main
             }
 
 
-            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
-            AddMCVAtMapSquareCoordinates(new Point(21, 12));
+//            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
+//            AddMCVAtMapSquareCoordinates(new Point(21, 12));
 
 
             //

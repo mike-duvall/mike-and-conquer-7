@@ -1,5 +1,7 @@
 ﻿using System.Web.Http;
 using mike_and_conquer.externalcontrol.rest.domain;
+using mike_and_conquer.gameobjects;
+using mike_and_conquer.gameworld;
 using GameWorldView = mike_and_conquer.gameview.GameWorldView;
 
 namespace mike_and_conquer.externalcontrol.rest.controller
@@ -13,10 +15,20 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             RestSidebar sidebar = new RestSidebar();
             sidebar.buildBarracksEnabled = false;
             sidebar.buildMinigunnerEnabled = false;
+            sidebar.barracksIsBuilding = false;
+
+            GDIConstructionYard constructionYard = GameWorld.instance.GDIConstructionYard;
+            if (constructionYard != null)
+            {
+                sidebar.barracksIsBuilding = constructionYard.IsBuildingBarracks;
+                sidebar.barracksReadyToPlace = constructionYard.IsBarracksReadyToPlace;
+            }
+            
 
             if (GameWorldView.instance.barracksSidebarIconView != null)
             {
                 sidebar.buildBarracksEnabled = true;
+
             }
 
             if (GameWorldView.instance.minigunnerSidebarIconView != null)

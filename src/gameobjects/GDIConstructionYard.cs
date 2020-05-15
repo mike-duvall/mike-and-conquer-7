@@ -12,6 +12,8 @@ namespace mike_and_conquer.gameobjects
         public Vector2 positionInWorldCoordinates { get; set; }
 
 
+
+
         private Boolean isBuildingBarracks;
         private int barracksBuildCountdown;
         private static int barracksBuildCountdownMax = 400;
@@ -92,18 +94,6 @@ namespace mike_and_conquer.gameobjects
             }
         }
 
-        // private void CreateMinigunnerFromBarracks()
-        // {
-        //     int minigunnerX = (int)positionInWorldCoordinates.X;
-        //     int minigunnerY = (int)(positionInWorldCoordinates.Y);
-        //
-        //     Point gdiMinigunnderPosition = new Point(minigunnerX, minigunnerY);
-        //     Minigunner builtMinigunner = MikeAndConquerGame.instance.AddGdiMinigunner(gdiMinigunnderPosition);
-        //
-        //     Point destinationInWC = new Point(gdiMinigunnderPosition.X, gdiMinigunnderPosition.Y + 40);
-        //     builtMinigunner.OrderToMoveToDestination(destinationInWC);
-        //
-        // }
 
         public void CreateBarracksFromConstructionYard()
         {

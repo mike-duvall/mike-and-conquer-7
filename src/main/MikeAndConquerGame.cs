@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.externalcontrol;
 using mike_and_conquer.gameobjects;
@@ -142,8 +143,8 @@ namespace mike_and_conquer.main
             }
 
 
-            // AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
-            // AddMCVAtMapSquareCoordinates(new Point(21, 12));
+//            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
+//            AddMCVAtMapSquareCoordinates(new Point(21, 12));
 
 
             //
@@ -201,7 +202,48 @@ namespace mike_and_conquer.main
             LoadSingleTextures();
             LoadShpFileTextures();
             LoadTemFiles();
+            LoadBarracksPlacementTexture();
         }
+
+        private void LoadBarracksPlacementTexture()
+        {
+            LoadTmpFile(BarracksPlacementIndicatorView.FILE_NAME);
+            MapBlackMapTileFramePixelsToToTransparent(BarracksPlacementIndicatorView.FILE_NAME);
+        }
+
+
+        private void MapBlackMapTileFramePixelsToToTransparent(string tmpFileName)
+        {
+            List<MapTileFrame> mapTileFrameList = spriteSheet.GetMapTileFrameForTmpFile(tmpFileName);
+            foreach (MapTileFrame mapTileFrame in mapTileFrameList)
+            {
+                Texture2D theTexture = mapTileFrame.Texture;
+                int numPixels = theTexture.Height * theTexture.Width;
+                Color[] originalTexturePixelData = new Color[numPixels];
+                Color[] changedTexturePixelData = new Color[numPixels];
+                theTexture.GetData(originalTexturePixelData);
+
+                int i = 0;
+                foreach (Color color in originalTexturePixelData)
+                {
+                    if (color.R == 0)
+                    {
+                        Color newColor = new Color(0, 0, 0, 0);
+                        changedTexturePixelData[i] = newColor;
+                    }
+                    else
+                    {
+                        changedTexturePixelData[i] = color;
+                    }
+
+                    i++;
+                }
+                theTexture.SetData(changedTexturePixelData);
+
+            }
+
+        }
+
 
         private void LoadShpFileTextures()
         {
@@ -239,6 +281,9 @@ namespace mike_and_conquer.main
                 BarracksSidebarIconView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(BarracksSidebarIconView.SHP_FILE_NAME),
                 BarracksSidebarIconView.SHP_FILE_COLOR_MAPPER);
+
+
+
 
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(GDIBarracksView.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(
@@ -300,6 +345,8 @@ namespace mike_and_conquer.main
             spriteSheet.LoadSingleTextureFromFile(MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
             spriteSheet.LoadSingleTextureFromFile(DestinationSquare.SPRITE_KEY, DestinationSquare.SPRITE_KEY);
             spriteSheet.LoadSingleTextureFromFile(MCVSelectionBox.SPRITE_KEY, MCVSelectionBox.SPRITE_KEY);
+            spriteSheet.LoadSingleTextureFromFile(ReadyOverlay.SPRITE_KEY, ReadyOverlay.SPRITE_KEY);
+
         }
 
 
@@ -351,8 +398,6 @@ namespace mike_and_conquer.main
 
             LoadTmpFile(GameMap.W1_TEM);
             LoadTmpFile(GameMap.W2_TEM);
-
-
         }
 
 

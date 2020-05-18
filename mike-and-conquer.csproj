@@ -101,9 +101,11 @@
     <Compile Include="src\gamesprite\SpriteSheet.cs" />
     <Compile Include="src\gamesprite\UnitFrame.cs" />
     <Compile Include="src\gameview\GDIConstructionYardView.cs" />
+    <Compile Include="src\gameview\BarracksPlacementIndicatorView.cs" />
     <Compile Include="src\gameview\MapTileShroudMapping.cs" />
     <Compile Include="src\gameview\MCVView.cs" />
     <Compile Include="src\gameview\MCVSelectionBox.cs" />
+    <Compile Include="src\gameview\sidebar\ReadyOverlay.cs" />
     <Compile Include="src\gameview\sidebar\SidebarIconView.cs" />
     <Compile Include="src\gameview\sidebar\BarrackSidebarIconView.cs" />
     <Compile Include="src\gameview\SpriteSortLayers.cs" />

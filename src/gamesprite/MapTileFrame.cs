@@ -7,22 +7,15 @@ namespace mike_and_conquer.gamesprite
     {
 
         private Texture2D mapTileTexture2D;
-        private byte[] frameData;
 
         public Texture2D Texture
         {
             get { return mapTileTexture2D; }
         }
 
-        public byte[] FrameData
-        {
-            get { return frameData; }
-        }
-
-        public MapTileFrame(Texture2D mapTileTexture2D, byte[] frameData)
+        public MapTileFrame(Texture2D mapTileTexture2D)
         {
             this.mapTileTexture2D = mapTileTexture2D;
-            this.frameData = frameData;
         }
 
     }

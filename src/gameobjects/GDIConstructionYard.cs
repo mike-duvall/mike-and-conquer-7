@@ -12,9 +12,12 @@ namespace mike_and_conquer.gameobjects
         public Vector2 positionInWorldCoordinates { get; set; }
 
 
+
+
         private Boolean isBuildingBarracks;
         private int barracksBuildCountdown;
         private static int barracksBuildCountdownMax = 400;
+        private Boolean isBarracksReadyToPlace;
 
         public Boolean IsBuildingBarracks
         {
@@ -26,6 +29,10 @@ namespace mike_and_conquer.gameobjects
             get { return CalculatePercentBarracksBuildComplete(); }
         }
 
+        public Boolean IsBarracksReadyToPlace
+        {
+            get { return isBarracksReadyToPlace; }
+        }
 
         private int CalculatePercentBarracksBuildComplete()
         {
@@ -67,7 +74,7 @@ namespace mike_and_conquer.gameobjects
 
 
 
-        public void StartBuildingMinigunner()
+        public void StartBuildingBarracks()
         {
 
             isBuildingBarracks = true;
@@ -81,33 +88,22 @@ namespace mike_and_conquer.gameobjects
                 barracksBuildCountdown--;
                 if (barracksBuildCountdown <= 0)
                 {
-                    CreateBarracksFromConstructionYard();
+                    isBarracksReadyToPlace = true;
                     isBuildingBarracks = false;
                 }
             }
         }
 
-        // private void CreateMinigunnerFromBarracks()
-        // {
-        //     int minigunnerX = (int)positionInWorldCoordinates.X;
-        //     int minigunnerY = (int)(positionInWorldCoordinates.Y);
-        //
-        //     Point gdiMinigunnderPosition = new Point(minigunnerX, minigunnerY);
-        //     Minigunner builtMinigunner = MikeAndConquerGame.instance.AddGdiMinigunner(gdiMinigunnderPosition);
-        //
-        //     Point destinationInWC = new Point(gdiMinigunnderPosition.X, gdiMinigunnderPosition.Y + 40);
-        //     builtMinigunner.OrderToMoveToDestination(destinationInWC);
-        //
-        // }
 
-        private void CreateBarracksFromConstructionYard()
+        public void CreateBarracksFromConstructionYard()
         {
             int barracksX = (int)positionInWorldCoordinates.X + 60;
             int barracksY = (int)(positionInWorldCoordinates.Y);
 
             Point barracksPosition = new Point(barracksX, barracksY);
             MikeAndConquerGame.instance.AddGDIBarracksAtWorldCoordinates(barracksPosition);
-
+            isBarracksReadyToPlace = false;
+            isBuildingBarracks = false;
         }
 
 

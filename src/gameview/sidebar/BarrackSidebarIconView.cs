@@ -5,6 +5,7 @@ using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.main;
 
+using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 namespace mike_and_conquer.gameview.sidebar
 {
@@ -37,6 +38,17 @@ namespace mike_and_conquer.gameview.sidebar
         {
             GDIConstructionYard constructionYard = MikeAndConquerGame.instance.gameWorld.GDIConstructionYard;
             return constructionYard.PercentBarracksBuildComplete;
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            base.Draw(gameTime,spriteBatch);
+            GDIConstructionYard constructionYard = MikeAndConquerGame.instance.gameWorld.GDIConstructionYard;
+            if (constructionYard.IsBarracksReadyToPlace)
+            {
+                readyOverlay.Draw(gameTime, spriteBatch);
+            }
+
         }
 
 

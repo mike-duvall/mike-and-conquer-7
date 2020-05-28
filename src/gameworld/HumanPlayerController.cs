@@ -17,6 +17,20 @@ namespace mike_and_conquer.gameworld
     class HumanPlayerController : PlayerController
     {
 
+        // top level states
+        private const string HANDLING_SIDEBAR_STATE = "HANDLING_SIDEBAR_STATE";
+        private const string HANDLING_MAP_STATE = "HANDLING_MAP_STATE";
+
+
+        // sub map states
+        private const string NEUTRAL_MAP_STATE = "NEUTRAL_MAP_STATE";
+        private const string UNITS_SELECTED_MAP_STATE = "UNITS_SELECTED_MAP_STATE";
+        private const string DRAG_SELECTING_MAP_STATE = "DRAG_SELECTING_MAP_STATE";
+
+
+        private string topLevelState;
+        private string mapState;
+
         public static HumanPlayerController instance;
 
         private MouseState oldMouseState;
@@ -30,46 +44,163 @@ namespace mike_and_conquer.gameworld
         public HumanPlayerController()
         {
             instance = this;
+            topLevelState = HANDLING_MAP_STATE;
+            mapState = NEUTRAL_MAP_STATE;
         }
 
         public override void Update(GameTime gameTime)
         {
             MouseState newMouseState = Mouse.GetState();
 
-            UpdateMousePointer(newMouseState);
 
-            Point mouseWorldLocationPoint = GetWorldLocationPointFromMouseState(newMouseState);
-
-            UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
-
-            if (LeftMouseButtonUnclicked(newMouseState))
+            if (topLevelState.Equals(HANDLING_MAP_STATE))
             {
-                if (unitSelectionBox.isDragSelectHappening)
-                {
-                    unitSelectionBox.HandleEndDragSelect();
-                }
-                else
-                {
-                    HandleLeftClick(newMouseState.Position.X, newMouseState.Position.Y);
-                }
+                HandleHandlingMapState(gameTime);
             }
-            else if (LeftMouseButtonClicked(newMouseState))
+            else if (topLevelState.Equals(HANDLING_SIDEBAR_STATE))
             {
-                unitSelectionBox.selectionBoxDragStartPoint = mouseWorldLocationPoint;
+                HandleHandlingSidebarState(gameTime);
             }
-            else if (RightMouseButtonClicked(newMouseState))
+            else
             {
-                unitSelectionBox.isDragSelectHappening = false;
-                HandleRightClick(newMouseState.Position.X, newMouseState.Position.Y);
+                throw new System.Exception("Did not find expected topLevelState:" + topLevelState);
             }
 
 
-            if (LeftMouseButtonIsBeingHeldDown(newMouseState))
-            {
-                unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
-            }
+//            UpdateMousePointer(newMouseState);
+//            Point mouseWorldLocationPoint = GetWorldLocationPointFromMouseState(newMouseState);
+//
+//            UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
+//
+//            if (LeftMouseButtonUnclicked(newMouseState))
+//            {
+//                if (unitSelectionBox.isDragSelectHappening)
+//                {
+//                    unitSelectionBox.HandleEndDragSelect();
+//                }
+//                else
+//                {
+//                    HandleLeftClick(newMouseState.Position.X, newMouseState.Position.Y);
+//                }
+//            }
+//            else if (LeftMouseButtonClicked(newMouseState))
+//            {
+//                unitSelectionBox.selectionBoxDragStartPoint = mouseWorldLocationPoint;
+//            }
+//            else if (RightMouseButtonClicked(newMouseState))
+//            {
+//                unitSelectionBox.isDragSelectHappening = false;
+//                HandleRightClick(newMouseState.Position.X, newMouseState.Position.Y);
+//            }
+//
+//
+//            if (LeftMouseButtonIsBeingHeldDown(newMouseState))
+//            {
+//                unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
+//            }
 
             oldMouseState = newMouseState;
+
+        }
+
+        private void HandleHandlingSidebarState(GameTime gameTime)
+        {
+
+        }
+
+        private void HandleHandlingMapState(GameTime gameTime)
+        {
+            MouseState mouseState = Mouse.GetState();
+            Point mousePoint = mouseState.Position;
+            Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
+            Vector2 mouseWorldLocation = GameWorldView.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
+
+
+            int mouseWorldX = (int)mouseWorldLocation.X;
+            int mouseWorldY = (int)mouseWorldLocation.Y;
+
+
+            if (mapState.Equals(NEUTRAL_MAP_STATE))
+            {
+                GameWorldView.instance.gameCursor.SetToMainCursor();
+                if (LeftMouseButtonClicked(mouseState))
+                {
+                    Boolean handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldX, mouseWorldY);
+                    if (handledEvent)
+                    {
+                        mapState = UNITS_SELECTED_MAP_STATE;
+                    }
+                }
+            }
+            else if (mapState.Equals(UNITS_SELECTED_MAP_STATE))
+            {
+
+                Vector2 mousePointerLocation = new Vector2(mouseState.X, mouseState.Y);
+                Vector2 mousePositionAsPointInWorldCoordinatesAsVector2 =
+                    GameWorldView.instance.ConvertScreenLocationToWorldLocation(mousePointerLocation);
+
+                Point mousePositionAsPointInWorldCoordinates =
+                    PointUtil.ConvertVector2ToPoint(mousePositionAsPointInWorldCoordinatesAsVector2);
+
+
+                if (GameWorld.instance.IsAMinigunnerSelected())
+                {
+                    if (GameWorld.instance.IsPointOverEnemy(mousePositionAsPointInWorldCoordinates))
+                    {
+                        GameWorldView.instance.gameCursor.SetToAttackEnemyLocationCursor();
+                    }
+                    else if (GameWorld.instance.IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
+                    {
+                        GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
+                    }
+                    else
+                    {
+                        GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
+                    }
+                }
+                else if (GameWorld.instance.IsAnMCVSelected())
+                {
+                    if (GameWorld.instance.IsPointOverMCV(mousePositionAsPointInWorldCoordinates))
+                    {
+                        GameWorldView.instance.gameCursor.SetToBuildConstructionYardCursor();
+                    }
+                    else if (GameWorld.instance.IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
+                    {
+                        GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
+                    }
+                    else
+                    {
+                        GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
+                    }
+
+                }
+
+
+                if (LeftMouseButtonClicked(mouseState))
+                {
+                    Boolean handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldX, mouseWorldY);
+                    if (handledEvent)
+                    {
+                        mapState = UNITS_SELECTED_MAP_STATE;
+                    }
+                    if (!handledEvent)
+                    {
+                        handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseWorldX, mouseWorldY);
+                    }
+
+                    if (!handledEvent)
+                    {
+                        CheckForAndHandleLeftClickOnMap(mouseWorldX, mouseWorldY);
+                    }
+                }
+
+                if (RightMouseButtonClicked(mouseState))
+                {
+                    HandleRightClick(mouseWorldX, mouseWorldY);
+                    mapState = NEUTRAL_MAP_STATE;
+                }
+            }
+
 
         }
 

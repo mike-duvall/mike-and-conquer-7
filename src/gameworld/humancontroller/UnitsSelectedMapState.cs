@@ -22,15 +22,11 @@ namespace mike_and_conquer.gameworld.humancontroller
             if (LeftMouseButtonClicked(newMouseState, oldMouseState))
             {
                 Boolean handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldX, mouseWorldY);
-//                if (handledEvent)
-//                {
-//                    mapState = UNITS_SELECTED_MAP_STATE;
-//                }
-//                if (!handledEvent)
-//                {
-//                    handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseWorldX, mouseWorldY);
-//                }
-//
+                if (!handledEvent)
+                {
+                    handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseWorldX, mouseWorldY);
+                }
+
                 if (!handledEvent)
                 {
                     handledEvent = CheckForAndHandleLeftClickOnMap(mouseWorldX, mouseWorldY);
@@ -128,7 +124,31 @@ namespace mike_and_conquer.gameworld.humancontroller
                 }
             }
             return true;
+
         }
+
+
+        internal Boolean CheckForAndHandleLeftClickOnEnemyUnit(int mouseX, int mouseY)
+        {
+            bool handled = false;
+            foreach (Minigunner nextNodMinigunner in GameWorld.instance.NodMinigunnerList)
+            {
+                if (nextNodMinigunner.ContainsPoint(mouseX, mouseY))
+                {
+                    handled = true;
+                    foreach (Minigunner nextGdiMinigunner in GameWorld.instance.GDIMinigunnerList)
+                    {
+                        if (nextGdiMinigunner.selected)
+                        {
+                            nextGdiMinigunner.OrderToMoveToAndAttackEnemyUnit(nextNodMinigunner);
+                        }
+                    }
+                }
+            }
+
+            return handled;
+        }
+
 
 
 

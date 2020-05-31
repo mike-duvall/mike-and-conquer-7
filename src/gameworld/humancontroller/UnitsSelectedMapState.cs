@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gameview;
+using mike_and_conquer.util;
 
 namespace mike_and_conquer.gameworld.humancontroller 
 {
@@ -17,6 +18,26 @@ namespace mike_and_conquer.gameworld.humancontroller
 
             int mouseWorldX = (int)mouseWorldLocation.X;
             int mouseWorldY = (int)mouseWorldLocation.Y;
+
+
+            Vector2 mousePointerLocation = new Vector2(newMouseState.X, newMouseState.Y);
+            Vector2 mousePositionAsPointInWorldCoordinatesAsVector2 =
+                GameWorldView.instance.ConvertScreenLocationToWorldLocation(mousePointerLocation);
+
+            Point mousePositionAsPointInWorldCoordinates =
+                PointUtil.ConvertVector2ToPoint(mousePositionAsPointInWorldCoordinatesAsVector2);
+
+
+
+            if (GameWorld.instance.IsAMinigunnerSelected())
+            {
+                UpdateMousePointerWhenMinigunnerSelected(mousePositionAsPointInWorldCoordinates);
+            }
+//            else if (GameWorld.instance.IsAnMCVSelected())
+//            {
+//                UpdateMousePointerWhenMCVSelected(mousePositionAsPointInWorldCoordinates);
+//            }
+
 
 
             if (LeftMouseButtonClicked(newMouseState, oldMouseState))
@@ -150,6 +171,21 @@ namespace mike_and_conquer.gameworld.humancontroller
         }
 
 
+        private static void UpdateMousePointerWhenMinigunnerSelected(Point mousePositionAsPointInWorldCoordinates)
+        {
+            if (GameWorld.instance.IsPointOverEnemy(mousePositionAsPointInWorldCoordinates))
+            {
+                GameWorldView.instance.gameCursor.SetToAttackEnemyLocationCursor();
+            }
+            else if (GameWorld.instance.IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
+            {
+                GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
+            }
+            else
+            {
+                GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
+            }
+        }
 
 
 

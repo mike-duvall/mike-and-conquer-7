@@ -773,11 +773,6 @@ namespace mike_and_conquer.gameworld
 
         }
 
-
-
-
-
-
         public void InitializeNavigationGraph()
         {
 
@@ -954,6 +949,11 @@ namespace mike_and_conquer.gameworld
             //
             // return false;
             return gdiPlayer.IsAnMCVSelected();
+        }
+
+        public bool IsAnyUnitSelected()
+        {
+            return IsAMinigunnerSelected() || IsAnMCVSelected();
         }
 
 

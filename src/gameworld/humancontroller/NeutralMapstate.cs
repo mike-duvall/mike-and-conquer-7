@@ -29,13 +29,15 @@ namespace mike_and_conquer.gameworld.humancontroller
                     return new UnitsSelectedMapState();
                 }
             }
-//            if (LeftMouseButtonIsBeingHeldDown(mouseState))
-//            {
-//                Point mouseWorldLocationPoint = GetWorldLocationPointFromMouseState(mouseState);
-//                UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
-//                unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
+            if (LeftMouseButtonIsBeingHeldDown(newMouseState, oldMouseState))
+            {
+                Point mouseWorldLocationPoint = GetWorldLocationPointFromMouseState(newMouseState);
+                UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
+                unitSelectionBox.selectionBoxDragStartPoint = mouseWorldLocationPoint;
+                unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
+                return new DragSelectingMapState(newMouseState);
 //                mapState = DRAG_SELECTING_MAP_STATE;
-//            }
+            }
 
             return this;
         }
@@ -64,6 +66,19 @@ namespace mike_and_conquer.gameworld.humancontroller
 //            }
 
             return handled;
+        }
+
+        private bool LeftMouseButtonIsBeingHeldDown(MouseState newMouseState, MouseState oldMouseState)
+        {
+            return newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton != ButtonState.Released;
+        }
+
+
+        private Point GetWorldLocationPointFromMouseState(MouseState mouseState)
+        {
+            Vector2 mouseScreenLocation = new Vector2(mouseState.X, mouseState.Y);
+            Vector2 mouseWorldLocationVector2 = GameWorldView.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
+            return new Point((int)mouseWorldLocationVector2.X, (int)mouseWorldLocationVector2.Y);
         }
 
 

@@ -12,7 +12,7 @@ using Point = Microsoft.Xna.Framework.Point;
 
 
 
-namespace mike_and_conquer.gameworld
+namespace mike_and_conquer.gameworld.humancontroller
 {
     class HumanPlayerController : PlayerController
     {
@@ -27,6 +27,7 @@ namespace mike_and_conquer.gameworld
         private const string UNITS_SELECTED_MAP_STATE = "UNITS_SELECTED_MAP_STATE";
         private const string DRAG_SELECTING_MAP_STATE = "DRAG_SELECTING_MAP_STATE";
 
+        private HumanControllerState humanControllerState;
 
         private string topLevelState;
         private string mapState;
@@ -46,25 +47,26 @@ namespace mike_and_conquer.gameworld
             instance = this;
             topLevelState = HANDLING_MAP_STATE;
             mapState = NEUTRAL_MAP_STATE;
+            humanControllerState = new NeutralMapstate();
         }
 
         public override void Update(GameTime gameTime)
         {
             MouseState newMouseState = Mouse.GetState();
 
-
-            if (topLevelState.Equals(HANDLING_MAP_STATE))
-            {
-                HandleHandlingMapState(gameTime);
-            }
-            else if (topLevelState.Equals(HANDLING_SIDEBAR_STATE))
-            {
-                HandleHandlingSidebarState(gameTime);
-            }
-            else
-            {
-                throw new System.Exception("Did not find expected topLevelState:" + topLevelState);
-            }
+            humanControllerState = humanControllerState.Update(gameTime, newMouseState, oldMouseState);
+//            if (topLevelState.Equals(HANDLING_MAP_STATE))
+//            {
+//                HandleHandlingMapState(gameTime);
+//            }
+//            else if (topLevelState.Equals(HANDLING_SIDEBAR_STATE))
+//            {
+//                HandleHandlingSidebarState(gameTime);
+//            }
+//            else
+//            {
+//                throw new System.Exception("Did not find expected topLevelState:" + topLevelState);
+//            }
 
 
 //            UpdateMousePointer(newMouseState);
@@ -131,6 +133,17 @@ namespace mike_and_conquer.gameworld
                         mapState = UNITS_SELECTED_MAP_STATE;
                     }
                 }
+                if (LeftMouseButtonIsBeingHeldDown(mouseState))
+                {
+                    Point mouseWorldLocationPoint = GetWorldLocationPointFromMouseState(mouseState);
+                    UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
+                    unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
+                    mapState = DRAG_SELECTING_MAP_STATE;
+                }
+
+
+
+
             }
             else if (mapState.Equals(UNITS_SELECTED_MAP_STATE))
             {
@@ -145,34 +158,11 @@ namespace mike_and_conquer.gameworld
 
                 if (GameWorld.instance.IsAMinigunnerSelected())
                 {
-                    if (GameWorld.instance.IsPointOverEnemy(mousePositionAsPointInWorldCoordinates))
-                    {
-                        GameWorldView.instance.gameCursor.SetToAttackEnemyLocationCursor();
-                    }
-                    else if (GameWorld.instance.IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
-                    {
-                        GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
-                    }
-                    else
-                    {
-                        GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
-                    }
+                    UpdateMousePointerWhenMinigunnerSelected(mousePositionAsPointInWorldCoordinates);
                 }
                 else if (GameWorld.instance.IsAnMCVSelected())
                 {
-                    if (GameWorld.instance.IsPointOverMCV(mousePositionAsPointInWorldCoordinates))
-                    {
-                        GameWorldView.instance.gameCursor.SetToBuildConstructionYardCursor();
-                    }
-                    else if (GameWorld.instance.IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
-                    {
-                        GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
-                    }
-                    else
-                    {
-                        GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
-                    }
-
+                    UpdateMousePointerWhenMCVSelected(mousePositionAsPointInWorldCoordinates);
                 }
 
 
@@ -200,8 +190,80 @@ namespace mike_and_conquer.gameworld
                     mapState = NEUTRAL_MAP_STATE;
                 }
             }
+            else if (mapState.Equals(DRAG_SELECTING_MAP_STATE))
+            {
+                UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
+                Point mouseWorldLocationPoint = GetWorldLocationPointFromMouseState(mouseState);
+                if (LeftMouseButtonUnclicked(mouseState))
+                {
+
+                    int numSelectedUnits = unitSelectionBox.HandleEndDragSelect();
+                    if (numSelectedUnits > 0)
+                    {
+                        mapState = UNITS_SELECTED_MAP_STATE;
+                    }
+                    else
+                    {
+                        mapState = NEUTRAL_MAP_STATE;
+                    }
+                }
+                else if (LeftMouseButtonClicked(mouseState))
+                {
+                    unitSelectionBox.selectionBoxDragStartPoint = mouseWorldLocationPoint;
+                }
+                else if (RightMouseButtonClicked(mouseState))
+                {
+                    unitSelectionBox.isDragSelectHappening = false;
+                    HandleRightClick(mouseState.Position.X, mouseState.Position.Y);
+                }
+                
+
+                if (LeftMouseButtonIsBeingHeldDown(mouseState))
+                {
+                    unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
+                }
 
 
+            }
+
+
+
+          
+
+
+
+        }
+
+        private static void UpdateMousePointerWhenMCVSelected(Point mousePositionAsPointInWorldCoordinates)
+        {
+            if (GameWorld.instance.IsPointOverMCV(mousePositionAsPointInWorldCoordinates))
+            {
+                GameWorldView.instance.gameCursor.SetToBuildConstructionYardCursor();
+            }
+            else if (GameWorld.instance.IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
+            {
+                GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
+            }
+            else
+            {
+                GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
+            }
+        }
+
+        private static void UpdateMousePointerWhenMinigunnerSelected(Point mousePositionAsPointInWorldCoordinates)
+        {
+            if (GameWorld.instance.IsPointOverEnemy(mousePositionAsPointInWorldCoordinates))
+            {
+                GameWorldView.instance.gameCursor.SetToAttackEnemyLocationCursor();
+            }
+            else if (GameWorld.instance.IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
+            {
+                GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
+            }
+            else
+            {
+                GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
+            }
         }
 
         public override void Add(Minigunner minigunner, bool aiIsOn)

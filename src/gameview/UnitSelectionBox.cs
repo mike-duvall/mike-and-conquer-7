@@ -1,15 +1,8 @@
 ﻿
 using Vector2 = Microsoft.Xna.Framework.Vector2;
-using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
-using Color = Microsoft.Xna.Framework.Color;
-using GameTime = Microsoft.Xna.Framework.GameTime;
-using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
-using SpriteEffects = Microsoft.Xna.Framework.Graphics.SpriteEffects;
 using Boolean = System.Boolean;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Point = Microsoft.Xna.Framework.Point;
-using Microsoft.Xna.Framework;
-using System;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.main;
 
@@ -115,7 +108,7 @@ namespace mike_and_conquer.gameview
             return mouseWorldLocationPoint.X != selectionBoxDragStartPoint.X || mouseWorldLocationPoint.Y != selectionBoxDragStartPoint.Y;
         }
 
-        public void HandleEndDragSelect()
+        public int HandleEndDragSelect()
         {
 
             // TODO:  For now, limiting the number of allowed selected units to 5
@@ -138,6 +131,7 @@ namespace mike_and_conquer.gameview
             }
 
             isDragSelectHappening = false;
+            return numMinigunnersSelected;
         }
 
 

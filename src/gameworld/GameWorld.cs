@@ -6,6 +6,7 @@ using mike_and_conquer.gameevent;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamestate;
 using mike_and_conquer.gameview;
+using mike_and_conquer.gameworld.humancontroller;
 using mike_and_conquer.main;
 using mike_and_conquer.pathfinding;
 using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;

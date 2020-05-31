@@ -31,10 +31,10 @@ namespace mike_and_conquer.gameworld.humancontroller
 //                    handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseWorldX, mouseWorldY);
 //                }
 //
-//                if (!handledEvent)
-//                {
-//                    CheckForAndHandleLeftClickOnMap(mouseWorldX, mouseWorldY);
-//                }
+                if (!handledEvent)
+                {
+                    handledEvent = CheckForAndHandleLeftClickOnMap(mouseWorldX, mouseWorldY);
+                }
             }
 
 
@@ -93,6 +93,41 @@ namespace mike_and_conquer.gameworld.humancontroller
 //            }
 
             return handled;
+        }
+
+
+        private bool CheckForAndHandleLeftClickOnMap(int mouseX, int mouseY)
+        {
+            foreach (Minigunner nextMinigunner in GameWorld.instance.GDIMinigunnerList)
+            {
+                if (nextMinigunner.selected == true)
+                {
+                    if (GameWorld.instance.IsValidMoveDestination(new Point(mouseX, mouseY)))
+                    {
+                        MapTileInstance clickedMapTileInstance =
+                            GameWorld.instance.FindMapTileInstance(mouseX, mouseY);
+                        Point centerOfSquare = clickedMapTileInstance.GetCenter();
+                        nextMinigunner.OrderToMoveToDestination(centerOfSquare);
+                    }
+                }
+            }
+
+            MCV mcv = GameWorld.instance.MCV;
+            if (mcv != null)
+            {
+                if (mcv.selected == true)
+                {
+                    if (GameWorld.instance.IsValidMoveDestination(new Point(mouseX, mouseY)))
+                    {
+                        MapTileInstance clickedMapTileInstance =
+                            GameWorld.instance.FindMapTileInstance(mouseX, mouseY);
+                        Point centerOfSquare = clickedMapTileInstance.GetCenter();
+                        mcv.OrderToMoveToDestination(centerOfSquare);
+                    }
+
+                }
+            }
+            return true;
         }
 
 

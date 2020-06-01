@@ -33,10 +33,10 @@ namespace mike_and_conquer.gameworld.humancontroller
             {
                 UpdateMousePointerWhenMinigunnerSelected(mousePositionAsPointInWorldCoordinates);
             }
-//            else if (GameWorld.instance.IsAnMCVSelected())
-//            {
-//                UpdateMousePointerWhenMCVSelected(mousePositionAsPointInWorldCoordinates);
-//            }
+            else if (GameWorld.instance.IsAnMCVSelected())
+            {
+                UpdateMousePointerWhenMCVSelected(mousePositionAsPointInWorldCoordinates);
+            }
 
 
 
@@ -176,6 +176,22 @@ namespace mike_and_conquer.gameworld.humancontroller
             if (GameWorld.instance.IsPointOverEnemy(mousePositionAsPointInWorldCoordinates))
             {
                 GameWorldView.instance.gameCursor.SetToAttackEnemyLocationCursor();
+            }
+            else if (GameWorld.instance.IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
+            {
+                GameWorldView.instance.gameCursor.SetToMoveToLocationCursor();
+            }
+            else
+            {
+                GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
+            }
+        }
+
+        private static void UpdateMousePointerWhenMCVSelected(Point mousePositionAsPointInWorldCoordinates)
+        {
+            if (GameWorld.instance.IsPointOverMCV(mousePositionAsPointInWorldCoordinates))
+            {
+                GameWorldView.instance.gameCursor.SetToBuildConstructionYardCursor();
             }
             else if (GameWorld.instance.IsValidMoveDestination(mousePositionAsPointInWorldCoordinates))
             {

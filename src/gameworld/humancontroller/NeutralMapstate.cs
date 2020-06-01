@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gameview;
+using mike_and_conquer.main;
 
 namespace mike_and_conquer.gameworld.humancontroller
 {
@@ -60,10 +61,10 @@ namespace mike_and_conquer.gameworld.humancontroller
                 }
             }
 
-//            if (!handled)
-//            {
-//                handled = CheckForAndHandleLeftClickOnMCV(mouseX, mouseY);
-//            }
+            if (!handled)
+            {
+                handled = CheckForAndHandleLeftClickOnMCV(mouseX, mouseY);
+            }
 
             return handled;
         }
@@ -80,6 +81,34 @@ namespace mike_and_conquer.gameworld.humancontroller
             Vector2 mouseWorldLocationVector2 = GameWorldView.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
             return new Point((int)mouseWorldLocationVector2.X, (int)mouseWorldLocationVector2.Y);
         }
+
+        private static bool CheckForAndHandleLeftClickOnMCV(int mouseX, int mouseY)
+        {
+            Boolean handled = false;
+            MCV mcv = GameWorld.instance.MCV;
+            if (mcv != null)
+            {
+                if (mcv.ContainsPoint(mouseX, mouseY))
+                {
+                    handled = true;
+                    if (mcv.selected == false)
+                    {
+                        GameWorld.instance.SelectMCV(GameWorld.instance.MCV);
+                    }
+                    else
+                    {
+                        Point mcvPositionInWorldCoordinates = new Point((int)mcv.positionInWorldCoordinates.X,
+                            (int)mcv.positionInWorldCoordinates.Y);
+                        MikeAndConquerGame.instance.RemoveMCV();
+                        MikeAndConquerGame.instance.AddGDIConstructionYardAtWorldCoordinates(mcvPositionInWorldCoordinates);
+                    }
+                }
+            }
+
+            return handled;
+        }
+
+
 
 
 

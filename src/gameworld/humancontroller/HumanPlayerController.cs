@@ -226,12 +226,6 @@ namespace mike_and_conquer.gameworld.humancontroller
 
             }
 
-
-
-          
-
-
-
         }
 
         private static void UpdateMousePointerWhenMCVSelected(Point mousePositionAsPointInWorldCoordinates)

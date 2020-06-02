@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using mike_and_conquer.gameview;
+using mike_and_conquer.main;
 
 namespace mike_and_conquer.gameworld.humancontroller
 {
@@ -21,6 +22,10 @@ namespace mike_and_conquer.gameworld.humancontroller
         }
         public override HumanControllerState Update(GameTime gameTime, MouseState newMouseState, MouseState oldMouseState)
         {
+
+            MikeAndConquerGame.instance.log.Information("DragSelectingMapState.Update() begin");
+
+
             if (LeftMouseButtonIsBeingHeldDown(newMouseState, oldMouseState))
             {
                 Point mouseWorldLocationPoint = GetWorldLocationPointFromMouseState(newMouseState);

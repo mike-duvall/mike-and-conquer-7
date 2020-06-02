@@ -11,6 +11,8 @@ namespace mike_and_conquer.gameworld.humancontroller
     {
         public override HumanControllerState Update(GameTime gameTime, MouseState newMouseState, MouseState oldMouseState)
         {
+            MikeAndConquerGame.instance.log.Information("NeutralMapstate.Update() begin");
+
 
             Point mousePoint = newMouseState.Position;
             Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
@@ -26,7 +28,6 @@ namespace mike_and_conquer.gameworld.humancontroller
                 Boolean handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldX, mouseWorldY);
                 if (handledEvent)
                 {
-//                    mapState = UNITS_SELECTED_MAP_STATE;
                     return new UnitsSelectedMapState();
                 }
             }
@@ -37,10 +38,30 @@ namespace mike_and_conquer.gameworld.humancontroller
                 unitSelectionBox.selectionBoxDragStartPoint = mouseWorldLocationPoint;
                 unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
                 return new DragSelectingMapState(newMouseState);
-//                mapState = DRAG_SELECTING_MAP_STATE;
+            }
+
+            if (IsOverSidebar(newMouseState))
+            {
+                return new MousePointerOverSidebarState();
             }
 
             return this;
+        }
+
+        private bool IsOverSidebar(MouseState newMouseState)
+        {
+            Point mousePoint = newMouseState.Position;
+            Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
+
+            Vector2 sidebarLocation = GameWorldView.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
+
+            if (sidebarLocation.X > 0  && sidebarLocation.Y > 0 )
+            {
+                return true;
+            }
+
+            return false;
+
         }
 
 

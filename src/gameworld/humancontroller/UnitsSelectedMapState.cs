@@ -15,6 +15,12 @@ namespace mike_and_conquer.gameworld.humancontroller
 
             MikeAndConquerGame.instance.log.Information("UnitSelectedMapState.Update() begin");
 
+            if (IsOverSidebar(newMouseState))
+            {
+                return new MousePointerOverSidebarState();
+            }
+
+
             Point mousePoint = newMouseState.Position;
             Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
             Vector2 mouseWorldLocation = GameWorldView.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
@@ -30,7 +36,6 @@ namespace mike_and_conquer.gameworld.humancontroller
 
             Point mousePositionAsPointInWorldCoordinates =
                 PointUtil.ConvertVector2ToPoint(mousePositionAsPointInWorldCoordinatesAsVector2);
-
 
 
             if (GameWorld.instance.IsAMinigunnerSelected())
@@ -101,6 +106,23 @@ namespace mike_and_conquer.gameworld.humancontroller
             }
 
         }
+
+        private bool IsOverSidebar(MouseState newMouseState)
+        {
+            Point mousePoint = newMouseState.Position;
+            Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
+
+            Vector2 sidebarLocation = GameWorldView.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
+
+            if (sidebarLocation.X > 0 && sidebarLocation.Y > 0)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
 
 
         internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)

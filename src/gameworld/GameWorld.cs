@@ -876,8 +876,12 @@ namespace mike_and_conquer.gameworld
 
             Boolean isValidMoveDestination = true;
             MapTileInstance clickedMapTileInstance =
-                FindMapTileInstance(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
-            if (clickedMapTileInstance.IsBlockingTerrain)
+                FindMapTileInstanceAllowNull(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
+            if (clickedMapTileInstance == null)
+            {
+                isValidMoveDestination = false;
+            }
+            else if (clickedMapTileInstance.IsBlockingTerrain)
             {
                 isValidMoveDestination = false;
             }

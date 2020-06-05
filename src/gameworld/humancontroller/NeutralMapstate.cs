@@ -13,6 +13,11 @@ namespace mike_and_conquer.gameworld.humancontroller
         {
             MikeAndConquerGame.instance.log.Information("NeutralMapstate.Update() begin");
 
+            if (GameWorld.instance.IsAnyUnitSelected())
+            {
+                return new UnitsSelectedMapState();
+            }
+
 
             Point mousePoint = newMouseState.Position;
             Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);

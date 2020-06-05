@@ -15,6 +15,12 @@ namespace mike_and_conquer.gameworld.humancontroller
 
             MikeAndConquerGame.instance.log.Information("UnitSelectedMapState.Update() begin");
 
+
+            if (!GameWorld.instance.IsAnyUnitSelected())
+            {
+                return new NeutralMapstate();
+            }
+
             if (IsOverSidebar(newMouseState))
             {
                 return new MousePointerOverSidebarState();
@@ -70,15 +76,7 @@ namespace mike_and_conquer.gameworld.humancontroller
                 return new NeutralMapstate();
             }
 
-            if (GameWorld.instance.IsAnyUnitSelected())
-            {
-                return this;
-            }
-            else
-            {
-                return new NeutralMapstate();
-            }
-
+            return this;
         }
 
 

@@ -12,16 +12,14 @@ namespace mike_and_conquer.gameworld.humancontroller
     {
         public override HumanControllerState Update(GameTime gameTime, MouseState newMouseState, MouseState oldMouseState)
         {
-
             MikeAndConquerGame.instance.log.Information("UnitSelectedMapState.Update() begin");
-
 
             if (!GameWorld.instance.IsAnyUnitSelected())
             {
                 return new NeutralMapstate();
             }
 
-            if (IsOverSidebar(newMouseState))
+            if (MouseInputUtil.IsOverSidebar(newMouseState))
             {
                 return new MousePointerOverSidebarState();
             }
@@ -53,9 +51,7 @@ namespace mike_and_conquer.gameworld.humancontroller
                 UpdateMousePointerWhenMCVSelected(mousePositionAsPointInWorldCoordinates);
             }
 
-
-
-            if (LeftMouseButtonClicked(newMouseState, oldMouseState))
+            if (MouseInputUtil.LeftMouseButtonClicked(newMouseState, oldMouseState))
             {
                 Boolean handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldX, mouseWorldY);
                 if (!handledEvent)
@@ -69,25 +65,13 @@ namespace mike_and_conquer.gameworld.humancontroller
                 }
             }
 
-
-            if (RightMouseButtonClicked(newMouseState, oldMouseState))
+            if (MouseInputUtil.RightMouseButtonClicked(newMouseState, oldMouseState))
             {
                 HandleRightClick(mouseWorldX, mouseWorldY);
                 return new NeutralMapstate();
             }
 
             return this;
-        }
-
-
-        private bool RightMouseButtonClicked(MouseState newMouseState, MouseState oldMouseState)
-        {
-            return newMouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released;
-        }
-
-        private bool LeftMouseButtonClicked(MouseState newMouseState, MouseState oldMouseState)
-        {
-            return newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released;
         }
 
 
@@ -104,23 +88,6 @@ namespace mike_and_conquer.gameworld.humancontroller
             }
 
         }
-
-        private bool IsOverSidebar(MouseState newMouseState)
-        {
-            Point mousePoint = newMouseState.Position;
-            Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
-
-            Vector2 sidebarLocation = GameWorldView.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
-
-            if (sidebarLocation.X > 0 && sidebarLocation.Y > 0)
-            {
-                return true;
-            }
-
-            return false;
-
-        }
-
 
 
         internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)

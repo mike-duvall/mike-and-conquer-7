@@ -10,14 +10,12 @@ namespace mike_and_conquer.gameworld.humancontroller
     {
         public override HumanControllerState Update(GameTime gameTime, MouseState newMouseState, MouseState oldMouseState)
         {
- 
-
             MikeAndConquerGame.instance.log.Information("MousePointerOverSidebarState.Update() begin");
 
-            if (IsOverSidebar(newMouseState))
+            if (MouseInputUtil.IsOverSidebar(newMouseState))
             {
 
-                if (LeftMouseButtonClicked(newMouseState, oldMouseState))
+                if (MouseInputUtil.LeftMouseButtonClicked(newMouseState, oldMouseState))
                 {
                     Point mousePoint = newMouseState.Position;
                     Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
@@ -46,23 +44,6 @@ namespace mike_and_conquer.gameworld.humancontroller
         }
 
 
-        private bool IsOverSidebar(MouseState newMouseState)
-        {
-            Point mousePoint = newMouseState.Position;
-            Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
-
-            Vector2 sidebarLocation = GameWorldView.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
-
-            if (sidebarLocation.X > 0 && sidebarLocation.Y > 0)
-            {
-                return true;
-            }
-
-            return false;
-
-        }
-
-
         private void HandleClickOnBuildBarracks()
         {
             GDIConstructionYard gdiConstructionYard = GameWorld.instance.GDIConstructionYard;
@@ -78,17 +59,10 @@ namespace mike_and_conquer.gameworld.humancontroller
 
         }
 
-        private bool LeftMouseButtonClicked(MouseState newMouseState, MouseState oldMouseState)
-        {
-            return newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released;
-        }
-
-
         private void HandleClickOnBuildMinigunner()
         {
             GameWorld.instance.GDIBarracks.StartBuildingMinigunner();
         }
-
 
 
     }

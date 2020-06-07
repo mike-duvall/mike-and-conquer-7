@@ -28,7 +28,7 @@ namespace mike_and_conquer.gameworld.humancontroller
             int mouseWorldY = (int)mouseWorldLocation.Y;
 
             GameWorldView.instance.gameCursor.SetToMainCursor();
-            if (LeftMouseButtonClicked(newMouseState, oldMouseState))
+            if (MouseInputUtil.LeftMouseButtonClicked(newMouseState, oldMouseState))
             {
                 Boolean handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldX, mouseWorldY);
                 if (handledEvent)
@@ -36,16 +36,16 @@ namespace mike_and_conquer.gameworld.humancontroller
                     return new UnitsSelectedMapState();
                 }
             }
-            if (LeftMouseButtonIsBeingHeldDown(newMouseState, oldMouseState))
+            if (MouseInputUtil.LeftMouseButtonIsBeingHeldDown(newMouseState, oldMouseState))
             {
-                Point mouseWorldLocationPoint = GetWorldLocationPointFromMouseState(newMouseState);
+                Point mouseWorldLocationPoint = MouseInputUtil.GetWorldLocationPointFromMouseState(newMouseState);
                 UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
                 unitSelectionBox.selectionBoxDragStartPoint = mouseWorldLocationPoint;
                 unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
                 return new DragSelectingMapState(newMouseState);
             }
 
-            if (IsOverSidebar(newMouseState))
+            if (MouseInputUtil.IsOverSidebar(newMouseState))
             {
                 return new MousePointerOverSidebarState();
             }
@@ -53,27 +53,6 @@ namespace mike_and_conquer.gameworld.humancontroller
             return this;
         }
 
-        private bool IsOverSidebar(MouseState newMouseState)
-        {
-            Point mousePoint = newMouseState.Position;
-            Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
-
-            Vector2 sidebarLocation = GameWorldView.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
-
-            if (sidebarLocation.X > 0  && sidebarLocation.Y > 0 )
-            {
-                return true;
-            }
-
-            return false;
-
-        }
-
-
-        private bool LeftMouseButtonClicked(MouseState newMouseState, MouseState oldMouseState)
-        {
-            return newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released;
-        }
 
         internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)
         {
@@ -95,18 +74,7 @@ namespace mike_and_conquer.gameworld.humancontroller
             return handled;
         }
 
-        private bool LeftMouseButtonIsBeingHeldDown(MouseState newMouseState, MouseState oldMouseState)
-        {
-            return newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton != ButtonState.Released;
-        }
 
-
-        private Point GetWorldLocationPointFromMouseState(MouseState mouseState)
-        {
-            Vector2 mouseScreenLocation = new Vector2(mouseState.X, mouseState.Y);
-            Vector2 mouseWorldLocationVector2 = GameWorldView.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
-            return new Point((int)mouseWorldLocationVector2.X, (int)mouseWorldLocationVector2.Y);
-        }
 
         private static bool CheckForAndHandleLeftClickOnMCV(int mouseX, int mouseY)
         {

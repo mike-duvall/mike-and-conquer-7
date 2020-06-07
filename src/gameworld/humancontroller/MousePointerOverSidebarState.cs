@@ -22,6 +22,8 @@ namespace mike_and_conquer.gameworld.humancontroller
 
                     Vector2 sidebarLocation = GameWorldView.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
 
+                    // TODO:  Add Sidebar class, have build buttons sit inside of it, iterate through
+                    // them and ask if they contain point where sidebar was clicked
                     if (sidebarLocation.X > 0 && sidebarLocation.X < 64 && sidebarLocation.Y > 0 && sidebarLocation.Y < 48)
                     {
                         HandleClickOnBuildBarracks();

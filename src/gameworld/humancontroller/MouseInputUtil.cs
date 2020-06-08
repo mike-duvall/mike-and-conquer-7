@@ -52,5 +52,14 @@ namespace mike_and_conquer.gameworld.humancontroller
             return new Point((int)mouseWorldLocationVector2.X, (int)mouseWorldLocationVector2.Y);
         }
 
+        public static Point GetSidebarWorldLocationPointFromMouseState(MouseState mouseState)
+        {
+            Vector2 mouseScreenLocation = new Vector2(mouseState.X, mouseState.Y);
+            Vector2 sidebarLocation = GameWorldView.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
+            return new Point((int)sidebarLocation.X, (int)sidebarLocation.Y);
+        }
+
+
+
     }
 }

@@ -18,19 +18,12 @@ namespace mike_and_conquer.gameworld.humancontroller
                 return new UnitsSelectedMapState();
             }
 
-
-            Point mousePoint = newMouseState.Position;
-            Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
-            Vector2 mouseWorldLocation = GameWorldView.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
-
-
-            int mouseWorldX = (int)mouseWorldLocation.X;
-            int mouseWorldY = (int)mouseWorldLocation.Y;
+            Point mouseWorldLocationPoint = MouseInputUtil.GetWorldLocationPointFromMouseState(newMouseState);
 
             GameWorldView.instance.gameCursor.SetToMainCursor();
             if (MouseInputUtil.LeftMouseButtonClicked(newMouseState, oldMouseState))
             {
-                Boolean handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldX, mouseWorldY);
+                Boolean handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldLocationPoint);
                 if (handledEvent)
                 {
                     return new UnitsSelectedMapState();
@@ -38,7 +31,6 @@ namespace mike_and_conquer.gameworld.humancontroller
             }
             if (MouseInputUtil.LeftMouseButtonIsBeingHeldDown(newMouseState, oldMouseState))
             {
-                Point mouseWorldLocationPoint = MouseInputUtil.GetWorldLocationPointFromMouseState(newMouseState);
                 UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
                 unitSelectionBox.selectionBoxDragStartPoint = mouseWorldLocationPoint;
                 unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
@@ -54,8 +46,12 @@ namespace mike_and_conquer.gameworld.humancontroller
         }
 
 
-        internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)
+        internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(Point mouseLocation)
         {
+
+            int mouseX = mouseLocation.X;
+            int mouseY = mouseLocation.Y;
+
             Boolean handled = false;
             foreach (Minigunner nextMinigunner in GameWorld.instance.GDIMinigunnerList)
             {

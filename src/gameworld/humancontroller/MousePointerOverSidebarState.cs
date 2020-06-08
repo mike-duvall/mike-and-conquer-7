@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using mike_and_conquer.gameobjects;
-using mike_and_conquer.gameview;
 using mike_and_conquer.main;
 
 namespace mike_and_conquer.gameworld.humancontroller
@@ -17,18 +16,15 @@ namespace mike_and_conquer.gameworld.humancontroller
 
                 if (MouseInputUtil.LeftMouseButtonClicked(newMouseState, oldMouseState))
                 {
-                    Point mousePoint = newMouseState.Position;
-                    Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
-
-                    Vector2 sidebarLocation = GameWorldView.instance.ConvertScreenLocationToSidebarLocation(mouseScreenLocation);
+                    Point sidebarWorldLocation = MouseInputUtil.GetSidebarWorldLocationPointFromMouseState(newMouseState);
 
                     // TODO:  Add Sidebar class, have build buttons sit inside of it, iterate through
                     // them and ask if they contain point where sidebar was clicked
-                    if (sidebarLocation.X > 0 && sidebarLocation.X < 64 && sidebarLocation.Y > 0 && sidebarLocation.Y < 48)
+                    if (sidebarWorldLocation.X > 0 && sidebarWorldLocation.X < 64 && sidebarWorldLocation.Y > 0 && sidebarWorldLocation.Y < 48)
                     {
                         HandleClickOnBuildBarracks();
                     }
-                    else if (sidebarLocation.X > 80 && sidebarLocation.X < 144 && sidebarLocation.Y > 0 && sidebarLocation.Y < 48)
+                    else if (sidebarWorldLocation.X > 80 && sidebarWorldLocation.X < 144 && sidebarWorldLocation.Y > 0 && sidebarWorldLocation.Y < 48)
                     {
                         HandleClickOnBuildMinigunner();
                     }

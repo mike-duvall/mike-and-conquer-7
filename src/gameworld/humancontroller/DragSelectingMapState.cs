@@ -9,7 +9,6 @@ namespace mike_and_conquer.gameworld.humancontroller
     {
         private DragSelectingMapState()
         {
-
         }
 
         public DragSelectingMapState(MouseState newMouseState)
@@ -52,8 +51,6 @@ namespace mike_and_conquer.gameworld.humancontroller
             return this;
 
         }
-
-
 
     }
 

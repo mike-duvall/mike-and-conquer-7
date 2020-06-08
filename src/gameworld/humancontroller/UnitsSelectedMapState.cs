@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gameview;
 using mike_and_conquer.main;
-using mike_and_conquer.util;
+
 
 namespace mike_and_conquer.gameworld.humancontroller 
 {
@@ -24,50 +24,34 @@ namespace mike_and_conquer.gameworld.humancontroller
                 return new MousePointerOverSidebarState();
             }
 
-
-            Point mousePoint = newMouseState.Position;
-            Vector2 mouseScreenLocation = new Vector2(mousePoint.X, mousePoint.Y);
-            Vector2 mouseWorldLocation = GameWorldView.instance.ConvertScreenLocationToWorldLocation(mouseScreenLocation);
-
-
-            int mouseWorldX = (int)mouseWorldLocation.X;
-            int mouseWorldY = (int)mouseWorldLocation.Y;
-
-
-            Vector2 mousePointerLocation = new Vector2(newMouseState.X, newMouseState.Y);
-            Vector2 mousePositionAsPointInWorldCoordinatesAsVector2 =
-                GameWorldView.instance.ConvertScreenLocationToWorldLocation(mousePointerLocation);
-
-            Point mousePositionAsPointInWorldCoordinates =
-                PointUtil.ConvertVector2ToPoint(mousePositionAsPointInWorldCoordinatesAsVector2);
-
+            Point mouseWorldLocationPoint = MouseInputUtil.GetWorldLocationPointFromMouseState(newMouseState);
 
             if (GameWorld.instance.IsAMinigunnerSelected())
             {
-                UpdateMousePointerWhenMinigunnerSelected(mousePositionAsPointInWorldCoordinates);
+                UpdateMousePointerWhenMinigunnerSelected(mouseWorldLocationPoint);
             }
             else if (GameWorld.instance.IsAnMCVSelected())
             {
-                UpdateMousePointerWhenMCVSelected(mousePositionAsPointInWorldCoordinates);
+                UpdateMousePointerWhenMCVSelected(mouseWorldLocationPoint);
             }
 
             if (MouseInputUtil.LeftMouseButtonClicked(newMouseState, oldMouseState))
             {
-                Boolean handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldX, mouseWorldY);
+                Boolean handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldLocationPoint);
                 if (!handledEvent)
                 {
-                    handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseWorldX, mouseWorldY);
+                    handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseWorldLocationPoint);
                 }
 
                 if (!handledEvent)
                 {
-                    handledEvent = CheckForAndHandleLeftClickOnMap(mouseWorldX, mouseWorldY);
+                    handledEvent = CheckForAndHandleLeftClickOnMap(mouseWorldLocationPoint);
                 }
             }
 
             if (MouseInputUtil.RightMouseButtonClicked(newMouseState, oldMouseState))
             {
-                HandleRightClick(mouseWorldX, mouseWorldY);
+                HandleRightClick(mouseWorldLocationPoint);
                 return new NeutralMapstate();
             }
 
@@ -75,8 +59,12 @@ namespace mike_and_conquer.gameworld.humancontroller
         }
 
 
-        internal void HandleRightClick(int mouseX, int mouseY)
+        internal void HandleRightClick(Point mouseLocation)
         {
+
+            int mouseX = mouseLocation.X;
+            int mouseY = mouseLocation.Y;
+
             foreach (Minigunner nextMinigunner in GameWorld.instance.GDIMinigunnerList)
             {
                 nextMinigunner.selected = false;
@@ -90,8 +78,10 @@ namespace mike_and_conquer.gameworld.humancontroller
         }
 
 
-        internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(int mouseX, int mouseY)
+        internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(Point mouseLocation)
         {
+            int mouseX = mouseLocation.X;
+            int mouseY = mouseLocation.Y;
             Boolean handled = false;
             foreach (Minigunner nextMinigunner in GameWorld.instance.GDIMinigunnerList)
             {
@@ -111,8 +101,12 @@ namespace mike_and_conquer.gameworld.humancontroller
         }
 
 
-        private bool CheckForAndHandleLeftClickOnMap(int mouseX, int mouseY)
+        private bool CheckForAndHandleLeftClickOnMap(Point mouseLocation)
         {
+
+            int mouseX = mouseLocation.X;
+            int mouseY = mouseLocation.Y;
+
             foreach (Minigunner nextMinigunner in GameWorld.instance.GDIMinigunnerList)
             {
                 if (nextMinigunner.selected == true)
@@ -147,8 +141,11 @@ namespace mike_and_conquer.gameworld.humancontroller
         }
 
 
-        internal Boolean CheckForAndHandleLeftClickOnEnemyUnit(int mouseX, int mouseY)
+        internal Boolean CheckForAndHandleLeftClickOnEnemyUnit(Point mouseLocation)
         {
+            int mouseX = mouseLocation.X;
+            int mouseY = mouseLocation.Y;
+
             bool handled = false;
             foreach (Minigunner nextNodMinigunner in GameWorld.instance.NodMinigunnerList)
             {

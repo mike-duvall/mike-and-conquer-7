@@ -18,7 +18,7 @@ namespace mike_and_conquer.main
 //        public static bool DRAW_SHROUD = false;
 
         public static float INITIAL_MAP_ZOOM = 1.0f;
-        //        public static float INITIAL_MAP_ZOOM = 3.0f;
+//        public static float INITIAL_MAP_ZOOM = 3.0f;
 
 
 

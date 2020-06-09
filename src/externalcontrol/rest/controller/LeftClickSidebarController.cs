@@ -36,6 +36,8 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             int screenHeight = GameWorldView.instance.ScreenHeight;
            
             
+            MouseInputHandler.MoveMouseToCoordinates((uint)transformedLocation.X, (uint)transformedLocation.Y, screenWidth, screenHeight);
+            
             MouseInputHandler.DoLeftMouseClick((uint)transformedLocation.X, (uint) transformedLocation.Y , screenWidth, screenHeight);
 
             return Ok();

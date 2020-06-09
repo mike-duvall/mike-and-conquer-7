@@ -6,6 +6,7 @@ using mike_and_conquer.gameevent;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamestate;
 using mike_and_conquer.gameview;
+using mike_and_conquer.gameworld.humancontroller;
 using mike_and_conquer.main;
 using mike_and_conquer.pathfinding;
 using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;
@@ -772,11 +773,6 @@ namespace mike_and_conquer.gameworld
 
         }
 
-
-
-
-
-
         public void InitializeNavigationGraph()
         {
 
@@ -880,8 +876,12 @@ namespace mike_and_conquer.gameworld
 
             Boolean isValidMoveDestination = true;
             MapTileInstance clickedMapTileInstance =
-                FindMapTileInstance(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
-            if (clickedMapTileInstance.IsBlockingTerrain)
+                FindMapTileInstanceAllowNull(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
+            if (clickedMapTileInstance == null)
+            {
+                isValidMoveDestination = false;
+            }
+            else if (clickedMapTileInstance.IsBlockingTerrain)
             {
                 isValidMoveDestination = false;
             }
@@ -953,6 +953,11 @@ namespace mike_and_conquer.gameworld
             //
             // return false;
             return gdiPlayer.IsAnMCVSelected();
+        }
+
+        public bool IsAnyUnitSelected()
+        {
+            return IsAMinigunnerSelected() || IsAnMCVSelected();
         }
 
 

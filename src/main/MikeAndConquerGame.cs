@@ -143,8 +143,9 @@ namespace mike_and_conquer.main
             }
 
 
-//            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
-//            AddMCVAtMapSquareCoordinates(new Point(21, 12));
+            //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
+            //            AddMCVAtMapSquareCoordinates(new Point(21, 12));
+            //            AddNodMinigunnerAtMapSquareCoordinates(new Point(20,11),false);
 
 
             //
@@ -166,8 +167,8 @@ namespace mike_and_conquer.main
             //                AddSandbag(14, 5, 0);
             //                AddSandbag(14, 6, 2);
             //                AddSandbag(14, 7, 8);
-//            minigunnerSidebarIconView = new MinigunnerSidebarIconView();
-//            AddGDIBarracksAtMapSquareCoordinates(new Point(20, 15));
+            //            minigunnerSidebarIconView = new MinigunnerSidebarIconView();
+            //            AddGDIBarracksAtMapSquareCoordinates(new Point(20, 15));
 
         }
 

@@ -135,8 +135,14 @@
     <Compile Include="src\gamesprite\GdiShpFileColorMapper.cs" />
     <Compile Include="src\gameview\UnitSelectionBoxView.cs" />
     <Compile Include="src\gameview\UnitSelectionBox.cs" />
+    <Compile Include="src\gameworld\humancontroller\DragSelectingMapState.cs" />
+    <Compile Include="src\gameworld\humancontroller\HumanControllerState.cs" />
+    <Compile Include="src\gameworld\humancontroller\MouseInputUtil.cs" />
+    <Compile Include="src\gameworld\humancontroller\MousePointerOverSidebarState.cs" />
+    <Compile Include="src\gameworld\humancontroller\NeutralMapstate.cs" />
+    <Compile Include="src\gameworld\humancontroller\UnitsSelectedMapState.cs" />
     <Compile Include="src\gameworld\NodAIPlayerController.cs" />
-    <Compile Include="src\gameworld\HumanPlayerController.cs" />
+    <Compile Include="src\gameworld\humancontroller\HumanPlayerController.cs" />
     <Compile Include="src\main\Camera2D.cs" />
     <Compile Include="src\gameworld\GameMap.cs" />
     <Compile Include="src\main\GameOption.cs" />

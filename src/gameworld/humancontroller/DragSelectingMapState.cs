@@ -22,9 +22,6 @@ namespace mike_and_conquer.gameworld.humancontroller
         public override HumanControllerState Update(GameTime gameTime, MouseState newMouseState, MouseState oldMouseState)
         {
 
-            MikeAndConquerGame.instance.log.Information("DragSelectingMapState.Update() begin");
-
-
             if (MouseInputUtil.LeftMouseButtonIsBeingHeldDown(newMouseState, oldMouseState))
             {
                 Point mouseWorldLocationPoint = MouseInputUtil.GetWorldLocationPointFromMouseState(newMouseState);

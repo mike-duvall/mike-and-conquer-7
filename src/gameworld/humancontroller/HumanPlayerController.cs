@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using mike_and_conquer.gameobjects;
+using mike_and_conquer.main;
 using MouseState = Microsoft.Xna.Framework.Input.MouseState;
 using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 
@@ -31,6 +32,8 @@ namespace mike_and_conquer.gameworld.humancontroller
         public override void Update(GameTime gameTime)
         {
             MouseState newMouseState = Mouse.GetState();
+
+//            MikeAndConquerGame.instance.log.Information("HumanControllerState instance type=" + humanControllerState.GetType().FullName);
             humanControllerState = humanControllerState.Update(gameTime, newMouseState, oldMouseState);
             oldMouseState = newMouseState;
         }

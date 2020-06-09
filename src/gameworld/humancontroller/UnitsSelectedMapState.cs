@@ -12,7 +12,6 @@ namespace mike_and_conquer.gameworld.humancontroller
     {
         public override HumanControllerState Update(GameTime gameTime, MouseState newMouseState, MouseState oldMouseState)
         {
-            MikeAndConquerGame.instance.log.Information("UnitSelectedMapState.Update() begin");
 
             if (!GameWorld.instance.IsAnyUnitSelected())
             {

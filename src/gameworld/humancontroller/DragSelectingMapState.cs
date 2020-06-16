@@ -15,10 +15,9 @@ namespace mike_and_conquer.gameworld.humancontroller
 
         public DragSelectingMapState(MouseState newMouseState)
         {
-            Point mouseWorldLocationPoint = MouseInputUtil.GetWorldLocationPointFromMouseState(newMouseState);
-
-            UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
-            unitSelectionBox.selectionBoxDragStartPoint = mouseWorldLocationPoint;
+//            Point mouseWorldLocationPoint = MouseInputUtil.GetWorldLocationPointFromMouseState(newMouseState);
+//            UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
+//            unitSelectionBox.selectionBoxDragStartPoint = mouseWorldLocationPoint;
         }
 
         public override HumanControllerState Update(GameTime gameTime, MouseState newMouseState, MouseState oldMouseState)

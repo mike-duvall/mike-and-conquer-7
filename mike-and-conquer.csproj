@@ -138,9 +138,8 @@
     <Compile Include="src\gameworld\humancontroller\DragSelectingMapState.cs" />
     <Compile Include="src\gameworld\humancontroller\HumanControllerState.cs" />
     <Compile Include="src\gameworld\humancontroller\MouseInputUtil.cs" />
-    <Compile Include="src\gameworld\humancontroller\MousePointerOverSidebarState.cs" />
-    <Compile Include="src\gameworld\humancontroller\NeutralMapstate.cs" />
-    <Compile Include="src\gameworld\humancontroller\UnitsSelectedMapState.cs" />
+    <Compile Include="src\gameworld\humancontroller\PointerOverSidebarState.cs" />
+    <Compile Include="src\gameworld\humancontroller\PointerOverMapState.cs" />
     <Compile Include="src\gameworld\NodAIPlayerController.cs" />
     <Compile Include="src\gameworld\humancontroller\HumanPlayerController.cs" />
     <Compile Include="src\main\Camera2D.cs" />

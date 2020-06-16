@@ -8,20 +8,19 @@ using mike_and_conquer.main;
 
 namespace mike_and_conquer.gameworld.humancontroller 
 {
-    public class UnitsSelectedMapState : HumanControllerState
+    public class PointerOverMapState : HumanControllerState
     {
+
+        private Point leftMouseDownStartPoint = new Point(-1,-1);
+
         public override HumanControllerState Update(GameTime gameTime, MouseState newMouseState, MouseState oldMouseState)
         {
-
-            if (!GameWorld.instance.IsAnyUnitSelected())
-            {
-                return new NeutralMapstate();
-            }
-
             if (MouseInputUtil.IsOverSidebar(newMouseState))
             {
-                return new MousePointerOverSidebarState();
+                return new PointerOverSidebarState();
             }
+
+            GameWorldView.instance.gameCursor.SetToMainCursor();
 
             Point mouseWorldLocationPoint = MouseInputUtil.GetWorldLocationPointFromMouseState(newMouseState);
 
@@ -34,8 +33,35 @@ namespace mike_and_conquer.gameworld.humancontroller
                 UpdateMousePointerWhenMCVSelected(mouseWorldLocationPoint);
             }
 
-            if (MouseInputUtil.LeftMouseButtonClicked(newMouseState, oldMouseState))
+            if (MouseInputUtil.LeftMouseButtonIsBeingHeldDown(newMouseState, oldMouseState))
             {
+                if (leftMouseDownStartPoint.X != -1 && leftMouseDownStartPoint.Y != -1)
+                {
+                    double distance = GetDistance(leftMouseDownStartPoint.X, leftMouseDownStartPoint.Y,
+                        mouseWorldLocationPoint.X, mouseWorldLocationPoint.Y);
+
+                    if (distance > 20)
+                    {
+                        UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
+                        unitSelectionBox.selectionBoxDragStartPoint = leftMouseDownStartPoint;
+//                    unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
+                        return new DragSelectingMapState(newMouseState);
+
+                    }
+                }
+                else
+                {
+                    leftMouseDownStartPoint = mouseWorldLocationPoint;
+                }
+
+            }
+
+
+
+            if (MouseInputUtil.LeftMouseButtonUnclicked(newMouseState, oldMouseState))
+            {
+                leftMouseDownStartPoint.X = -1;
+                leftMouseDownStartPoint.Y = -1;
                 Boolean handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldLocationPoint);
                 if (!handledEvent)
                 {
@@ -51,7 +77,6 @@ namespace mike_and_conquer.gameworld.humancontroller
             if (MouseInputUtil.RightMouseButtonClicked(newMouseState, oldMouseState))
             {
                 HandleRightClick(mouseWorldLocationPoint);
-                return new NeutralMapstate();
             }
 
             return this;
@@ -74,6 +99,11 @@ namespace mike_and_conquer.gameworld.humancontroller
                 GameWorld.instance.MCV.selected = false;
             }
 
+        }
+
+        private double GetDistance(double x1, double y1, double x2, double y2)
+        {
+            return Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
         }
 
 

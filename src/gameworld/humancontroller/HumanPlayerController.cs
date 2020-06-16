@@ -26,14 +26,14 @@ namespace mike_and_conquer.gameworld.humancontroller
         public HumanPlayerController()
         {
             instance = this;
-            humanControllerState = new NeutralMapstate();
+            humanControllerState = new PointerOverMapState();
         }
 
         public override void Update(GameTime gameTime)
         {
             MouseState newMouseState = Mouse.GetState();
 
-//            MikeAndConquerGame.instance.log.Information("HumanControllerState instance type=" + humanControllerState.GetType().FullName);
+            MikeAndConquerGame.instance.log.Information("HumanControllerState instance type=" + humanControllerState.GetType().FullName);
             humanControllerState = humanControllerState.Update(gameTime, newMouseState, oldMouseState);
             oldMouseState = newMouseState;
         }

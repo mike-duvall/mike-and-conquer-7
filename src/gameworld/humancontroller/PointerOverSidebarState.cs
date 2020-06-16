@@ -5,7 +5,7 @@ using mike_and_conquer.main;
 
 namespace mike_and_conquer.gameworld.humancontroller
 {
-    class MousePointerOverSidebarState : HumanControllerState
+    class PointerOverSidebarState : HumanControllerState
     {
         public override HumanControllerState Update(GameTime gameTime, MouseState newMouseState, MouseState oldMouseState)
         {
@@ -36,7 +36,7 @@ namespace mike_and_conquer.gameworld.humancontroller
             {
                 // TODO:  Check if units are selected or not first
                 // to find correct state
-                return new NeutralMapstate();
+                return new PointerOverMapState();
             }
         }
 

@@ -42,11 +42,7 @@ namespace mike_and_conquer.gameworld.humancontroller
 
                     if (distance > 20)
                     {
-                        UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
-                        unitSelectionBox.selectionBoxDragStartPoint = leftMouseDownStartPoint;
-//                    unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
-                        return new DragSelectingMapState(newMouseState);
-
+                        return new DragSelectingMapState(leftMouseDownStartPoint);
                     }
                 }
                 else

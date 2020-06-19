@@ -33,26 +33,19 @@ namespace mike_and_conquer.gameworld.humancontroller
                 UpdateMousePointerWhenMCVSelected(mouseWorldLocationPoint);
             }
 
-            if (MouseInputUtil.LeftMouseButtonIsBeingHeldDown(newMouseState, oldMouseState))
+
+            if (MouseInputUtil.LeftMouseButtonClicked(newMouseState, oldMouseState))
             {
-                if (leftMouseDownStartPoint.X != -1 && leftMouseDownStartPoint.Y != -1)
-                {
-                    double distance = GetDistance(leftMouseDownStartPoint.X, leftMouseDownStartPoint.Y,
-                        mouseWorldLocationPoint.X, mouseWorldLocationPoint.Y);
-
-                    if (distance > 20)
-                    {
-                        return new DragSelectingMapState(leftMouseDownStartPoint);
-                    }
-                }
-                else
-                {
-                    leftMouseDownStartPoint = mouseWorldLocationPoint;
-                }
-
+                leftMouseDownStartPoint = mouseWorldLocationPoint;
             }
 
-
+            if (MouseInputUtil.LeftMouseButtonIsBeingHeldDown(newMouseState, oldMouseState))
+            {
+                if (MouseDragIsHappening(mouseWorldLocationPoint))
+                {
+                    return new DragSelectingMapState(leftMouseDownStartPoint);
+                }
+            }
 
             if (MouseInputUtil.LeftMouseButtonUnclicked(newMouseState, oldMouseState))
             {
@@ -76,6 +69,24 @@ namespace mike_and_conquer.gameworld.humancontroller
             }
 
             return this;
+        }
+
+        private bool MouseDragIsHappening(Point mouseWorldLocationPoint)
+        {
+
+            if (leftMouseDownStartPoint.X != -1 && leftMouseDownStartPoint.Y != -1)
+            {
+                double distance = GetDistance(leftMouseDownStartPoint.X, leftMouseDownStartPoint.Y,
+                    mouseWorldLocationPoint.X, mouseWorldLocationPoint.Y);
+
+                if (distance > 20)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
         }
 
 

@@ -25,8 +25,7 @@ namespace mike_and_conquer.gameworld.humancontroller
                 unitSelectionBox.HandleMouseMoveDuringDragSelect(mouseWorldLocationPoint);
                 return this;
             }
-
-            if (MouseInputUtil.LeftMouseButtonUnclicked(newMouseState, oldMouseState))
+            else 
             {
                 UnitSelectionBox unitSelectionBox = GameWorld.instance.unitSelectionBox;
                 unitSelectionBox.HandleEndDragSelect();
@@ -35,18 +34,12 @@ namespace mike_and_conquer.gameworld.humancontroller
                     Point mouseWorldLocationPoint = MouseInputUtil.GetWorldLocationPointFromMouseState(newMouseState);
                     CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldLocationPoint);
                 }
-                if (GameWorld.instance.IsAnyUnitSelected())
-                {
-                    return new PointerOverMapState();
-                }
-                else
-                {
-                    return new PointerOverMapState();
-                }
+
+                return new PointerOverMapState();
 
             }
 
-            return this;
+
 
         }
 

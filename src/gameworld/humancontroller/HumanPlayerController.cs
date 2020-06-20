@@ -12,6 +12,8 @@ namespace mike_and_conquer.gameworld.humancontroller
     class HumanPlayerController : PlayerController
     {
 
+
+        private HumanControllerState previousHumanControllerState;
         private HumanControllerState humanControllerState;
 
         public static HumanPlayerController instance;
@@ -27,6 +29,7 @@ namespace mike_and_conquer.gameworld.humancontroller
         public HumanPlayerController()
         {
             instance = this;
+            previousHumanControllerState = null;
             humanControllerState = new PointerOverMapState();
         }
 
@@ -34,9 +37,16 @@ namespace mike_and_conquer.gameworld.humancontroller
         {
             MouseState newMouseState = Mouse.GetState();
 
-            MikeAndConquerGame.instance.log.Information("HumanControllerState instance type=" + humanControllerState.GetType().FullName);
+            if (previousHumanControllerState != humanControllerState)
+            {
+                MikeAndConquerGame.instance.log.Information("HumanControllerState instance type=" +
+                                                            humanControllerState.GetType().FullName);
+            }
+            previousHumanControllerState = humanControllerState;
+
             humanControllerState = humanControllerState.Update(gameTime, newMouseState, oldMouseState);
             oldMouseState = newMouseState;
+
         }
 
 

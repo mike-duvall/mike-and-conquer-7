@@ -51,7 +51,7 @@ namespace mike_and_conquer.gameworld.humancontroller
             {
                 leftMouseDownStartPoint.X = -1;
                 leftMouseDownStartPoint.Y = -1;
-                Boolean handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldLocationPoint);
+                Boolean handledEvent = HumanPlayerController.CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldLocationPoint);
                 if (!handledEvent)
                 {
                     handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseWorldLocationPoint);
@@ -114,27 +114,6 @@ namespace mike_and_conquer.gameworld.humancontroller
         }
 
 
-        internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(Point mouseLocation)
-        {
-            int mouseX = mouseLocation.X;
-            int mouseY = mouseLocation.Y;
-            Boolean handled = false;
-            foreach (Minigunner nextMinigunner in GameWorld.instance.GDIMinigunnerList)
-            {
-                if (nextMinigunner.ContainsPoint(mouseX, mouseY))
-                {
-                    handled = true;
-                    GameWorld.instance.SelectSingleGDIUnit(nextMinigunner);
-                }
-            }
-
-            if (!handled)
-            {
-                handled = CheckForAndHandleLeftClickOnMCV(mouseX, mouseY);
-            }
-
-            return handled;
-        }
 
 
         private bool CheckForAndHandleLeftClickOnMap(Point mouseLocation)
@@ -233,33 +212,6 @@ namespace mike_and_conquer.gameworld.humancontroller
                 GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
             }
         }
-
-        private static bool CheckForAndHandleLeftClickOnMCV(int mouseX, int mouseY)
-        {
-            Boolean handled = false;
-            MCV mcv = GameWorld.instance.MCV;
-            if (mcv != null)
-            {
-                if (mcv.ContainsPoint(mouseX, mouseY))
-                {
-                    handled = true;
-                    if (mcv.selected == false)
-                    {
-                        GameWorld.instance.SelectMCV(GameWorld.instance.MCV);
-                    }
-                    else
-                    {
-                        Point mcvPositionInWorldCoordinates = new Point((int)mcv.positionInWorldCoordinates.X,
-                            (int)mcv.positionInWorldCoordinates.Y);
-                        MikeAndConquerGame.instance.RemoveMCV();
-                        MikeAndConquerGame.instance.AddGDIConstructionYardAtWorldCoordinates(mcvPositionInWorldCoordinates);
-                    }
-                }
-            }
-
-            return handled;
-        }
-
 
 
     }

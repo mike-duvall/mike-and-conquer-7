@@ -95,10 +95,13 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-        public void CreateBarracksFromConstructionYard()
+        public void CreateBarracksFromConstructionYard(int x, int y)
         {
-            int barracksX = (int)positionInWorldCoordinates.X + 60;
-            int barracksY = (int)(positionInWorldCoordinates.Y);
+            //            int barracksX = (int)positionInWorldCoordinates.X + 60;
+            //            int barracksY = (int)(positionInWorldCoordinates.Y);
+            int barracksX = x;
+            int barracksY = y;
+
 
             Point barracksPosition = new Point(barracksX, barracksY);
             MikeAndConquerGame.instance.AddGDIBarracksAtWorldCoordinates(barracksPosition);

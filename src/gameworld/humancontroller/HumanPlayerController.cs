@@ -46,7 +46,6 @@ namespace mike_and_conquer.gameworld.humancontroller
 
             humanControllerState = humanControllerState.Update(gameTime, newMouseState, oldMouseState);
             oldMouseState = newMouseState;
-
         }
 
 

@@ -153,7 +153,7 @@ namespace mike_and_conquer.gameview
 
         public static GameWorldView instance;
 
-        private BarracksPlacementIndicatorView barracksPlacementIndicatorView;
+        public BarracksPlacementIndicatorView barracksPlacementIndicatorView;
 
 
         public GameWorldView()
@@ -350,7 +350,6 @@ namespace mike_and_conquer.gameview
                 barracksSidebarIconView.Draw(gameTime, spriteBatch);
             }
 
-
             spriteBatch.End();
         }
 
@@ -390,7 +389,11 @@ namespace mike_and_conquer.gameview
                     mapTileInstanceView.Draw(gameTime, spriteBatch);
                 }
 
-                barracksPlacementIndicatorView.Draw(gameTime, spriteBatch);
+//                if (barracksPlacementIndicatorView != null)
+//                {
+//                    barracksPlacementIndicatorView.Draw(gameTime, spriteBatch);
+//                }
+
 
                 spriteBatch.End();
 
@@ -614,6 +617,13 @@ namespace mike_and_conquer.gameview
                 GameWorldView.instance.mcvView.DrawNoShadow(gameTime, spriteBatch);
             }
 
+            if (barracksPlacementIndicatorView != null)
+            {
+                barracksPlacementIndicatorView.Draw(gameTime, spriteBatch);
+            }
+
+
+
             spriteBatch.End();
         }
 
@@ -818,7 +828,7 @@ namespace mike_and_conquer.gameview
             LoadTShadow16MrfTexture();
 
 //            LoadTmpFile(BarracksPlacementIndicatorView.FILE_NAME);
-            barracksPlacementIndicatorView = new BarracksPlacementIndicatorView();
+//            barracksPlacementIndicatorView = new BarracksPlacementIndicatorView();
         }
 
         private void LoadTUnitsMrfTexture()

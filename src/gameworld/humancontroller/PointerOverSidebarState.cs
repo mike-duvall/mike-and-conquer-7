@@ -21,7 +21,7 @@ namespace mike_and_conquer.gameworld.humancontroller
                     // them and ask if they contain point where sidebar was clicked
                     if (sidebarWorldLocation.X > 0 && sidebarWorldLocation.X < 64 && sidebarWorldLocation.Y > 0 && sidebarWorldLocation.Y < 48)
                     {
-                        HandleClickOnBuildBarracks();
+                        return HandleClickOnBuildBarracks();
                     }
                     else if (sidebarWorldLocation.X > 80 && sidebarWorldLocation.X < 144 && sidebarWorldLocation.Y > 0 && sidebarWorldLocation.Y < 48)
                     {
@@ -41,18 +41,22 @@ namespace mike_and_conquer.gameworld.humancontroller
         }
 
 
-        private void HandleClickOnBuildBarracks()
+        private HumanControllerState HandleClickOnBuildBarracks()
         {
             GDIConstructionYard gdiConstructionYard = GameWorld.instance.GDIConstructionYard;
 
             if (gdiConstructionYard.IsBarracksReadyToPlace)
             {
-                gdiConstructionYard.CreateBarracksFromConstructionYard();
+                //gdiConstructionYard.CreateBarracksFromConstructionYard();
+                return new PlacingBuldingState();
             }
             else if (!gdiConstructionYard.IsBuildingBarracks)
             {
                 GameWorld.instance.GDIConstructionYard.StartBuildingBarracks();
             }
+
+            return this;
+
 
         }
 

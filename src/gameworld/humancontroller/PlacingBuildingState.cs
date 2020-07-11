@@ -34,11 +34,8 @@ namespace mike_and_conquer.gameworld.humancontroller
                 int snappedX = originalX - (originalX % GameWorld.MAP_TILE_WIDTH) + halfWidth;
                 int snappedY = originalY - (originalY % GameWorld.MAP_TILE_HEIGHT) + halfHeight;
 
-                //                GameWorldView.instance.barracksPlacementIndicatorView.position.X = mouseWorldLocationPoint.X;
-                //                GameWorldView.instance.barracksPlacementIndicatorView.position.Y = mouseWorldLocationPoint.Y;
                 GameWorldView.instance.barracksPlacementIndicatorView.position.X = snappedX;
                 GameWorldView.instance.barracksPlacementIndicatorView.position.Y = snappedY;
-
 
                 if (MouseInputUtil.LeftMouseButtonUnclicked(newMouseState, oldMouseState))
                 {

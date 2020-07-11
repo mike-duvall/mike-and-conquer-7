@@ -40,9 +40,6 @@ namespace mike_and_conquer.gameworld.humancontroller
             }
         }
 
-
-
-
     }
 
 

@@ -144,7 +144,7 @@ namespace mike_and_conquer.main
 
 
             //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
-                        AddMCVAtMapSquareCoordinates(new Point(21, 12));
+//                        AddMCVAtMapSquareCoordinates(new Point(21, 12));
             //            AddNodMinigunnerAtMapSquareCoordinates(new Point(20,11),false);
 
 

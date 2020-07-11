@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using mike_and_conquer.gameview;
+using mike_and_conquer.gameworld;
 using mike_and_conquer.main;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
@@ -10,8 +12,6 @@ namespace mike_and_conquer.gameobjects
     {
 
         public Vector2 positionInWorldCoordinates { get; set; }
-
-
 
 
         private Boolean isBuildingBarracks;
@@ -95,13 +95,16 @@ namespace mike_and_conquer.gameobjects
         }
 
 
+
+
+
         public void CreateBarracksFromConstructionYard(int x, int y)
         {
-            //            int barracksX = (int)positionInWorldCoordinates.X + 60;
-            //            int barracksY = (int)(positionInWorldCoordinates.Y);
-            int barracksX = x;
-            int barracksY = y;
 
+            MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstance(x, y);
+
+            int barracksX = (int) mapTileInstance.PositionInWorldCoordinates.X + 12;
+            int barracksY = (int)mapTileInstance.PositionInWorldCoordinates.Y + 12;
 
             Point barracksPosition = new Point(barracksX, barracksY);
             MikeAndConquerGame.instance.AddGDIBarracksAtWorldCoordinates(barracksPosition);

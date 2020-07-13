@@ -23,7 +23,6 @@ namespace mike_and_conquer.gameview
                 MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(FILE_NAME);
 
             this.singleTextureSprite = new SingleTextureSprite(mapTileFrameList[0].Texture);
-//            position = new Point(175,400);
         }
 
 

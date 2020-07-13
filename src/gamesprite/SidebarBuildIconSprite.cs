@@ -30,6 +30,8 @@ namespace mike_and_conquer.gamesprite
 
         private Vector2 middleOfSpriteInSpriteCoordinates;
 
+        private ShadowMapper shadowMapper;
+
         public int Width
         {
             get { return staticTexture.Width; }
@@ -54,6 +56,7 @@ namespace mike_and_conquer.gamesprite
             middleOfSpriteInSpriteCoordinates.Y = Height / 2;
 
             drawBoundingRectangle = false;
+            shadowMapper = new ShadowMapper();
         }
 
         
@@ -119,8 +122,7 @@ namespace mike_and_conquer.gamesprite
                 if (lineDrawingTexturePixelData[i] == Color.Black)
                 {
                     mappedPaletteIndex =
-                        // MikeAndConquerGame.instance.shadowMapper.MapSidebarBuildPaletteIndex(mappedPaletteIndex);
-                        gameview.GameWorldView.instance.shadowMapper.MapSidebarBuildPaletteIndex(mappedPaletteIndex);
+                        shadowMapper.MapSidebarBuildPaletteIndex(mappedPaletteIndex);
                 }
 
                 uint mappedColor = palette[mappedPaletteIndex];

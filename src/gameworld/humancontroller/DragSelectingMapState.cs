@@ -16,6 +16,7 @@ namespace mike_and_conquer.gameworld.humancontroller
             unitSelectionBox.isDragSelectHappening = true;
         }
 
+
         public override HumanControllerState Update(GameTime gameTime, MouseState newMouseState, MouseState oldMouseState)
         {
 

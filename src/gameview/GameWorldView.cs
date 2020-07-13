@@ -44,9 +44,20 @@ namespace mike_and_conquer.gameview
 
         public GameCursor gameCursor;
 
-        public ShadowMapper shadowMapper;
-        public MinigunnerSidebarIconView minigunnerSidebarIconView;
-        public BarracksSidebarIconView barracksSidebarIconView;
+        private ShadowMapper shadowMapper;
+        private MinigunnerSidebarIconView minigunnerSidebarIconView;
+        private BarracksSidebarIconView barracksSidebarIconView;
+
+
+        public BarracksSidebarIconView BarracksSidebarIconView
+        {
+            get { return barracksSidebarIconView; }
+        }
+
+        public MinigunnerSidebarIconView MinigunnerSidebarIconView
+        {
+            get { return minigunnerSidebarIconView; }
+        }
 
         public float MapZoom
         {

@@ -1,9 +1,6 @@
 ﻿
-using System.Collections.Generic;
+
 using Microsoft.Xna.Framework;
-using mike_and_conquer.main;
-using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
-using Color = Microsoft.Xna.Framework.Color;
 
 namespace mike_and_conquer.util
 {
@@ -14,5 +11,12 @@ namespace mike_and_conquer.util
         {
             return new Point((int) aVector2.X, (int) aVector2.Y);
         }
+
+        public static Vector2 ConvertPointToVector2(Point aPoint)
+        {
+            return new Vector2(aPoint.X, aPoint.Y);
+        }
+
+
     }
 }

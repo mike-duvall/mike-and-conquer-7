@@ -26,11 +26,6 @@ namespace mike_and_conquer.gameview
 
         internal void HandleMouseMoveDuringDragSelect(Point mouseWorldLocationPoint)
         {
-            if (MouseLocationHasMovedSinceLeftClick(mouseWorldLocationPoint))
-            {
-                isDragSelectHappening = true;
-            }
-
             if (mouseWorldLocationPoint.X > selectionBoxDragStartPoint.X)
             {
                 HandleDragFromLeftToRight(mouseWorldLocationPoint);
@@ -101,11 +96,6 @@ namespace mike_and_conquer.gameview
                 selectionBoxDragStartPoint.Y,
                 mouseWorldLocationPoint.X - selectionBoxDragStartPoint.X,
                 mouseWorldLocationPoint.Y - selectionBoxDragStartPoint.Y);
-        }
-
-        public bool MouseLocationHasMovedSinceLeftClick(Point mouseWorldLocationPoint)
-        {
-            return mouseWorldLocationPoint.X != selectionBoxDragStartPoint.X || mouseWorldLocationPoint.Y != selectionBoxDragStartPoint.Y;
         }
 
         public int HandleEndDragSelect()

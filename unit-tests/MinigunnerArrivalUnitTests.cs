@@ -43,7 +43,7 @@ namespace unit_tests
             Point destinationInWorldMapTileCoordinate = new Point(destinationColumn, destinationRow);
 
             Point destinationInWorldCoordinates =
-                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(destinationInWorldMapTileCoordinate);
+                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(destinationInWorldMapTileCoordinate);
 
             foreach (Minigunner minigunner in minigunnerList)
             {
@@ -67,7 +67,7 @@ namespace unit_tests
 
 
             Point destinationInWorldCoordinates =
-                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(destinationInWorldMapTileCoordinate);
+                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(destinationInWorldMapTileCoordinate);
 
 
             for (int i = 0; i < numberOfMinigunner; i++)
@@ -90,7 +90,7 @@ namespace unit_tests
         {
             Point minigunnerLocationInMapSquareCoordinates = new Point(x, y);
             Point minigunnerLocationInWorldCoordinates =
-                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
 
             return gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
 

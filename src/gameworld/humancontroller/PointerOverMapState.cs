@@ -8,20 +8,19 @@ using mike_and_conquer.main;
 
 namespace mike_and_conquer.gameworld.humancontroller 
 {
-    public class UnitsSelectedMapState : HumanControllerState
+    public class PointerOverMapState : HumanControllerState
     {
+
+        private Point leftMouseDownStartPoint = new Point(-1,-1);
+
         public override HumanControllerState Update(GameTime gameTime, MouseState newMouseState, MouseState oldMouseState)
         {
-
-            if (!GameWorld.instance.IsAnyUnitSelected())
-            {
-                return new NeutralMapstate();
-            }
-
             if (MouseInputUtil.IsOverSidebar(newMouseState))
             {
-                return new MousePointerOverSidebarState();
+                return new PointerOverSidebarState();
             }
+
+            GameWorldView.instance.gameCursor.SetToMainCursor();
 
             Point mouseWorldLocationPoint = MouseInputUtil.GetWorldLocationPointFromMouseState(newMouseState);
 
@@ -34,9 +33,25 @@ namespace mike_and_conquer.gameworld.humancontroller
                 UpdateMousePointerWhenMCVSelected(mouseWorldLocationPoint);
             }
 
+
             if (MouseInputUtil.LeftMouseButtonClicked(newMouseState, oldMouseState))
             {
-                Boolean handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldLocationPoint);
+                leftMouseDownStartPoint = mouseWorldLocationPoint;
+            }
+
+            if (MouseInputUtil.LeftMouseButtonIsBeingHeldDown(newMouseState, oldMouseState))
+            {
+                if (MouseDragIsHappening(mouseWorldLocationPoint))
+                {
+                    return new DragSelectingMapState(leftMouseDownStartPoint);
+                }
+            }
+
+            if (MouseInputUtil.LeftMouseButtonUnclicked(newMouseState, oldMouseState))
+            {
+                leftMouseDownStartPoint.X = -1;
+                leftMouseDownStartPoint.Y = -1;
+                Boolean handledEvent = HumanPlayerController.CheckForAndHandleLeftClickOnFriendlyUnit(mouseWorldLocationPoint);
                 if (!handledEvent)
                 {
                     handledEvent = CheckForAndHandleLeftClickOnEnemyUnit(mouseWorldLocationPoint);
@@ -51,10 +66,27 @@ namespace mike_and_conquer.gameworld.humancontroller
             if (MouseInputUtil.RightMouseButtonClicked(newMouseState, oldMouseState))
             {
                 HandleRightClick(mouseWorldLocationPoint);
-                return new NeutralMapstate();
             }
 
             return this;
+        }
+
+        private bool MouseDragIsHappening(Point mouseWorldLocationPoint)
+        {
+
+            if (leftMouseDownStartPoint.X != -1 && leftMouseDownStartPoint.Y != -1)
+            {
+                double distance = GetDistance(leftMouseDownStartPoint.X, leftMouseDownStartPoint.Y,
+                    mouseWorldLocationPoint.X, mouseWorldLocationPoint.Y);
+
+                if (distance > 20)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
         }
 
 
@@ -76,28 +108,12 @@ namespace mike_and_conquer.gameworld.humancontroller
 
         }
 
-
-        internal Boolean CheckForAndHandleLeftClickOnFriendlyUnit(Point mouseLocation)
+        private double GetDistance(double x1, double y1, double x2, double y2)
         {
-            int mouseX = mouseLocation.X;
-            int mouseY = mouseLocation.Y;
-            Boolean handled = false;
-            foreach (Minigunner nextMinigunner in GameWorld.instance.GDIMinigunnerList)
-            {
-                if (nextMinigunner.ContainsPoint(mouseX, mouseY))
-                {
-                    handled = true;
-                    GameWorld.instance.SelectSingleGDIUnit(nextMinigunner);
-                }
-            }
-
-            if (!handled)
-            {
-                handled = CheckForAndHandleLeftClickOnMCV(mouseX, mouseY);
-            }
-
-            return handled;
+            return Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
         }
+
+
 
 
         private bool CheckForAndHandleLeftClickOnMap(Point mouseLocation)
@@ -196,33 +212,6 @@ namespace mike_and_conquer.gameworld.humancontroller
                 GameWorldView.instance.gameCursor.SetToMovementNotAllowedCursor();
             }
         }
-
-        private static bool CheckForAndHandleLeftClickOnMCV(int mouseX, int mouseY)
-        {
-            Boolean handled = false;
-            MCV mcv = GameWorld.instance.MCV;
-            if (mcv != null)
-            {
-                if (mcv.ContainsPoint(mouseX, mouseY))
-                {
-                    handled = true;
-                    if (mcv.selected == false)
-                    {
-                        GameWorld.instance.SelectMCV(GameWorld.instance.MCV);
-                    }
-                    else
-                    {
-                        Point mcvPositionInWorldCoordinates = new Point((int)mcv.positionInWorldCoordinates.X,
-                            (int)mcv.positionInWorldCoordinates.Y);
-                        MikeAndConquerGame.instance.RemoveMCV();
-                        MikeAndConquerGame.instance.AddGDIConstructionYardAtWorldCoordinates(mcvPositionInWorldCoordinates);
-                    }
-                }
-            }
-
-            return handled;
-        }
-
 
 
     }

@@ -25,13 +25,13 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             }
             
 
-            if (GameWorldView.instance.barracksSidebarIconView != null)
+            if (GameWorldView.instance.BarracksSidebarIconView != null)
             {
                 sidebar.buildBarracksEnabled = true;
 
             }
 
-            if (GameWorldView.instance.minigunnerSidebarIconView != null)
+            if (GameWorldView.instance.MinigunnerSidebarIconView != null)
             {
                 sidebar.buildMinigunnerEnabled = true;
             }

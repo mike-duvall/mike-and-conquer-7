@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gameworld;
+using mike_and_conquer.gameworld.humancontroller;
 using mike_and_conquer.main;
+using mike_and_conquer.util;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 using Point = Microsoft.Xna.Framework.Point;
@@ -164,7 +166,7 @@ namespace mike_and_conquer.gameview
 
         public static GameWorldView instance;
 
-        public BarracksPlacementIndicatorView barracksPlacementIndicatorView;
+        private BarracksPlacementIndicatorView barracksPlacementIndicatorView;
 
 
         public GameWorldView()
@@ -1213,6 +1215,15 @@ namespace mike_and_conquer.gameview
         }
 
 
+        public Point ConvertScreenLocationToWorldLocation(Point screenLocation)
+        {
+            Vector2 screenLocationAsPoint = PointUtil.ConvertPointToVector2(screenLocation);
+            Vector2 resultVector2 =  Vector2.Transform(screenLocationAsPoint, Matrix.Invert(mapViewportCamera.TransformMatrix));
+            return PointUtil.ConvertVector2ToPoint(resultVector2);
+        }
+
+
+
         public Vector2 ConvertScreenLocationToWorldLocation(Vector2 screenLocation)
         {
             return Vector2.Transform(screenLocation, Matrix.Invert(mapViewportCamera.TransformMatrix));
@@ -1226,8 +1237,41 @@ namespace mike_and_conquer.gameview
         }
 
 
+        public void Notify_PlacingBarracks()
+        {
+            if (barracksPlacementIndicatorView == null)
+            {
+                barracksPlacementIndicatorView = new BarracksPlacementIndicatorView();
+                barracksPlacementIndicatorView.position = new Point(
+                    (int) GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.X,
+                    (int) GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.Y);
+            }
+
+        }
 
 
+        public void Notify_PlacingBarracksWithMouseOverMap(Point mouseLocationInScreenCoordinates)
+        {
 
+            Point mouseLocationWordCoordinates =
+                ConvertScreenLocationToWorldLocation(mouseLocationInScreenCoordinates);
+
+            Point mouseLocationInMapTileCoordinates =
+                GameWorld.instance.ConvertWorldCoordinatesToMapTileCoordinates(mouseLocationWordCoordinates);
+
+            Point worldLocationRoundedToMapTile =
+                GameWorld.instance.ConvertMapTileCoordinatesToWorldCoordinates(
+                    mouseLocationInMapTileCoordinates);
+
+            barracksPlacementIndicatorView.position.X = worldLocationRoundedToMapTile.X;
+            barracksPlacementIndicatorView.position.Y = worldLocationRoundedToMapTile.Y;
+
+        }
+
+
+        public void Notify_DonePlacingBarracks()
+        {
+            barracksPlacementIndicatorView = null;
+        }
     }
 }

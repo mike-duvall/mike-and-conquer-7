@@ -143,7 +143,7 @@ namespace unit_tests
 //
 //            Point minigunnerLocationInMapSquareCoordinates = new Point(0, 0);
 //            Point minigunnerLocationInWorldCoordinates =
-//                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+//                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
 //
 //            Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
 //
@@ -153,7 +153,7 @@ namespace unit_tests
 //            Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
 //
 //            Point destinationInWorldCoordinates =
-//                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+//                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
 //
 //            minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
 //

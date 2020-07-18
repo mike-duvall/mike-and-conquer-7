@@ -48,7 +48,7 @@ namespace mike_and_conquer.gameworld.humancontroller
             if (gdiConstructionYard.IsBarracksReadyToPlace)
             {
                 //gdiConstructionYard.CreateBarracksFromConstructionYard();
-                return new PlacingBuldingState();
+                return new PlacingBuildingState();
             }
             else if (!gdiConstructionYard.IsBuildingBarracks)
             {

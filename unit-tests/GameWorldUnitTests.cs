@@ -37,7 +37,7 @@ namespace unit_tests
 
             Point minigunnerLocationInMapSquareCoordinates = new Point(0, 0);
             Point minigunnerLocationInWorldCoordinates =
-                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
             
             Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
 
@@ -47,7 +47,7 @@ namespace unit_tests
             Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
 
             Point destinationInWorldCoordinates =
-                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
 
             minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
 
@@ -91,7 +91,7 @@ namespace unit_tests
 
             Point minigunnerLocationInMapSquareCoordinates = new Point(1, 1);
             Point minigunnerLocationInWorldCoordinates =
-                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
 
             Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
 
@@ -102,7 +102,7 @@ namespace unit_tests
             Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
 
             Point destinationInWorldCoordinates =
-                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
 
             minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
 
@@ -150,7 +150,7 @@ namespace unit_tests
 
             Point minigunnerLocationInMapSquareCoordinates = new Point(0, 4);
             Point minigunnerLocationInWorldCoordinates =
-                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
 
             Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
 
@@ -161,7 +161,7 @@ namespace unit_tests
             Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
 
             Point destinationInWorldCoordinates =
-                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
 
             minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
 
@@ -206,7 +206,7 @@ namespace unit_tests
 
             Point minigunnerLocationInMapTileCoordinates = new Point(0, 0);
             Point minigunnerLocationInWorldCoordinates =
-                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapTileCoordinates);
+                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapTileCoordinates);
 
             Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
 
@@ -216,7 +216,7 @@ namespace unit_tests
             Point destinationInWorldMapSquareCoordinate = new Point(destinationColumn, destinationRow);
 
             Point destinationInWorldCoordinates =
-                gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
+                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(destinationInWorldMapSquareCoordinate);
 
             minigunner.OrderToMoveToDestination(destinationInWorldCoordinates);
 
@@ -274,7 +274,7 @@ namespace unit_tests
                 if (currentPathIndex != maxPathIndex)
                 {
                     Point nextDestinationInWorldCoordinates =
-                        gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(nextPathPoint);
+                        gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(nextPathPoint);
                     WaitForMinigunnerToArriveAtPosition(gameWorld, minigunner, gameTime,
                         nextDestinationInWorldCoordinates);
                 }
@@ -282,7 +282,7 @@ namespace unit_tests
                 {
                     // Check for landing at Slot 0
                     Point landingSquareSlotDestinationInWorldCoordinates =
-                        gameWorld.ConvertWorldMapTileCoordinatesToWorldCoordinates(nextPathPoint);
+                        gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(nextPathPoint);
 
                     landingSquareSlotDestinationInWorldCoordinates =
                         UnitTestUtils.GetSlotLocationInWorldCoordinates(0,

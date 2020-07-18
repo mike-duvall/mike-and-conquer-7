@@ -402,12 +402,6 @@ namespace mike_and_conquer.gameview
                     mapTileInstanceView.Draw(gameTime, spriteBatch);
                 }
 
-//                if (barracksPlacementIndicatorView != null)
-//                {
-//                    barracksPlacementIndicatorView.Draw(gameTime, spriteBatch);
-//                }
-
-
                 spriteBatch.End();
 
             }
@@ -841,7 +835,6 @@ namespace mike_and_conquer.gameview
             LoadTShadow16MrfTexture();
 
 //            LoadTmpFile(BarracksPlacementIndicatorView.FILE_NAME);
-//            barracksPlacementIndicatorView = new BarracksPlacementIndicatorView();
         }
 
         private void LoadTUnitsMrfTexture()

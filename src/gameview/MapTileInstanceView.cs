@@ -93,7 +93,7 @@ namespace mike_and_conquer.gameview
         //            MapTileFrame mapTileFrame = mapTileFrameList[imageIndex];
         //            byte[] frameData = mapTileFrame.FrameData;
         //
-        //            int frameDataIndex = y * singleTextureSprite.Width + x;
+        //            int frameDataIndex = y * canPlaceBuildingSprite.Width + x;
         //            return frameData[frameDataIndex];
         //        }
 

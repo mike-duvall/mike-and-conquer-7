@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using Microsoft.Xna.Framework;
 using mike_and_conquer.gameevent;
@@ -9,6 +10,7 @@ using mike_and_conquer.gameview;
 using mike_and_conquer.gameworld.humancontroller;
 using mike_and_conquer.main;
 using mike_and_conquer.pathfinding;
+using mike_and_conquer.util;
 using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;
 using CreateGDIMinigunnerGameEvent = mike_and_conquer.gameevent.CreateGDIMinigunnerGameEvent;
 using GetGDIMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetGDIMinigunnerByIdGameEvent;
@@ -792,7 +794,6 @@ namespace mike_and_conquer.gameworld
             {
                 if (nextMapTileInstance.IsBlockingTerrain)
                 {
-                    //                    nextBasicMapSquare.gameSprite.drawWhiteBoundingRectangle = true;
                     Point mapTilePositionInMapTileCoordinates =
                         ConvertWorldPositionVector2ToMapTilePositionPoint(nextMapTileInstance
                             .PositionInWorldCoordinates);
@@ -869,6 +870,148 @@ namespace mike_and_conquer.gameworld
         {
             MapTileInstance mapTileInstance = this.FindMapTileInstance(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
             mapTileInstance.Visibility = visibility;
+        }
+
+
+        public bool IsValidBuildingPlacementLocation(Point pointInWordlCoordinates)
+        {
+            MapTileInstance mapTileInstance = this.FindMapTileInstanceAllowNull(pointInWordlCoordinates.X, pointInWordlCoordinates.Y);
+            if (mapTileInstance == null)
+            {
+                return false;
+            }
+
+            return IsMapTileInstanceAdjacentToConstructionYard(mapTileInstance) && !mapTileInstance.IsBlockingTerrain && !GDIConstructionYard.ContainsPoint(pointInWordlCoordinates);
+
+        }
+
+        private bool IsRelativeMapTileInstanceAdjacentToConstructionsYard(MapTileInstance mapTileInstance,
+            TILE_LOCATION tileLocation)
+        {
+            MapTileInstance adjacentTile = FindAdjacentMapTileInstance(mapTileInstance, tileLocation);
+            if (adjacentTile != null && GDIConstructionYard.ContainsPoint(PointUtil.ConvertVector2ToPoint(adjacentTile.PositionInWorldCoordinates)))
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+
+        enum TILE_LOCATION
+        {
+            WEST,
+            NORTH_WEST,
+            NORTH,
+            NORTH_EAST,
+            EAST,
+            SOUTH_EAST,
+            SOUTH,
+            SOUTH_WEST
+        }
+
+
+
+        private bool IsMapTileInstanceAdjacentToConstructionYard(MapTileInstance mapTileInstance)
+        {
+
+            if (IsRelativeMapTileInstanceAdjacentToConstructionsYard(mapTileInstance, TILE_LOCATION.WEST))
+            {
+                return true;
+            }
+
+            if (IsRelativeMapTileInstanceAdjacentToConstructionsYard(mapTileInstance, TILE_LOCATION.NORTH_WEST))
+            {
+                return true;
+            }
+
+            if (IsRelativeMapTileInstanceAdjacentToConstructionsYard(mapTileInstance, TILE_LOCATION.NORTH))
+            {
+                return true;
+            }
+
+            if (IsRelativeMapTileInstanceAdjacentToConstructionsYard(mapTileInstance, TILE_LOCATION.NORTH_EAST))
+            {
+                return true;
+            }
+
+            if (IsRelativeMapTileInstanceAdjacentToConstructionsYard(mapTileInstance, TILE_LOCATION.EAST))
+            {
+                return true;
+            }
+
+            if (IsRelativeMapTileInstanceAdjacentToConstructionsYard(mapTileInstance, TILE_LOCATION.SOUTH_EAST))
+            {
+                return true;
+            }
+
+            if (IsRelativeMapTileInstanceAdjacentToConstructionsYard(mapTileInstance, TILE_LOCATION.SOUTH))
+            {
+                return true;
+            }
+
+            if (IsRelativeMapTileInstanceAdjacentToConstructionsYard(mapTileInstance, TILE_LOCATION.SOUTH_WEST))
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+
+
+
+        private MapTileInstance FindAdjacentMapTileInstance(MapTileInstance mapTileInstance,TILE_LOCATION tileLocation)
+        {
+
+            Point adjacentTilePositionMapTileCoordinates = this.ConvertWorldCoordinatesToMapTileCoordinates( PointUtil.ConvertVector2ToPoint(mapTileInstance.PositionInWorldCoordinates));
+            if (tileLocation == TILE_LOCATION.WEST)
+            {
+                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X - 1;
+            }
+            else if (tileLocation == TILE_LOCATION.NORTH_WEST)
+            {
+                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X - 1;
+                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y - 1;
+            }
+            else if (tileLocation == TILE_LOCATION.NORTH)
+            {
+                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y - 1;
+            }
+            else if (tileLocation == TILE_LOCATION.NORTH_EAST)
+            {
+                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X + 1;
+                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y - 1;
+            }
+            else if (tileLocation == TILE_LOCATION.EAST)
+            {
+                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X + 1;
+            }
+            else if (tileLocation == TILE_LOCATION.SOUTH_EAST)
+            {
+                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X + 1;
+                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y + 1;
+            }
+            else if (tileLocation == TILE_LOCATION.SOUTH)
+            {
+                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y + 1;
+            }
+            else if (tileLocation == TILE_LOCATION.SOUTH_WEST)
+            {
+                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X - 1;
+                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y + 1;
+            }
+
+            Point adjacentTilePositionInWorldCoordinates =
+                ConvertMapTileCoordinatesToWorldCoordinates(adjacentTilePositionMapTileCoordinates);
+            MapTileInstance fouMapTileInstance =
+                this.FindMapTileInstanceAllowNull(adjacentTilePositionInWorldCoordinates.X,
+                    adjacentTilePositionInWorldCoordinates.Y);
+
+            return fouMapTileInstance;
+
         }
 
         public  bool IsValidMoveDestination(Point pointInWorldCoordinates)

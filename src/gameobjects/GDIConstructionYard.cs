@@ -61,16 +61,17 @@ namespace mike_and_conquer.gameobjects
 
 
 
-        //        public bool ContainsPoint(Point aPoint)
-        //        {
-        //            int width = GameWorld.MAP_TILE_WIDTH;
-        //            int height = GameWorld.MAP_TILE_HEIGHT;
-        //
-        //            int leftX = (int)positionInWorldCoordinates.X - (width / 2);
-        //            int topY = (int)positionInWorldCoordinates.Y - (height / 2);
-        //            Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);
-        //            return boundRectangle.Contains(aPoint);
-        //        }
+        public bool ContainsPoint(Point aPoint)
+        {
+            int width = 72;
+            int height = 48;
+
+            int leftX = (int)positionInWorldCoordinates.X - (width / 2);
+            int topY = (int)positionInWorldCoordinates.Y - (height / 2);
+
+            Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);
+            return boundRectangle.Contains(aPoint);
+        }
 
 
 

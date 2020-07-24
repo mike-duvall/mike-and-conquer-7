@@ -311,8 +311,8 @@ namespace mike_and_conquer.gameobjects
             yOffset = yOffset * 24;
             MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstanceAllowNull((int)basePosition.X + xOffset, (int)basePosition.Y + yOffset);
             return mapTileInstance;
-
         }
+
 
         MapTileInstance FindNearbyMapTileByOffset(int xOffset, int yOffset)
         {

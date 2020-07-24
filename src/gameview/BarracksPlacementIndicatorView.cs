@@ -37,7 +37,7 @@ namespace mike_and_conquer.gameview
 
             Vector2 position = new Vector2(this.position.X, this.position.Y);
 
-            if (GameWorld.instance.IsValidMoveDestination(this.position))
+            if (GameWorld.instance.IsValidBuildingPlacementLocation(this.position))
             {
                 canPlaceBuildingSprite.Draw(
                     gameTime,

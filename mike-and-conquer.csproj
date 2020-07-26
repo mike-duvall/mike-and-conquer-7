@@ -83,6 +83,8 @@
     <Compile Include="src\gameevent\GetNodMinigunnerByIdGameEvent.cs" />
     <Compile Include="src\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="src\gameevent\CreateGDIMinigunnerGameEvent.cs" />
+    <Compile Include="src\gameobjects\BuildingPlacementIndicator.cs" />
+    <Compile Include="src\gameobjects\BuildingPlacementIndicatorTile.cs" />
     <Compile Include="src\gameobjects\GDIConstructionYard.cs" />
     <Compile Include="src\gameobjects\GDIBarracks.cs" />
     <Compile Include="src\gameobjects\MCV.cs" />
@@ -135,6 +137,7 @@
     <Compile Include="src\gamesprite\GdiShpFileColorMapper.cs" />
     <Compile Include="src\gameview\UnitSelectionBoxView.cs" />
     <Compile Include="src\gameview\UnitSelectionBox.cs" />
+    <Compile Include="src\gameworld\GameLocation.cs" />
     <Compile Include="src\gameworld\humancontroller\DragSelectingMapState.cs" />
     <Compile Include="src\gameworld\humancontroller\HumanControllerState.cs" />
     <Compile Include="src\gameworld\humancontroller\MouseInputUtil.cs" />

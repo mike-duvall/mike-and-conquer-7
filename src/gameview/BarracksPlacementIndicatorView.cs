@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.gameworld;
 using mike_and_conquer.main;
@@ -13,15 +14,22 @@ namespace mike_and_conquer.gameview
     {
 
 
+        private BuildingPlacementIndicator buildingPlacementIndicator;
+
         public SingleTextureSprite canPlaceBuildingSprite;
         private SingleTextureSprite canNotPlaceBuildingSprite;
 
-        public Point position;
+//        public Point position;
+        private Point position;
         public static string FILE_NAME = "trans.icn";
         private static Vector2 middleOfSpriteInSpriteCoordinates;
 
-        public BarracksPlacementIndicatorView()
+        public BarracksPlacementIndicatorView(BuildingPlacementIndicator buildingPlacementIndicator)
         {
+            this.position = buildingPlacementIndicator.GameLocation.ToPoint();
+
+            this.buildingPlacementIndicator = buildingPlacementIndicator;
+
             List<MapTileFrame> mapTileFrameList =
                 MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(FILE_NAME);
 
@@ -35,10 +43,38 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            Point placementSquarePosition = this.position;
-            DrawPlacementSquareAtPosition(placementSquarePosition, gameTime, spriteBatch);
-            placementSquarePosition.X = (placementSquarePosition.X + GameWorld.MAP_TILE_WIDTH);
-            DrawPlacementSquareAtPosition(placementSquarePosition, gameTime, spriteBatch);
+//            Point placementSquarePosition = this.position;
+//            DrawPlacementSquareAtPosition(placementSquarePosition, gameTime, spriteBatch);
+//            placementSquarePosition.X = (placementSquarePosition.X + GameWorld.MAP_TILE_WIDTH);
+//            DrawPlacementSquareAtPosition(placementSquarePosition, gameTime, spriteBatch);
+            foreach (BuildingPlacementIndicatorTile tile in  buildingPlacementIndicator.BuildingBuildingPlacementIndicatorTiles)
+            {
+                if (GameWorld.instance.IsValidBuildingPlacementLocation(tile.GameLocation.ToPoint()))
+                {
+                    canPlaceBuildingSprite.Draw(
+                        gameTime,
+                        spriteBatch,
+                        PointUtil.ConvertPointToVector2(tile.GameLocation.ToPoint()),
+                        SpriteSortLayers.MAP_SQUARE_DEPTH,
+                        false,
+                        Color.White);
+
+                }
+                else
+                {
+                    canNotPlaceBuildingSprite.Draw(
+                        gameTime,
+                        spriteBatch,
+                        PointUtil.ConvertPointToVector2(tile.GameLocation.ToPoint()),
+                        SpriteSortLayers.MAP_SQUARE_DEPTH,
+                        false,
+                        Color.White);
+
+                }
+
+
+
+            }
         }
 
 

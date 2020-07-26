@@ -167,6 +167,7 @@ namespace mike_and_conquer.gameview
         public static GameWorldView instance;
 
         private BarracksPlacementIndicatorView barracksPlacementIndicatorView;
+        private BuildingPlacementIndicator barracksBuildingPlacementIndicator;
 
 
         public GameWorldView()
@@ -1234,10 +1235,17 @@ namespace mike_and_conquer.gameview
         {
             if (barracksPlacementIndicatorView == null)
             {
-                barracksPlacementIndicatorView = new BarracksPlacementIndicatorView();
-                barracksPlacementIndicatorView.position = new Point(
-                    (int) GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.X,
-                    (int) GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.Y);
+                barracksBuildingPlacementIndicator = new BuildingPlacementIndicator(
+                    GameLocation.CreateGameLocationInWorldCoordinates((int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.X,
+                        (int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.Y));
+
+                barracksBuildingPlacementIndicator.AddTileAtRelativeLocation(0,0);
+                barracksBuildingPlacementIndicator.AddTileAtRelativeLocation(1, 0);
+
+                barracksPlacementIndicatorView = new BarracksPlacementIndicatorView(barracksBuildingPlacementIndicator);
+//                barracksPlacementIndicatorView.position = new Point(
+//                    (int) GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.X,
+//                    (int) GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.Y);
             }
 
         }
@@ -1256,8 +1264,12 @@ namespace mike_and_conquer.gameview
                 GameWorld.instance.ConvertMapTileCoordinatesToWorldCoordinates(
                     mouseLocationInMapTileCoordinates);
 
-            barracksPlacementIndicatorView.position.X = worldLocationRoundedToMapTile.X;
-            barracksPlacementIndicatorView.position.Y = worldLocationRoundedToMapTile.Y;
+//            barracksPlacementIndicatorView.position.X = worldLocationRoundedToMapTile.X;
+//            barracksPlacementIndicatorView.position.Y = worldLocationRoundedToMapTile.Y;
+
+            barracksBuildingPlacementIndicator.GameLocation.X = worldLocationRoundedToMapTile.X;
+            barracksBuildingPlacementIndicator.GameLocation.Y = worldLocationRoundedToMapTile.Y;
+
 
         }
 
@@ -1265,6 +1277,7 @@ namespace mike_and_conquer.gameview
         public void Notify_DonePlacingBarracks()
         {
             barracksPlacementIndicatorView = null;
+            barracksBuildingPlacementIndicator = null;
         }
     }
 }

@@ -1239,13 +1239,18 @@ namespace mike_and_conquer.gameview
                     GameLocation.CreateGameLocationInWorldCoordinates((int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.X,
                         (int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.Y));
 
+
+
                 barracksBuildingPlacementIndicator.AddTileAtRelativeLocation(0,0);
                 barracksBuildingPlacementIndicator.AddTileAtRelativeLocation(1, 0);
 
+                barracksBuildingPlacementIndicator.AddTileAtRelativeLocation(0, 1);
+                barracksBuildingPlacementIndicator.AddTileAtRelativeLocation(1, 1);
+
+                barracksBuildingPlacementIndicator.AddTileAtRelativeLocation(0, 2);
+                barracksBuildingPlacementIndicator.AddTileAtRelativeLocation(1, 2);
+
                 barracksPlacementIndicatorView = new BarracksPlacementIndicatorView(barracksBuildingPlacementIndicator);
-//                barracksPlacementIndicatorView.position = new Point(
-//                    (int) GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.X,
-//                    (int) GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.Y);
             }
 
         }
@@ -1264,13 +1269,11 @@ namespace mike_and_conquer.gameview
                 GameWorld.instance.ConvertMapTileCoordinatesToWorldCoordinates(
                     mouseLocationInMapTileCoordinates);
 
-//            barracksPlacementIndicatorView.position.X = worldLocationRoundedToMapTile.X;
-//            barracksPlacementIndicatorView.position.Y = worldLocationRoundedToMapTile.Y;
+            barracksBuildingPlacementIndicator.UpdateLocation(worldLocationRoundedToMapTile.X,
+                worldLocationRoundedToMapTile.Y);
 
-            barracksBuildingPlacementIndicator.GameLocation.X = worldLocationRoundedToMapTile.X;
-            barracksBuildingPlacementIndicator.GameLocation.Y = worldLocationRoundedToMapTile.Y;
-
-
+//            barracksBuildingPlacementIndicator.GameLocation.X = worldLocationRoundedToMapTile.X;
+//            barracksBuildingPlacementIndicator.GameLocation.Y = worldLocationRoundedToMapTile.Y;
         }
 
 

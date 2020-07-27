@@ -873,7 +873,7 @@ namespace mike_and_conquer.gameworld
         }
 
 
-        public bool IsValidBuildingPlacementLocation(Point pointInWordlCoordinates)
+        public bool IsPointAdjacentToConstructionYard(Point pointInWordlCoordinates)
         {
             MapTileInstance mapTileInstance = this.FindMapTileInstanceAllowNull(pointInWordlCoordinates.X, pointInWordlCoordinates.Y);
             if (mapTileInstance == null)

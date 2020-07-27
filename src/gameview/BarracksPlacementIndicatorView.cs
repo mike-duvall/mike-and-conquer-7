@@ -49,7 +49,8 @@ namespace mike_and_conquer.gameview
 //            DrawPlacementSquareAtPosition(placementSquarePosition, gameTime, spriteBatch);
             foreach (BuildingPlacementIndicatorTile tile in  buildingPlacementIndicator.BuildingBuildingPlacementIndicatorTiles)
             {
-                if (GameWorld.instance.IsValidBuildingPlacementLocation(tile.GameLocation.ToPoint()))
+//                if (GameWorld.instance.IsPointAdjacentToConstructionYard(tile.GameLocation.ToPoint()))
+                if (tile.CanPlaceBuilding)
                 {
                     canPlaceBuildingSprite.Draw(
                         gameTime,
@@ -80,7 +81,7 @@ namespace mike_and_conquer.gameview
 
         void DrawPlacementSquareAtPosition(Point position, GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (GameWorld.instance.IsValidBuildingPlacementLocation(position))
+            if (GameWorld.instance.IsPointAdjacentToConstructionYard(position))
             {
                 canPlaceBuildingSprite.Draw(
                     gameTime,

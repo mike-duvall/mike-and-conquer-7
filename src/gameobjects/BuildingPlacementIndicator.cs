@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using mike_and_conquer.gameworld;
+using SharpDX.X3DAudio;
 
 namespace mike_and_conquer.gameobjects
 {
@@ -31,6 +32,38 @@ namespace mike_and_conquer.gameobjects
         {
             BuildingPlacementIndicatorTile newTile = new BuildingPlacementIndicatorTile(this.GameLocation, x, y);
             buildingBuildingPlacementIndicatorTiles.Add(newTile);
+        }
+
+        public void UpdateLocation(int x, int y)
+        {
+            gameLocation.X = x;
+            gameLocation.Y = y;
+            foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
+            {
+                tile.UpdateLocation(gameLocation);
+                tile.CanPlaceBuilding = false;
+            }
+
+            bool isAnyTileTouchingExistingBase = false;
+
+            foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
+            {
+                if (GameWorld.instance.IsPointAdjacentToConstructionYard(tile.GameLocation.ToPoint()))
+                {
+                    isAnyTileTouchingExistingBase = true;
+                }
+            }
+
+            if (isAnyTileTouchingExistingBase)
+            {
+                foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
+                {
+                    if (GameWorld.instance.IsValidMoveDestination(tile.GameLocation.ToPoint()))
+                    {
+                        tile.CanPlaceBuilding = true;
+                    }
+                }
+            }
         }
     }
 }

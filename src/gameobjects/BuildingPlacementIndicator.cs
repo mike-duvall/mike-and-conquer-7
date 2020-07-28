@@ -58,12 +58,28 @@ namespace mike_and_conquer.gameobjects
             {
                 foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
                 {
+
                     if (GameWorld.instance.IsValidMoveDestination(tile.GameLocation.ToPoint()))
                     {
                         tile.CanPlaceBuilding = true;
                     }
                 }
             }
+        }
+
+        public bool ValidBuildingLocation()
+        {
+            bool isValidBuildingLocation = true;
+
+            foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
+            {
+                if (!tile.CanPlaceBuilding)
+                {
+                    isValidBuildingLocation = false;
+                }
+            }
+
+            return isValidBuildingLocation;
         }
     }
 }

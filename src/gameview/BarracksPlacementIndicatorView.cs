@@ -43,13 +43,8 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-//            Point placementSquarePosition = this.position;
-//            DrawPlacementSquareAtPosition(placementSquarePosition, gameTime, spriteBatch);
-//            placementSquarePosition.X = (placementSquarePosition.X + GameWorld.MAP_TILE_WIDTH);
-//            DrawPlacementSquareAtPosition(placementSquarePosition, gameTime, spriteBatch);
             foreach (BuildingPlacementIndicatorTile tile in  buildingPlacementIndicator.BuildingBuildingPlacementIndicatorTiles)
             {
-//                if (GameWorld.instance.IsPointAdjacentToConstructionYard(tile.GameLocation.ToPoint()))
                 if (tile.CanPlaceBuilding)
                 {
                     canPlaceBuildingSprite.Draw(

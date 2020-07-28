@@ -167,7 +167,7 @@ namespace mike_and_conquer.gameview
         public static GameWorldView instance;
 
         private BarracksPlacementIndicatorView barracksPlacementIndicatorView;
-        private BuildingPlacementIndicator barracksBuildingPlacementIndicator;
+        public BuildingPlacementIndicator barracksBuildingPlacementIndicator;
 
 
         public GameWorldView()

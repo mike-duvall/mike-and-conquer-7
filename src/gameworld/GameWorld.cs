@@ -1016,8 +1016,7 @@ namespace mike_and_conquer.gameworld
 
         public  bool IsValidMoveDestination(Point pointInWorldCoordinates)
         {
-
-            Boolean isValidMoveDestination = true;
+            bool isValidMoveDestination = true;
             MapTileInstance clickedMapTileInstance =
                 FindMapTileInstanceAllowNull(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
             if (clickedMapTileInstance == null)
@@ -1034,6 +1033,14 @@ namespace mike_and_conquer.gameworld
             {
 
                 if (nextSandbag.ContainsPoint(pointInWorldCoordinates))
+                {
+                    isValidMoveDestination = false;
+                }
+            }
+
+            if (GDIConstructionYard != null)
+            {
+                if (GDIConstructionYard.ContainsPoint(pointInWorldCoordinates))
                 {
                     isValidMoveDestination = false;
                 }

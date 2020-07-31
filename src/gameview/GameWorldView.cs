@@ -167,6 +167,7 @@ namespace mike_and_conquer.gameview
         public static GameWorldView instance;
 
         private BarracksPlacementIndicatorView barracksPlacementIndicatorView;
+
         public BuildingPlacementIndicator barracksBuildingPlacementIndicator;
 
 
@@ -591,6 +592,13 @@ namespace mike_and_conquer.gameview
                 Color.White);
 
 
+            if (barracksPlacementIndicatorView != null)
+            {
+                barracksPlacementIndicatorView.Draw(gameTime, spriteBatch);
+            }
+
+
+
             if (GameWorldView.instance.GDIBarracksView != null)
             {
                 GameWorldView.instance.GDIBarracksView.DrawNoShadow(gameTime, spriteBatch);
@@ -625,10 +633,6 @@ namespace mike_and_conquer.gameview
                 GameWorldView.instance.mcvView.DrawNoShadow(gameTime, spriteBatch);
             }
 
-            if (barracksPlacementIndicatorView != null)
-            {
-                barracksPlacementIndicatorView.Draw(gameTime, spriteBatch);
-            }
 
 
 
@@ -1191,7 +1195,6 @@ namespace mike_and_conquer.gameview
                 Color.White);
             spriteBatch.End();
         }
-
 
         public Vector2 ConvertWorldCoordinatesToScreenCoordinates(Vector2 positionInWorldCoordinates)
         {

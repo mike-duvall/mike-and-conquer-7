@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gameworld;
-using mike_and_conquer.gameworld.humancontroller;
 using mike_and_conquer.main;
 using mike_and_conquer.util;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -167,6 +166,8 @@ namespace mike_and_conquer.gameview
         public static GameWorldView instance;
 
         private BarracksPlacementIndicatorView barracksPlacementIndicatorView;
+
+        public BarracksPlacementIndicator barracksBarracksPlacementIndicator;
 
 
         public GameWorldView()
@@ -590,6 +591,13 @@ namespace mike_and_conquer.gameview
                 Color.White);
 
 
+            if (barracksPlacementIndicatorView != null)
+            {
+                barracksPlacementIndicatorView.Draw(gameTime, spriteBatch);
+            }
+
+
+
             if (GameWorldView.instance.GDIBarracksView != null)
             {
                 GameWorldView.instance.GDIBarracksView.DrawNoShadow(gameTime, spriteBatch);
@@ -599,8 +607,6 @@ namespace mike_and_conquer.gameview
             {
                 GameWorldView.instance.GdiConstructionYardView.DrawNoShadow(gameTime, spriteBatch);
             }
-
-
 
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
@@ -624,10 +630,6 @@ namespace mike_and_conquer.gameview
                 GameWorldView.instance.mcvView.DrawNoShadow(gameTime, spriteBatch);
             }
 
-            if (barracksPlacementIndicatorView != null)
-            {
-                barracksPlacementIndicatorView.Draw(gameTime, spriteBatch);
-            }
 
 
 
@@ -1191,7 +1193,6 @@ namespace mike_and_conquer.gameview
             spriteBatch.End();
         }
 
-
         public Vector2 ConvertWorldCoordinatesToScreenCoordinates(Vector2 positionInWorldCoordinates)
         {
             return Vector2.Transform(positionInWorldCoordinates, mapViewportCamera.TransformMatrix);
@@ -1234,10 +1235,10 @@ namespace mike_and_conquer.gameview
         {
             if (barracksPlacementIndicatorView == null)
             {
-                barracksPlacementIndicatorView = new BarracksPlacementIndicatorView();
-                barracksPlacementIndicatorView.position = new Point(
-                    (int) GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.X,
-                    (int) GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.Y);
+                barracksBarracksPlacementIndicator = new BarracksPlacementIndicator(
+                    GameLocation.CreateGameLocationInWorldCoordinates((int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.X,
+                        (int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.Y));
+                barracksPlacementIndicatorView = new BarracksPlacementIndicatorView(barracksBarracksPlacementIndicator);
             }
 
         }
@@ -1256,15 +1257,15 @@ namespace mike_and_conquer.gameview
                 GameWorld.instance.ConvertMapTileCoordinatesToWorldCoordinates(
                     mouseLocationInMapTileCoordinates);
 
-            barracksPlacementIndicatorView.position.X = worldLocationRoundedToMapTile.X;
-            barracksPlacementIndicatorView.position.Y = worldLocationRoundedToMapTile.Y;
-
+            barracksBarracksPlacementIndicator.UpdateLocation(worldLocationRoundedToMapTile.X,
+                worldLocationRoundedToMapTile.Y);
         }
 
 
         public void Notify_DonePlacingBarracks()
         {
             barracksPlacementIndicatorView = null;
+            barracksBarracksPlacementIndicator = null;
         }
     }
 }

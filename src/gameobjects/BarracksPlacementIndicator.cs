@@ -37,7 +37,7 @@ namespace mike_and_conquer.gameobjects
 
         }
 
-        public void AddTileAtRelativeLocation(int x, int y)
+        private void AddTileAtRelativeLocation(int x, int y)
         {
             BuildingPlacementIndicatorTile newTile = new BuildingPlacementIndicatorTile(this.GameLocation, x, y);
             buildingBuildingPlacementIndicatorTiles.Add(newTile);

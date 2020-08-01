@@ -22,8 +22,6 @@ namespace mike_and_conquer.gameview
 
         public BarracksPlacementIndicatorView(BarracksPlacementIndicator barracksPlacementIndicator)
         {
-//            this.position = barracksPlacementIndicator.GameLocation.ToPoint();
-
             this.barracksPlacementIndicator = barracksPlacementIndicator;
 
             List<MapTileFrame> mapTileFrameList =

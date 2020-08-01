@@ -5,7 +5,7 @@ using SharpDX.X3DAudio;
 
 namespace mike_and_conquer.gameobjects
 {
-    public class BuildingPlacementIndicator
+    public class BarracksPlacementIndicator
     {
 
         private GameLocation gameLocation;
@@ -22,10 +22,19 @@ namespace mike_and_conquer.gameobjects
             get { return buildingBuildingPlacementIndicatorTiles; }
         }
 
-        public BuildingPlacementIndicator(GameLocation gameLocation)
+        public BarracksPlacementIndicator(GameLocation gameLocation)
         {
             this.gameLocation = gameLocation;
             this.buildingBuildingPlacementIndicatorTiles = new List<BuildingPlacementIndicatorTile>();
+            AddTileAtRelativeLocation(0, 0);
+            AddTileAtRelativeLocation(1, 0);
+
+            AddTileAtRelativeLocation(0, 1);
+            AddTileAtRelativeLocation(1, 1);
+
+            AddTileAtRelativeLocation(0, 2);
+            AddTileAtRelativeLocation(1, 2);
+
         }
 
         public void AddTileAtRelativeLocation(int x, int y)

@@ -12,7 +12,7 @@ namespace mike_and_conquer.gameview
     public class BarracksPlacementIndicatorView
     {
 
-        private BuildingPlacementIndicator buildingPlacementIndicator;
+        private BarracksPlacementIndicator barracksPlacementIndicator;
 
         public SingleTextureSprite canPlaceBuildingSprite;
         private SingleTextureSprite canNotPlaceBuildingSprite;
@@ -20,11 +20,11 @@ namespace mike_and_conquer.gameview
         public static string FILE_NAME = "trans.icn";
         private static Vector2 middleOfSpriteInSpriteCoordinates;
 
-        public BarracksPlacementIndicatorView(BuildingPlacementIndicator buildingPlacementIndicator)
+        public BarracksPlacementIndicatorView(BarracksPlacementIndicator barracksPlacementIndicator)
         {
-//            this.position = buildingPlacementIndicator.GameLocation.ToPoint();
+//            this.position = barracksPlacementIndicator.GameLocation.ToPoint();
 
-            this.buildingPlacementIndicator = buildingPlacementIndicator;
+            this.barracksPlacementIndicator = barracksPlacementIndicator;
 
             List<MapTileFrame> mapTileFrameList =
                 MikeAndConquerGame.instance.SpriteSheet.GetMapTileFrameForTmpFile(FILE_NAME);
@@ -39,7 +39,7 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            foreach (BuildingPlacementIndicatorTile tile in  buildingPlacementIndicator.BuildingBuildingPlacementIndicatorTiles)
+            foreach (BuildingPlacementIndicatorTile tile in  barracksPlacementIndicator.BuildingBuildingPlacementIndicatorTiles)
             {
                 if (tile.CanPlaceBuilding)
                 {

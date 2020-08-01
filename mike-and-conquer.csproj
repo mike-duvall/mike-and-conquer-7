@@ -83,7 +83,7 @@
     <Compile Include="src\gameevent\GetNodMinigunnerByIdGameEvent.cs" />
     <Compile Include="src\gameevent\GetGDIMinigunnerByIdGameEvent.cs" />
     <Compile Include="src\gameevent\CreateGDIMinigunnerGameEvent.cs" />
-    <Compile Include="src\gameobjects\BuildingPlacementIndicator.cs" />
+    <Compile Include="src\gameobjects\BarracksPlacementIndicator.cs" />
     <Compile Include="src\gameobjects\BuildingPlacementIndicatorTile.cs" />
     <Compile Include="src\gameobjects\GDIConstructionYard.cs" />
     <Compile Include="src\gameobjects\GDIBarracks.cs" />

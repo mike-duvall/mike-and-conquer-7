@@ -21,7 +21,7 @@ namespace mike_and_conquer.gameworld.humancontroller
 
                 if (MouseInputUtil.LeftMouseButtonUnclicked(newMouseState, oldMouseState))
                 {
-                    if(GameWorldView.instance.barracksBuildingPlacementIndicator.ValidBuildingLocation())
+                    if(GameWorldView.instance.barracksBarracksPlacementIndicator.ValidBuildingLocation())
                     {
                         GDIConstructionYard gdiConstructionYard = GameWorld.instance.GDIConstructionYard;
                         Point mouseWorldLocationPoint = MouseInputUtil.GetWorldLocationPointFromMouseState(newMouseState);

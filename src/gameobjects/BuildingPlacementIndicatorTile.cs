@@ -26,16 +26,12 @@ namespace mike_and_conquer.gameobjects
         {
             get
             {
-//                int x = baseGameLocation.X + (relativeX * GameWorld.MAP_TILE_WIDTH);
-//                int y = baseGameLocation.Y + (relativeY * GameWorld.MAP_TILE_HEIGHT);
-//                return GameLocation.CreateGameLocationInWorldCoordinates(x, y);
                 return gameLocation;
             }
         }
 
         public BuildingPlacementIndicatorTile(GameLocation baseGameLocation, int x, int y)
         {
-//            this.baseGameLocation = baseGameLocation;
             this.relativeX = x;
             this.relativeY = y;
             this.UpdateLocation(baseGameLocation);

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
-using mike_and_conquer.gameworld;
 using mike_and_conquer.main;
 using mike_and_conquer.util;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
@@ -13,20 +12,17 @@ namespace mike_and_conquer.gameview
     public class BarracksPlacementIndicatorView
     {
 
-
         private BuildingPlacementIndicator buildingPlacementIndicator;
 
         public SingleTextureSprite canPlaceBuildingSprite;
         private SingleTextureSprite canNotPlaceBuildingSprite;
 
-//        public Point position;
-        private Point position;
         public static string FILE_NAME = "trans.icn";
         private static Vector2 middleOfSpriteInSpriteCoordinates;
 
         public BarracksPlacementIndicatorView(BuildingPlacementIndicator buildingPlacementIndicator)
         {
-            this.position = buildingPlacementIndicator.GameLocation.ToPoint();
+//            this.position = buildingPlacementIndicator.GameLocation.ToPoint();
 
             this.buildingPlacementIndicator = buildingPlacementIndicator;
 
@@ -68,40 +64,8 @@ namespace mike_and_conquer.gameview
 
                 }
 
-
-
             }
         }
-
-
-        void DrawPlacementSquareAtPosition(Point position, GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            if (GameWorld.instance.IsPointAdjacentToConstructionYard(position))
-            {
-                canPlaceBuildingSprite.Draw(
-                    gameTime,
-                    spriteBatch,
-                    PointUtil.ConvertPointToVector2(position),
-                    SpriteSortLayers.MAP_SQUARE_DEPTH,
-                    false,
-                    Color.White);
-
-            }
-            else
-            {
-                canNotPlaceBuildingSprite.Draw(
-                    gameTime,
-                    spriteBatch,
-                    PointUtil.ConvertPointToVector2(position),
-                    SpriteSortLayers.MAP_SQUARE_DEPTH,
-                    false,
-                    Color.White);
-
-            }
-
-        }
-
-
 
 
     }

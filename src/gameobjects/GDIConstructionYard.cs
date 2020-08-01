@@ -96,10 +96,7 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-
-
-
-        public void CreateBarracksFromConstructionYard(int x, int y)
+        public void CreateBarracksAtPosition(int x, int y)
         {
 
             MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstance(x, y);

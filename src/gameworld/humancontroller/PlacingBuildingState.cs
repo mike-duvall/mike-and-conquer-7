@@ -25,7 +25,7 @@ namespace mike_and_conquer.gameworld.humancontroller
                     {
                         GDIConstructionYard gdiConstructionYard = GameWorld.instance.GDIConstructionYard;
                         Point mouseWorldLocationPoint = MouseInputUtil.GetWorldLocationPointFromMouseState(newMouseState);
-                        gdiConstructionYard.CreateBarracksFromConstructionYard(mouseWorldLocationPoint.X, mouseWorldLocationPoint.Y);
+                        gdiConstructionYard.CreateBarracksAtPosition(mouseWorldLocationPoint.X, mouseWorldLocationPoint.Y);
                         GameWorldView.instance.Notify_DonePlacingBarracks();
                         return new PointerOverMapState();
                     }

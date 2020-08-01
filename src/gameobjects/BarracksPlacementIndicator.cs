@@ -57,7 +57,7 @@ namespace mike_and_conquer.gameobjects
 
             foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
             {
-                if (GameWorld.instance.IsPointAdjacentToConstructionYard(tile.GameLocation.ToPoint()))
+                if (GameWorld.instance.IsPointAdjacentToConstructionYardAndClearForBuilding(tile.GameLocation.ToPoint()))
                 {
                     isAnyTileTouchingExistingBase = true;
                 }

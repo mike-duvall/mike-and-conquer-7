@@ -873,7 +873,7 @@ namespace mike_and_conquer.gameworld
         }
 
 
-        public bool IsPointAdjacentToConstructionYard(Point pointInWordlCoordinates)
+        public bool IsPointAdjacentToConstructionYardAndClearForBuilding(Point pointInWordlCoordinates)
         {
             MapTileInstance mapTileInstance = this.FindMapTileInstanceAllowNull(pointInWordlCoordinates.X, pointInWordlCoordinates.Y);
             if (mapTileInstance == null)
@@ -881,9 +881,17 @@ namespace mike_and_conquer.gameworld
                 return false;
             }
 
-            return IsMapTileInstanceAdjacentToConstructionYard(mapTileInstance) && !mapTileInstance.IsBlockingTerrain && !GDIConstructionYard.ContainsPoint(pointInWordlCoordinates);
+            return IsMapTileInstanceAdjacentToConstructionYard(mapTileInstance) &&
+                   IsMapTileInstanceClearForBuilding(mapTileInstance);
 
         }
+
+        private bool IsMapTileInstanceClearForBuilding(MapTileInstance mapTileInstance)
+        {
+            return !mapTileInstance.IsBlockingTerrain &&
+                   !GDIConstructionYard.ContainsPoint(PointUtil.ConvertVector2ToPoint(mapTileInstance.PositionInWorldCoordinates));
+        }
+
 
         private bool IsRelativeMapTileInstanceAdjacentToConstructionsYard(MapTileInstance mapTileInstance,
             TILE_LOCATION tileLocation)

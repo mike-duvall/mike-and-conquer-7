@@ -10,10 +10,10 @@ namespace mike_and_conquer.gameobjects
         private int relativeX;
         private int relativeY;
 
-        private GameLocation gameLocation;
+        private MapTileLocation mapTileLocation;
         private bool canPlaceBulding;
 
-        private GameLocation baseGameLocation;
+        private MapTileLocation baseMapTileLocation;
 
 
         public bool CanPlaceBuilding
@@ -22,28 +22,37 @@ namespace mike_and_conquer.gameobjects
             set { canPlaceBulding = value; }
         }
 
-        public GameLocation GameLocation
+        public MapTileLocation MapTileLocation
         {
             get
             {
-                return gameLocation;
+                return mapTileLocation;
             }
         }
 
-        public BuildingPlacementIndicatorTile(GameLocation baseGameLocation, int x, int y)
+        public BuildingPlacementIndicatorTile(MapTileLocation baseMapTileLocation, int x, int y)
         {
             this.relativeX = x;
             this.relativeY = y;
-            this.UpdateLocation(baseGameLocation);
+            this.UpdateLocation(baseMapTileLocation);
         }
 
 
-        public void UpdateLocation(GameLocation newGameLocation)
+        public void UpdateLocation(MapTileLocation newMapTileLocation)
         {
-            this.baseGameLocation = newGameLocation;
-            int x = baseGameLocation.X + (relativeX * GameWorld.MAP_TILE_WIDTH);
-            int y = baseGameLocation.Y + (relativeY * GameWorld.MAP_TILE_HEIGHT);
-            this.gameLocation = GameLocation.CreateGameLocationInWorldCoordinates(x, y);
+            this.baseMapTileLocation = newMapTileLocation;
+//            int x = baseMapTileLocation.X + (relativeX * GameWorld.MAP_TILE_WIDTH);
+//            int y = baseMapTileLocation.Y + (relativeY * GameWorld.MAP_TILE_HEIGHT);
+//            this.mapTileLocation = MapTileLocation.CreateFromWorldMapTileCoordinates(x, y);
+
+            int x = baseMapTileLocation.XinWorldMapTileCoordinates + relativeX;
+            int y = baseMapTileLocation.YinWorldMapTileCoordinates + relativeY;
+
+            this.mapTileLocation = MapTileLocation.CreateFromWorldMapTileCoordinates(x, y);
+
+            //            this.mapTileLocation.XinWorldMapTileCoordinates = x;
+            //            this.mapTileLocation.YinWorldMapTileCoordinates = y;
+
         }
 
 

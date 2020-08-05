@@ -8,11 +8,11 @@ namespace mike_and_conquer.gameobjects
     public class BarracksPlacementIndicator
     {
 
-        private GameLocation gameLocation;
+        private MapTileLocation mapTileLocation;
 
-        public GameLocation GameLocation
+        public MapTileLocation MapTileLocation
         {
-            get {  return gameLocation; }
+            get {  return mapTileLocation; }
         }
 
         private List<BuildingPlacementIndicatorTile> buildingBuildingPlacementIndicatorTiles;
@@ -22,9 +22,9 @@ namespace mike_and_conquer.gameobjects
             get { return buildingBuildingPlacementIndicatorTiles; }
         }
 
-        public BarracksPlacementIndicator(GameLocation gameLocation)
+        public BarracksPlacementIndicator(MapTileLocation mapTileLocation)
         {
-            this.gameLocation = gameLocation;
+            this.mapTileLocation = mapTileLocation;
             this.buildingBuildingPlacementIndicatorTiles = new List<BuildingPlacementIndicatorTile>();
             AddTileAtRelativeLocation(0, 0);
             AddTileAtRelativeLocation(1, 0);
@@ -39,17 +39,53 @@ namespace mike_and_conquer.gameobjects
 
         private void AddTileAtRelativeLocation(int x, int y)
         {
-            BuildingPlacementIndicatorTile newTile = new BuildingPlacementIndicatorTile(this.GameLocation, x, y);
+            BuildingPlacementIndicatorTile newTile = new BuildingPlacementIndicatorTile(this.MapTileLocation, x, y);
             buildingBuildingPlacementIndicatorTiles.Add(newTile);
         }
 
-        public void UpdateLocation(int x, int y)
+//        public void UpdateLocation(int x, int y)
+//        {
+//
+//
+//
+//            mapTileLocation.X = x;
+//            mapTileLocation.Y = y;
+//            foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
+//            {
+//                tile.UpdateLocation(mapTileLocation);
+//                tile.CanPlaceBuilding = false;
+//            }
+//
+//            bool isAnyTileTouchingExistingBase = false;
+//
+//            foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
+//            {
+//                if (GameWorld.instance.IsPointAdjacentToConstructionYardAndClearForBuilding(tile.MapTileLocation.WorldCoordinatesAsPoint))
+//                {
+//                    isAnyTileTouchingExistingBase = true;
+//                }
+//            }
+//
+//            if (isAnyTileTouchingExistingBase)
+//            {
+//                foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
+//                {
+//
+//                    if (GameWorld.instance.IsValidMoveDestination(tile.MapTileLocation.WorldCoordinatesAsPoint))
+//                    {
+//                        tile.CanPlaceBuilding = true;
+//                    }
+//                }
+//            }
+//        }
+
+
+        public void UpdateLocationInWorldCoordinates(Point mouseLocationWordCoordinates)
         {
-            gameLocation.X = x;
-            gameLocation.Y = y;
+            mapTileLocation.UpdateLocationInWorldCoordinates(mouseLocationWordCoordinates);
             foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
             {
-                tile.UpdateLocation(gameLocation);
+                tile.UpdateLocation(mapTileLocation);
                 tile.CanPlaceBuilding = false;
             }
 
@@ -57,7 +93,7 @@ namespace mike_and_conquer.gameobjects
 
             foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
             {
-                if (GameWorld.instance.IsPointAdjacentToConstructionYardAndClearForBuilding(tile.GameLocation.ToPoint()))
+                if (GameWorld.instance.IsPointAdjacentToConstructionYardAndClearForBuilding(tile.MapTileLocation.WorldCoordinatesAsPoint))
                 {
                     isAnyTileTouchingExistingBase = true;
                 }
@@ -68,13 +104,16 @@ namespace mike_and_conquer.gameobjects
                 foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
                 {
 
-                    if (GameWorld.instance.IsValidMoveDestination(tile.GameLocation.ToPoint()))
+                    if (GameWorld.instance.IsValidMoveDestination(tile.MapTileLocation.WorldCoordinatesAsPoint))
                     {
                         tile.CanPlaceBuilding = true;
                     }
                 }
             }
+
+
         }
+
 
         public bool ValidBuildingLocation()
         {
@@ -90,5 +129,6 @@ namespace mike_and_conquer.gameobjects
 
             return isValidBuildingLocation;
         }
+
     }
 }

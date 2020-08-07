@@ -551,7 +551,7 @@ namespace mike_and_conquer.main
         {
 
             Point positionInWorldCoordinates =
-                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
+                MapTileLocation.ConvertMapTileCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
             return AddGdiMinigunner(positionInWorldCoordinates);
         }
 
@@ -623,7 +623,7 @@ namespace mike_and_conquer.main
         public void AddMCVAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
         {
             Point positionInWorldCoordinates =
-                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
+                MapTileLocation.ConvertMapTileCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
 
             MCV mcv = gameWorld.AddMCV(positionInWorldCoordinates);
             gameWorldView.AddMCVView(mcv);
@@ -648,7 +648,7 @@ namespace mike_and_conquer.main
         {
 
             Point positionInWorldCoordinates =
-                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
+                MapTileLocation.ConvertMapTileCoordinatesToWorldCoordinates(positionInMapSquareCoordinates);
 
             return AddNodMinigunner(positionInWorldCoordinates, aiIsOn);
         }

@@ -1260,15 +1260,10 @@ namespace mike_and_conquer.gameview
             Point mouseLocationWordCoordinates =
                 ConvertScreenLocationToWorldLocation(mouseLocationInScreenCoordinates);
 
+
             Point mouseLocationInMapTileCoordinates =
-                GameWorld.instance.ConvertWorldCoordinatesToMapTileCoordinates(mouseLocationWordCoordinates);
+                MapTileLocation.ConvertWorldCoordinatesToMapTileCoordinates(mouseLocationWordCoordinates);
 
-            Point worldLocationRoundedToMapTile =
-                GameWorld.instance.ConvertMapTileCoordinatesToWorldCoordinates(
-                    mouseLocationInMapTileCoordinates);
-
-//            barracksBarracksPlacementIndicator.UpdateLocation(worldLocationRoundedToMapTile.X,
-//                worldLocationRoundedToMapTile.Y);
 
             barracksBarracksPlacementIndicator.UpdateLocationInWorldCoordinates(mouseLocationWordCoordinates);
 

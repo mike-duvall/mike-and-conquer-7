@@ -36,7 +36,6 @@ namespace mike_and_conquer.gameview
 
 
 
-
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             foreach (BuildingPlacementIndicatorTile tile in  barracksPlacementIndicator.BuildingBuildingPlacementIndicatorTiles)

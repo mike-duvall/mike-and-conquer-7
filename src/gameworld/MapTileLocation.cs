@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
+using mike_and_conquer.util;
 
 namespace mike_and_conquer.gameworld
 {
@@ -37,10 +38,19 @@ namespace mike_and_conquer.gameworld
             return new MapTileLocation(x,y);
         }
 
-//        public Point ToPoint()
-//        {
-//            return new Point(xInWorldMapTileCoordinates, yInWorldMapTileCoordinates);
-//        }
+        public static MapTileLocation CreateFromWorldCoordinatesInVector2(Vector2 worldCoordinatesInVector2)
+        {
+            Point worldCoordinatesInPoint = PointUtil.ConvertVector2ToPoint(worldCoordinatesInVector2);
+            Point mapTileCoordinates = MapTileLocation.ConvertWorldCoordinatesToMapTileCoordinates(worldCoordinatesInPoint);
+            return new MapTileLocation(mapTileCoordinates.X, mapTileCoordinates.Y);
+        }
+
+
+
+        //        public Point ToPoint()
+        //        {
+        //            return new Point(xInWorldMapTileCoordinates, yInWorldMapTileCoordinates);
+        //        }
         public float XInWorldCoordinates
         {
             get { return (xInWorldMapTileCoordinates * GameWorld.MAP_TILE_WIDTH) + (GameWorld.MAP_TILE_WIDTH / 2); }
@@ -70,9 +80,36 @@ namespace mike_and_conquer.gameworld
 
         public void UpdateLocationInWorldCoordinates(Point locationWordCoordinates)
         {
-            Point locationInMapTileCoordinates = GameWorld.instance.ConvertWorldCoordinatesToMapTileCoordinates(locationWordCoordinates);
+            Point locationInMapTileCoordinates = ConvertWorldCoordinatesToMapTileCoordinates(locationWordCoordinates);
             xInWorldMapTileCoordinates = locationInMapTileCoordinates.X;
             yInWorldMapTileCoordinates = locationInMapTileCoordinates.Y;
         }
+
+
+        public static Point ConvertMapTileCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
+        {
+
+            int xInWorldCoordinates = (pointInWorldMapSquareCoordinates.X * GameWorld.MAP_TILE_WIDTH) +
+                                      (GameWorld.MAP_TILE_WIDTH / 2);
+            int yInWorldCoordinates = pointInWorldMapSquareCoordinates.Y * GameWorld.MAP_TILE_HEIGHT +
+                                      (GameWorld.MAP_TILE_HEIGHT / 2);
+
+            return new Point(xInWorldCoordinates, yInWorldCoordinates);
+        }
+
+
+        public static Point ConvertWorldCoordinatesToMapTileCoordinates(Point pointInWorldCoordinates)
+        {
+
+            int destinationRow = pointInWorldCoordinates.Y;
+            int destinationColumn = pointInWorldCoordinates.X;
+
+            int destinationX = destinationColumn / GameWorld.MAP_TILE_WIDTH;
+            int destinationY = destinationRow / GameWorld.MAP_TILE_HEIGHT;
+
+            return new Point(destinationX, destinationY);
+        }
+
+
     }
 }

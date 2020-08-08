@@ -45,6 +45,12 @@ namespace mike_and_conquer.gameworld
             return new MapTileLocation(mapTileCoordinates.X, mapTileCoordinates.Y);
         }
 
+        public static MapTileLocation CreateFromWorldCoordinates(int x, int y)
+        {
+            Point worldCoordinatesInPoint = new Point(x,y);
+            Point mapTileCoordinates = MapTileLocation.ConvertWorldCoordinatesToMapTileCoordinates(worldCoordinatesInPoint);
+            return new MapTileLocation(mapTileCoordinates.X, mapTileCoordinates.Y);
+        }
 
 
         //        public Point ToPoint()

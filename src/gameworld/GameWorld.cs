@@ -794,18 +794,12 @@ namespace mike_and_conquer.gameworld
                 if (nextMapTileInstance.IsBlockingTerrain)
                 {
 
-
-
-                    MapTileLocation mapTileLocation = MapTileLocation.CreateFromWorldCoordinatesInVector2(nextMapTileInstance.PositionInWorldCoordinates);
-
-
-
-
+//                    MapTileLocation mapTileLocation = MapTileLocation.CreateFromWorldCoordinatesInVector2(nextMapTileInstance.PositionInWorldCoordinates);
+                    MapTileLocation mapTileLocation = nextMapTileInstance.MapTileLocation;
+                    
                     navigationGraph.MakeNodeBlockingNode(
                         mapTileLocation.XinWorldMapTileCoordinates,
                         mapTileLocation.YinWorldMapTileCoordinates);
-
-
                 }
             }
 
@@ -866,7 +860,7 @@ namespace mike_and_conquer.gameworld
         private bool IsMapTileInstanceClearForBuilding(MapTileInstance mapTileInstance)
         {
             return !mapTileInstance.IsBlockingTerrain &&
-                   !GDIConstructionYard.ContainsPoint(PointUtil.ConvertVector2ToPoint(mapTileInstance.PositionInWorldCoordinates));
+                   !GDIConstructionYard.ContainsPoint(PointUtil.ConvertVector2ToPoint(mapTileInstance.MapTileLocation.WorldCoordinatesAsVector2));
         }
 
 
@@ -874,7 +868,7 @@ namespace mike_and_conquer.gameworld
             TILE_LOCATION tileLocation)
         {
             MapTileInstance adjacentTile = FindAdjacentMapTileInstance(mapTileInstance, tileLocation);
-            if (adjacentTile != null && GDIConstructionYard.ContainsPoint(PointUtil.ConvertVector2ToPoint(adjacentTile.PositionInWorldCoordinates)))
+            if (adjacentTile != null && GDIConstructionYard.ContainsPoint(PointUtil.ConvertVector2ToPoint(adjacentTile.MapTileLocation.WorldCoordinatesAsVector2)))
             {
                 return true;
             }
@@ -951,7 +945,7 @@ namespace mike_and_conquer.gameworld
         private MapTileInstance FindAdjacentMapTileInstance(MapTileInstance mapTileInstance,TILE_LOCATION tileLocation)
         {
 
-            Point adjacentTilePositionMapTileCoordinates = MapTileLocation.ConvertWorldCoordinatesToMapTileCoordinates( PointUtil.ConvertVector2ToPoint(mapTileInstance.PositionInWorldCoordinates));
+            Point adjacentTilePositionMapTileCoordinates = MapTileLocation.ConvertWorldCoordinatesToMapTileCoordinates( PointUtil.ConvertVector2ToPoint(mapTileInstance.MapTileLocation.WorldCoordinatesAsVector2));
             if (tileLocation == TILE_LOCATION.WEST)
             {
                 adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X - 1;

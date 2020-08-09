@@ -11,11 +11,8 @@ namespace mike_and_conquer.gameview
 {
     public class MapTileInstance
     {
-        //public Vector2 PositionInWorldCoordinates { get; }
-
+        
         private MapTileLocation mapTileLocation;
-
-
 
         public MapTileLocation MapTileLocation
         {
@@ -67,7 +64,6 @@ namespace mike_and_conquer.gameview
 
         public MapTileInstance(int x, int y, string textureKey, byte imageIndex, bool isBlockingTerrain)
         {
-//            this.PositionInWorldCoordinates = new Vector2(x,y);
             this.mapTileLocation = MapTileLocation.CreateFromWorldCoordinates(x,y);
             this.textureKey = textureKey;
             this.imageIndex = imageIndex;
@@ -81,8 +77,6 @@ namespace mike_and_conquer.gameview
             int width = GameWorld.MAP_TILE_WIDTH;
             int height = GameWorld.MAP_TILE_HEIGHT;
 
-            //            int leftX = (int)PositionInWorldCoordinates.X - (width / 2);
-            //            int topY = (int)PositionInWorldCoordinates.Y - (height / 2);
             int leftX =  mapTileLocation.WorldCoordinatesAsPoint.X - (width / 2);
             int topY =  mapTileLocation.WorldCoordinatesAsPoint.Y - (height / 2);
 

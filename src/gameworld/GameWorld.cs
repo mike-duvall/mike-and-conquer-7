@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using Microsoft.Xna.Framework;
 using mike_and_conquer.gameevent;
@@ -10,7 +9,6 @@ using mike_and_conquer.gameview;
 using mike_and_conquer.gameworld.humancontroller;
 using mike_and_conquer.main;
 using mike_and_conquer.pathfinding;
-using mike_and_conquer.util;
 using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;
 using CreateGDIMinigunnerGameEvent = mike_and_conquer.gameevent.CreateGDIMinigunnerGameEvent;
 using GetGDIMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetGDIMinigunnerByIdGameEvent;
@@ -860,7 +858,8 @@ namespace mike_and_conquer.gameworld
         private bool IsMapTileInstanceClearForBuilding(MapTileInstance mapTileInstance)
         {
             return !mapTileInstance.IsBlockingTerrain &&
-                   !GDIConstructionYard.ContainsPoint(PointUtil.ConvertVector2ToPoint(mapTileInstance.MapTileLocation.WorldCoordinatesAsVector2));
+                   !GDIConstructionYard.ContainsPoint(mapTileInstance.MapTileLocation.WorldCoordinatesAsPoint);
+
         }
 
 
@@ -868,7 +867,7 @@ namespace mike_and_conquer.gameworld
             TILE_LOCATION tileLocation)
         {
             MapTileInstance adjacentTile = FindAdjacentMapTileInstance(mapTileInstance, tileLocation);
-            if (adjacentTile != null && GDIConstructionYard.ContainsPoint(PointUtil.ConvertVector2ToPoint(adjacentTile.MapTileLocation.WorldCoordinatesAsVector2)))
+            if (adjacentTile != null && GDIConstructionYard.ContainsPoint(adjacentTile.MapTileLocation.WorldCoordinatesAsPoint))
             {
                 return true;
             }
@@ -945,7 +944,6 @@ namespace mike_and_conquer.gameworld
         private MapTileInstance FindAdjacentMapTileInstance(MapTileInstance mapTileInstance,TILE_LOCATION tileLocation)
         {
 
-//            Point adjacentTilePositionMapTileCoordinates = MapTileLocation.ConvertWorldCoordinatesToMapTileCoordinates( PointUtil.ConvertVector2ToPoint(mapTileInstance.MapTileLocation.WorldCoordinatesAsVector2));
             Point adjacentTilePositionMapTileCoordinates = mapTileInstance.MapTileLocation.WorldMapTileCoordinatesAsPoint;
 
             if (tileLocation == TILE_LOCATION.WEST)

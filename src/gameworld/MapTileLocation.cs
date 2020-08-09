@@ -9,19 +9,6 @@ namespace mike_and_conquer.gameworld
         private int xInWorldMapTileCoordinates;
         private int yInWorldMapTileCoordinates;
 
-        public int XinWorldMapTileCoordinates
-        {
-            get { return xInWorldMapTileCoordinates; }
-            set { xInWorldMapTileCoordinates = value; }
-        }
-
-
-        public int YinWorldMapTileCoordinates
-        {
-            get { return yInWorldMapTileCoordinates; }
-            set { yInWorldMapTileCoordinates = value; }
-        }
-
         private MapTileLocation(int x, int y)
         {
             this.xInWorldMapTileCoordinates = x;
@@ -47,15 +34,22 @@ namespace mike_and_conquer.gameworld
             return new MapTileLocation(mapTileCoordinates.X, mapTileCoordinates.Y);
         }
 
-//        public float XInWorldCoordinates
-//        {
-//            get { return (xInWorldMapTileCoordinates * GameWorld.MAP_TILE_WIDTH) + (GameWorld.MAP_TILE_WIDTH / 2); }
-//        }
-//
-//        public float YInWorldCoordinates
-//        {
-//            get { return (yInWorldMapTileCoordinates * GameWorld.MAP_TILE_HEIGHT) + (GameWorld.MAP_TILE_HEIGHT / 2); }
-//        }
+
+        public Point WorldMapTileCoordinatesAsPoint
+        {
+            get { return new Point(xInWorldMapTileCoordinates, yInWorldMapTileCoordinates); }
+        }
+
+
+
+        public Point WorldCoordinatesAsPoint
+        {
+            get
+            {
+                return MapTileLocation.ConvertMapTileCoordinatesToWorldCoordinates(new Point(xInWorldMapTileCoordinates, yInWorldMapTileCoordinates));
+            }
+        }
+
 
         public Vector2 WorldCoordinatesAsVector2
         {
@@ -66,18 +60,7 @@ namespace mike_and_conquer.gameworld
             }
         }
 
-        public Point WorldMapTileCoordinatesAsPoint
-        {
-            get {  return new Point(XinWorldMapTileCoordinates, YinWorldMapTileCoordinates);}
-        }
 
-        public Point WorldCoordinatesAsPoint
-        {
-            get
-            {
-                return  MapTileLocation.ConvertMapTileCoordinatesToWorldCoordinates(new Point(xInWorldMapTileCoordinates, yInWorldMapTileCoordinates));
-            }
-        }
 
         public void UpdateLocationInWorldCoordinates(Point locationWordCoordinates)
         {

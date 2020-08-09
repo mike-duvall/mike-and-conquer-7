@@ -41,17 +41,12 @@ namespace mike_and_conquer.gameobjects
         public void UpdateLocation(MapTileLocation newMapTileLocation)
         {
             this.baseMapTileLocation = newMapTileLocation;
-//            int x = baseMapTileLocation.X + (relativeX * GameWorld.MAP_TILE_WIDTH);
-//            int y = baseMapTileLocation.Y + (relativeY * GameWorld.MAP_TILE_HEIGHT);
-//            this.mapTileLocation = MapTileLocation.CreateFromWorldMapTileCoordinates(x, y);
 
-            int x = baseMapTileLocation.XinWorldMapTileCoordinates + relativeX;
-            int y = baseMapTileLocation.YinWorldMapTileCoordinates + relativeY;
+            int x = baseMapTileLocation.WorldMapTileCoordinatesAsPoint.X  + relativeX;
+            int y = baseMapTileLocation.WorldMapTileCoordinatesAsPoint.Y + relativeY;
 
             this.mapTileLocation = MapTileLocation.CreateFromWorldMapTileCoordinates(x, y);
 
-            //            this.mapTileLocation.XinWorldMapTileCoordinates = x;
-            //            this.mapTileLocation.YinWorldMapTileCoordinates = y;
 
         }
 

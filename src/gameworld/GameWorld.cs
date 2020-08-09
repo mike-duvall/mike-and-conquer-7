@@ -784,8 +784,8 @@ namespace mike_and_conquer.gameworld
             {
                 MapTileLocation sandbagMapTileLocation = MapTileLocation.CreateFromWorldCoordinatesInVector2(nextSandbag.positionInWorldCoordinates);
                 navigationGraph.MakeNodeBlockingNode(
-                    sandbagMapTileLocation.XinWorldMapTileCoordinates,
-                    sandbagMapTileLocation.YinWorldMapTileCoordinates);
+                    sandbagMapTileLocation.WorldMapTileCoordinatesAsPoint.Y,
+                    sandbagMapTileLocation.WorldMapTileCoordinatesAsPoint.Y);
             }
 
 
@@ -798,8 +798,8 @@ namespace mike_and_conquer.gameworld
                     MapTileLocation mapTileLocation = nextMapTileInstance.MapTileLocation;
                     
                     navigationGraph.MakeNodeBlockingNode(
-                        mapTileLocation.XinWorldMapTileCoordinates,
-                        mapTileLocation.YinWorldMapTileCoordinates);
+                        mapTileLocation.WorldMapTileCoordinatesAsPoint.X,
+                        mapTileLocation.WorldMapTileCoordinatesAsPoint.Y);
                 }
             }
 

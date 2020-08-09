@@ -236,10 +236,10 @@ namespace mike_and_conquer.gameobjects
         private void UpdateToVisibleIfSurroundedByVisibleTiles(MapTileInstance mapTileInstance)
         {
             
-            MapTileInstance northMapTile = FindNearbyMapTileByOffset(mapTileInstance.PositionInWorldCoordinates,0, -1);
-            MapTileInstance eastMapTile = FindNearbyMapTileByOffset(mapTileInstance.PositionInWorldCoordinates, 1, 0);
-            MapTileInstance southMapTile = FindNearbyMapTileByOffset(mapTileInstance.PositionInWorldCoordinates, 0, 1);
-            MapTileInstance westMapTile = FindNearbyMapTileByOffset(mapTileInstance.PositionInWorldCoordinates, -1, 0);
+            MapTileInstance northMapTile = FindNearbyMapTileByOffset(mapTileInstance.MapTileLocation.WorldCoordinatesAsVector2,0, -1);
+            MapTileInstance eastMapTile = FindNearbyMapTileByOffset(mapTileInstance.MapTileLocation.WorldCoordinatesAsVector2, 1, 0);
+            MapTileInstance southMapTile = FindNearbyMapTileByOffset(mapTileInstance.MapTileLocation.WorldCoordinatesAsVector2, 0, 1);
+            MapTileInstance westMapTile = FindNearbyMapTileByOffset(mapTileInstance.MapTileLocation.WorldCoordinatesAsVector2, -1, 0);
 
             int numAdjectTilesVisible = 0;
 

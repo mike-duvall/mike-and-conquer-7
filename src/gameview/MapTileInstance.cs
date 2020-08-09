@@ -11,7 +11,13 @@ namespace mike_and_conquer.gameview
 {
     public class MapTileInstance
     {
-        public Vector2 PositionInWorldCoordinates { get; }
+        
+        private MapTileLocation mapTileLocation;
+
+        public MapTileLocation MapTileLocation
+        {
+            get { return mapTileLocation; }
+        }
 
         private string textureKey;
         private byte imageIndex;
@@ -58,7 +64,7 @@ namespace mike_and_conquer.gameview
 
         public MapTileInstance(int x, int y, string textureKey, byte imageIndex, bool isBlockingTerrain)
         {
-            this.PositionInWorldCoordinates = new Vector2(x,y);
+            this.mapTileLocation = MapTileLocation.CreateFromWorldCoordinates(x,y);
             this.textureKey = textureKey;
             this.imageIndex = imageIndex;
             this.isBlockingTerrain = isBlockingTerrain;
@@ -71,15 +77,16 @@ namespace mike_and_conquer.gameview
             int width = GameWorld.MAP_TILE_WIDTH;
             int height = GameWorld.MAP_TILE_HEIGHT;
 
-            int leftX = (int)PositionInWorldCoordinates.X - (width / 2);
-            int topY = (int)PositionInWorldCoordinates.Y - (height / 2);
+            int leftX =  mapTileLocation.WorldCoordinatesAsPoint.X - (width / 2);
+            int topY =  mapTileLocation.WorldCoordinatesAsPoint.Y - (height / 2);
+
             Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);
             return boundRectangle.Contains(aPoint);
         }
 
         public Point GetCenter()
         {
-            return new Point((int)PositionInWorldCoordinates.X, (int)PositionInWorldCoordinates.Y);
+            return new Point(mapTileLocation.WorldCoordinatesAsPoint.X, mapTileLocation.WorldCoordinatesAsPoint.Y);
         }
 
         public Point GetDestinationSlotForMinigunner(Minigunner aMinigunner)

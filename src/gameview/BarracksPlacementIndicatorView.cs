@@ -35,6 +35,7 @@ namespace mike_and_conquer.gameview
         }
 
 
+
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             foreach (BuildingPlacementIndicatorTile tile in  barracksPlacementIndicator.BuildingBuildingPlacementIndicatorTiles)
@@ -44,7 +45,7 @@ namespace mike_and_conquer.gameview
                     canPlaceBuildingSprite.Draw(
                         gameTime,
                         spriteBatch,
-                        PointUtil.ConvertPointToVector2(tile.GameLocation.ToPoint()),
+                        tile.MapTileLocation.WorldCoordinatesAsVector2,
                         SpriteSortLayers.MAP_SQUARE_DEPTH,
                         false,
                         Color.White);
@@ -55,7 +56,7 @@ namespace mike_and_conquer.gameview
                     canNotPlaceBuildingSprite.Draw(
                         gameTime,
                         spriteBatch,
-                        PointUtil.ConvertPointToVector2(tile.GameLocation.ToPoint()),
+                        PointUtil.ConvertPointToVector2(tile.MapTileLocation.WorldCoordinatesAsPoint),
                         SpriteSortLayers.MAP_SQUARE_DEPTH,
                         false,
                         Color.White);

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using Microsoft.Xna.Framework;
 using mike_and_conquer.gameevent;
@@ -10,7 +9,6 @@ using mike_and_conquer.gameview;
 using mike_and_conquer.gameworld.humancontroller;
 using mike_and_conquer.main;
 using mike_and_conquer.pathfinding;
-using mike_and_conquer.util;
 using AsyncGameEvent = mike_and_conquer.gameevent.AsyncGameEvent;
 using CreateGDIMinigunnerGameEvent = mike_and_conquer.gameevent.CreateGDIMinigunnerGameEvent;
 using GetGDIMinigunnerByIdGameEvent = mike_and_conquer.gameevent.GetGDIMinigunnerByIdGameEvent;
@@ -782,11 +780,10 @@ namespace mike_and_conquer.gameworld
 
             foreach (Sandbag nextSandbag in sandbagList)
             {
-                Point sandbagPositionInMapTileCoordinates =
-                    ConvertWorldPositionVector2ToMapTilePositionPoint(nextSandbag.positionInWorldCoordinates);
+                MapTileLocation sandbagMapTileLocation = MapTileLocation.CreateFromWorldCoordinatesInVector2(nextSandbag.positionInWorldCoordinates);
                 navigationGraph.MakeNodeBlockingNode(
-                    sandbagPositionInMapTileCoordinates.X,
-                    sandbagPositionInMapTileCoordinates.Y);
+                    sandbagMapTileLocation.WorldMapTileCoordinatesAsPoint.Y,
+                    sandbagMapTileLocation.WorldMapTileCoordinatesAsPoint.Y);
             }
 
 
@@ -794,12 +791,13 @@ namespace mike_and_conquer.gameworld
             {
                 if (nextMapTileInstance.IsBlockingTerrain)
                 {
-                    Point mapTilePositionInMapTileCoordinates =
-                        ConvertWorldPositionVector2ToMapTilePositionPoint(nextMapTileInstance
-                            .PositionInWorldCoordinates);
+
+//                    MapTileLocation mapTileLocation = MapTileLocation.CreateFromWorldCoordinatesInVector2(nextMapTileInstance.PositionInWorldCoordinates);
+                    MapTileLocation mapTileLocation = nextMapTileInstance.MapTileLocation;
+                    
                     navigationGraph.MakeNodeBlockingNode(
-                        mapTilePositionInMapTileCoordinates.X,
-                        mapTilePositionInMapTileCoordinates.Y);
+                        mapTileLocation.WorldMapTileCoordinatesAsPoint.X,
+                        mapTileLocation.WorldMapTileCoordinatesAsPoint.Y);
                 }
             }
 
@@ -807,37 +805,8 @@ namespace mike_and_conquer.gameworld
 
         }
 
-        private Point ConvertWorldPositionVector2ToMapTilePositionPoint(Vector2 positionInWorldCoordinates)
-        {
-            return ConvertWorldCoordinatesToMapTileCoordinates(new Point((int)positionInWorldCoordinates.X,
-                (int)positionInWorldCoordinates.Y));
-
-        }
 
 
-        public Point ConvertMapTileCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
-        {
-
-            int xInWorldCoordinates = (pointInWorldMapSquareCoordinates.X * MAP_TILE_WIDTH) +
-                                      (MAP_TILE_WIDTH / 2);
-            int yInWorldCoordinates = pointInWorldMapSquareCoordinates.Y * MAP_TILE_HEIGHT +
-                                      (MAP_TILE_HEIGHT / 2);
-
-            return new Point(xInWorldCoordinates, yInWorldCoordinates);
-        }
-
-
-        public Point ConvertWorldCoordinatesToMapTileCoordinates(Point pointInWorldCoordinates)
-        {
-        
-            int destinationRow = pointInWorldCoordinates.Y;
-            int destinationColumn = pointInWorldCoordinates.X;
-        
-            int destinationX = destinationColumn / MAP_TILE_WIDTH;
-            int destinationY = destinationRow / MAP_TILE_HEIGHT;
-        
-            return new Point(destinationX, destinationY);
-        }
 
 
         public Point ConvertMapSquareIndexToWorldCoordinate(int index)
@@ -889,7 +858,8 @@ namespace mike_and_conquer.gameworld
         private bool IsMapTileInstanceClearForBuilding(MapTileInstance mapTileInstance)
         {
             return !mapTileInstance.IsBlockingTerrain &&
-                   !GDIConstructionYard.ContainsPoint(PointUtil.ConvertVector2ToPoint(mapTileInstance.PositionInWorldCoordinates));
+                   !GDIConstructionYard.ContainsPoint(mapTileInstance.MapTileLocation.WorldCoordinatesAsPoint);
+
         }
 
 
@@ -897,7 +867,7 @@ namespace mike_and_conquer.gameworld
             TILE_LOCATION tileLocation)
         {
             MapTileInstance adjacentTile = FindAdjacentMapTileInstance(mapTileInstance, tileLocation);
-            if (adjacentTile != null && GDIConstructionYard.ContainsPoint(PointUtil.ConvertVector2ToPoint(adjacentTile.PositionInWorldCoordinates)))
+            if (adjacentTile != null && GDIConstructionYard.ContainsPoint(adjacentTile.MapTileLocation.WorldCoordinatesAsPoint))
             {
                 return true;
             }
@@ -974,7 +944,8 @@ namespace mike_and_conquer.gameworld
         private MapTileInstance FindAdjacentMapTileInstance(MapTileInstance mapTileInstance,TILE_LOCATION tileLocation)
         {
 
-            Point adjacentTilePositionMapTileCoordinates = this.ConvertWorldCoordinatesToMapTileCoordinates( PointUtil.ConvertVector2ToPoint(mapTileInstance.PositionInWorldCoordinates));
+            Point adjacentTilePositionMapTileCoordinates = mapTileInstance.MapTileLocation.WorldMapTileCoordinatesAsPoint;
+
             if (tileLocation == TILE_LOCATION.WEST)
             {
                 adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X - 1;
@@ -1013,7 +984,7 @@ namespace mike_and_conquer.gameworld
             }
 
             Point adjacentTilePositionInWorldCoordinates =
-                ConvertMapTileCoordinatesToWorldCoordinates(adjacentTilePositionMapTileCoordinates);
+                MapTileLocation.ConvertMapTileCoordinatesToWorldCoordinates(adjacentTilePositionMapTileCoordinates);
             MapTileInstance fouMapTileInstance =
                 this.FindMapTileInstanceAllowNull(adjacentTilePositionInWorldCoordinates.X,
                     adjacentTilePositionInWorldCoordinates.Y);

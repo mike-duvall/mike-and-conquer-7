@@ -1235,9 +1235,19 @@ namespace mike_and_conquer.gameview
         {
             if (barracksPlacementIndicatorView == null)
             {
+
+                int constructionYardWorldMapTileX =
+                    ((int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.X) *
+                    GameWorld.MAP_TILE_WIDTH;
+
+                int constructionYardWorldMapTileY =
+                    ((int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.Y) *
+                    GameWorld.MAP_TILE_HEIGHT;
+
+
                 barracksBarracksPlacementIndicator = new BarracksPlacementIndicator(
-                    GameLocation.CreateGameLocationInWorldCoordinates((int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.X,
-                        (int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.Y));
+                    MapTileLocation.CreateFromWorldMapTileCoordinates(constructionYardWorldMapTileX,constructionYardWorldMapTileY));
+
                 barracksPlacementIndicatorView = new BarracksPlacementIndicatorView(barracksBarracksPlacementIndicator);
             }
 
@@ -1250,15 +1260,9 @@ namespace mike_and_conquer.gameview
             Point mouseLocationWordCoordinates =
                 ConvertScreenLocationToWorldLocation(mouseLocationInScreenCoordinates);
 
-            Point mouseLocationInMapTileCoordinates =
-                GameWorld.instance.ConvertWorldCoordinatesToMapTileCoordinates(mouseLocationWordCoordinates);
+            barracksBarracksPlacementIndicator.UpdateLocationInWorldCoordinates(mouseLocationWordCoordinates);
 
-            Point worldLocationRoundedToMapTile =
-                GameWorld.instance.ConvertMapTileCoordinatesToWorldCoordinates(
-                    mouseLocationInMapTileCoordinates);
 
-            barracksBarracksPlacementIndicator.UpdateLocation(worldLocationRoundedToMapTile.X,
-                worldLocationRoundedToMapTile.Y);
         }
 
 

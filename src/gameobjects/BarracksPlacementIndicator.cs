@@ -43,41 +43,6 @@ namespace mike_and_conquer.gameobjects
             buildingBuildingPlacementIndicatorTiles.Add(newTile);
         }
 
-//        public void UpdateLocation(int x, int y)
-//        {
-//
-//
-//
-//            mapTileLocation.X = x;
-//            mapTileLocation.Y = y;
-//            foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
-//            {
-//                tile.UpdateLocation(mapTileLocation);
-//                tile.CanPlaceBuilding = false;
-//            }
-//
-//            bool isAnyTileTouchingExistingBase = false;
-//
-//            foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
-//            {
-//                if (GameWorld.instance.IsPointAdjacentToConstructionYardAndClearForBuilding(tile.MapTileLocation.WorldCoordinatesAsPoint))
-//                {
-//                    isAnyTileTouchingExistingBase = true;
-//                }
-//            }
-//
-//            if (isAnyTileTouchingExistingBase)
-//            {
-//                foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
-//                {
-//
-//                    if (GameWorld.instance.IsValidMoveDestination(tile.MapTileLocation.WorldCoordinatesAsPoint))
-//                    {
-//                        tile.CanPlaceBuilding = true;
-//                    }
-//                }
-//            }
-//        }
 
 
         public void UpdateLocationInWorldCoordinates(Point mouseLocationWordCoordinates)

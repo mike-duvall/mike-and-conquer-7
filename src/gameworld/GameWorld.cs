@@ -945,7 +945,9 @@ namespace mike_and_conquer.gameworld
         private MapTileInstance FindAdjacentMapTileInstance(MapTileInstance mapTileInstance,TILE_LOCATION tileLocation)
         {
 
-            Point adjacentTilePositionMapTileCoordinates = MapTileLocation.ConvertWorldCoordinatesToMapTileCoordinates( PointUtil.ConvertVector2ToPoint(mapTileInstance.MapTileLocation.WorldCoordinatesAsVector2));
+//            Point adjacentTilePositionMapTileCoordinates = MapTileLocation.ConvertWorldCoordinatesToMapTileCoordinates( PointUtil.ConvertVector2ToPoint(mapTileInstance.MapTileLocation.WorldCoordinatesAsVector2));
+            Point adjacentTilePositionMapTileCoordinates = mapTileInstance.MapTileLocation.WorldMapTileCoordinatesAsPoint;
+
             if (tileLocation == TILE_LOCATION.WEST)
             {
                 adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X - 1;

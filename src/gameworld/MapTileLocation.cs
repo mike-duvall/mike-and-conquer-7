@@ -1,4 +1,4 @@
-﻿using System.Runtime.CompilerServices;
+﻿
 using Microsoft.Xna.Framework;
 using mike_and_conquer.util;
 
@@ -8,8 +8,6 @@ namespace mike_and_conquer.gameworld
     {
         private int xInWorldMapTileCoordinates;
         private int yInWorldMapTileCoordinates;
-
-
 
         public int XinWorldMapTileCoordinates
         {
@@ -23,9 +21,6 @@ namespace mike_and_conquer.gameworld
             get { return yInWorldMapTileCoordinates; }
             set { yInWorldMapTileCoordinates = value; }
         }
-
-
-
 
         private MapTileLocation(int x, int y)
         {
@@ -41,46 +36,46 @@ namespace mike_and_conquer.gameworld
         public static MapTileLocation CreateFromWorldCoordinatesInVector2(Vector2 worldCoordinatesInVector2)
         {
             Point worldCoordinatesInPoint = PointUtil.ConvertVector2ToPoint(worldCoordinatesInVector2);
-            Point mapTileCoordinates = MapTileLocation.ConvertWorldCoordinatesToMapTileCoordinates(worldCoordinatesInPoint);
+            Point mapTileCoordinates = ConvertWorldCoordinatesToMapTileCoordinates(worldCoordinatesInPoint);
             return new MapTileLocation(mapTileCoordinates.X, mapTileCoordinates.Y);
         }
 
         public static MapTileLocation CreateFromWorldCoordinates(int x, int y)
         {
             Point worldCoordinatesInPoint = new Point(x,y);
-            Point mapTileCoordinates = MapTileLocation.ConvertWorldCoordinatesToMapTileCoordinates(worldCoordinatesInPoint);
+            Point mapTileCoordinates = ConvertWorldCoordinatesToMapTileCoordinates(worldCoordinatesInPoint);
             return new MapTileLocation(mapTileCoordinates.X, mapTileCoordinates.Y);
         }
 
-
-        //        public Point ToPoint()
-        //        {
-        //            return new Point(xInWorldMapTileCoordinates, yInWorldMapTileCoordinates);
-        //        }
-        public float XInWorldCoordinates
-        {
-            get { return (xInWorldMapTileCoordinates * GameWorld.MAP_TILE_WIDTH) + (GameWorld.MAP_TILE_WIDTH / 2); }
-        }
-
-        public float YInWorldCoordinates
-        {
-            get { return (yInWorldMapTileCoordinates * GameWorld.MAP_TILE_HEIGHT) + (GameWorld.MAP_TILE_HEIGHT / 2); }
-        }
+//        public float XInWorldCoordinates
+//        {
+//            get { return (xInWorldMapTileCoordinates * GameWorld.MAP_TILE_WIDTH) + (GameWorld.MAP_TILE_WIDTH / 2); }
+//        }
+//
+//        public float YInWorldCoordinates
+//        {
+//            get { return (yInWorldMapTileCoordinates * GameWorld.MAP_TILE_HEIGHT) + (GameWorld.MAP_TILE_HEIGHT / 2); }
+//        }
 
         public Vector2 WorldCoordinatesAsVector2
         {
             get
             {
-                return new Vector2(XInWorldCoordinates, YInWorldCoordinates);
+                Point point = WorldCoordinatesAsPoint;
+                return new Vector2(point.X, point.Y);
             }
         }
 
+        public Point WorldMapTileCoordinatesAsPoint
+        {
+            get {  return new Point(XinWorldMapTileCoordinates, YinWorldMapTileCoordinates);}
+        }
 
         public Point WorldCoordinatesAsPoint
         {
             get
             {
-                return new Point((int) XInWorldCoordinates, (int) YInWorldCoordinates);
+                return  MapTileLocation.ConvertMapTileCoordinatesToWorldCoordinates(new Point(xInWorldMapTileCoordinates, yInWorldMapTileCoordinates));
             }
         }
 
@@ -104,7 +99,7 @@ namespace mike_and_conquer.gameworld
         }
 
 
-        public static Point ConvertWorldCoordinatesToMapTileCoordinates(Point pointInWorldCoordinates)
+        private static Point ConvertWorldCoordinatesToMapTileCoordinates(Point pointInWorldCoordinates)
         {
 
             int destinationRow = pointInWorldCoordinates.Y;
@@ -115,6 +110,7 @@ namespace mike_and_conquer.gameworld
 
             return new Point(destinationX, destinationY);
         }
+
 
 
     }

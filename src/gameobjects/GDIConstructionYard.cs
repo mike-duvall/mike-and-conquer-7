@@ -101,8 +101,12 @@ namespace mike_and_conquer.gameobjects
 
             MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstance(x, y);
 
-            int barracksX = (int) mapTileInstance.MapTileLocation.XInWorldCoordinates + 12;
-            int barracksY = (int)mapTileInstance.MapTileLocation.YInWorldCoordinates + 12;
+            //            int barracksX = (int) mapTileInstance.MapTileLocation.XInWorldCoordinates + 12;
+            //            int barracksY = (int)mapTileInstance.MapTileLocation.YInWorldCoordinates + 12;
+
+            int barracksX = (int)mapTileInstance.MapTileLocation.WorldCoordinatesAsPoint.X + 12;
+            int barracksY = (int)mapTileInstance.MapTileLocation.WorldCoordinatesAsPoint.Y + 12;
+
 
             Point barracksPosition = new Point(barracksX, barracksY);
             MikeAndConquerGame.instance.AddGDIBarracksAtWorldCoordinates(barracksPosition);

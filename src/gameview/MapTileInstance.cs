@@ -15,6 +15,8 @@ namespace mike_and_conquer.gameview
 
         private MapTileLocation mapTileLocation;
 
+
+
         public MapTileLocation MapTileLocation
         {
             get { return mapTileLocation; }
@@ -81,8 +83,8 @@ namespace mike_and_conquer.gameview
 
             //            int leftX = (int)PositionInWorldCoordinates.X - (width / 2);
             //            int topY = (int)PositionInWorldCoordinates.Y - (height / 2);
-            int leftX = (int) mapTileLocation.XInWorldCoordinates - (width / 2);
-            int topY = (int) mapTileLocation.YInWorldCoordinates - (height / 2);
+            int leftX =  mapTileLocation.WorldCoordinatesAsPoint.X - (width / 2);
+            int topY =  mapTileLocation.WorldCoordinatesAsPoint.Y - (height / 2);
 
             Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);
             return boundRectangle.Contains(aPoint);
@@ -90,7 +92,7 @@ namespace mike_and_conquer.gameview
 
         public Point GetCenter()
         {
-            return new Point((int)mapTileLocation.XInWorldCoordinates, (int)mapTileLocation.YInWorldCoordinates);
+            return new Point(mapTileLocation.WorldCoordinatesAsPoint.X, mapTileLocation.WorldCoordinatesAsPoint.Y);
         }
 
         public Point GetDestinationSlotForMinigunner(Minigunner aMinigunner)

@@ -20,8 +20,8 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             Minigunner minigunner = GameWorld.instance.GetNodMinigunnerByIdViaEvent(id);
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;
-            restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
-            restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
+            restMinigunner.x = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.X;
+            restMinigunner.y = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y;
             restMinigunner.health = minigunner.health;
             restMinigunner.selected = minigunner.selected;
             return Ok(restMinigunner);
@@ -36,8 +36,8 @@ namespace mike_and_conquer.externalcontrol.rest.controller
                 Minigunner minigunner = GameWorld.instance.CreateNodMinigunnerViaEvent(minigunnerPositionInWorldCoordinates, inputMinigunner.aiIsOn);
                 RestMinigunner restMinigunner = new RestMinigunner();
                 restMinigunner.id = minigunner.id;
-                restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
-                restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
+                restMinigunner.x = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.X;
+                restMinigunner.y = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y;
                 restMinigunner.health = minigunner.health;
                 return Ok(restMinigunner);
             }

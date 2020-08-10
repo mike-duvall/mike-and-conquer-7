@@ -25,11 +25,11 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             {
                 RestMinigunner restMinigunner = new RestMinigunner();
                 restMinigunner.id = minigunner.id;
-                restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
-                restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
+                restMinigunner.x = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.X;
+                restMinigunner.y = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y;
                 Vector2 screenPosition =
                     GameWorldView.instance.ConvertWorldCoordinatesToScreenCoordinates(minigunner
-                        .positionInWorldCoordinates);
+                        .GameWorldLocation.WorldCoordinatesAsVector2);
                 restMinigunner.screenX = (int)screenPosition.X;
                 restMinigunner.screenY = (int)screenPosition.Y;
                 restMinigunner.health = minigunner.health;
@@ -48,11 +48,11 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             Minigunner minigunner = GameWorld.instance.GetGDIMinigunnerByIdViaEvent(id);
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;
-            restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
-            restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
+            restMinigunner.x = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.X;
+            restMinigunner.y = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y;
             Vector2 screenPosition =
                 GameWorldView.instance.ConvertWorldCoordinatesToScreenCoordinates(minigunner
-                    .positionInWorldCoordinates);
+                    .GameWorldLocation.WorldCoordinatesAsVector2);
             restMinigunner.screenX = (int)screenPosition.X;
             restMinigunner.screenY = (int)screenPosition.Y;
             restMinigunner.health = minigunner.health;
@@ -83,8 +83,8 @@ namespace mike_and_conquer.externalcontrol.rest.controller
 
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;
-            restMinigunner.x = (int)minigunner.positionInWorldCoordinates.X;
-            restMinigunner.y = (int)minigunner.positionInWorldCoordinates.Y;
+            restMinigunner.x = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.X;
+            restMinigunner.y = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y;
             restMinigunner.health = minigunner.health;
 
             // MikeAndConquerGame.instance.log.Information("leaving Post() for minigunner, id:" + restMinigunner.id);

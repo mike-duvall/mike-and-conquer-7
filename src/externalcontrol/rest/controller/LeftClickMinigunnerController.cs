@@ -18,12 +18,12 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             Minigunner gdiMinigunner = GameWorld.instance.GetGdiOrNodMinigunner(restMinigunnerId.id);
         
             Vector2 minigunnerLocation = new Vector2();
-            minigunnerLocation.X = gdiMinigunner.positionInWorldCoordinates.X;
-            minigunnerLocation.Y = gdiMinigunner.positionInWorldCoordinates.Y - 20;
+            minigunnerLocation.X = gdiMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X;
+            minigunnerLocation.Y = gdiMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y - 20;
 
             Vector2 transformedLocation =
                 GameWorldView.instance.ConvertWorldCoordinatesToScreenCoordinates(gdiMinigunner
-                    .positionInWorldCoordinates);
+                    .GameWorldLocation.WorldCoordinatesAsVector2);
 
             int screenWidth = GameWorldView.instance.ScreenWidth;
             int screenHeight = GameWorldView.instance.ScreenHeight;

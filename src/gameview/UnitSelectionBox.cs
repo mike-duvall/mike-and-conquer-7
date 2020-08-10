@@ -109,7 +109,7 @@ namespace mike_and_conquer.gameview
             int maxAllowedSelected = 5;
             foreach (Minigunner minigunner in MikeAndConquerGame.instance.gameWorld.GDIMinigunnerList)
             {
-                if (numMinigunnersSelected < maxAllowedSelected && selectionBoxRectangle.Contains(minigunner.positionInWorldCoordinates))
+                if (numMinigunnersSelected < maxAllowedSelected && selectionBoxRectangle.Contains(minigunner.GameWorldLocation.WorldCoordinatesAsVector2))
                 {
                     minigunner.selected = true;
                     numMinigunnersSelected++;

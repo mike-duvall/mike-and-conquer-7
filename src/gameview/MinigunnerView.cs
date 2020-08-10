@@ -25,7 +25,7 @@ namespace mike_and_conquer.gameview
             this.unitSprite = new UnitSprite(spriteListKey);
             this.unitSprite.drawBoundingRectangle = false;
             this.unitSprite.drawShadow = true;
-            this.unitSelectionCursor = new UnitSelectionCursor((int)this.myMinigunner.positionInWorldCoordinates.X, (int)this.myMinigunner.positionInWorldCoordinates.Y);
+            this.unitSelectionCursor = new UnitSelectionCursor((int)this.myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X, (int)this.myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
             this.destinationSquare = new DestinationSquare();
             this.drawDestinationSquare = false;
             SetupAnimations();
@@ -72,7 +72,7 @@ namespace mike_and_conquer.gameview
                 return;
             }
 
-            unitSelectionCursor.position = new Vector2(myMinigunner.positionInWorldCoordinates.X, myMinigunner.positionInWorldCoordinates.Y);
+            unitSelectionCursor.position = new Vector2(myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X, myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
             if (myMinigunner.state == Minigunner.State.IDLE)
             {
                 unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
@@ -86,7 +86,7 @@ namespace mike_and_conquer.gameview
                 unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
             }
 
-            unitSprite.Draw(gameTime, spriteBatch, myMinigunner.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
+            unitSprite.Draw(gameTime, spriteBatch, myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
 
             if (myMinigunner.selected)
             {
@@ -109,7 +109,7 @@ namespace mike_and_conquer.gameview
             }
 
 
-            unitSelectionCursor.position = new Vector2(myMinigunner.positionInWorldCoordinates.X, myMinigunner.positionInWorldCoordinates.Y);
+            unitSelectionCursor.position = new Vector2(myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X, myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
             if (myMinigunner.state == Minigunner.State.IDLE)
             {
                 unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
@@ -124,7 +124,7 @@ namespace mike_and_conquer.gameview
             }
 
 
-            unitSprite.DrawNoShadow(gameTime, spriteBatch, myMinigunner.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
+            unitSprite.DrawNoShadow(gameTime, spriteBatch, myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
 
             if (myMinigunner.selected)
             {
@@ -142,7 +142,7 @@ namespace mike_and_conquer.gameview
                 return;
             }
 
-            unitSprite.DrawShadowOnly(gameTime, spriteBatch, myMinigunner.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
+            unitSprite.DrawShadowOnly(gameTime, spriteBatch, myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
         }
 
 

@@ -186,13 +186,12 @@ namespace mike_and_conquer.gameobjects
 
         private void UpdateNearbyMapTileVisibility(int xOffset, int yOffset, MapTileInstance.MapTileVisibility mapTileVisibility)
         {
-            xOffset = xOffset * 24;
-            yOffset = yOffset * 24;
-            int offsetLocationX = (int) positionInWorldCoordinates.X + xOffset;
-            int offsetLocationY = (int)positionInWorldCoordinates.Y + yOffset;
 
-            MapTileLocation mapTileLocation =
-                MapTileLocation.CreateFromWorldCoordinates(offsetLocationX, offsetLocationY);
+            MapTileLocation mapTileLocation = MapTileLocation
+                .CreateFromWorldCoordinatesInVector2(positionInWorldCoordinates)
+                .IncrementWorldMapTileX(xOffset)
+                .IncrementWorldMapTileY(yOffset);
+
             MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstanceAllowNull(mapTileLocation);
 
             if (mapTileInstance != null && mapTileInstance.Visibility != MapTileInstance.MapTileVisibility.Visible)

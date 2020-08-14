@@ -944,47 +944,55 @@ namespace mike_and_conquer.gameworld
         private MapTileInstance FindAdjacentMapTileInstance(MapTileInstance mapTileInstance,TILE_LOCATION tileLocation)
         {
 
-            Point adjacentTilePositionMapTileCoordinates = mapTileInstance.MapTileLocation.WorldMapTileCoordinatesAsPoint;
+            MapTileLocation adjacentMapTileLocation = MapTileLocation.CreateCopy(mapTileInstance.MapTileLocation);
+
+            int xOffset = 0;
+            int yOffset = 0;
 
             if (tileLocation == TILE_LOCATION.WEST)
             {
-                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X - 1;
+                xOffset = -1;
             }
             else if (tileLocation == TILE_LOCATION.NORTH_WEST)
             {
-                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X - 1;
-                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y - 1;
+                xOffset = -1;
+                yOffset = -1;
             }
             else if (tileLocation == TILE_LOCATION.NORTH)
             {
-                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y - 1;
+                yOffset = -1;
             }
             else if (tileLocation == TILE_LOCATION.NORTH_EAST)
             {
-                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X + 1;
-                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y - 1;
+                xOffset = 1;
+                yOffset = -1;
             }
             else if (tileLocation == TILE_LOCATION.EAST)
             {
-                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X + 1;
+                xOffset = 1;
+
             }
             else if (tileLocation == TILE_LOCATION.SOUTH_EAST)
             {
-                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X + 1;
-                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y + 1;
+                xOffset = 1;
+                yOffset = 1;
             }
             else if (tileLocation == TILE_LOCATION.SOUTH)
             {
-                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y + 1;
+                yOffset = 1;
             }
             else if (tileLocation == TILE_LOCATION.SOUTH_WEST)
             {
-                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X - 1;
-                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y + 1;
+                xOffset = -1;
+                yOffset = 1;
             }
 
-            Point adjacentTilePositionInWorldCoordinates =
-                MapTileLocation.ConvertMapTileCoordinatesToWorldCoordinates(adjacentTilePositionMapTileCoordinates);
+            adjacentMapTileLocation
+                .IncrementWorldMapTileX(xOffset)
+                .IncrementWorldMapTileY(yOffset);
+
+
+            Point adjacentTilePositionInWorldCoordinates = adjacentMapTileLocation.WorldCoordinatesAsPoint;
             MapTileInstance fouMapTileInstance =
                 this.FindMapTileInstanceAllowNull(adjacentTilePositionInWorldCoordinates.X,
                     adjacentTilePositionInWorldCoordinates.Y);

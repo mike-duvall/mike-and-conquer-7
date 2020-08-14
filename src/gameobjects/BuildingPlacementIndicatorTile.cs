@@ -13,8 +13,6 @@ namespace mike_and_conquer.gameobjects
         private MapTileLocation mapTileLocation;
         private bool canPlaceBulding;
 
-        private MapTileLocation baseMapTileLocation;
-
 
         public bool CanPlaceBuilding
         {
@@ -40,14 +38,10 @@ namespace mike_and_conquer.gameobjects
 
         public void UpdateLocation(MapTileLocation newMapTileLocation)
         {
-            this.baseMapTileLocation = newMapTileLocation;
-
-            int x = baseMapTileLocation.WorldMapTileCoordinatesAsPoint.X  + relativeX;
-            int y = baseMapTileLocation.WorldMapTileCoordinatesAsPoint.Y + relativeY;
-
-            this.mapTileLocation = MapTileLocation.CreateFromWorldMapTileCoordinates(x, y);
-
-
+            this.mapTileLocation = MapTileLocation.CreateCopy(newMapTileLocation);
+            this.mapTileLocation
+                .IncrementWorldMapTileX(relativeX)
+                .IncrementWorldMapTileY(relativeY);
         }
 
 

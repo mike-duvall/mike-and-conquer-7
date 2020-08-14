@@ -146,10 +146,6 @@ namespace mike_and_conquer.gameview
         }
 
 
-        Pickup here
-        All tests passed, so push latest changes
-        Then work on making general methods throughout not take x and y, but instead take GameWorldLocation as input params
-
         public void SetAnimate(bool animateFlag)
         {
             unitSprite.SetAnimate(animateFlag);

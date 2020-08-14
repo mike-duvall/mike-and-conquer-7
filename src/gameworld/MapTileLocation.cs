@@ -9,6 +9,8 @@ namespace mike_and_conquer.gameworld
         private int xInWorldMapTileCoordinates;
         private int yInWorldMapTileCoordinates;
 
+
+
         private MapTileLocation(int x, int y)
         {
             this.xInWorldMapTileCoordinates = x;
@@ -32,6 +34,11 @@ namespace mike_and_conquer.gameworld
             Point worldCoordinatesInPoint = new Point(x,y);
             Point mapTileCoordinates = ConvertWorldCoordinatesToMapTileCoordinates(worldCoordinatesInPoint);
             return new MapTileLocation(mapTileCoordinates.X, mapTileCoordinates.Y);
+        }
+
+        public static MapTileLocation CreateCopy(MapTileLocation mapTileLocation)
+        {
+            return new MapTileLocation(mapTileLocation.xInWorldMapTileCoordinates, mapTileLocation.yInWorldMapTileCoordinates);
         }
 
 
@@ -62,12 +69,12 @@ namespace mike_and_conquer.gameworld
 
 
 
-        public void UpdateLocationInWorldCoordinates(Point locationWordCoordinates)
-        {
-            Point locationInMapTileCoordinates = ConvertWorldCoordinatesToMapTileCoordinates(locationWordCoordinates);
-            xInWorldMapTileCoordinates = locationInMapTileCoordinates.X;
-            yInWorldMapTileCoordinates = locationInMapTileCoordinates.Y;
-        }
+//        public void UpdateLocationInWorldCoordinates(Point locationWordCoordinates)
+//        {
+//            Point locationInMapTileCoordinates = ConvertWorldCoordinatesToMapTileCoordinates(locationWordCoordinates);
+//            xInWorldMapTileCoordinates = locationInMapTileCoordinates.X;
+//            yInWorldMapTileCoordinates = locationInMapTileCoordinates.Y;
+//        }
 
 
         public static Point ConvertMapTileCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
@@ -94,6 +101,31 @@ namespace mike_and_conquer.gameworld
             return new Point(destinationX, destinationY);
         }
 
+
+        public MapTileLocation IncrementWorldMapTileX(int relativeX)
+        {
+            this.xInWorldMapTileCoordinates += relativeX;
+            return this;
+        }
+
+        public MapTileLocation IncrementWorldMapTileY(int relativeY)
+        {
+            this.yInWorldMapTileCoordinates += relativeY;
+            return this;
+        }
+
+
+        public MapTileLocation XInWorldCoordinates(int newX)
+        {
+            xInWorldMapTileCoordinates = newX / GameWorld.MAP_TILE_WIDTH;
+            return this;
+        }
+
+        public MapTileLocation YInWorldCoordinates(int newY)
+        {
+            yInWorldMapTileCoordinates = newY / GameWorld.MAP_TILE_HEIGHT;
+            return this;
+        }
 
 
     }

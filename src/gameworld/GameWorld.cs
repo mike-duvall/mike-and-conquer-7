@@ -744,35 +744,6 @@ namespace mike_and_conquer.gameworld
             return gameEvent.GetGameState();
         }
 
-        //        public MapTileInstance FindMapTileInstance(int xWorldCoordinate, int yWorldCoordinate)
-        //        {
-        //        
-        //            foreach (MapTileInstance nextBasicMapSquare in this.gameMap.MapTileInstanceList)
-        //            {
-        //                if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
-        //                {
-        //                    return nextBasicMapSquare;
-        //                }
-        //            }
-        //            throw new Exception("Unable to find MapTileInstance at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
-        //        
-        //        }
-        //
-        //        public MapTileInstance FindMapTileInstanceAllowNull(int xWorldCoordinate, int yWorldCoordinate)
-        //        {
-        //
-        //            foreach (MapTileInstance nextBasicMapSquare in this.gameMap.MapTileInstanceList)
-        //            {
-        //                if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
-        //                {
-        //                    return nextBasicMapSquare;
-        //                }
-        //            }
-        //
-        //            return null;
-        //
-        //        }
-
         public MapTileInstance FindMapTileInstance(MapTileLocation mapTileLocation)
         {
 

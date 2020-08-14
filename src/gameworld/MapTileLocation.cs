@@ -122,13 +122,69 @@ namespace mike_and_conquer.gameworld
             return this;
         }
 
-//        public int XInWorldCoordinates()
-//        {
-//            int xInWorldCoordinates = (xInWorldMapTileCoordinates * GameWorld.MAP_TILE_WIDTH) +
-//                                      (GameWorld.MAP_TILE_WIDTH / 2);
-//
-//            return xInWorldCoordinates;
-//        }
+
+
+        public MapTileLocation CreateAdjacentMapTileLocation(GameWorld.TILE_LOCATION tileLocation)
+        {
+            MapTileLocation adjacentMapTileLocation = this.Clone();
+
+            int xOffset = 0;
+            int yOffset = 0;
+
+            if (tileLocation == GameWorld.TILE_LOCATION.WEST)
+            {
+                xOffset = -1;
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.NORTH_WEST)
+            {
+                xOffset = -1;
+                yOffset = -1;
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.NORTH)
+            {
+                yOffset = -1;
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.NORTH_EAST)
+            {
+                xOffset = 1;
+                yOffset = -1;
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.EAST)
+            {
+                xOffset = 1;
+
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.SOUTH_EAST)
+            {
+                xOffset = 1;
+                yOffset = 1;
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.SOUTH)
+            {
+                yOffset = 1;
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.SOUTH_WEST)
+            {
+                xOffset = -1;
+                yOffset = 1;
+            }
+
+            adjacentMapTileLocation
+                .IncrementWorldMapTileX(xOffset)
+                .IncrementWorldMapTileY(yOffset);
+
+            return adjacentMapTileLocation;
+
+
+        }
+
+        //        public int XInWorldCoordinates()
+        //        {
+        //            int xInWorldCoordinates = (xInWorldMapTileCoordinates * GameWorld.MAP_TILE_WIDTH) +
+        //                                      (GameWorld.MAP_TILE_WIDTH / 2);
+        //
+        //            return xInWorldCoordinates;
+        //        }
 
 
     }

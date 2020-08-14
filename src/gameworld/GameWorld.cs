@@ -881,7 +881,7 @@ namespace mike_and_conquer.gameworld
         }
 
 
-        enum TILE_LOCATION
+        public enum TILE_LOCATION
         {
             WEST,
             NORTH_WEST,
@@ -944,63 +944,13 @@ namespace mike_and_conquer.gameworld
 
 
 
-
         private MapTileInstance FindAdjacentMapTileInstance(MapTileInstance mapTileInstance,TILE_LOCATION tileLocation)
         {
 
-//            MapTileLocation adjacentMapTileLocation = MapTileLocation.CreateCopy(mapTileInstance.MapTileLocation);
-            MapTileLocation adjacentMapTileLocation = mapTileInstance.MapTileLocation.Clone();
-
-            int xOffset = 0;
-            int yOffset = 0;
-
-            if (tileLocation == TILE_LOCATION.WEST)
-            {
-                xOffset = -1;
-            }
-            else if (tileLocation == TILE_LOCATION.NORTH_WEST)
-            {
-                xOffset = -1;
-                yOffset = -1;
-            }
-            else if (tileLocation == TILE_LOCATION.NORTH)
-            {
-                yOffset = -1;
-            }
-            else if (tileLocation == TILE_LOCATION.NORTH_EAST)
-            {
-                xOffset = 1;
-                yOffset = -1;
-            }
-            else if (tileLocation == TILE_LOCATION.EAST)
-            {
-                xOffset = 1;
-
-            }
-            else if (tileLocation == TILE_LOCATION.SOUTH_EAST)
-            {
-                xOffset = 1;
-                yOffset = 1;
-            }
-            else if (tileLocation == TILE_LOCATION.SOUTH)
-            {
-                yOffset = 1;
-            }
-            else if (tileLocation == TILE_LOCATION.SOUTH_WEST)
-            {
-                xOffset = -1;
-                yOffset = 1;
-            }
-
-            adjacentMapTileLocation
-                .IncrementWorldMapTileX(xOffset)
-                .IncrementWorldMapTileY(yOffset);
+            MapTileLocation adjacentMapTileLocation =
+                mapTileInstance.MapTileLocation.CreateAdjacentMapTileLocation(tileLocation);
 
 
-//            Point adjacentTilePositionInWorldCoordinates = adjacentMapTileLocation.WorldCoordinatesAsPoint;
-//            MapTileInstance fouMapTileInstance =
-//                this.FindMapTileInstanceAllowNull(adjacentTilePositionInWorldCoordinates.X,
-//                    adjacentTilePositionInWorldCoordinates.Y);
 
             MapTileInstance fouMapTileInstance =
                 this.FindMapTileInstanceAllowNull(adjacentMapTileLocation);

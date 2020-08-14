@@ -25,7 +25,7 @@ namespace mike_and_conquer.gameview.sidebar
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            float layerDepth = 1.0f;
+//            float layerDepth = 1.0f;
             sprite.Draw(gameTime, spriteBatch, position, 1.0f);
         }
     }

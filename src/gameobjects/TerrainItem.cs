@@ -53,11 +53,15 @@ namespace mike_and_conquer.gameobjects
             List<Point> blockMapTileRelativeCoordinates = terrainItemDescriptor.GetBlockMapTileRelativeCoordinates();
 
 
+
             foreach (Point point in blockMapTileRelativeCoordinates)
             {
+                // TODO: don't convert these to world cordinates first, just use worldMapTileCoordinates
                 int mapTileX = positionInWorldCoordinates.X + (point.X * GameWorld.MAP_TILE_WIDTH) + 10;
                 int mapTileY = positionInWorldCoordinates.Y + (point.Y * GameWorld.MAP_TILE_HEIGHT) + 10;
-                MapTileInstance blockedMapTile = MikeAndConquerGame.instance.gameWorld.FindMapTileInstance(mapTileX, mapTileY);
+//                MapTileInstance blockedMapTile = MikeAndConquerGame.instance.gameWorld.FindMapTileInstance(mapTileX, mapTileY);
+                MapTileInstance blockedMapTile = MikeAndConquerGame.instance.gameWorld.FindMapTileInstance(
+                    MapTileLocation.CreateFromWorldCoordinates(mapTileX, mapTileY));
                 blockMapTileInstances.Add(blockedMapTile);
             }
 

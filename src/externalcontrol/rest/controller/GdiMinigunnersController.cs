@@ -76,7 +76,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
                 minigunner =
                     GameWorld.instance.CreateGDIMinigunnerViaEvent(minigunnerPositionInWorldCoordinates);
             }
-            catch (BadMinigunnerLocationException e)
+            catch (BadMinigunnerLocationException)
             {
                 return BadRequest("Cannot create on blocking terrain");
             }

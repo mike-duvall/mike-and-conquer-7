@@ -33,12 +33,11 @@ namespace mike_and_conquer.gameview
 
         }
 
-        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            float layerDepth = 1.0f;
-            missionSprite.Draw(gameTime, spriteBatch, missionPosition, 1.0f);
-            accomplishedSprite.Draw(gameTime, spriteBatch, accomplishedPosition, 1.0f);
-
-        }
+//        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+//        {
+//            missionSprite.Draw(gameTime, spriteBatch, missionPosition, 1.0f);
+//            accomplishedSprite.Draw(gameTime, spriteBatch, accomplishedPosition, 1.0f);
+//
+//        }
     }
 }

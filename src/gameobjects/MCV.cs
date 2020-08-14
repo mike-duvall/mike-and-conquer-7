@@ -47,7 +47,7 @@ namespace mike_and_conquer.gameobjects
         double movementVelocity = .010;
         double movementDistanceEpsilon;
 
-        private static int globalId = 1;
+//        private static int globalId = 1;
 
 
         Serilog.Core.Logger log = new LoggerConfiguration()
@@ -104,9 +104,9 @@ namespace mike_and_conquer.gameobjects
                 return;
             }
 
-
             MapTileInstance possibleNewMapTileInstance =
-                GameWorld.instance.FindMapTileInstance((int)positionInWorldCoordinates.X, (int)positionInWorldCoordinates.Y);
+                GameWorld.instance.FindMapTileInstance(
+                    MapTileLocation.CreateFromWorldCoordinatesInVector2(positionInWorldCoordinates));
 
             if (possibleNewMapTileInstance == currentMapTileInstance)
             {
@@ -188,7 +188,12 @@ namespace mike_and_conquer.gameobjects
         {
             xOffset = xOffset * 24;
             yOffset = yOffset * 24;
-            MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstanceAllowNull((int)positionInWorldCoordinates.X + xOffset, (int)positionInWorldCoordinates.Y + yOffset);
+            int offsetLocationX = (int) positionInWorldCoordinates.X + xOffset;
+            int offsetLocationY = (int)positionInWorldCoordinates.Y + yOffset;
+
+            MapTileLocation mapTileLocation =
+                MapTileLocation.CreateFromWorldCoordinates(offsetLocationX, offsetLocationY);
+            MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstanceAllowNull(mapTileLocation);
 
             if (mapTileInstance != null && mapTileInstance.Visibility != MapTileInstance.MapTileVisibility.Visible)
             {
@@ -245,10 +250,6 @@ namespace mike_and_conquer.gameobjects
             {
                 Point centerOfDestinationSquare = path[0];
 
-                MapTileInstance destinationMapTileInstance =
-                    GameWorld.instance.FindMapTileInstance(centerOfDestinationSquare.X, centerOfDestinationSquare.Y);
-
-//                Point currentDestinationPoint = destinationMapTileInstance.GetDestinationSlotForMinigunner(this);
                 Point currentDestinationPoint = centerOfDestinationSquare;
 
                 SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
@@ -448,11 +449,6 @@ namespace mike_and_conquer.gameobjects
         public void OrderToMoveToDestination(Point destination)
         {
 
-            MapTileInstance currentMapTileInstanceLocation =
-                GameWorld.instance.FindMapTileInstance((int)this.positionInWorldCoordinates.X,
-                    (int) this.positionInWorldCoordinates.Y);
-
-//            currentMapTileInstanceLocation.ClearSlotForMinigunner(this);
             int startColumn = (int)this.positionInWorldCoordinates.X / GameWorld.MAP_TILE_WIDTH;
             int startRow = (int)this.positionInWorldCoordinates.Y / GameWorld.MAP_TILE_HEIGHT;
             Point startPoint = new Point(startColumn, startRow);

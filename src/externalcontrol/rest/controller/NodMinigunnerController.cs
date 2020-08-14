@@ -41,7 +41,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
                 restMinigunner.health = minigunner.health;
                 return Ok(restMinigunner);
             }
-            catch (BadMinigunnerLocationException e)
+            catch (BadMinigunnerLocationException)
             {
                 return BadRequest("Cannot create on blocking terrain");
             }

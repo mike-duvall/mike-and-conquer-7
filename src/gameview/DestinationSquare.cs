@@ -23,7 +23,6 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            float layerDepth = 1.0f;
             sprite.Draw(gameTime, spriteBatch, position, 1.0f);
         }
     }

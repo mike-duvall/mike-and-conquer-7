@@ -36,10 +36,10 @@ namespace mike_and_conquer.gameworld
             return new MapTileLocation(mapTileCoordinates.X, mapTileCoordinates.Y);
         }
 
-        public static MapTileLocation CreateCopy(MapTileLocation mapTileLocation)
-        {
-            return new MapTileLocation(mapTileLocation.xInWorldMapTileCoordinates, mapTileLocation.yInWorldMapTileCoordinates);
-        }
+//        public static MapTileLocation CreateCopy(MapTileLocation mapTileLocation)
+//        {
+//            return new MapTileLocation(mapTileLocation.xInWorldMapTileCoordinates, mapTileLocation.yInWorldMapTileCoordinates);
+//        }
 
 
         public Point WorldMapTileCoordinatesAsPoint
@@ -68,15 +68,6 @@ namespace mike_and_conquer.gameworld
         }
 
 
-
-//        public void UpdateLocationInWorldCoordinates(Point locationWordCoordinates)
-//        {
-//            Point locationInMapTileCoordinates = ConvertWorldCoordinatesToMapTileCoordinates(locationWordCoordinates);
-//            xInWorldMapTileCoordinates = locationInMapTileCoordinates.X;
-//            yInWorldMapTileCoordinates = locationInMapTileCoordinates.Y;
-//        }
-
-
         public static Point ConvertMapTileCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
         {
 
@@ -101,6 +92,10 @@ namespace mike_and_conquer.gameworld
             return new Point(destinationX, destinationY);
         }
 
+        public MapTileLocation Clone()
+        {
+            return new MapTileLocation(xInWorldMapTileCoordinates, yInWorldMapTileCoordinates);
+        }
 
         public MapTileLocation IncrementWorldMapTileX(int relativeX)
         {
@@ -126,6 +121,14 @@ namespace mike_and_conquer.gameworld
             yInWorldMapTileCoordinates = newY / GameWorld.MAP_TILE_HEIGHT;
             return this;
         }
+
+//        public int XInWorldCoordinates()
+//        {
+//            int xInWorldCoordinates = (xInWorldMapTileCoordinates * GameWorld.MAP_TILE_WIDTH) +
+//                                      (GameWorld.MAP_TILE_WIDTH / 2);
+//
+//            return xInWorldCoordinates;
+//        }
 
 
     }

@@ -99,10 +99,8 @@ namespace mike_and_conquer.gameobjects
         public void CreateBarracksAtPosition(int x, int y)
         {
 
-            MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstance(x, y);
-
-            //            int barracksX = (int) mapTileInstance.MapTileLocation.XInWorldCoordinates + 12;
-            //            int barracksY = (int)mapTileInstance.MapTileLocation.YInWorldCoordinates + 12;
+            MapTileInstance mapTileInstance =
+                GameWorld.instance.FindMapTileInstance(MapTileLocation.CreateFromWorldCoordinates(x, y));
 
             int barracksX = (int)mapTileInstance.MapTileLocation.WorldCoordinatesAsPoint.X + 12;
             int barracksY = (int)mapTileInstance.MapTileLocation.WorldCoordinatesAsPoint.Y + 12;

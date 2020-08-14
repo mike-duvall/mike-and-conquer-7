@@ -93,7 +93,7 @@ namespace mike_and_conquer.gameview
         private RenderTarget2D mapTileRenderTarget;
         private RenderTarget2D shadowOnlyRenderTarget;
         private RenderTarget2D mapTileAndShadowsRenderTarget;
-        private RenderTarget2D mapTileShadowsAndTreesRenderTarget;
+//        private RenderTarget2D mapTileShadowsAndTreesRenderTarget;
         private RenderTarget2D mapTileVisibilityRenderTarget;
         private RenderTarget2D unitsAndTerrainRenderTarget;
 

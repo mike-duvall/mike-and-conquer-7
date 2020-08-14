@@ -123,7 +123,8 @@ namespace mike_and_conquer.gameobjects
             }
 
             MapTileInstance possibleNewMapTileInstance =
-                GameWorld.instance.FindMapTileInstance((int)GameWorldLocation.WorldCoordinatesAsVector2.X, (int)GameWorldLocation.WorldCoordinatesAsVector2.Y);
+                GameWorld.instance.FindMapTileInstance(
+                    MapTileLocation.CreateFromWorldCoordinatesInVector2(GameWorldLocation.WorldCoordinatesAsVector2));
 
             if (possibleNewMapTileInstance == currentMapTileInstance)
             {
@@ -212,10 +213,10 @@ namespace mike_and_conquer.gameobjects
             UpdateNearbyMapTileVisibility(2, -2, MapTileInstance.MapTileVisibility.PartiallyVisible);
 
 
-            if (this.id == 9)
-            {
-                int x = 3;
-            }
+//            if (this.id == 9)
+//            {
+//                int x = 3;
+//            }
             // south side
             UpdateNearbyMapTileVisibility(-1, 1, MapTileInstance.MapTileVisibility.Visible);
             UpdateNearbyMapTileVisibility(0, 1, MapTileInstance.MapTileVisibility.Visible);
@@ -317,9 +318,12 @@ namespace mike_and_conquer.gameobjects
 
         MapTileInstance FindNearbyMapTileByOffset(Vector2 basePosition, int xOffset, int yOffset)
         {
-            xOffset = xOffset * 24;
-            yOffset = yOffset * 24;
-            MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstanceAllowNull((int)basePosition.X + xOffset, (int)basePosition.Y + yOffset);
+            MapTileLocation offsetMapTileLocation = 
+                MapTileLocation.CreateFromWorldCoordinatesInVector2(basePosition)
+                    .IncrementWorldMapTileX(xOffset)
+                    .IncrementWorldMapTileY(yOffset);
+
+            MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstanceAllowNull(offsetMapTileLocation);
             return mapTileInstance;
         }
 
@@ -390,11 +394,12 @@ namespace mike_and_conquer.gameobjects
                 Point centerOfDestinationSquare = path[0];
 
                 MapTileInstance destinationMapTileInstance =
-                    gameWorld.FindMapTileInstance(centerOfDestinationSquare.X, centerOfDestinationSquare.Y);
+                    gameWorld.FindMapTileInstance(
+                        MapTileLocation.CreateFromWorldCoordinates(centerOfDestinationSquare.X,
+                            centerOfDestinationSquare.Y));
 
                 Point currentDestinationPoint = destinationMapTileInstance.GetDestinationSlotForMinigunner(this);
                 SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
-
             }
 
             this.state = State.LANDING_AT_MAP_SQUARE;
@@ -634,10 +639,10 @@ namespace mike_and_conquer.gameobjects
 
         public void OrderToMoveToDestination(Point destination)
         {
-
             MapTileInstance currentMapTileInstanceLocation =
-                gameWorld.FindMapTileInstance((int)this.GameWorldLocation.WorldCoordinatesAsVector2.X,
-                    (int) this.GameWorldLocation.WorldCoordinatesAsVector2.Y);
+                gameWorld.FindMapTileInstance(
+                    MapTileLocation.CreateFromWorldCoordinatesInVector2(
+                        this.GameWorldLocation.WorldCoordinatesAsVector2));
 
             currentMapTileInstanceLocation.ClearSlotForMinigunner(this);
             int startColumn = (int)this.GameWorldLocation.WorldCoordinatesAsVector2.X / GameWorld.MAP_TILE_WIDTH;

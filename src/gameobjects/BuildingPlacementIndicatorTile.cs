@@ -38,8 +38,8 @@ namespace mike_and_conquer.gameobjects
 
         public void UpdateLocation(MapTileLocation newMapTileLocation)
         {
-            this.mapTileLocation = MapTileLocation.CreateCopy(newMapTileLocation);
-            this.mapTileLocation
+            this.mapTileLocation = newMapTileLocation
+                .Clone()
                 .IncrementWorldMapTileX(relativeX)
                 .IncrementWorldMapTileY(relativeY);
         }

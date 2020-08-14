@@ -37,7 +37,7 @@ namespace mike_and_conquer.main
     public class MikeAndConquerGame : Game
     {
 
-        private float testRotation = 0;
+//        private float testRotation = 0;
 
         public static MikeAndConquerGame instance;
 
@@ -133,7 +133,7 @@ namespace mike_and_conquer.main
 
         private void AddTestModeObjects()
         {
-            bool aiIsOn = false;
+//            bool aiIsOn = false;
 
 
             if (!GameOptions.IS_FULL_SCREEN)

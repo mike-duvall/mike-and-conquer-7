@@ -16,12 +16,12 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             MCV mcv = GameWorld.instance.MCV;
 
             Vector2 minigunnerLocation = new Vector2();
-            minigunnerLocation.X = mcv.positionInWorldCoordinates.X;
-            minigunnerLocation.Y = mcv.positionInWorldCoordinates.Y - 20;
+            minigunnerLocation.X = mcv.GameWorldLocation.WorldCoordinatesAsVector2.X;
+            minigunnerLocation.Y = mcv.GameWorldLocation.WorldCoordinatesAsVector2.Y - 20;
 
             Vector2 transformedLocation =
                 GameWorldView.instance.ConvertWorldCoordinatesToScreenCoordinates(mcv
-                    .positionInWorldCoordinates);
+                    .GameWorldLocation.WorldCoordinatesAsVector2);
 
             int screenWidth = GameWorldView.instance.ScreenWidth;
             int screenHeight = GameWorldView.instance.ScreenHeight;

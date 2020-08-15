@@ -51,9 +51,10 @@ namespace mike_and_conquer.gameview
                 return;
             }
 
-            mcvSelectionBox.position = new Vector2(myMCV.positionInWorldCoordinates.X, myMCV.positionInWorldCoordinates.Y);
+            mcvSelectionBox.position = myMCV.GameWorldLocation.WorldCoordinatesAsVector2;
 
-            unitSprite.Draw(gameTime, spriteBatch, myMCV.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
+
+            unitSprite.Draw(gameTime, spriteBatch, myMCV.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
 
             if (myMCV.selected)
             {
@@ -75,9 +76,9 @@ namespace mike_and_conquer.gameview
                 return;
             }
 
-            mcvSelectionBox.position = new Vector2(myMCV.positionInWorldCoordinates.X, myMCV.positionInWorldCoordinates.Y);
+            mcvSelectionBox.position = new Vector2(myMCV.GameWorldLocation.WorldCoordinatesAsVector2.X, myMCV.GameWorldLocation.WorldCoordinatesAsVector2.Y);
 
-            unitSprite.DrawNoShadow(gameTime, spriteBatch, myMCV.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
+            unitSprite.DrawNoShadow(gameTime, spriteBatch, myMCV.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
 
             if (myMCV.selected)
             {
@@ -95,7 +96,7 @@ namespace mike_and_conquer.gameview
                 return;
             }
 
-            unitSprite.DrawShadowOnly(gameTime, spriteBatch, myMCV.positionInWorldCoordinates, SpriteSortLayers.UNIT_DEPTH);
+            unitSprite.DrawShadowOnly(gameTime, spriteBatch, myMCV.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
         }
 
 

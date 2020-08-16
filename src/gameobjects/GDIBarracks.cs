@@ -1,5 +1,6 @@
 ﻿
 using System;
+using mike_and_conquer.gameworld;
 using mike_and_conquer.main;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -11,7 +12,12 @@ namespace mike_and_conquer.gameobjects
     public class GDIBarracks
     {
 
-        public Vector2 positionInWorldCoordinates { get; set; }
+        private GameWorldLocation gameWorldLocation;
+
+        public GameWorldLocation GameWorldLocation
+        {
+            get { return gameWorldLocation; }
+        }
 
         private Boolean isBuildingMinigunner;
         private int minigunnerBuildCountdown;
@@ -47,7 +53,7 @@ namespace mike_and_conquer.gameobjects
 
         public GDIBarracks(int x, int y)
         {
-            positionInWorldCoordinates = new Vector2(x, y);
+            gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(x, y);
         }
 
 
@@ -86,8 +92,8 @@ namespace mike_and_conquer.gameobjects
 
         private void CreateMinigunnerFromBarracks()
         {
-            int minigunnerX = (int) positionInWorldCoordinates.X;
-            int minigunnerY = (int) (positionInWorldCoordinates.Y);
+            int minigunnerX = (int) gameWorldLocation.WorldCoordinatesAsVector2.X;
+            int minigunnerY = (int) gameWorldLocation.WorldCoordinatesAsVector2.Y;
 
             Point gdiMinigunnderPosition = new Point(minigunnerX, minigunnerY);
             Minigunner builtMinigunner = MikeAndConquerGame.instance.AddGdiMinigunner(gdiMinigunnderPosition);

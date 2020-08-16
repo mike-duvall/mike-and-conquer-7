@@ -1237,11 +1237,11 @@ namespace mike_and_conquer.gameview
             {
 
                 int constructionYardWorldMapTileX =
-                    ((int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.X) *
+                    ((int)GameWorld.instance.GDIConstructionYard.GameWorldLocation.WorldCoordinatesAsVector2.X) *
                     GameWorld.MAP_TILE_WIDTH;
 
                 int constructionYardWorldMapTileY =
-                    ((int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.Y) *
+                    ((int)GameWorld.instance.GDIConstructionYard.GameWorldLocation.WorldCoordinatesAsVector2.Y) *
                     GameWorld.MAP_TILE_HEIGHT;
 
 

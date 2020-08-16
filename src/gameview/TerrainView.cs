@@ -20,14 +20,9 @@ namespace mike_and_conquer.gameview
         public TerrainView(TerrainItem terrainItem)
         {
             this.terrainItem = terrainItem;
-            this.terrainSprite = new TerrainSprite( terrainItem.TerrainItemType, terrainItem.PositionInWorldCoordinates);
+            this.terrainSprite = new TerrainSprite(terrainItem.TerrainItemType, terrainItem.MapTileLocation.WorldMapTileCoordinatesAsPoint);
         }
 
-//        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-//        {
-//            Vector2 positionAsVector2 = new Vector2(terrainItem.PositionInWorldCoordinates.X, terrainItem.PositionInWorldCoordinates.Y);
-//            terrainSprite.Draw(gameTime, spriteBatch, positionAsVector2);
-//        }
 
         public void DrawFull(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -37,14 +32,12 @@ namespace mike_and_conquer.gameview
 
         public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            Vector2 positionAsVector2 = new Vector2(terrainItem.PositionInWorldCoordinates.X, terrainItem.PositionInWorldCoordinates.Y);
-            this.terrainSprite.DrawShadowOnly(gameTime, spriteBatch, positionAsVector2);
+            this.terrainSprite.DrawShadowOnly(gameTime, spriteBatch, terrainItem.MapTileLocation.WorldCoordinatesAsVector2);
         }
 
         public void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            Vector2 positionAsVector2 = new Vector2(terrainItem.PositionInWorldCoordinates.X, terrainItem.PositionInWorldCoordinates.Y);
-            this.terrainSprite.DrawNoShadow(gameTime, spriteBatch, positionAsVector2, terrainItem.LayerDepthOffset);
+            this.terrainSprite.DrawNoShadow(gameTime, spriteBatch, terrainItem.MapTileLocation.WorldCoordinatesAsVector2, terrainItem.LayerDepthOffset);
         }
     }
 }

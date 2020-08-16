@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using mike_and_conquer.gameview;
+using mike_and_conquer.gameworld;
 using mike_and_conquer.main;
 using mike_and_conquer.openra;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
@@ -51,7 +52,7 @@ namespace mike_and_conquer.gamesprite
 
             spriteBorderRectangleTexture = CreateSpriteBorderRectangleTexture();
 
-            spriteOrigin = new Vector2(0,0);
+            spriteOrigin = new Vector2(GameWorld.MAP_TILE_WIDTH / 2, GameWorld.MAP_TILE_HEIGHT / 2);
 
             UnitFrame firstUnitFrame = unitFrameList[unitFrameImageIndex];
             this.width = firstUnitFrame.Texture.Width;

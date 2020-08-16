@@ -12,11 +12,12 @@ namespace mike_and_conquer.gameobjects
     public class TerrainItem
     {
 
-        private Point positionInWorldCoordinates;
 
-        public Point PositionInWorldCoordinates
+        private MapTileLocation mapTileLocation;
+
+        public MapTileLocation MapTileLocation
         {
-            get { return positionInWorldCoordinates; }
+            get { return mapTileLocation; }
         }
 
         public String TerrainItemType
@@ -41,7 +42,7 @@ namespace mike_and_conquer.gameobjects
 
         public TerrainItem(int x, int y, TerrainItemDescriptor terrainItemDescriptor, float layerDepthOffset)
         {
-            positionInWorldCoordinates = new Point(x, y);
+            mapTileLocation = MapTileLocation.CreateFromWorldCoordinates(x, y);
             this.terrainItemDescriptor = terrainItemDescriptor;
             this.layerDepthOffset = layerDepthOffset;
         }
@@ -57,9 +58,8 @@ namespace mike_and_conquer.gameobjects
             foreach (Point point in blockMapTileRelativeCoordinates)
             {
                 // TODO: don't convert these to world cordinates first, just use worldMapTileCoordinates
-                int mapTileX = positionInWorldCoordinates.X + (point.X * GameWorld.MAP_TILE_WIDTH) + 10;
-                int mapTileY = positionInWorldCoordinates.Y + (point.Y * GameWorld.MAP_TILE_HEIGHT) + 10;
-//                MapTileInstance blockedMapTile = MikeAndConquerGame.instance.gameWorld.FindMapTileInstance(mapTileX, mapTileY);
+                int mapTileX = mapTileLocation.WorldCoordinatesAsPoint.X + (point.X * GameWorld.MAP_TILE_WIDTH) + 10;
+                int mapTileY = mapTileLocation.WorldCoordinatesAsPoint.Y + (point.Y * GameWorld.MAP_TILE_HEIGHT) + 10;
                 MapTileInstance blockedMapTile = MikeAndConquerGame.instance.gameWorld.FindMapTileInstance(
                     MapTileLocation.CreateFromWorldCoordinates(mapTileX, mapTileY));
                 blockMapTileInstances.Add(blockedMapTile);

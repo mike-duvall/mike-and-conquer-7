@@ -31,6 +31,10 @@ namespace mike_and_conquer.gameview
         {
             this.unitSprite = new UnitSprite(SPRITE_KEY);
             this.unitSprite.drawShadow = true;
+
+            // Center of barracks is the center of the upper left tile
+            this.unitSprite.middleOfSpriteInSpriteCoordinates.X = 12;
+            this.unitSprite.middleOfSpriteInSpriteCoordinates.Y = 12;
             this.myBarracks = barracks;
             SetupAnimations();
         }
@@ -52,12 +56,12 @@ namespace mike_and_conquer.gameview
 
         internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            unitSprite.DrawNoShadow(gameTime, spriteBatch, myBarracks.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
+            unitSprite.DrawNoShadow(gameTime, spriteBatch, myBarracks.MapTileLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
         }
 
         internal void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            unitSprite.DrawShadowOnly(gameTime, spriteBatch, myBarracks.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
+            unitSprite.DrawShadowOnly(gameTime, spriteBatch, myBarracks.MapTileLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
         }
 
 

@@ -570,12 +570,13 @@ namespace mike_and_conquer.gameworld
             return nodPlayer.AddNodMinigunner(newMinigunner, aiIsOn);
         }
 
-        public GDIBarracks AddGDIBarracks(Point positionInWorldCoordinates)
+
+        public GDIBarracks AddGDIBarracks(MapTileLocation mapTileLocation)
         {
             // // TODO Might want to check if one already exists and throw error if so
             // gdiBarracks = new GDIBarracks(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
             // return gdiBarracks;
-            return gdiPlayer.AddGDIBarracks(positionInWorldCoordinates);
+            return gdiPlayer.AddGDIBarracks(mapTileLocation);
         }
 
         public GDIConstructionYard AddGDIConstructionYard(Point positionInWorldCoordinates)

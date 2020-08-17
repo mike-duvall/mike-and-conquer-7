@@ -12,11 +12,12 @@ namespace mike_and_conquer.gameobjects
     public class GDIBarracks
     {
 
-        private GameWorldLocation gameWorldLocation;
 
-        public GameWorldLocation GameWorldLocation
+        private MapTileLocation mapTileLocation;
+
+        public MapTileLocation MapTileLocation
         {
-            get { return gameWorldLocation; }
+            get { return mapTileLocation; }
         }
 
         private Boolean isBuildingMinigunner;
@@ -51,9 +52,10 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-        public GDIBarracks(int x, int y)
+
+        public GDIBarracks(MapTileLocation mapTileLocation)
         {
-            gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(x, y);
+            this.mapTileLocation = mapTileLocation;
         }
 
 
@@ -92,10 +94,7 @@ namespace mike_and_conquer.gameobjects
 
         private void CreateMinigunnerFromBarracks()
         {
-            int minigunnerX = (int) gameWorldLocation.WorldCoordinatesAsVector2.X;
-            int minigunnerY = (int) gameWorldLocation.WorldCoordinatesAsVector2.Y;
-
-            Point gdiMinigunnderPosition = new Point(minigunnerX, minigunnerY);
+            Point gdiMinigunnderPosition = mapTileLocation.WorldCoordinatesAsPoint;
             Minigunner builtMinigunner = MikeAndConquerGame.instance.AddGdiMinigunner(gdiMinigunnderPosition);
 
             Point destinationInWC = new Point(gdiMinigunnderPosition.X, gdiMinigunnderPosition.Y + 40);

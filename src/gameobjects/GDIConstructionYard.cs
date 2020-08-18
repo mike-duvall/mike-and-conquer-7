@@ -11,13 +11,12 @@ namespace mike_and_conquer.gameobjects
     public class GDIConstructionYard
     {
 
-//        public Vector2 positionInWorldCoordinates { get; set; }
 
-        private GameWorldLocation gameWorldLocation;
+        private MapTileLocation mapTileLocation;
 
-        public GameWorldLocation GameWorldLocation
+        public MapTileLocation MapTileLocation
         {
-            get { return gameWorldLocation; }
+            get { return mapTileLocation; }
         }
 
 
@@ -63,8 +62,7 @@ namespace mike_and_conquer.gameobjects
 
         public GDIConstructionYard(int x, int y)
         {
-//            positionInWorldCoordinates = new Vector2(x, y);
-            gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(x, y);
+            mapTileLocation = MapTileLocation.CreateFromWorldCoordinates(x, y);
         }
 
 
@@ -74,8 +72,8 @@ namespace mike_and_conquer.gameobjects
             int width = 72;
             int height = 48;
 
-            int leftX = (int)gameWorldLocation.WorldCoordinatesAsVector2.X - (width / 2);
-            int topY = (int)gameWorldLocation.WorldCoordinatesAsVector2.Y - (height / 2);
+            int leftX = (int)mapTileLocation.WorldCoordinatesAsVector2.X - (width / 2);
+            int topY = (int)mapTileLocation.WorldCoordinatesAsVector2.Y - (height / 2);
 
             Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);
             return boundRectangle.Contains(aPoint);

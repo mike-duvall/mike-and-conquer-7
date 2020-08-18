@@ -52,19 +52,19 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            unitSprite.Draw(gameTime, spriteBatch, myGdiConstructionYard.GameWorldLocation.WorldCoordinatesAsVector2,
+            unitSprite.Draw(gameTime, spriteBatch, myGdiConstructionYard.MapTileLocation.WorldCoordinatesAsVector2,
                 SpriteSortLayers.BUILDING_DEPTH);
         }
 
         internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            unitSprite.DrawNoShadow(gameTime, spriteBatch, myGdiConstructionYard.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
+            unitSprite.DrawNoShadow(gameTime, spriteBatch, myGdiConstructionYard.MapTileLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
         }
 
 
         internal void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            unitSprite.DrawShadowOnly(gameTime, spriteBatch, myGdiConstructionYard.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
+            unitSprite.DrawShadowOnly(gameTime, spriteBatch, myGdiConstructionYard.MapTileLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
         }
 
         // internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)

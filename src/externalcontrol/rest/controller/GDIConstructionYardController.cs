@@ -20,8 +20,8 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             }
             RestGDIConstructionYard  restGdiConstructionYard = new RestGDIConstructionYard();
 
-            restGdiConstructionYard.x = (int)gdiConstructionYard.GameWorldLocation.WorldCoordinatesAsVector2.X;
-            restGdiConstructionYard.y = (int)gdiConstructionYard.GameWorldLocation.WorldCoordinatesAsVector2.Y;
+            restGdiConstructionYard.x = gdiConstructionYard.MapTileLocation.WorldCoordinatesAsPoint.X;
+            restGdiConstructionYard.y = gdiConstructionYard.MapTileLocation.WorldCoordinatesAsPoint.Y;
             return Ok(restGdiConstructionYard);
 
         }

@@ -25,8 +25,6 @@ namespace mike_and_conquer.gameobjects
         public int health { get; set; }
         public bool selected { get; set; }
 
-//        public Vector2 positionInWorldCoordinates { get; set; }
-
         private GameWorldLocation gameWorldLocation;
 
         public GameWorldLocation GameWorldLocation
@@ -82,7 +80,6 @@ namespace mike_and_conquer.gameobjects
 
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;
-//            positionInWorldCoordinates = new Vector2(xInWorldCoordinates, yInWorldCoordinates);
             gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(xInWorldCoordinates, yInWorldCoordinates);
 
             health = 1000;
@@ -607,7 +604,6 @@ namespace mike_and_conquer.gameobjects
 //                positionInWorldCoordinates = new Vector2(newX, newY);
 //            }
 
-//            positionInWorldCoordinates = new Vector2(newX, newY);
             gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(newX, newY);
 
         }

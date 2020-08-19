@@ -341,12 +341,6 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-        private double Distance(double dX0, double dY0, double dX1, double dY1)
-        {
-            return Math.Sqrt((dX1 - dX0) * (dX1 - dX0) + (dY1 - dY0) * (dY1 - dY0));
-        }
-
-
 
         void MoveTowardsDestination(GameTime gameTime, int destinationX, int destinationY)
         {
@@ -417,7 +411,7 @@ namespace mike_and_conquer.gameobjects
 //                positionInWorldCoordinates = new Vector2(newX, newY);
 //            }
 
-//            positionInWorldCoordinates = new Vector2(newX, newY);
+
             gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(newX, newY);
 
         }

@@ -1230,41 +1230,25 @@ namespace mike_and_conquer.gameview
             return result;
         }
 
-
         public void Notify_PlacingBarracks()
         {
             if (barracksPlacementIndicatorView == null)
             {
-
-                int constructionYardWorldMapTileX =
-                    GameWorld.instance.GDIConstructionYard.MapTileLocation.WorldCoordinatesAsPoint.X *
-                    GameWorld.MAP_TILE_WIDTH;
-
-                int constructionYardWorldMapTileY =
-                    GameWorld.instance.GDIConstructionYard.MapTileLocation.WorldCoordinatesAsPoint.Y *
-                    GameWorld.MAP_TILE_HEIGHT;
-
-
                 barracksBarracksPlacementIndicator = new BarracksPlacementIndicator(
-                    MapTileLocation.CreateFromWorldMapTileCoordinates(constructionYardWorldMapTileX,constructionYardWorldMapTileY));
+                    MapTileLocation.CreateFromWorldCoordinatesInVector2(GameWorld.instance.GDIConstructionYard.MapTileLocation.WorldCoordinatesAsVector2));
 
                 barracksPlacementIndicatorView = new BarracksPlacementIndicatorView(barracksBarracksPlacementIndicator);
             }
 
         }
 
-
         public void Notify_PlacingBarracksWithMouseOverMap(Point mouseLocationInScreenCoordinates)
         {
-
             Point mouseLocationWordCoordinates =
                 ConvertScreenLocationToWorldLocation(mouseLocationInScreenCoordinates);
 
             barracksBarracksPlacementIndicator.UpdateLocationInWorldCoordinates(mouseLocationWordCoordinates);
-
-
         }
-
 
         public void Notify_DonePlacingBarracks()
         {

@@ -22,8 +22,9 @@ namespace mike_and_conquer.externalcontrol.rest.controller
 
             RestGDIBarracks  restGDIBarracks = new RestGDIBarracks();
 
-            restGDIBarracks.x = (int)gdiBarracks.positionInWorldCoordinates.X;
-            restGDIBarracks.y = (int)gdiBarracks.positionInWorldCoordinates.Y;
+            restGDIBarracks.x = gdiBarracks.MapTileLocation.WorldCoordinatesAsPoint.X;
+            restGDIBarracks.y = gdiBarracks.MapTileLocation.WorldCoordinatesAsPoint.Y;
+
             return Ok(restGDIBarracks);
 
         }

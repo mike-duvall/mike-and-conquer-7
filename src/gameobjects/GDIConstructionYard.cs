@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using mike_and_conquer.gameview;
 using mike_and_conquer.gameworld;
 using mike_and_conquer.main;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
+
 
 namespace mike_and_conquer.gameobjects
 { 
@@ -11,7 +11,13 @@ namespace mike_and_conquer.gameobjects
     public class GDIConstructionYard
     {
 
-        public Vector2 positionInWorldCoordinates { get; set; }
+
+        private MapTileLocation mapTileLocation;
+
+        public MapTileLocation MapTileLocation
+        {
+            get { return mapTileLocation; }
+        }
 
 
         private Boolean isBuildingBarracks;
@@ -56,7 +62,7 @@ namespace mike_and_conquer.gameobjects
 
         public GDIConstructionYard(int x, int y)
         {
-            positionInWorldCoordinates = new Vector2(x, y);
+            mapTileLocation = MapTileLocation.CreateFromWorldCoordinates(x, y);
         }
 
 
@@ -66,8 +72,8 @@ namespace mike_and_conquer.gameobjects
             int width = 72;
             int height = 48;
 
-            int leftX = (int)positionInWorldCoordinates.X - (width / 2);
-            int topY = (int)positionInWorldCoordinates.Y - (height / 2);
+            int leftX = (int)mapTileLocation.WorldCoordinatesAsVector2.X - (width / 2);
+            int topY = (int)mapTileLocation.WorldCoordinatesAsVector2.Y - (height / 2);
 
             Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);
             return boundRectangle.Contains(aPoint);
@@ -96,20 +102,10 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-        public void CreateBarracksAtPosition(int x, int y)
+        public void CreateBarracksAtPosition(MapTileLocation mapTileLocation)
         {
 
-            MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstance(x, y);
-
-            //            int barracksX = (int) mapTileInstance.MapTileLocation.XInWorldCoordinates + 12;
-            //            int barracksY = (int)mapTileInstance.MapTileLocation.YInWorldCoordinates + 12;
-
-            int barracksX = (int)mapTileInstance.MapTileLocation.WorldCoordinatesAsPoint.X + 12;
-            int barracksY = (int)mapTileInstance.MapTileLocation.WorldCoordinatesAsPoint.Y + 12;
-
-
-            Point barracksPosition = new Point(barracksX, barracksY);
-            MikeAndConquerGame.instance.AddGDIBarracksAtWorldCoordinates(barracksPosition);
+            MikeAndConquerGame.instance.AddGDIBarracksAtWorldCoordinates(mapTileLocation);
             isBarracksReadyToPlace = false;
             isBuildingBarracks = false;
         }

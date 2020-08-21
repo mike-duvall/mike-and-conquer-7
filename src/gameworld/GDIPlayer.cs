@@ -142,10 +142,10 @@ namespace mike_and_conquer.gameworld
             return mcv;
         }
 
-        public GDIBarracks AddGDIBarracks(Point positionInWorldCoordinates)
+        public GDIBarracks AddGDIBarracks(MapTileLocation mapTileLocation)
         {
             // TODO Might want to check if one already exists and throw error if so
-            gdiBarracks = new GDIBarracks(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
+            gdiBarracks = new GDIBarracks(mapTileLocation);
             return gdiBarracks;
         }
 

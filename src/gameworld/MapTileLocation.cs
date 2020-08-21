@@ -9,6 +9,8 @@ namespace mike_and_conquer.gameworld
         private int xInWorldMapTileCoordinates;
         private int yInWorldMapTileCoordinates;
 
+
+
         private MapTileLocation(int x, int y)
         {
             this.xInWorldMapTileCoordinates = x;
@@ -33,6 +35,11 @@ namespace mike_and_conquer.gameworld
             Point mapTileCoordinates = ConvertWorldCoordinatesToMapTileCoordinates(worldCoordinatesInPoint);
             return new MapTileLocation(mapTileCoordinates.X, mapTileCoordinates.Y);
         }
+
+//        public static MapTileLocation CreateCopy(MapTileLocation mapTileLocation)
+//        {
+//            return new MapTileLocation(mapTileLocation.xInWorldMapTileCoordinates, mapTileLocation.yInWorldMapTileCoordinates);
+//        }
 
 
         public Point WorldMapTileCoordinatesAsPoint
@@ -61,15 +68,6 @@ namespace mike_and_conquer.gameworld
         }
 
 
-
-        public void UpdateLocationInWorldCoordinates(Point locationWordCoordinates)
-        {
-            Point locationInMapTileCoordinates = ConvertWorldCoordinatesToMapTileCoordinates(locationWordCoordinates);
-            xInWorldMapTileCoordinates = locationInMapTileCoordinates.X;
-            yInWorldMapTileCoordinates = locationInMapTileCoordinates.Y;
-        }
-
-
         public static Point ConvertMapTileCoordinatesToWorldCoordinates(Point pointInWorldMapSquareCoordinates)
         {
 
@@ -94,6 +92,99 @@ namespace mike_and_conquer.gameworld
             return new Point(destinationX, destinationY);
         }
 
+        public MapTileLocation Clone()
+        {
+            return new MapTileLocation(xInWorldMapTileCoordinates, yInWorldMapTileCoordinates);
+        }
+
+        public MapTileLocation IncrementWorldMapTileX(int relativeX)
+        {
+            this.xInWorldMapTileCoordinates += relativeX;
+            return this;
+        }
+
+        public MapTileLocation IncrementWorldMapTileY(int relativeY)
+        {
+            this.yInWorldMapTileCoordinates += relativeY;
+            return this;
+        }
+
+
+        public MapTileLocation XInWorldCoordinates(int newX)
+        {
+            xInWorldMapTileCoordinates = newX / GameWorld.MAP_TILE_WIDTH;
+            return this;
+        }
+
+        public MapTileLocation YInWorldCoordinates(int newY)
+        {
+            yInWorldMapTileCoordinates = newY / GameWorld.MAP_TILE_HEIGHT;
+            return this;
+        }
+
+
+
+        public MapTileLocation CreateAdjacentMapTileLocation(GameWorld.TILE_LOCATION tileLocation)
+        {
+            MapTileLocation adjacentMapTileLocation = this.Clone();
+
+            int xOffset = 0;
+            int yOffset = 0;
+
+            if (tileLocation == GameWorld.TILE_LOCATION.WEST)
+            {
+                xOffset = -1;
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.NORTH_WEST)
+            {
+                xOffset = -1;
+                yOffset = -1;
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.NORTH)
+            {
+                yOffset = -1;
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.NORTH_EAST)
+            {
+                xOffset = 1;
+                yOffset = -1;
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.EAST)
+            {
+                xOffset = 1;
+
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.SOUTH_EAST)
+            {
+                xOffset = 1;
+                yOffset = 1;
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.SOUTH)
+            {
+                yOffset = 1;
+            }
+            else if (tileLocation == GameWorld.TILE_LOCATION.SOUTH_WEST)
+            {
+                xOffset = -1;
+                yOffset = 1;
+            }
+
+            adjacentMapTileLocation
+                .IncrementWorldMapTileX(xOffset)
+                .IncrementWorldMapTileY(yOffset);
+
+            return adjacentMapTileLocation;
+
+
+        }
+
+        //        public int XInWorldCoordinates()
+        //        {
+        //            int xInWorldCoordinates = (xInWorldMapTileCoordinates * GameWorld.MAP_TILE_WIDTH) +
+        //                                      (GameWorld.MAP_TILE_WIDTH / 2);
+        //
+        //            return xInWorldCoordinates;
+        //        }
 
 
     }

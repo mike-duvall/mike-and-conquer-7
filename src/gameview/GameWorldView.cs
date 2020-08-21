@@ -93,7 +93,7 @@ namespace mike_and_conquer.gameview
         private RenderTarget2D mapTileRenderTarget;
         private RenderTarget2D shadowOnlyRenderTarget;
         private RenderTarget2D mapTileAndShadowsRenderTarget;
-        private RenderTarget2D mapTileShadowsAndTreesRenderTarget;
+//        private RenderTarget2D mapTileShadowsAndTreesRenderTarget;
         private RenderTarget2D mapTileVisibilityRenderTarget;
         private RenderTarget2D unitsAndTerrainRenderTarget;
 
@@ -1230,41 +1230,25 @@ namespace mike_and_conquer.gameview
             return result;
         }
 
-
         public void Notify_PlacingBarracks()
         {
             if (barracksPlacementIndicatorView == null)
             {
-
-                int constructionYardWorldMapTileX =
-                    ((int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.X) *
-                    GameWorld.MAP_TILE_WIDTH;
-
-                int constructionYardWorldMapTileY =
-                    ((int)GameWorld.instance.GDIConstructionYard.positionInWorldCoordinates.Y) *
-                    GameWorld.MAP_TILE_HEIGHT;
-
-
                 barracksBarracksPlacementIndicator = new BarracksPlacementIndicator(
-                    MapTileLocation.CreateFromWorldMapTileCoordinates(constructionYardWorldMapTileX,constructionYardWorldMapTileY));
+                    MapTileLocation.CreateFromWorldCoordinatesInVector2(GameWorld.instance.GDIConstructionYard.MapTileLocation.WorldCoordinatesAsVector2));
 
                 barracksPlacementIndicatorView = new BarracksPlacementIndicatorView(barracksBarracksPlacementIndicator);
             }
 
         }
 
-
         public void Notify_PlacingBarracksWithMouseOverMap(Point mouseLocationInScreenCoordinates)
         {
-
             Point mouseLocationWordCoordinates =
                 ConvertScreenLocationToWorldLocation(mouseLocationInScreenCoordinates);
 
             barracksBarracksPlacementIndicator.UpdateLocationInWorldCoordinates(mouseLocationWordCoordinates);
-
-
         }
-
 
         public void Notify_DonePlacingBarracks()
         {

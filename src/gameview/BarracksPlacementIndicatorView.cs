@@ -18,7 +18,7 @@ namespace mike_and_conquer.gameview
         private SingleTextureSprite canNotPlaceBuildingSprite;
 
         public static string FILE_NAME = "trans.icn";
-        private static Vector2 middleOfSpriteInSpriteCoordinates;
+//        private static Vector2 middleOfSpriteInSpriteCoordinates;
 
         public BarracksPlacementIndicatorView(BarracksPlacementIndicator barracksPlacementIndicator)
         {

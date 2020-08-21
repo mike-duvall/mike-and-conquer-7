@@ -37,7 +37,7 @@ namespace mike_and_conquer.main
     public class MikeAndConquerGame : Game
     {
 
-        private float testRotation = 0;
+//        private float testRotation = 0;
 
         public static MikeAndConquerGame instance;
 
@@ -133,7 +133,7 @@ namespace mike_and_conquer.main
 
         private void AddTestModeObjects()
         {
-            bool aiIsOn = false;
+//            bool aiIsOn = false;
 
 
             if (!GameOptions.IS_FULL_SCREEN)
@@ -595,20 +595,10 @@ namespace mike_and_conquer.main
         }
 
 
-        public void AddGDIBarracksAtMapSquareCoordinates(Point positionInMapSquareCoordinates)
+
+        public void AddGDIBarracksAtWorldCoordinates(MapTileLocation mapTileLocation)
         {
-            int xInWorldCoordinates = positionInMapSquareCoordinates.X * GameWorld.MAP_TILE_WIDTH;
-            int yInWorldCoordinates = positionInMapSquareCoordinates.Y * GameWorld.MAP_TILE_HEIGHT;
-
-            Point positionInWorldCoordinates = new Point(xInWorldCoordinates, yInWorldCoordinates);
-
-            AddGDIBarracksAtWorldCoordinates(positionInWorldCoordinates);
-        }
-
-
-        public void AddGDIBarracksAtWorldCoordinates(Point positionInWorldCoordinates)
-        {
-            GDIBarracks gdiBarracks = gameWorld.AddGDIBarracks(positionInWorldCoordinates);
+            GDIBarracks gdiBarracks = gameWorld.AddGDIBarracks(mapTileLocation);
             gameWorldView.AddGDIBarracksView(gdiBarracks);
         }
 

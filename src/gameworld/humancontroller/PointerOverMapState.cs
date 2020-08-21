@@ -128,8 +128,13 @@ namespace mike_and_conquer.gameworld.humancontroller
                 {
                     if (GameWorld.instance.IsValidMoveDestination(new Point(mouseX, mouseY)))
                     {
+//                        MapTileInstance clickedMapTileInstance =
+//                            GameWorld.instance.FindMapTileInstance(mouseX, mouseY);
                         MapTileInstance clickedMapTileInstance =
-                            GameWorld.instance.FindMapTileInstance(mouseX, mouseY);
+                            GameWorld.instance.FindMapTileInstance(
+                                MapTileLocation.CreateFromWorldCoordinates(mouseX, mouseY));
+
+
                         Point centerOfSquare = clickedMapTileInstance.GetCenter();
                         nextMinigunner.OrderToMoveToDestination(centerOfSquare);
                     }
@@ -143,8 +148,12 @@ namespace mike_and_conquer.gameworld.humancontroller
                 {
                     if (GameWorld.instance.IsValidMoveDestination(new Point(mouseX, mouseY)))
                     {
+//                        MapTileInstance clickedMapTileInstance =
+//                            GameWorld.instance.FindMapTileInstance(mouseX, mouseY);
                         MapTileInstance clickedMapTileInstance =
-                            GameWorld.instance.FindMapTileInstance(mouseX, mouseY);
+                            GameWorld.instance.FindMapTileInstance(
+                                MapTileLocation.CreateFromWorldCoordinates(mouseX, mouseY));
+
                         Point centerOfSquare = clickedMapTileInstance.GetCenter();
                         mcv.OrderToMoveToDestination(centerOfSquare);
                     }

@@ -47,7 +47,10 @@ namespace mike_and_conquer.gameobjects
 
         public void UpdateLocationInWorldCoordinates(Point mouseLocationWordCoordinates)
         {
-            mapTileLocation.UpdateLocationInWorldCoordinates(mouseLocationWordCoordinates);
+            mapTileLocation
+                .XInWorldCoordinates(mouseLocationWordCoordinates.X)
+                .YInWorldCoordinates(mouseLocationWordCoordinates.Y);
+
             foreach (BuildingPlacementIndicatorTile tile in buildingBuildingPlacementIndicatorTiles)
             {
                 tile.UpdateLocation(mapTileLocation);

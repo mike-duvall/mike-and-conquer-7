@@ -24,7 +24,14 @@ namespace mike_and_conquer.gameobjects
         public int id { get; set; }
         public int health { get; set; }
         public bool selected { get; set; }
-        public Vector2 positionInWorldCoordinates { get; set; }
+
+        private GameWorldLocation gameWorldLocation;
+
+        public GameWorldLocation GameWorldLocation
+        {
+            get { return gameWorldLocation; }
+        }
+
         public Point destination {
             get { return new Point(destinationX, destinationY);}
         }
@@ -73,7 +80,7 @@ namespace mike_and_conquer.gameobjects
 
             this.state = State.IDLE;
             this.currentCommand = Command.NONE;
-            positionInWorldCoordinates = new Vector2(xInWorldCoordinates, yInWorldCoordinates);
+            gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(xInWorldCoordinates, yInWorldCoordinates);
 
             health = 1000;
             id = Minigunner.globalId;
@@ -113,7 +120,8 @@ namespace mike_and_conquer.gameobjects
             }
 
             MapTileInstance possibleNewMapTileInstance =
-                GameWorld.instance.FindMapTileInstance((int) positionInWorldCoordinates.X, (int) positionInWorldCoordinates.Y);
+                GameWorld.instance.FindMapTileInstance(
+                    MapTileLocation.CreateFromWorldCoordinatesInVector2(GameWorldLocation.WorldCoordinatesAsVector2));
 
             if (possibleNewMapTileInstance == currentMapTileInstance)
             {
@@ -202,10 +210,10 @@ namespace mike_and_conquer.gameobjects
             UpdateNearbyMapTileVisibility(2, -2, MapTileInstance.MapTileVisibility.PartiallyVisible);
 
 
-            if (this.id == 9)
-            {
-                int x = 3;
-            }
+//            if (this.id == 9)
+//            {
+//                int x = 3;
+//            }
             // south side
             UpdateNearbyMapTileVisibility(-1, 1, MapTileInstance.MapTileVisibility.Visible);
             UpdateNearbyMapTileVisibility(0, 1, MapTileInstance.MapTileVisibility.Visible);
@@ -307,16 +315,19 @@ namespace mike_and_conquer.gameobjects
 
         MapTileInstance FindNearbyMapTileByOffset(Vector2 basePosition, int xOffset, int yOffset)
         {
-            xOffset = xOffset * 24;
-            yOffset = yOffset * 24;
-            MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstanceAllowNull((int)basePosition.X + xOffset, (int)basePosition.Y + yOffset);
+            MapTileLocation offsetMapTileLocation = 
+                MapTileLocation.CreateFromWorldCoordinatesInVector2(basePosition)
+                    .IncrementWorldMapTileX(xOffset)
+                    .IncrementWorldMapTileY(yOffset);
+
+            MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstanceAllowNull(offsetMapTileLocation);
             return mapTileInstance;
         }
 
 
         MapTileInstance FindNearbyMapTileByOffset(int xOffset, int yOffset)
         {
-            return FindNearbyMapTileByOffset(this.positionInWorldCoordinates, xOffset, yOffset);
+            return FindNearbyMapTileByOffset(this.GameWorldLocation.WorldCoordinatesAsVector2, xOffset, yOffset);
 
         }
 
@@ -343,8 +354,8 @@ namespace mike_and_conquer.gameobjects
             int unitWidth = 12;
             int unitHeight = 12;
 
-            int x = (int)(positionInWorldCoordinates.X - (unitWidth / 2));
-            int y = (int)(positionInWorldCoordinates.Y - unitHeight) + (int)(1);  
+            int x = (int)(GameWorldLocation.WorldCoordinatesAsVector2.X - (unitWidth / 2));
+            int y = (int)(GameWorldLocation.WorldCoordinatesAsVector2.Y - unitHeight) + (int)(1);  
 
             Rectangle rectangle = new Rectangle(x,y,unitWidth,unitHeight);
             return rectangle;
@@ -380,11 +391,12 @@ namespace mike_and_conquer.gameobjects
                 Point centerOfDestinationSquare = path[0];
 
                 MapTileInstance destinationMapTileInstance =
-                    gameWorld.FindMapTileInstance(centerOfDestinationSquare.X, centerOfDestinationSquare.Y);
+                    gameWorld.FindMapTileInstance(
+                        MapTileLocation.CreateFromWorldCoordinates(centerOfDestinationSquare.X,
+                            centerOfDestinationSquare.Y));
 
                 Point currentDestinationPoint = destinationMapTileInstance.GetDestinationSlotForMinigunner(this);
                 SetDestination(currentDestinationPoint.X, currentDestinationPoint.Y);
-
             }
 
             this.state = State.LANDING_AT_MAP_SQUARE;
@@ -451,22 +463,22 @@ namespace mike_and_conquer.gameobjects
 
         private bool IsFarEnoughRight(int destinationX)
         {
-            return (positionInWorldCoordinates.X > (destinationX - movementDistanceEpsilon));
+            return (GameWorldLocation.WorldCoordinatesAsVector2.X > (destinationX - movementDistanceEpsilon));
         }
 
         private bool IsFarEnoughLeft(int destinationX)
         {
-            return (positionInWorldCoordinates.X < (destinationX + movementDistanceEpsilon));
+            return (GameWorldLocation.WorldCoordinatesAsVector2.X < (destinationX + movementDistanceEpsilon));
         }
 
         private bool IsFarEnoughDown(int destinationY)
         {
-            return (positionInWorldCoordinates.Y > (destinationY - movementDistanceEpsilon));
+            return (GameWorldLocation.WorldCoordinatesAsVector2.Y > (destinationY - movementDistanceEpsilon));
         }
 
         private bool IsFarEnoughUp(int destinationY)
         {
-            return (positionInWorldCoordinates.Y < (destinationY + movementDistanceEpsilon));
+            return (GameWorldLocation.WorldCoordinatesAsVector2.Y < (destinationY + movementDistanceEpsilon));
         }
 
 
@@ -503,7 +515,7 @@ namespace mike_and_conquer.gameobjects
 
         private int CalculateDistanceToTarget()
         {
-            return (int)Distance(positionInWorldCoordinates.X, positionInWorldCoordinates.Y, currentAttackTarget.positionInWorldCoordinates.X, currentAttackTarget.positionInWorldCoordinates.Y);
+            return (int)Distance(GameWorldLocation.WorldCoordinatesAsVector2.X, GameWorldLocation.WorldCoordinatesAsVector2.Y, currentAttackTarget.GameWorldLocation.WorldCoordinatesAsVector2.X, currentAttackTarget.GameWorldLocation.WorldCoordinatesAsVector2.Y);
         }
 
 
@@ -526,13 +538,13 @@ namespace mike_and_conquer.gameobjects
         void MoveTowardsDestination(GameTime gameTime, int destinationX, int destinationY)
         {
 
-            float newX = positionInWorldCoordinates.X;
-            float newY = positionInWorldCoordinates.Y;
+            float newX = GameWorldLocation.WorldCoordinatesAsVector2.X;
+            float newY = GameWorldLocation.WorldCoordinatesAsVector2.Y;
 
             double delta = gameTime.ElapsedGameTime.TotalMilliseconds * movementVelocity;
 
-            float remainingDistanceX = Math.Abs(destinationX - positionInWorldCoordinates.X);
-            float remainingDistanceY = Math.Abs(destinationY - positionInWorldCoordinates.Y);
+            float remainingDistanceX = Math.Abs(destinationX - GameWorldLocation.WorldCoordinatesAsVector2.X);
+            float remainingDistanceY = Math.Abs(destinationY - GameWorldLocation.WorldCoordinatesAsVector2.Y);
             double deltaX = delta;
             double deltaY = delta;
 
@@ -592,7 +604,7 @@ namespace mike_and_conquer.gameobjects
 //                positionInWorldCoordinates = new Vector2(newX, newY);
 //            }
 
-            positionInWorldCoordinates = new Vector2(newX, newY);
+            gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(newX, newY);
 
         }
 
@@ -623,14 +635,14 @@ namespace mike_and_conquer.gameobjects
 
         public void OrderToMoveToDestination(Point destination)
         {
-
             MapTileInstance currentMapTileInstanceLocation =
-                gameWorld.FindMapTileInstance((int)this.positionInWorldCoordinates.X,
-                    (int) this.positionInWorldCoordinates.Y);
+                gameWorld.FindMapTileInstance(
+                    MapTileLocation.CreateFromWorldCoordinatesInVector2(
+                        this.GameWorldLocation.WorldCoordinatesAsVector2));
 
             currentMapTileInstanceLocation.ClearSlotForMinigunner(this);
-            int startColumn = (int)this.positionInWorldCoordinates.X / GameWorld.MAP_TILE_WIDTH;
-            int startRow = (int)this.positionInWorldCoordinates.Y / GameWorld.MAP_TILE_HEIGHT;
+            int startColumn = (int)this.GameWorldLocation.WorldCoordinatesAsVector2.X / GameWorld.MAP_TILE_WIDTH;
+            int startRow = (int)this.GameWorldLocation.WorldCoordinatesAsVector2.Y / GameWorld.MAP_TILE_HEIGHT;
             Point startPoint = new Point(startColumn, startRow);
 
             AStar aStar = new AStar();
@@ -667,15 +679,15 @@ namespace mike_and_conquer.gameobjects
         internal void OrderToMoveToAndAttackEnemyUnit(Minigunner enemyMinigunner)
         {
 
-            int startColumn = (int)this.positionInWorldCoordinates.X / GameWorld.MAP_TILE_WIDTH;
-            int startRow = (int)this.positionInWorldCoordinates.Y / GameWorld.MAP_TILE_HEIGHT;
+            int startColumn = (int)this.GameWorldLocation.WorldCoordinatesAsVector2.X / GameWorld.MAP_TILE_WIDTH;
+            int startRow = (int)this.GameWorldLocation.WorldCoordinatesAsVector2.Y / GameWorld.MAP_TILE_HEIGHT;
             Point startPoint = new Point(startColumn, startRow);
 
             AStar aStar = new AStar();
 
             Point destinationSquare = new Point();
-            destinationSquare.X = (int)enemyMinigunner.positionInWorldCoordinates.X / GameWorld.MAP_TILE_WIDTH;
-            destinationSquare.Y = (int)enemyMinigunner.positionInWorldCoordinates.Y / GameWorld.MAP_TILE_HEIGHT;
+            destinationSquare.X = (int)enemyMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X / GameWorld.MAP_TILE_WIDTH;
+            destinationSquare.Y = (int)enemyMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y / GameWorld.MAP_TILE_HEIGHT;
 
 
             Path foundPath = null;

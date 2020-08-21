@@ -570,12 +570,13 @@ namespace mike_and_conquer.gameworld
             return nodPlayer.AddNodMinigunner(newMinigunner, aiIsOn);
         }
 
-        public GDIBarracks AddGDIBarracks(Point positionInWorldCoordinates)
+
+        public GDIBarracks AddGDIBarracks(MapTileLocation mapTileLocation)
         {
             // // TODO Might want to check if one already exists and throw error if so
             // gdiBarracks = new GDIBarracks(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
             // return gdiBarracks;
-            return gdiPlayer.AddGDIBarracks(positionInWorldCoordinates);
+            return gdiPlayer.AddGDIBarracks(mapTileLocation);
         }
 
         public GDIConstructionYard AddGDIConstructionYard(Point positionInWorldCoordinates)
@@ -744,26 +745,26 @@ namespace mike_and_conquer.gameworld
             return gameEvent.GetGameState();
         }
 
-        public MapTileInstance FindMapTileInstance(int xWorldCoordinate, int yWorldCoordinate)
+        public MapTileInstance FindMapTileInstance(MapTileLocation mapTileLocation)
         {
-        
+
             foreach (MapTileInstance nextBasicMapSquare in this.gameMap.MapTileInstanceList)
             {
-                if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
+                if (nextBasicMapSquare.ContainsPoint(mapTileLocation.WorldCoordinatesAsPoint))
                 {
                     return nextBasicMapSquare;
                 }
             }
-            throw new Exception("Unable to find MapTileInstance at coordinates, x:" + xWorldCoordinate + ", y:" + yWorldCoordinate);
-        
+            throw new Exception("Unable to find MapTileInstance at coordinates, x:" + mapTileLocation.WorldCoordinatesAsPoint.X  + ", y:" +  mapTileLocation.WorldCoordinatesAsPoint.Y);
+
         }
 
-        public MapTileInstance FindMapTileInstanceAllowNull(int xWorldCoordinate, int yWorldCoordinate)
+        public MapTileInstance FindMapTileInstanceAllowNull(MapTileLocation mapTileLocation)
         {
 
             foreach (MapTileInstance nextBasicMapSquare in this.gameMap.MapTileInstanceList)
             {
-                if (nextBasicMapSquare.ContainsPoint(new Point(xWorldCoordinate, yWorldCoordinate)))
+                if (nextBasicMapSquare.ContainsPoint(mapTileLocation.WorldCoordinatesAsPoint))
                 {
                     return nextBasicMapSquare;
                 }
@@ -772,6 +773,8 @@ namespace mike_and_conquer.gameworld
             return null;
 
         }
+
+
 
         public void InitializeNavigationGraph()
         {
@@ -835,16 +838,18 @@ namespace mike_and_conquer.gameworld
 
         }
 
-        public void MakeMapSquareVisible(Point positionInWorldCoordinates, MapTileInstance.MapTileVisibility visibility)
-        {
-            MapTileInstance mapTileInstance = this.FindMapTileInstance(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
-            mapTileInstance.Visibility = visibility;
-        }
+//        public void MakeMapSquareVisible(Point positionInWorldCoordinates, MapTileInstance.MapTileVisibility visibility)
+//        {
+//            MapTileInstance mapTileInstance = this.FindMapTileInstance(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
+//            mapTileInstance.Visibility = visibility;
+//        }
 
 
         public bool IsPointAdjacentToConstructionYardAndClearForBuilding(Point pointInWordlCoordinates)
         {
-            MapTileInstance mapTileInstance = this.FindMapTileInstanceAllowNull(pointInWordlCoordinates.X, pointInWordlCoordinates.Y);
+            MapTileLocation mapTileLocation = MapTileLocation.CreateFromWorldCoordinates(pointInWordlCoordinates.X, pointInWordlCoordinates.Y);
+//            MapTileInstance mapTileInstance = this.FindMapTileInstanceAllowNull(pointInWordlCoordinates.X, pointInWordlCoordinates.Y);
+            MapTileInstance mapTileInstance = this.FindMapTileInstanceAllowNull(mapTileLocation);
             if (mapTileInstance == null)
             {
                 return false;
@@ -877,7 +882,7 @@ namespace mike_and_conquer.gameworld
         }
 
 
-        enum TILE_LOCATION
+        public enum TILE_LOCATION
         {
             WEST,
             NORTH_WEST,
@@ -940,54 +945,17 @@ namespace mike_and_conquer.gameworld
 
 
 
-
         private MapTileInstance FindAdjacentMapTileInstance(MapTileInstance mapTileInstance,TILE_LOCATION tileLocation)
         {
 
-            Point adjacentTilePositionMapTileCoordinates = mapTileInstance.MapTileLocation.WorldMapTileCoordinatesAsPoint;
+            MapTileLocation adjacentMapTileLocation =
+                mapTileInstance.MapTileLocation.CreateAdjacentMapTileLocation(tileLocation);
 
-            if (tileLocation == TILE_LOCATION.WEST)
-            {
-                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X - 1;
-            }
-            else if (tileLocation == TILE_LOCATION.NORTH_WEST)
-            {
-                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X - 1;
-                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y - 1;
-            }
-            else if (tileLocation == TILE_LOCATION.NORTH)
-            {
-                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y - 1;
-            }
-            else if (tileLocation == TILE_LOCATION.NORTH_EAST)
-            {
-                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X + 1;
-                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y - 1;
-            }
-            else if (tileLocation == TILE_LOCATION.EAST)
-            {
-                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X + 1;
-            }
-            else if (tileLocation == TILE_LOCATION.SOUTH_EAST)
-            {
-                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X + 1;
-                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y + 1;
-            }
-            else if (tileLocation == TILE_LOCATION.SOUTH)
-            {
-                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y + 1;
-            }
-            else if (tileLocation == TILE_LOCATION.SOUTH_WEST)
-            {
-                adjacentTilePositionMapTileCoordinates.X = adjacentTilePositionMapTileCoordinates.X - 1;
-                adjacentTilePositionMapTileCoordinates.Y = adjacentTilePositionMapTileCoordinates.Y + 1;
-            }
 
-            Point adjacentTilePositionInWorldCoordinates =
-                MapTileLocation.ConvertMapTileCoordinatesToWorldCoordinates(adjacentTilePositionMapTileCoordinates);
+
             MapTileInstance fouMapTileInstance =
-                this.FindMapTileInstanceAllowNull(adjacentTilePositionInWorldCoordinates.X,
-                    adjacentTilePositionInWorldCoordinates.Y);
+                this.FindMapTileInstanceAllowNull(adjacentMapTileLocation);
+
 
             return fouMapTileInstance;
 
@@ -996,8 +964,14 @@ namespace mike_and_conquer.gameworld
         public  bool IsValidMoveDestination(Point pointInWorldCoordinates)
         {
             bool isValidMoveDestination = true;
+//            MapTileInstance clickedMapTileInstance =
+//                FindMapTileInstanceAllowNull(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
+
             MapTileInstance clickedMapTileInstance =
-                FindMapTileInstanceAllowNull(pointInWorldCoordinates.X, pointInWorldCoordinates.Y);
+                FindMapTileInstanceAllowNull(
+                    MapTileLocation.CreateFromWorldCoordinates(pointInWorldCoordinates.X, pointInWorldCoordinates.Y));
+
+
             if (clickedMapTileInstance == null)
             {
                 isValidMoveDestination = false;

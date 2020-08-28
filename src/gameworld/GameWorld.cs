@@ -88,6 +88,7 @@ namespace mike_and_conquer.gameworld
             // nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
             unitSelectionBox = new UnitSelectionBox();
 
+            
             GameWorld.instance = this;
         }
 
@@ -428,6 +429,7 @@ namespace mike_and_conquer.gameworld
         {
             DeslectAllUnits();
             minigunner.selected = true;
+            MikeAndConquerGame.instance.PlayAwaitingOrders();
         }
 
         internal void SelectMCV(MCV mcv)

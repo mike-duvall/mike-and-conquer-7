@@ -124,21 +124,6 @@
 /processorParam:TextureFormat=Color
 /build:Mission.png
 
-
-#begin SideBar/ReadyOverlay.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:SideBar/ReadyOverlay.png
-
-
-
 #begin mouse.shp
 /copy:mouse.shp
 
@@ -234,6 +219,24 @@
 
 #begin SideBar/pyleicnh.tem
 /copy:SideBar/pyleicnh.tem
+
+#begin SideBar/ReadyOverlay.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SideBar/ReadyOverlay.png
+
+#begin Sounds/RAC_SFX_UNT_AWAIT1.V01_EN-US.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/RAC_SFX_UNT_AWAIT1.V01_EN-US.mp3
 
 #begin T01.tem
 /copy:T01.tem

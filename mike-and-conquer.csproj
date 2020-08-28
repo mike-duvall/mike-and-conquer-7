@@ -315,6 +315,7 @@
     <Content Include="notes\potential-drawing-algorithms.txt" />
     <Content Include="notes\Setup-Notes.txt" />
     <Content Include="notes\shadow-color-mapping-notes.txt" />
+    <Content Include="notes\sound-files-locations.txt" />
     <Content Include="notes\xcc-mixer-notes.txt" />
   </ItemGroup>
   <ItemGroup>

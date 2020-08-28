@@ -1,0 +1,32 @@
+﻿
+
+
+aud.mix - Misc sounds, EVA voice installation sounds
+cclocal.mix - None
+conquer.mix - None 
+DESEICNH.MIX - None
+DESERT.MIX - None
+GENERAL.MIX - None
+LOCAL.MIX - None
+
+
+SOUNDS.MIX - Unit sounds
+
+
+
+Can use XCC Mixer to extract files as WAV, but they sound scratchy to me when I do that
+
+
+
+
+
+Used this program: https://www.ppmsite.com/osbigeditorinfo/ to extract sounds from remastered collection
+        Using instructions here:  https://gamesgds.com/command-conquer-remastered-collection-how-to-extract-music-and-modify-dll-files/
+Used file:
+	\steamapps\common\CncRemastered\Data\SFX2D_EN-US.MEG
+
+Extracted to wav.  Then used audacity to convert to MP3, variable encoding
+
+That seemed to work to play as sound effect.  Had to make it sound effect, not song, in content importer
+
+

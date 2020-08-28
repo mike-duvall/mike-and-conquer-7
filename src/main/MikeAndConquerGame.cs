@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using mike_and_conquer.externalcontrol;
 using mike_and_conquer.gameobjects;
@@ -69,6 +70,8 @@ namespace mike_and_conquer.main
             .CreateLogger();
 
         public const string CONTENT_DIRECTORY_PREFIX = "Content\\";
+
+        private SoundEffect effect;
 
         public MikeAndConquerGame(bool testMode)
         {
@@ -195,6 +198,14 @@ namespace mike_and_conquer.main
 
             gameWorld.InitializeNavigationGraph();
             gameWorldView.LoadContent();
+
+            effect = Content.Load<SoundEffect>("Sounds/RAC_SFX_UNT_AWAIT1.V01_EN-US");
+        }
+
+
+        public void PlayAwaitingOrders()
+        {
+            effect.Play();
         }
 
         private void LoadTextures()

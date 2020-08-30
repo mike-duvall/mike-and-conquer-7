@@ -127,6 +127,12 @@
 #begin mouse.shp
 /copy:mouse.shp
 
+#begin Music/C&C Tiberian Dawn OST - Act on Instinct.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/C&C Tiberian Dawn OST - Act on Instinct.mp3
+
 #begin p07.tem
 /copy:p07.tem
 

@@ -11,6 +11,7 @@ using mike_and_conquer.gameview;
 using mike_and_conquer.gameview.sidebar;
 using mike_and_conquer.gameworld;
 using mike_and_conquer.openralocal;
+using mike_and_conquer.sound;
 using Serilog;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -73,8 +74,14 @@ namespace mike_and_conquer.main
 
         public const string CONTENT_DIRECTORY_PREFIX = "Content\\";
 
-        private SoundEffect effect;
-        private Song song;
+//        private SoundEffect effect;
+//        private Song song;
+        private SoundManager soundManager;
+
+        public SoundManager SoundManager
+        {
+            get { return soundManager; }
+        }
 
         public MikeAndConquerGame(bool testMode)
         {
@@ -113,6 +120,8 @@ namespace mike_and_conquer.main
 
             raiSpriteFrameManager = new RAISpriteFrameManager();
             spriteSheet = new SpriteSheet();
+
+            soundManager = new SoundManager();
 
             MikeAndConquerGame.instance = this;
             // redrawBaseMapTiles = true;
@@ -202,21 +211,17 @@ namespace mike_and_conquer.main
             gameWorld.InitializeNavigationGraph();
             gameWorldView.LoadContent();
 
-            effect = Content.Load<SoundEffect>("Sounds/RAC_SFX_UNT_AWAIT1.V01_EN-US");
-            song = Content.Load<Song>("Music/C&C Tiberian Dawn OST - Act on Instinct");
 
-            if (GameOptions.PLAY_MUSIC)
-            {
-                MediaPlayer.Play(song);
-            }
+            soundManager.LoadContent(Content);
+
+//            effect = Content.Load<SoundEffect>("Sounds/RAC_SFX_UNT_AWAIT1.V01_EN-US");
+//            song = Content.Load<Song>("Music/C&C Tiberian Dawn OST - Act on Instinct");
+
+            soundManager.PlaySong();
+
 
         }
 
-
-        public void PlayAwaitingOrders()
-        {
-            effect.Play();
-        }
 
         private void LoadTextures()
         {

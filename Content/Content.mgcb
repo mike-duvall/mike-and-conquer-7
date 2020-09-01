@@ -238,11 +238,23 @@
 /processorParam:TextureFormat=Color
 /build:SideBar/ReadyOverlay.png
 
-#begin Sounds/RAC_SFX_UNT_AWAIT1.V01_EN-US.mp3
+#begin Sounds/TDC_SFX_EVA_BLDGING1_EN-US.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/RAC_SFX_UNT_AWAIT1.V01_EN-US.mp3
+/build:Sounds/TDC_SFX_EVA_BLDGING1_EN-US.mp3
+
+#begin Sounds/TDC_SFX_UNT_AFFIRM1.V00_EN-US.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/TDC_SFX_UNT_AFFIRM1.V00_EN-US.mp3
+
+#begin Sounds/TDC_SFX_UNT_AWAIT1.V00_EN-US.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/TDC_SFX_UNT_AWAIT1.V00_EN-US.mp3
 
 #begin T01.tem
 /copy:T01.tem

@@ -204,6 +204,7 @@
     <Compile Include="src\openra\ShpTDLoader.cs" />
     <Compile Include="src\gamesprite\ShpFileColorMapper.cs" />
     <Compile Include="src\gameview\UnitSelectionCursor.cs" />
+    <Compile Include="src\sound\SoundManager.cs" />
     <Compile Include="src\util\PointUtil.cs" />
     <Compile Include="src\util\TextureUtil.cs" />
     <Compile Include="src\util\AnimationSequence.cs" />

@@ -429,7 +429,6 @@ namespace mike_and_conquer.gameworld
         {
             DeslectAllUnits();
             minigunner.selected = true;
-            MikeAndConquerGame.instance.PlayAwaitingOrders();
         }
 
         internal void SelectMCV(MCV mcv)

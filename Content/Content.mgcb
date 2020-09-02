@@ -124,23 +124,14 @@
 /processorParam:TextureFormat=Color
 /build:Mission.png
 
-
-#begin SideBar/ReadyOverlay.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:SideBar/ReadyOverlay.png
-
-
-
 #begin mouse.shp
 /copy:mouse.shp
+
+#begin Music/C&C Tiberian Dawn OST - Act on Instinct.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/C&C Tiberian Dawn OST - Act on Instinct.mp3
 
 #begin p07.tem
 /copy:p07.tem
@@ -234,6 +225,36 @@
 
 #begin SideBar/pyleicnh.tem
 /copy:SideBar/pyleicnh.tem
+
+#begin SideBar/ReadyOverlay.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SideBar/ReadyOverlay.png
+
+#begin Sounds/TDC_SFX_EVA_BLDGING1_EN-US.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/TDC_SFX_EVA_BLDGING1_EN-US.mp3
+
+#begin Sounds/TDC_SFX_UNT_AFFIRM1.V00_EN-US.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/TDC_SFX_UNT_AFFIRM1.V00_EN-US.mp3
+
+#begin Sounds/TDC_SFX_UNT_AWAIT1.V00_EN-US.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/TDC_SFX_UNT_AWAIT1.V00_EN-US.mp3
 
 #begin T01.tem
 /copy:T01.tem

@@ -88,6 +88,7 @@ namespace mike_and_conquer.gameworld
             // nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
             unitSelectionBox = new UnitSelectionBox();
 
+            
             GameWorld.instance = this;
         }
 

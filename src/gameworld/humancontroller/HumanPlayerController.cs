@@ -67,6 +67,7 @@ namespace mike_and_conquer.gameworld.humancontroller
                 {
                     handled = true;
                     GameWorld.instance.SelectSingleGDIUnit(nextMinigunner);
+                    MikeAndConquerGame.instance.SoundManager.PlayUnitAwaitingOrders();
                 }
             }
 

@@ -52,6 +52,7 @@ namespace mike_and_conquer.gameworld.humancontroller
             else if (!gdiConstructionYard.IsBuildingBarracks)
             {
                 GameWorld.instance.GDIConstructionYard.StartBuildingBarracks();
+                MikeAndConquerGame.instance.SoundManager.PlayEVABuilding();
             }
 
             return this;

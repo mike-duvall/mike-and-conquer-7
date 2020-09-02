@@ -9,6 +9,7 @@ using mike_and_conquer.gameview;
 using mike_and_conquer.gameview.sidebar;
 using mike_and_conquer.gameworld;
 using mike_and_conquer.openralocal;
+using mike_and_conquer.sound;
 using Serilog;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
@@ -37,7 +38,8 @@ namespace mike_and_conquer.main
     public class MikeAndConquerGame : Game
     {
 
-//        private float testRotation = 0;
+
+        //        private float testRotation = 0;
 
         public static MikeAndConquerGame instance;
 
@@ -69,6 +71,13 @@ namespace mike_and_conquer.main
             .CreateLogger();
 
         public const string CONTENT_DIRECTORY_PREFIX = "Content\\";
+
+        private SoundManager soundManager;
+
+        public SoundManager SoundManager
+        {
+            get { return soundManager; }
+        }
 
         public MikeAndConquerGame(bool testMode)
         {
@@ -107,6 +116,8 @@ namespace mike_and_conquer.main
 
             raiSpriteFrameManager = new RAISpriteFrameManager();
             spriteSheet = new SpriteSheet();
+
+            soundManager = new SoundManager();
 
             MikeAndConquerGame.instance = this;
             // redrawBaseMapTiles = true;
@@ -195,7 +206,13 @@ namespace mike_and_conquer.main
 
             gameWorld.InitializeNavigationGraph();
             gameWorldView.LoadContent();
+
+
+            soundManager.LoadContent(Content);
+
+            soundManager.PlaySong();
         }
+
 
         private void LoadTextures()
         {

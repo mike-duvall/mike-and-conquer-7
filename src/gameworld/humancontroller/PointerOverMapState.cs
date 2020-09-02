@@ -122,14 +122,14 @@ namespace mike_and_conquer.gameworld.humancontroller
             int mouseX = mouseLocation.X;
             int mouseY = mouseLocation.Y;
 
+            bool unitOrderedToMove = false;
+
             foreach (Minigunner nextMinigunner in GameWorld.instance.GDIMinigunnerList)
             {
                 if (nextMinigunner.selected == true)
                 {
                     if (GameWorld.instance.IsValidMoveDestination(new Point(mouseX, mouseY)))
                     {
-//                        MapTileInstance clickedMapTileInstance =
-//                            GameWorld.instance.FindMapTileInstance(mouseX, mouseY);
                         MapTileInstance clickedMapTileInstance =
                             GameWorld.instance.FindMapTileInstance(
                                 MapTileLocation.CreateFromWorldCoordinates(mouseX, mouseY));
@@ -137,6 +137,7 @@ namespace mike_and_conquer.gameworld.humancontroller
 
                         Point centerOfSquare = clickedMapTileInstance.GetCenter();
                         nextMinigunner.OrderToMoveToDestination(centerOfSquare);
+                        unitOrderedToMove = true;
                     }
                 }
             }
@@ -148,17 +149,21 @@ namespace mike_and_conquer.gameworld.humancontroller
                 {
                     if (GameWorld.instance.IsValidMoveDestination(new Point(mouseX, mouseY)))
                     {
-//                        MapTileInstance clickedMapTileInstance =
-//                            GameWorld.instance.FindMapTileInstance(mouseX, mouseY);
                         MapTileInstance clickedMapTileInstance =
                             GameWorld.instance.FindMapTileInstance(
                                 MapTileLocation.CreateFromWorldCoordinates(mouseX, mouseY));
 
                         Point centerOfSquare = clickedMapTileInstance.GetCenter();
                         mcv.OrderToMoveToDestination(centerOfSquare);
+                        unitOrderedToMove = true;
                     }
 
                 }
+            }
+
+            if (unitOrderedToMove)
+            {
+                MikeAndConquerGame.instance.SoundManager.PlayUnitAffirmative1();
             }
             return true;
 

@@ -30,3 +30,6 @@ Extracted to wav.  Then used audacity to convert to MP3, variable encoding
 That seemed to work to play as sound effect.  Had to make it sound effect, not song, in content importer
 
 Extracted sound effecs to:  D:\Dropbox\Personal\ZZZ-Local\PersonalProgramming\mike-and-conquer\extracted sounds
+
+Source for background songs:
+	https://www.youtube.com/watch?v=SU9TatBIeUs&list=PLFqTvOsjFbRqheOZU7ZAqIEeCFPMUN7pF&index=1

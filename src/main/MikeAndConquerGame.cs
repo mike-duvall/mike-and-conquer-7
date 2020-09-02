@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Media;
 using mike_and_conquer.externalcontrol;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
@@ -74,8 +72,6 @@ namespace mike_and_conquer.main
 
         public const string CONTENT_DIRECTORY_PREFIX = "Content\\";
 
-//        private SoundEffect effect;
-//        private Song song;
         private SoundManager soundManager;
 
         public SoundManager SoundManager
@@ -214,12 +210,7 @@ namespace mike_and_conquer.main
 
             soundManager.LoadContent(Content);
 
-//            effect = Content.Load<SoundEffect>("Sounds/RAC_SFX_UNT_AWAIT1.V01_EN-US");
-//            song = Content.Load<Song>("Music/C&C Tiberian Dawn OST - Act on Instinct");
-
             soundManager.PlaySong();
-
-
         }
 
 

@@ -62,15 +62,16 @@ namespace mike_and_conquer.gameview
         private Minigunner minigunnerSlot3 = null;
         private Minigunner minigunnerSlot4 = null;
 
-        public MapTileInstance(int x, int y, string textureKey, byte imageIndex, bool isBlockingTerrain)
+
+        public MapTileInstance(MapTileLocation mapTileLocation, string textureKey, byte imageIndex, bool isBlockingTerrain)
         {
-            this.mapTileLocation = MapTileLocation.CreateFromWorldCoordinates(x,y);
+            this.mapTileLocation = mapTileLocation;
             this.textureKey = textureKey;
             this.imageIndex = imageIndex;
             this.isBlockingTerrain = isBlockingTerrain;
             this.Visibility = MapTileInstance.MapTileVisibility.NotVisible;
-
         }
+
 
         public bool ContainsPoint(Point aPoint)
         {

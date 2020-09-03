@@ -81,8 +81,8 @@ namespace mike_and_conquer.gameworld
 
             mapTileInstanceList = new List<MapTileInstance>();
 
-            int x = GameWorld.MAP_TILE_WIDTH / 2;
-            int y = GameWorld.MAP_TILE_HEIGHT / 2;
+            int x = 0;
+            int y = 0;
 
             int i = 0;
             for (int row = startY; row <= endY; row++)
@@ -95,16 +95,17 @@ namespace mike_and_conquer.gameworld
                     bool isBlockingTerrain = IsBlockingTerrain(textureKey, imageIndex);
 
                     MapTileInstance mapTileInstance =
-                        new MapTileInstance(x, y, textureKey, imageIndex, isBlockingTerrain);
+                        new MapTileInstance(MapTileLocation.CreateFromWorldMapTileCoordinates(x, y), textureKey, imageIndex, isBlockingTerrain);
+
                     this.MapTileInstanceList.Add(mapTileInstance);
 
-                    x = x + GameWorld.MAP_TILE_WIDTH;
+                    x++;
 
                     bool incrementRow = ((i + 1) % numColumns) == 0;
                     if (incrementRow)
                     {
-                        x = GameWorld.MAP_TILE_WIDTH / 2;
-                        y = y + GameWorld.MAP_TILE_HEIGHT;
+                        x = 0;
+                        y++;
                     }
 
                     i++;
@@ -113,76 +114,36 @@ namespace mike_and_conquer.gameworld
             }
         }
 
+
+        // Used for unit tests
         public GameMap(int[,] nodeArray)
         {
             mapTileInstanceList = new List<MapTileInstance>();
 
-
             numRows = nodeArray.GetLength(0);
             numColumns = nodeArray.GetLength(1);
-
 
             for (int y = 0; y < numRows; y++)
             {
                 for (int x = 0; x < numColumns; x++)
                 {
-
-
-                    int mapTileInstanceX = (x * GameWorld.MAP_TILE_WIDTH) + (GameWorld.MAP_TILE_WIDTH / 2);
-                    int mapTileInstanceY = (y * GameWorld.MAP_TILE_HEIGHT) + (GameWorld.MAP_TILE_HEIGHT / 2);
                     string dummyTexture = "";
                     byte dummyImageIndex = 0;
 
                     if (nodeArray[y, x] == 1)
                     {
                         MapTileInstance mapTileInstance =
-                            new MapTileInstance(mapTileInstanceX, mapTileInstanceY, dummyTexture, dummyImageIndex, true);
+                            new MapTileInstance(MapTileLocation.CreateFromWorldMapTileCoordinates(x, y), dummyTexture, dummyImageIndex, true);
                         this.MapTileInstanceList.Add(mapTileInstance);
-
                     }
                     else
                     {
                         MapTileInstance mapTileInstance =
-                            new MapTileInstance(mapTileInstanceX, mapTileInstanceY, dummyTexture, dummyImageIndex, false);
+                            new MapTileInstance(MapTileLocation.CreateFromWorldMapTileCoordinates(x, y), dummyTexture, dummyImageIndex, false);
                         this.MapTileInstanceList.Add(mapTileInstance);
-
                     }
                 }
             }
-
-
-
-            //            int x = 12;
-            //            int y = 12;
-            //
-            //            int i = 0;
-            //            for (int row = startY; row <= endY; row++)
-            //            {
-            //                for (int column = startX; column <= endX; column++)
-            //                {
-            //                    int offset = CalculateOffset(column, row);
-            //                    string textureKey = ConvertByteToTextureKey(allBytes[offset]);
-            //                    byte imageIndex = CalculateImageIndexForTextureKey(textureKey, allBytes, column, row, offset);
-            //                    bool isBlockingTerrain = IsBlockingTerrain(textureKey, imageIndex);
-            //
-            //                    MapTileInstance mapTileInstance =
-            //                        new MapTileInstance(x, y, textureKey, imageIndex, isBlockingTerrain);
-            //                    this.MapTileInstanceList.Add(mapTileInstance);
-            //
-            //                    x = x + 24;
-            //
-            //                    bool incrementRow = ((i + 1) % 26) == 0;
-            //                    if (incrementRow)
-            //                    {
-            //                        x = 12;
-            //                        y = y + 24;
-            //                    }
-            //
-            //                    i++;
-            //
-            //                }
-            //            }
-
         }
 
 

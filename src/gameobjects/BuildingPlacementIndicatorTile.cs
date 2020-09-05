@@ -6,13 +6,11 @@ namespace mike_and_conquer.gameobjects
     public class BuildingPlacementIndicatorTile
     {
 
-
         private int relativeX;
         private int relativeY;
 
         private MapTileLocation mapTileLocation;
         private bool canPlaceBulding;
-
 
         public bool CanPlaceBuilding
         {

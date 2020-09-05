@@ -52,20 +52,14 @@ namespace mike_and_conquer.gameobjects
             }
         }
 
-
-
-
         protected GDIConstructionYard()
         {
         }
 
-
-        public GDIConstructionYard(int x, int y)
+        public GDIConstructionYard(MapTileLocation mapTileLocation)
         {
-            mapTileLocation = MapTileLocation.CreateFromWorldCoordinates(x, y);
+            this.mapTileLocation = mapTileLocation;
         }
-
-
 
         public bool ContainsPoint(Point aPoint)
         {
@@ -105,7 +99,7 @@ namespace mike_and_conquer.gameobjects
         public void CreateBarracksAtPosition(MapTileLocation mapTileLocation)
         {
 
-            MikeAndConquerGame.instance.AddGDIBarracksAtWorldCoordinates(mapTileLocation);
+            MikeAndConquerGame.instance.AddGDIBarracks(mapTileLocation);
             isBarracksReadyToPlace = false;
             isBuildingBarracks = false;
         }

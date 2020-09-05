@@ -613,16 +613,15 @@ namespace mike_and_conquer.main
 
 
 
-        public void AddGDIBarracksAtWorldCoordinates(MapTileLocation mapTileLocation)
+        public void AddGDIBarracks(MapTileLocation mapTileLocation)
         {
             GDIBarracks gdiBarracks = gameWorld.AddGDIBarracks(mapTileLocation);
             gameWorldView.AddGDIBarracksView(gdiBarracks);
         }
 
-
-        public void AddGDIConstructionYardAtWorldCoordinates(Point positionInWorldCoordinates)
+        public void AddGDIConstructionYard(MapTileLocation mapTileLocation)
         {
-            GDIConstructionYard gdiConstructionYard = gameWorld.AddGDIConstructionYard(positionInWorldCoordinates);
+            GDIConstructionYard gdiConstructionYard = gameWorld.AddGDIConstructionYard(mapTileLocation);
             gameWorldView.AddGDIConstructionYardView(gdiConstructionYard);
         }
 

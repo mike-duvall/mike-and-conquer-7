@@ -36,12 +36,6 @@ namespace mike_and_conquer.gameworld
             return new MapTileLocation(mapTileCoordinates.X, mapTileCoordinates.Y);
         }
 
-//        public static MapTileLocation CreateCopy(MapTileLocation mapTileLocation)
-//        {
-//            return new MapTileLocation(mapTileLocation.xInWorldMapTileCoordinates, mapTileLocation.yInWorldMapTileCoordinates);
-//        }
-
-
         public Point WorldMapTileCoordinatesAsPoint
         {
             get { return new Point(xInWorldMapTileCoordinates, yInWorldMapTileCoordinates); }

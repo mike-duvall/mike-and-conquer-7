@@ -95,10 +95,10 @@ namespace mike_and_conquer.gameworld.humancontroller
                     }
                     else
                     {
-                        Point mcvPositionInWorldCoordinates = new Point((int)mcv.GameWorldLocation.WorldCoordinatesAsVector2.X,
-                            (int)mcv.GameWorldLocation.WorldCoordinatesAsVector2.Y);
+                        MapTileLocation mapTileLocation =
+                            MapTileLocation.CreateFromWorldCoordinatesInVector2(mcv.GameWorldLocation.WorldCoordinatesAsVector2);
                         MikeAndConquerGame.instance.RemoveMCV();
-                        MikeAndConquerGame.instance.AddGDIConstructionYardAtWorldCoordinates(mcvPositionInWorldCoordinates);
+                        MikeAndConquerGame.instance.AddGDIConstructionYard(mapTileLocation);
                     }
                 }
             }

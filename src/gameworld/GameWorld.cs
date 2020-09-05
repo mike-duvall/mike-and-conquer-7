@@ -580,15 +580,14 @@ namespace mike_and_conquer.gameworld
             return gdiPlayer.AddGDIBarracks(mapTileLocation);
         }
 
-        public GDIConstructionYard AddGDIConstructionYard(Point positionInWorldCoordinates)
+        public GDIConstructionYard AddGDIConstructionYard(MapTileLocation mapTileLocation)
         {
             // // TODO Might want to check if one already exists and throw error if so
             // gdiConstructionYard = new GDIConstructionYard(positionInWorldCoordinates.X, positionInWorldCoordinates.Y);
             // return gdiConstructionYard;
 
-            return gdiPlayer.AddGDIConstructionYard(positionInWorldCoordinates);
+            return gdiPlayer.AddGDIConstructionYard(mapTileLocation);
         }
-
 
         public GameState ProcessGameEvents()
         {

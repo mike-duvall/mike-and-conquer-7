@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamestate;
+using mike_and_conquer.gameworld;
 using mike_and_conquer.main;
 
 namespace mike_and_conquer.gameevent 
@@ -32,7 +33,7 @@ namespace mike_and_conquer.gameevent
         protected override GameState ProcessImpl()
         {
             GameState newGameState = null;
-            result = MikeAndConquerGame.instance.AddSandbag(x,y, index);
+            result = MikeAndConquerGame.instance.AddSandbag(MapTileLocation.CreateFromWorldMapTileCoordinates(x,y), index);
             return newGameState;
         }
 

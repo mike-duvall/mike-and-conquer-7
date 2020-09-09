@@ -40,13 +40,15 @@ namespace mike_and_conquer.gameview
             unitSprite.AddAnimationSequence(0, animationSequence);
         }
 
-
-        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            unitSprite.Draw(gameTime, spriteBatch, mySandbag.positionInWorldCoordinates,
-                SpriteSortLayers.BUILDING_DEPTH);
+            unitSprite.DrawShadowOnly(gameTime, spriteBatch, mySandbag.MapTileLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
         }
 
+        public void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            unitSprite.DrawNoShadow(gameTime, spriteBatch, mySandbag.MapTileLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
+        }
 
 
     }

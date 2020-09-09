@@ -447,6 +447,11 @@ namespace mike_and_conquer.gameview
             }
 
 
+            foreach (SandbagView nextSandbagView in GameWorldView.instance.SandbagViewList)
+            {
+                nextSandbagView.DrawShadowOnly(gameTime, spriteBatch);
+            }
+
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {
@@ -608,6 +613,10 @@ namespace mike_and_conquer.gameview
                 GameWorldView.instance.GdiConstructionYardView.DrawNoShadow(gameTime, spriteBatch);
             }
 
+            foreach (SandbagView nextSandbagView in GameWorldView.instance.SandbagViewList)
+            {
+                nextSandbagView.DrawNoShadow(gameTime, spriteBatch);
+            }
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {

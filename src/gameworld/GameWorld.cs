@@ -783,7 +783,7 @@ namespace mike_and_conquer.gameworld
 
             foreach (Sandbag nextSandbag in sandbagList)
             {
-                MapTileLocation sandbagMapTileLocation = MapTileLocation.CreateFromWorldCoordinatesInVector2(nextSandbag.positionInWorldCoordinates);
+                MapTileLocation sandbagMapTileLocation = nextSandbag.MapTileLocation;
                 navigationGraph.MakeNodeBlockingNode(
                     sandbagMapTileLocation.WorldMapTileCoordinatesAsPoint.Y,
                     sandbagMapTileLocation.WorldMapTileCoordinatesAsPoint.Y);

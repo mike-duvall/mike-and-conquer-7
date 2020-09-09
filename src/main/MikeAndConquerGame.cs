@@ -594,16 +594,9 @@ namespace mike_and_conquer.main
             return newMinigunner;
         }
 
-        internal Sandbag AddSandbag(int xInMapSquareCoordinates, int yInMapSquareCoordinates, int sandbagType)
+        internal Sandbag AddSandbag(MapTileLocation mapTileLocation, int sandbagType)
         {
-
-            int xInWorldCoordinates =
-                (xInMapSquareCoordinates * GameWorld.MAP_TILE_WIDTH) + (GameWorld.MAP_TILE_WIDTH / 2);
-
-            int yInWorldCoordinates =
-                (yInMapSquareCoordinates * GameWorld.MAP_TILE_HEIGHT) + (GameWorld.MAP_TILE_HEIGHT / 2);
-
-            Sandbag newSandbag = new Sandbag(xInWorldCoordinates, yInWorldCoordinates, sandbagType);
+            Sandbag newSandbag = new Sandbag(mapTileLocation, sandbagType);
             gameWorld.sandbagList.Add(newSandbag);
 
             gameWorldView.AddSandbagView(newSandbag);

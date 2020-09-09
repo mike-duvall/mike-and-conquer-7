@@ -1,5 +1,4 @@
 ﻿using mike_and_conquer.gameworld;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Point = Microsoft.Xna.Framework.Point;
 
@@ -9,8 +8,12 @@ namespace mike_and_conquer.gameobjects
     public class Sandbag
     {
 
-        public Vector2 positionInWorldCoordinates { get; set; }
+        private MapTileLocation mapTileLocation;
 
+        public MapTileLocation MapTileLocation
+        {
+            get { return mapTileLocation; }
+        }
 
         private int sandbagType;
 
@@ -26,9 +29,9 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-        public Sandbag(int x, int y, int sandbagType)
+        public Sandbag(MapTileLocation mapTileLocation, int sandbagType)
         {
-            positionInWorldCoordinates = new Vector2(x, y);
+            this.mapTileLocation = mapTileLocation;
             this.sandbagType = sandbagType;
         }
 
@@ -38,8 +41,9 @@ namespace mike_and_conquer.gameobjects
             int width = GameWorld.MAP_TILE_WIDTH;
             int height = GameWorld.MAP_TILE_HEIGHT;
 
-            int leftX = (int)positionInWorldCoordinates.X - (width / 2);
-            int topY = (int)positionInWorldCoordinates.Y - (height / 2);
+            int leftX = mapTileLocation.WorldCoordinatesAsPoint.X - (width / 2);
+            int topY =  mapTileLocation.WorldCoordinatesAsPoint.Y - (height / 2);
+
             Rectangle boundRectangle = new Rectangle(leftX, topY, width, height);
             return boundRectangle.Contains(aPoint);
         }

@@ -8,6 +8,7 @@ Some shp file are in: D:\OriginGames\CNC and The Covert Operations\CONQUER.MIX
 * Unit selection cursor: select.shp
 * Palette: temperate.pal
 * Plain map squares: v15.tem (?)
+* Sandbag: sbag.shp
 
 
 GENERAL.MIX - Appears to be mission files

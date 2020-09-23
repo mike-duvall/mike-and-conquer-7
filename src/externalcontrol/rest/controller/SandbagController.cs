@@ -20,7 +20,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             restSandbag.y = sandbag.MapTileLocation.WorldCoordinatesAsPoint.Y;
             restSandbag.index = (int) sandbag.SandbagType;
 
-            return Ok(sandbag);
+            return Ok(restSandbag);
         }
 
     }

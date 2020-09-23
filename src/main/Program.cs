@@ -27,8 +27,10 @@ namespace mike_and_conquer.main
                 }
 
                 RestServerManager.Initialize();
-                using (var game = new MikeAndConquerGame(testMode))
-                    game.Run();
+                MikeAndConquerGame game = new MikeAndConquerGame(testMode);
+                game.Run();
+//                using (var game = new MikeAndConquerGame(testMode))
+//                    game.Run();
             }
             catch (Exception e)
             {

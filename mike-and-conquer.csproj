@@ -72,8 +72,11 @@
   <ItemGroup>
     <Compile Include="src\aicontroller\MinigunnerAIController.cs" />
     <Compile Include="src\externalcontrol\RestServerManager.cs" />
+    <Compile Include="src\externalcontrol\rest\controller\NodTurretController.cs" />
+    <Compile Include="src\externalcontrol\rest\domain\RestNodTurret.cs" />
     <Compile Include="src\gameevent\AsyncGameEvent.cs" />
     <Compile Include="src\gameevent\CreateMCVGameEvent.cs" />
+    <Compile Include="src\gameevent\CreateNodTurretGameEvent.cs" />
     <Compile Include="src\gameevent\SetGDIMinigunnerHealthGameEvent.cs" />
     <Compile Include="src\gameevent\CreateSandbagGameEvent.cs" />
     <Compile Include="src\gameevent\GetCurrentGameStateGameEvent.cs" />
@@ -88,9 +91,11 @@
     <Compile Include="src\gameobjects\GDIConstructionYard.cs" />
     <Compile Include="src\gameobjects\GDIBarracks.cs" />
     <Compile Include="src\gameobjects\MCV.cs" />
+    <Compile Include="src\gameobjects\NodTurret.cs" />
     <Compile Include="src\gameobjects\TerrainItemDescriptor.cs" />
     <Compile Include="src\gameobjects\TerrainItem.cs" />
     <Compile Include="src\gameobjects\Sandbag.cs" />
+    <Compile Include="src\gamesprite\NodSecondaryShpFileColorMapper.cs" />
     <Compile Include="src\gamesprite\PartiallyVisibileMapTileMask.cs" />
     <Compile Include="src\gamesprite\SidebarBuildIconSprite.cs" />
     <Compile Include="src\gamesprite\SingleTextureSprite.cs" />
@@ -107,6 +112,7 @@
     <Compile Include="src\gameview\MapTileShroudMapping.cs" />
     <Compile Include="src\gameview\MCVView.cs" />
     <Compile Include="src\gameview\MCVSelectionBox.cs" />
+    <Compile Include="src\gameview\NodTurretView.cs" />
     <Compile Include="src\gameview\sidebar\ReadyOverlay.cs" />
     <Compile Include="src\gameview\sidebar\SidebarIconView.cs" />
     <Compile Include="src\gameview\sidebar\BarrackSidebarIconView.cs" />
@@ -310,7 +316,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
-    <Content Include="notes\errors.txt" />
     <Content Include="notes\ini-file-cell-number-calculations.txt" />
     <Content Include="notes\Notes.txt" />
     <Content Include="notes\potential-drawing-algorithms.txt" />

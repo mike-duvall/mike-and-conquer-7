@@ -155,7 +155,7 @@ namespace mike_and_conquer.main
 
 
             //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
-//                        AddMCVAtMapSquareCoordinates(new Point(21, 12));
+            //                        AddMCVAtMapSquareCoordinates(new Point(21, 12));
             //            AddNodMinigunnerAtMapSquareCoordinates(new Point(20,11),false);
 
 
@@ -191,26 +191,38 @@ namespace mike_and_conquer.main
         protected override void LoadContent()
         {
 
-            gameWorld.InitializeDefaultMap();
 
-            // spriteBatch = new SpriteBatch(GraphicsDevice);
+//            try
+//            {
+                gameWorld.InitializeDefaultMap();
 
-            LoadTextures();
+                // spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            if (!testMode)
-            {
-                AddTestModeObjects();
-            }
+                LoadTextures();
 
-            //AddGDIConstructionYardAtMapTileCoordinates(new Point(20, 15));
+                if (!testMode)
+                {
+                    AddTestModeObjects();
+                }
 
-            gameWorld.InitializeNavigationGraph();
-            gameWorldView.LoadContent();
+                //AddGDIConstructionYardAtMapTileCoordinates(new Point(20, 15));
+
+                gameWorld.InitializeNavigationGraph();
+                gameWorldView.LoadContent();
 
 
-            soundManager.LoadContent(Content);
+                soundManager.LoadContent(Content);
 
-            soundManager.PlaySong();
+                soundManager.PlaySong();
+
+//            }
+//            catch (Exception e)
+//            {
+//                System.Diagnostics.Debug.WriteLine(e);
+//                throw e;
+//            }
+
+
         }
 
 
@@ -287,6 +299,13 @@ namespace mike_and_conquer.main
                 SandbagView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(SandbagView.SHP_FILE_NAME),
                 SandbagView.SHP_FILE_COLOR_MAPPER);
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(NodTurretView.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                NodTurretView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(NodTurretView.SHP_FILE_NAME),
+                NodTurretView.SHP_FILE_COLOR_MAPPER);
+
 
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(MinigunnerSidebarIconView.SHP_FILE_NAME);
             spriteSheet.LoadUnitFramesFromSpriteFrames(
@@ -592,6 +611,16 @@ namespace mike_and_conquer.main
             gameWorldView.AddGDIMinigunnerView(newMinigunner);
 
             return newMinigunner;
+        }
+
+
+        public NodTurret AddNodTurret(MapTileLocation mapTileLocation, int nodTurretType)
+        {
+            NodTurret newNodTurret = new NodTurret(mapTileLocation,nodTurretType, 45);
+            gameWorld.nodTurretList.Add(newNodTurret);
+            gameWorldView.AddNodTurretView(newNodTurret);
+            return newNodTurret;
+
         }
 
         internal Sandbag AddSandbag(MapTileLocation mapTileLocation, int sandbagType)

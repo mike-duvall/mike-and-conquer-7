@@ -37,7 +37,9 @@ namespace mike_and_conquer.gameworld
         private NodPlayer nodPlayer;
 
         public List<Sandbag> sandbagList;
+        public List<NodTurret> nodTurretList;
         public List<TerrainItem> terrainItemList;
+
 
         public List<Minigunner> GDIMinigunnerList
         {
@@ -81,6 +83,7 @@ namespace mike_and_conquer.gameworld
             nodPlayer = new NodPlayer(new NodAIPlayerController());
             // nodMinigunnerList = new List<Minigunner>();
             sandbagList = new List<Sandbag>();
+            nodTurretList = new List<NodTurret>();
             terrainItemList = new List<TerrainItem>();
 
             gameEvents = new List<AsyncGameEvent>();
@@ -665,6 +668,23 @@ namespace mike_and_conquer.gameworld
             return sandbag;
 
         }
+
+
+        public NodTurret CreateNodTurretViaEvent(int x, int y, int type)
+        {
+            CreateNodTurretGameEvent gameEvent = new CreateNodTurretGameEvent(x, y, type);
+
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            NodTurret nodTurret = gameEvent.GetNodTurret();
+            return nodTurret;
+
+        }
+
+
 
         public Minigunner GetGDIMinigunnerByIdViaEvent(int id)
         {

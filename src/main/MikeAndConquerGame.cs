@@ -191,38 +191,26 @@ namespace mike_and_conquer.main
         protected override void LoadContent()
         {
 
+            gameWorld.InitializeDefaultMap();
 
-//            try
-//            {
-                gameWorld.InitializeDefaultMap();
+            // spriteBatch = new SpriteBatch(GraphicsDevice);
 
-                // spriteBatch = new SpriteBatch(GraphicsDevice);
+            LoadTextures();
 
-                LoadTextures();
+            if (!testMode)
+            {
+                AddTestModeObjects();
+            }
 
-                if (!testMode)
-                {
-                    AddTestModeObjects();
-                }
+            //AddGDIConstructionYardAtMapTileCoordinates(new Point(20, 15));
 
-                //AddGDIConstructionYardAtMapTileCoordinates(new Point(20, 15));
-
-                gameWorld.InitializeNavigationGraph();
-                gameWorldView.LoadContent();
+            gameWorld.InitializeNavigationGraph();
+            gameWorldView.LoadContent();
 
 
-                soundManager.LoadContent(Content);
+            soundManager.LoadContent(Content);
 
-                soundManager.PlaySong();
-
-//            }
-//            catch (Exception e)
-//            {
-//                System.Diagnostics.Debug.WriteLine(e);
-//                throw e;
-//            }
-
-
+            soundManager.PlaySong();
         }
 
 

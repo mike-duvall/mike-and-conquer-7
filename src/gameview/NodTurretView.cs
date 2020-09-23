@@ -36,7 +36,6 @@ namespace mike_and_conquer.gameview
         private void SetupAnimations()
         {
             AnimationSequence animationSequence = new AnimationSequence(1);
-//            animationSequence.AddFrame(mySandbag.SandbagType);
             animationSequence.AddFrame(25 + (myNodTurret.TurretType * 32));
             unitSprite.AddAnimationSequence(0, animationSequence);
         }

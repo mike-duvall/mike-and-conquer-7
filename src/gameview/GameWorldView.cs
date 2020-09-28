@@ -1098,6 +1098,10 @@ namespace mike_and_conquer.gameview
                 barracksSidebarIconView.Update(gameTime);
             }
 
+            foreach (NodTurretView nodTurretView in nodTurretViewList)
+            {
+                nodTurretView.Update(gameTime);
+            }
 
 
         }

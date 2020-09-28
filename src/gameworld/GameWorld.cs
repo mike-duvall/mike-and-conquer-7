@@ -452,6 +452,12 @@ namespace mike_and_conquer.gameworld
 
             gdiPlayer.Update(gameTime);
             nodPlayer.Update(gameTime);
+
+            foreach (NodTurret nodTurret in nodTurretList)
+            {
+                nodTurret.Update(gameTime);
+            }
+
             // if (mcv != null)
             // {
             //     mcv.Update(gameTime);

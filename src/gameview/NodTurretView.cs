@@ -1,8 +1,9 @@
-﻿using mike_and_conquer.gameobjects;
+﻿using System;
+using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
+using mike_and_conquer.main;
 using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 
-using Vector2 = Microsoft.Xna.Framework.Vector2;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
@@ -36,8 +37,15 @@ namespace mike_and_conquer.gameview
         private void SetupAnimations()
         {
             AnimationSequence animationSequence = new AnimationSequence(1);
-            animationSequence.AddFrame(25 + (myNodTurret.TurretType * 32));
+
+            for (int i = 0; i < 32; i++)
+            {
+                animationSequence.AddFrame(i + (myNodTurret.TurretType * 32));
+            }
+
+
             unitSprite.AddAnimationSequence(0, animationSequence);
+            unitSprite.SetAnimate(false);
         }
 
         public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
@@ -50,6 +58,31 @@ namespace mike_and_conquer.gameview
             unitSprite.DrawNoShadow(gameTime, spriteBatch, myNodTurret.MapTileLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
         }
 
+
+        public void Update(GameTime gameTime)
+        {
+            int frameOffset = CalculateFrameOffsetFromDirection(this.myNodTurret.Direction);
+//            MikeAndConquerGame.instance.log.Information("Setting animation index to:{0}", frameOffset);
+            unitSprite.SetFrameOfCurrentAnimationSequence(frameOffset);
+        }
+
+        private int CalculateFrameOffsetFromDirection(float direction)
+        {
+
+            int frameOffset = (int) Math.Round(direction / 11.5f);
+
+            // the frames are stored in counterclockwise order
+            // but `direction` is in clockwise order
+            // so we have to translate it
+            int mappedFrameOffset = 32 - frameOffset;
+
+            if (mappedFrameOffset == 32)
+            {
+                mappedFrameOffset = 0;
+            }
+
+            return mappedFrameOffset;
+        }
 
     }
 }

@@ -65,10 +65,11 @@ namespace mike_and_conquer.main
         private int mouseCounter = 0;
 
         public Serilog.Core.Logger log = new LoggerConfiguration()
-            //.WriteTo.Console()
-            //.WriteTo.File("log.txt")
-            .WriteTo.Debug()
+             //.WriteTo.Console()
+             //.WriteTo.File("log.txt")
+            .WriteTo.Debug(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level}]  {Message}{NewLine}{Exception}")
             .CreateLogger();
+
 
         public const string CONTENT_DIRECTORY_PREFIX = "Content\\";
 
@@ -604,7 +605,8 @@ namespace mike_and_conquer.main
 
         public NodTurret AddNodTurret(MapTileLocation mapTileLocation, int nodTurretType)
         {
-            NodTurret newNodTurret = new NodTurret(mapTileLocation,nodTurretType, 45);
+            NodTurret newNodTurret = new NodTurret(mapTileLocation,nodTurretType, 90.0f - 11.5f);
+//            NodTurret newNodTurret = new NodTurret(mapTileLocation, nodTurretType, 90.0f);
             gameWorld.nodTurretList.Add(newNodTurret);
             gameWorldView.AddNodTurretView(newNodTurret);
             return newNodTurret;

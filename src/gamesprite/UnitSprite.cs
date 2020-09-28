@@ -84,6 +84,11 @@ namespace mike_and_conquer.gamesprite
             currentTexture = unitFrameList[currentAnimationImageIndex].Texture;
         }
 
+        public void SetFrameOfCurrentAnimationSequence(int frame)
+        {
+            AnimationSequence animationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+            animationSequence.SetCurrentFrameIndex(frame);
+        }
 
         public void AddAnimationSequence(int key, AnimationSequence  animationSequence)
         {

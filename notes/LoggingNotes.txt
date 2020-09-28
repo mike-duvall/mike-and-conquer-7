@@ -1,0 +1,9 @@
+﻿
+How to format log output as floating point 
+and how to log thread id
+
+            string formattedPreviousDirection = string.Format("{0:N2}", previousDirection);
+            string formattedDirection = string.Format("{0:N2}", direction);
+            Thread thread = Thread.CurrentThread;
+            int threadId = thread.ManagedThreadId;
+            MikeAndConquerGame.instance.log.Information("threadId:{0} previousDirection:{1}  direction:{2}", threadId, formattedPreviousDirection, formattedDirection);

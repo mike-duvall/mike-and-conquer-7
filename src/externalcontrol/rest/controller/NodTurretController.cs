@@ -23,6 +23,5 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             return Ok(restNodTurret);
         }
 
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using mike_and_conquer.gameworld;
+using mike_and_conquer.main;
 
 
 namespace mike_and_conquer.gameobjects
@@ -31,7 +32,15 @@ namespace mike_and_conquer.gameobjects
             get { return direction; }
         }
 
+
+        private float goalDirection;
+
         private Minigunner targetedMinigunner;
+
+        private bool isCurrentlyTurningTowardsTarget = false;
+        private int turnDelay = 15;
+        private int turnDelayCountdownTimer = -1;
+
 
         protected NodTurret()
         {
@@ -43,42 +52,19 @@ namespace mike_and_conquer.gameobjects
             this.mapTileLocation = mapTileLocation;
             this.turretType = turretType;
             this.direction = direction;
-            this.previousDirection = direction;
+            this.goalDirection = direction;
             this.targetedMinigunner = null;
         }
 
-        private int view = 0;
-        private int viewSwitchCounter = 0;
-
-        private float previousDirection;
 
 
         public void Update(GameTime gameTime)
         {
-//            viewSwitchCounter++;
-//            if (viewSwitchCounter > 25)
-//            {
-//                viewSwitchCounter = 0;
-//                view++;
-//                if (view > 31)
-//                {
-//                    view = 0;
-//                }
-//
-//            }
-//
-//            this.direction += 0.9f;
-//            if (direction > 359.0f)
-//            {
-//                direction = 0f;
-//            }
-//
-//            this.previousDirection = direction;
             if (targetedMinigunner == null)
             {
-                foreach(Minigunner minigunner in GameWorld.instance.GDIMinigunnerList)
+                foreach (Minigunner minigunner in GameWorld.instance.GDIMinigunnerList)
                 {
-                    int distance = (int) Distance(MapTileLocation.WorldCoordinatesAsVector2.X,
+                    int distance = (int)Distance(MapTileLocation.WorldCoordinatesAsVector2.X,
                         MapTileLocation.WorldCoordinatesAsVector2.Y,
                         minigunner.GameWorldLocation.WorldCoordinatesAsVector2.X,
                         minigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
@@ -92,6 +78,7 @@ namespace mike_and_conquer.gameobjects
                 }
             }
 
+
             if (targetedMinigunner != null)
             {
                 double angle = GetAngle(
@@ -103,11 +90,54 @@ namespace mike_and_conquer.gameobjects
                 {
                     angle = angle - 360;
                 }
-                direction = (int) angle;
+
+                goalDirection = (float)angle;
+
+                if (!IsPointingAtGoalDirection())
+                {
+                    if (!isCurrentlyTurningTowardsTarget)
+                    {
+                        isCurrentlyTurningTowardsTarget = true;
+                        turnDelayCountdownTimer = turnDelay;
+                    }
+
+                    turnDelayCountdownTimer--;
+                    if (turnDelayCountdownTimer <= 0)
+                    {
+                        turnDelayCountdownTimer = turnDelay;
+                        direction += 11.25f;
+                    }
+                    if (direction > 360.0f)
+                    {
+                        direction = direction - 360.0f;
+                    }
+
+                }
+                else
+                {
+                    isCurrentlyTurningTowardsTarget = false;
+                }
+
 
             }
+
+
+
         }
 
+
+
+        private bool IsPointingAtGoalDirection()
+        {
+            return NearlyEqual(direction, goalDirection, 5.0f);
+        }
+
+
+        public static bool NearlyEqual(float f1, float f2, float epsilon)
+        {
+            // Equal if they are within 0.00001 of each other
+            return Math.Abs(f1 - f2) < epsilon;
+        }
 
         public static double ConvertRadiansToDegrees(double radians)
         {

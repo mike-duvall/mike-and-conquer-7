@@ -605,8 +605,10 @@ namespace mike_and_conquer.main
 
         public NodTurret AddNodTurret(MapTileLocation mapTileLocation, int nodTurretType)
         {
-            NodTurret newNodTurret = new NodTurret(mapTileLocation,nodTurretType, 90.0f - 11.5f);
-//            NodTurret newNodTurret = new NodTurret(mapTileLocation, nodTurretType, 90.0f);
+            NodTurret newNodTurret =
+                new NodTurret(mapTileLocation, nodTurretType, 90.0f - NodTurret.TURN_ANGLE_INCREMENT);
+//            NodTurret newNodTurret = new NodTurret(mapTileLocation, nodTurretType, 90.0f - 11.5f);
+            //            NodTurret newNodTurret = new NodTurret(mapTileLocation, nodTurretType, 90.0f);
             gameWorld.nodTurretList.Add(newNodTurret);
             gameWorldView.AddNodTurretView(newNodTurret);
             return newNodTurret;

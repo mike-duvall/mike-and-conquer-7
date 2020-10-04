@@ -41,6 +41,7 @@ namespace mike_and_conquer.gameobjects
         private int turnDelay = 15;
         private int turnDelayCountdownTimer = -1;
 
+        public static float TURN_ANGLE_INCREMENT = 360.0f / 32.0f;  // 11.25
 
         protected NodTurret()
         {
@@ -79,6 +80,7 @@ namespace mike_and_conquer.gameobjects
             }
 
 
+
             if (targetedMinigunner != null)
             {
                 double angle = GetAngle(
@@ -105,9 +107,9 @@ namespace mike_and_conquer.gameobjects
                     if (turnDelayCountdownTimer <= 0)
                     {
                         turnDelayCountdownTimer = turnDelay;
-                        direction += 11.25f;
+                        direction += TURN_ANGLE_INCREMENT;
                     }
-                    if (direction > 360.0f)
+                    if (direction >= 360.0f)
                     {
                         direction = direction - 360.0f;
                     }
@@ -129,7 +131,8 @@ namespace mike_and_conquer.gameobjects
 
         private bool IsPointingAtGoalDirection()
         {
-            return NearlyEqual(direction, goalDirection, 5.0f);
+//            return NearlyEqual(direction, goalDirection, 5.0f);
+            return NearlyEqual(direction, goalDirection, TURN_ANGLE_INCREMENT / 2.0f);
         }
 
 

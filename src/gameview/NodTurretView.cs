@@ -97,8 +97,7 @@ namespace mike_and_conquer.gameview
         private int CalculateFrameOffsetFromDirection(float direction)
         {
 
-//            int frameOffset = (int) Math.Round(direction / 11.5f);
-            int frameOffset = (int)Math.Round(direction / NodTurret.TURN_ANGLE_INCREMENT);
+            int frameOffset = (int)Math.Round(direction / NodTurret.TURN_ANGLE_SIZE);
 
             // the frames are stored in counterclockwise order
             // but `direction` is in clockwise order

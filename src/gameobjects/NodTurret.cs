@@ -40,8 +40,11 @@ namespace mike_and_conquer.gameobjects
         private bool isCurrentlyTurningTowardsTarget = false;
         private int turnDelay = 15;
         private int turnDelayCountdownTimer = -1;
+        private float turnIncrement;
 
-        public static float TURN_ANGLE_INCREMENT = 360.0f / 32.0f;  // 11.25
+        public static float TURN_ANGLE_SIZE = 360.0f / 32.0f;  // 11.25
+
+
 
         protected NodTurret()
         {
@@ -83,6 +86,19 @@ namespace mike_and_conquer.gameobjects
 
             if (targetedMinigunner != null)
             {
+
+                int distance = (int)Distance(MapTileLocation.WorldCoordinatesAsVector2.X,
+                    MapTileLocation.WorldCoordinatesAsVector2.Y,
+                    targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X,
+                    targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
+
+                int trackingDistance = 24 * 5;
+                if (distance >= trackingDistance)
+                {
+                    targetedMinigunner = null;
+                    return;
+                }
+
                 double angle = GetAngle(
                     targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X,
                     targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
@@ -94,8 +110,12 @@ namespace mike_and_conquer.gameobjects
                 }
 
                 goalDirection = (float)angle;
+                turnIncrement = CalculateTurnIncrement();
+                bool isPointingAtGoalDirection = IsPointingAtGoalDirection();
+                MikeAndConquerGame.instance.log.Information("goalDirection:{0}, turnIncrement:{1}, isPointingAtGoalDirection:{2} ", goalDirection,
+                    turnIncrement, isPointingAtGoalDirection);
 
-                if (!IsPointingAtGoalDirection())
+                if (!isPointingAtGoalDirection)
                 {
                     if (!isCurrentlyTurningTowardsTarget)
                     {
@@ -107,11 +127,16 @@ namespace mike_and_conquer.gameobjects
                     if (turnDelayCountdownTimer <= 0)
                     {
                         turnDelayCountdownTimer = turnDelay;
-                        direction += TURN_ANGLE_INCREMENT;
+                        direction += turnIncrement;
                     }
                     if (direction >= 360.0f)
                     {
                         direction = direction - 360.0f;
+                    }
+
+                    if (direction < 0.0f)
+                    {
+                        direction = 360.0f + direction;
                     }
 
                 }
@@ -123,24 +148,63 @@ namespace mike_and_conquer.gameobjects
 
             }
 
-
-
         }
 
 
+        private float CalculateClockWiseDistance()
+        {
+            float clockWiseDistance = 0f;
+            if (goalDirection > direction)
+            {
+                clockWiseDistance = goalDirection - direction;
+            }
+            else
+            {
+                clockWiseDistance = (360.0f - direction) + goalDirection;
+            }
+
+            return clockWiseDistance;
+
+        }
+
+        private float CalculateTurnIncrement()
+        {
+            float clockWiseDistance = CalculateClockWiseDistance();
+
+            if (clockWiseDistance >= 180.0f)
+            {
+                return -TURN_ANGLE_SIZE;
+            }
+            else
+            {
+                return TURN_ANGLE_SIZE;
+            }
+
+        }
 
         private bool IsPointingAtGoalDirection()
         {
-//            return NearlyEqual(direction, goalDirection, 5.0f);
-            return NearlyEqual(direction, goalDirection, TURN_ANGLE_INCREMENT / 2.0f);
+            float clockwiseDistance = CalculateClockWiseDistance();
+            float counterClockwiseDistance = 360.0f - clockwiseDistance;
+
+            float closestDistance = 0.0f;
+            if (clockwiseDistance <= counterClockwiseDistance)
+            {
+                closestDistance = clockwiseDistance;
+            }
+            else
+            {
+                closestDistance = counterClockwiseDistance;
+            }
+
+            return Math.Abs(closestDistance) < TURN_ANGLE_SIZE / 2.0f;
         }
 
-
-        public static bool NearlyEqual(float f1, float f2, float epsilon)
-        {
-            // Equal if they are within 0.00001 of each other
-            return Math.Abs(f1 - f2) < epsilon;
-        }
+//        public static bool NearlyEqual(float f1, float f2, float epsilon)
+//        {
+//            // Equal if they are within 0.00001 of each other
+//            return Math.Abs(f1 - f2) < epsilon;
+//        }
 
         public static double ConvertRadiansToDegrees(double radians)
         {

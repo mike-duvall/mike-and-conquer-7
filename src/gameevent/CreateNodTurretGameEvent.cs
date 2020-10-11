@@ -10,11 +10,13 @@ namespace mike_and_conquer.gameevent
 
 
         private int x, y, type;
+        private float direction;
 
-        public CreateNodTurretGameEvent(int x, int y, int type)
+        public CreateNodTurretGameEvent(int x, int y, float direction, int type)
         {
             this.x = x;
             this.y = y;
+            this.direction = direction;
             this.type = type;
         }
 
@@ -28,7 +30,9 @@ namespace mike_and_conquer.gameevent
         protected override GameState ProcessImpl()
         {
             GameState newGameState = null;
-            result = MikeAndConquerGame.instance.AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(x, y),
+            result = MikeAndConquerGame.instance.AddNodTurret(
+                MapTileLocation.CreateFromWorldMapTileCoordinates(x, y),
+                direction,
                 type);
             return newGameState;
         }

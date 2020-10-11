@@ -10,6 +10,9 @@ namespace mike_and_conquer.gameobjects
     public class NodTurret
     {
 
+
+        public int id { get;  }
+
         private MapTileLocation mapTileLocation;
 
         public MapTileLocation MapTileLocation
@@ -31,6 +34,9 @@ namespace mike_and_conquer.gameobjects
         {
             get { return direction; }
         }
+
+
+        private static int globalId = 1;
 
 
         private float goalDirection;
@@ -58,6 +64,9 @@ namespace mike_and_conquer.gameobjects
             this.direction = direction;
             this.goalDirection = direction;
             this.targetedMinigunner = null;
+            this.id = NodTurret.globalId;
+            NodTurret.globalId++;
+
         }
 
 

@@ -77,6 +77,7 @@
     <Compile Include="src\gameevent\AsyncGameEvent.cs" />
     <Compile Include="src\gameevent\CreateMCVGameEvent.cs" />
     <Compile Include="src\gameevent\CreateNodTurretGameEvent.cs" />
+    <Compile Include="src\gameevent\GetNodTurretByIdGameEvent.cs" />
     <Compile Include="src\gameevent\SetGDIMinigunnerHealthGameEvent.cs" />
     <Compile Include="src\gameevent\CreateSandbagGameEvent.cs" />
     <Compile Include="src\gameevent\GetCurrentGameStateGameEvent.cs" />

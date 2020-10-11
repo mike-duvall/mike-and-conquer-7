@@ -102,6 +102,7 @@ namespace mike_and_conquer.gameworld
             nodPlayer.HandleReset();
             // nodMinigunnerList.Clear();
             sandbagList.Clear();
+            nodTurretList.Clear();
             // mcv = null;
             // gdiConstructionYard = null;
             // gdiBarracks = null;
@@ -369,18 +370,20 @@ namespace mike_and_conquer.gameworld
 
         internal Minigunner GetGdiMinigunner(int id)
         {
-            // Minigunner foundMinigunner = null;
-            // foreach (Minigunner nextMinigunner in gdiMinigunnerList)
-            // {
-            //     if (nextMinigunner.id == id)
-            //     {
-            //         foundMinigunner = nextMinigunner;
-            //     }
-            // }
-            //
-            // return foundMinigunner;
-
             return gdiPlayer.GetMinigunner(id);
+        }
+
+        public NodTurret GetNodTurret(int id)
+        {
+            foreach(NodTurret nodTurret in nodTurretList)
+            {
+                if (nodTurret.id == id)
+                {
+                    return nodTurret;
+                }
+            }
+
+            return null;
         }
 
 
@@ -676,9 +679,9 @@ namespace mike_and_conquer.gameworld
         }
 
 
-        public NodTurret CreateNodTurretViaEvent(int x, int y, int type)
+        public NodTurret CreateNodTurretViaEvent(int x, int y, float direction, int type)
         {
-            CreateNodTurretGameEvent gameEvent = new CreateNodTurretGameEvent(x, y, type);
+            CreateNodTurretGameEvent gameEvent = new CreateNodTurretGameEvent(x, y, direction, type);
 
             lock (gameEvents)
             {
@@ -704,6 +707,20 @@ namespace mike_and_conquer.gameworld
             Minigunner gdiMinigunner = gameEvent.GetMinigunner();
             return gdiMinigunner;
         }
+
+        public NodTurret GetNodTurretByIdViaEvent(int id)
+        {
+            GetNodTurretByIdGameEvent gameEvent = new GetNodTurretByIdGameEvent(id);
+
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+
+            NodTurret nodTurret = gameEvent.GetNodTurret();
+            return nodTurret;
+        }
+
 
 
         public Minigunner CreateNodMinigunnerViaEvent(Point positionInWorldCoordinates, bool aiIsOn)

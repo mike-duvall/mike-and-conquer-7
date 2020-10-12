@@ -221,10 +221,6 @@
     <Compile Include="src\externalcontrol\rest\controller\GdiMinigunnersController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Loggly, Version=4.6.1.76, Culture=neutral, PublicKeyToken=aea0e3c965ace843, processorArchitecture=MSIL">
-      <HintPath>packages\loggly-csharp.4.6.1.76\lib\net45\Loggly.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Loggly.Config, Version=4.6.1.76, Culture=neutral, PublicKeyToken=aea0e3c965ace843, processorArchitecture=MSIL">
       <HintPath>packages\loggly-csharp-config.4.6.1.76\lib\net45\Loggly.Config.dll</HintPath>
       <Private>True</Private>

@@ -37,7 +37,7 @@ namespace unit_tests
 
             Point minigunnerLocationInMapSquareCoordinates = new Point(0, 0);
             Point minigunnerLocationInWorldCoordinates =
-                gameWorld.ConvertMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
+                gameWorld. ConvertMapTileCoordinatesToWorldCoordinates(minigunnerLocationInMapSquareCoordinates);
             
             Minigunner minigunner = gameWorld.AddGdiMinigunner(minigunnerLocationInWorldCoordinates);
 

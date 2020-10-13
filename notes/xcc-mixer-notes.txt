@@ -9,6 +9,17 @@ Some shp file are in: D:\OriginGames\CNC and The Covert Operations\CONQUER.MIX
 * Palette: temperate.pal
 * Plain map squares: v15.tem (?)
 * Sandbag: sbag.shp
+* Nod turret: gun.shp
+	* Appears to be four different versions of turrets, indicated by third parameter below in the INI files:  128 vs 48
+			[STRUCTURES]
+			002=BadGuy,GUN,128,3566,160,None
+			001=BadGuy,GUN,128,3561,160,None
+			000=BadGuy,GUN,48,3569,160,None
+	* Nod turret - flame while firing:
+		gunfire.shp
+	* Nod turret bullet -	
+		120mm.shp
+
 
 
 GENERAL.MIX - Appears to be mission files

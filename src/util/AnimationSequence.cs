@@ -1,6 +1,7 @@
-﻿using Boolean = System.Boolean;
+﻿
 
 using System.Collections.Generic;
+
 
 namespace mike_and_conquer.util
 {
@@ -58,6 +59,7 @@ namespace mike_and_conquer.util
 
         public int GetCurrentFrame()
         {
+//            MikeAndConquerGame.instance.log.Information("GetCurrentFrame() currentAnimationFrameIndex={0}", currentAnimationFrameIndex);
             return frames[currentAnimationFrameIndex];
         }
 

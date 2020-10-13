@@ -217,6 +217,11 @@
 #begin Shp/fact.shp
 /copy:Shp/fact.shp
 
+#begin Shp/gun.shp
+/copy:Shp/gun.shp
+
+
+
 #begin Shp/mcv.shp
 /copy:Shp/mcv.shp
 

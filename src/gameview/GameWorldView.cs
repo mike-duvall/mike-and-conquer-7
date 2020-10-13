@@ -123,6 +123,8 @@ namespace mike_and_conquer.gameview
 
         private List<SandbagView> sandbagViewList;
 
+        private List<NodTurretView> nodTurretViewList;
+
         private UnitSelectionBoxView unitSelectionBoxView;
 
         public List<MapTileInstanceView> MapTileInstanceViewList
@@ -146,6 +148,12 @@ namespace mike_and_conquer.gameview
         {
             get { return sandbagViewList; }
         }
+
+        public List<NodTurretView> NodTurretViewList
+        {
+            get { return nodTurretViewList; }
+        }
+
 
         public GDIBarracksView GDIBarracksView
         {
@@ -178,6 +186,7 @@ namespace mike_and_conquer.gameview
             nodMinigunnerViewList = new List<MinigunnerView>();
 
             sandbagViewList = new List<SandbagView>();
+            nodTurretViewList = new List<NodTurretView>();
             terrainViewList = new List<TerrainView>();
 
             unitSelectionBoxView =
@@ -452,6 +461,11 @@ namespace mike_and_conquer.gameview
                 nextSandbagView.DrawShadowOnly(gameTime, spriteBatch);
             }
 
+            foreach (NodTurretView nextNodTurretView in GameWorldView.instance.NodTurretViewList)
+            {
+                nextNodTurretView.DrawShadowOnly(gameTime, spriteBatch);
+            }
+
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {
@@ -618,6 +632,12 @@ namespace mike_and_conquer.gameview
                 nextSandbagView.DrawNoShadow(gameTime, spriteBatch);
             }
 
+            foreach (NodTurretView nodTurretView in GameWorldView.instance.NodTurretViewList)
+            {
+                nodTurretView.DrawNoShadow(gameTime, spriteBatch);
+            }
+
+
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {
                 nextMinigunnerView.DrawNoShadow(gameTime, spriteBatch);
@@ -706,6 +726,7 @@ namespace mike_and_conquer.gameview
             gdiMinigunnerViewList.Clear();
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
+            nodTurretViewList.Clear();
             mcvView = null;
             gdiConstructionYardView = null;
             gdiBarracksView = null;
@@ -738,6 +759,13 @@ namespace mike_and_conquer.gameview
         {
             SandbagView newSandbagView = new SandbagView(newSandbag);
             sandbagViewList.Add(newSandbagView);
+        }
+
+
+        public void AddNodTurretView(NodTurret nodTurret)
+        {
+            NodTurretView newNodTurretView = new NodTurretView(nodTurret);
+            nodTurretViewList.Add(newNodTurretView);
         }
 
         public void AddGDIBarracksView(GDIBarracks gdiBarracks)
@@ -831,7 +859,17 @@ namespace mike_and_conquer.gameview
             for (int i = 0; i < numPixels; i++)
             {
                 uint mappedColor = palette[i];
+
+                // NOTE:  This tweak of this red color was needed to make
+                // rendering of the Nod Turrets show the right color
+                // The red pixel value was off by 4.  Not sure why, palette seems to be getting read correctly
+                // Tweaking the color here on the fly since the palette is Immutable
+                if (i == 0x7e && mappedColor == 0xffdc1408)
+                {
+                    mappedColor = 0xffdc1008;
+                }
                 System.Drawing.Color systemColor = System.Drawing.Color.FromArgb((int)mappedColor);
+
                 byte alpha = 255;
                 Color xnaColor = new Color(systemColor.R, systemColor.G, systemColor.B, alpha);
                 texturePixelData[i] = xnaColor;
@@ -1060,6 +1098,10 @@ namespace mike_and_conquer.gameview
                 barracksSidebarIconView.Update(gameTime);
             }
 
+            foreach (NodTurretView nodTurretView in nodTurretViewList)
+            {
+                nodTurretView.Update(gameTime);
+            }
 
 
         }

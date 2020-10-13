@@ -72,8 +72,12 @@
   <ItemGroup>
     <Compile Include="src\aicontroller\MinigunnerAIController.cs" />
     <Compile Include="src\externalcontrol\RestServerManager.cs" />
+    <Compile Include="src\externalcontrol\rest\controller\NodTurretController.cs" />
+    <Compile Include="src\externalcontrol\rest\domain\RestNodTurret.cs" />
     <Compile Include="src\gameevent\AsyncGameEvent.cs" />
     <Compile Include="src\gameevent\CreateMCVGameEvent.cs" />
+    <Compile Include="src\gameevent\CreateNodTurretGameEvent.cs" />
+    <Compile Include="src\gameevent\GetNodTurretByIdGameEvent.cs" />
     <Compile Include="src\gameevent\SetGDIMinigunnerHealthGameEvent.cs" />
     <Compile Include="src\gameevent\CreateSandbagGameEvent.cs" />
     <Compile Include="src\gameevent\GetCurrentGameStateGameEvent.cs" />
@@ -88,9 +92,11 @@
     <Compile Include="src\gameobjects\GDIConstructionYard.cs" />
     <Compile Include="src\gameobjects\GDIBarracks.cs" />
     <Compile Include="src\gameobjects\MCV.cs" />
+    <Compile Include="src\gameobjects\NodTurret.cs" />
     <Compile Include="src\gameobjects\TerrainItemDescriptor.cs" />
     <Compile Include="src\gameobjects\TerrainItem.cs" />
     <Compile Include="src\gameobjects\Sandbag.cs" />
+    <Compile Include="src\gamesprite\NodSecondaryShpFileColorMapper.cs" />
     <Compile Include="src\gamesprite\PartiallyVisibileMapTileMask.cs" />
     <Compile Include="src\gamesprite\SidebarBuildIconSprite.cs" />
     <Compile Include="src\gamesprite\SingleTextureSprite.cs" />
@@ -107,6 +113,7 @@
     <Compile Include="src\gameview\MapTileShroudMapping.cs" />
     <Compile Include="src\gameview\MCVView.cs" />
     <Compile Include="src\gameview\MCVSelectionBox.cs" />
+    <Compile Include="src\gameview\NodTurretView.cs" />
     <Compile Include="src\gameview\sidebar\ReadyOverlay.cs" />
     <Compile Include="src\gameview\sidebar\SidebarIconView.cs" />
     <Compile Include="src\gameview\sidebar\BarrackSidebarIconView.cs" />
@@ -231,8 +238,8 @@
       <HintPath>packages\MonoGame.Framework.WindowsDX.3.7.1.189\lib\net45\MonoGame.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
@@ -240,7 +247,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>packages\Serilog.2.7.1\lib\net45\Serilog.dll</HintPath>
+      <HintPath>packages\Serilog.2.9.0\lib\net45\Serilog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Serilog.Sinks.Console, Version=3.1.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
@@ -252,7 +259,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+      <HintPath>packages\Serilog.Sinks.File.4.1.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Serilog.Sinks.RollingFile, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>packages\Serilog.Sinks.RollingFile.3.3.0\lib\net45\Serilog.Sinks.RollingFile.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SharpDX, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
@@ -310,8 +321,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
-    <Content Include="notes\errors.txt" />
     <Content Include="notes\ini-file-cell-number-calculations.txt" />
+    <Content Include="notes\LoggingNotes.txt" />
     <Content Include="notes\Notes.txt" />
     <Content Include="notes\potential-drawing-algorithms.txt" />
     <Content Include="notes\Setup-Notes.txt" />
@@ -323,6 +334,7 @@
     <MonoGameContentReference Include="Content\Content.mgcb">
       <SubType>Designer</SubType>
     </MonoGameContentReference>
+    <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

@@ -80,10 +80,10 @@ namespace mike_and_conquer.gameview
 
                 if (previousFrameStartTimeInMillis != -1)
                 {
-                    MikeAndConquerGame.instance.log.Information("previousFrameOffset:{0}, time spent at previous offset:{1}",
-                        previousFrameOffset, currentElapsedMilliseconds - previousFrameStartTimeInMillis);
-                    MikeAndConquerGame.instance.log.Information("currentElapsedMilliseconds:{0}, previousFrameStartTimeInMillis:{1}",
-                        currentElapsedMilliseconds,  previousFrameStartTimeInMillis);
+//                    MikeAndConquerGame.instance.log.Information("previousFrameOffset:{0}, time spent at previous offset:{1}",
+//                        previousFrameOffset, currentElapsedMilliseconds - previousFrameStartTimeInMillis);
+//                    MikeAndConquerGame.instance.log.Information("currentElapsedMilliseconds:{0}, previousFrameStartTimeInMillis:{1}",
+//                        currentElapsedMilliseconds,  previousFrameStartTimeInMillis);
 
                 }
 
@@ -109,8 +109,8 @@ namespace mike_and_conquer.gameview
                 mappedFrameOffset = 0;
             }
 
-            MikeAndConquerGame.instance.log.Information("direction:{0}", direction);
-            MikeAndConquerGame.instance.log.Information("mappedFrameOffset:{0}", mappedFrameOffset);
+//            MikeAndConquerGame.instance.log.Information("direction:{0}", direction);
+//            MikeAndConquerGame.instance.log.Information("mappedFrameOffset:{0}", mappedFrameOffset);
             return mappedFrameOffset;
         }
 

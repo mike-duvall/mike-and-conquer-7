@@ -39,17 +39,18 @@ namespace mike_and_conquer.gameobjects
         private static int globalId = 1;
 
 
+        private Minigunner targetedMinigunner;
         private float goalDirection;
 
-        private Minigunner targetedMinigunner;
-
         private bool isCurrentlyTurningTowardsTarget = false;
-        private int turnDelay = 15;
+        private int turnDelay = 5;
         private int turnDelayCountdownTimer = -1;
         private float turnIncrement;
 
         public static float TURN_ANGLE_SIZE = 360.0f / 32.0f;  // 11.25
 
+
+        private int trackingDistance;
 
 
         protected NodTurret()
@@ -64,99 +65,110 @@ namespace mike_and_conquer.gameobjects
             this.direction = direction;
             this.goalDirection = direction;
             this.targetedMinigunner = null;
+            this.trackingDistance = 24 * 5;
             this.id = NodTurret.globalId;
             NodTurret.globalId++;
 
         }
 
-
-
         public void Update(GameTime gameTime)
         {
-            if (targetedMinigunner == null)
-            {
-                foreach (Minigunner minigunner in GameWorld.instance.GDIMinigunnerList)
-                {
-                    int distance = (int)Distance(MapTileLocation.WorldCoordinatesAsVector2.X,
-                        MapTileLocation.WorldCoordinatesAsVector2.Y,
-                        minigunner.GameWorldLocation.WorldCoordinatesAsVector2.X,
-                        minigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
-
-                    int trackingDistance = 24 * 5;
-                    if (distance < trackingDistance)
-                    {
-                        targetedMinigunner = minigunner;
-                        break;
-                    }
-                }
-            }
-
-
+            EvaluateAndUpdateTargetedMinigunner();
 
             if (targetedMinigunner != null)
             {
 
-                int distance = (int)Distance(MapTileLocation.WorldCoordinatesAsVector2.X,
+                int distanceToTargedMinigunner = (int)Distance(MapTileLocation.WorldCoordinatesAsVector2.X,
                     MapTileLocation.WorldCoordinatesAsVector2.Y,
                     targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X,
                     targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
 
-                int trackingDistance = 24 * 5;
-                if (distance >= trackingDistance)
+                if (distanceToTargedMinigunner >= trackingDistance)
                 {
                     targetedMinigunner = null;
                     return;
                 }
 
-                double angle = GetAngle(
-                    targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X,
-                    targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
+                UpdateGoalDirection();
+                EvaluateDirectionAndTurnIfNeeded();
+            }
+        }
 
-                angle += 90;
-                if (angle > 360)
+
+        private void EvaluateDirectionAndTurnIfNeeded()
+        {
+            turnIncrement = CalculateTurnIncrement();
+            bool isPointingAtGoalDirection = IsPointingAtGoalDirection();
+            if (!isPointingAtGoalDirection)
+            {
+                if (!isCurrentlyTurningTowardsTarget)
                 {
-                    angle = angle - 360;
+                    isCurrentlyTurningTowardsTarget = true;
+                    turnDelayCountdownTimer = turnDelay;
                 }
 
-                goalDirection = (float)angle;
-                turnIncrement = CalculateTurnIncrement();
-                bool isPointingAtGoalDirection = IsPointingAtGoalDirection();
-                MikeAndConquerGame.instance.log.Information("goalDirection:{0}, turnIncrement:{1}, isPointingAtGoalDirection:{2} ", goalDirection,
-                    turnIncrement, isPointingAtGoalDirection);
-
-                if (!isPointingAtGoalDirection)
+                turnDelayCountdownTimer--;
+                if (turnDelayCountdownTimer <= 0)
                 {
-                    if (!isCurrentlyTurningTowardsTarget)
-                    {
-                        isCurrentlyTurningTowardsTarget = true;
-                        turnDelayCountdownTimer = turnDelay;
-                    }
-
-                    turnDelayCountdownTimer--;
-                    if (turnDelayCountdownTimer <= 0)
-                    {
-                        turnDelayCountdownTimer = turnDelay;
-                        direction += turnIncrement;
-                    }
-                    if (direction >= 360.0f)
-                    {
-                        direction = direction - 360.0f;
-                    }
-
-                    if (direction < 0.0f)
-                    {
-                        direction = 360.0f + direction;
-                    }
-
+                    turnDelayCountdownTimer = turnDelay;
+                    direction += turnIncrement;
                 }
-                else
+                if (direction >= 360.0f)
                 {
-                    isCurrentlyTurningTowardsTarget = false;
+                    direction = direction - 360.0f;
                 }
 
+                if (direction < 0.0f)
+                {
+                    direction = 360.0f + direction;
+                }
 
             }
+            else
+            {
+                isCurrentlyTurningTowardsTarget = false;
+            }
 
+//            MikeAndConquerGame.instance.log.Information("goalDirection:{0}, turnIncrement:{1}, isPointingAtGoalDirection:{2} ", goalDirection,
+//                turnIncrement, isPointingAtGoalDirection);
+
+        }
+
+        private void UpdateGoalDirection()
+        {
+            double targetDirectionFromTurret = GetAngle(
+                targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X,
+                targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
+
+            targetDirectionFromTurret += 90;
+            if (targetDirectionFromTurret > 360)
+            {
+                targetDirectionFromTurret = targetDirectionFromTurret - 360;
+            }
+
+            goalDirection = (float)targetDirectionFromTurret;
+
+
+        }
+
+        private void EvaluateAndUpdateTargetedMinigunner()
+        {
+            if (targetedMinigunner == null)
+            {
+                foreach (Minigunner minigunner in GameWorld.instance.GDIMinigunnerList)
+                {
+                    int distance = (int) Distance(MapTileLocation.WorldCoordinatesAsVector2.X,
+                        MapTileLocation.WorldCoordinatesAsVector2.Y,
+                        minigunner.GameWorldLocation.WorldCoordinatesAsVector2.X,
+                        minigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
+
+                    if (distance < trackingDistance)
+                    {
+                        targetedMinigunner = minigunner;
+                        return;
+                    }
+                }
+            }
         }
 
 

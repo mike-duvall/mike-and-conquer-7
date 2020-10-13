@@ -221,10 +221,6 @@
     <Compile Include="src\externalcontrol\rest\controller\GdiMinigunnersController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Loggly.Config, Version=4.6.1.76, Culture=neutral, PublicKeyToken=aea0e3c965ace843, processorArchitecture=MSIL">
-      <HintPath>packages\loggly-csharp-config.4.6.1.76\lib\net45\Loggly.Config.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=2.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Owin.2.0.2\lib\net45\Microsoft.Owin.dll</HintPath>

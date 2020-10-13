@@ -63,12 +63,12 @@ namespace unit_tests
             //            int leeway = 1;
             float leeway = 0.2f;
             bool isAtXDestination =
-                (minigunner.positionInWorldCoordinates.X > destination.X - leeway) &&
-                (minigunner.positionInWorldCoordinates.X < destination.X + leeway);
+                (minigunner.GameWorldLocation.WorldCoordinatesAsVector2.X > destination.X - leeway) &&
+                (minigunner.GameWorldLocation.WorldCoordinatesAsVector2.X < destination.X + leeway);
 
             bool isAtYDestination =
-                (minigunner.positionInWorldCoordinates.Y > destination.Y - leeway) &&
-                (minigunner.positionInWorldCoordinates.Y < destination.Y + leeway);
+                (minigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y > destination.Y - leeway) &&
+                (minigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y < destination.Y + leeway);
 
 
             return isAtXDestination && isAtYDestination;

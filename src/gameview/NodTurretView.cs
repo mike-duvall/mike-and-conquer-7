@@ -58,9 +58,8 @@ namespace mike_and_conquer.gameview
             unitSprite.DrawNoShadow(gameTime, spriteBatch, myNodTurret.MapTileLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
         }
 
-        private int previousFrameOffset = -1;
-//        private GameTime previousFrameStartTime = null;
-        private int previousFrameStartTimeInMillis = -1;
+//        private int previousFrameOffset = -1;
+//        private int previousFrameStartTimeInMillis = -1;
 
         public void Update(GameTime gameTime)
         {
@@ -68,29 +67,27 @@ namespace mike_and_conquer.gameview
 //            MikeAndConquerGame.instance.log.Information("Setting animation index to:{0}", frameOffset);
             unitSprite.SetFrameOfCurrentAnimationSequence(frameOffset);
 
-
 //            MikeAndConquerGame.instance.log.Information("previousFrameStartTimeInMillis:{0}, current:{1}",
 //                previousFrameStartTimeInMillis, gameTime.TotalGameTime.Milliseconds);
 
 
 
-            if (frameOffset != previousFrameOffset)
-            {
-                int currentElapsedMilliseconds = (int) gameTime.TotalGameTime.TotalMilliseconds;
-
-                if (previousFrameStartTimeInMillis != -1)
-                {
+//            if (frameOffset != previousFrameOffset)
+//            {
+//                int currentElapsedMilliseconds = (int) gameTime.TotalGameTime.TotalMilliseconds;
+//
+//                if (previousFrameStartTimeInMillis != -1)
+//                {
 //                    MikeAndConquerGame.instance.log.Information("previousFrameOffset:{0}, time spent at previous offset:{1}",
 //                        previousFrameOffset, currentElapsedMilliseconds - previousFrameStartTimeInMillis);
 //                    MikeAndConquerGame.instance.log.Information("currentElapsedMilliseconds:{0}, previousFrameStartTimeInMillis:{1}",
 //                        currentElapsedMilliseconds,  previousFrameStartTimeInMillis);
-
-                }
-
-                previousFrameStartTimeInMillis = currentElapsedMilliseconds;
-                previousFrameOffset = frameOffset;
-
-            }
+//                }
+//                previousFrameStartTimeInMillis = currentElapsedMilliseconds;
+//
+//                previousFrameOffset = frameOffset;
+//
+//            }
 
         }
 

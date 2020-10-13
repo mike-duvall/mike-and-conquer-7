@@ -221,12 +221,6 @@ namespace mike_and_conquer.gameobjects
             return Math.Abs(closestDistance) < TURN_ANGLE_SIZE / 2.0f;
         }
 
-//        public static bool NearlyEqual(float f1, float f2, float epsilon)
-//        {
-//            // Equal if they are within 0.00001 of each other
-//            return Math.Abs(f1 - f2) < epsilon;
-//        }
-
         public static double ConvertRadiansToDegrees(double radians)
         {
             double degrees = (180 / Math.PI) * radians;
@@ -253,39 +247,10 @@ namespace mike_and_conquer.gameobjects
 
         }
 
-        //        public double getAngle(Point screenPoint)
-        //        {
-        //            double dx = screenPoint.getX() - mCentreX;
-        //            // Minus to correct for coord re-mapping
-        //            double dy = -(screenPoint.getY() - mCentreY);
-        //
-        //            double inRads = Math.atan2(dy, dx);
-        //
-        //            // We need to map to coord system when 0 degree is at 3 O'clock, 270 at 12 O'clock
-        //            if (inRads < 0)
-        //                inRads = Math.abs(inRads);
-        //            else
-        //                inRads = 2 * Math.PI - inRads;
-        //
-        //            return Math.toDegrees(inRads);
-        //        }
-        //
         private double Distance(double dX0, double dY0, double dX1, double dY1)
         {
             return Math.Sqrt((dX1 - dX0) * (dX1 - dX0) + (dY1 - dY0) * (dY1 - dY0));
         }
-
-
-//        private int CalculateDistanceToTarget()
-//        {
-//            return (int)Distance(
-//                MapTileLocation.WorldCoordinatesAsVector2.X,
-//                MapTileLocation.WorldCoordinatesAsVector2.Y,
-//                targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X,
-//                targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
-//        }
-
-
 
         //        public bool ContainsPoint(Point aPoint)
         //        {

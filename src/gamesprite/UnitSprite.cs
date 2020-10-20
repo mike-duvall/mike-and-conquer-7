@@ -139,13 +139,7 @@ namespace mike_and_conquer.gamesprite
 
             float defaultScale = 1;
 
-            int roundedX = (int)Math.Round(positionInWorldCoordinates.X, 0);
-            int roundedY = (int)Math.Round(positionInWorldCoordinates.Y, 0);
-
-            Vector2 snappedPositionInWordCoordinates = new Vector2(roundedX, roundedY);
-
-
-            spriteBatch.Draw(currentTexture, snappedPositionInWordCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
+            spriteBatch.Draw(currentTexture, positionInWorldCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
 
             if (drawBoundingRectangle)
             {

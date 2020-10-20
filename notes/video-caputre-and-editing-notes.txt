@@ -1,0 +1,7 @@
+﻿Using OBS Studio to do screen caputres of game:  https://obsproject.com/
+	* Set "Display Capture" as the source
+
+
+
+Used VLC to do frame by frame analysis.  However, when capturing doing screenshots of frames in VLC, the color seems to be getting distored for Nod Turret shots
+

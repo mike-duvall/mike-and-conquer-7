@@ -136,11 +136,12 @@ namespace mike_and_conquer.main
         /// related content.  Calling base.InitializeDefaultMap will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-//        protected override void Initialize()
-//        {
-//            // TODO: Add your initialization logic here
-//            base.InitializeDefaultMap();
-//        }
+        //        protected override void Initialize()
+        //        {
+        //            // TODO: Add your initialization logic here
+        //            base.InitializeDefaultMap();
+        //        }
+
 
 
         private void AddTestModeObjects()
@@ -152,8 +153,11 @@ namespace mike_and_conquer.main
             {
                 AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 9));
                 AddMCVAtMapSquareCoordinates(new Point(21, 12));
+                AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(14, 16), 90, 2);
             }
 
+
+//            AddProjectile120mmAtGameWorldLocation(GameWorldLocation.CreateFromWorldCoordinates(200,200));
 
             //            AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 11));
             //                        AddMCVAtMapSquareCoordinates(new Point(21, 12));
@@ -294,6 +298,13 @@ namespace mike_and_conquer.main
                 NodTurretView.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(NodTurretView.SHP_FILE_NAME),
                 NodTurretView.SHP_FILE_COLOR_MAPPER);
+
+
+            raiSpriteFrameManager.LoadAllTexturesFromShpFile(Projectile120mmView.SHP_FILE_NAME);
+            spriteSheet.LoadUnitFramesFromSpriteFrames(
+                Projectile120mmView.SPRITE_KEY,
+                raiSpriteFrameManager.GetSpriteFramesForUnit(Projectile120mmView.SHP_FILE_NAME),
+                Projectile120mmView.SHP_FILE_COLOR_MAPPER);
 
 
             raiSpriteFrameManager.LoadAllTexturesFromShpFile(MinigunnerSidebarIconView.SHP_FILE_NAME);
@@ -651,6 +662,19 @@ namespace mike_and_conquer.main
             gameWorldView.AddMCVView(mcv);
         }
 
+        public void AddProjectile120mmAtGameWorldLocation(GameWorldLocation gameWorldLocation, GameWorldLocation targetLocation)
+        {
+            Projectile120mm projectile120Mm = gameWorld.AddProjectile120mm(gameWorldLocation, targetLocation);
+            gameWorldView.AddProjectile120mmView(projectile120Mm);
+        }
+
+        public void RemoveProjectile120mmWithId(int id)
+        {
+            gameWorldView.RemoveProjectile120mmView(id);
+            gameWorld.RemoveProjectile120mm(id);
+        }
+
+
         public MCV AddMCVAtWorldCoordinates(Point positionInWorldCoordinates)
         {
             MCV mcv = gameWorld.AddMCV(positionInWorldCoordinates);
@@ -664,6 +688,7 @@ namespace mike_and_conquer.main
             GameWorld.instance.RemoveMCV();
             GameWorldView.instance.mcvView = null;
         }
+
 
 
         internal Minigunner AddNodMinigunnerAtMapSquareCoordinates(Point positionInMapSquareCoordinates, bool aiIsOn)

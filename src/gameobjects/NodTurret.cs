@@ -42,14 +42,17 @@ namespace mike_and_conquer.gameobjects
         private Minigunner targetedMinigunner;
         private float goalDirection;
 
+
+
+
         private bool isCurrentlyTurningTowardsTarget = false;
-        private int turnDelay = 5;
+        private int turnDelay = 10;
         private int turnDelayCountdownTimer = -1;
         private float turnIncrement;
 
         public static float TURN_ANGLE_SIZE = 360.0f / 32.0f;  // 11.25
 
-
+        private bool hasFired = false;
         private int trackingDistance;
 
 
@@ -91,6 +94,16 @@ namespace mike_and_conquer.gameobjects
 
                 UpdateGoalDirection();
                 EvaluateDirectionAndTurnIfNeeded();
+                if (IsPointingAtGoalDirection() && !hasFired)
+                {
+
+                    Point myWorldCcCoordinatesAsPoint = this.MapTileLocation.WorldCoordinatesAsPoint;
+                    GameWorldLocation projectileGameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(myWorldCcCoordinatesAsPoint.X + 20,
+                        myWorldCcCoordinatesAsPoint.Y);
+
+                    MikeAndConquerGame.instance.AddProjectile120mmAtGameWorldLocation(projectileGameWorldLocation, targetedMinigunner.GameWorldLocation);
+                    hasFired = true;
+                }
             }
         }
 

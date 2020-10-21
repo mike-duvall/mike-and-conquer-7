@@ -448,9 +448,7 @@ namespace mike_and_conquer.main
         }
 
 
-
-
-
+        private KeyboardState oldKeyboardState;
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -466,11 +464,22 @@ namespace mike_and_conquer.main
             KeyboardState newKeyboardState = Keyboard.GetState();
             ExitIfEscPressed(newKeyboardState);
 
+//            if (!oldKeyboardState.IsKeyDown(Keys.Q) && newKeyboardState.IsKeyDown(Keys.Q))
+//            {
+//                Projectile120mm.movementVelocity += 0.01;
+//            }
+//            else if (!oldKeyboardState.IsKeyDown(Keys.A) && newKeyboardState.IsKeyDown(Keys.A))
+//            {
+//                Projectile120mm.movementVelocity -= 0.01;
+//            }
+
+
             gameWorldView.Update(gameTime, newKeyboardState);
 
             currentGameState = this.currentGameState.Update(gameTime);
             this.currentGameStateView.Update(gameTime);
 
+            oldKeyboardState = newKeyboardState;
             base.Update(gameTime);
         }
 

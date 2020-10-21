@@ -27,11 +27,10 @@ namespace mike_and_conquer.gameobjects
 
         private GameWorldLocation targetLocation;
 
-        private int updateDelayTime;
+        private int updateDelayTime = 5;
         private int updateDelayTimer;
 
-//        double movementVelocity = .010;
-        double movementVelocity = .050;
+        private double movementVelocity = .68;
         double movementDistanceEpsilon;
 
         public Projectile120mm(GameWorldLocation gameWorldLocation, GameWorldLocation targetLocation)
@@ -40,7 +39,7 @@ namespace mike_and_conquer.gameobjects
             globalId++;
             this.gameWorldLocation = gameWorldLocation;
             this.targetLocation = targetLocation;
-            this.updateDelayTime = 5;
+//            this.updateDelayTime = 5;
             this.updateDelayTimer = updateDelayTime;
             movementDistanceEpsilon = movementVelocity + (double).04f;
         }
@@ -49,6 +48,8 @@ namespace mike_and_conquer.gameobjects
 
         public bool Update(GameTime gameTime)
         {
+
+            MikeAndConquerGame.instance.log.Information("movementVelocity:{0}, updateDelayTime{1} ", movementVelocity, updateDelayTime);
             bool removeMe = false;
             updateDelayTimer--;
             if (updateDelayTimer < 0)

@@ -105,6 +105,7 @@ namespace mike_and_conquer.gameworld
             // nodMinigunnerList.Clear();
             sandbagList.Clear();
             nodTurretList.Clear();
+            projectile120MmList.Clear();
             // mcv = null;
             // gdiConstructionYard = null;
             // gdiBarracks = null;

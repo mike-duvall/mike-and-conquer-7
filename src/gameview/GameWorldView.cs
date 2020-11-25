@@ -734,6 +734,7 @@ namespace mike_and_conquer.gameview
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
             nodTurretViewList.Clear();
+            projectile120MmViewList.Clear();
             mcvView = null;
             gdiConstructionYardView = null;
             gdiBarracksView = null;

@@ -43,13 +43,16 @@ namespace mike_and_conquer.gameobjects
         private float goalDirection;
 
         private bool isCurrentlyTurningTowardsTarget = false;
-        private int turnDelay = 5;
+        private int turnDelay = 10;
         private int turnDelayCountdownTimer = -1;
         private float turnIncrement;
 
         public static float TURN_ANGLE_SIZE = 360.0f / 32.0f;  // 11.25
 
+//        private bool hasFired = false;
 
+        private int fireDelay = 275;
+        private int fireDelayCountdownTimer = -1;
         private int trackingDistance;
 
 
@@ -65,14 +68,22 @@ namespace mike_and_conquer.gameobjects
             this.direction = direction;
             this.goalDirection = direction;
             this.targetedMinigunner = null;
-            this.trackingDistance = 24 * 5;
+            this.trackingDistance = 24 * 7;
             this.id = NodTurret.globalId;
             NodTurret.globalId++;
 
         }
 
+
+        private bool CanFire()
+        {
+            return fireDelayCountdownTimer < 0;
+        }
+
         public void Update(GameTime gameTime)
         {
+
+            fireDelayCountdownTimer--;
             EvaluateAndUpdateTargetedMinigunner();
 
             if (targetedMinigunner != null)
@@ -91,6 +102,16 @@ namespace mike_and_conquer.gameobjects
 
                 UpdateGoalDirection();
                 EvaluateDirectionAndTurnIfNeeded();
+                if (IsPointingAtGoalDirection() && CanFire())
+                {
+
+                    Point myWorldCcCoordinatesAsPoint = this.MapTileLocation.WorldCoordinatesAsPoint;
+                    GameWorldLocation projectileGameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(myWorldCcCoordinatesAsPoint.X + 20,
+                        myWorldCcCoordinatesAsPoint.Y);
+
+                    MikeAndConquerGame.instance.AddProjectile120mmAtGameWorldLocation(projectileGameWorldLocation, targetedMinigunner.GameWorldLocation);
+                    fireDelayCountdownTimer = fireDelay;
+                }
             }
         }
 

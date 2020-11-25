@@ -39,6 +39,7 @@ namespace mike_and_conquer.gameworld
         public List<Sandbag> sandbagList;
         public List<NodTurret> nodTurretList;
         public List<TerrainItem> terrainItemList;
+        public List<Projectile120mm> projectile120MmList;
 
 
         public List<Minigunner> GDIMinigunnerList
@@ -85,6 +86,7 @@ namespace mike_and_conquer.gameworld
             sandbagList = new List<Sandbag>();
             nodTurretList = new List<NodTurret>();
             terrainItemList = new List<TerrainItem>();
+            projectile120MmList = new List<Projectile120mm>();
 
             gameEvents = new List<AsyncGameEvent>();
 
@@ -103,6 +105,9 @@ namespace mike_and_conquer.gameworld
             // nodMinigunnerList.Clear();
             sandbagList.Clear();
             nodTurretList.Clear();
+            projectile120MmList.Clear();
+            nodTurretList.Clear();
+            projectile120MmList.Clear();
             // mcv = null;
             // gdiConstructionYard = null;
             // gdiBarracks = null;
@@ -461,10 +466,24 @@ namespace mike_and_conquer.gameworld
                 nodTurret.Update(gameTime);
             }
 
-            // if (mcv != null)
-            // {
-            //     mcv.Update(gameTime);
-            // }
+
+
+            List<Projectile120mm> projectile120mmsToRemove = new List<Projectile120mm>();
+            foreach (Projectile120mm projectile120mm in projectile120MmList)
+            {
+                bool shouldRemove = projectile120mm.Update(gameTime);
+                if (shouldRemove)
+                {
+                    projectile120mmsToRemove.Add(projectile120mm);
+                }
+            }
+
+
+            foreach (Projectile120mm projectile120mm in projectile120mmsToRemove)
+            {
+                MikeAndConquerGame.instance.RemoveProjectile120mmWithId(projectile120mm.id);
+            }
+
 
         }
 
@@ -1110,6 +1129,25 @@ namespace mike_and_conquer.gameworld
         public void RemoveMCV()
         {
             gdiPlayer.RemoveMCV();
+        }
+
+        public Projectile120mm AddProjectile120mm(GameWorldLocation gameWorldLocation, GameWorldLocation targetLocation)
+        {
+            Projectile120mm projectile120Mm = new Projectile120mm(gameWorldLocation, targetLocation);
+            projectile120MmList.Add(projectile120Mm);
+            return projectile120Mm;
+        }
+
+        public void RemoveProjectile120mm(int id)
+        {
+            foreach (Projectile120mm projectile120Mm in projectile120MmList)
+            {
+                if (projectile120Mm.id == id)
+                {
+                    projectile120MmList.Remove(projectile120Mm);
+                    return;
+                }
+            }
         }
     }
 }

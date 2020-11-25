@@ -220,6 +220,8 @@
 #begin Shp/gun.shp
 /copy:Shp/gun.shp
 
+#begin Shp/120mm.shp
+/copy:Shp/120mm.shp
 
 
 #begin Shp/mcv.shp

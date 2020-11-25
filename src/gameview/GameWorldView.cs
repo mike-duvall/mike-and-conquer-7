@@ -124,6 +124,7 @@ namespace mike_and_conquer.gameview
         private List<SandbagView> sandbagViewList;
 
         private List<NodTurretView> nodTurretViewList;
+        private List<Projectile120mmView> projectile120MmViewList;
 
         private UnitSelectionBoxView unitSelectionBoxView;
 
@@ -187,6 +188,7 @@ namespace mike_and_conquer.gameview
 
             sandbagViewList = new List<SandbagView>();
             nodTurretViewList = new List<NodTurretView>();
+            projectile120MmViewList = new List<Projectile120mmView>();
             terrainViewList = new List<TerrainView>();
 
             unitSelectionBoxView =
@@ -637,6 +639,11 @@ namespace mike_and_conquer.gameview
                 nodTurretView.DrawNoShadow(gameTime, spriteBatch);
             }
 
+            foreach (Projectile120mmView projectile120MmView in projectile120MmViewList)
+            {
+                projectile120MmView.DrawNoShadow(gameTime, spriteBatch);
+            }
+
 
             foreach (MinigunnerView nextMinigunnerView in GameWorldView.instance.GdiMinigunnerViewList)
             {
@@ -727,6 +734,7 @@ namespace mike_and_conquer.gameview
             nodMinigunnerViewList.Clear();
             sandbagViewList.Clear();
             nodTurretViewList.Clear();
+            projectile120MmViewList.Clear();
             mcvView = null;
             gdiConstructionYardView = null;
             gdiBarracksView = null;
@@ -1305,6 +1313,24 @@ namespace mike_and_conquer.gameview
         {
             barracksPlacementIndicatorView = null;
             barracksBarracksPlacementIndicator = null;
+        }
+
+        public void AddProjectile120mmView(Projectile120mm projectile120Mm)
+        {
+            projectile120MmViewList.Add(new Projectile120mmView(projectile120Mm));
+        }
+
+        public void RemoveProjectile120mmView(int id)
+        {
+            foreach (Projectile120mmView view in projectile120MmViewList)
+            {
+                if (view.Id == id)
+                {
+                    projectile120MmViewList.Remove(view);
+                    return;
+                }
+            }
+
         }
     }
 }

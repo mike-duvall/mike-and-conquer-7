@@ -43,10 +43,10 @@ namespace mike_and_conquer.gameobjects
         private float goalDirection;
 
         private bool isCurrentlyTurningTowardsTarget = false;
-        private int turnDelay = 10;
-        private int turnDelayCountdownTimer = -1;
-        private float turnIncrement;
-
+        // private int turnDelay = 10;
+        // private int turnDelayCountdownTimer = -1;
+        // private float turnIncrement;
+        //
         public static float TURN_ANGLE_SIZE = 360.0f / 32.0f;  // 11.25
 
 //        private bool hasFired = false;
@@ -55,6 +55,11 @@ namespace mike_and_conquer.gameobjects
         private int fireDelayCountdownTimer = -1;
         private int trackingDistance;
 
+
+        // Turn rate in CnC is 12 on a scale of 0 to 256
+        // Since MnC uses 360 degrees, need to convert that turn rate to one based on 360 degrees
+        private float baseTurnRate = 12.0f * 360.0f / 256.0f; // 16.875
+        public static float scaledTurnRate;
 
         protected NodTurret()
         {
@@ -101,7 +106,17 @@ namespace mike_and_conquer.gameobjects
                 }
 
                 UpdateGoalDirection();
-                EvaluateDirectionAndTurnIfNeeded();
+                EvaluateDirectionAndTurnIfNeeded(gameTime);
+
+                // Pickup here
+                // Turn turret test is failing because turret direction is 360 instead of 0
+                // Revisit how all this works
+                    // Make target direction be 0 in the first place instead of 360
+                    // Wrap updating of direction with checks for greater/equal to 360 and less than 0
+                    // Add tests to make it start at 45 and rotate to 315, and the opposite
+                    // Revisit and refactor all of this once test works
+                    // Add Rest calls to adjust game speed, consider speeding up for normal tests and slowing down for tests like this
+
                 if (IsPointingAtGoalDirection() && CanFire())
                 {
 
@@ -116,33 +131,51 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-        private void EvaluateDirectionAndTurnIfNeeded()
+        private void EvaluateDirectionAndTurnIfNeeded(GameTime gameTime)
         {
-            turnIncrement = CalculateTurnIncrement();
+
+
+
+            // Pickup here
+            // Make turret turn speed scale with game speed
+            //
+            // direction of turret in Cnc is between 0 and 256
+            // turning speed of turret is 12, so need to convert that to 
+            // 360 degrees
+            // and then incorporate that into the turning rate in MnC
+            // and then consider if I need a similar mapping array of degree to facing like in CnC, 
+            // or whether current algorithm is sufficient
+            // Will probalby just need to update current facing by 12 scaled by current game speed
+            // Rather than the current timer based method
+
+            
+
+
+            float turnIncrement = CalculateTurnIncrement(gameTime);
             bool isPointingAtGoalDirection = IsPointingAtGoalDirection();
             if (!isPointingAtGoalDirection)
             {
                 if (!isCurrentlyTurningTowardsTarget)
                 {
                     isCurrentlyTurningTowardsTarget = true;
-                    turnDelayCountdownTimer = turnDelay;
+                    // turnDelayCountdownTimer = turnDelay;
                 }
 
-                turnDelayCountdownTimer--;
-                if (turnDelayCountdownTimer <= 0)
-                {
-                    turnDelayCountdownTimer = turnDelay;
+                // turnDelayCountdownTimer--;
+                // if (turnDelayCountdownTimer <= 0)
+                // {
+                //     turnDelayCountdownTimer = turnDelay;
                     direction += turnIncrement;
-                }
-                if (direction >= 360.0f)
-                {
-                    direction = direction - 360.0f;
-                }
-
-                if (direction < 0.0f)
-                {
-                    direction = 360.0f + direction;
-                }
+                // }
+                // if (direction >= 360.0f)
+                // {
+                //     direction = direction - 360.0f;
+                // }
+                //
+                // if (direction < 0.0f)
+                // {
+                //     direction = 360.0f + direction;
+                // }
 
             }
             else
@@ -150,8 +183,19 @@ namespace mike_and_conquer.gameobjects
                 isCurrentlyTurningTowardsTarget = false;
             }
 
-//            MikeAndConquerGame.instance.log.Information("goalDirection:{0}, turnIncrement:{1}, isPointingAtGoalDirection:{2} ", goalDirection,
-//                turnIncrement, isPointingAtGoalDirection);
+            if (direction >= 360.0f)
+            {
+                direction = direction - 360.0f;
+            }
+
+            if (direction < 0.0f)
+            {
+                direction = 360.0f + direction;
+            }
+
+
+            //            MikeAndConquerGame.instance.log.Information("goalDirection:{0}, turnIncrement:{1}, isPointingAtGoalDirection:{2} ", goalDirection,
+            //                turnIncrement, isPointingAtGoalDirection);
 
         }
 
@@ -162,7 +206,7 @@ namespace mike_and_conquer.gameobjects
                 targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
 
             targetDirectionFromTurret += 90;
-            if (targetDirectionFromTurret > 360)
+            if (targetDirectionFromTurret >= 360)
             {
                 targetDirectionFromTurret = targetDirectionFromTurret - 360;
             }
@@ -209,17 +253,29 @@ namespace mike_and_conquer.gameobjects
 
         }
 
-        private float CalculateTurnIncrement()
+        private float CalculateTurnIncrement(GameTime gameTime)
         {
+
+            // Pickup here
+            // scaledTurnRate is way too slow
+            // Revisit how I'm calculating everything
+            //
+            //     Consider if I need to add this, like in minigunner:
+            //                 double delta = gameTime.ElapsedGameTime.TotalMilliseconds * scaledMovementSpeed;
+            //     Also revisit how I'm handling delta in minigunner as compared to scaledMovementSpeed
+
+
+            scaledTurnRate = baseTurnRate / GameOptions.GAME_SPEED_DELAY_DIVISOR;
+            scaledTurnRate = (float)(gameTime.ElapsedGameTime.TotalMilliseconds * scaledTurnRate);
             float clockWiseDistance = CalculateClockWiseDistance();
 
             if (clockWiseDistance >= 180.0f)
             {
-                return -TURN_ANGLE_SIZE;
+                return -scaledTurnRate;
             }
             else
             {
-                return TURN_ANGLE_SIZE;
+                return scaledTurnRate;
             }
 
         }
@@ -239,7 +295,17 @@ namespace mike_and_conquer.gameobjects
                 closestDistance = counterClockwiseDistance;
             }
 
-            return Math.Abs(closestDistance) < TURN_ANGLE_SIZE / 2.0f;
+            bool isPointingAsGoalDirection = Math.Abs(closestDistance) < TURN_ANGLE_SIZE / 2.0f;
+            if (isPointingAsGoalDirection)
+            {
+                // snap to exact goalDirection
+                direction = goalDirection;
+            }
+            return isPointingAsGoalDirection;
+
+
+            // return Math.Abs(closestDistance) < TURN_ANGLE_SIZE / 2.0f;
+            // return Math.Abs(closestDistance) < scaledTurnRate / 2.0f;
         }
 
         public static double ConvertRadiansToDegrees(double radians)

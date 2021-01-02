@@ -1036,6 +1036,8 @@ namespace mike_and_conquer.gameview
 
         public void Update(GameTime gameTime, KeyboardState newKeyboardState)
         {
+
+
             if (newKeyboardState.IsKeyDown(Keys.B))
             {
                 borderSize = 1;
@@ -1079,6 +1081,21 @@ namespace mike_and_conquer.gameview
             if (!oldKeyboardState.IsKeyDown(Keys.S) && newKeyboardState.IsKeyDown(Keys.S))
             {
                 GameOptions.ToggleDrawShroud();
+            }
+
+
+            if (!oldKeyboardState.IsKeyDown(Keys.Q) && newKeyboardState.IsKeyDown(Keys.Q))
+            {
+                GameOptions.GAME_SPEED_DELAY_DIVISOR -= 10;
+                if (GameOptions.GAME_SPEED_DELAY_DIVISOR < 1)
+                {
+                    GameOptions.GAME_SPEED_DELAY_DIVISOR = 1;
+                }
+            }
+
+            if (!oldKeyboardState.IsKeyDown(Keys.W) && newKeyboardState.IsKeyDown(Keys.W))
+            {
+                GameOptions.GAME_SPEED_DELAY_DIVISOR += 10;
             }
 
 

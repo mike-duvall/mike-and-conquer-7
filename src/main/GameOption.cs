@@ -15,14 +15,20 @@ namespace mike_and_conquer.main
 //        public static bool IS_FULL_SCREEN = false;
 
         public static bool DRAW_SHROUD = true;
-//        public static bool DRAW_SHROUD = false;
+        // public static bool DRAW_SHROUD = false;
 
         public static float INITIAL_MAP_ZOOM = 1.0f;
-//        public static float INITIAL_MAP_ZOOM = 3.0f;
+        // public static float INITIAL_MAP_ZOOM = 3.0f;
 
 
 //        public static bool PLAY_MUSIC = true;
         public static bool PLAY_MUSIC = false;
+
+        public static int GAME_SPEED_DELAY_DIVISOR = 50;
+        // public static int GAME_SPEED_DELAY_DIVISOR = 500;
+        // public static int GAME_SPEED_DELAY_DIVISOR = 20;
+
+
 
         public static void ToggleDrawTerrainBorder()
         {
@@ -39,5 +45,8 @@ namespace mike_and_conquer.main
             DRAW_SHROUD = !DRAW_SHROUD;
         }
 
+
+
     }
 }
+

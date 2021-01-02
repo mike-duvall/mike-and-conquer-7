@@ -146,7 +146,13 @@ namespace mike_and_conquer.main
 
         private void AddTestModeObjects()
         {
-//            bool aiIsOn = false;
+            //            bool aiIsOn = false;
+
+
+
+            // AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 9));
+            // AddMCVAtMapSquareCoordinates(new Point(21, 12));
+            // AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(14, 16), 90, 2);
 
 
             if (!GameOptions.IS_FULL_SCREEN)

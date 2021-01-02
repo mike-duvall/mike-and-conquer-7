@@ -30,7 +30,13 @@ namespace mike_and_conquer.gameobjects
         private int updateDelayTime = 5;
         private int updateDelayTimer;
 
-        private double movementVelocity = .68;
+
+        private static double baseSpeed = 9.375f; // MPH_VERY_FAST == 100, 
+        // private double movementVelocity = .68;
+
+        private double movementVelocity = baseSpeed / GameOptions.GAME_SPEED_DELAY_DIVISOR;
+
+
         double movementDistanceEpsilon;
 
         public Projectile120mm(GameWorldLocation gameWorldLocation, GameWorldLocation targetLocation)
@@ -51,9 +57,9 @@ namespace mike_and_conquer.gameobjects
 
             MikeAndConquerGame.instance.log.Information("movementVelocity:{0}, updateDelayTime{1} ", movementVelocity, updateDelayTime);
             bool removeMe = false;
-            updateDelayTimer--;
-            if (updateDelayTimer < 0)
-            {
+            // updateDelayTimer--;
+            // if (updateDelayTimer < 0)
+            // {
 
                 updateDelayTimer = updateDelayTime;
 
@@ -72,18 +78,7 @@ namespace mike_and_conquer.gameobjects
                     // Cause damage to anything near the bullet impact point
                 }
 
-//                MikeAndConquerGame.instance.log.Information("New projectile x,y: {x},{y}", 
-//                    gameWorldLocation.WorldCoordinatesAsVector2.X,
-//                    gameWorldLocation.WorldCoordinatesAsVector2.Y);
-
-//                int roundedX = (int)Math.Round(gameWorldLocation.WorldCoordinatesAsVector2.X, 0);
-//                int roundedY = (int)Math.Round(gameWorldLocation.WorldCoordinatesAsVector2.Y, 0);
-                //                MikeAndConquerGame.instance.log.Information("                New projectile rounded x,y: {x},{y}",
-                //                    roundedX,
-                //                    roundedY);
-
-//                MikeAndConquerGame.instance.log.Information("{0}" , roundedY);
-            }
+            // }
 
             return removeMe;
         }

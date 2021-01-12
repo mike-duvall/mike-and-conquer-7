@@ -51,10 +51,19 @@ namespace mike_and_conquer.gameobjects
 
         private List<Point> path;
 
-        double movementVelocity = .010;
+        // double movementVelocity = .010;
         double movementDistanceEpsilon;
 
-//        private static int globalId = 1;
+
+        private static int baseCncSpeed = (int)CncSpeed.MPH_MEDIUM_SLOW;
+        // private static double baseMovementSpeed = 0.75f;
+        // private static readonly double baseMovementSpeed = baseCncSpeed * 24.0 / 256.0;
+        private static readonly double baseMovementSpeed = baseCncSpeed * GameWorld.WorldUnitsPerLepton;
+        // double scaledMovementSpeed = .010;
+        private double scaledMovementSpeed;
+
+
+        //        private static int globalId = 1;
 
 
         Serilog.Core.Logger log = new LoggerConfiguration()
@@ -83,7 +92,10 @@ namespace mike_and_conquer.gameobjects
 //            Minigunner.globalId++;
 
             clickDetectionRectangle = CreateClickDetectionRectangle();
-            movementDistanceEpsilon = movementVelocity + (double).04f;
+            // movementDistanceEpsilon = movementVelocity + (double).04f;
+            scaledMovementSpeed = baseMovementSpeed / GameOptions.GAME_SPEED_DELAY_DIVISOR;
+            movementDistanceEpsilon = scaledMovementSpeed + (double).04f;
+
             selected = false;
         }
 
@@ -348,7 +360,9 @@ namespace mike_and_conquer.gameobjects
             float newX = gameWorldLocation.WorldCoordinatesAsVector2.X;
             float newY = gameWorldLocation.WorldCoordinatesAsVector2.Y;
 
-            double delta = gameTime.ElapsedGameTime.TotalMilliseconds * movementVelocity;
+            // double delta = gameTime.ElapsedGameTime.TotalMilliseconds * movementVelocity;
+            double delta = gameTime.ElapsedGameTime.TotalMilliseconds * scaledMovementSpeed;
+
 
             float remainingDistanceX = Math.Abs(destinationX - gameWorldLocation.WorldCoordinatesAsVector2.X);
             float remainingDistanceY = Math.Abs(destinationY - gameWorldLocation.WorldCoordinatesAsVector2.Y);

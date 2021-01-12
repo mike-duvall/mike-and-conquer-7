@@ -54,27 +54,9 @@ namespace mike_and_conquer.gameobjects
         private List<Point> path;
 
 
-        private static double baseMovementSpeed = 0.75f;
-        // double scaledMovementSpeed = .010;
+        private static int baseCncSpeedInLeptons = (int) CncSpeed.MPH_SLOW;  // MPH_SLOW == 8
+        private static readonly double baseMovementSpeedInWorldCoordinates = baseCncSpeedInLeptons * GameWorld.WorldUnitsPerLepton;
         private double scaledMovementSpeed;
-
-        // Pickup here
-
-        // 256 / 24 = 10.666666667 leptons per pixel(world unit)
-        // Minigunner speed is 8 leptons per frame
-
-        // Therefore, minigunner speed == 8 divided by (256/24) == 8 * 24 / 256 = 0.75 leptops per frame
-        // scaledMovementSpeed above = 0.01, so I've already included a scaling factor( of about 75)
-        // Pull that scaling factor out as global variable, then calibrate the speeds produced by speeds
-        // in Cnc to speeds in mAndC, and then creating mapping of Cnc game speeds to MaC scaling factors
-
-        // So, if base minigunner speed is 0.75, then the scaling factor that results in scaledMovementSpeed above is 75
-        // Because 0.75 / 75 = .01
-        // Next step is to fixup the code so that a global scaling factor of 75 is used, for just minigunner right now
-        // Then do the Cnc vs Mnc measurements to determine the scaling factors for slowest and fastest 
-
-
-
         double movementDistanceEpsilon;
 
         private static int globalId = 1;
@@ -108,7 +90,7 @@ namespace mike_and_conquer.gameobjects
             Minigunner.globalId++;
 
             clickDetectionRectangle = CreateClickDetectionRectangle();
-            scaledMovementSpeed = baseMovementSpeed / GameOptions.GAME_SPEED_DELAY_DIVISOR;
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.GAME_SPEED_DELAY_DIVISOR;
             movementDistanceEpsilon = scaledMovementSpeed + (double).04f;
             selected = false;
 
@@ -117,7 +99,7 @@ namespace mike_and_conquer.gameobjects
         public void Update(GameTime gameTime)
         {
 
-            scaledMovementSpeed = baseMovementSpeed / GameOptions.GAME_SPEED_DELAY_DIVISOR;
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.GAME_SPEED_DELAY_DIVISOR;
 
             UpdateVisibleMapTiles();
             if (this.currentCommand == Command.NONE)

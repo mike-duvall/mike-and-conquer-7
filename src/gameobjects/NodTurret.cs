@@ -108,21 +108,18 @@ namespace mike_and_conquer.gameobjects
                 UpdateGoalDirection();
                 EvaluateDirectionAndTurnIfNeeded(gameTime);
 
-                // Pickup here
-                // Turn turret test is failing because turret direction is 360 instead of 0
-                // Revisit how all this works
-                    // Make target direction be 0 in the first place instead of 360
-                    // Wrap updating of direction with checks for greater/equal to 360 and less than 0
-                    // Add tests to make it start at 45 and rotate to 315, and the opposite
-                    // Revisit and refactor all of this once test works
-                    // Add Rest calls to adjust game speed, consider speeding up for normal tests and slowing down for tests like this
-
                 if (IsPointingAtGoalDirection() && CanFire())
                 {
 
                     Point myWorldCcCoordinatesAsPoint = this.MapTileLocation.WorldCoordinatesAsPoint;
-                    GameWorldLocation projectileGameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(myWorldCcCoordinatesAsPoint.X + 20,
-                        myWorldCcCoordinatesAsPoint.Y);
+                    // GameWorldLocation projectileGameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(myWorldCcCoordinatesAsPoint.X + 20,
+                    //     myWorldCcCoordinatesAsPoint.Y);
+
+                    GameWorldLocation projectileGameWorldLocation = 
+                        GameWorldLocation.CreateFromWorldCoordinates(
+                            myWorldCcCoordinatesAsPoint.X,
+                            myWorldCcCoordinatesAsPoint.Y);
+
 
                     MikeAndConquerGame.instance.AddProjectile120mmAtGameWorldLocation(projectileGameWorldLocation, targetedMinigunner.GameWorldLocation);
                     fireDelayCountdownTimer = fireDelay;
@@ -147,9 +144,6 @@ namespace mike_and_conquer.gameobjects
             // or whether current algorithm is sufficient
             // Will probalby just need to update current facing by 12 scaled by current game speed
             // Rather than the current timer based method
-
-            
-
 
             float turnIncrement = CalculateTurnIncrement(gameTime);
             bool isPointingAtGoalDirection = IsPointingAtGoalDirection();

@@ -24,9 +24,10 @@ namespace mike_and_conquer.main
 //        public static bool PLAY_MUSIC = true;
         public static bool PLAY_MUSIC = false;
 
-        public static int GAME_SPEED_DELAY_DIVISOR = 50;
-        // public static int GAME_SPEED_DELAY_DIVISOR = 500;
-        // public static int GAME_SPEED_DELAY_DIVISOR = 20;
+        // public static int GAME_SPEED_DELAY_DIVISOR = 50;
+        // public static int GAME_SPEED_DELAY_DIVISOR = 200;
+        public static int GAME_SPEED_DELAY_DIVISOR = 20;
+        // public static int GAME_SPEED_DELAY_DIVISOR = 1;
 
 
 

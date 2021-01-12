@@ -150,7 +150,7 @@ namespace mike_and_conquer.main
 
 
 
-            // AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 9));
+            // AddGdiMinigunnerAtMapSquareCoordinates(new Point(16, 9));
             // AddMCVAtMapSquareCoordinates(new Point(21, 12));
             // AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(14, 16), 90, 2);
 

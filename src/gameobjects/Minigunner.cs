@@ -85,7 +85,9 @@ namespace mike_and_conquer.gameobjects
             this.currentCommand = Command.NONE;
             gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(xInWorldCoordinates, yInWorldCoordinates);
 
-            health = 1000;
+            health = 50;
+
+
             id = Minigunner.globalId;
             Minigunner.globalId++;
 
@@ -451,6 +453,9 @@ namespace mike_and_conquer.gameobjects
             if (IsInAttackRange())
             {
                 this.state = State.ATTACKING;
+
+
+
                 currentAttackTarget.ReduceHealth(10);
 
             }
@@ -622,7 +627,7 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-        private void ReduceHealth(int amount)
+        public void ReduceHealth(int amount)
         {
             if (health > 0)
             {

@@ -36,6 +36,8 @@ namespace mike_and_conquer.gameobjects
         private double scaledMovementSpeed;
         double movementDistanceEpsilon;
 
+        private Minigunner target;
+
 
 
         // private static double baseSpeed = 9.375f; // MPH_VERY_FAST == 100, 
@@ -46,12 +48,13 @@ namespace mike_and_conquer.gameobjects
         //
         // double movementDistanceEpsilon;
 
-        public Projectile120mm(GameWorldLocation gameWorldLocation, GameWorldLocation targetLocation)
+        public Projectile120mm(GameWorldLocation startLocation, Minigunner target )
         {
             this.id = globalId;
             globalId++;
-            this.gameWorldLocation = gameWorldLocation;
-            this.targetLocation = targetLocation;
+            this.gameWorldLocation = startLocation;
+            this.target = target;
+            this.targetLocation = target.GameWorldLocation;
 //            this.updateDelayTime = 5;
             this.updateDelayTimer = updateDelayTime;
             // movementDistanceEpsilon = movementVelocity + (double).04f;
@@ -92,10 +95,9 @@ namespace mike_and_conquer.gameobjects
                     SnapToTargetLocation();
                     
                     removeMe = true;
-                    // Remove projectile from GameWorld
-//                    MikeAndConquerGame.instance.RemoveProjectile120mmWithId(id);
-                    // Cause damage to anything near the bullet impact point
-                }
+                // Cause damage to anything near the bullet impact point
+                    target.ReduceHealth(10);
+            }
 
             // }
 

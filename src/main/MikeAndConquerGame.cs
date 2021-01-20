@@ -143,7 +143,6 @@ namespace mike_and_conquer.main
         //        }
 
 
-
         private void AddTestModeObjects()
         {
             //            bool aiIsOn = false;
@@ -677,9 +676,9 @@ namespace mike_and_conquer.main
             gameWorldView.AddMCVView(mcv);
         }
 
-        public void AddProjectile120mmAtGameWorldLocation(GameWorldLocation gameWorldLocation, GameWorldLocation targetLocation)
+        public void AddProjectile120mmAtGameWorldLocation(GameWorldLocation gameWorldLocation, Minigunner target)
         {
-            Projectile120mm projectile120Mm = gameWorld.AddProjectile120mm(gameWorldLocation, targetLocation);
+            Projectile120mm projectile120Mm = gameWorld.AddProjectile120mm(gameWorldLocation, target);
             gameWorldView.AddProjectile120mmView(projectile120Mm);
         }
 

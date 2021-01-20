@@ -121,7 +121,7 @@ namespace mike_and_conquer.gameobjects
                             myWorldCcCoordinatesAsPoint.Y);
 
 
-                    MikeAndConquerGame.instance.AddProjectile120mmAtGameWorldLocation(projectileGameWorldLocation, targetedMinigunner.GameWorldLocation);
+                    MikeAndConquerGame.instance.AddProjectile120mmAtGameWorldLocation(projectileGameWorldLocation, targetedMinigunner);
                     fireDelayCountdownTimer = fireDelay;
                 }
             }
@@ -133,17 +133,6 @@ namespace mike_and_conquer.gameobjects
 
 
 
-            // Pickup here
-            // Make turret turn speed scale with game speed
-            //
-            // direction of turret in Cnc is between 0 and 256
-            // turning speed of turret is 12, so need to convert that to 
-            // 360 degrees
-            // and then incorporate that into the turning rate in MnC
-            // and then consider if I need a similar mapping array of degree to facing like in CnC, 
-            // or whether current algorithm is sufficient
-            // Will probalby just need to update current facing by 12 scaled by current game speed
-            // Rather than the current timer based method
 
             float turnIncrement = CalculateTurnIncrement(gameTime);
             bool isPointingAtGoalDirection = IsPointingAtGoalDirection();

@@ -1137,9 +1137,9 @@ namespace mike_and_conquer.gameworld
             gdiPlayer.RemoveMCV();
         }
 
-        public Projectile120mm AddProjectile120mm(GameWorldLocation gameWorldLocation, GameWorldLocation targetLocation)
+        public Projectile120mm AddProjectile120mm(GameWorldLocation gameWorldLocation, Minigunner target)
         {
-            Projectile120mm projectile120Mm = new Projectile120mm(gameWorldLocation, targetLocation);
+            Projectile120mm projectile120Mm = new Projectile120mm(gameWorldLocation, target);
             projectile120MmList.Add(projectile120Mm);
             return projectile120Mm;
         }

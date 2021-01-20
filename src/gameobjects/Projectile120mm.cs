@@ -27,8 +27,8 @@ namespace mike_and_conquer.gameobjects
 
         private GameWorldLocation targetLocation;
 
-        private int updateDelayTime = 5;
-        private int updateDelayTimer;
+        // private int updateDelayTime = 5;
+        // private int updateDelayTimer;
 
 
         private static int baseCncSpeedInLeptons = (int)CncSpeed.MPH_VERY_FAST;  // MPH_VERY_FAST = 100
@@ -39,15 +39,6 @@ namespace mike_and_conquer.gameobjects
         private Minigunner target;
 
 
-
-        // private static double baseSpeed = 9.375f; // MPH_VERY_FAST == 100, 
-        // // private double movementVelocity = .68;
-        //
-        // private double movementVelocity = baseSpeed / GameOptions.GAME_SPEED_DELAY_DIVISOR;
-        //
-        //
-        // double movementDistanceEpsilon;
-
         public Projectile120mm(GameWorldLocation startLocation, Minigunner target )
         {
             this.id = globalId;
@@ -56,7 +47,7 @@ namespace mike_and_conquer.gameobjects
             this.target = target;
             this.targetLocation = target.GameWorldLocation;
 //            this.updateDelayTime = 5;
-            this.updateDelayTimer = updateDelayTime;
+            // this.updateDelayTimer = updateDelayTime;
             // movementDistanceEpsilon = movementVelocity + (double).04f;
 
             scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.GAME_SPEED_DELAY_DIVISOR;
@@ -76,30 +67,19 @@ namespace mike_and_conquer.gameobjects
 
             // MikeAndConquerGame.instance.log.Information("movementVelocity:{0}, updateDelayTime{1} ", movementVelocity, updateDelayTime);
             bool removeMe = false;
-            // updateDelayTimer--;
-            // if (updateDelayTimer < 0)
-            // {
 
-                updateDelayTimer = updateDelayTime;
-
-                float targetX = targetLocation.WorldCoordinatesAsVector2.X;
-                float targetY = targetLocation.WorldCoordinatesAsVector2.Y;
-                if (!IsAtDestination( targetX, targetY))
-                {
-                    MoveTowardsDestination(gameTime, targetX, targetY);
-                }
-                else
-                {
-
-
-                    SnapToTargetLocation();
-                    
-                    removeMe = true;
-                // Cause damage to anything near the bullet impact point
-                    target.ReduceHealth(10);
+            float targetX = targetLocation.WorldCoordinatesAsVector2.X;
+            float targetY = targetLocation.WorldCoordinatesAsVector2.Y;
+            if (!IsAtDestination( targetX, targetY))
+            {
+                MoveTowardsDestination(gameTime, targetX, targetY);
             }
-
-            // }
+            else
+            {
+                SnapToTargetLocation();
+                removeMe = true;
+                target.ReduceHealth(10);
+            }
 
             return removeMe;
         }
@@ -195,68 +175,6 @@ namespace mike_and_conquer.gameobjects
             gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(currentPosition.X, currentPosition.Y);
 
 
-            // float remainingDistanceX = Math.Abs(destinationX - GameWorldLocation.WorldCoordinatesAsVector2.X);
-            // float remainingDistanceY = Math.Abs(destinationY - GameWorldLocation.WorldCoordinatesAsVector2.Y);
-            // double deltaX = delta;
-            // double deltaY = delta;
-            //
-            // if (remainingDistanceX < deltaX)
-            // {
-            //     deltaX = remainingDistanceX;
-            // }
-            //
-            // if (remainingDistanceY < deltaY)
-            // {
-            //     deltaY = remainingDistanceY;
-            // }
-            //
-            // if (!IsFarEnoughRight(destinationX))
-            // {
-            //     newX += (float)deltaX;
-            // }
-            // else if (!IsFarEnoughLeft(destinationX))
-            // {
-            //     newX -= (float)deltaX;
-            // }
-            //
-            // if (!IsFarEnoughDown(destinationY))
-            // {
-            //     newY += (float)deltaY;
-            // }
-            // else if (!IsFarEnoughUp(destinationY))
-            // {
-            //     newY -= (float)deltaY;
-            // }
-            //
-            //
-            // // TODO:  Leaving in this commented out code for debugging movement issues.
-            // // Should remove it later if end up not needing it
-            // //            float xChange = Math.Abs(positionInWorldCoordinates.X - newX);
-            // //            float yChange = Math.Abs(positionInWorldCoordinates.Y - newY);
-            // //            float changeThreshold = 0.10f;
-            // //
-            // //            if (xChange < changeThreshold && yChange < changeThreshold)
-            // //            {
-            // //                MikeAndConquerGame.instance.log.Information("delta:" + delta);
-            // //                Boolean isFarEnoughRight = IsFarEnoughRight(destinationX);
-            // //                Boolean isFarEnoughLeft = IsFarEnoughLeft(destinationX);
-            // //                Boolean isFarEnoughDown = IsFarEnoughDown(destinationY);
-            // //                Boolean isFarEnoughUp = IsFarEnoughUp(destinationY);
-            // //
-            // //                MikeAndConquerGame.instance.log.Information("isFarEnoughRight:" + isFarEnoughRight);
-            // //                MikeAndConquerGame.instance.log.Information("isFarEnoughLeft:" + isFarEnoughLeft);
-            // //                MikeAndConquerGame.instance.log.Information("isFarEnoughDown:" + isFarEnoughDown);
-            // //                MikeAndConquerGame.instance.log.Information("isFarEnoughUp:" + isFarEnoughUp);
-            // //                MikeAndConquerGame.instance.log.Information("old:positionInWorldCoordinates=" + positionInWorldCoordinates);
-            // //                positionInWorldCoordinates = new Vector2(newX, newY);
-            // //                MikeAndConquerGame.instance.log.Information("new:positionInWorldCoordinates=" + positionInWorldCoordinates);
-            // //            }
-            // //            else
-            // //            {
-            // //                positionInWorldCoordinates = new Vector2(newX, newY);
-            // //            }
-            //
-            // gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(newX, newY);
 
         }
 

@@ -43,10 +43,7 @@ namespace mike_and_conquer.gameobjects
         private float goalDirection;
 
         private bool isCurrentlyTurningTowardsTarget = false;
-        // private int turnDelay = 10;
-        // private int turnDelayCountdownTimer = -1;
-        // private float turnIncrement;
-        //
+
         public static float TURN_ANGLE_SIZE = 360.0f / 32.0f;  // 11.25
 
 //        private bool hasFired = false;
@@ -112,8 +109,6 @@ namespace mike_and_conquer.gameobjects
                 {
 
                     Point myWorldCcCoordinatesAsPoint = this.MapTileLocation.WorldCoordinatesAsPoint;
-                    // GameWorldLocation projectileGameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(myWorldCcCoordinatesAsPoint.X + 20,
-                    //     myWorldCcCoordinatesAsPoint.Y);
 
                     GameWorldLocation projectileGameWorldLocation = 
                         GameWorldLocation.CreateFromWorldCoordinates(
@@ -141,24 +136,9 @@ namespace mike_and_conquer.gameobjects
                 if (!isCurrentlyTurningTowardsTarget)
                 {
                     isCurrentlyTurningTowardsTarget = true;
-                    // turnDelayCountdownTimer = turnDelay;
                 }
 
-                // turnDelayCountdownTimer--;
-                // if (turnDelayCountdownTimer <= 0)
-                // {
-                //     turnDelayCountdownTimer = turnDelay;
-                    direction += turnIncrement;
-                // }
-                // if (direction >= 360.0f)
-                // {
-                //     direction = direction - 360.0f;
-                // }
-                //
-                // if (direction < 0.0f)
-                // {
-                //     direction = 360.0f + direction;
-                // }
+                direction += turnIncrement;
 
             }
             else
@@ -239,15 +219,6 @@ namespace mike_and_conquer.gameobjects
         private float CalculateTurnIncrement(GameTime gameTime)
         {
 
-            // Pickup here
-            // scaledTurnRate is way too slow
-            // Revisit how I'm calculating everything
-            //
-            //     Consider if I need to add this, like in minigunner:
-            //                 double delta = gameTime.ElapsedGameTime.TotalMilliseconds * scaledMovementSpeed;
-            //     Also revisit how I'm handling delta in minigunner as compared to scaledMovementSpeed
-
-
             scaledTurnRate = baseTurnRate / GameOptions.GAME_SPEED_DELAY_DIVISOR;
             scaledTurnRate = (float)(gameTime.ElapsedGameTime.TotalMilliseconds * scaledTurnRate);
             float clockWiseDistance = CalculateClockWiseDistance();
@@ -286,9 +257,6 @@ namespace mike_and_conquer.gameobjects
             }
             return isPointingAsGoalDirection;
 
-
-            // return Math.Abs(closestDistance) < TURN_ANGLE_SIZE / 2.0f;
-            // return Math.Abs(closestDistance) < scaledTurnRate / 2.0f;
         }
 
         public static double ConvertRadiansToDegrees(double radians)

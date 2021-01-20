@@ -55,10 +55,10 @@ namespace mike_and_conquer.gameobjects
         double movementDistanceEpsilon;
 
 
-        private static int baseCncSpeed = (int)CncSpeed.MPH_MEDIUM_SLOW;
+        private static int baseCncSpeedInLeptons = (int)CncSpeed.MPH_MEDIUM_SLOW;
         // private static double baseMovementSpeed = 0.75f;
-        // private static readonly double baseMovementSpeed = baseCncSpeed * 24.0 / 256.0;
-        private static readonly double baseMovementSpeed = baseCncSpeed * GameWorld.WorldUnitsPerLepton;
+        // private static readonly double baseMovementSpeed = baseCncSpeedInLeptons * 24.0 / 256.0;
+        private static readonly double baseMovementSpeed = baseCncSpeedInLeptons * GameWorld.WorldUnitsPerLepton;
         // double scaledMovementSpeed = .010;
         private double scaledMovementSpeed;
 

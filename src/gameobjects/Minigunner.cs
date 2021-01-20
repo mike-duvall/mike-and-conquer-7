@@ -453,9 +453,6 @@ namespace mike_and_conquer.gameobjects
             if (IsInAttackRange())
             {
                 this.state = State.ATTACKING;
-
-
-
                 currentAttackTarget.ReduceHealth(10);
 
             }

@@ -1036,8 +1036,6 @@ namespace mike_and_conquer.gameview
 
         public void Update(GameTime gameTime, KeyboardState newKeyboardState)
         {
-
-
             if (newKeyboardState.IsKeyDown(Keys.B))
             {
                 borderSize = 1;
@@ -1046,7 +1044,6 @@ namespace mike_and_conquer.gameview
             {
                 borderSize = 0;
             }
-
 
             if (newKeyboardState.IsKeyDown(Keys.I))
             {

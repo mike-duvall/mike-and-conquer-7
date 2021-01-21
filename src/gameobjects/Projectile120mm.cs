@@ -27,10 +27,6 @@ namespace mike_and_conquer.gameobjects
 
         private GameWorldLocation targetLocation;
 
-        // private int updateDelayTime = 5;
-        // private int updateDelayTimer;
-
-
         private static int baseCncSpeedInLeptons = (int)CncSpeed.MPH_VERY_FAST;  // MPH_VERY_FAST = 100
         private static readonly double baseMovementSpeedInWorldCoordinates = baseCncSpeedInLeptons * GameWorld.WorldUnitsPerLepton;
         private double scaledMovementSpeed;
@@ -46,9 +42,6 @@ namespace mike_and_conquer.gameobjects
             this.gameWorldLocation = startLocation;
             this.target = target;
             this.targetLocation = target.GameWorldLocation;
-//            this.updateDelayTime = 5;
-            // this.updateDelayTimer = updateDelayTime;
-            // movementDistanceEpsilon = movementVelocity + (double).04f;
 
             scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.GAME_SPEED_DELAY_DIVISOR;
 //            movementDistanceEpsilon = scaledMovementSpeed + (double).08f;
@@ -120,14 +113,6 @@ namespace mike_and_conquer.gameobjects
 
         private bool IsAtDestinationX(float destinationX)
         {
-            bool farEnoughRight = IsFarEnoughRight(destinationX);
-            bool farEnoughLeft = IsFarEnoughLeft(destinationX);
-
-            if(!(farEnoughRight && farEnoughLeft))
-            {
-                int x = 3;
-            }
-
             return (
                 IsFarEnoughRight(destinationX) &&
                 IsFarEnoughLeft(destinationX)
@@ -137,14 +122,6 @@ namespace mike_and_conquer.gameobjects
 
         private bool IsAtDestinationY(float destinationY)
         {
-            bool farEnoughDown = IsFarEnoughDown(destinationY);
-            bool farEnoughUP = IsFarEnoughUp(destinationY);
-
-            if (!(farEnoughDown && farEnoughUP))
-            {
-                int x = 3;
-            }
-
             return (
                 IsFarEnoughDown(destinationY) &&
                 IsFarEnoughUp(destinationY)

@@ -51,9 +51,7 @@ namespace mike_and_conquer.gameobjects
 
         private List<Point> path;
 
-        // double movementVelocity = .010;
         double movementDistanceEpsilon;
-
 
         private static int baseCncSpeedInLeptons = (int)CncSpeed.MPH_MEDIUM_SLOW;
         // private static double baseMovementSpeed = 0.75f;
@@ -360,9 +358,7 @@ namespace mike_and_conquer.gameobjects
             float newX = gameWorldLocation.WorldCoordinatesAsVector2.X;
             float newY = gameWorldLocation.WorldCoordinatesAsVector2.Y;
 
-            // double delta = gameTime.ElapsedGameTime.TotalMilliseconds * movementVelocity;
             double delta = gameTime.ElapsedGameTime.TotalMilliseconds * scaledMovementSpeed;
-
 
             float remainingDistanceX = Math.Abs(destinationX - gameWorldLocation.WorldCoordinatesAsVector2.X);
             float remainingDistanceY = Math.Abs(destinationY - gameWorldLocation.WorldCoordinatesAsVector2.Y);

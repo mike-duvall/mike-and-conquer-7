@@ -53,7 +53,10 @@ namespace mike_and_conquer.gameobjects
 
         private List<Point> path;
 
-        double movementVelocity = .010;
+
+        private static int baseCncSpeedInLeptons = (int) CncSpeed.MPH_SLOW;  // MPH_SLOW == 8
+        private static readonly double baseMovementSpeedInWorldCoordinates = baseCncSpeedInLeptons * GameWorld.WorldUnitsPerLepton;
+        private double scaledMovementSpeed;
         double movementDistanceEpsilon;
 
         private static int globalId = 1;
@@ -82,18 +85,23 @@ namespace mike_and_conquer.gameobjects
             this.currentCommand = Command.NONE;
             gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(xInWorldCoordinates, yInWorldCoordinates);
 
-            health = 1000;
+            health = 50;
+
+
             id = Minigunner.globalId;
             Minigunner.globalId++;
 
             clickDetectionRectangle = CreateClickDetectionRectangle();
-            movementDistanceEpsilon = movementVelocity + (double).04f;
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.GAME_SPEED_DELAY_DIVISOR;
+            movementDistanceEpsilon = scaledMovementSpeed + (double).04f;
             selected = false;
 
         }
 
         public void Update(GameTime gameTime)
         {
+
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.GAME_SPEED_DELAY_DIVISOR;
 
             UpdateVisibleMapTiles();
             if (this.currentCommand == Command.NONE)
@@ -541,7 +549,7 @@ namespace mike_and_conquer.gameobjects
             float newX = GameWorldLocation.WorldCoordinatesAsVector2.X;
             float newY = GameWorldLocation.WorldCoordinatesAsVector2.Y;
 
-            double delta = gameTime.ElapsedGameTime.TotalMilliseconds * movementVelocity;
+            double delta = gameTime.ElapsedGameTime.TotalMilliseconds * scaledMovementSpeed;
 
             float remainingDistanceX = Math.Abs(destinationX - GameWorldLocation.WorldCoordinatesAsVector2.X);
             float remainingDistanceY = Math.Abs(destinationY - GameWorldLocation.WorldCoordinatesAsVector2.Y);
@@ -616,7 +624,7 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-        private void ReduceHealth(int amount)
+        public void ReduceHealth(int amount)
         {
             if (health > 0)
             {

@@ -43,9 +43,6 @@ namespace mike_and_conquer.gameobjects
         private float goalDirection;
 
         private bool isCurrentlyTurningTowardsTarget = false;
-        private int turnDelay = 10;
-        private int turnDelayCountdownTimer = -1;
-        private float turnIncrement;
 
         public static float TURN_ANGLE_SIZE = 360.0f / 32.0f;  // 11.25
 
@@ -55,6 +52,11 @@ namespace mike_and_conquer.gameobjects
         private int fireDelayCountdownTimer = -1;
         private int trackingDistance;
 
+
+        // Turn rate in CnC is 12 on a scale of 0 to 256
+        // Since MnC uses 360 degrees, need to convert that turn rate to one based on 360 degrees
+        private float baseTurnRate = 12.0f * 360.0f / 256.0f; // 16.875
+        public static float scaledTurnRate;
 
         protected NodTurret()
         {
@@ -101,48 +103,42 @@ namespace mike_and_conquer.gameobjects
                 }
 
                 UpdateGoalDirection();
-                EvaluateDirectionAndTurnIfNeeded();
+                EvaluateDirectionAndTurnIfNeeded(gameTime);
+
                 if (IsPointingAtGoalDirection() && CanFire())
                 {
 
                     Point myWorldCcCoordinatesAsPoint = this.MapTileLocation.WorldCoordinatesAsPoint;
-                    GameWorldLocation projectileGameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(myWorldCcCoordinatesAsPoint.X + 20,
-                        myWorldCcCoordinatesAsPoint.Y);
 
-                    MikeAndConquerGame.instance.AddProjectile120mmAtGameWorldLocation(projectileGameWorldLocation, targetedMinigunner.GameWorldLocation);
+                    GameWorldLocation projectileGameWorldLocation = 
+                        GameWorldLocation.CreateFromWorldCoordinates(
+                            myWorldCcCoordinatesAsPoint.X,
+                            myWorldCcCoordinatesAsPoint.Y);
+
+
+                    MikeAndConquerGame.instance.AddProjectile120mmAtGameWorldLocation(projectileGameWorldLocation, targetedMinigunner);
                     fireDelayCountdownTimer = fireDelay;
                 }
             }
         }
 
 
-        private void EvaluateDirectionAndTurnIfNeeded()
+        private void EvaluateDirectionAndTurnIfNeeded(GameTime gameTime)
         {
-            turnIncrement = CalculateTurnIncrement();
+
+
+
+
+            float turnIncrement = CalculateTurnIncrement(gameTime);
             bool isPointingAtGoalDirection = IsPointingAtGoalDirection();
             if (!isPointingAtGoalDirection)
             {
                 if (!isCurrentlyTurningTowardsTarget)
                 {
                     isCurrentlyTurningTowardsTarget = true;
-                    turnDelayCountdownTimer = turnDelay;
                 }
 
-                turnDelayCountdownTimer--;
-                if (turnDelayCountdownTimer <= 0)
-                {
-                    turnDelayCountdownTimer = turnDelay;
-                    direction += turnIncrement;
-                }
-                if (direction >= 360.0f)
-                {
-                    direction = direction - 360.0f;
-                }
-
-                if (direction < 0.0f)
-                {
-                    direction = 360.0f + direction;
-                }
+                direction += turnIncrement;
 
             }
             else
@@ -150,8 +146,19 @@ namespace mike_and_conquer.gameobjects
                 isCurrentlyTurningTowardsTarget = false;
             }
 
-//            MikeAndConquerGame.instance.log.Information("goalDirection:{0}, turnIncrement:{1}, isPointingAtGoalDirection:{2} ", goalDirection,
-//                turnIncrement, isPointingAtGoalDirection);
+            if (direction >= 360.0f)
+            {
+                direction = direction - 360.0f;
+            }
+
+            if (direction < 0.0f)
+            {
+                direction = 360.0f + direction;
+            }
+
+
+            //            MikeAndConquerGame.instance.log.Information("goalDirection:{0}, turnIncrement:{1}, isPointingAtGoalDirection:{2} ", goalDirection,
+            //                turnIncrement, isPointingAtGoalDirection);
 
         }
 
@@ -162,7 +169,7 @@ namespace mike_and_conquer.gameobjects
                 targetedMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
 
             targetDirectionFromTurret += 90;
-            if (targetDirectionFromTurret > 360)
+            if (targetDirectionFromTurret >= 360)
             {
                 targetDirectionFromTurret = targetDirectionFromTurret - 360;
             }
@@ -209,17 +216,20 @@ namespace mike_and_conquer.gameobjects
 
         }
 
-        private float CalculateTurnIncrement()
+        private float CalculateTurnIncrement(GameTime gameTime)
         {
+
+            scaledTurnRate = baseTurnRate / GameOptions.GAME_SPEED_DELAY_DIVISOR;
+            scaledTurnRate = (float)(gameTime.ElapsedGameTime.TotalMilliseconds * scaledTurnRate);
             float clockWiseDistance = CalculateClockWiseDistance();
 
             if (clockWiseDistance >= 180.0f)
             {
-                return -TURN_ANGLE_SIZE;
+                return -scaledTurnRate;
             }
             else
             {
-                return TURN_ANGLE_SIZE;
+                return scaledTurnRate;
             }
 
         }
@@ -239,7 +249,14 @@ namespace mike_and_conquer.gameobjects
                 closestDistance = counterClockwiseDistance;
             }
 
-            return Math.Abs(closestDistance) < TURN_ANGLE_SIZE / 2.0f;
+            bool isPointingAsGoalDirection = Math.Abs(closestDistance) < TURN_ANGLE_SIZE / 2.0f;
+            if (isPointingAsGoalDirection)
+            {
+                // snap to exact goalDirection
+                direction = goalDirection;
+            }
+            return isPointingAsGoalDirection;
+
         }
 
         public static double ConvertRadiansToDegrees(double radians)

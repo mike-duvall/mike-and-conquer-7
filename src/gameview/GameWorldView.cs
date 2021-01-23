@@ -63,6 +63,7 @@ namespace mike_and_conquer.gameview
         public float MapZoom
         {
             get { return mapViewportCamera.Zoom; }
+            set { mapViewportCamera.Zoom = value;  }
         }
 
         public int ScreenHeight

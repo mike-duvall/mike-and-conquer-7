@@ -776,9 +776,9 @@ namespace mike_and_conquer.gameworld
         }
 
 
-        public void ResetGameViaEvent(bool drawShroud)
+        public void ResetGameViaEvent(bool drawShroud, float initialMapZoom, int gameSpeedDelayDivisor)
         {
-            ResetGameGameEvent gameEvent = new ResetGameGameEvent(drawShroud);
+            ResetGameGameEvent gameEvent = new ResetGameGameEvent(drawShroud, initialMapZoom, gameSpeedDelayDivisor);
 
             lock (gameEvents)
             {
@@ -934,6 +934,7 @@ namespace mike_and_conquer.gameworld
                    !GDIConstructionYard.ContainsPoint(mapTileInstance.MapTileLocation.WorldCoordinatesAsPoint);
 
         }
+
 
 
         private bool IsRelativeMapTileInstanceAdjacentToConstructionsYard(MapTileInstance mapTileInstance,

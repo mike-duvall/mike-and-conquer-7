@@ -10,7 +10,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
 
         public void Post([FromBody]RestResetOptions resetOptions)
         {
-            GameWorld.instance.ResetGameViaEvent(resetOptions.drawShroud);
+            GameWorld.instance.ResetGameViaEvent(resetOptions.drawShroud, resetOptions.initialMapZoom, resetOptions.gameSpeedDelayDivisor);
         }
 
 

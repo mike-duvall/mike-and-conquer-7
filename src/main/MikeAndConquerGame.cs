@@ -723,9 +723,12 @@ namespace mike_and_conquer.main
             return newMinigunner;
         }
 
-        public GameState HandleReset(bool drawShroud)
+        public GameState HandleReset(bool drawShroud, float initialMapZoom, int gameSpeedDelayDivisor)
         {
             GameOptions.DRAW_SHROUD = drawShroud;
+            // GameOptions.INITIAL_MAP_ZOOM = initialMapZoom;
+            GameWorldView.instance.MapZoom = initialMapZoom;
+            GameOptions.GAME_SPEED_DELAY_DIVISOR = gameSpeedDelayDivisor;
             GameState newGameState = gameWorld.HandleReset();
             gameWorldView.HandleReset();
             return newGameState;

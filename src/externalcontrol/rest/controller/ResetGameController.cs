@@ -1,7 +1,5 @@
 ﻿using System.Web.Http;
 using mike_and_conquer.externalcontrol.rest.domain;
-using mike_and_conquer.gameobjects;
-using mike_and_conquer.gameview;
 using mike_and_conquer.gameworld;
 using mike_and_conquer.main;
 

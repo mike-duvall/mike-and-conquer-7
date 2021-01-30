@@ -21,9 +21,9 @@ namespace mike_and_conquer.gameevent
         {
             GameState newGameState = null;
             GameOptions2 gameOptions2 = new GameOptions2();
-            gameOptions2.initialMapZoom = GameOptions.INITIAL_MAP_ZOOM;
-            gameOptions2.drawShroud = GameOptions.DRAW_SHROUD;
-            gameOptions2.gameSpeedDelayDivisor = GameOptions.GAME_SPEED_DELAY_DIVISOR;
+            gameOptions2.initialMapZoom = GameOptions.instance.MAP_ZOOM;
+            gameOptions2.drawShroud = GameOptions.instance.DRAW_SHROUD;
+            gameOptions2.gameSpeedDelayDivisor = GameOptions.instance.GAME_SPEED_DELAY_DIVISOR;
             result = gameOptions2;
 
             return newGameState;

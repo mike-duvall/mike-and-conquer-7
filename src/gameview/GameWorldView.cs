@@ -204,7 +204,7 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime)
         {
-            MapZoom = GameOptions.INITIAL_MAP_ZOOM;
+            MapZoom = GameOptions.instance.MAP_ZOOM;
             DrawMap(gameTime);
             DrawSidebar(gameTime);
             DrawGameCursor(gameTime);
@@ -292,7 +292,7 @@ namespace mike_and_conquer.gameview
 
             this.mapViewportCamera = new Camera2D(mapViewport);
 
-            this.mapViewportCamera.Zoom = GameOptions.INITIAL_MAP_ZOOM;
+            this.mapViewportCamera.Zoom = GameOptions.instance.MAP_ZOOM;
             this.mapViewportCamera.Location =
                 new Vector2(CalculateLeftmostScrollX(), CalculateTopmostScrollY());
 
@@ -569,7 +569,7 @@ namespace mike_and_conquer.gameview
                 nullEffect,
                 renderTargetCamera.TransformMatrix);
 
-            if (GameOptions.DRAW_SHROUD)
+            if (GameOptions.instance.DRAW_SHROUD)
             {
                 foreach (MapTileInstanceView basicMapSquareView in GameWorldView.instance.MapTileInstanceViewList)
                 {
@@ -693,7 +693,7 @@ namespace mike_and_conquer.gameview
 
             mapTilePaletteMapperEffect.Parameters["PaletteTexture"].SetValue(paletteTexture);
             mapTilePaletteMapperEffect.Parameters["MapTileVisibilityTexture"].SetValue(mapTileVisibilityRenderTarget);
-            mapTilePaletteMapperEffect.Parameters["DrawShroud"].SetValue(GameOptions.DRAW_SHROUD);
+            mapTilePaletteMapperEffect.Parameters["DrawShroud"].SetValue(GameOptions.instance.DRAW_SHROUD);
             mapTilePaletteMapperEffect.Parameters["Value13MrfTexture"].SetValue(tshadow13MrfTexture);
             mapTilePaletteMapperEffect.Parameters["Value14MrfTexture"].SetValue(tshadow14MrfTexture);
             mapTilePaletteMapperEffect.Parameters["Value15MrfTexture"].SetValue(tshadow15MrfTexture);
@@ -1064,34 +1064,34 @@ namespace mike_and_conquer.gameview
 
             if (!oldKeyboardState.IsKeyDown(Keys.Y) && newKeyboardState.IsKeyDown(Keys.Y))
             {
-                GameOptions.ToggleDrawTerrainBorder();
+                GameOptions.instance.ToggleDrawTerrainBorder();
                 redrawBaseMapTiles = true;
             }
 
             if (!oldKeyboardState.IsKeyDown(Keys.H) && newKeyboardState.IsKeyDown(Keys.H))
             {
-                GameOptions.ToggleDrawBlockingTerrainBorder();
+                GameOptions.instance.ToggleDrawBlockingTerrainBorder();
                 redrawBaseMapTiles = true;
             }
 
             if (!oldKeyboardState.IsKeyDown(Keys.S) && newKeyboardState.IsKeyDown(Keys.S))
             {
-                GameOptions.ToggleDrawShroud();
+                GameOptions.instance.ToggleDrawShroud();
             }
 
 
             if (!oldKeyboardState.IsKeyDown(Keys.Q) && newKeyboardState.IsKeyDown(Keys.Q))
             {
-                GameOptions.GAME_SPEED_DELAY_DIVISOR -= 10;
-                if (GameOptions.GAME_SPEED_DELAY_DIVISOR < 1)
+                GameOptions.instance.GAME_SPEED_DELAY_DIVISOR -= 10;
+                if (GameOptions.instance.GAME_SPEED_DELAY_DIVISOR < 1)
                 {
-                    GameOptions.GAME_SPEED_DELAY_DIVISOR = 1;
+                    GameOptions.instance.GAME_SPEED_DELAY_DIVISOR = 1;
                 }
             }
 
             if (!oldKeyboardState.IsKeyDown(Keys.W) && newKeyboardState.IsKeyDown(Keys.W))
             {
-                GameOptions.GAME_SPEED_DELAY_DIVISOR += 10;
+                GameOptions.instance.GAME_SPEED_DELAY_DIVISOR += 10;
             }
 
 

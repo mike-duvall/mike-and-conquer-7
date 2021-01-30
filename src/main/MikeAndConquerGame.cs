@@ -83,6 +83,7 @@ namespace mike_and_conquer.main
 
         public MikeAndConquerGame(bool testMode)
         {
+
             RemoveHostingTraceListenerToEliminateDuplicateLogEntries();
 
             log.Information("Hello, Serilog!");
@@ -90,7 +91,10 @@ namespace mike_and_conquer.main
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
 
-            if (GameOptions.IS_FULL_SCREEN)
+
+            new GameOptions();
+
+            if (GameOptions.instance.IS_FULL_SCREEN)
             {
                 graphics.IsFullScreen = true;
                 graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
@@ -155,7 +159,7 @@ namespace mike_and_conquer.main
             // AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(14, 16), 90, 2);
 
 
-            if (!GameOptions.IS_FULL_SCREEN)
+            if (!GameOptions.instance.IS_FULL_SCREEN)
             {
                 AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 9));
                 AddMCVAtMapSquareCoordinates(new Point(21, 12));
@@ -726,11 +730,11 @@ namespace mike_and_conquer.main
 
         public GameState HandleReset(bool drawShroud, float initialMapZoom, int gameSpeedDelayDivisor)
         {
-            GameOptions.DRAW_SHROUD = drawShroud;
-            // GameOptions.INITIAL_MAP_ZOOM = initialMapZoom;
+            GameOptions.instance.DRAW_SHROUD = drawShroud;
+            // GameOptions.instance.MAP_ZOOM = initialMapZoom;
             // GameWorldView.instance.MapZoom = initialMapZoom;
-            GameOptions.INITIAL_MAP_ZOOM = initialMapZoom;
-            GameOptions.GAME_SPEED_DELAY_DIVISOR = gameSpeedDelayDivisor;
+            GameOptions.instance.MAP_ZOOM = initialMapZoom;
+            GameOptions.instance.GAME_SPEED_DELAY_DIVISOR = gameSpeedDelayDivisor;
             GameState newGameState = gameWorld.HandleReset();
             gameWorldView.HandleReset();
             return newGameState;

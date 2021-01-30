@@ -21,6 +21,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             RestMinigunner[] restMinigunners = new RestMinigunner[GameWorld.instance.GDIMinigunnerList.Count];
 
             int i = 0;
+            // Bogus, this should get the minigunner list via Event instead of directly
             foreach (Minigunner minigunner in GameWorld.instance.GDIMinigunnerList)
             {
                 RestMinigunner restMinigunner = new RestMinigunner();

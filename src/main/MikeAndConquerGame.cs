@@ -11,6 +11,7 @@ using mike_and_conquer.gameworld;
 using mike_and_conquer.openralocal;
 using mike_and_conquer.sound;
 using Serilog;
+using SharpDX.MediaFoundation;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
@@ -727,7 +728,8 @@ namespace mike_and_conquer.main
         {
             GameOptions.DRAW_SHROUD = drawShroud;
             // GameOptions.INITIAL_MAP_ZOOM = initialMapZoom;
-            GameWorldView.instance.MapZoom = initialMapZoom;
+            // GameWorldView.instance.MapZoom = initialMapZoom;
+            GameOptions.INITIAL_MAP_ZOOM = initialMapZoom;
             GameOptions.GAME_SPEED_DELAY_DIVISOR = gameSpeedDelayDivisor;
             GameState newGameState = gameWorld.HandleReset();
             gameWorldView.HandleReset();

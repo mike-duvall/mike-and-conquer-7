@@ -204,12 +204,10 @@ namespace mike_and_conquer.gameview
 
         internal void Draw(GameTime gameTime)
         {
-
+            MapZoom = GameOptions.INITIAL_MAP_ZOOM;
             DrawMap(gameTime);
             DrawSidebar(gameTime);
             DrawGameCursor(gameTime);
-
-
         }
 
 

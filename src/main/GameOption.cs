@@ -20,9 +20,6 @@ namespace mike_and_conquer.main
         public static float INITIAL_MAP_ZOOM = 1.0f;
         // public static float INITIAL_MAP_ZOOM = 3.0f;
 
-
-
-
         //        public static bool PLAY_MUSIC = true;
         public static bool PLAY_MUSIC = false;
 

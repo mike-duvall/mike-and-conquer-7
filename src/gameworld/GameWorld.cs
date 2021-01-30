@@ -733,6 +733,27 @@ namespace mike_and_conquer.gameworld
             return gdiMinigunner;
         }
 
+
+        public GameOptions2 GetGameOptionViaEvent()
+        {
+            // GetGDIMinigunnerByIdGameEvent gameEvent = new GetGDIMinigunnerByIdGameEvent(id);
+
+            GameOptionsGameEvent gameEvent = new GameOptionsGameEvent();
+
+            // GameOptionsByGameEvent gameEvent = new GameOptionsByGameEvent();
+            //
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+            
+            GameOptions2 gameOptions = gameEvent.GetGameOptions();
+            return gameOptions;
+
+        }
+
+
+
         public NodTurret GetNodTurretByIdViaEvent(int id)
         {
             GetNodTurretByIdGameEvent gameEvent = new GetNodTurretByIdGameEvent(id);
@@ -934,6 +955,7 @@ namespace mike_and_conquer.gameworld
                    !GDIConstructionYard.ContainsPoint(mapTileInstance.MapTileLocation.WorldCoordinatesAsPoint);
 
         }
+
 
 
 

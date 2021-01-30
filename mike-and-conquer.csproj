@@ -160,7 +160,6 @@
     <Compile Include="src\main\Camera2D.cs" />
     <Compile Include="src\gameworld\GameMap.cs" />
     <Compile Include="src\gameworld\CncSpeed.cs" />
-    <Compile Include="src\main\GameOptions2.cs" />
     <Compile Include="src\main\GameOption.cs" />
     <Compile Include="src\gameworld\GameWorld.cs" />
     <Compile Include="src\gameworld\NodPlayer.cs" />

@@ -17,11 +17,11 @@ namespace mike_and_conquer.externalcontrol.rest.controller
 
         public IHttpActionResult Get()
         {
-            GameOptions2 gameOptions2 = GameWorld.instance.GetGameOptionViaEvent();
+            GameOptions gameOptions = GameWorld.instance.GetGameOptionViaEvent();
             RestResetOptions restResetOptions = new RestResetOptions();
-            restResetOptions.initialMapZoom = gameOptions2.initialMapZoom;
-            restResetOptions.gameSpeedDelayDivisor = gameOptions2.gameSpeedDelayDivisor;
-            restResetOptions.drawShroud = gameOptions2.drawShroud;
+            restResetOptions.initialMapZoom = gameOptions.MAP_ZOOM;
+            restResetOptions.gameSpeedDelayDivisor = gameOptions.GAME_SPEED_DELAY_DIVISOR;
+            restResetOptions.drawShroud = gameOptions.DRAW_SHROUD;
 
             return Ok(restResetOptions);
         }

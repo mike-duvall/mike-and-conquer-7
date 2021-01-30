@@ -1,6 +1,5 @@
-﻿using mike_and_conquer.gameobjects;
+﻿
 using mike_and_conquer.gamestate;
-using mike_and_conquer.gameworld;
 using mike_and_conquer.main;
 
 
@@ -12,19 +11,25 @@ namespace mike_and_conquer.gameevent
 
 
 
-        public GameOptions2 GetGameOptions()
+        public GameOptions GetGameOptions()
         {
-            return (GameOptions2)GetResult();
+            return (GameOptions)GetResult();
         }
 
         protected override GameState ProcessImpl()
         {
+            // GameState newGameState = null;
+            // GameOptions gameOptions = new GameOptions();
+            // gameOptions.MAP_ZOOM = GameOptions.instance.MAP_ZOOM;
+            // gameOptions.DRAW_SHROUD = GameOptions.instance.DRAW_SHROUD;
+            // gameOptions.GAME_SPEED_DELAY_DIVISOR = GameOptions.instance.GAME_SPEED_DELAY_DIVISOR;
+            // result = gameOptions;
+            //
+            // return newGameState;
+
             GameState newGameState = null;
-            GameOptions2 gameOptions2 = new GameOptions2();
-            gameOptions2.initialMapZoom = GameOptions.instance.MAP_ZOOM;
-            gameOptions2.drawShroud = GameOptions.instance.DRAW_SHROUD;
-            gameOptions2.gameSpeedDelayDivisor = GameOptions.instance.GAME_SPEED_DELAY_DIVISOR;
-            result = gameOptions2;
+
+            result = GameOptions.instance;
 
             return newGameState;
 

@@ -734,7 +734,7 @@ namespace mike_and_conquer.gameworld
         }
 
 
-        public GameOptions2 GetGameOptionViaEvent()
+        public GameOptions GetGameOptionViaEvent()
         {
             // GetGDIMinigunnerByIdGameEvent gameEvent = new GetGDIMinigunnerByIdGameEvent(id);
 
@@ -747,7 +747,7 @@ namespace mike_and_conquer.gameworld
                 gameEvents.Add(gameEvent);
             }
             
-            GameOptions2 gameOptions = gameEvent.GetGameOptions();
+            GameOptions gameOptions = gameEvent.GetGameOptions();
             return gameOptions;
 
         }

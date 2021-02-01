@@ -91,7 +91,7 @@ namespace mike_and_conquer.gameobjects
 
             clickDetectionRectangle = CreateClickDetectionRectangle();
             // movementDistanceEpsilon = movementVelocity + (double).04f;
-            scaledMovementSpeed = baseMovementSpeed / GameOptions.instance.GAME_SPEED_DELAY_DIVISOR;
+            scaledMovementSpeed = baseMovementSpeed / GameOptions.instance.GameSpeedDelayDivisor;
             movementDistanceEpsilon = scaledMovementSpeed + (double).04f;
 
             selected = false;
@@ -116,7 +116,7 @@ namespace mike_and_conquer.gameobjects
         {
 
             // TODO: Consider removing this if statement once map shroud is fully working
-            if (GameOptions.instance.DRAW_SHROUD == false)
+            if (GameOptions.instance.DrawShroud == false)
             {
                 return;
             }

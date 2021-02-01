@@ -19,9 +19,9 @@ namespace mike_and_conquer.externalcontrol.rest.controller
         {
             GameOptions gameOptions = GameWorld.instance.GetGameOptionViaEvent();
             RestResetOptions restResetOptions = new RestResetOptions();
-            restResetOptions.initialMapZoom = gameOptions.MAP_ZOOM;
-            restResetOptions.gameSpeedDelayDivisor = gameOptions.GAME_SPEED_DELAY_DIVISOR;
-            restResetOptions.drawShroud = gameOptions.DRAW_SHROUD;
+            restResetOptions.initialMapZoom = gameOptions.MapZoomLevel;
+            restResetOptions.gameSpeedDelayDivisor = gameOptions.GameSpeedDelayDivisor;
+            restResetOptions.drawShroud = gameOptions.DrawShroud;
 
             return Ok(restResetOptions);
         }

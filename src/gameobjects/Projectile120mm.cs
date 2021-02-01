@@ -43,7 +43,7 @@ namespace mike_and_conquer.gameobjects
             this.target = target;
             this.targetLocation = target.GameWorldLocation;
 
-            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GAME_SPEED_DELAY_DIVISOR;
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GameSpeedDelayDivisor;
 //            movementDistanceEpsilon = scaledMovementSpeed + (double).08f;
             movementDistanceEpsilon = scaledMovementSpeed + (double)3.2f;
             // movementDistanceEpsilon = 2.0;
@@ -56,7 +56,7 @@ namespace mike_and_conquer.gameobjects
         public bool Update(GameTime gameTime)
         {
 
-            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GAME_SPEED_DELAY_DIVISOR;
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GameSpeedDelayDivisor;
 
             // MikeAndConquerGame.instance.log.Information("movementVelocity:{0}, updateDelayTime{1} ", movementVelocity, updateDelayTime);
             bool removeMe = false;

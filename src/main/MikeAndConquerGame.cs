@@ -94,7 +94,7 @@ namespace mike_and_conquer.main
 
             new GameOptions();
 
-            if (GameOptions.instance.IS_FULL_SCREEN)
+            if (GameOptions.instance.IsFullScreen)
             {
                 graphics.IsFullScreen = true;
                 graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
@@ -159,7 +159,7 @@ namespace mike_and_conquer.main
             // AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(14, 16), 90, 2);
 
 
-            if (!GameOptions.instance.IS_FULL_SCREEN)
+            if (!GameOptions.instance.IsFullScreen)
             {
                 AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 9));
                 AddMCVAtMapSquareCoordinates(new Point(21, 12));
@@ -730,11 +730,11 @@ namespace mike_and_conquer.main
 
         public GameState HandleReset(bool drawShroud, float initialMapZoom, int gameSpeedDelayDivisor)
         {
-            GameOptions.instance.DRAW_SHROUD = drawShroud;
-            // GameOptions.instance.MAP_ZOOM = initialMapZoom;
+            GameOptions.instance.DrawShroud = drawShroud;
+            // GameOptions.instance.MapZoomLevel = initialMapZoom;
             // GameWorldView.instance.MapZoom = initialMapZoom;
-            GameOptions.instance.MAP_ZOOM = initialMapZoom;
-            GameOptions.instance.GAME_SPEED_DELAY_DIVISOR = gameSpeedDelayDivisor;
+            GameOptions.instance.MapZoomLevel = initialMapZoom;
+            GameOptions.instance.GameSpeedDelayDivisor = gameSpeedDelayDivisor;
             GameState newGameState = gameWorld.HandleReset();
             gameWorldView.HandleReset();
             return newGameState;

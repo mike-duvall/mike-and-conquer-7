@@ -108,7 +108,7 @@ namespace mike_and_conquer.gameview
                 false,
                 Color.White);
 
-            if (GameOptions.instance.DRAW_TERRAIN_BORDER)
+            if (GameOptions.instance.DrawTerrainBorder)
             {
                 float defaultScale = 1;
                 float layerDepth = 0;
@@ -116,7 +116,7 @@ namespace mike_and_conquer.gameview
                     0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
             }
 
-            if (GameOptions.instance.DRAW_BLOCKING_TERRAIN_BORDER && myMapTileInstance.IsBlockingTerrain)
+            if (GameOptions.instance.DrawBlockingTerrainBorder && myMapTileInstance.IsBlockingTerrain)
             {
                 float defaultScale = 1;
                 float layerDepth = 0;

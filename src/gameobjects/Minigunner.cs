@@ -94,7 +94,7 @@ namespace mike_and_conquer.gameobjects
             Minigunner.globalId++;
 
             clickDetectionRectangle = CreateClickDetectionRectangle();
-            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GAME_SPEED_DELAY_DIVISOR;
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GameSpeedDelayDivisor;
             movementDistanceEpsilon = scaledMovementSpeed + (double).04f;
             selected = false;
 
@@ -103,7 +103,7 @@ namespace mike_and_conquer.gameobjects
         public void Update(GameTime gameTime)
         {
 
-            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GAME_SPEED_DELAY_DIVISOR;
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GameSpeedDelayDivisor;
 
             UpdateVisibleMapTiles();
             if (this.currentCommand == Command.NONE)
@@ -124,7 +124,7 @@ namespace mike_and_conquer.gameobjects
         {
 
             // TODO: Consider removing this if statement once map shroud is fully working
-            if (GameOptions.instance.DRAW_SHROUD == false)
+            if (GameOptions.instance.DrawShroud == false)
             {
                 return;
             }

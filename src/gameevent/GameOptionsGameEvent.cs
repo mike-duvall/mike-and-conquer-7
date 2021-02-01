@@ -20,9 +20,9 @@ namespace mike_and_conquer.gameevent
         {
             // GameState newGameState = null;
             // GameOptions gameOptions = new GameOptions();
-            // gameOptions.MAP_ZOOM = GameOptions.instance.MAP_ZOOM;
-            // gameOptions.DRAW_SHROUD = GameOptions.instance.DRAW_SHROUD;
-            // gameOptions.GAME_SPEED_DELAY_DIVISOR = GameOptions.instance.GAME_SPEED_DELAY_DIVISOR;
+            // gameOptions.MapZoomLevel = GameOptions.instance.MapZoomLevel;
+            // gameOptions.DrawShroud = GameOptions.instance.DrawShroud;
+            // gameOptions.GameSpeedDelayDivisor = GameOptions.instance.GameSpeedDelayDivisor;
             // result = gameOptions;
             //
             // return newGameState;

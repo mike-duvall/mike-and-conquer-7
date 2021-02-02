@@ -2,7 +2,7 @@
 namespace mike_and_conquer.externalcontrol.rest.domain
 {
 
-    public class RestResetOptions
+    public class RestGameOptions
     {
 
         public bool drawShroud { get; set; }

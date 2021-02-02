@@ -193,7 +193,7 @@
     <Compile Include="src\externalcontrol\rest\controller\GDIConstructionYardController.cs" />
     <Compile Include="src\externalcontrol\rest\controller\MCVController.cs" />
     <Compile Include="src\externalcontrol\rest\domain\RestGDIConstructionYard.cs" />
-    <Compile Include="src\externalcontrol\rest\domain\RestResetOptions.cs" />
+    <Compile Include="src\externalcontrol\rest\domain\RestGameOptions.cs" />
     <Compile Include="src\externalcontrol\rest\domain\RestMinigunner.cs" />
     <Compile Include="src\externalcontrol\rest\controller\ScreenshotController.cs" />
     <Compile Include="src\externalcontrol\rest\controller\MouseCursorStateController.cs" />
@@ -220,7 +220,7 @@
     <Compile Include="src\util\TextureUtil.cs" />
     <Compile Include="src\util\AnimationSequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\externalcontrol\rest\controller\ResetGameController.cs" />
+    <Compile Include="src\externalcontrol\rest\controller\GameOptionsController.cs" />
     <Compile Include="src\externalcontrol\RestServerConfigurationProvider.cs" />
     <Compile Include="src\externalcontrol\rest\controller\GdiMinigunnersController.cs" />
   </ItemGroup>

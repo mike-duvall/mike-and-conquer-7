@@ -46,6 +46,9 @@ namespace mike_and_conquer.externalcontrol.rest.controller
 
         public IHttpActionResult Get(int id)
         {
+            // Bogus:  Even though we are getting this minigunner by event, we get a reference
+            // to the actual minigunner, not a copy, so in theory this minigunner could be getting
+            // updated in the game thread while we are using it
             Minigunner minigunner = GameWorld.instance.GetGDIMinigunnerByIdViaEvent(id);
             RestMinigunner restMinigunner = new RestMinigunner();
             restMinigunner.id = minigunner.id;

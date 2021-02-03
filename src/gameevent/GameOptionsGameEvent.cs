@@ -7,10 +7,6 @@ namespace mike_and_conquer.gameevent
 {
     public class GameOptionsGameEvent : AsyncGameEvent
     {
-
-
-
-
         public GameOptions GetGameOptions()
         {
             return (GameOptions)GetResult();
@@ -22,12 +18,6 @@ namespace mike_and_conquer.gameevent
             result = GameOptions.instance;
             return newGameState;
         }
-
-
-
-
-
-
 
     }
 }

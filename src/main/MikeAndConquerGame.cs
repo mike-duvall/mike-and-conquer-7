@@ -731,8 +731,6 @@ namespace mike_and_conquer.main
         public GameState HandleReset(bool drawShroud, float initialMapZoom, int gameSpeedDelayDivisor)
         {
             GameOptions.instance.DrawShroud = drawShroud;
-            // GameOptions.instance.MapZoomLevel = initialMapZoom;
-            // GameWorldView.instance.MapZoom = initialMapZoom;
             GameOptions.instance.MapZoomLevel = initialMapZoom;
             GameOptions.instance.GameSpeedDelayDivisor = gameSpeedDelayDivisor;
             GameState newGameState = gameWorld.HandleReset();

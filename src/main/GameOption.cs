@@ -8,44 +8,48 @@ namespace mike_and_conquer.main
     public class GameOptions
     {
 
-        public static bool DRAW_TERRAIN_BORDER = false;
-        public static bool DRAW_BLOCKING_TERRAIN_BORDER = false;
+        public bool DrawTerrainBorder = false;
+        public bool DrawBlockingTerrainBorder = false;
 
-        public static bool IS_FULL_SCREEN = true;
-//        public static bool IS_FULL_SCREEN = false;
+        public bool IsFullScreen = true;
+//        public bool IsFullScreen = false;
 
-        public static bool DRAW_SHROUD = true;
-        // public static bool DRAW_SHROUD = false;
+        public bool DrawShroud = true;
+        // public bool DrawShroud = false;
 
-        public static float INITIAL_MAP_ZOOM = 1.0f;
-        // public static float INITIAL_MAP_ZOOM = 3.0f;
+        public float MapZoomLevel = 1.0f;
+        // public float MapZoomLevel = 3.0f;
 
+        //        public  bool PlayMusic = true;
+        public bool PlayMusic = false;
 
-
-
-        //        public static bool PLAY_MUSIC = true;
-        public static bool PLAY_MUSIC = false;
-
-        public static int GAME_SPEED_DELAY_DIVISOR = 50;
-        // public static int GAME_SPEED_DELAY_DIVISOR = 200;
-        // public static int GAME_SPEED_DELAY_DIVISOR = 20;
-        // public static int GAME_SPEED_DELAY_DIVISOR = 1;
+        public int GameSpeedDelayDivisor = 50;
+        // public int GameSpeedDelayDivisor = 200;
+        // public int GameSpeedDelayDivisor = 20;
+        // public int GameSpeedDelayDivisor = 1;
 
 
+        public static GameOptions instance;
 
-        public static void ToggleDrawTerrainBorder()
+        public GameOptions()
         {
-            DRAW_TERRAIN_BORDER = !DRAW_TERRAIN_BORDER;
+            GameOptions.instance = this;
         }
 
-        public static void ToggleDrawBlockingTerrainBorder()
+
+        public  void ToggleDrawTerrainBorder()
         {
-            DRAW_BLOCKING_TERRAIN_BORDER = !DRAW_BLOCKING_TERRAIN_BORDER;
+            DrawTerrainBorder = !DrawTerrainBorder;
         }
 
-        public static void ToggleDrawShroud()
+        public  void ToggleDrawBlockingTerrainBorder()
         {
-            DRAW_SHROUD = !DRAW_SHROUD;
+            DrawBlockingTerrainBorder = !DrawBlockingTerrainBorder;
+        }
+
+        public  void ToggleDrawShroud()
+        {
+            DrawShroud = !DrawShroud;
         }
 
 

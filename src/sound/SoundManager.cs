@@ -26,7 +26,7 @@ namespace mike_and_conquer.sound
 
         public void PlaySong()
         {
-            if (GameOptions.PLAY_MUSIC)
+            if (GameOptions.instance.PlayMusic)
             {
                 MediaPlayer.Play(song);
             }

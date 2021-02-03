@@ -733,6 +733,22 @@ namespace mike_and_conquer.gameworld
             return gdiMinigunner;
         }
 
+
+        public GameOptions GetGameOptionViaEvent()
+        {
+            GameOptionsGameEvent gameEvent = new GameOptionsGameEvent();
+
+            lock (gameEvents)
+            {
+                gameEvents.Add(gameEvent);
+            }
+            
+            GameOptions gameOptions = gameEvent.GetGameOptions();
+            return gameOptions;
+        }
+
+
+
         public NodTurret GetNodTurretByIdViaEvent(int id)
         {
             GetNodTurretByIdGameEvent gameEvent = new GetNodTurretByIdGameEvent(id);
@@ -776,9 +792,9 @@ namespace mike_and_conquer.gameworld
         }
 
 
-        public void ResetGameViaEvent(bool drawShroud)
+        public void ResetGameViaEvent(bool drawShroud, float initialMapZoom, int gameSpeedDelayDivisor)
         {
-            ResetGameGameEvent gameEvent = new ResetGameGameEvent(drawShroud);
+            ResetGameGameEvent gameEvent = new ResetGameGameEvent(drawShroud, initialMapZoom, gameSpeedDelayDivisor);
 
             lock (gameEvents)
             {

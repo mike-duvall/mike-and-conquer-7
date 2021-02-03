@@ -11,6 +11,7 @@ using mike_and_conquer.gameworld;
 using mike_and_conquer.openralocal;
 using mike_and_conquer.sound;
 using Serilog;
+using SharpDX.MediaFoundation;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
@@ -82,6 +83,7 @@ namespace mike_and_conquer.main
 
         public MikeAndConquerGame(bool testMode)
         {
+
             RemoveHostingTraceListenerToEliminateDuplicateLogEntries();
 
             log.Information("Hello, Serilog!");
@@ -89,7 +91,10 @@ namespace mike_and_conquer.main
             this.testMode = testMode;
             graphics = new GraphicsDeviceManager(this);
 
-            if (GameOptions.IS_FULL_SCREEN)
+
+            new GameOptions();
+
+            if (GameOptions.instance.IsFullScreen)
             {
                 graphics.IsFullScreen = true;
                 graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
@@ -154,7 +159,7 @@ namespace mike_and_conquer.main
             // AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(14, 16), 90, 2);
 
 
-            if (!GameOptions.IS_FULL_SCREEN)
+            if (!GameOptions.instance.IsFullScreen)
             {
                 AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 9));
                 AddMCVAtMapSquareCoordinates(new Point(21, 12));
@@ -723,9 +728,11 @@ namespace mike_and_conquer.main
             return newMinigunner;
         }
 
-        public GameState HandleReset(bool drawShroud)
+        public GameState HandleReset(bool drawShroud, float initialMapZoom, int gameSpeedDelayDivisor)
         {
-            GameOptions.DRAW_SHROUD = drawShroud;
+            GameOptions.instance.DrawShroud = drawShroud;
+            GameOptions.instance.MapZoomLevel = initialMapZoom;
+            GameOptions.instance.GameSpeedDelayDivisor = gameSpeedDelayDivisor;
             GameState newGameState = gameWorld.HandleReset();
             gameWorldView.HandleReset();
             return newGameState;

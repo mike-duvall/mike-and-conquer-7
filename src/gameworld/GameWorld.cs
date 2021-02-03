@@ -736,12 +736,8 @@ namespace mike_and_conquer.gameworld
 
         public GameOptions GetGameOptionViaEvent()
         {
-            // GetGDIMinigunnerByIdGameEvent gameEvent = new GetGDIMinigunnerByIdGameEvent(id);
-
             GameOptionsGameEvent gameEvent = new GameOptionsGameEvent();
 
-            // GameOptionsByGameEvent gameEvent = new GameOptionsByGameEvent();
-            //
             lock (gameEvents)
             {
                 gameEvents.Add(gameEvent);
@@ -749,7 +745,6 @@ namespace mike_and_conquer.gameworld
             
             GameOptions gameOptions = gameEvent.GetGameOptions();
             return gameOptions;
-
         }
 
 
@@ -955,8 +950,6 @@ namespace mike_and_conquer.gameworld
                    !GDIConstructionYard.ContainsPoint(mapTileInstance.MapTileLocation.WorldCoordinatesAsPoint);
 
         }
-
-
 
 
         private bool IsRelativeMapTileInstanceAdjacentToConstructionsYard(MapTileInstance mapTileInstance,

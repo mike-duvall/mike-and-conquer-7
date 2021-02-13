@@ -70,43 +70,43 @@ namespace mike_and_conquer.gameview
             unitSelectionCursor.Update(gameTime);
         }
 
-        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-
-
-            if(myMinigunner.health <= 0)
-            {
-                return;
-            }
-
-            unitSelectionCursor.position = new Vector2(myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X, myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
-            if (myMinigunner.state == Minigunner.State.IDLE)
-            {
-                unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
-            }
-            else if (myMinigunner.state == Minigunner.State.MOVING)
-            {
-                unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
-            }
-            else if (myMinigunner.state == Minigunner.State.ATTACKING)
-            {
-                unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
-            }
-
-            unitSprite.Draw(gameTime, spriteBatch, myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
-
-            if (myMinigunner.selected)
-            {
-                unitSelectionCursor.Draw(gameTime, spriteBatch, SpriteSortLayers.UNIT_DEPTH);
-            }
-
-            if (this.drawDestinationSquare && this.myMinigunner.state == Minigunner.State.MOVING)
-            {
-                this.destinationSquare.position = this.myMinigunner.DestinationPosition;
-                this.destinationSquare.Draw(gameTime, spriteBatch);
-            }
-
-        }
+        // internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        // {
+        //
+        //
+        //     if(myMinigunner.health <= 0)
+        //     {
+        //         return;
+        //     }
+        //
+        //     unitSelectionCursor.position = new Vector2(myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X, myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
+        //     if (myMinigunner.state == Minigunner.State.IDLE)
+        //     {
+        //         unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);
+        //     }
+        //     else if (myMinigunner.state == Minigunner.State.MOVING)
+        //     {
+        //         unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.WALKING_UP);
+        //     }
+        //     else if (myMinigunner.state == Minigunner.State.ATTACKING)
+        //     {
+        //         unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.SHOOTING_UP);
+        //     }
+        //
+        //     unitSprite.Draw(gameTime, spriteBatch, myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
+        //
+        //     if (myMinigunner.selected)
+        //     {
+        //         unitSelectionCursor.Draw(gameTime, spriteBatch, SpriteSortLayers.UNIT_DEPTH);
+        //     }
+        //
+        //     if (this.drawDestinationSquare && this.myMinigunner.state == Minigunner.State.MOVING)
+        //     {
+        //         this.destinationSquare.position = this.myMinigunner.DestinationPosition;
+        //         this.destinationSquare.Draw(gameTime, spriteBatch);
+        //     }
+        //
+        // }
 
         internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -135,7 +135,7 @@ namespace mike_and_conquer.gameview
 
             if (myMinigunner.selected)
             {
-                unitSelectionCursor.Draw(gameTime, spriteBatch, SpriteSortLayers.UNIT_DEPTH);
+                unitSelectionCursor.DrawNoShadow(gameTime, spriteBatch, SpriteSortLayers.UNIT_DEPTH);
             }
 
         }
@@ -150,6 +150,13 @@ namespace mike_and_conquer.gameview
             }
 
             unitSprite.DrawShadowOnly(gameTime, spriteBatch, myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
+
+            if (myMinigunner.selected)
+            {
+                unitSelectionCursor.DrawShadowOnly(gameTime, spriteBatch, SpriteSortLayers.UNIT_DEPTH);
+            }
+
+
         }
 
 

@@ -24,6 +24,7 @@ namespace mike_and_conquer.gameview
         Texture2D texture;
         Texture2D boundingRectangle;
         private Texture2D healthBar;
+        private Texture2D healthBarShadow;
 
         Boolean drawBoundingRectangle;
 
@@ -132,9 +133,14 @@ namespace mike_and_conquer.gameview
 
             Color cncPalleteColorBlack = new Color(0, 255, 255, 255);
             Color cncPalleteColorGreen = new Color(4, 255, 255, 255);
+            Color cncPalleteColorShadow = new Color(255, 255, 255, 255);
+
+
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorBlack);
-            // fillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorBlack);
-            // fillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorBlack);
+
+            // fillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorShadow);
+            // fillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorShadow);
+
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorBlack);
 
             fillVerticalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorBlack);
@@ -145,7 +151,6 @@ namespace mike_and_conquer.gameview
 
             int healthBarLength = (int) (myMinigunner.health * ratio);
 
-
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorGreen, 1, healthBarLength);
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorGreen, 1, healthBarLength);
 
@@ -154,14 +159,54 @@ namespace mike_and_conquer.gameview
 
         }
 
+        internal Texture2D InitializeHealthBarShadow()
+        {
+            int healthBarHeight = 4;
+            int healthBarWidth = 12;  // This is hard coded for minigunner
+
+            Texture2D rectangle =
+                new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, healthBarWidth, healthBarHeight);
+
+            Color[] data = new Color[rectangle.Width * rectangle.Height];
+
+            // Color cncPalleteColorBlack = new Color(0, 255, 255, 255);
+            // Color cncPalleteColorGreen = new Color(4, 255, 255, 255);
+            Color cncPalleteColorShadow = new Color(255, 255, 255, 255);
+
+
+            // fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorBlack);
+
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorShadow);
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorShadow);
+
+            // fillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorBlack);
+            //
+            // fillVerticalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorBlack);
+            // fillVerticalLine(data, rectangle.Width, rectangle.Height, 11, cncPalleteColorBlack);
+            //
+            // int maxHealth = 50;
+            // float ratio = 10f / maxHealth;
+            //
+            // int healthBarLength = (int)(myMinigunner.health * ratio);
+            //
+            // fillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorGreen, 1, healthBarLength);
+            // fillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorGreen, 1, healthBarLength);
+
+            rectangle.SetData(data);
+            return rectangle;
+
+        }
+
+
 
 
         public void Update(GameTime gameTime)
         {
             healthBar = InitializeHealthBar();
+            healthBarShadow = InitializeHealthBarShadow();
         }
 
-        internal void Draw(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
+        internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
         {
             spriteBatch.Draw(texture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
             if (drawBoundingRectangle)
@@ -175,6 +220,18 @@ namespace mike_and_conquer.gameview
             healthBarPosition.X = position.X + 10;
             healthBarPosition.Y = position.Y - 1;
             spriteBatch.Draw(healthBar, healthBarPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
+        }
+
+
+        internal void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
+        {
+            Vector2 healthBarPosition = position;
+            // healthBarPosition.X = position.X + (texture.Width - 30);
+            healthBarPosition.X = position.X + 10;
+            healthBarPosition.Y = position.Y - 1;
+            spriteBatch.Draw(healthBarShadow, healthBarPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
+
+
         }
 
 

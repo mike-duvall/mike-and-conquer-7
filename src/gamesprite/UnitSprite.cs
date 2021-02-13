@@ -166,6 +166,28 @@ namespace mike_and_conquer.gamesprite
 
             Texture2D shadowOnlyTexture = unitFrameList[currentAnimationImageIndex].ShadowOnlyTexture;
 
+            int numPixels = shadowOnlyTexture.Width * shadowOnlyTexture.Height;
+            // Color[] texturePixelData = new Color[numPixels];
+            // shadowOnlyTexture.GetData(texturePixelData);
+            //
+            // for (int i = 0; i < numPixels; i++)
+            // {
+            //     Color nextColor = texturePixelData[i];
+            //     if (nextColor.R != 0)
+            //     {
+            //         int x = 3;
+            //     }
+            //     if (nextColor.G != 0)
+            //     {
+            //         int x = 3;
+            //     }
+            //     if (nextColor.B != 0)
+            //     {
+            //         int x = 3;
+            //     }
+            // }
+
+
             float defaultScale = 1;
 
             int roundedX = (int)Math.Round(positionInWorldCoordinates.X, 0);

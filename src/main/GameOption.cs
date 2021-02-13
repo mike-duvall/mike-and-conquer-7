@@ -12,7 +12,7 @@ namespace mike_and_conquer.main
         public bool DrawBlockingTerrainBorder = false;
 
         public bool IsFullScreen = true;
-//        public bool IsFullScreen = false;
+        // public bool IsFullScreen = false;
 
         public bool DrawShroud = true;
         // public bool DrawShroud = false;

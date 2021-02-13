@@ -1,4 +1,5 @@
-﻿using mike_and_conquer.gameobjects;
+﻿using Microsoft.Xna.Framework;
+using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
 using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 
@@ -25,7 +26,7 @@ namespace mike_and_conquer.gameview
             this.unitSprite = new UnitSprite(spriteListKey);
             this.unitSprite.drawBoundingRectangle = false;
             this.unitSprite.drawShadow = true;
-            this.unitSelectionCursor = new UnitSelectionCursor((int)this.myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X, (int)this.myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
+            this.unitSelectionCursor = new UnitSelectionCursor(myMinigunner, (int)this.myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X, (int)this.myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
             this.destinationSquare = new DestinationSquare();
             this.drawDestinationSquare = false;
             SetupAnimations();
@@ -62,6 +63,12 @@ namespace mike_and_conquer.gameview
             unitSprite.AddAnimationSequence((int)AnimationSequences.SHOOTING_UP, shootinUpAnimationSequence);
         }
 
+
+
+        public void Update(GameTime gameTime)
+        {
+            unitSelectionCursor.Update(gameTime);
+        }
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

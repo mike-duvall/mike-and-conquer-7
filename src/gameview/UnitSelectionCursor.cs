@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.main;
 using ShpTDSprite = mike_and_conquer.openra.ShpTDSprite;
@@ -18,8 +19,12 @@ namespace mike_and_conquer.gameview
     {
         public Vector2 position { get; set; }
 
+
+        private Minigunner myMinigunner;
         Texture2D texture;
         Texture2D boundingRectangle;
+        private Texture2D healthBar;
+
         Boolean drawBoundingRectangle;
 
         private Vector2 middleOfSprite;
@@ -36,18 +41,18 @@ namespace mike_and_conquer.gameview
 
         }
 
-        public UnitSelectionCursor(int x, int y)
+        public UnitSelectionCursor(Minigunner minigunner, int x, int y)
         {
-
-//            this.texture = loadTextureFromShpFile(MikeAndConquerGame.CONTENT_DIRECTORY_PREFIX + "select.shp", 0);
+            this.myMinigunner = minigunner;
             List<UnitFrame> unitFrameList = MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
             UnitFrame theUnitFrame = unitFrameList[0];
 
             this.texture = theUnitFrame.Texture;
 
-
             position = new Vector2(x, y);
-            boundingRectangle = initializeBoundingRectangle();
+            boundingRectangle = InitializeBoundingRectangle();
+            // healthBar = InitializeHealthBar();
+            healthBar = null;
 
             middleOfSprite = new Vector2();
             middleOfSprite.X = 15;
@@ -68,6 +73,23 @@ namespace mike_and_conquer.gameview
             }
         }
 
+        internal void fillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color, int start, int end)
+        {
+            int beginIndex = width * lineIndex;
+            int relativeStart = beginIndex + start;
+            int relativeEnd = beginIndex + end;
+            for (int i = beginIndex; i < (beginIndex + width); ++i)
+            {
+                if (i >= relativeStart && i <= relativeEnd)
+                {
+                    data[i] = color;
+                }
+
+            }
+        }
+
+
+
         internal void fillVerticalLine(Color[] data, int width, int height, int lineIndex, Color color)
         {
             int beginIndex = lineIndex;
@@ -78,7 +100,7 @@ namespace mike_and_conquer.gameview
         }
 
 
-        internal Texture2D initializeBoundingRectangle()
+        internal Texture2D InitializeBoundingRectangle()
         {
             Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, texture.Width, texture.Height);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
@@ -98,9 +120,45 @@ namespace mike_and_conquer.gameview
 
         }
 
+        internal Texture2D InitializeHealthBar()
+        {
+            int healthBarHeight = 4;
+            int healthBarWidth = 12;  // This is hard coded for minigunner
+
+            Texture2D rectangle =
+                new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, healthBarWidth, healthBarHeight);
+
+            Color[] data = new Color[rectangle.Width * rectangle.Height];
+
+            Color cncPalleteColorBlack = new Color(0, 255, 255, 255);
+            Color cncPalleteColorGreen = new Color(4, 255, 255, 255);
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorBlack);
+            // fillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorBlack);
+            // fillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorBlack);
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorBlack);
+
+            fillVerticalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorBlack);
+            fillVerticalLine(data, rectangle.Width, rectangle.Height, 11, cncPalleteColorBlack);
+
+            int maxHealth = 50;
+            float ratio = 10f / maxHealth;
+
+            int healthBarLength = (int) (myMinigunner.health * ratio);
+
+
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorGreen, 1, healthBarLength);
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorGreen, 1, healthBarLength);
+
+            rectangle.SetData(data);
+            return rectangle;
+
+        }
+
+
+
         public void Update(GameTime gameTime)
         {
-
+            healthBar = InitializeHealthBar();
         }
 
         internal void Draw(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
@@ -108,8 +166,15 @@ namespace mike_and_conquer.gameview
             spriteBatch.Draw(texture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
             if (drawBoundingRectangle)
             {
+                
                 spriteBatch.Draw(boundingRectangle, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
             }
+
+            Vector2 healthBarPosition = position;
+            // healthBarPosition.X = position.X + (texture.Width - 30);
+            healthBarPosition.X = position.X + 10;
+            healthBarPosition.Y = position.Y - 1;
+            spriteBatch.Draw(healthBar, healthBarPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
         }
 
 

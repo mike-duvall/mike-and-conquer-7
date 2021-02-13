@@ -32,7 +32,6 @@ using MCVSelectionBox = mike_and_conquer.gameview.MCVSelectionBox;
 
 
 
-
 namespace mike_and_conquer.main
 {
 

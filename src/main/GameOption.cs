@@ -11,11 +11,11 @@ namespace mike_and_conquer.main
         public bool DrawTerrainBorder = false;
         public bool DrawBlockingTerrainBorder = false;
 
-        // public bool IsFullScreen = true;
-        public bool IsFullScreen = false;
+        public bool IsFullScreen = true;
+        // public bool IsFullScreen = false;
 
-        // public bool DrawShroud = true;
-        public bool DrawShroud = false;
+        public bool DrawShroud = true;
+        // public bool DrawShroud = false;
 
         public float MapZoomLevel = 1.0f;
         // public float MapZoomLevel = 3.0f;

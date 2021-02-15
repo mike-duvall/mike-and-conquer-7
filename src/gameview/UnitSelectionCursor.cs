@@ -2,7 +2,6 @@
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.main;
-using ShpTDSprite = mike_and_conquer.openra.ShpTDSprite;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 using Color = Microsoft.Xna.Framework.Color;
@@ -26,6 +25,9 @@ namespace mike_and_conquer.gameview
         private Texture2D healthBar;
         private Texture2D healthBarShadow;
 
+        Vector2 healthBarPosition;
+
+
         Boolean drawBoundingRectangle;
 
         private Vector2 middleOfSprite;
@@ -36,6 +38,9 @@ namespace mike_and_conquer.gameview
         public const string SHP_FILE_NAME = "select.shp";
         public const string SPRITE_KEY = "UnitSelectionCursor";
         public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
+
+
+
 
         private UnitSelectionCursor()
         {
@@ -52,8 +57,8 @@ namespace mike_and_conquer.gameview
 
             position = new Vector2(x, y);
             boundingRectangle = InitializeBoundingRectangle();
-            // healthBar = InitializeHealthBar();
             healthBar = null;
+
 
             middleOfSprite = new Vector2();
             middleOfSprite.X = 15;
@@ -152,6 +157,12 @@ namespace mike_and_conquer.gameview
             fillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorGreen, 1, healthBarLength);
 
             rectangle.SetData(data);
+
+            healthBarPosition = position;
+            healthBarPosition.X = position.X + 10;
+            healthBarPosition.Y = position.Y - 1;
+
+
             return rectangle;
 
         }
@@ -179,6 +190,7 @@ namespace mike_and_conquer.gameview
         public void Update(GameTime gameTime)
         {
             healthBar = InitializeHealthBar();
+
         }
 
         internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
@@ -190,9 +202,6 @@ namespace mike_and_conquer.gameview
                 spriteBatch.Draw(boundingRectangle, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
             }
 
-            Vector2 healthBarPosition = position;
-            healthBarPosition.X = position.X + 10;
-            healthBarPosition.Y = position.Y - 1;
             spriteBatch.Draw(healthBar, healthBarPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
         }
 
@@ -200,12 +209,10 @@ namespace mike_and_conquer.gameview
 
         internal void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
         {
-            Vector2 healthBarPosition = position;
-            // healthBarPosition.X = position.X + (texture.Width - 30);
-            healthBarPosition.X = position.X + 10;
-            healthBarPosition.Y = position.Y - 1;
             spriteBatch.Draw(healthBarShadow, healthBarPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
         }
+
+
 
     }
 

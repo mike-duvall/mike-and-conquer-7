@@ -174,10 +174,7 @@ namespace mike_and_conquer.gamesprite
             Vector2 snappedPositionInWordCoordinates = new Vector2(roundedX, roundedY);
 
             spriteBatch.Draw(shadowOnlyTexture, snappedPositionInWordCoordinates, null, Color.White, 0f, middleOfSpriteInSpriteCoordinates, defaultScale, SpriteEffects.None, layerDepth);
-
-
         }
-
 
         // How to draw shadows:
         // X       Write method that returns current tile, given a point on the map

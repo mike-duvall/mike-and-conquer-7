@@ -1124,7 +1124,10 @@ namespace mike_and_conquer.gameview
                 nodTurretView.Update(gameTime);
             }
 
-
+            foreach (MinigunnerView minigunnerView in gdiMinigunnerViewList)
+            {
+                minigunnerView.Update(gameTime);
+            }
         }
 
 
@@ -1179,13 +1182,18 @@ namespace mike_and_conquer.gameview
             }
             else if (oldKeyboardState.IsKeyUp(Keys.OemPlus) && newKeyboardState.IsKeyDown(Keys.OemPlus))
             {
-                float newZoom = this.mapViewportCamera.Zoom + zoomChangeAmount;
-                this.mapViewportCamera.Zoom = newZoom;
+                // TODO:  This is bogus having to update both the option and the actual camera zoom to the new zoom level
+                // Should be hidden behind some kind setter method?
+                float newZoom = GameOptions.instance.MapZoomLevel + zoomChangeAmount;
+                GameOptions.instance.MapZoomLevel = newZoom;
+                this.mapViewportCamera.Zoom = GameOptions.instance.MapZoomLevel;
             }
             else if (oldKeyboardState.IsKeyUp(Keys.OemMinus) && newKeyboardState.IsKeyDown(Keys.OemMinus))
             {
-                float newZoom = this.mapViewportCamera.Zoom - zoomChangeAmount;
-                this.mapViewportCamera.Zoom = newZoom;
+                float newZoom = GameOptions.instance.MapZoomLevel - zoomChangeAmount;
+                GameOptions.instance.MapZoomLevel = newZoom;
+                this.mapViewportCamera.Zoom = GameOptions.instance.MapZoomLevel;
+
             }
 
             SnapMapCameraToBounds();

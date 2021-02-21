@@ -50,10 +50,12 @@ namespace mike_and_conquer.gameview
         public UnitSelectionCursor(Minigunner minigunner, int x, int y)
         {
             this.myMinigunner = minigunner;
-            List<UnitFrame> unitFrameList = MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
-            UnitFrame theUnitFrame = unitFrameList[0];
+            // List<UnitFrame> unitFrameList = MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
+            // UnitFrame theUnitFrame = unitFrameList[0];
+            //
+            // this.texture = theUnitFrame.Texture;
 
-            this.texture = theUnitFrame.Texture;
+            this.texture = InitializeSelectionCursor();
 
             position = new Vector2(x, y);
             boundingRectangle = InitializeBoundingRectangle();
@@ -159,8 +161,9 @@ namespace mike_and_conquer.gameview
             rectangle.SetData(data);
 
             healthBarPosition = position;
-            healthBarPosition.X = position.X + 10;
-            healthBarPosition.Y = position.Y - 1;
+            healthBarPosition.X = position.X + 9;
+            // healthBarPosition.Y = position.Y - 1;
+            healthBarPosition.Y = position.Y;
 
 
             return rectangle;
@@ -187,15 +190,75 @@ namespace mike_and_conquer.gameview
         }
 
 
+        internal Texture2D InitializeSelectionCursor()
+        {
+
+            Color cncPalleteColorWhite = new Color(255, 255, 255, 255);
+
+            int width = 13;
+            int height = 16;
+
+            Texture2D rectangle =
+                new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, width, height);
+            
+            Color[] data = new Color[rectangle.Width * rectangle.Height];
+
+            // int start = 1;
+            // int end = 3;
+            // top left
+
+            int leftStart = 0;
+
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorWhite, leftStart, leftStart + 2);
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorWhite, leftStart, leftStart );
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorWhite, leftStart, leftStart );
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorWhite, leftStart, leftStart );
+
+
+            // bottom left
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 9, cncPalleteColorWhite, leftStart, leftStart );
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 10, cncPalleteColorWhite, leftStart, leftStart );
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 11, cncPalleteColorWhite, leftStart, leftStart );
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 12, cncPalleteColorWhite, leftStart, leftStart + 2);
+
+            int rightStart = 10;
+
+            int rightEdge = rightStart + 2;
+
+            // top right
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorWhite, rightStart, rightEdge);
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorWhite, rightEdge, rightEdge);
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorWhite, rightEdge, rightEdge);
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorWhite, rightEdge, rightEdge);
+
+
+            // bottom right
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 9, cncPalleteColorWhite, rightEdge, rightEdge);
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 10, cncPalleteColorWhite, rightEdge, rightEdge);
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 11, cncPalleteColorWhite, rightEdge, rightEdge);
+            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 12, cncPalleteColorWhite, rightStart, rightEdge);
+
+
+            rectangle.SetData(data);
+
+            return rectangle;
+
+        }
+
+
+
         public void Update(GameTime gameTime)
         {
             healthBar = InitializeHealthBar();
+
 
         }
 
         internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
         {
-            spriteBatch.Draw(texture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
+            // Vector2 selectionCursorPosition = new Vector2(position.X + 10, position.Y + 3);
+            Vector2 selectionCursorPosition = new Vector2(position.X + 9, position.Y + 4);
+            spriteBatch.Draw(texture, selectionCursorPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
             if (drawBoundingRectangle)
             {
                 

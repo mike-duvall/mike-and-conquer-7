@@ -1288,7 +1288,6 @@ namespace mike_and_conquer.gameview
             return positionInCameraViewportCoordinates;
         }
 
-
         public Point ConvertScreenLocationToWorldLocation(Point screenLocation)
         {
             Vector2 screenLocationAsPoint = PointUtil.ConvertPointToVector2(screenLocation);

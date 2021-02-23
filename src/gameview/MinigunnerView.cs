@@ -79,8 +79,7 @@ namespace mike_and_conquer.gameview
             }
 
 
-            // TODO:  move everything put actual drawing to Update() method
-            unitSelectionCursor.position = new Vector2(myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X, myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
+            // TODO:  move everything but actual drawing to Update() method
             if (myMinigunner.state == Minigunner.State.IDLE)
             {
                 unitSprite.SetCurrentAnimationSequenceIndex((int)AnimationSequences.STANDING_STILL);

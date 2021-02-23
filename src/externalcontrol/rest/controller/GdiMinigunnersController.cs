@@ -44,6 +44,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             return restMinigunners;
         }
 
+
         public IHttpActionResult Get(int id)
         {
             // Bogus:  Even though we are getting this minigunner by event, we get a reference

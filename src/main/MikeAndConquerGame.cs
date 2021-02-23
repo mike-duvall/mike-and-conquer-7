@@ -348,11 +348,11 @@ namespace mike_and_conquer.main
                 raiSpriteFrameManager.GetSpriteFramesForUnit(PartiallyVisibileMapTileMask.SHP_FILE_NAME),
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
 
-            raiSpriteFrameManager.LoadAllTexturesFromShpFile(UnitSelectionCursor.SHP_FILE_NAME);
-            spriteSheet.LoadUnitFramesFromSpriteFrames(
-                UnitSelectionCursor.SPRITE_KEY,
-                raiSpriteFrameManager.GetSpriteFramesForUnit(UnitSelectionCursor.SHP_FILE_NAME),
-                UnitSelectionCursor.SHP_FILE_COLOR_MAPPER);
+            // raiSpriteFrameManager.LoadAllTexturesFromShpFile(UnitSelectionCursor.SHP_FILE_NAME);
+            // spriteSheet.LoadUnitFramesFromSpriteFrames(
+            //     UnitSelectionCursor.SPRITE_KEY,
+            //     raiSpriteFrameManager.GetSpriteFramesForUnit(UnitSelectionCursor.SHP_FILE_NAME),
+            //     UnitSelectionCursor.SHP_FILE_COLOR_MAPPER);
 
         }
 

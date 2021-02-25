@@ -1128,6 +1128,11 @@ namespace mike_and_conquer.gameview
             {
                 minigunnerView.Update(gameTime);
             }
+
+            if (mcvView != null)
+            {
+                mcvView.Update(gameTime);
+            }
         }
 
 

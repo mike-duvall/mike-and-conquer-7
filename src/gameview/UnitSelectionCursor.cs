@@ -1,4 +1,5 @@
 ﻿
+using System;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
 using mike_and_conquer.main;
@@ -16,11 +17,12 @@ namespace mike_and_conquer.gameview
 
     public class UnitSelectionCursor
     {
-        private Vector2 position;
+        // private Vector2 position;
 
         Texture2D boundingRectangle;
 
         private Minigunner myMinigunner;
+        private MCV myMCV;
         private Texture2D selectionCursorTexture;
         private Vector2 selectionCursorPosition;
 
@@ -41,19 +43,42 @@ namespace mike_and_conquer.gameview
 
 
 
-
         private UnitSelectionCursor()
         {
+
+        }
+
+
+        public UnitSelectionCursor(MCV mcv, int x, int y)
+        {
+            this.myMinigunner = null;
+            this.myMCV = mcv;
+
+            this.selectionCursorTexture = InitializeSelectionCursor();
+
+            // position = new Vector2(x, y);
+            boundingRectangle = InitializeBoundingRectangle();
+            healthBarTexture = null;
+
+
+            middleOfSprite = new Vector2();
+            middleOfSprite.X = 15;
+            middleOfSprite.Y = 14;
+
+            drawBoundingRectangle = false;
+
+            healthBarShadowTexture = InitializeHealthBarShadow();
 
         }
 
         public UnitSelectionCursor(Minigunner minigunner, int x, int y)
         {
             this.myMinigunner = minigunner;
+            this.myMCV = null;
 
             this.selectionCursorTexture = InitializeSelectionCursor();
 
-            position = new Vector2(x, y);
+            // position = new Vector2(x, y);
             boundingRectangle = InitializeBoundingRectangle();
             healthBarTexture = null;
 
@@ -125,6 +150,23 @@ namespace mike_and_conquer.gameview
 
         }
 
+
+        private int GetUnitHealth()
+        {
+            if (this.myMCV != null)
+            {
+                return this.myMCV.health;
+            }
+            else if(this.myMinigunner !=null)
+            {
+                return this.myMinigunner.health;
+            }
+            else
+            {
+                throw new Exception("myMCV AND myMinigunner were null");
+            }
+        }
+
         internal Texture2D InitializeHealthBar()
         {
             int healthBarHeight = 4;
@@ -148,16 +190,17 @@ namespace mike_and_conquer.gameview
             int maxHealth = 50;
             float ratio = 10f / maxHealth;
 
-            int healthBarLength = (int) (myMinigunner.health * ratio);
+            // int healthBarLength = (int) (myMinigunner.health * ratio);
+            int healthBarLength = (int)(GetUnitHealth() * ratio);
 
             FillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorGreen, 1, healthBarLength);
             FillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorGreen, 1, healthBarLength);
 
             rectangle.SetData(data);
 
-            healthBarPosition = position;
-            healthBarPosition.X = position.X + 9;
-            healthBarPosition.Y = position.Y;
+            // healthBarPosition = position;
+            // healthBarPosition.X = position.X + 9;
+            // healthBarPosition.Y = position.Y;
 
             return rectangle;
 
@@ -240,9 +283,32 @@ namespace mike_and_conquer.gameview
             healthBarTexture = InitializeHealthBar();
             int selectionCursorXOffset = 9;
             int selectionCursorYOffset = 4;
-            selectionCursorPosition = new Vector2(
-                myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X + selectionCursorXOffset,
-                myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y + selectionCursorYOffset);
+            if (this.myMinigunner != null)
+            {
+                selectionCursorPosition = new Vector2(
+                    myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X + selectionCursorXOffset,
+                    myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y + selectionCursorYOffset);
+
+                healthBarPosition.X = myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X + 9;
+                healthBarPosition.Y = myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y;
+
+            }
+            else if (this.myMCV != null)
+            {
+                selectionCursorPosition = new Vector2(
+                    myMCV.GameWorldLocation.WorldCoordinatesAsVector2.X + selectionCursorXOffset,
+                    myMCV.GameWorldLocation.WorldCoordinatesAsVector2.Y + selectionCursorYOffset);
+
+                healthBarPosition.X = myMCV.GameWorldLocation.WorldCoordinatesAsVector2.X + 9;
+                healthBarPosition.Y = myMCV.GameWorldLocation.WorldCoordinatesAsVector2.Y;
+            }
+            else
+            {
+                throw new Exception("myMCV AND myMinigunner were null");
+            }
+
+
+
 
         }
 
@@ -250,11 +316,11 @@ namespace mike_and_conquer.gameview
         {
 
             spriteBatch.Draw(selectionCursorTexture, selectionCursorPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
-            if (drawBoundingRectangle)
-            {
-                
-                spriteBatch.Draw(boundingRectangle, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
-            }
+            // if (drawBoundingRectangle)
+            // {
+            //     
+            //     spriteBatch.Draw(boundingRectangle, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
+            // }
 
             spriteBatch.Draw(healthBarTexture, healthBarPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
         }

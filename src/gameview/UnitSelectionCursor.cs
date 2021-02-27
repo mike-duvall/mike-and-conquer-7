@@ -167,7 +167,28 @@ namespace mike_and_conquer.gameview
             }
         }
 
+
         internal Texture2D InitializeHealthBar()
+        {
+
+            // TODO free old textures if they exist?
+            if (this.myMCV != null)
+            {
+                return InitializeHealthBarForMCV();
+            }
+            else if (this.myMinigunner != null)
+            {
+                return InitializeHealthBarForMinigunner();
+            }
+            else
+            {
+                throw new Exception("myMCV AND myMinigunner were null");
+            }
+
+        }
+
+
+        private Texture2D InitializeHealthBarForMinigunner()
         {
             int healthBarHeight = 4;
             int healthBarWidth = 12;  // This is hard coded for minigunner
@@ -198,13 +219,48 @@ namespace mike_and_conquer.gameview
 
             rectangle.SetData(data);
 
-            // healthBarPosition = position;
-            // healthBarPosition.X = position.X + 9;
-            // healthBarPosition.Y = position.Y;
+            return rectangle;
+        }
+
+
+
+
+        private Texture2D InitializeHealthBarForMCV()
+        {
+            int healthBarHeight = 4;
+            int healthBarWidth = 36;  // This is hard coded for minigunner
+
+            Texture2D rectangle =
+                new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, healthBarWidth, healthBarHeight);
+
+            Color[] data = new Color[rectangle.Width * rectangle.Height];
+
+            Color cncPalleteColorBlack = new Color(0, 255, 255, 255);
+            Color cncPalleteColorGreen = new Color(4, 255, 255, 255);
+
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorBlack);
+
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorBlack);
+            
+            FillVerticalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorBlack);
+            FillVerticalLine(data, rectangle.Width, rectangle.Height, healthBarWidth - 1, cncPalleteColorBlack);
+
+            int nonBorderHealthBarWidth = healthBarWidth - 2;
+            int maxHealth = 1000;
+            // float ratio = 10f / maxHealth;
+            float ratio = (float) nonBorderHealthBarWidth / (float) maxHealth;
+            int unitHealth = GetUnitHealth();
+            int healthBarLength = (int) (unitHealth * ratio);
+            
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorGreen, 1, healthBarLength);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorGreen, 1, healthBarLength);
+
+            rectangle.SetData(data);
 
             return rectangle;
 
         }
+
 
         internal Texture2D InitializeHealthBarShadow()
         {
@@ -226,7 +282,7 @@ namespace mike_and_conquer.gameview
         }
 
 
-        internal Texture2D InitializeSelectionCursor()
+        internal Texture2D InitializeSelectionCursorForMinigunner()
         {
 
             Color cncPalleteColorWhite = new Color(255, 255, 255, 255);
@@ -274,6 +330,99 @@ namespace mike_and_conquer.gameview
             rectangle.SetData(data);
 
             return rectangle;
+        }
+
+
+        internal Texture2D InitializeSelectionCursorForMCV()
+        {
+
+            Color cncPalleteColorWhite = new Color(255, 255, 255, 255);
+
+            // int width = 13;
+            // int height = 16;
+            int width = 37;
+            int height = 38;
+            // TODO why 37 by 38 instead of 37 by 37?  same for miniguner?
+
+
+            Texture2D rectangle =
+                new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, width, height);
+
+            Color[] data = new Color[rectangle.Width * rectangle.Height];
+
+            int leftStart = 0;
+
+            // top left
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorWhite, leftStart, leftStart + 7);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorWhite, leftStart, leftStart);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorWhite, leftStart, leftStart);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorWhite, leftStart, leftStart);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 4, cncPalleteColorWhite, leftStart, leftStart);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 5, cncPalleteColorWhite, leftStart, leftStart);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 6, cncPalleteColorWhite, leftStart, leftStart);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 7, cncPalleteColorWhite, leftStart, leftStart);
+
+
+            // bottom left
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 25, cncPalleteColorWhite, leftStart, leftStart);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 26, cncPalleteColorWhite, leftStart, leftStart);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 27, cncPalleteColorWhite, leftStart, leftStart);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 28, cncPalleteColorWhite, leftStart, leftStart);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 29, cncPalleteColorWhite, leftStart, leftStart);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 30, cncPalleteColorWhite, leftStart, leftStart);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 31, cncPalleteColorWhite, leftStart, leftStart);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 32, cncPalleteColorWhite, leftStart, leftStart + 7);
+
+
+            int rightStart = 29;
+            
+            int rightEdge = rightStart + 7;
+            
+            // top right
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorWhite, rightStart, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorWhite, rightEdge, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorWhite, rightEdge, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorWhite, rightEdge, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 4, cncPalleteColorWhite, rightEdge, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 5, cncPalleteColorWhite, rightEdge, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 6, cncPalleteColorWhite, rightEdge, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 7, cncPalleteColorWhite, rightEdge, rightEdge);
+
+
+            // bottom right
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 25, cncPalleteColorWhite, rightEdge, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 26, cncPalleteColorWhite, rightEdge, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 27, cncPalleteColorWhite, rightEdge, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 28, cncPalleteColorWhite, rightEdge, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 29, cncPalleteColorWhite, rightEdge, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 30, cncPalleteColorWhite, rightEdge, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 31, cncPalleteColorWhite, rightEdge, rightEdge);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 32, cncPalleteColorWhite, rightStart, rightEdge);
+
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 12, cncPalleteColorWhite, rightStart, rightEdge);
+
+
+            rectangle.SetData(data);
+
+            return rectangle;
+        }
+
+
+        internal Texture2D InitializeSelectionCursor()
+        {
+
+            if (this.myMCV != null)
+            {
+                return InitializeSelectionCursorForMCV();
+            }
+            else if (this.myMinigunner != null)
+            {
+                return InitializeSelectionCursorForMinigunner();
+            }
+            else
+            {
+                throw new Exception("myMCV AND myMinigunner were null");
+            }
 
         }
 
@@ -281,10 +430,11 @@ namespace mike_and_conquer.gameview
         public void Update(GameTime gameTime)
         {
             healthBarTexture = InitializeHealthBar();
-            int selectionCursorXOffset = 9;
-            int selectionCursorYOffset = 4;
             if (this.myMinigunner != null)
             {
+                int selectionCursorXOffset = 9;
+                int selectionCursorYOffset = 4;
+
                 selectionCursorPosition = new Vector2(
                     myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X + selectionCursorXOffset,
                     myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y + selectionCursorYOffset);
@@ -295,12 +445,15 @@ namespace mike_and_conquer.gameview
             }
             else if (this.myMCV != null)
             {
+                int selectionCursorXOffset = 9;
+                int selectionCursorYOffset = 0;
+
                 selectionCursorPosition = new Vector2(
-                    myMCV.GameWorldLocation.WorldCoordinatesAsVector2.X + selectionCursorXOffset,
+                    myMCV.GameWorldLocation.WorldCoordinatesAsVector2.X + selectionCursorXOffset - 12,
                     myMCV.GameWorldLocation.WorldCoordinatesAsVector2.Y + selectionCursorYOffset);
 
-                healthBarPosition.X = myMCV.GameWorldLocation.WorldCoordinatesAsVector2.X + 9;
-                healthBarPosition.Y = myMCV.GameWorldLocation.WorldCoordinatesAsVector2.Y;
+                healthBarPosition.X = myMCV.GameWorldLocation.WorldCoordinatesAsVector2.X - 3;
+                healthBarPosition.Y = myMCV.GameWorldLocation.WorldCoordinatesAsVector2.Y - 4;
             }
             else
             {

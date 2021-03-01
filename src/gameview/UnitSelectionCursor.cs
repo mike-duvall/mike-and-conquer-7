@@ -131,6 +131,50 @@ namespace mike_and_conquer.gameview
         }
 
 
+        void DrawHorizontalLine(Color[] data, Color color, int width, int height, int startX, int startY, int length)
+        {
+            if (startX + length > width)
+            {
+                throw new Exception("Attempt to create line outside bounds of texture width");
+            }
+            int beginIndex = startX + (width * startY);
+        
+            for (int i = beginIndex; i < beginIndex + length; i++)
+            {
+                data[i] = color;
+            }
+        
+        }
+
+        void DrawVerticalLine(Color[] data, Color color, int width, int height, int startX, int startY, int length)
+        {
+
+            int dataIndex = startX + (width * startY);
+
+
+            for (int i = 0; i < length; i++)
+            {
+                data[dataIndex] = color;
+                dataIndex += width;
+            }
+
+            // if (startX + length > width)
+            // {
+            //     throw new Exception("Attempt to create line outside bounds of texture width");
+            // }
+            // int beginIndex = startX + (width * startY);
+            //
+            // for (int i = beginIndex; i < beginIndex + length; i++)
+            // {
+            //     data[i] = color;
+            // }
+
+        }
+
+
+
+
+
         internal Texture2D InitializeBoundingRectangle()
         {
             Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, selectionCursorTexture.Width, selectionCursorTexture.Height);
@@ -341,7 +385,7 @@ namespace mike_and_conquer.gameview
             // int width = 13;
             // int height = 16;
             int width = 37;
-            int height = 38;
+            int height = 33;
             // TODO why 37 by 38 instead of 37 by 37?  same for miniguner?
 
 
@@ -350,56 +394,102 @@ namespace mike_and_conquer.gameview
 
             Color[] data = new Color[rectangle.Width * rectangle.Height];
 
-            int leftStart = 0;
+            int startX = 0;
+            int startY = 0;
+            int length = 37;
 
+            // DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
+
+            // startY = 32;
+            // DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
+            //
+            //
+            // startX = 1;
+            // startY = 30;
+            // length = 4;
+            //
+            // DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
+
+
+            // int leftStart = 0;
+            //
             // top left
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorWhite, leftStart, leftStart + 7);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorWhite, leftStart, leftStart);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorWhite, leftStart, leftStart);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorWhite, leftStart, leftStart);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 4, cncPalleteColorWhite, leftStart, leftStart);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 5, cncPalleteColorWhite, leftStart, leftStart);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 6, cncPalleteColorWhite, leftStart, leftStart);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 7, cncPalleteColorWhite, leftStart, leftStart);
 
-
+            length = 8;
+            DrawHorizontalLine(data,cncPalleteColorWhite,width,height,startX,startY, length);
+            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorWhite, leftStart, leftStart + 7);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorWhite, leftStart, leftStart);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorWhite, leftStart, leftStart);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorWhite, leftStart, leftStart);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 4, cncPalleteColorWhite, leftStart, leftStart);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 5, cncPalleteColorWhite, leftStart, leftStart);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 6, cncPalleteColorWhite, leftStart, leftStart);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 7, cncPalleteColorWhite, leftStart, leftStart);
+            //
+            //
             // bottom left
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 25, cncPalleteColorWhite, leftStart, leftStart);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 26, cncPalleteColorWhite, leftStart, leftStart);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 27, cncPalleteColorWhite, leftStart, leftStart);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 28, cncPalleteColorWhite, leftStart, leftStart);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 29, cncPalleteColorWhite, leftStart, leftStart);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 30, cncPalleteColorWhite, leftStart, leftStart);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 31, cncPalleteColorWhite, leftStart, leftStart);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 32, cncPalleteColorWhite, leftStart, leftStart + 7);
 
+            startY = 25;
+            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
 
-            int rightStart = 29;
-            
-            int rightEdge = rightStart + 7;
-            
+            startY = 32;
+            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
+
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 25, cncPalleteColorWhite, leftStart, leftStart);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 26, cncPalleteColorWhite, leftStart, leftStart);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 27, cncPalleteColorWhite, leftStart, leftStart);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 28, cncPalleteColorWhite, leftStart, leftStart);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 29, cncPalleteColorWhite, leftStart, leftStart);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 30, cncPalleteColorWhite, leftStart, leftStart);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 31, cncPalleteColorWhite, leftStart, leftStart);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 32, cncPalleteColorWhite, leftStart, leftStart + 7);
+            //
+            //
+            // int rightStart = 29;
+            //
+            // int rightEdge = rightStart + 7;
+            //
             // top right
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorWhite, rightStart, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorWhite, rightEdge, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorWhite, rightEdge, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorWhite, rightEdge, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 4, cncPalleteColorWhite, rightEdge, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 5, cncPalleteColorWhite, rightEdge, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 6, cncPalleteColorWhite, rightEdge, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 7, cncPalleteColorWhite, rightEdge, rightEdge);
 
+            
+            startX = 29;
+            startY = 0;
+            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
 
+            startX = 36;
+            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
+
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorWhite, rightStart, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorWhite, rightEdge, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorWhite, rightEdge, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorWhite, rightEdge, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 4, cncPalleteColorWhite, rightEdge, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 5, cncPalleteColorWhite, rightEdge, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 6, cncPalleteColorWhite, rightEdge, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 7, cncPalleteColorWhite, rightEdge, rightEdge);
+            //
+            //
             // bottom right
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 25, cncPalleteColorWhite, rightEdge, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 26, cncPalleteColorWhite, rightEdge, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 27, cncPalleteColorWhite, rightEdge, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 28, cncPalleteColorWhite, rightEdge, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 29, cncPalleteColorWhite, rightEdge, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 30, cncPalleteColorWhite, rightEdge, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 31, cncPalleteColorWhite, rightEdge, rightEdge);
-            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 32, cncPalleteColorWhite, rightStart, rightEdge);
 
-            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 12, cncPalleteColorWhite, rightStart, rightEdge);
+            startY = 25;
+            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
+
+            startX = 29;
+            startY = 32;
+            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
+
+
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 25, cncPalleteColorWhite, rightEdge, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 26, cncPalleteColorWhite, rightEdge, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 27, cncPalleteColorWhite, rightEdge, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 28, cncPalleteColorWhite, rightEdge, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 29, cncPalleteColorWhite, rightEdge, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 30, cncPalleteColorWhite, rightEdge, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 31, cncPalleteColorWhite, rightEdge, rightEdge);
+            // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 32, cncPalleteColorWhite, rightStart, rightEdge);
+            //
+            // // FillHorizontalLine(data, rectangle.Width, rectangle.Height, 12, cncPalleteColorWhite, rightStart, rightEdge);
 
 
             rectangle.SetData(data);

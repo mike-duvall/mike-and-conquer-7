@@ -216,6 +216,7 @@ namespace mike_and_conquer.gameview
         {
 
             // TODO free old textures if they exist?
+
             if (this.myMCV != null)
             {
                 return InitializeHealthBarForMCV();
@@ -361,6 +362,8 @@ namespace mike_and_conquer.gameview
             startX = 10 + horizontalLength - 1;
             DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
 
+
+
             // bottom right
             startY = 9;
             DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
@@ -446,6 +449,10 @@ namespace mike_and_conquer.gameview
 
         public void Update(GameTime gameTime)
         {
+            if (healthBarTexture != null)
+            {
+                healthBarTexture.Dispose();
+            }
             healthBarTexture = InitializeHealthBar();
             if (this.myMinigunner != null)
             {

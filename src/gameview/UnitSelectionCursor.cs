@@ -330,59 +330,32 @@ namespace mike_and_conquer.gameview
         internal Texture2D InitializeSelectionCursorForMinigunner()
         {
 
-            Color cncPalleteColorWhite = new Color(255, 255, 255, 255);
-
             int width = 13;
             int height = 13;
 
-            Texture2D rectangle =
-                new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, width, height);
-            
-            Color[] data = new Color[rectangle.Width * rectangle.Height];
-
-            int startX = 0;
-            int startY = 0;
             int horizontalLength = 3;
             int verticalLength = 4;
 
-            // top left
-            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, horizontalLength);
-            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
-
-            // bottom left
-            startY = 9;
-            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
-            startY = startY + verticalLength - 1;
-            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, horizontalLength);
-
-            // top right
-            startX = 10;
-            startY = 0;
-            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, horizontalLength);
-            startX = 10 + horizontalLength - 1;
-            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
-
-
-
-            // bottom right
-            startY = 9;
-            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
-            startX = startX - horizontalLength + 1;
-            startY = startY + verticalLength - 1;
-            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, horizontalLength);
-
-            rectangle.SetData(data);
-
-            return rectangle;
+            return CreateUnitSelectionTexture(width, height, horizontalLength, verticalLength);
         }
+
 
 
         internal Texture2D InitializeSelectionCursorForMCV()
         {
-            Color cncPalleteColorWhite = new Color(255, 255, 255, 255);
-
             int width = 37;
             int height = 33;
+
+            int horizontalLength = 8;
+            int verticalLength = 8;
+
+            return CreateUnitSelectionTexture(width, height, horizontalLength, verticalLength);
+        }
+
+
+        private Texture2D CreateUnitSelectionTexture(int width, int height, int horizontalLength, int verticalLength)
+        {
+            Color cncPalleteColorWhite = new Color(255, 255, 255, 255);
 
             Texture2D rectangle =
                 new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, width, height);
@@ -391,41 +364,38 @@ namespace mike_and_conquer.gameview
 
             int startX = 0;
             int startY = 0;
-            int length = 8;
-
-
 
             // top left
-            DrawHorizontalLine(data,cncPalleteColorWhite, width,height,startX,startY, length);
-            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
+            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, horizontalLength);
+            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
 
             // bottom left
-            startY = 25;
-            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
-
-            startY = 32;
-            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
+            startY = height - verticalLength;
+            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
+            startY = height - 1;
+            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, horizontalLength);
 
             // top right
-            startX = 29;
+            startX = width - horizontalLength;
             startY = 0;
-            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
-
-            startX = 36;
-            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
+            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, horizontalLength);
+            startX = width - 1;
+            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
 
             // bottom right
-            startY = 25;
-            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
+            startY = height - verticalLength;
+            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
+            startX = width - horizontalLength;
 
-            startX = 29;
-            startY = 32;
-            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, length);
+            startY = height - 1;
+            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, horizontalLength);
 
             rectangle.SetData(data);
 
             return rectangle;
         }
+
+
 
 
         internal Texture2D InitializeSelectionCursor()

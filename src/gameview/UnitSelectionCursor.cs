@@ -327,30 +327,56 @@ namespace mike_and_conquer.gameview
         }
 
 
-        internal Texture2D InitializeSelectionCursorForMinigunner()
+        private UnitSize GetMinigunnerUnitSize()
         {
+            return new UnitSize(12, 16);
+        }
 
-            int width = 13;
-            int height = 13;
-
-            int horizontalLength = 3;
-            int verticalLength = 4;
-
-            return CreateUnitSelectionTexture(width, height, horizontalLength, verticalLength);
+        private UnitSize GetMCVUnitSize()
+        {
+            return new UnitSize(36, 36);
         }
 
 
+        // internal Texture2D InitializeSelectionCursorForMinigunner()
+        // {
+        //
+        //     UnitSize unitSize = new UnitSize(12, 16);
+        //
+        //     // int width = 13;
+        //     // int height = 13;
+        //     int width = unitSize.Width + 1;
+        //     int height = unitSize.Height - 4 + 1;
+        //
+        //     // int horizontalLength = 3;
+        //     // int verticalLength = 4;
+        //     int horizontalLength = (unitSize.Width / 5) + 1;
+        //     int verticalLength = (unitSize.Height / 5) + 1;
+        //
+        //
+        //     return CreateUnitSelectionTexture(width, height, horizontalLength, verticalLength);
+        // }
 
-        internal Texture2D InitializeSelectionCursorForMCV()
-        {
-            int width = 37;
-            int height = 33;
 
-            int horizontalLength = 8;
-            int verticalLength = 8;
 
-            return CreateUnitSelectionTexture(width, height, horizontalLength, verticalLength);
-        }
+        // internal Texture2D InitializeSelectionCursorForMCV()
+        // {
+        //     UnitSize unitSize = new UnitSize(36, 36);
+        //
+        //     // int width = 37;
+        //     // int height = 33;
+        //     int width = unitSize.Width + 1;
+        //     int height = unitSize.Height - 4 + 1;
+        //
+        //
+        //     // int horizontalLength = 8;
+        //     // int verticalLength = 8;
+        //     int horizontalLength = (unitSize.Width / 5) + 1;
+        //     int verticalLength = (unitSize.Height / 5) + 1;
+        //
+        //
+        //     return CreateUnitSelectionTexture(width, height, horizontalLength, verticalLength);
+        // }
 
 
         private Texture2D CreateUnitSelectionTexture(int width, int height, int horizontalLength, int verticalLength)
@@ -400,19 +426,32 @@ namespace mike_and_conquer.gameview
 
         internal Texture2D InitializeSelectionCursor()
         {
+            UnitSize unitSize = null;
 
             if (this.myMCV != null)
             {
-                return InitializeSelectionCursorForMCV();
+                // return InitializeSelectionCursorForMCV();
+                unitSize = GetMCVUnitSize();
+
+
             }
             else if (this.myMinigunner != null)
             {
-                return InitializeSelectionCursorForMinigunner();
+                // return InitializeSelectionCursorForMinigunner();
+                unitSize = GetMinigunnerUnitSize();
             }
             else
             {
                 throw new Exception("myMCV AND myMinigunner were null");
             }
+
+            int width = unitSize.Width + 1;
+            int height = unitSize.Height - 4 + 1;
+
+            int horizontalLength = (unitSize.Width / 5) + 1;
+            int verticalLength = (unitSize.Height / 5) + 1;
+
+            return CreateUnitSelectionTexture(width, height, horizontalLength, verticalLength);
 
         }
 

@@ -98,6 +98,7 @@
     <Compile Include="src\gameobjects\TerrainItemDescriptor.cs" />
     <Compile Include="src\gameobjects\TerrainItem.cs" />
     <Compile Include="src\gameobjects\Sandbag.cs" />
+    <Compile Include="src\gameobjects\UnitSize.cs" />
     <Compile Include="src\gamesprite\NodSecondaryShpFileColorMapper.cs" />
     <Compile Include="src\gamesprite\PartiallyVisibileMapTileMask.cs" />
     <Compile Include="src\gamesprite\SidebarBuildIconSprite.cs" />

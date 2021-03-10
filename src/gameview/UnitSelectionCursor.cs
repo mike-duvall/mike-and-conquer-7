@@ -1,7 +1,9 @@
 ﻿
 using System;
+using Microsoft.Xna.Framework;
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
+using mike_and_conquer.gameworld;
 using mike_and_conquer.main;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
@@ -363,6 +365,81 @@ namespace mike_and_conquer.gameview
 
         }
 
+
+
+        Point GetSelectionCursorOffsetForMinigunner()
+        {
+            return new Point(-6, -10);
+        }
+
+        Point GetSelectionCursorOffsetForMCV()
+        {
+            return new Point(-18, -14);
+        }
+
+
+        private Point GetSelectionCursorOffset()
+        {
+            Point selectionCursorOffset;
+
+            if (this.myMCV != null)
+            {
+                selectionCursorOffset = GetSelectionCursorOffsetForMCV();
+
+
+            }
+            else if (this.myMinigunner != null)
+            {
+                selectionCursorOffset = GetSelectionCursorOffsetForMinigunner();
+            }
+            else
+            {
+                throw new Exception("myMCV AND myMinigunner were null");
+            }
+
+            return selectionCursorOffset;
+
+        }
+
+
+        GameWorldLocation GetGameWorldLocationForMinigunner()
+        {
+            return myMinigunner.GameWorldLocation;
+        }
+
+        GameWorldLocation GetGameWorldLocationForMCV()
+        {
+            return myMCV.GameWorldLocation;
+        }
+
+
+        private GameWorldLocation GetGameWorldLocation()
+        {
+            GameWorldLocation gameWorldLocation;
+
+            if (this.myMCV != null)
+            {
+                gameWorldLocation = GetGameWorldLocationForMCV();
+
+
+            }
+            else if (this.myMinigunner != null)
+            {
+                gameWorldLocation = GetGameWorldLocationForMinigunner();
+            }
+            else
+            {
+                throw new Exception("myMCV AND myMinigunner were null");
+            }
+
+            return gameWorldLocation;
+
+        }
+
+
+
+
+
         public void Update(GameTime gameTime)
         {
 
@@ -371,32 +448,13 @@ namespace mike_and_conquer.gameview
                 healthBarTexture.Dispose();
             }
             healthBarTexture = InitializeHealthBar();
-            if (this.myMinigunner != null)
-            {
-                int selectionCursorXOffset = -6;
-                int selectionCursorYOffset = -10;
 
-                selectionCursorPosition = new Vector2(
-                    myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X + selectionCursorXOffset,
-                    myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y + selectionCursorYOffset);
+            Point selectionCursorOffset = GetSelectionCursorOffset();
+            GameWorldLocation gameWorldLocation = GetGameWorldLocation();
 
-
-            }
-            else if (this.myMCV != null)
-            {
-                int selectionCursorXOffset = -18;
-                int selectionCursorYOffset = -14;
-
-                selectionCursorPosition = new Vector2(
-                    myMCV.GameWorldLocation.WorldCoordinatesAsVector2.X + selectionCursorXOffset,
-                    myMCV.GameWorldLocation.WorldCoordinatesAsVector2.Y + selectionCursorYOffset);
-
-
-            }
-            else
-            {
-                throw new Exception("myMCV AND myMinigunner were null");
-            }
+            selectionCursorPosition = new Vector2(
+                gameWorldLocation.WorldCoordinatesAsVector2.X + selectionCursorOffset.X,
+                gameWorldLocation.WorldCoordinatesAsVector2.Y + selectionCursorOffset.Y);
 
             healthBarPosition = selectionCursorPosition;
             healthBarPosition.Y -= 4;

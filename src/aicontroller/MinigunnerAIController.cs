@@ -34,7 +34,7 @@ namespace mike_and_conquer.aicontroller
 
             foreach (Minigunner nextMinigunner in gdiMinigunners)
             {
-                if (nextMinigunner.health > 0)
+                if (nextMinigunner.Health > 0)
                 {
                     return nextMinigunner;
                 }

@@ -26,6 +26,8 @@ namespace mike_and_conquer.gameview
             this.unitSprite = new UnitSprite(spriteListKey);
             this.unitSprite.drawBoundingRectangle = false;
             this.unitSprite.drawShadow = true;
+
+
             this.unitSelectionCursor = new UnitSelectionCursor(myMinigunner, (int)this.myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X, (int)this.myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
             this.destinationSquare = new DestinationSquare();
             this.drawDestinationSquare = false;
@@ -73,7 +75,7 @@ namespace mike_and_conquer.gameview
 
         internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (myMinigunner.health <= 0)
+            if (myMinigunner.Health <= 0)
             {
                 return;
             }
@@ -107,7 +109,7 @@ namespace mike_and_conquer.gameview
         public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
         {
 
-            if (myMinigunner.health <= 0)
+            if (myMinigunner.Health <= 0)
             {
                 return;
             }

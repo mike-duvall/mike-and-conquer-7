@@ -18,18 +18,18 @@ namespace mike_and_conquer.gameobjects
 { 
 
 
-    public class MCV
+    public class MCV : GameObject
     {
 //        public int id { get; set; }
-        public int health { get; set; }
+        // public int Health { get; set; }
         public bool selected { get; set; }
 
-        private GameWorldLocation gameWorldLocation;
-
-        public GameWorldLocation GameWorldLocation
-        {
-            get { return gameWorldLocation;  }
-        }
+        // private GameWorldLocation gameWorldLocation;
+        //
+        // public GameWorldLocation GameWorldLocation
+        // {
+        //     get { return gameWorldLocation;  }
+        // }
 
         public Point destination {
             get { return new Point(destinationX, destinationY);}
@@ -85,9 +85,15 @@ namespace mike_and_conquer.gameobjects
             this.currentCommand = Command.NONE;
             gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(xInWorldCoordinates, yInWorldCoordinates);
 
-            health = 1000;
-//            id = Minigunner.globalId;
-//            Minigunner.globalId++;
+            // health = 1000;
+            //            id = Minigunner.globalId;
+            //            Minigunner.globalId++;
+
+            this.maxHealth = 1000;
+            this.health = this.maxHealth;
+            this.unitSize = new UnitSize(36, 36);
+            this.selectionCursorOffset = new Point(-18, -14);
+
 
             clickDetectionRectangle = CreateClickDetectionRectangle();
             // movementDistanceEpsilon = movementVelocity + (double).04f;

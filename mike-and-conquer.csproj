@@ -92,6 +92,7 @@
     <Compile Include="src\gameobjects\BuildingPlacementIndicatorTile.cs" />
     <Compile Include="src\gameobjects\GDIConstructionYard.cs" />
     <Compile Include="src\gameobjects\GDIBarracks.cs" />
+    <Compile Include="src\gameobjects\GameObject.cs" />
     <Compile Include="src\gameobjects\MCV.cs" />
     <Compile Include="src\gameobjects\Projectile120mm.cs" />
     <Compile Include="src\gameobjects\NodTurret.cs" />

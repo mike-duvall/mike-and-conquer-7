@@ -22,7 +22,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             restMinigunner.id = minigunner.id;
             restMinigunner.x = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.X;
             restMinigunner.y = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y;
-            restMinigunner.health = minigunner.health;
+            restMinigunner.health = minigunner.Health;
             restMinigunner.selected = minigunner.selected;
             return Ok(restMinigunner);
 
@@ -38,7 +38,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
                 restMinigunner.id = minigunner.id;
                 restMinigunner.x = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.X;
                 restMinigunner.y = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y;
-                restMinigunner.health = minigunner.health;
+                restMinigunner.health = minigunner.Health;
                 return Ok(restMinigunner);
             }
             catch (BadMinigunnerLocationException)

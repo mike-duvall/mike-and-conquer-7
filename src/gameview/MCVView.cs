@@ -80,7 +80,7 @@ namespace mike_and_conquer.gameview
 
         internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (myMCV.health <= 0)
+            if (myMCV.Health <= 0)
             {
                 return;
             }
@@ -105,7 +105,7 @@ namespace mike_and_conquer.gameview
         public void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch)
         {
 
-            if (myMCV.health <= 0)
+            if (myMCV.Health <= 0)
             {
                 return;
             }

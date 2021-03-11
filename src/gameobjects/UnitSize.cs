@@ -1,7 +1,7 @@
 ﻿
 namespace mike_and_conquer.gameobjects
 {
-    class UnitSize
+    public class UnitSize
     {
 
         private int width;

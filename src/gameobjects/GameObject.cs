@@ -33,7 +33,6 @@ namespace mike_and_conquer.gameobjects
         public int MaxHealth
         {
             get { return maxHealth; }
-            // set { maxHealth = value; }
         }
 
         protected UnitSize unitSize;
@@ -44,8 +43,11 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-        protected Point selectionCursorOffset;
 
+        // TODO:  Make this calculated rather than hard coded
+        // Once I have gathered more data for more units
+        // and can figure out the algorithm
+        protected Point selectionCursorOffset;
         public Point SelectionCursorOffset
         {
             get { return selectionCursorOffset; }

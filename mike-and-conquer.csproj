@@ -116,7 +116,6 @@
     <Compile Include="src\gameview\BarracksPlacementIndicatorView.cs" />
     <Compile Include="src\gameview\MapTileShroudMapping.cs" />
     <Compile Include="src\gameview\MCVView.cs" />
-    <Compile Include="src\gameview\MCVSelectionBox.cs" />
     <Compile Include="src\gameview\Projectile120mmView.cs" />
     <Compile Include="src\gameview\NodTurretView.cs" />
     <Compile Include="src\gameview\sidebar\ReadyOverlay.cs" />

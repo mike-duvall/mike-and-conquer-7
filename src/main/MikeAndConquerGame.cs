@@ -28,7 +28,7 @@ using SandbagView = mike_and_conquer.gameview.SandbagView;
 
 
 using Point = Microsoft.Xna.Framework.Point;
-using MCVSelectionBox = mike_and_conquer.gameview.MCVSelectionBox;
+
 
 
 
@@ -390,7 +390,6 @@ namespace mike_and_conquer.main
             spriteSheet.LoadSingleTextureFromFile(MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
             spriteSheet.LoadSingleTextureFromFile(MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
             spriteSheet.LoadSingleTextureFromFile(DestinationSquare.SPRITE_KEY, DestinationSquare.SPRITE_KEY);
-            spriteSheet.LoadSingleTextureFromFile(MCVSelectionBox.SPRITE_KEY, MCVSelectionBox.SPRITE_KEY);
             spriteSheet.LoadSingleTextureFromFile(ReadyOverlay.SPRITE_KEY, ReadyOverlay.SPRITE_KEY);
 
         }

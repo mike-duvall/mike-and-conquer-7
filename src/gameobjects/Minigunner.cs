@@ -24,15 +24,8 @@ namespace mike_and_conquer.gameobjects
     public class Minigunner : GameObject
     {
         public int id { get; set; }
-        // public int health { get; set; }
-        public bool selected { get; set; }
 
-        // private GameWorldLocation gameWorldLocation;
-        //
-        // public GameWorldLocation GameWorldLocation
-        // {
-        //     get { return gameWorldLocation; }
-        // }
+        public bool selected { get; set; }
 
         public Point destination {
             get { return new Point(destinationX, destinationY);}

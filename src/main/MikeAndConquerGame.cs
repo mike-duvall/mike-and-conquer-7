@@ -26,9 +26,7 @@ using GdiMinigunnerView = mike_and_conquer.gameview.GdiMinigunnerView;
 using NodMinigunnerView = mike_and_conquer.gameview.NodMinigunnerView;
 using SandbagView = mike_and_conquer.gameview.SandbagView;
 
-
 using Point = Microsoft.Xna.Framework.Point;
-
 
 
 
@@ -37,7 +35,6 @@ namespace mike_and_conquer.main
 
     public class MikeAndConquerGame : Game
     {
-
 
         //        private float testRotation = 0;
 
@@ -347,12 +344,6 @@ namespace mike_and_conquer.main
             spriteSheet.LoadUnitFramesFromSpriteFrames(PartiallyVisibileMapTileMask.SPRITE_KEY,
                 raiSpriteFrameManager.GetSpriteFramesForUnit(PartiallyVisibileMapTileMask.SHP_FILE_NAME),
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
-
-            // raiSpriteFrameManager.LoadAllTexturesFromShpFile(UnitSelectionCursor.SHP_FILE_NAME);
-            // spriteSheet.LoadUnitFramesFromSpriteFrames(
-            //     UnitSelectionCursor.SPRITE_KEY,
-            //     raiSpriteFrameManager.GetSpriteFramesForUnit(UnitSelectionCursor.SHP_FILE_NAME),
-            //     UnitSelectionCursor.SHP_FILE_COLOR_MAPPER);
 
         }
 

@@ -18,12 +18,8 @@ namespace mike_and_conquer.gameview
 
     public class UnitSelectionCursor
     {
-        // private Vector2 position;
 
         Texture2D boundingRectangle;
-
-        // private Minigunner myMinigunner;
-        // private MCV myMCV;
 
         private GameObject myGameObject;
         private Texture2D selectionCursorTexture;
@@ -39,11 +35,6 @@ namespace mike_and_conquer.gameview
         private Vector2 origin;
 
         float defaultScale = 1;
-
-        // public const string SHP_FILE_NAME = "select.shp";
-        // public const string SPRITE_KEY = "UnitSelectionCursor";
-        // public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
-
 
 
         private UnitSelectionCursor()
@@ -72,6 +63,8 @@ namespace mike_and_conquer.gameview
 
 
 
+        // TODO Delete these Fillxxxx methods
+        // and replace with the Drawxxxx ones
         internal void FillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
         {
             int beginIndex = width * lineIndex;
@@ -160,7 +153,6 @@ namespace mike_and_conquer.gameview
         {
             
             int healthBarHeight = 4;
-            // int healthBarWidth = GetUnitSize().Width;
             int healthBarWidth = myGameObject.UnitSize.Width;
 
             Texture2D rectangle =
@@ -196,7 +188,8 @@ namespace mike_and_conquer.gameview
         internal Texture2D InitializeHealthBarShadow()
         {
             int healthBarHeight = 4;
-            int healthBarWidth = 12;  // This is hard coded for minigunner
+            // int healthBarWidth = 12;  // This is hard coded for minigunner
+            int healthBarWidth = myGameObject.UnitSize.Width;  
 
             Texture2D rectangle =
                 new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, healthBarWidth, healthBarHeight);
@@ -278,9 +271,6 @@ namespace mike_and_conquer.gameview
                 healthBarTexture.Dispose();
             }
             healthBarTexture = InitializeHealthBar();
-
-            // Point selectionCursorOffset = GetSelectionCursorOffset();
-            // GameWorldLocation gameWorldLocation = GetGameWorldLocation();
 
             Point selectionCursorOffset = myGameObject.SelectionCursorOffset;
             GameWorldLocation gameWorldLocation = myGameObject.GameWorldLocation;

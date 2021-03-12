@@ -1,9 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿
 using mike_and_conquer.gameobjects;
 using mike_and_conquer.gamesprite;
-using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 
-using Vector2 = Microsoft.Xna.Framework.Vector2;
+using AnimationSequence = mike_and_conquer.util.AnimationSequence;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
@@ -26,7 +25,6 @@ namespace mike_and_conquer.gameview
             this.unitSprite = new UnitSprite(spriteListKey);
             this.unitSprite.drawBoundingRectangle = false;
             this.unitSprite.drawShadow = true;
-
 
             this.unitSelectionCursor = new UnitSelectionCursor(myMinigunner, (int)this.myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.X, (int)this.myMinigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y);
             this.destinationSquare = new DestinationSquare();

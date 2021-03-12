@@ -12,7 +12,6 @@ namespace mike_and_conquer.gameview
     public class MCVView
     {
         private UnitSprite unitSprite;
-        // private MCVSelectionBox mcvSelectionBox;
         private UnitSelectionCursor unitSelectionCursor;
         private DestinationSquare destinationSquare;
         private MCV myMCV;
@@ -51,33 +50,6 @@ namespace mike_and_conquer.gameview
         }
 
 
-        // internal void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        // {
-        //
-        //
-        //     if(myMCV.health <= 0)
-        //     {
-        //         return;
-        //     }
-        //
-        //     mcvSelectionBox.position = myMCV.GameWorldLocation.WorldCoordinatesAsVector2;
-        //
-        //
-        //     unitSprite.Draw(gameTime, spriteBatch, myMCV.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
-        //
-        //     if (myMCV.selected)
-        //     {
-        //         mcvSelectionBox.Draw(gameTime, spriteBatch);
-        //     }
-        //
-        //     if (this.drawDestinationSquare && this.myMCV.state == MCV.State.MOVING)
-        //     {
-        //         this.destinationSquare.position = this.myMCV.DestinationPosition;
-        //         this.destinationSquare.Draw(gameTime, spriteBatch);
-        //     }
-        //
-        // }
-
         internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (myMCV.Health <= 0)
@@ -85,14 +57,8 @@ namespace mike_and_conquer.gameview
                 return;
             }
 
-            // mcvSelectionBox.position = new Vector2(myMCV.GameWorldLocation.WorldCoordinatesAsVector2.X, myMCV.GameWorldLocation.WorldCoordinatesAsVector2.Y);
-
             unitSprite.DrawNoShadow(gameTime, spriteBatch, myMCV.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
 
-            // if (myMCV.selected)
-            // {
-            //     mcvSelectionBox.Draw(gameTime, spriteBatch);
-            // }
             if (myMCV.selected)
             {
                 unitSelectionCursor.DrawNoShadow(gameTime, spriteBatch, SpriteSortLayers.UNIT_DEPTH);

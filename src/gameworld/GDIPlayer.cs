@@ -104,7 +104,7 @@ namespace mike_and_conquer.gameworld
         {
             foreach (Minigunner nextMinigunner in gdiMinigunnerList)
             {
-                if (nextMinigunner.health > 0)
+                if (nextMinigunner.Health > 0)
                 {
                     nextMinigunner.Update(gameTime);
                 }

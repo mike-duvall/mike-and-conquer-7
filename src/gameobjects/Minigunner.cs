@@ -21,18 +21,11 @@ namespace mike_and_conquer.gameobjects
 
 
 
-    public class Minigunner
+    public class Minigunner : GameObject
     {
         public int id { get; set; }
-        public int health { get; set; }
+
         public bool selected { get; set; }
-
-        private GameWorldLocation gameWorldLocation;
-
-        public GameWorldLocation GameWorldLocation
-        {
-            get { return gameWorldLocation; }
-        }
 
         public Point destination {
             get { return new Point(destinationX, destinationY);}
@@ -87,7 +80,11 @@ namespace mike_and_conquer.gameobjects
             this.currentCommand = Command.NONE;
             gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(xInWorldCoordinates, yInWorldCoordinates);
 
-            health = 50;
+            this.maxHealth = 50;
+            this.health = this.maxHealth;
+            this.unitSize = new UnitSize(12, 16);
+            this.selectionCursorOffset = new Point(-6, -10);
+
 
 
             id = Minigunner.globalId;

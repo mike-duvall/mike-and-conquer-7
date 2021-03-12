@@ -61,7 +61,7 @@ namespace mike_and_conquer.gamestate
             Boolean allDead = true;
             foreach (Minigunner nextMinigunner in GameWorld.instance.NodMinigunnerList)
             {
-                if( nextMinigunner.health > 0)
+                if( nextMinigunner.Health > 0)
                 {
                     allDead = false;
                 }
@@ -79,7 +79,7 @@ namespace mike_and_conquer.gamestate
             Boolean allDead = true;
             foreach (Minigunner nextMinigunner in GameWorld.instance.GDIMinigunnerList)
             {
-                if (nextMinigunner.health > 0)
+                if (nextMinigunner.Health > 0)
                 {
                     allDead = false;
                 }

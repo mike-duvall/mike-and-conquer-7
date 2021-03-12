@@ -23,7 +23,7 @@ namespace mike_and_conquer.gameevent
             GameState newGameState = null;
             Minigunner minigunner = GameWorld.instance.GetGdiMinigunner(minigunnerId);
             // MikeAndConquerGame.instance.log.Information("Before setting health of minigunner, id: " + minigunnerId + ", health=" + health);
-            minigunner.health = health;
+            minigunner.Health = health;
             // MikeAndConquerGame.instance.log.Information("After setting health of minigunner, id: " + minigunnerId + ", health=" + health);
 
             return newGameState;

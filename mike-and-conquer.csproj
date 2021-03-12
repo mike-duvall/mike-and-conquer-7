@@ -92,12 +92,14 @@
     <Compile Include="src\gameobjects\BuildingPlacementIndicatorTile.cs" />
     <Compile Include="src\gameobjects\GDIConstructionYard.cs" />
     <Compile Include="src\gameobjects\GDIBarracks.cs" />
+    <Compile Include="src\gameobjects\GameObject.cs" />
     <Compile Include="src\gameobjects\MCV.cs" />
     <Compile Include="src\gameobjects\Projectile120mm.cs" />
     <Compile Include="src\gameobjects\NodTurret.cs" />
     <Compile Include="src\gameobjects\TerrainItemDescriptor.cs" />
     <Compile Include="src\gameobjects\TerrainItem.cs" />
     <Compile Include="src\gameobjects\Sandbag.cs" />
+    <Compile Include="src\gameobjects\UnitSize.cs" />
     <Compile Include="src\gamesprite\NodSecondaryShpFileColorMapper.cs" />
     <Compile Include="src\gamesprite\PartiallyVisibileMapTileMask.cs" />
     <Compile Include="src\gamesprite\SidebarBuildIconSprite.cs" />
@@ -114,7 +116,6 @@
     <Compile Include="src\gameview\BarracksPlacementIndicatorView.cs" />
     <Compile Include="src\gameview\MapTileShroudMapping.cs" />
     <Compile Include="src\gameview\MCVView.cs" />
-    <Compile Include="src\gameview\MCVSelectionBox.cs" />
     <Compile Include="src\gameview\Projectile120mmView.cs" />
     <Compile Include="src\gameview\NodTurretView.cs" />
     <Compile Include="src\gameview\sidebar\ReadyOverlay.cs" />

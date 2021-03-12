@@ -1128,6 +1128,11 @@ namespace mike_and_conquer.gameview
             {
                 minigunnerView.Update(gameTime);
             }
+
+            if (mcvView != null)
+            {
+                mcvView.Update(gameTime);
+            }
         }
 
 
@@ -1287,7 +1292,6 @@ namespace mike_and_conquer.gameview
             positionInCameraViewportCoordinates.X += sidebarViewport.X;
             return positionInCameraViewportCoordinates;
         }
-
 
         public Point ConvertScreenLocationToWorldLocation(Point screenLocation)
         {

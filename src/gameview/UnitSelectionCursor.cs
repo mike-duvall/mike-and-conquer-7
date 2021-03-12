@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿
+using System;
+using Microsoft.Xna.Framework;
 using mike_and_conquer.gameobjects;
-using mike_and_conquer.gamesprite;
+using mike_and_conquer.gameworld;
 using mike_and_conquer.main;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
@@ -16,30 +18,23 @@ namespace mike_and_conquer.gameview
 
     public class UnitSelectionCursor
     {
-        public Vector2 position { get; set; }
 
-
-        private Minigunner myMinigunner;
-        Texture2D texture;
         Texture2D boundingRectangle;
-        private Texture2D healthBar;
-        private Texture2D healthBarShadow;
 
+        private GameObject myGameObject;
+        private Texture2D selectionCursorTexture;
+        private Vector2 selectionCursorPosition;
+
+
+        private Texture2D healthBarTexture;
+        private Texture2D healthBarShadowTexture;
         Vector2 healthBarPosition;
-
 
         Boolean drawBoundingRectangle;
 
-        private Vector2 middleOfSprite;
+        private Vector2 origin;
 
         float defaultScale = 1;
-
-
-        public const string SHP_FILE_NAME = "select.shp";
-        public const string SPRITE_KEY = "UnitSelectionCursor";
-        public static readonly ShpFileColorMapper SHP_FILE_COLOR_MAPPER = new GdiShpFileColorMapper();
-
-
 
 
         private UnitSelectionCursor()
@@ -47,32 +42,30 @@ namespace mike_and_conquer.gameview
 
         }
 
-        public UnitSelectionCursor(Minigunner minigunner, int x, int y)
+
+        public UnitSelectionCursor(GameObject gameObject, int x, int y)
         {
-            this.myMinigunner = minigunner;
-            List<UnitFrame> unitFrameList = MikeAndConquerGame.instance.SpriteSheet.GetUnitFramesForShpFile(SPRITE_KEY);
-            UnitFrame theUnitFrame = unitFrameList[0];
+            this.myGameObject = gameObject;
+            origin = new Vector2();
+            origin.X = 0;
+            origin.Y = 0;
 
-            this.texture = theUnitFrame.Texture;
+            this.selectionCursorTexture = InitializeSelectionCursor();
 
-            position = new Vector2(x, y);
             boundingRectangle = InitializeBoundingRectangle();
-            healthBar = null;
-
-
-            middleOfSprite = new Vector2();
-            middleOfSprite.X = 15;
-            middleOfSprite.Y = 14;
+            healthBarTexture = null;
 
             drawBoundingRectangle = false;
 
-            healthBarShadow = InitializeHealthBarShadow();
+            healthBarShadowTexture = InitializeHealthBarShadow();
         }
 
 
 
 
-        internal void fillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
+        // TODO Delete these Fillxxxx methods
+        // and replace with the Drawxxxx ones
+        internal void FillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color)
         {
             int beginIndex = width * lineIndex;
             for (int i = beginIndex; i < (beginIndex + width); ++i)
@@ -81,7 +74,7 @@ namespace mike_and_conquer.gameview
             }
         }
 
-        internal void fillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color, int start, int end)
+        internal void FillHorizontalLine(Color[] data, int width, int height, int lineIndex, Color color, int start, int end)
         {
             int beginIndex = width * lineIndex;
             int relativeStart = beginIndex + start;
@@ -98,7 +91,7 @@ namespace mike_and_conquer.gameview
 
 
 
-        internal void fillVerticalLine(Color[] data, int width, int height, int lineIndex, Color color)
+        internal void FillVerticalLine(Color[] data, int width, int height, int lineIndex, Color color)
         {
             int beginIndex = lineIndex;
             for (int i = beginIndex; i < (width * height); i += width)
@@ -108,30 +101,59 @@ namespace mike_and_conquer.gameview
         }
 
 
+        void DrawHorizontalLine(Color[] data, Color color, int width, int height, int startX, int startY, int length)
+        {
+            if (startX + length > width)
+            {
+                throw new Exception("Attempt to create line outside bounds of texture width");
+            }
+            int beginIndex = startX + (width * startY);
+        
+            for (int i = beginIndex; i < beginIndex + length; i++)
+            {
+                data[i] = color;
+            }
+        
+        }
+
+        void DrawVerticalLine(Color[] data, Color color, int width, int height, int startX, int startY, int length)
+        {
+
+            int dataIndex = startX + (width * startY);
+
+            for (int i = 0; i < length; i++)
+            {
+                data[dataIndex] = color;
+                dataIndex += width;
+            }
+
+        }
+
+
         internal Texture2D InitializeBoundingRectangle()
         {
-            Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, texture.Width, texture.Height);
+            Texture2D rectangle = new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, selectionCursorTexture.Width, selectionCursorTexture.Height);
             Color[] data = new Color[rectangle.Width * rectangle.Height];
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
-            fillVerticalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
-            fillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, Color.White);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, rectangle.Height - 1, Color.White);
+            FillVerticalLine(data, rectangle.Width, rectangle.Height, 0, Color.White);
+            FillVerticalLine(data, rectangle.Width, rectangle.Height, rectangle.Width - 1, Color.White);
             int centerX = rectangle.Width / 2;
             int centerY = rectangle.Height / 2;
             int centerOffset = (centerY * rectangle.Width) + centerX;
 
             data[centerOffset] = Color.Red;
 
-
             rectangle.SetData(data);
             return rectangle;
-
         }
 
-        internal Texture2D InitializeHealthBar()
+
+        private Texture2D InitializeHealthBar()
         {
+            
             int healthBarHeight = 4;
-            int healthBarWidth = 12;  // This is hard coded for minigunner
+            int healthBarWidth = myGameObject.UnitSize.Width;
 
             Texture2D rectangle =
                 new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, healthBarWidth, healthBarHeight);
@@ -141,27 +163,23 @@ namespace mike_and_conquer.gameview
             Color cncPalleteColorBlack = new Color(0, 255, 255, 255);
             Color cncPalleteColorGreen = new Color(4, 255, 255, 255);
 
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorBlack);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorBlack);
 
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorBlack);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 3, cncPalleteColorBlack);
 
-            fillVerticalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorBlack);
-            fillVerticalLine(data, rectangle.Width, rectangle.Height, 11, cncPalleteColorBlack);
+            FillVerticalLine(data, rectangle.Width, rectangle.Height, 0, cncPalleteColorBlack);
+            FillVerticalLine(data, rectangle.Width, rectangle.Height, healthBarWidth - 1, cncPalleteColorBlack);
 
-            int maxHealth = 50;
-            float ratio = 10f / maxHealth;
+            int nonBorderHealthBarWidth = healthBarWidth - 2;
+            int maxHealth = myGameObject.MaxHealth;
+            float ratio = (float)nonBorderHealthBarWidth / (float)maxHealth;
+            int unitHealth = myGameObject.Health;
+            int healthBarLength = (int)(unitHealth * ratio);
 
-            int healthBarLength = (int) (myMinigunner.health * ratio);
-
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorGreen, 1, healthBarLength);
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorGreen, 1, healthBarLength);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorGreen, 1, healthBarLength);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorGreen, 1, healthBarLength);
 
             rectangle.SetData(data);
-
-            healthBarPosition = position;
-            healthBarPosition.X = position.X + 10;
-            healthBarPosition.Y = position.Y - 1;
-
 
             return rectangle;
 
@@ -170,7 +188,8 @@ namespace mike_and_conquer.gameview
         internal Texture2D InitializeHealthBarShadow()
         {
             int healthBarHeight = 4;
-            int healthBarWidth = 12;  // This is hard coded for minigunner
+            // int healthBarWidth = 12;  // This is hard coded for minigunner
+            int healthBarWidth = myGameObject.UnitSize.Width;  
 
             Texture2D rectangle =
                 new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, healthBarWidth, healthBarHeight);
@@ -179,40 +198,110 @@ namespace mike_and_conquer.gameview
 
             Color cncPalleteColorShadow = new Color(255, 255, 255, 255);
 
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorShadow);
-            fillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorShadow);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 1, cncPalleteColorShadow);
+            FillHorizontalLine(data, rectangle.Width, rectangle.Height, 2, cncPalleteColorShadow);
 
             rectangle.SetData(data);
             return rectangle;
         }
 
 
+        private Texture2D CreateUnitSelectionTexture(int width, int height, int horizontalLength, int verticalLength)
+        {
+            Color cncPalleteColorWhite = new Color(255, 255, 255, 255);
+
+            Texture2D rectangle =
+                new Texture2D(MikeAndConquerGame.instance.GraphicsDevice, width, height);
+
+            Color[] data = new Color[rectangle.Width * rectangle.Height];
+
+            int startX = 0;
+            int startY = 0;
+
+            // top left
+            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, horizontalLength);
+            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
+
+            // bottom left
+            startY = height - verticalLength;
+            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
+            startY = height - 1;
+            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, horizontalLength);
+
+            // top right
+            startX = width - horizontalLength;
+            startY = 0;
+            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, horizontalLength);
+            startX = width - 1;
+            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
+
+            // bottom right
+            startY = height - verticalLength;
+            DrawVerticalLine(data, cncPalleteColorWhite, width, height, startX, startY, verticalLength);
+            startX = width - horizontalLength;
+
+            startY = height - 1;
+            DrawHorizontalLine(data, cncPalleteColorWhite, width, height, startX, startY, horizontalLength);
+
+            rectangle.SetData(data);
+
+            return rectangle;
+        }
+
+        Texture2D InitializeSelectionCursor()
+        {
+            UnitSize unitSize = myGameObject.UnitSize;
+
+            int width = unitSize.Width + 1;
+            int height = unitSize.Height - 4 + 1;
+
+            int horizontalLength = (unitSize.Width / 5) + 1;
+            int verticalLength = (unitSize.Height / 5) + 1;
+
+            return CreateUnitSelectionTexture(width, height, horizontalLength, verticalLength);
+
+        }
+
+
         public void Update(GameTime gameTime)
         {
-            healthBar = InitializeHealthBar();
+
+            if (healthBarTexture != null)
+            {
+                healthBarTexture.Dispose();
+            }
+            healthBarTexture = InitializeHealthBar();
+
+            Point selectionCursorOffset = myGameObject.SelectionCursorOffset;
+            GameWorldLocation gameWorldLocation = myGameObject.GameWorldLocation;
+
+
+            selectionCursorPosition = new Vector2(
+                gameWorldLocation.WorldCoordinatesAsVector2.X + selectionCursorOffset.X,
+                gameWorldLocation.WorldCoordinatesAsVector2.Y + selectionCursorOffset.Y);
+
+            healthBarPosition = selectionCursorPosition;
+            healthBarPosition.Y -= 4;
 
         }
 
         internal void DrawNoShadow(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
         {
-            spriteBatch.Draw(texture, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
+
+            spriteBatch.Draw(selectionCursorTexture, selectionCursorPosition, null, Color.White, 0f, origin, defaultScale, SpriteEffects.None, layerDepth);
             if (drawBoundingRectangle)
             {
                 
-                spriteBatch.Draw(boundingRectangle, position, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(boundingRectangle, selectionCursorPosition, null, Color.White, 0f, origin, defaultScale, SpriteEffects.None, 0f);
             }
 
-            spriteBatch.Draw(healthBar, healthBarPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
+            spriteBatch.Draw(healthBarTexture, healthBarPosition, null, Color.White, 0f, origin, defaultScale, SpriteEffects.None, layerDepth);
         }
-
-
 
         internal void DrawShadowOnly(GameTime gameTime, SpriteBatch spriteBatch, float layerDepth)
         {
-            spriteBatch.Draw(healthBarShadow, healthBarPosition, null, Color.White, 0f, middleOfSprite, defaultScale, SpriteEffects.None, layerDepth);
+            spriteBatch.Draw(healthBarShadowTexture, healthBarPosition, null, Color.White, 0f, origin, defaultScale, SpriteEffects.None, layerDepth);
         }
-
-
 
     }
 

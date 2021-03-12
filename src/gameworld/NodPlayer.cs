@@ -49,7 +49,7 @@ namespace mike_and_conquer.gameworld
             playerController.Update(gameTime);
             foreach (Minigunner nextMinigunner in nodMinigunnerList)
             {
-                if (nextMinigunner.health > 0)
+                if (nextMinigunner.Health > 0)
                 {
                     nextMinigunner.Update(gameTime);
                 }

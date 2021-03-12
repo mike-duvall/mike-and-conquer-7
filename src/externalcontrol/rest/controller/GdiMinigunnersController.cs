@@ -33,7 +33,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
                         .GameWorldLocation.WorldCoordinatesAsVector2);
                 restMinigunner.screenX = (int)screenPosition.X;
                 restMinigunner.screenY = (int)screenPosition.Y;
-                restMinigunner.health = minigunner.health;
+                restMinigunner.health = minigunner.Health;
                 restMinigunner.selected = minigunner.selected;
                 restMinigunner.destinationX = (int)minigunner.destination.X;
                 restMinigunner.destinationY = (int)minigunner.destination.Y;
@@ -43,6 +43,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             // return Ok(restMinigunners);
             return restMinigunners;
         }
+
 
         public IHttpActionResult Get(int id)
         {
@@ -59,7 +60,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
                     .GameWorldLocation.WorldCoordinatesAsVector2);
             restMinigunner.screenX = (int)screenPosition.X;
             restMinigunner.screenY = (int)screenPosition.Y;
-            restMinigunner.health = minigunner.health;
+            restMinigunner.health = minigunner.Health;
             restMinigunner.selected = minigunner.selected;
             restMinigunner.destinationX = (int) minigunner.destination.X;
             restMinigunner.destinationY = (int)minigunner.destination.Y;
@@ -89,7 +90,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             restMinigunner.id = minigunner.id;
             restMinigunner.x = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.X;
             restMinigunner.y = (int)minigunner.GameWorldLocation.WorldCoordinatesAsVector2.Y;
-            restMinigunner.health = minigunner.health;
+            restMinigunner.health = minigunner.Health;
 
             // MikeAndConquerGame.instance.log.Information("leaving Post() for minigunner, id:" + restMinigunner.id);
             return Ok(restMinigunner);

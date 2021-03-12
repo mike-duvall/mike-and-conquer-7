@@ -26,9 +26,7 @@ using GdiMinigunnerView = mike_and_conquer.gameview.GdiMinigunnerView;
 using NodMinigunnerView = mike_and_conquer.gameview.NodMinigunnerView;
 using SandbagView = mike_and_conquer.gameview.SandbagView;
 
-
 using Point = Microsoft.Xna.Framework.Point;
-using MCVSelectionBox = mike_and_conquer.gameview.MCVSelectionBox;
 
 
 
@@ -37,7 +35,6 @@ namespace mike_and_conquer.main
 
     public class MikeAndConquerGame : Game
     {
-
 
         //        private float testRotation = 0;
 
@@ -348,12 +345,6 @@ namespace mike_and_conquer.main
                 raiSpriteFrameManager.GetSpriteFramesForUnit(PartiallyVisibileMapTileMask.SHP_FILE_NAME),
                 GDIBarracksView.SHP_FILE_COLOR_MAPPER);
 
-            raiSpriteFrameManager.LoadAllTexturesFromShpFile(UnitSelectionCursor.SHP_FILE_NAME);
-            spriteSheet.LoadUnitFramesFromSpriteFrames(
-                UnitSelectionCursor.SPRITE_KEY,
-                raiSpriteFrameManager.GetSpriteFramesForUnit(UnitSelectionCursor.SHP_FILE_NAME),
-                UnitSelectionCursor.SHP_FILE_COLOR_MAPPER);
-
         }
 
 
@@ -390,7 +381,6 @@ namespace mike_and_conquer.main
             spriteSheet.LoadSingleTextureFromFile(MissionAccomplishedMessage.ACCOMPLISHED_SPRITE_KEY, "Accomplished");
             spriteSheet.LoadSingleTextureFromFile(MissionFailedMessage.FAILED_SPRITE_KEY, "Failed");
             spriteSheet.LoadSingleTextureFromFile(DestinationSquare.SPRITE_KEY, DestinationSquare.SPRITE_KEY);
-            spriteSheet.LoadSingleTextureFromFile(MCVSelectionBox.SPRITE_KEY, MCVSelectionBox.SPRITE_KEY);
             spriteSheet.LoadSingleTextureFromFile(ReadyOverlay.SPRITE_KEY, ReadyOverlay.SPRITE_KEY);
 
         }

@@ -46,10 +46,7 @@ namespace mike_and_conquer.gameobjects
         double movementDistanceEpsilon;
 
         private static int baseCncSpeedInLeptons = (int)CncSpeed.MPH_MEDIUM_SLOW;
-        // private static double baseMovementSpeed = 0.75f;
-        // private static readonly double baseMovementSpeed = baseCncSpeedInLeptons * 24.0 / 256.0;
-        private static readonly double baseMovementSpeed = baseCncSpeedInLeptons * GameWorld.WorldUnitsPerLepton;
-        // double scaledMovementSpeed = .010;
+        private static readonly double baseMovementSpeedInWorldCoordinates = baseCncSpeedInLeptons * GameWorld.WorldUnitsPerLepton;
         private double scaledMovementSpeed;
 
 
@@ -87,8 +84,7 @@ namespace mike_and_conquer.gameobjects
 
 
             clickDetectionRectangle = CreateClickDetectionRectangle();
-            // movementDistanceEpsilon = movementVelocity + (double).04f;
-            scaledMovementSpeed = baseMovementSpeed / GameOptions.instance.GameSpeedDelayDivisor;
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GameSpeedDelayDivisor;
             movementDistanceEpsilon = scaledMovementSpeed + (double).04f;
 
             selected = false;
@@ -96,6 +92,9 @@ namespace mike_and_conquer.gameobjects
 
         public void Update(GameTime gameTime)
         {
+
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GameSpeedDelayDivisor;
+
 
             UpdateVisibleMapTiles();
             if (this.currentCommand == Command.NONE)

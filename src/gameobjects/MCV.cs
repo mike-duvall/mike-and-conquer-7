@@ -45,7 +45,11 @@ namespace mike_and_conquer.gameobjects
 
         double movementDistanceEpsilon;
 
-        private static int baseCncSpeedInLeptons = (int)CncSpeed.MPH_MEDIUM_SLOW;
+        private static int baseCncSpeedInLeptons = (int)CncSpeed.MPH_MEDIUM_SLOW;   // MCV speed
+        // private static int baseCncSpeedInLeptons = (int)CncSpeed.MPH_MEDIUM_FAST;  // Jeep speed 
+        // private static int baseCncSpeedInLeptons = 11;  // Infantry speed (new and calibrated)
+
+
         private static readonly double baseMovementSpeedInWorldCoordinates = baseCncSpeedInLeptons * GameWorld.WorldUnitsPerLepton;
         private double scaledMovementSpeed;
 

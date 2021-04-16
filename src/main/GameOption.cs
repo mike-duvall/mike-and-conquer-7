@@ -23,11 +23,22 @@ namespace mike_and_conquer.main
         //        public  bool PlayMusic = true;
         public bool PlayMusic = false;
 
-        public int GameSpeedDelayDivisor = 50;
-        // public int GameSpeedDelayDivisor = 200;
-        // public int GameSpeedDelayDivisor = 20;
-        // public int GameSpeedDelayDivisor = 1;
 
+        // public int GameSpeedDelayDivisor = 250;  // Slowest
+
+        // public int GameSpeedDelayDivisor = 125;  // Slower
+
+        // public int GameSpeedDelayDivisor = 85; // Slow
+
+        // public int GameSpeedDelayDivisor = 63; // Moderate
+
+        public int GameSpeedDelayDivisor = 43;  // Normal
+
+        // public int GameSpeedDelayDivisor = 30;  // Fast
+
+        // public int GameSpeedDelayDivisor = 25; // Faster
+
+        // public int GameSpeedDelayDivisor = 23; // Fastest
 
         public static GameOptions instance;
 

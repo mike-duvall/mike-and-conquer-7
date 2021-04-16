@@ -124,18 +124,13 @@ namespace mike_and_conquer.pathfinding
         }
 
 
-        public double Cost(int fromNodeId, int toNodeId)
+        public int Cost(int fromNodeId, int toNodeId)
         {
-
-            // Point fromPoint = GameWorld.instance.ConvertMapSquareIndexToWorldCoordinate(fromNodeId);
-            // Point toPoint = GameWorld.instance.ConvertMapSquareIndexToWorldCoordinate(toNodeId);
-            //
-            // double distance = Distance(fromPoint.X, fromPoint.Y, toPoint.X, toPoint.Y);
-            //
-            // return distance;
-
-            double cost = 0;
-
+            // TODO:  Possible optimization would be
+            // to precalculate the costs up front and store them
+            // Might mean Node has to have a list of costed connections rather than
+            // a list of connected node ids
+            int cost = 0;
 
             if (toNodeId == (fromNodeId + 1))
             {
@@ -185,6 +180,9 @@ namespace mike_and_conquer.pathfinding
 
     public class AStar
     {
+        // This code uses algorithms from here:  https://www.redblobgames.com/pathfinding/a-star/introduction.html
+        // Current implementation is actually "Dijkstra’s Algorithm" rather than A *
+
         public Path FindPath(NavigationGraph navigationGraph, Point startPoint, Point endPoint)
         {
             int startPointIndex = (startPoint.Y * navigationGraph.width) + startPoint.X;
@@ -195,49 +193,10 @@ namespace mike_and_conquer.pathfinding
         public Path FindPath(NavigationGraph navigationGraph, int startLocation, int goalLocation)
 
         {
-            //            frontier = Queue()
-            //            frontier.put(start)
-            //            came_from = { }
-            //            came_from[start] = None
-            //
-            //            while not frontier.empty()
-            //            {
-            //                current = frontier.get()
-            //                for next in navigationGraph.neighbors(current)
-            //                {
-            //                    if next not in came_from
-            //                    {
-            //                        frontier.put(next)
-            //                        came_from[next] = current
-            //                    }
-            //                }
-            //            }
-
-            // Queue<Node> frontier  = new Queue<Node>();
-            // frontier.Enqueue(navigationGraph.nodeList[startLocation]);
-            // Dictionary<int, int> came_from = new Dictionary<int, int>();
-            // came_from[startLocation] = -1;
-            //
-            // while (frontier.Count > 0)
-            // {
-            //     Node current = frontier.Dequeue();
-            //     foreach (int next in current.connectedNodes)
-            //     {
-            //         if (!came_from.ContainsKey(next))
-            //         {
-            //             frontier.Enqueue(navigationGraph.nodeList[next]);
-            //             came_from[next] = current.id;
-            //         }
-            //     }
-            // }
-
-            // Queue<Node> frontier = new Queue<Node>();
 
             PriorityQueue<Node> frontier = new PriorityQueue<Node>();
 
-            // frontier.Enqueue(navigationGraph.nodeList[startLocation]);
             frontier.Enqueue(0, navigationGraph.nodeList[startLocation]);
-
 
             Dictionary<int, int> came_from = new Dictionary<int, int>();
             Dictionary<int, int> cost_so_far = new Dictionary<int, int>();
@@ -245,19 +204,13 @@ namespace mike_and_conquer.pathfinding
             came_from[startLocation] = -1;
             cost_so_far[startLocation] = -1;
 
-
-            // Pickup here
-            // This is an infinite loop
-            // Consider writing more constrained unit test
-            // Revisit unit tests in general
-
             while (frontier.Count > 0)
             {
                 Node current = frontier.Dequeue();
 
                 foreach (int next in current.connectedNodes)
                 {
-                    int costToNextNode = (int) navigationGraph.Cost(current.id, next);
+                    int costToNextNode = navigationGraph.Cost(current.id, next);
                     int current_cost_so_far = 0;
                     if (cost_so_far.ContainsKey(current.id))
                     {
@@ -267,21 +220,11 @@ namespace mike_and_conquer.pathfinding
 
                     if (!cost_so_far.ContainsKey(next) || (new_cost < cost_so_far[next]))
                     {
-                        // cost_so_far[next] = new_cost
-                        // priority = new_cost
-                        // frontier.put(next, priority)
-                        // came_from[next] = current
                         cost_so_far[next] = new_cost;
                         int priority = new_cost;
                         frontier.Enqueue(priority, navigationGraph.nodeList[next]);
                         came_from[next] = current.id;
                     }
-
-                    // if (!came_from.ContainsKey(next))
-                    // {
-                    //     frontier.Enqueue(navigationGraph.nodeList[next]);
-                    //     came_from[next] = current.id;
-                    // }
                 }
             }
 

@@ -21,36 +21,47 @@ namespace mike_and_conquer.gameobjects
 
 
         private Boolean isBuildingBarracks;
-        private int barracksBuildCountdown;
-        private static int barracksBuildCountdownMax = 400;
+        // private int barracksBuildCountdown;
+        // private static int barracksBuildCountdownMax = 400;
+
+        private float buildBarracksPercentComplete;
         private Boolean isBarracksReadyToPlace;
+
+        private float scaledBuildSpeed;
+        private float baseBuildSpeed = 0.65f;
 
         public Boolean IsBuildingBarracks
         {
             get { return isBuildingBarracks; }
         }
 
+        // public int PercentBarracksBuildComplete
+        // {
+        //     get { return CalculatePercentBarracksBuildComplete(); }
+        // }
+
         public int PercentBarracksBuildComplete
         {
-            get { return CalculatePercentBarracksBuildComplete(); }
+            get { return (int) buildBarracksPercentComplete; }
         }
+
 
         public Boolean IsBarracksReadyToPlace
         {
             get { return isBarracksReadyToPlace; }
         }
 
-        private int CalculatePercentBarracksBuildComplete()
-        {
-            if (isBuildingBarracks)
-            {
-                return 100 - ((barracksBuildCountdown * 100) / barracksBuildCountdownMax);
-            }
-            else
-            {
-                return 100;
-            }
-        }
+        // private int CalculatePercentBarracksBuildComplete()
+        // {
+        //     if (isBuildingBarracks)
+        //     {
+        //         return 100 - ((barracksBuildCountdown * 100) / barracksBuildCountdownMax);
+        //     }
+        //     else
+        //     {
+        //         return 100;
+        //     }
+        // }
 
         protected GDIConstructionYard()
         {
@@ -79,15 +90,27 @@ namespace mike_and_conquer.gameobjects
         {
 
             isBuildingBarracks = true;
-            barracksBuildCountdown = barracksBuildCountdownMax;
+            buildBarracksPercentComplete = 0.0f;
+            // barracksBuildCountdown = barracksBuildCountdownMax;
         }
 
         public void Update(GameTime gameTime)
         {
+            scaledBuildSpeed = baseBuildSpeed / GameOptions.instance.GameSpeedDelayDivisor;
+
             if (isBuildingBarracks)
             {
-                barracksBuildCountdown--;
-                if (barracksBuildCountdown <= 0)
+                // barracksBuildCountdown--;
+                // if (barracksBuildCountdown <= 0)
+                // {
+                //     isBarracksReadyToPlace = true;
+                //     isBuildingBarracks = false;
+                // }
+                double delta = gameTime.ElapsedGameTime.TotalMilliseconds * scaledBuildSpeed;
+
+
+                buildBarracksPercentComplete += (float) delta;
+                if (buildBarracksPercentComplete >= 100.0f)
                 {
                     isBarracksReadyToPlace = true;
                     isBuildingBarracks = false;

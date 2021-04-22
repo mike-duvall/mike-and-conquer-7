@@ -55,7 +55,12 @@ namespace mike_and_conquer.gameobjects
 
         // Turn rate in CnC is 12 on a scale of 0 to 256
         // Since MnC uses 360 degrees, need to convert that turn rate to one based on 360 degrees
-        private float baseTurnRate = 12.0f * 360.0f / 256.0f; // 16.875
+        // private float baseTurnRate = 12.0f * 360.0f / 256.0f; // 16.875
+        // Seems like above calculation would be right, but using emperical tests vs Cnc
+        // Determined that turret turn speed needs to be 23
+        private float baseTurnRate = 23f;
+
+
         public static float scaledTurnRate;
 
         protected NodTurret()
@@ -125,9 +130,6 @@ namespace mike_and_conquer.gameobjects
 
         private void EvaluateDirectionAndTurnIfNeeded(GameTime gameTime)
         {
-
-
-
 
             float turnIncrement = CalculateTurnIncrement(gameTime);
             bool isPointingAtGoalDirection = IsPointingAtGoalDirection();

@@ -49,13 +49,10 @@ namespace mike_and_conquer.gameobjects
         // private static int baseCncSpeedInLeptons = (int)CncSpeed.MPH_MEDIUM_FAST;  // Jeep speed 
         // private static int baseCncSpeedInLeptons = 11;  // Infantry speed (new and calibrated)
 
-
         private static readonly double baseMovementSpeedInWorldCoordinates = baseCncSpeedInLeptons * GameWorld.WorldUnitsPerLepton;
         private double scaledMovementSpeed;
 
-
         //        private static int globalId = 1;
-
 
         Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()

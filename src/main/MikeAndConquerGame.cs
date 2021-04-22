@@ -157,8 +157,8 @@ namespace mike_and_conquer.main
 
             if (!GameOptions.instance.IsFullScreen)
             {
-                AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 9));
-                AddGdiMinigunnerAtMapSquareCoordinates(new Point(25, 16));
+                AddGdiMinigunnerAtMapSquareCoordinates(new Point(18, 5));
+                // AddGdiMinigunnerAtMapSquareCoordinates(new Point(25, 16));
 
                 // AddGdiMinigunnerAtMapSquareCoordinates(new Point(22, 9));
                 // AddGdiMinigunnerAtMapSquareCoordinates(new Point(23, 9));
@@ -173,8 +173,9 @@ namespace mike_and_conquer.main
                 // AddGdiMinigunnerAtMapSquareCoordinates(new Point(26, 15));
 
                 //                AddMCVAtMapSquareCoordinates(new Point(21, 12));
-                AddMCVAtMapSquareCoordinates(new Point(26, 17));
+                AddMCVAtMapSquareCoordinates(new Point(22, 14));
                 // AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(14, 16), 90, 2);
+                // AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(18, 13), 180, 2);
             }
 
 

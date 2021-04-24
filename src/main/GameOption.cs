@@ -30,9 +30,9 @@ namespace mike_and_conquer.main
 
         // public int GameSpeedDelayDivisor = 85; // Slow
 
-        // public int GameSpeedDelayDivisor = 63; // Moderate
+        public int GameSpeedDelayDivisor = 63; // Moderate
 
-        public int GameSpeedDelayDivisor = 43;  // Normal
+        // public int GameSpeedDelayDivisor = 43;  // Normal
 
         // public int GameSpeedDelayDivisor = 30;  // Fast
 

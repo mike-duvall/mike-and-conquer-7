@@ -21,8 +21,12 @@ namespace mike_and_conquer.gameobjects
         }
 
         private Boolean isBuildingMinigunner;
-        private int minigunnerBuildCountdown;
-        private static int minigunnerBuildCountdownMax = 400;
+
+        private float buildMinigunnerPercentComplete;
+
+        private float scaledBuildSpeed;
+        private float baseBuildSpeed = 1.25f;
+
 
         public Boolean IsBuildingMinigunner
         {
@@ -31,27 +35,13 @@ namespace mike_and_conquer.gameobjects
         
         public int PercentMinigunnerBuildComplete
         {
-            get { return CalculatePercentMinigunnerBuildComplete(); }
+            get { return (int) buildMinigunnerPercentComplete; }
         }
 
-
-        private int CalculatePercentMinigunnerBuildComplete()
-        {
-            if (isBuildingMinigunner)
-            {
-                return 100 - ((minigunnerBuildCountdown * 100) / minigunnerBuildCountdownMax);
-            }
-            else
-            {
-                return 100;
-            }
-        }
 
         protected GDIBarracks()
         {
         }
-
-
 
         public GDIBarracks(MapTileLocation mapTileLocation)
         {
@@ -76,19 +66,27 @@ namespace mike_and_conquer.gameobjects
         {
 
             isBuildingMinigunner = true;
-            minigunnerBuildCountdown = minigunnerBuildCountdownMax;
+            buildMinigunnerPercentComplete = 0.0f;
         }
+
+
 
         public void Update(GameTime gameTime)
         {
+            scaledBuildSpeed = baseBuildSpeed / GameOptions.instance.GameSpeedDelayDivisor;
+
             if (isBuildingMinigunner)
             {
-                minigunnerBuildCountdown--;
-                if (minigunnerBuildCountdown <= 0)
+                double delta = gameTime.ElapsedGameTime.TotalMilliseconds * scaledBuildSpeed;
+
+                buildMinigunnerPercentComplete += (float)delta;
+                if (buildMinigunnerPercentComplete >= 100.0f)
                 {
                     CreateMinigunnerFromBarracks();
                     isBuildingMinigunner = false;
                 }
+
+
             }
         }
 

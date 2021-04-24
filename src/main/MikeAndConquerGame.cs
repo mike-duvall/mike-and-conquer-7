@@ -11,7 +11,6 @@ using mike_and_conquer.gameworld;
 using mike_and_conquer.openralocal;
 using mike_and_conquer.sound;
 using Serilog;
-using SharpDX.MediaFoundation;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
@@ -99,10 +98,13 @@ namespace mike_and_conquer.main
             else
             {
                 graphics.IsFullScreen = false;
-//                graphics.PreferredBackBufferWidth = 1280;
-//                graphics.PreferredBackBufferHeight = 1024;
-                graphics.PreferredBackBufferWidth = 1024;
+                // graphics.PreferredBackBufferWidth = 1280;
+                // graphics.PreferredBackBufferHeight = 1024;
+                graphics.PreferredBackBufferWidth = 1280;
                 graphics.PreferredBackBufferHeight = 768;
+
+                // graphics.PreferredBackBufferWidth = 1024;
+                // graphics.PreferredBackBufferHeight = 768;
 
 
             }
@@ -155,6 +157,11 @@ namespace mike_and_conquer.main
             // AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(14, 16), 90, 2);
 
 
+            // AddGdiMinigunnerAtMapSquareCoordinates(new Point(18, 5));
+            // AddMCVAtMapSquareCoordinates(new Point(22, 14));
+            // AddGDIBarracks(MapTileLocation.CreateFromWorldMapTileCoordinates(24, 16));
+
+
             if (!GameOptions.instance.IsFullScreen)
             {
                 AddGdiMinigunnerAtMapSquareCoordinates(new Point(18, 5));
@@ -174,6 +181,7 @@ namespace mike_and_conquer.main
 
                 //                AddMCVAtMapSquareCoordinates(new Point(21, 12));
                 AddMCVAtMapSquareCoordinates(new Point(22, 14));
+                AddGDIBarracks(MapTileLocation.CreateFromWorldMapTileCoordinates(24,16));
                 // AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(14, 16), 90, 2);
                 // AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(18, 13), 180, 2);
             }

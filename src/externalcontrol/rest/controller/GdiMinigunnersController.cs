@@ -18,6 +18,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
         public IEnumerable<RestMinigunner> Get()
         {
 
+            int count = GameWorld.instance.GDIMinigunnerList.Count;
             RestMinigunner[] restMinigunners = new RestMinigunner[GameWorld.instance.GDIMinigunnerList.Count];
 
             int i = 0;
@@ -38,6 +39,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
                 restMinigunner.destinationX = (int)minigunner.destination.X;
                 restMinigunner.destinationY = (int)minigunner.destination.Y;
                 restMinigunners[i] = restMinigunner;
+                i++;
             }
 
             // return Ok(restMinigunners);

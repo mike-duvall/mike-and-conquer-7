@@ -17,18 +17,15 @@ using Node = mike_and_conquer.pathfinding.Node;
 namespace mike_and_conquer.gameobjects
 { 
 
-
     public class MCV : GameObject
     {
         public bool selected { get; set; }
-
 
         public Point destination {
             get { return new Point(destinationX, destinationY);}
         }
 
         Rectangle clickDetectionRectangle;
-
 
         public enum State { IDLE, MOVING, LANDING_AT_MAP_SQUARE };
         public State state;
@@ -38,7 +35,6 @@ namespace mike_and_conquer.gameobjects
 
         private int destinationX;
         private int destinationY;
-
         public Vector2 DestinationPosition { get { return new Vector2(destinationX, destinationY); } }
 
         private List<Point> path;
@@ -46,8 +42,6 @@ namespace mike_and_conquer.gameobjects
         double movementDistanceEpsilon;
 
         private static int baseCncSpeedInLeptons = (int)CncSpeed.MPH_MEDIUM_SLOW;   // MCV speed
-        // private static int baseCncSpeedInLeptons = (int)CncSpeed.MPH_MEDIUM_FAST;  // Jeep speed 
-        // private static int baseCncSpeedInLeptons = 11;  // Infantry speed (new and calibrated)
 
         private static readonly double baseMovementSpeedInWorldCoordinates = baseCncSpeedInLeptons * GameWorld.WorldUnitsPerLepton;
         private double scaledMovementSpeed;

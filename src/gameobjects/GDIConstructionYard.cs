@@ -7,38 +7,26 @@ using mike_and_conquer.main;
 
 namespace mike_and_conquer.gameobjects
 { 
-
     public class GDIConstructionYard
     {
-
-
         private MapTileLocation mapTileLocation;
-
         public MapTileLocation MapTileLocation
         {
             get { return mapTileLocation; }
         }
 
-
-        private Boolean isBuildingBarracks;
-        // private int barracksBuildCountdown;
-        // private static int barracksBuildCountdownMax = 400;
+        private bool isBuildingBarracks;
 
         private float buildBarracksPercentComplete;
-        private Boolean isBarracksReadyToPlace;
+        private bool isBarracksReadyToPlace;
 
         private float scaledBuildSpeed;
         private float baseBuildSpeed = 0.65f;
 
-        public Boolean IsBuildingBarracks
+        public bool IsBuildingBarracks
         {
             get { return isBuildingBarracks; }
         }
-
-        // public int PercentBarracksBuildComplete
-        // {
-        //     get { return CalculatePercentBarracksBuildComplete(); }
-        // }
 
         public int PercentBarracksBuildComplete
         {
@@ -50,18 +38,6 @@ namespace mike_and_conquer.gameobjects
         {
             get { return isBarracksReadyToPlace; }
         }
-
-        // private int CalculatePercentBarracksBuildComplete()
-        // {
-        //     if (isBuildingBarracks)
-        //     {
-        //         return 100 - ((barracksBuildCountdown * 100) / barracksBuildCountdownMax);
-        //     }
-        //     else
-        //     {
-        //         return 100;
-        //     }
-        // }
 
         protected GDIConstructionYard()
         {
@@ -85,13 +61,10 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-
         public void StartBuildingBarracks()
         {
-
             isBuildingBarracks = true;
             buildBarracksPercentComplete = 0.0f;
-            // barracksBuildCountdown = barracksBuildCountdownMax;
         }
 
         public void Update(GameTime gameTime)
@@ -100,16 +73,9 @@ namespace mike_and_conquer.gameobjects
 
             if (isBuildingBarracks)
             {
-                // barracksBuildCountdown--;
-                // if (barracksBuildCountdown <= 0)
-                // {
-                //     isBarracksReadyToPlace = true;
-                //     isBuildingBarracks = false;
-                // }
-                double delta = gameTime.ElapsedGameTime.TotalMilliseconds * scaledBuildSpeed;
+                double buildIncrement = gameTime.ElapsedGameTime.TotalMilliseconds * scaledBuildSpeed;
 
-
-                buildBarracksPercentComplete += (float) delta;
+                buildBarracksPercentComplete += (float) buildIncrement;
                 if (buildBarracksPercentComplete >= 100.0f)
                 {
                     isBarracksReadyToPlace = true;

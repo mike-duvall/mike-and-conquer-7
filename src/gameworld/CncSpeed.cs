@@ -19,6 +19,3 @@ namespace mike_and_conquer.main
 	}
 }
 
-
-
-

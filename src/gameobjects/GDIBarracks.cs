@@ -76,9 +76,9 @@ namespace mike_and_conquer.gameobjects
 
             if (isBuildingMinigunner)
             {
-                double delta = gameTime.ElapsedGameTime.TotalMilliseconds * scaledBuildSpeed;
+                double buildIncrement = gameTime.ElapsedGameTime.TotalMilliseconds * scaledBuildSpeed;
 
-                buildMinigunnerPercentComplete += (float)delta;
+                buildMinigunnerPercentComplete += (float)buildIncrement;
                 if (buildMinigunnerPercentComplete >= 100.0f)
                 {
                     CreateMinigunnerFromBarracks();

@@ -64,7 +64,6 @@ namespace mike_and_conquer.gameobjects
 
         public void StartBuildingMinigunner()
         {
-
             isBuildingMinigunner = true;
             buildMinigunnerPercentComplete = 0.0f;
         }
@@ -85,7 +84,6 @@ namespace mike_and_conquer.gameobjects
                     CreateMinigunnerFromBarracks();
                     isBuildingMinigunner = false;
                 }
-
 
             }
         }

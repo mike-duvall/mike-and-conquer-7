@@ -7,49 +7,36 @@ using mike_and_conquer.main;
 
 namespace mike_and_conquer.gameobjects
 { 
-
     public class GDIConstructionYard
     {
-
-
         private MapTileLocation mapTileLocation;
-
         public MapTileLocation MapTileLocation
         {
             get { return mapTileLocation; }
         }
 
+        private bool isBuildingBarracks;
 
-        private Boolean isBuildingBarracks;
-        private int barracksBuildCountdown;
-        private static int barracksBuildCountdownMax = 400;
-        private Boolean isBarracksReadyToPlace;
+        private float buildBarracksPercentComplete;
+        private bool isBarracksReadyToPlace;
 
-        public Boolean IsBuildingBarracks
+        private float scaledBuildSpeed;
+        private float baseBuildSpeed = 0.65f;
+
+        public bool IsBuildingBarracks
         {
             get { return isBuildingBarracks; }
         }
 
         public int PercentBarracksBuildComplete
         {
-            get { return CalculatePercentBarracksBuildComplete(); }
+            get { return (int) buildBarracksPercentComplete; }
         }
+
 
         public Boolean IsBarracksReadyToPlace
         {
             get { return isBarracksReadyToPlace; }
-        }
-
-        private int CalculatePercentBarracksBuildComplete()
-        {
-            if (isBuildingBarracks)
-            {
-                return 100 - ((barracksBuildCountdown * 100) / barracksBuildCountdownMax);
-            }
-            else
-            {
-                return 100;
-            }
         }
 
         protected GDIConstructionYard()
@@ -74,20 +61,22 @@ namespace mike_and_conquer.gameobjects
         }
 
 
-
         public void StartBuildingBarracks()
         {
-
             isBuildingBarracks = true;
-            barracksBuildCountdown = barracksBuildCountdownMax;
+            buildBarracksPercentComplete = 0.0f;
         }
 
         public void Update(GameTime gameTime)
         {
+            scaledBuildSpeed = baseBuildSpeed / GameOptions.instance.GameSpeedDelayDivisor;
+
             if (isBuildingBarracks)
             {
-                barracksBuildCountdown--;
-                if (barracksBuildCountdown <= 0)
+                double buildIncrement = gameTime.ElapsedGameTime.TotalMilliseconds * scaledBuildSpeed;
+
+                buildBarracksPercentComplete += (float) buildIncrement;
+                if (buildBarracksPercentComplete >= 100.0f)
                 {
                     isBarracksReadyToPlace = true;
                     isBuildingBarracks = false;

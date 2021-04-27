@@ -32,6 +32,8 @@ namespace mike_and_conquer.gameworld
 
         public static int MAP_TILE_WIDTH = 24;
         public static int MAP_TILE_HEIGHT = 24;
+        public static int MAP_TILE_WIDTH_IN_LEPTONS = 256;
+
 
         private GDIPlayer gdiPlayer;
         private NodPlayer nodPlayer;
@@ -41,12 +43,14 @@ namespace mike_and_conquer.gameworld
         public List<TerrainItem> terrainItemList;
         public List<Projectile120mm> projectile120MmList;
 
+
         // Tiles are 24 pixels wide and are also 256 leptons wide
         // Since MnC uses pixels as "world coordinates" or "world units"
         // WorldUnitsPerLepton is 24 / 256, which is:  0.09375
         // This is needed because Cnc code documents things like
         // movement speeds in terms of leptons
-        public static double WorldUnitsPerLepton = 24.0 / 256.0;
+        // public static double WorldUnitsPerLepton = 24.0 / 256.0;
+        public static double WorldUnitsPerLepton = (float) MAP_TILE_WIDTH / (float) MAP_TILE_WIDTH_IN_LEPTONS;
 
         public List<Minigunner> GDIMinigunnerList
         {

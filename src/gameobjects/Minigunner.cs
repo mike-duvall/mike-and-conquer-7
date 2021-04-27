@@ -35,6 +35,7 @@ namespace mike_and_conquer.gameobjects
 
         private Minigunner currentAttackTarget;
 
+
         public enum State { IDLE, MOVING, ATTACKING, LANDING_AT_MAP_SQUARE };
         public State state;
 
@@ -49,7 +50,15 @@ namespace mike_and_conquer.gameobjects
         private List<Point> path;
 
 
-        private static int baseCncSpeedInLeptons = (int) CncSpeed.MPH_SLOW;  // MPH_SLOW == 8
+        // CnC source code shows Infantry speed to be CncSpeed.MPH_SLOW, which is 8, but my empirical tests
+        // of actual Cnc game show it to be about speed 11, when compared to MCV and Jeep speeds
+        // I don't fully understand why, but think it has to do with differences in Cnc in how
+        // Infantry is moved vs how vehicles are moved.  It appears to be completely different code
+        // In addition, in Cnc, minigunners moving left to right are slower than minigunners
+        // moving right to left.  So the code seems suspect....
+        // Manually tweaking the speed I use to match empirical measurements
+        //private static int baseCncSpeedInLeptons = (int) CncSpeed.MPH_SLOW;  // MPH_SLOW == 8
+        private static int baseCncSpeedInLeptons = 11;  // Calibrated based on empirical tests
         private static readonly double baseMovementSpeedInWorldCoordinates = baseCncSpeedInLeptons * GameWorld.WorldUnitsPerLepton;
         private double scaledMovementSpeed;
         double movementDistanceEpsilon;
@@ -96,6 +105,7 @@ namespace mike_and_conquer.gameobjects
             selected = false;
 
         }
+
 
         public void Update(GameTime gameTime)
         {

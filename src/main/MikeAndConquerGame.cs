@@ -11,7 +11,6 @@ using mike_and_conquer.gameworld;
 using mike_and_conquer.openralocal;
 using mike_and_conquer.sound;
 using Serilog;
-using SharpDX.MediaFoundation;
 using Game = Microsoft.Xna.Framework.Game;
 using GameTime = Microsoft.Xna.Framework.GameTime;
 using GraphicsDeviceManager = Microsoft.Xna.Framework.GraphicsDeviceManager;
@@ -99,10 +98,13 @@ namespace mike_and_conquer.main
             else
             {
                 graphics.IsFullScreen = false;
-//                graphics.PreferredBackBufferWidth = 1280;
-//                graphics.PreferredBackBufferHeight = 1024;
-                graphics.PreferredBackBufferWidth = 1024;
+                // graphics.PreferredBackBufferWidth = 1280;
+                // graphics.PreferredBackBufferHeight = 1024;
+                graphics.PreferredBackBufferWidth = 1280;
                 graphics.PreferredBackBufferHeight = 768;
+
+                // graphics.PreferredBackBufferWidth = 1024;
+                // graphics.PreferredBackBufferHeight = 768;
 
 
             }
@@ -155,11 +157,33 @@ namespace mike_and_conquer.main
             // AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(14, 16), 90, 2);
 
 
+            // AddGdiMinigunnerAtMapSquareCoordinates(new Point(18, 5));
+            // AddMCVAtMapSquareCoordinates(new Point(22, 14));
+            // AddGDIBarracks(MapTileLocation.CreateFromWorldMapTileCoordinates(24, 16));
+
+
             if (!GameOptions.instance.IsFullScreen)
             {
-                AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 9));
-                AddMCVAtMapSquareCoordinates(new Point(21, 12));
-                AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(14, 16), 90, 2);
+                AddGdiMinigunnerAtMapSquareCoordinates(new Point(18, 5));
+                // AddGdiMinigunnerAtMapSquareCoordinates(new Point(25, 16));
+
+                // AddGdiMinigunnerAtMapSquareCoordinates(new Point(22, 9));
+                // AddGdiMinigunnerAtMapSquareCoordinates(new Point(23, 9));
+                // AddGdiMinigunnerAtMapSquareCoordinates(new Point(24, 9));
+                // AddGdiMinigunnerAtMapSquareCoordinates(new Point(25, 9));
+                // AddGdiMinigunnerAtMapSquareCoordinates(new Point(26, 9));
+                // AddGdiMinigunnerAtMapSquareCoordinates(new Point(21, 10));
+                // AddGdiMinigunnerAtMapSquareCoordinates(new Point(22, 11));
+                // AddGdiMinigunnerAtMapSquareCoordinates(new Point(23, 12));
+                // AddGdiMinigunnerAtMapSquareCoordinates(new Point(24, 13));
+                // AddGdiMinigunnerAtMapSquareCoordinates(new Point(25, 14));
+                // AddGdiMinigunnerAtMapSquareCoordinates(new Point(26, 15));
+
+                //                AddMCVAtMapSquareCoordinates(new Point(21, 12));
+                AddMCVAtMapSquareCoordinates(new Point(22, 14));
+                AddGDIBarracks(MapTileLocation.CreateFromWorldMapTileCoordinates(24,16));
+                // AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(14, 16), 90, 2);
+                // AddNodTurret(MapTileLocation.CreateFromWorldMapTileCoordinates(18, 13), 180, 2);
             }
 
 

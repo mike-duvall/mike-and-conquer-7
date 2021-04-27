@@ -23,7 +23,7 @@ Open up the proper Rest endpoints on the Windows box in question, with this comm
 		netsh http show urlacl
 
 Also need to manually connect to the remote machine before the network connection will work
-		Connect to \\192.168.0.146\buildoutput in xyplorer or file explorer
+		Connect to \\192.168.0.147\buildoutput in xyplorer or file explorer
 
 For running mike-and-conquer-test Spock tests against remote instance, need to open up firewall on remote machine:
 
@@ -37,8 +37,8 @@ For running mike-and-conquer-test Spock tests against remote instance, need to o
 Also, setup local project config to set build output to be the remote machine and to connect to the remote machine when debugging:
 * Right click the project name ("mike-and-conquer")
 * Select Properties
-* On the Build tab, set Ouput Path to:  \\192.168.0.146\buildoutput\ (Or whatever the IP address of the remote machine is)
-* On the Debug tab, Check "Use remote machine", and set the value to "192.168.0.146" (Or whatever the IP address of the remote machine is)
+* On the Build tab, set Ouput Path to:  \\192.168.0.147\buildoutput\ (Or whatever the IP address of the remote machine is)
+* On the Debug tab, Check "Use remote machine", and set the value to "192.168.0.147" (Or whatever the IP address of the remote machine is)
 
 
 

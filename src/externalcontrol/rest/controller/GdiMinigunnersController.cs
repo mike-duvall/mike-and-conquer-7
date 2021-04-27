@@ -38,6 +38,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
                 restMinigunner.destinationX = (int)minigunner.destination.X;
                 restMinigunner.destinationY = (int)minigunner.destination.Y;
                 restMinigunners[i] = restMinigunner;
+                i++;
             }
 
             // return Ok(restMinigunners);

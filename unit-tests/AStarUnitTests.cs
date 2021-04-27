@@ -141,37 +141,29 @@ namespace unit_tests
             AStar aStar = new AStar();
 
             // and
-            //  0, 0, S, 0, 0, 0
-            //  0, 1, 1, 1, 0, 0
-            //  0, 0, E, 0, 0, 0
-            //  .
-            //  .
+            //  0, 0, S, 0, 0
+            //  0, 1, 1, 1, 0
+            //  0, 0, E, 0, 0
 
-//            int[,] nodeArray = new int[5, 3];
-//
-//            nodeArray[1, 1] = 1;
-//            nodeArray[2, 1] = 1;
-//            nodeArray[3, 1] = 1;
 
-//            NavigationGraph navigationGraph = new NavigationGraph(nodeArray);
             NavigationGraph navigationGraph = new NavigationGraph(5,3);
 
             navigationGraph.MakeNodeBlockingNode(1, 1);
             navigationGraph.MakeNodeBlockingNode(2, 1);
             navigationGraph.MakeNodeBlockingNode(3, 1);
             navigationGraph.RebuildAdajencyGraph();
-
+            
             // when
             Point startPoint = new Point(2, 0);
             Point endPoint = new Point(2, 2);
             Path foundPath = aStar.FindPath(navigationGraph, startPoint, endPoint);
-
+            
             // then
             Assert.IsNotNull(foundPath);
-
+            
             // and
             Assert.IsTrue(foundPath.nodeList.Count == 5);
-
+            
             Assert.IsTrue(foundPath.nodeList[0].id == 2);
             Assert.IsTrue(foundPath.nodeList[1].id == 1);
             Assert.IsTrue(foundPath.nodeList[2].id == 5);

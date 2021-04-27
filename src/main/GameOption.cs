@@ -23,11 +23,20 @@ namespace mike_and_conquer.main
         //        public  bool PlayMusic = true;
         public bool PlayMusic = false;
 
-        public int GameSpeedDelayDivisor = 50;
-        // public int GameSpeedDelayDivisor = 200;
-        // public int GameSpeedDelayDivisor = 20;
-        // public int GameSpeedDelayDivisor = 1;
 
+        public enum GameSpeed
+        {
+            Slowest = 250,
+            Slower = 125,
+            Slow = 85, 
+            Moderate = 63,
+            Normal = 43,
+            Fast = 30,
+            Faster = 25,
+            Fastest = 23
+        }
+
+        public int GameSpeedDelayDivisor = (int) GameSpeed.Moderate; 
 
         public static GameOptions instance;
 

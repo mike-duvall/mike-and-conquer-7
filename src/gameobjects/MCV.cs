@@ -17,18 +17,15 @@ using Node = mike_and_conquer.pathfinding.Node;
 namespace mike_and_conquer.gameobjects
 { 
 
-
     public class MCV : GameObject
     {
         public bool selected { get; set; }
-
 
         public Point destination {
             get { return new Point(destinationX, destinationY);}
         }
 
         Rectangle clickDetectionRectangle;
-
 
         public enum State { IDLE, MOVING, LANDING_AT_MAP_SQUARE };
         public State state;
@@ -38,23 +35,18 @@ namespace mike_and_conquer.gameobjects
 
         private int destinationX;
         private int destinationY;
-
         public Vector2 DestinationPosition { get { return new Vector2(destinationX, destinationY); } }
 
         private List<Point> path;
 
         double movementDistanceEpsilon;
 
-        private static int baseCncSpeedInLeptons = (int)CncSpeed.MPH_MEDIUM_SLOW;
-        // private static double baseMovementSpeed = 0.75f;
-        // private static readonly double baseMovementSpeed = baseCncSpeedInLeptons * 24.0 / 256.0;
-        private static readonly double baseMovementSpeed = baseCncSpeedInLeptons * GameWorld.WorldUnitsPerLepton;
-        // double scaledMovementSpeed = .010;
+        private static int baseCncSpeedInLeptons = (int)CncSpeed.MPH_MEDIUM_SLOW;   // MCV speed
+
+        private static readonly double baseMovementSpeedInWorldCoordinates = baseCncSpeedInLeptons * GameWorld.WorldUnitsPerLepton;
         private double scaledMovementSpeed;
 
-
         //        private static int globalId = 1;
-
 
         Serilog.Core.Logger log = new LoggerConfiguration()
             //.WriteTo.Console()
@@ -87,8 +79,7 @@ namespace mike_and_conquer.gameobjects
 
 
             clickDetectionRectangle = CreateClickDetectionRectangle();
-            // movementDistanceEpsilon = movementVelocity + (double).04f;
-            scaledMovementSpeed = baseMovementSpeed / GameOptions.instance.GameSpeedDelayDivisor;
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GameSpeedDelayDivisor;
             movementDistanceEpsilon = scaledMovementSpeed + (double).04f;
 
             selected = false;
@@ -96,6 +87,9 @@ namespace mike_and_conquer.gameobjects
 
         public void Update(GameTime gameTime)
         {
+
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GameSpeedDelayDivisor;
+
 
             UpdateVisibleMapTiles();
             if (this.currentCommand == Command.NONE)

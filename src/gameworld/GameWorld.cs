@@ -43,6 +43,12 @@ namespace mike_and_conquer.gameworld
         public List<TerrainItem> terrainItemList;
         public List<Projectile120mm> projectile120MmList;
 
+        private List<GameHistoryEvent> gameHistoryEventList;
+
+        public List<GameHistoryEvent> GameHistoryEventList
+        {
+            get { return this.gameHistoryEventList; }
+        }
 
         // Tiles are 24 pixels wide and are also 256 leptons wide
         // Since MnC uses pixels as "world coordinates" or "world units"
@@ -103,7 +109,7 @@ namespace mike_and_conquer.gameworld
             // nodMinigunnerAIControllerList = new List<MinigunnerAIController>();
             unitSelectionBox = new UnitSelectionBox();
 
-            
+            gameHistoryEventList = new List<GameHistoryEvent>();
             GameWorld.instance = this;
         }
 
@@ -126,6 +132,16 @@ namespace mike_and_conquer.gameworld
             return new PlayingGameState();
         }
 
+
+        public void PublisheGameHistoryEvent(String evenType, int unitId)
+        {
+            // double totalMillis = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds;
+            // Int32 int32InMillies = (Int32) (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds;
+
+            ulong unixTimestamp = (ulong) (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds;
+            GameHistoryEvent gameHistoryEvent = new GameHistoryEvent(evenType, unitId, unixTimestamp);
+            gameHistoryEventList.Add(gameHistoryEvent);
+        }
 
         public void InitializeDefaultMap()
         {

@@ -1,5 +1,5 @@
 ﻿
-namespace mike_and_conquer.main
+namespace mike_and_conquer.gameworld
 {
     public enum CncSpeed
     {

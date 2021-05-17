@@ -72,7 +72,9 @@
   <ItemGroup>
     <Compile Include="src\aicontroller\MinigunnerAIController.cs" />
     <Compile Include="src\externalcontrol\RestServerManager.cs" />
+    <Compile Include="src\externalcontrol\rest\controller\GameHistoryEventsController.cs" />
     <Compile Include="src\externalcontrol\rest\controller\NodTurretController.cs" />
+    <Compile Include="src\externalcontrol\rest\domain\RestGameHistoryEvent.cs" />
     <Compile Include="src\externalcontrol\rest\domain\RestNodTurret.cs" />
     <Compile Include="src\gameevent\AsyncGameEvent.cs" />
     <Compile Include="src\gameevent\CreateMCVGameEvent.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="src\gamesprite\GdiShpFileColorMapper.cs" />
     <Compile Include="src\gameview\UnitSelectionBoxView.cs" />
     <Compile Include="src\gameview\UnitSelectionBox.cs" />
+    <Compile Include="src\gameworld\GameHistoryEvent.cs" />
     <Compile Include="src\gameworld\GameWorldLocation.cs" />
     <Compile Include="src\gameworld\MapTileLocation.cs" />
     <Compile Include="src\gameworld\humancontroller\DragSelectingMapState.cs" />

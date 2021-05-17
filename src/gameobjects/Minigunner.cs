@@ -49,6 +49,8 @@ namespace mike_and_conquer.gameobjects
 
         private List<Point> path;
 
+        private double slowestSpeedReloadTimeInSeconds = 4.5f;
+        private double reloadCountdownTimer;
 
         // CnC source code shows Infantry speed to be CncSpeed.MPH_SLOW, which is 8, but my empirical tests
         // of actual Cnc game show it to be about speed 11, when compared to MCV and Jeep speeds
@@ -103,6 +105,7 @@ namespace mike_and_conquer.gameobjects
             scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GameSpeedDelayDivisor;
             movementDistanceEpsilon = scaledMovementSpeed + (double).04f;
             selected = false;
+            reloadCountdownTimer = 0;
 
         }
 
@@ -452,6 +455,7 @@ namespace mike_and_conquer.gameobjects
 
         }
 
+
         private void HandleCommandAttackTarget(GameTime gameTime)
         {
             if (currentAttackTarget.health <= 0)
@@ -459,11 +463,23 @@ namespace mike_and_conquer.gameobjects
                 this.currentCommand = Command.NONE;
             }
 
+            
+
             if (IsInAttackRange())
             {
                 this.state = State.ATTACKING;
-                currentAttackTarget.ReduceHealth(10);
-
+                if (reloadCountdownTimer <= 0.0f)
+                {
+                    currentAttackTarget.ReduceHealth(10);
+                    GameWorld.instance.PublisheGameHistoryEvent("FirePrimaryWeapon", this.id);
+                    reloadCountdownTimer = slowestSpeedReloadTimeInSeconds;
+                }
+                else
+                {
+                    double totalElapsedMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
+                    double totalElapsedSeconds = totalElapsedMilliseconds / 1000.0f;
+                    reloadCountdownTimer = reloadCountdownTimer - totalElapsedSeconds;
+                }
             }
             else
             {

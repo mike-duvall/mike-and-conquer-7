@@ -13,18 +13,20 @@ namespace mike_and_conquer.gameevent
 
         private bool drawShroud;
         private float initialMapZoom;
-        private int gameSpeedDelayDivisor;
+        // private int gameSpeedDelayDivisor;
+        private GameOptions.GameSpeed gameSpeed;
 
-        public ResetGameGameEvent(bool drawShroud, float initialMapZoom, int gameSpeedDelayDivisor)
+        public ResetGameGameEvent(bool drawShroud, float initialMapZoom, GameOptions.GameSpeed gameSpeed)
         {
             this.drawShroud = drawShroud;
             this.initialMapZoom = initialMapZoom;
-            this.gameSpeedDelayDivisor = gameSpeedDelayDivisor;
+            // this.gameSpeedDelayDivisor = gameSpeedDelayDivisor;
+            this.gameSpeed = gameSpeed;
         }
 
         protected override GameState ProcessImpl()
         {
-            return MikeAndConquerGame.instance.HandleReset(drawShroud, initialMapZoom, gameSpeedDelayDivisor);
+            return MikeAndConquerGame.instance.HandleReset(drawShroud, initialMapZoom, gameSpeed);
         }
 
     }

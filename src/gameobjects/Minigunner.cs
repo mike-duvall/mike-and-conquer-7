@@ -49,7 +49,8 @@ namespace mike_and_conquer.gameobjects
 
         private List<Point> path;
 
-        private double slowestSpeedReloadTimeInSeconds = 4.5f;
+//        private double reloadTimeInSeconds = 4.5f;
+        private double reloadTimeInSeconds;
         private double reloadCountdownTimer;
 
         // CnC source code shows Infantry speed to be CncSpeed.MPH_SLOW, which is 8, but my empirical tests
@@ -106,6 +107,16 @@ namespace mike_and_conquer.gameobjects
             movementDistanceEpsilon = scaledMovementSpeed + (double).04f;
             selected = false;
             reloadCountdownTimer = 0;
+            int minigunnerROF = 20;
+            double divisor = 1111.111111111111111111111111;
+
+            // double dmrof = 20;
+            // double dgameSpeed = GameOptions.instance.GameSpeedDelayDivisor;
+            // double dr = dmrof * dgameSpeed / divisor;
+
+
+           reloadTimeInSeconds = minigunnerROF * GameOptions.instance.GameSpeedDelayDivisor / divisor;
+            int x = 3;
 
         }
 
@@ -472,7 +483,7 @@ namespace mike_and_conquer.gameobjects
                 {
                     currentAttackTarget.ReduceHealth(10);
                     GameWorld.instance.PublisheGameHistoryEvent("FirePrimaryWeapon", this.id);
-                    reloadCountdownTimer = slowestSpeedReloadTimeInSeconds;
+                    reloadCountdownTimer = reloadTimeInSeconds;
                 }
                 else
                 {

@@ -812,9 +812,9 @@ namespace mike_and_conquer.gameworld
         }
 
 
-        public void ResetGameViaEvent(bool drawShroud, float initialMapZoom, int gameSpeedDelayDivisor)
+        public void ResetGameViaEvent(bool drawShroud, float initialMapZoom, GameOptions.GameSpeed gameSpeed)
         {
-            ResetGameGameEvent gameEvent = new ResetGameGameEvent(drawShroud, initialMapZoom, gameSpeedDelayDivisor);
+            ResetGameGameEvent gameEvent = new ResetGameGameEvent(drawShroud, initialMapZoom, gameSpeed);
 
             lock (gameEvents)
             {

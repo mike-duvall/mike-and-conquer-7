@@ -30,11 +30,13 @@ namespace mike_and_conquer.main
             Slower = 125,
             Slow = 85, 
             Moderate = 63,
-            Normal = 43,
+            Normal = 40,
             Fast = 30,
             Faster = 25,
-            Fastest = 23
+            Fastest = 24
         }
+
+
 
         public int GameSpeedDelayDivisor = (int) GameSpeed.Moderate; 
 

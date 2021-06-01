@@ -34,7 +34,7 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             RestGameOptions restGameOptions = new RestGameOptions();
             restGameOptions.initialMapZoom = gameOptions.MapZoomLevel;
             // restGameOptions.GameSpeed = gameOptions.GameSpeedDelayDivisor.;
-            restGameOptions.gameSpeed = ConvertGameSpeedValueToString(gameOptions.GameSpeedDelayDivisor);
+            restGameOptions.gameSpeed = ConvertGameSpeedValueToString(gameOptions.CurrentGameSpeed);
 
             restGameOptions.drawShroud = gameOptions.DrawShroud;
 
@@ -49,6 +49,16 @@ namespace mike_and_conquer.externalcontrol.rest.controller
 
             throw new Exception("Could not map gameSpeedDivisor:" + gameSpeedDelayDivisor);
         }
+
+        private String ConvertGameSpeedValueToString(GameOptions.GameSpeed gameSpeed)
+        {
+            if (gameSpeed == GameOptions.GameSpeed.Slowest) return "Slowest";
+            if (gameSpeed == GameOptions.GameSpeed.Normal) return "Normal";
+            if (gameSpeed == GameOptions.GameSpeed.Fastest) return "Fastest";
+
+            throw new Exception("Could not map gameSpeedDivisor:" + gameSpeed);
+        }
+
 
 
     }

@@ -218,7 +218,7 @@ namespace mike_and_conquer.gameobjects
         private float CalculateTurnIncrement(GameTime gameTime)
         {
 
-            scaledTurnRate = baseTurnRate / GameOptions.instance.GameSpeedDelayDivisor;
+            scaledTurnRate = baseTurnRate / GameOptions.instance.CurrentGameSpeedDivisor();
             scaledTurnRate = (float)(gameTime.ElapsedGameTime.TotalMilliseconds * scaledTurnRate);
             float clockWiseDistance = CalculateClockWiseDistance();
 

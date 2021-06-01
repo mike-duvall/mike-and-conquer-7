@@ -103,7 +103,7 @@ namespace mike_and_conquer.gameobjects
             Minigunner.globalId++;
 
             clickDetectionRectangle = CreateClickDetectionRectangle();
-            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GameSpeedDelayDivisor;
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.CurrentGameSpeedDivisor();
             movementDistanceEpsilon = scaledMovementSpeed + (double).04f;
             selected = false;
             reloadCountdownTimer = 0;
@@ -115,16 +115,26 @@ namespace mike_and_conquer.gameobjects
             // double dr = dmrof * dgameSpeed / divisor;
 
 
-           reloadTimeInSeconds = minigunnerROF * GameOptions.instance.GameSpeedDelayDivisor / divisor;
+            reloadTimeInSeconds = minigunnerROF * GameOptions.instance.CurrentGameSpeedDivisor() / divisor;
+            MikeAndConquerGame.instance.log.Information("GameOptions.instance.CurrentGameSpeedDivisor():" + GameOptions.instance.CurrentGameSpeedDivisor());
+            MikeAndConquerGame.instance.log.Information("reloadTimeInSeconds:" + reloadTimeInSeconds);
             int x = 3;
 
         }
 
 
+
+        // private double previousElapsedTimeTotalMilliseconds;
+
         public void Update(GameTime gameTime)
         {
 
-            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GameSpeedDelayDivisor;
+            // if (id == 1)
+            // {
+            //     double elapsedTimeTotalMilliseconds = gameTime.ElapsedGameTime.TotalMilliseconds;
+            //     MikeAndConquerGame.instance.log.Information("elapsedTimeTotalMilliseconds.:" + elapsedTimeTotalMilliseconds);
+            // }
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.CurrentGameSpeedDivisor();
 
             UpdateVisibleMapTiles();
             if (this.currentCommand == Command.NONE)

@@ -72,7 +72,7 @@ namespace mike_and_conquer.gameobjects
 
         public void Update(GameTime gameTime)
         {
-            scaledBuildSpeed = baseBuildSpeed / GameOptions.instance.GameSpeedDelayDivisor;
+            scaledBuildSpeed = baseBuildSpeed / GameOptions.instance.CurrentGameSpeedDivisor();
 
             if (isBuildingMinigunner)
             {

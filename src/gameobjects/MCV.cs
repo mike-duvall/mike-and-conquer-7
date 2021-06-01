@@ -79,7 +79,7 @@ namespace mike_and_conquer.gameobjects
 
 
             clickDetectionRectangle = CreateClickDetectionRectangle();
-            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GameSpeedDelayDivisor;
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.CurrentGameSpeedDivisor();
             movementDistanceEpsilon = scaledMovementSpeed + (double).04f;
 
             selected = false;
@@ -88,7 +88,7 @@ namespace mike_and_conquer.gameobjects
         public void Update(GameTime gameTime)
         {
 
-            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.GameSpeedDelayDivisor;
+            scaledMovementSpeed = baseMovementSpeedInWorldCoordinates / GameOptions.instance.CurrentGameSpeedDivisor();
 
 
             UpdateVisibleMapTiles();

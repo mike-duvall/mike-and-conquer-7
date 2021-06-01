@@ -522,7 +522,7 @@ namespace mike_and_conquer.main
             // This is a hack fix to fix an issue where if you change this.IsMouseVisible to false
             // while the Windows pointer is showing the mouse pointer arrow with the blue sworl "busy" icon on the side
             // it will continue to show a frozen(non moving) copy of the blue sworl "busy" icon, even after it 
-            // stops showing and updating the normal Winodws mouse pointer (in favor of my manually handled one)
+            // stops showing and updating the normal Windows mouse pointer (in favor of my manually handled one)
             // TODO:  Investigate replacing countdown timer with direct call to (possibly to native Windows API) to determine
             // native mouse pointer "busy" status, and wait until ti goes "not busy"
             if (mouseCounter < 20)
@@ -745,7 +745,9 @@ namespace mike_and_conquer.main
         {
             GameOptions.instance.DrawShroud = drawShroud;
             GameOptions.instance.MapZoomLevel = initialMapZoom;
-            GameOptions.instance.GameSpeedDelayDivisor = (int) gameSpeed;
+            // GameOptions.instance.GameSpeedDelayDivisor = (int) gameSpeed;
+            // GameOptions.instance.GameSpeedDelayDivisor = GameOptions.ConvertGameSpeedToDelayDivisor(gameSpeed);
+            GameOptions.instance.CurrentGameSpeed = gameSpeed;
             GameState newGameState = gameWorld.HandleReset();
             gameWorldView.HandleReset();
             gameWorld.GameHistoryEventList.Clear();

@@ -1080,19 +1080,19 @@ namespace mike_and_conquer.gameview
             }
 
 
-            if (!oldKeyboardState.IsKeyDown(Keys.Q) && newKeyboardState.IsKeyDown(Keys.Q))
-            {
-                GameOptions.instance.GameSpeedDelayDivisor -= 10;
-                if (GameOptions.instance.GameSpeedDelayDivisor < 1)
-                {
-                    GameOptions.instance.GameSpeedDelayDivisor = 1;
-                }
-            }
-
-            if (!oldKeyboardState.IsKeyDown(Keys.W) && newKeyboardState.IsKeyDown(Keys.W))
-            {
-                GameOptions.instance.GameSpeedDelayDivisor += 10;
-            }
+            // if (!oldKeyboardState.IsKeyDown(Keys.Q) && newKeyboardState.IsKeyDown(Keys.Q))
+            // {
+            //     GameOptions.instance.CurrentGameSpeedDivisor() -= 10;
+            //     if (GameOptions.instance.CurrentGameSpeedDivisor() < 1)
+            //     {
+            //         GameOptions.instance.CurrentGameSpeedDivisor() = 1;
+            //     }
+            // }
+            //
+            // if (!oldKeyboardState.IsKeyDown(Keys.W) && newKeyboardState.IsKeyDown(Keys.W))
+            // {
+            //     GameOptions.instance.GameSpeedDelayDivisor += 10;
+            // }
 
 
             // this.mapViewportCamera.Rotation = testRotation;

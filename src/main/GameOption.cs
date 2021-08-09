@@ -3,6 +3,7 @@
 
 
 using System;
+using SharpDX.Direct3D11;
 
 namespace mike_and_conquer.main
 
@@ -38,6 +39,7 @@ namespace mike_and_conquer.main
             Fastest = 23
         }
 
+
         public static float ConvertGameSpeedToDelayDivisor(GameSpeed gameSpeed)
         {
             switch (gameSpeed)
@@ -45,20 +47,47 @@ namespace mike_and_conquer.main
                // case GameSpeed.Slowest:
                //  return 250.0f;  4534
                // case GameSpeed.Slowest:
-               //     return 251.0f;  //  4550
+               //     return 251.0f;  //  4550, reload speed, // 74964 for movement test
                 // case GameSpeed.Slowest:
-                //    return 249.0f;  // 4514
+                //    return 249.0f;  // 4514, reload speed
                // case GameSpeed.Slowest:
                //     return 248.0f;  // 4482
 
                case GameSpeed.Slowest:
-                   return 248.5f;   // 4500
+                   return 248.5f;   // 4500, for reload, correct value, // 74231 for movement test, desired value 75600
 
                 case GameSpeed.Slower:
                    return 125;
+
+
+               // case GameSpeed.Slow:
+                //     return 75; // reloadTime(in code) = 1.35   //  measured reloadTime(in test): 1383
+
+                // case GameSpeed.Slow:
+                //     return 80;  // reloadTime(in code) = 1.44   //  measured reloadTime(in test): 1467
+
+               // case GameSpeed.Slow:
+               //     return 82; // reloadTime(in code) = 1.476    //  measured reloadTime(in test): 1500 // measured movement time in test:  25035, desired value 25201
+
+
+                // case GameSpeed.Slow:
+                //     return 82.1f;   // measured movement time in test:  25083, desired value 25201
+
+
                case GameSpeed.Slow:
-                   return 85;
-               case GameSpeed.Moderate:
+                   return 82.5f;   // measured movement time in test:  , desired value 25201
+
+
+                // case GameSpeed.Slow:
+                //    return 82.5f; // reloadTime(in code) = 1.485    //  measured reloadTime(in test): 1516
+
+
+                // case GameSpeed.Slow:
+                //    return 85; // reloadTime(in code) = 1.53    //  measured reloadTime(in test): 1550
+
+
+
+                case GameSpeed.Moderate:
                    return 63.0f;
                 case GameSpeed.Normal:
                     return 40.0f;  
@@ -77,6 +106,7 @@ namespace mike_and_conquer.main
                 //     return 22.0f; // 415
                 // case GameSpeed.Fastest:
                 //     return 22.2f; // reloadTime(in code)=0.39960001373291015   //  measured reloadTime(in test): 416
+
 
 
                 // case GameSpeed.Fastest:
@@ -105,7 +135,9 @@ namespace mike_and_conquer.main
             }
         }
 
-        public GameSpeed CurrentGameSpeed = GameSpeed.Moderate;
+
+        // public GameSpeed CurrentGameSpeed = GameSpeed.Moderate;
+        public GameSpeed CurrentGameSpeed = GameSpeed.Slowest;
 
         public float CurrentGameSpeedDivisor()
         {

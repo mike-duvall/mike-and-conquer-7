@@ -112,6 +112,7 @@ namespace mike_and_conquer.main
             Content.RootDirectory = "Content";
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
             this.IsFixedTimeStep = false;
+            this.graphics.SynchronizeWithVerticalRetrace = false;
 
             gameWorld = new GameWorld();
             gameWorldView = new GameWorldView();
@@ -161,6 +162,7 @@ namespace mike_and_conquer.main
             // AddMCVAtMapSquareCoordinates(new Point(22, 14));
             // AddGDIBarracks(MapTileLocation.CreateFromWorldMapTileCoordinates(24, 16));
 
+            // AddMCVAtMapSquareCoordinates(new Point(26, 17));
 
             if (!GameOptions.instance.IsFullScreen)
             {
@@ -480,7 +482,10 @@ namespace mike_and_conquer.main
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            //      log.Information("gameTime.ElapsedGameTime.TotalMilliseconds:" + gameTime.ElapsedGameTime.TotalMilliseconds);
+            bool isFixedTimeStep = this.IsFixedTimeStep;
+            bool synchronizeWithVerticalRetrace = this.graphics.SynchronizeWithVerticalRetrace;
+            log.Information("gameTime.ElapsedGameTime.TotalMilliseconds:" + gameTime.ElapsedGameTime.TotalMilliseconds);
+
 
             FixMousePointerProblem();
 

@@ -32,6 +32,7 @@ namespace mike_and_conquer.gameobjects
 
         public enum Command { NONE,  FOLLOW_PATH };
         public Command currentCommand;
+        public Command previousCommand;
 
         private int destinationX;
         private int destinationY;
@@ -66,7 +67,8 @@ namespace mike_and_conquer.gameobjects
         {
 
             this.state = State.IDLE;
-            this.currentCommand = Command.NONE;
+            // this.currentCommand = Command.NONE;
+            UpdateCommand(Command.NONE);
             gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(xInWorldCoordinates, yInWorldCoordinates);
 
             //            id = Minigunner.globalId;
@@ -94,12 +96,46 @@ namespace mike_and_conquer.gameobjects
             UpdateVisibleMapTiles();
             if (this.currentCommand == Command.NONE)
             {
+                // if (previousCommand != null && previousCommand == Command.FOLLOW_PATH)
+                // {
+                //     int mcvId = -1; // Don't have ids for MCVs yet
+                //     GameWorld.instance.PublisheGameHistoryEvent("StopMoving", mcvId);
+                // }
+
                 HandleCommandNone(gameTime);
             }
             else if (this.currentCommand == Command.FOLLOW_PATH)
             {
+                // if (previousCommand != null && previousCommand == Command.NONE)
+                // {
+                //     int mcvId = -1; // Don't have ids for MCVs yet
+                //     GameWorld.instance.PublisheGameHistoryEvent("StartMoving", mcvId);
+                // }
+
                 HandleCommandFollowPath(gameTime);
             }
+
+        }
+
+        private void UpdateCommand(Command newCommand)
+        {
+
+
+            previousCommand = this.currentCommand;
+            this.currentCommand = newCommand;
+
+            if (previousCommand == Command.NONE && this.currentCommand == Command.FOLLOW_PATH)
+            {
+                int mcvId = -1; // Don't have ids for MCVs yet
+                GameWorld.instance.PublisheGameHistoryEvent("StartMoving", mcvId);
+            }
+
+            if (previousCommand == Command.FOLLOW_PATH && this.currentCommand == Command.NONE)
+            {
+                int mcvId = -1; // Don't have ids for MCVs yet
+                GameWorld.instance.PublisheGameHistoryEvent("StopMoving", mcvId);
+            }
+
 
         }
 
@@ -288,8 +324,11 @@ namespace mike_and_conquer.gameobjects
             }
             else
             {
-                this.currentCommand = Command.NONE;
+                // this.currentCommand = Command.NONE;
+                UpdateCommand(Command.NONE);
             }
+
+
 
         }
 
@@ -349,7 +388,33 @@ namespace mike_and_conquer.gameobjects
             float newX = gameWorldLocation.WorldCoordinatesAsVector2.X;
             float newY = gameWorldLocation.WorldCoordinatesAsVector2.Y;
 
-            double delta = gameTime.ElapsedGameTime.TotalMilliseconds * scaledMovementSpeed;
+
+            // double deltaScaler = 0.9;  // 82483
+            // double deltaScaler = 0.95;  // 78165
+            // double deltaScaler = 0.97;  // 76522
+
+
+
+
+            // double deltaScaler = 0.98;  // 75750, 75740
+
+            double deltaScaler = 0.982;  // 75600
+
+            //            double deltaScaler = 0.985;  // 75365, 75366
+
+            // double deltaScaler = 0.985;  // 75365, 75366
+
+
+            //double deltaScaler = 0.986;  // 75347, 75349
+
+
+
+
+            // double deltaScaler = 0.99;  // 75014, new measurement:  74998, new: 75013
+
+
+            // double deltaScaler = 1.0; // Presume 74231
+            double delta = gameTime.ElapsedGameTime.TotalMilliseconds * scaledMovementSpeed * deltaScaler;
 
             float remainingDistanceX = Math.Abs(destinationX - gameWorldLocation.WorldCoordinatesAsVector2.X);
             float remainingDistanceY = Math.Abs(destinationY - gameWorldLocation.WorldCoordinatesAsVector2.Y);
@@ -457,7 +522,8 @@ namespace mike_and_conquer.gameobjects
 
             Path foundPath = aStar.FindPath(GameWorld.instance.navigationGraph, startPoint, destinationSquare);
 
-            this.currentCommand = Command.FOLLOW_PATH;
+            // this.currentCommand = Command.FOLLOW_PATH;
+            UpdateCommand(Command.FOLLOW_PATH);
             this.state = State.MOVING;
 
             List<Point> listOfPoints = new List<Point>();

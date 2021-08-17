@@ -111,8 +111,16 @@ namespace mike_and_conquer.main
 
             Content.RootDirectory = "Content";
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
-            this.IsFixedTimeStep = false;
-            this.graphics.SynchronizeWithVerticalRetrace = false;
+            // this.IsFixedTimeStep = false;
+            // this.graphics.SynchronizeWithVerticalRetrace = false;
+
+            TimeSpan xBefore = this.TargetElapsedTime;
+
+            this.IsFixedTimeStep = true;
+            this.graphics.SynchronizeWithVerticalRetrace = true;
+            this.TargetElapsedTime = TimeSpan.FromMilliseconds(30);
+
+            TimeSpan xAfter = this.TargetElapsedTime;
 
             gameWorld = new GameWorld();
             gameWorldView = new GameWorldView();
@@ -485,6 +493,7 @@ namespace mike_and_conquer.main
             bool isFixedTimeStep = this.IsFixedTimeStep;
             bool synchronizeWithVerticalRetrace = this.graphics.SynchronizeWithVerticalRetrace;
             log.Information("gameTime.ElapsedGameTime.TotalMilliseconds:" + gameTime.ElapsedGameTime.TotalMilliseconds);
+
 
 
             FixMousePointerProblem();

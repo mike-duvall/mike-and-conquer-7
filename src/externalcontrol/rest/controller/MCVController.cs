@@ -19,8 +19,12 @@ namespace mike_and_conquer.externalcontrol.rest.controller
             }
             RestMCV restMCV = new RestMCV();
 
-            restMCV.x = (int)mcv.GameWorldLocation.WorldCoordinatesAsVector2.X;
-            restMCV.y = (int)mcv.GameWorldLocation.WorldCoordinatesAsVector2.Y;
+            // restMCV.x = (int)mcv.GameWorldLocation.WorldCoordinatesAsVector2.X;
+            // restMCV.y = (int)mcv.GameWorldLocation.WorldCoordinatesAsVector2.Y;
+            restMCV.x = (int)mcv.GameWorldLocation.X;
+            restMCV.y = (int)mcv.GameWorldLocation.Y;
+
+
             // Vector2 screenPosition =
             //     MikeAndConquerGame.instance.ConvertWorldCoordinatesToScreenCoordinates(minigunner
             //         .positionInWorldCoordinates);
@@ -74,8 +78,11 @@ namespace mike_and_conquer.externalcontrol.rest.controller
 
             RestMCV restMCV = new RestMCV();
             // restMCV.id = minigunner.id;
-            restMCV.x = (int)mcv.GameWorldLocation.WorldCoordinatesAsVector2.X;
-            restMCV.y = (int)mcv.GameWorldLocation.WorldCoordinatesAsVector2.Y;
+            // restMCV.x = (int)mcv.GameWorldLocation.WorldCoordinatesAsVector2.X;
+            // restMCV.y = (int)mcv.GameWorldLocation.WorldCoordinatesAsVector2.Y;
+            restMCV.x = (int)mcv.GameWorldLocation.X;
+            restMCV.y = (int)mcv.GameWorldLocation.Y;
+
             // restMCV.health = minigunner.health;
 
             // MikeAndConquerGame.instance.log.Information("leaving Post() for minigunner, id:" + restMinigunner.id);

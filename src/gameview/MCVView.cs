@@ -12,7 +12,8 @@ namespace mike_and_conquer.gameview
     public class MCVView
     {
         private UnitSprite unitSprite;
-        private UnitSelectionCursor unitSelectionCursor;
+        // private UnitSelectionCursor unitSelectionCursor;
+        private UnitSelectionCursor2 unitSelectionCursor;
         private DestinationSquare destinationSquare;
         private MCV myMCV;
         private bool drawDestinationSquare;
@@ -32,7 +33,8 @@ namespace mike_and_conquer.gameview
             this.unitSprite.drawBoundingRectangle = false;
             this.unitSprite.drawShadow = true;
             // this.mcvSelectionBox = new MCVSelectionBox();
-            this.unitSelectionCursor = new UnitSelectionCursor(myMCV, (int)this.myMCV.GameWorldLocation.WorldCoordinatesAsVector2.X, (int)this.myMCV.GameWorldLocation.WorldCoordinatesAsVector2.Y);
+            // this.unitSelectionCursor = new UnitSelectionCursor(myMCV, (int)this.myMCV.GameWorldLocation.WorldCoordinatesAsVector2.X, (int)this.myMCV.GameWorldLocation.WorldCoordinatesAsVector2.Y);
+            this.unitSelectionCursor = new UnitSelectionCursor2(myMCV, (int)this.myMCV.GameWorldLocation.X, (int)this.myMCV.GameWorldLocation.Y);
 
             this.destinationSquare = new DestinationSquare();
             this.drawDestinationSquare = false;
@@ -57,7 +59,8 @@ namespace mike_and_conquer.gameview
                 return;
             }
 
-            unitSprite.DrawNoShadow(gameTime, spriteBatch, myMCV.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
+            // unitSprite.DrawNoShadow(gameTime, spriteBatch, myMCV.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
+            unitSprite.DrawNoShadow(gameTime, spriteBatch, myMCV.GameWorldLocation.AsVector2, SpriteSortLayers.UNIT_DEPTH);
 
             if (myMCV.selected)
             {
@@ -76,7 +79,8 @@ namespace mike_and_conquer.gameview
                 return;
             }
 
-            unitSprite.DrawShadowOnly(gameTime, spriteBatch, myMCV.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
+            // unitSprite.DrawShadowOnly(gameTime, spriteBatch, myMCV.GameWorldLocation.WorldCoordinatesAsVector2, SpriteSortLayers.UNIT_DEPTH);
+            unitSprite.DrawShadowOnly(gameTime, spriteBatch, myMCV.GameWorldLocation.AsVector2, SpriteSortLayers.UNIT_DEPTH);
 
             if (myMCV.selected)
             {

@@ -97,8 +97,11 @@ namespace mike_and_conquer.gameworld.humancontroller
                     }
                     else
                     {
+                        // MapTileLocation mapTileLocation =
+                        //     MapTileLocation.CreateFromWorldCoordinatesInVector2(mcv.GameWorldLocation.WorldCoordinatesAsVector2);
                         MapTileLocation mapTileLocation =
-                            MapTileLocation.CreateFromWorldCoordinatesInVector2(mcv.GameWorldLocation.WorldCoordinatesAsVector2);
+                            MapTileLocation.CreateFromWorldCoordinatesInVector2(mcv.GameWorldLocation.AsVector2);
+
                         MikeAndConquerGame.instance.RemoveMCV();
                         MikeAndConquerGame.instance.AddGDIConstructionYard(mapTileLocation);
                     }

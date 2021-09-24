@@ -32,11 +32,15 @@ namespace mike_and_conquer.gameworld
             get { return yInWorldCoordinates; }
         }
 
-
         // public Vector2 WorldCoordinatesAsVector2
         // {
         //     get { return new Vector2(xInWorldCoordinates, yInWorldCoordinates); }
         // }
+
+        public Vector2 AsVector2
+        {
+            get { return new Vector2((float) xInWorldCoordinates, (float) yInWorldCoordinates); }
+        }
 
 
     }

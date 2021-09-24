@@ -473,7 +473,8 @@ namespace mike_and_conquer.gameworld
             DeslectAllUnits();
             mcv.selected = true;
         }
-
+        Pickup here
+        Revisit and review if I want to go down the path of having my on separate game world and timer
 
 
         public void Update(GameTime gameTime)

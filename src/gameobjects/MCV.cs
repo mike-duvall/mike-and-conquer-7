@@ -17,7 +17,8 @@ using Node = mike_and_conquer.pathfinding.Node;
 namespace mike_and_conquer.gameobjects
 { 
 
-    public class MCV : GameObject
+    // public class MCV : GameObject
+    public class MCV : GameObject2
     {
         public bool selected { get; set; }
 
@@ -69,7 +70,8 @@ namespace mike_and_conquer.gameobjects
             this.state = State.IDLE;
             // this.currentCommand = Command.NONE;
             UpdateCommand(Command.NONE);
-            gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(xInWorldCoordinates, yInWorldCoordinates);
+//            gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(xInWorldCoordinates, yInWorldCoordinates);
+            gameWorldLocationDouble = GameWorldLocationDouble.CreateFromWorldCoordinates(xInWorldCoordinates, yInWorldCoordinates);
 
             //            id = Minigunner.globalId;
             //            Minigunner.globalId++;
@@ -203,9 +205,18 @@ namespace mike_and_conquer.gameobjects
                 return;
             }
 
+            // MapTileInstance possibleNewMapTileInstance =
+            //     GameWorld.instance.FindMapTileInstance(
+            //         MapTileLocation.CreateFromWorldCoordinatesInVector2(gameWorldLocation.WorldCoordinatesAsVector2));
+
+
+            // Vector2 worldCoordinatesAsVector2 = new Vector2((float) gameWorldLocationDouble.X, (float) gameWorldLocationDouble.Y);
+
             MapTileInstance possibleNewMapTileInstance =
                 GameWorld.instance.FindMapTileInstance(
-                    MapTileLocation.CreateFromWorldCoordinatesInVector2(gameWorldLocation.WorldCoordinatesAsVector2));
+                    MapTileLocation.CreateFromWorldCoordinatesInVector2(gameWorldLocationDouble.AsVector2));
+
+
 
             if (possibleNewMapTileInstance == currentMapTileInstance)
             {
@@ -285,11 +296,19 @@ namespace mike_and_conquer.gameobjects
 
         private void UpdateNearbyMapTileVisibility(int xOffset, int yOffset, MapTileInstance.MapTileVisibility mapTileVisibility)
         {
+//            Vector2 worldCoordinatesAsVector2 = new Vector2((float)gameWorldLocationDouble.X, (float)gameWorldLocationDouble.Y);
+
+
+            // MapTileLocation mapTileLocation = MapTileLocation
+            //     .CreateFromWorldCoordinatesInVector2(gameWorldLocation.WorldCoordinatesAsVector2)
+            //     .IncrementWorldMapTileX(xOffset)
+            //     .IncrementWorldMapTileY(yOffset);
 
             MapTileLocation mapTileLocation = MapTileLocation
-                .CreateFromWorldCoordinatesInVector2(gameWorldLocation.WorldCoordinatesAsVector2)
+                .CreateFromWorldCoordinatesInVector2(gameWorldLocationDouble.AsVector2)
                 .IncrementWorldMapTileX(xOffset)
                 .IncrementWorldMapTileY(yOffset);
+
 
             MapTileInstance mapTileInstance = GameWorld.instance.FindMapTileInstanceAllowNull(mapTileLocation);
 
@@ -307,8 +326,13 @@ namespace mike_and_conquer.gameobjects
             int unitHeight = 24;
 
 
-            int x = (int)(gameWorldLocation.WorldCoordinatesAsVector2.X - (unitWidth / 2));
-            int y = (int)(gameWorldLocation.WorldCoordinatesAsVector2.Y - (unitHeight / 2)) + (int)(1);
+            // Vector2 worldCoordinatesAsVector2 = new Vector2((float)gameWorldLocationDouble.X, (float)gameWorldLocationDouble.Y);
+
+
+            // int x = (int)(gameWorldLocation.WorldCoordinatesAsVector2.X - (unitWidth / 2));
+            // int y = (int)(gameWorldLocation.WorldCoordinatesAsVector2.Y - (unitHeight / 2)) + (int)(1);
+            int x = (int)(gameWorldLocationDouble.X - (unitWidth / 2));
+            int y = (int)(gameWorldLocationDouble.Y - (unitHeight / 2)) + (int)(1);
 
 
 
@@ -392,22 +416,26 @@ namespace mike_and_conquer.gameobjects
 
         private bool IsFarEnoughRight(int destinationX)
         {
-            return (gameWorldLocation.WorldCoordinatesAsVector2.X > (destinationX - movementDistanceEpsilon));
+            // return (gameWorldLocation.WorldCoordinatesAsVector2.X > (destinationX - movementDistanceEpsilon));
+            return (gameWorldLocationDouble.X > (destinationX - movementDistanceEpsilon));
         }
 
         private bool IsFarEnoughLeft(int destinationX)
         {
-            return (gameWorldLocation.WorldCoordinatesAsVector2.X < (destinationX + movementDistanceEpsilon));
+            // return (gameWorldLocation.WorldCoordinatesAsVector2.X < (destinationX + movementDistanceEpsilon));
+            return (gameWorldLocationDouble.X < (destinationX + movementDistanceEpsilon));
         }
 
         private bool IsFarEnoughDown(int destinationY)
         {
-            return (gameWorldLocation.WorldCoordinatesAsVector2.Y > (destinationY - movementDistanceEpsilon));
+            // return (gameWorldLocation.WorldCoordinatesAsVector2.Y > (destinationY - movementDistanceEpsilon));
+            return (gameWorldLocationDouble.Y > (destinationY - movementDistanceEpsilon));
         }
 
         private bool IsFarEnoughUp(int destinationY)
         {
-            return (gameWorldLocation.WorldCoordinatesAsVector2.Y < (destinationY + movementDistanceEpsilon));
+            // return (gameWorldLocation.WorldCoordinatesAsVector2.Y < (destinationY + movementDistanceEpsilon));
+            return (gameWorldLocationDouble.Y < (destinationY + movementDistanceEpsilon));
         }
 
 
@@ -441,12 +469,21 @@ namespace mike_and_conquer.gameobjects
         {
 
 
-            float oldX = gameWorldLocation.WorldCoordinatesAsVector2.X;
-            float oldY = gameWorldLocation.WorldCoordinatesAsVector2.Y;
+            // float oldX = gameWorldLocation.WorldCoordinatesAsVector2.X;
+            // float oldY = gameWorldLocation.WorldCoordinatesAsVector2.Y;
+            //
+            //
+            // float newX = gameWorldLocation.WorldCoordinatesAsVector2.X;
+            // float newY = gameWorldLocation.WorldCoordinatesAsVector2.Y;
 
 
-            float newX = gameWorldLocation.WorldCoordinatesAsVector2.X;
-            float newY = gameWorldLocation.WorldCoordinatesAsVector2.Y;
+            double oldX = gameWorldLocationDouble.X;
+            double oldY = gameWorldLocationDouble.Y;
+
+
+            double newX = gameWorldLocationDouble.X;
+            double newY = gameWorldLocationDouble.Y;
+
 
 
             // double deltaScaler = 0.9;  // 82483
@@ -480,7 +517,10 @@ namespace mike_and_conquer.gameobjects
 
             // double delta = 0.8252258601;  // 12525
             // double delta = 0.8252258597;   // 12614
-            double delta = 0.8252258592;  // 12613
+            // double delta = 0.8252258592;  // 12613
+
+
+            double delta = 0.8252258592; // 12594
             float deltaFloat = 0.8252258592f;
 
 
@@ -490,8 +530,11 @@ namespace mike_and_conquer.gameobjects
 
 
 
-            float remainingDistanceX = Math.Abs(destinationX - gameWorldLocation.WorldCoordinatesAsVector2.X);
-            float remainingDistanceY = Math.Abs(destinationY - gameWorldLocation.WorldCoordinatesAsVector2.Y);
+            // float remainingDistanceX = Math.Abs(destinationX - gameWorldLocation.WorldCoordinatesAsVector2.X);
+            // float remainingDistanceY = Math.Abs(destinationY - gameWorldLocation.WorldCoordinatesAsVector2.Y);
+            double remainingDistanceX = Math.Abs(destinationX - gameWorldLocationDouble.X);
+            double remainingDistanceY = Math.Abs(destinationY - gameWorldLocationDouble.Y);
+
             double deltaX = delta;
             double deltaY = delta;
 
@@ -507,27 +550,35 @@ namespace mike_and_conquer.gameobjects
 
             if (!IsFarEnoughRight(destinationX))
             {
-                newX += (float)deltaX;
+                // newX += (float)deltaX;
+                newX += deltaX;
+
             }
             else if (!IsFarEnoughLeft(destinationX))
             {
-                newX -= (float)deltaX;
+                // newX -= (float)deltaX;
+                newX -= deltaX;
             }
 
             if (!IsFarEnoughDown(destinationY))
             {
-                newY += (float)deltaY;
+                // newY += (float)deltaY;
+                newY += deltaY;
             }
             else if (!IsFarEnoughUp(destinationY))
             {
-                newY -= (float)deltaY;
+                // newY -= (float)deltaY;
+                newY -= deltaY;
             }
 
 
             // TODO:  Leaving in this commented out code for debugging movement issues.
             // Should remove it later if end up not needing it
-            float xChange = Math.Abs(oldX - newX);
-            float yChange = Math.Abs(oldY - newY);
+            // float xChange = Math.Abs(oldX - newX);
+            // float yChange = Math.Abs(oldY - newY);
+            double xChange = Math.Abs(oldX - newX);
+            double yChange = Math.Abs(oldY - newY);
+
             float changeThreshold = 0.10f;
 
             // if (xChange < changeThreshold && yChange < changeThreshold)
@@ -554,7 +605,8 @@ namespace mike_and_conquer.gameobjects
             // }
 
 
-            gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(newX, newY);
+            // gameWorldLocation = GameWorldLocation.CreateFromWorldCoordinates(newX, newY);
+            gameWorldLocationDouble = GameWorldLocationDouble.CreateFromWorldCoordinates(newX, newY);
 
         }
 
@@ -586,8 +638,11 @@ namespace mike_and_conquer.gameobjects
         public void OrderToMoveToDestination(Point destination)
         {
 
-            int startColumn = (int)this.gameWorldLocation.WorldCoordinatesAsVector2.X / GameWorld.MAP_TILE_WIDTH;
-            int startRow = (int)this.gameWorldLocation.WorldCoordinatesAsVector2.Y / GameWorld.MAP_TILE_HEIGHT;
+            // int startColumn = (int)this.gameWorldLocation.WorldCoordinatesAsVector2.X / GameWorld.MAP_TILE_WIDTH;
+            // int startRow = (int)this.gameWorldLocation.WorldCoordinatesAsVector2.Y / GameWorld.MAP_TILE_HEIGHT;
+            int startColumn = (int)this.gameWorldLocationDouble.X / GameWorld.MAP_TILE_WIDTH;
+            int startRow = (int)this.gameWorldLocationDouble.Y / GameWorld.MAP_TILE_HEIGHT;
+
             Point startPoint = new Point(startColumn, startRow);
 
             AStar aStar = new AStar();

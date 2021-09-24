@@ -118,7 +118,9 @@ namespace mike_and_conquer.main
 
             this.IsFixedTimeStep = true;
             this.graphics.SynchronizeWithVerticalRetrace = true;
-            this.TargetElapsedTime = TimeSpan.FromMilliseconds(30);
+            this.TargetElapsedTime = TimeSpan.FromMilliseconds(30);  // Normal
+            this.TargetElapsedTime = TimeSpan.FromMilliseconds(45);  // Moderate
+            this.TargetElapsedTime = TimeSpan.FromMilliseconds(18);  // Faster
 
             TimeSpan xAfter = this.TargetElapsedTime;
 

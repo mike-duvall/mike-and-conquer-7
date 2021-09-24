@@ -92,6 +92,7 @@
     <Compile Include="src\gameevent\CreateGDIMinigunnerGameEvent.cs" />
     <Compile Include="src\gameobjects\BarracksPlacementIndicator.cs" />
     <Compile Include="src\gameobjects\BuildingPlacementIndicatorTile.cs" />
+    <Compile Include="src\gameobjects\GameObject2.cs" />
     <Compile Include="src\gameobjects\GDIConstructionYard.cs" />
     <Compile Include="src\gameobjects\GDIBarracks.cs" />
     <Compile Include="src\gameobjects\GameObject.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="src\gamesprite\GdiShpFileColorMapper.cs" />
     <Compile Include="src\gameview\UnitSelectionBoxView.cs" />
     <Compile Include="src\gameview\UnitSelectionBox.cs" />
+    <Compile Include="src\gameview\UnitSelectionCursor2.cs" />
     <Compile Include="src\gameworld\GameHistoryEvent.cs" />
     <Compile Include="src\gameworld\GameWorldLocationDouble.cs" />
     <Compile Include="src\gameworld\GameWorldLocation.cs" />
